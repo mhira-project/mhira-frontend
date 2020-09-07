@@ -1,0 +1,47 @@
+@import "../../../assets/scss/_variables";
+
+.logo {
+  height: 44px;
+  background-color: transparent;
+  border-bottom: 1px solid #606060;
+  margin: 16px;
+  overflow: hidden;
+  text-align: right;
+  i {
+    color: #fff;
+    cursor: pointer;
+    font-size: 25px;
+  }
+}
+
+.layout {
+  min-height: 100vh;
+}
+
+nz-header {
+  background: $app-light-blue;
+  padding: 0;
+}
+
+nz-sider {
+  background-color: $app-dark;
+}
+
+.content-area {
+  background-color: #fff;
+}
+
+nz-content {
+  margin: 0 16px;
+  background-color: #fff;
+}
+
+nz-breadcrumb {
+  margin: 16px 0;
+}
+
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  min-height: 360px;
+}

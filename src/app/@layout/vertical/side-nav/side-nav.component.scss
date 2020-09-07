@@ -1,0 +1,103 @@
+@import "../../../../assets/scss/_variables";
+@import "../../../../assets/scss/_mixins";
+
+perfect-scrollbar {
+  overflow: visible;
+
+  .ps {
+    overflow: visible;
+  }
+
+  .ps__rail-y,
+  .ps__rail-x {
+    display: none;
+  }
+}
+
+ul {
+  background-color: $app-dark;
+  li {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    a,
+    span {
+      text-decoration: none;
+      color: $menu-text;
+    }
+    a:hover,
+    span:hover {
+      color: $app-green !important;
+    }
+    i {
+      font-size: 30px !important;
+      font-weight: bold;
+    }
+  }
+  li:hover {
+    color: $app-green;
+  }
+}
+
+::ng-deep {
+  .ant-menu:not(.ant-menu-horizontal) {
+    .ant-menu-item-selected {
+      background-color: transparent;
+    }
+  }
+  .ant-menu-submenu-popup {
+    .ant-menu-sub {
+      background-color: $app-dark;
+    }
+  }
+  .ant-menu-sub.ant-menu-inline {
+    background-color: $app-dark;
+  }
+  .ant-menu-submenu-selected {
+    .ant-menu-submenu-title {
+      span {
+        color: $app-green !important;
+      }
+      .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+      .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+      .ant-menu-submenu-vertical-left > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+      .ant-menu-submenu-vertical-left > .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+      .ant-menu-submenu-vertical-right > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+      .ant-menu-submenu-vertical-right > .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+      .ant-menu-submenu-vertical > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+      .ant-menu-submenu-vertical > .ant-menu-submenu-title .ant-menu-submenu-arrow::before {
+        background-image: linear-gradient(to right, $app-green, $app-green);
+      }
+    }
+  }
+  .ant-menu-submenu-title:hover {
+    .ant-menu-submenu-arrow::before {
+      background-image: linear-gradient(to right, $app-green, $app-green);
+    }
+    .ant-menu-submenu-arrow::after {
+      background-image: linear-gradient(to right, $app-green, $app-green);
+    }
+  }
+  .ant-menu-inline .ant-menu-item,
+  .ant-menu-vertical .ant-menu-item,
+  .ant-menu-vertical-left .ant-menu-item,
+  .ant-menu-vertical-right .ant-menu-item {
+    outline: none;
+  }
+  .ant-menu-inline .ant-menu-item::after,
+  .ant-menu-vertical .ant-menu-item::after,
+  .ant-menu-vertical-left .ant-menu-item::after,
+  .ant-menu-vertical-right .ant-menu-item::after {
+    border-right: 3px solid $app-green;
+  }
+
+  .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+  .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+  .ant-menu-submenu-vertical-left > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+  .ant-menu-submenu-vertical-left > .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+  .ant-menu-submenu-vertical-right > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+  .ant-menu-submenu-vertical-right > .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+  .ant-menu-submenu-vertical > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+  .ant-menu-submenu-vertical > .ant-menu-submenu-title .ant-menu-submenu-arrow::before {
+    background-image: linear-gradient(to right, $menu-text, $menu-text);
+  }
+}

@@ -1,0 +1,34 @@
+@import "../../../../assets/scss/_variables";
+@import "../../../../assets/scss/_mixins";
+
+.header-menu {
+  background-color: transparent;
+  border: none;
+  .notifications {
+    border-right: 1px solid #eaedf8;
+  }
+  nz-badge {
+    i {
+      font-size: 25px;
+      color: #373737;
+    }
+    nz-avatar,
+    .user-name {
+      color: #373737;
+    }
+  }
+}
+
+::ng-deep {
+  .ant-menu-horizontal > .ant-menu-item-active,
+  .ant-menu-horizontal > .ant-menu-item-open,
+  .ant-menu-horizontal > .ant-menu-item-selected,
+  .ant-menu-horizontal > .ant-menu-item:hover,
+  .ant-menu-horizontal > .ant-menu-submenu-active,
+  .ant-menu-horizontal > .ant-menu-submenu-open,
+  .ant-menu-horizontal > .ant-menu-submenu-selected,
+  .ant-menu-horizontal > .ant-menu-submenu:hover {
+    color: inherit;
+    border: none;
+  }
+}

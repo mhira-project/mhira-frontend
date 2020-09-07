@@ -1,0 +1,13 @@
+@import "variables";
+@import "mixins";
+@import "reset";
+@import "~ng-zorro-antd/ng-zorro-antd.min.css";
+//Layout
+@import "layout/breakpoint";
+//Navigation
+@import "navigation/_affix";
+@import "navigation/_breadcrumb";
+@import "navigation/dropdown";
+@import "navigation/pagination";
+@import "navigation/page-header";
+@import "navigation/steps";

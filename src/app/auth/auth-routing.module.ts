@@ -5,12 +5,18 @@ import { extract } from '@app/i18n';
 import { LoginComponent } from './login.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent, data: { title: extract('Login') } }
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: {
+      title: extract('Login'),
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [],
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {}

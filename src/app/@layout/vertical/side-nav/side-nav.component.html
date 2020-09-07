@@ -1,0 +1,23 @@
+<perfect-scrollbar class="side-nav" sideNav>
+  <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+    <ng-container *ngFor="let item of menuItems">
+      <li *ngIf="item.submenu.length == 0" nz-menu-item nz-tooltip nzTitle="item.title">
+        <a [routerLink]="item.path" *ngIf="item.submenu.length === 0">
+          <i *ngIf="item.iconType == 'nzIcon'" nz-icon [nzType]="item.icon" [nzTheme]="item.iconTheme"></i>
+          <span *ngIf="!isCollapsed" [translate]="item.title"></span>
+        </a>
+      </li>
+      <li *ngIf="item.submenu.length > 0" nz-submenu>
+        <span title>
+          <i *ngIf="item.iconType == 'nzIcon'" nz-icon [nzType]="item.icon" [nzTheme]="item.iconTheme"></i>
+          <span *ngIf="!isCollapsed" [translate]="item.title"></span>
+        </span>
+        <ul>
+          <li nz-menu-item *ngFor="let submenu of item.submenu" [routerLink]="item.path">
+            <span [translate]="submenu.title"></span>
+          </li>
+        </ul>
+      </li>
+    </ng-container>
+  </ul>
+</perfect-scrollbar>
