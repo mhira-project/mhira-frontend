@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { extract } from '../../i18n/index';
-import { AboutComponent } from './about.component';
+import { FeedbackComponent } from './feedback.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AboutComponent,
+    component: FeedbackComponent,
     data: {
-      title: extract('About'),
+      title: extract('Feedback'),
     },
   },
 ];
@@ -18,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AboutRoutingModule {}
+export class FeedbackRoutingModule {}

@@ -10,15 +10,15 @@ export const MENU: SideNavInterface[] = [
     icon: 'home',
     submenu: [
       {
-        path: 'home',
+        path: 'home/patients',
         title: extract('Patients'),
         iconType: '',
         iconTheme: '',
         submenu: [],
       },
       {
-        path: 'home',
-        title: extract('Case Management'),
+        path: 'home/case-managers',
+        title: extract('Case Managers'),
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -26,21 +26,21 @@ export const MENU: SideNavInterface[] = [
     ],
   },
   {
-    path: 'inquiries',
+    path: 'assessments',
     title: extract('Assessments'),
     iconType: 'nzIcon',
     iconTheme: 'fill',
     icon: 'edit',
     submenu: [
       {
-        path: 'inquiries/filter/outgoing',
+        path: 'assessments/plan-assessments',
         title: extract('Plan assessment'),
         iconType: '',
         iconTheme: '',
         submenu: [],
       },
       {
-        path: 'inquiries/filter/outgoing',
+        path: 'assessments/planned-assessments',
         title: extract('View planned assessment'),
         iconType: '',
         iconTheme: '',
@@ -56,7 +56,7 @@ export const MENU: SideNavInterface[] = [
     icon: 'file-text',
     submenu: [
       {
-        path: 'inquiries/filter/outgoing',
+        path: 'reports',
         title: extract('All Reports'),
         iconType: '',
         iconTheme: '',
@@ -65,21 +65,21 @@ export const MENU: SideNavInterface[] = [
     ],
   },
   {
-    path: 'billing',
+    path: 'administration',
     title: extract('Administration'),
     iconType: 'nzIcon',
     iconTheme: 'fill',
     icon: 'setting',
     submenu: [
       {
-        path: 'inquiries/filter/outgoing',
+        path: 'administration/user-management',
         title: extract('User Management'),
         iconType: '',
         iconTheme: '',
         submenu: [],
       },
       {
-        path: 'inquiries/filter/outgoing',
+        path: 'administration/roles-and-permissions',
         title: extract('Roles and Permissions'),
         iconType: '',
         iconTheme: '',
@@ -88,7 +88,7 @@ export const MENU: SideNavInterface[] = [
     ],
   },
   {
-    path: 'users',
+    path: 'feedback',
     title: extract('Feedback'),
     iconType: 'nzIcon',
     iconTheme: 'fill',

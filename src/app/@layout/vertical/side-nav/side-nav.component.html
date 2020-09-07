@@ -13,7 +13,7 @@
           <span *ngIf="!isCollapsed" [translate]="item.title"></span>
         </span>
         <ul>
-          <li nz-menu-item *ngFor="let submenu of item.submenu" [routerLink]="item.path">
+          <li nz-menu-item *ngFor="let submenu of item.submenu" [routerLink]="submenu.path">
             <span [translate]="submenu.title"></span>
           </li>
         </ul>

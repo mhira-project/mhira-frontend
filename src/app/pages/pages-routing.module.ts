@@ -6,17 +6,23 @@ import { extract } from '../i18n';
 const routes: Routes = [
   {
     path: 'home',
-    data: {
-      title: extract('Home'),
-    },
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: 'about',
-    data: {
-      title: extract('About'),
-    },
-    loadChildren: () => import('./about/about.module').then((m) => m.AboutModule),
+    path: 'assessments',
+    loadChildren: () => import('./assessments/assessments.module').then((m) => m.AssessmentsModule),
+  },
+  {
+    path: 'reports',
+    loadChildren: () => import('./reports/reports.module').then((m) => m.ReportsModule),
+  },
+  {
+    path: 'administration',
+    loadChildren: () => import('./administration/administration.module').then((m) => m.AdministrationModule),
+  },
+  {
+    path: 'feedback',
+    loadChildren: () => import('./feedback/feedback.module').then((m) => m.FeedbackModule),
   },
   {
     path: '',

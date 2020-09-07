@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Event, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, Event, NavigationEnd, ActivatedRoute, ActivationEnd } from '@angular/router';
 import { TabInterface } from '@app/@layout/vertical/header/tabs/tab.interface';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tabs',
@@ -47,7 +48,7 @@ export class TabsComponent implements OnInit {
             const currentChild = this.activatedRoute.snapshot.firstChild;
             const tab = {
               path: event.url.slice(1),
-              title: currentChild.data['title'],
+              title: 'To Be Parsed', // currentChild.data['title'],
             };
             this.tabs.push(tab);
             this.selectedIndex = this.tabs.indexOf(tab);
