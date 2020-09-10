@@ -36,11 +36,11 @@ pipelines:
         - step:
             name: Invalidate cloudfront distribution
             script:
-              - pipe: docker://rudijs/aws-cloudfront-create-invlidation:1.0.1
+              - pipe: atlassian/aws-cloudfront-invalidate:0.1.2
                 variables:
                   AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
                   AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-                  # AWS_DEFAULT_REGION: 'af-south-1'
+                  AWS_DEFAULT_REGION: 'us-east-1'
                   DISTRIBUTION_ID: "ELKUDD46VAWKE"
                   PATHS: "/index.html" # Optional
                   # DEBUG: "true" # Optional
