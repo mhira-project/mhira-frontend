@@ -24,6 +24,7 @@ pipelines:
               - dist/*
         - step:
             name: Deploy to S3
+            deployment: staging
             script:
               - pipe: atlassian/aws-s3-deploy:0.3.8
                 variables:
@@ -33,3 +34,14 @@ pipelines:
                   S3_BUCKET: 'mhira-portal'
                   LOCAL_PATH: 'dist'
                   ACL: 'private'
+        - step:
+            name: Invalidate cloudfront distribution
+            script:
+              - pipe: atlassian/aws-s3-deploy:0.3.8
+                variables:
+                  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                  AWS_DEFAULT_REGION: 'af-south-1'
+                  DISTRIBUTION_ID: "ELKUDD46VAWKE"
+                  PATHS: "/index.html" # Optional
+                  # DEBUG: "true" # Optional
