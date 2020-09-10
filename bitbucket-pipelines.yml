@@ -43,4 +43,4 @@ pipelines:
                   AWS_DEFAULT_REGION: 'af-south-1'
                   DISTRIBUTION_ID: "ELKUDD46VAWKE"
                   PATHS: "/index.html" # Optional
-                  # DEBUG: "true" # Optional
+                  DEBUG: "true" # Optional
