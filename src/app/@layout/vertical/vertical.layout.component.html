@@ -4,7 +4,7 @@
       <i
         class="trigger"
         nz-icon
-        [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        [nzType]="isCollapsed ? 'menu' : 'menu'"
         (click)="isCollapsed = !isCollapsed"
       ></i>
     </div>
@@ -15,10 +15,6 @@
       <app-header></app-header>
     </nz-header>
     <nz-content>
-      <nz-breadcrumb>
-        <nz-breadcrumb-item>User</nz-breadcrumb-item>
-        <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
-      </nz-breadcrumb>
       <div class="inner-content">
         <router-outlet></router-outlet>
       </div>
