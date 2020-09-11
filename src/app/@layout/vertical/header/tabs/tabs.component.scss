@@ -1,24 +1,23 @@
 nz-tabset {
   position: absolute;
   bottom: -15px;
-  .tab-text {
-    width: 100px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    i {
-      position: absolute;
-      right: 15px;
-      top: 17px;
-    }
-  }
+}
+
+.tab-text{
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 ::ng-deep {
   .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
     border-radius: 10px 10px 0 0;
-    padding: 13px 16px;
-    margin: 0 2px -6px 0;
-    height: 45px;
+    height: 50px;
+  }
+  .top-tabs .ant-tabs-tab{
+    background: #E2E5EF !important;
+  }
+  .top-tabs .ant-tabs-tab-active{
+    background: #fff  !important;
   }
 }
