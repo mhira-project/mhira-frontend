@@ -3,13 +3,13 @@
     <ng-container *ngFor="let item of menuItems">
       <li *ngIf="item.submenu.length == 0" nz-menu-item nz-tooltip nzTitle="item.title">
         <a [routerLink]="item.path" *ngIf="item.submenu.length === 0">
-          <i nz-icon nzType="{{ item.icon }}"></i>
+          <i nz-icon nzType="{{ item.icon }}" nzTheme="{{ item.iconTheme }}"></i>
           <span *ngIf="!isCollapsed" [translate]="item.title"></span>
         </a>
       </li>
       <li *ngIf="item.submenu.length > 0" nz-submenu>
         <span title>
-          <i nz-icon nzType="{{ item.icon }}"></i>
+          <i nz-icon nzType="{{ item.icon }}" nzTheme="{{ item.iconTheme }}"></i>
           <span *ngIf="!isCollapsed" [translate]="item.title"></span>
         </span>
         <ul>
