@@ -13,7 +13,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LayoutModule } from '@app/@layout/layout.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NzIconModule } from 'ng-zorro-antd';
 
 @NgModule({
   imports: [
@@ -27,7 +26,6 @@ import { NzIconModule } from 'ng-zorro-antd';
     LayoutModule,
     CoreModule,
     SharedModule,
-    NzIconModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
