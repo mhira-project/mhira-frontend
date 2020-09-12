@@ -6,7 +6,7 @@ export const MENU: SideNavInterface[] = [
     path: 'home',
     title: extract('Home'),
     iconType: 'nzIcon',
-    iconTheme: 'fill',
+    iconTheme: 'outline',
     icon: 'home',
     submenu: [
       {
@@ -29,7 +29,7 @@ export const MENU: SideNavInterface[] = [
     path: 'assessments',
     title: extract('Assessments'),
     iconType: 'nzIcon',
-    iconTheme: 'fill',
+    iconTheme: 'outline',
     icon: 'edit',
     submenu: [
       {
@@ -52,7 +52,7 @@ export const MENU: SideNavInterface[] = [
     path: 'reports',
     title: extract('Reports'),
     iconType: 'nzIcon',
-    iconTheme: 'fill',
+    iconTheme: 'outline',
     icon: 'file-text',
     submenu: [
       {
@@ -68,7 +68,7 @@ export const MENU: SideNavInterface[] = [
     path: 'administration',
     title: extract('Administration'),
     iconType: 'nzIcon',
-    iconTheme: 'fill',
+    iconTheme: 'outline',
     icon: 'setting',
     submenu: [
       {
@@ -91,7 +91,7 @@ export const MENU: SideNavInterface[] = [
     path: 'feedback',
     title: extract('Feedback'),
     iconType: 'nzIcon',
-    iconTheme: 'fill',
+    iconTheme: 'outline',
     icon: 'message',
     submenu: [],
   },
