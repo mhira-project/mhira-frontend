@@ -39,6 +39,9 @@ ul {
 }
 
 ::ng-deep {
+  .ant-menu-inline{
+    border-right: 0 solid #f0f0f0 !important;
+  }
   .ant-menu:not(.ant-menu-horizontal) {
     .ant-menu-item-selected {
       background-color: transparent;
@@ -51,6 +54,7 @@ ul {
   }
   .ant-menu-sub.ant-menu-inline {
     background-color: $app-dark;
+
   }
   .ant-menu-submenu-selected {
     .ant-menu-submenu-title {

@@ -1,9 +1,13 @@
-<nz-tabset [nzType]="'card'" [nzSelectedIndex]="selectedIndex">
+<nz-tabset  class="top-tabs" [nzType]="'card'" [nzSelectedIndex]="selectedIndex">
   <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate" (nzClick)="navigateToTab(tab)">
     <ng-template #titleTemplate>
-      <div class="tab-text">
-        <span [translate]="tab.title"></span>
-        <i nz-icon nzType="close" (click)="closeTab(tab)" class="ant-tabs-close-x"></i>
+      <div class="tab-text" nz-row>
+        <div nz-col nzFlex="auto">
+          <span class="tab-text" [translate]="tab.title"></span>
+        </div>
+        <div nz-col>
+          <i nz-icon nzType="close" (click)="closeTab(tab)" class="ant-tabs-close-x"></i>
+        </div>
       </div>
     </ng-template>
   </nz-tab>
