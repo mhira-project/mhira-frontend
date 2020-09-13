@@ -1,7 +1,7 @@
 <nz-tabset  class="top-tabs" [nzType]="'card'" [nzSelectedIndex]="selectedIndex">
   <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate" (nzClick)="navigateToTab(tab)">
     <ng-template #titleTemplate>
-      <div class="tab-text" nz-row>
+      <div class="m-5" nz-row>
         <div nz-col nzFlex="auto">
           <span class="tab-text" [translate]="tab.title"></span>
         </div>
