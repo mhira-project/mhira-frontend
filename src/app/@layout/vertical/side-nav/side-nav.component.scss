@@ -39,9 +39,10 @@ ul {
 }
 
 ::ng-deep {
-  .ant-menu-inline{
+  .ant-menu-inline,.ant-menu-inline-collapsed{
     border-right: 0 solid #f0f0f0 !important;
   }
+
   .ant-menu:not(.ant-menu-horizontal) {
     .ant-menu-item-selected {
       background-color: transparent;
