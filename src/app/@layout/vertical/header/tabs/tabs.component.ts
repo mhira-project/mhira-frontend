@@ -1,22 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, Event, NavigationEnd, ActivatedRoute, ActivationEnd } from '@angular/router';
 import { TabInterface } from '@app/@layout/vertical/header/tabs/tab.interface';
 import { filter } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.scss'],
 })
-export class TabsComponent implements OnInit {
+export class TabsComponent implements OnInit, AfterViewInit {
   tabs: TabInterface[] = [];
   selectedIndex = -1;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private location: Location) {}
 
   ngOnInit(): void {
-    
     this.urlChange();
+  }
+  ngAfterViewInit() {
+
+    setTimeout(function() {
+      this.router.navigate([this.location.path()]);
+    }.bind(this), 500);
+
   }
 
   closeTab(tab: TabInterface): void {
@@ -47,7 +54,6 @@ export class TabsComponent implements OnInit {
           const pathFound = this.tabs.some((tab) => tab.path === event.url.slice(1));
           if (!pathFound) {
             const currentChild = this.activatedRoute.snapshot.firstChild;
-
             var tab = {
               path: event.url.slice(1),
               title: 'Untitled', // currentChild.data['title'],
