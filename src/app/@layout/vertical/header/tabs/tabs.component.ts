@@ -15,6 +15,7 @@ export class TabsComponent implements OnInit {
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
+    
     this.urlChange();
   }
 
