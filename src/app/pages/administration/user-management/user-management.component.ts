@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+// @ts-ignore
+const faker = require('faker');
 
 @Component({
   selector: 'app-user-management',
@@ -11,7 +13,6 @@ export class UserManagementComponent implements OnInit {
     {
       title: 'First name',
       name: 'firstName',
-
       isFilterable: true,
     },
     {
@@ -43,5 +44,21 @@ export class UserManagementComponent implements OnInit {
   ];
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    for(var i=0; i<10; i++){
+      var firstName = faker.name.firstName();
+      var lastName = faker.name.lastName();
+      var firstName = faker.name.firstName();
+      var phone = faker.phone.phoneNumber('+255#########');
+      var createdAt = faker.date.past();
+      this.listOfData.push({
+        firstName:firstName,
+        lastName:lastName,
+        email:`${firstName}.${lastName}@gmail.com`,
+        createdAt:createdAt,
+        phone:phone,
+        status: 'ACTIVE'
+      })
+    }
+  }
 }
