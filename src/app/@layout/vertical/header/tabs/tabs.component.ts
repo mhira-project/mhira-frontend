@@ -1,29 +1,44 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router, Event, NavigationEnd, ActivatedRoute, ActivationEnd } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, Event, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TabInterface } from '@app/@layout/vertical/header/tabs/tab.interface';
-import { filter } from 'rxjs/operators';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.scss'],
 })
-export class TabsComponent implements OnInit, AfterViewInit {
+export class TabsComponent implements OnInit {
   tabs: TabInterface[] = [];
   selectedIndex = -1;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private location: Location) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.getCurrentRoute();
     this.urlChange();
   }
-  ngAfterViewInit() {
 
-    setTimeout(function() {
-      this.router.navigate([this.location.path()]);
-    }.bind(this), 500);
-
+  getCurrentRoute() {
+    const currentRoute = this.activatedRoute.snapshot.firstChild;
+    let tab = {
+      path: this.router.url,
+      title: 'Untitled',
+    };
+    if (currentRoute.firstChild.children.length > 0) {
+      tab = {
+        path: this.router.url,
+        title: currentRoute.firstChild.children[0].data.title,
+      };
+    } else {
+      if (currentRoute.firstChild.data) {
+        tab = {
+          path: this.router.url,
+          title: currentRoute.firstChild.data.title,
+        };
+      }
+    }
+    this.tabs.push(tab);
+    this.selectedIndex = 0;
   }
 
   closeTab(tab: TabInterface): void {
@@ -54,29 +69,41 @@ export class TabsComponent implements OnInit, AfterViewInit {
           const pathFound = this.tabs.some((tab) => tab.path === event.url.slice(1));
           if (!pathFound) {
             const currentChild = this.activatedRoute.snapshot.firstChild;
-            var tab = {
-              path: event.url.slice(1),
-              title: 'Untitled', // currentChild.data['title'],
+            let tab = {
+              path: this.router.url,
+              title: 'Untitled',
             };
-            if(currentChild.firstChild.children.length>0) {
+            if (currentChild.firstChild.children.length > 0) {
               tab = {
-                path: event.url.slice(1),
-                title: currentChild.firstChild.children[0].data.title, // currentChild.data['title'],
+                path: this.router.url,
+                title: currentChild.firstChild.children[0].data.title,
               };
-            }else{
-              if(currentChild.firstChild.data){
+            } else {
+              if (currentChild.firstChild.data) {
                 tab = {
-                  path: event.url.slice(1),
-                  title: currentChild.firstChild.data.title, // currentChild.data['title'],
+                  path: this.router.url,
+                  title: currentChild.firstChild.data.title,
                 };
               }
             }
 
-            this.tabs.push(tab);
-            this.selectedIndex = this.tabs.indexOf(tab);
+            const isInArray =
+              this.tabs.find((_tab) => {
+                return _tab.path === this.router.url;
+              }) !== undefined;
+
+            if (!isInArray) {
+              this.tabs.push(tab);
+            }
+            this.tabs.filter((_tab) => {
+              if (_tab.path === this.router.url) {
+                this.selectedIndex = this.tabs.indexOf(_tab);
+                return;
+              }
+            });
           } else {
-            const tab = this.tabs.filter((tab) => {
-              return tab.path === event.url.slice(1);
+            const tab = this.tabs.filter((_tab) => {
+              return _tab.path === this.router.url;
             })[0];
             this.selectedIndex = this.tabs.indexOf(tab);
             this.navigateToTab(tab);
