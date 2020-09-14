@@ -38,6 +38,7 @@
     "date-fns": "^2.10.0",
     "jquery": "^3.5.1",
     "ng-zorro-antd": "^9.3.0",
+    "ngx-input-search": "^3.0.8",
     "ngx-perfect-scrollbar": "^10.0.1",
     "rxjs": "^6.5.5",
     "tailwindcss": "^1.8.8",
