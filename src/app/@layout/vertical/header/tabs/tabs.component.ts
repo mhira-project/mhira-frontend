@@ -46,10 +46,25 @@ export class TabsComponent implements OnInit {
           const pathFound = this.tabs.some((tab) => tab.path === event.url.slice(1));
           if (!pathFound) {
             const currentChild = this.activatedRoute.snapshot.firstChild;
-            const tab = {
+
+            var tab = {
               path: event.url.slice(1),
-              title: 'To Be Parsed', // currentChild.data['title'],
+              title: 'Untitled', // currentChild.data['title'],
             };
+            if(currentChild.firstChild.children.length>0) {
+              tab = {
+                path: event.url.slice(1),
+                title: currentChild.firstChild.children[0].data.title, // currentChild.data['title'],
+              };
+            }else{
+              if(currentChild.firstChild.data){
+                tab = {
+                  path: event.url.slice(1),
+                  title: currentChild.firstChild.data.title, // currentChild.data['title'],
+                };
+              }
+            }
+
             this.tabs.push(tab);
             this.selectedIndex = this.tabs.indexOf(tab);
           } else {
