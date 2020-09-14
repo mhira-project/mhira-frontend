@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as FileSaver from 'FileSaver';
+// import * as FileSaver from 'FileSaver';
 import * as XLSX from 'xlsx';
 
 @Injectable({
@@ -20,6 +20,6 @@ export class XlsExportService {
 
   private saveExcelFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], { type: this.fileType });
-    FileSaver.saveAs(data, fileName + this.fileExtension);
+    // FileSaver.saveAs(data, fileName + this.fileExtension);
   }
 }
