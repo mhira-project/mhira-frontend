@@ -1,0 +1,236 @@
+<ng-template #indicatorTemplate><i nz-icon class="loadingSpinner" nzType="loading"></i></ng-template>
+<nz-spin [nzSpinning]="loading" [nzIndicator]="indicatorTemplate">
+  <div
+    *ngIf="showSearch || setOfCheckedId.size > 0 || showImport || showExport || showButton"
+    class="p-b-30 p-t-30"
+    nz-row
+    nzAlign="middle"
+  >
+    <div nz-col nzFlex="300px">
+      <nz-input-group *ngIf="showSearch" [nzSuffix]="suffixIconSearch">
+        <input
+          (ngxInputSearch)="onSearchAction($event)"
+          [debounceTime]="300"
+          nz-input
+          placeholder="Search"
+          type="text"
+        />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+      <!--    <div *ngIf="setOfCheckedId.size>0">-->
+      <!--      Selected {{ setOfCheckedId.size }} items-->
+      <!--    </div>-->
+    </div>
+    <div nz-col nzFlex="auto">
+      <div nz-row nzJustify="end">
+        <nz-range-picker
+          *ngIf="showDateFilter"
+          class="m-r-15"
+          nzShowTime
+          nzFormat="yyyy/MM/dd HH:mm:ss"
+          [(ngModel)]="dateRange"
+          (ngModelChange)="onDateFilterChange($event)"
+        ></nz-range-picker>
+        <button
+          nzShape="round"
+          *ngIf="setOfCheckedId.size > 0"
+          class="m-r-5"
+          nz-button
+          nzType="danger"
+          [nzSize]="'normal'"
+        >
+          <i nz-icon nzType="delete"></i>
+        </button>
+        <button
+          nzShape="round"
+          *ngIf="showImport"
+          class="m-r-5"
+          nz-button
+          nzType="primary"
+          (click)="onImportAction()"
+          [nzSize]="'normal'"
+        >
+          <i nz-icon nzType="upload"></i>Import
+        </button>
+
+        <button
+          nzShape="round"
+          *ngIf="showExport && !exportWithOption"
+          class="m-r-5"
+          nz-button
+          nzType="primary"
+          (click)="onExportAction()"
+          [nzSize]="'normal'"
+        >
+          <i nz-icon nzType="file-excel"></i>Export
+        </button>
+        <button
+          nzShape="round"
+          *ngIf="showExport && exportWithOption"
+          nz-dropdown
+          [nzDropdownMenu]="exportOptions"
+          nzTrigger="click"
+          [nzPlacement]="'bottomRight'"
+          class="m-r-5"
+          nz-button
+          nzType="primary"
+          [nzSize]="'normal'"
+        >
+          Export <i nz-icon nzType="down"></i>
+        </button>
+        <nz-dropdown-menu #exportOptions="nzDropdownMenu">
+          <ul nz-menu>
+            <li *ngFor="let exportItem of listOfExportOptions" nz-menu-item>
+              <i
+                nz-icon
+                style="font-size: 20px"
+                [nzType]="
+                  exportItem.fileType === 'excel'
+                    ? 'file-excel'
+                    : exportItem.fileType === 'pdf'
+                    ? 'file-pdf'
+                    : 'file-text'
+                "
+              ></i>
+              {{ exportItem.label }}
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+        <button
+          nzShape="round"
+          nz-button
+          nzType="primary"
+          [nzSize]="'normal'"
+          (click)="onNewAction()"
+          *ngIf="showButton"
+        >
+          <i nz-icon [nzType]="buttonIcon"></i>{{ buttonText }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <nz-table
+    #rowSelectionTable
+    [nzShowPagination]="showPagination"
+    nzShowSizeChanger
+    [nzData]="listOfDisplayData"
+    [nzPageIndex]="currentPage"
+    [nzPageSize]="limit"
+    [nzTotal]="total"
+    [nzFrontPagination]="frontPagination"
+    (nzQueryParams)="onQueryParamsChange($event)"
+  >
+    <thead>
+      <tr>
+        <th
+          *ngIf="showCheckBoxColumn"
+          [nzWidth]="'10px'"
+          [nzChecked]="checked"
+          [nzIndeterminate]="indeterminate"
+          (nzCheckedChange)="onAllChecked($event)"
+        ></th>
+        <th [nzWidth]="column.width" *ngFor="let column of listOfColumn">
+          {{ column.title }}
+          <nz-filter-trigger *ngIf="column.isFilterable" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+              <div class="search-box">
+                <label>
+                  <input type="text" nz-input [placeholder]="'Search ' + column.title" [(ngModel)]="searchValue" />
+                </label>
+                <button
+                  nz-button
+                  nzSize="small"
+                  nzType="primary"
+                  (click)="onFilterSearch(column.name)"
+                  class="search-button"
+                >
+                  Search
+                </button>
+                <button nz-button nzSize="small" (click)="reset()">Reset</button>
+              </div>
+            </div>
+          </nz-dropdown-menu>
+          <ng-container *ngIf="column.isList">
+            <nz-divider class="m-v-10"></nz-divider>
+            <div>
+              <table>
+                <td [width]="listColumn.width" *ngFor="let listColumn of column.listColumns">
+                  {{ listColumn.title }}
+                </td>
+              </table>
+            </div>
+          </ng-container>
+        </th>
+        <th *ngIf="showActionColumn" [nzWidth]="'100px'">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let data of rowSelectionTable.data; let i = index">
+        <tr>
+          <td
+            *ngIf="showCheckBoxColumn"
+            (nzCheckedChange)="onItemChecked(data.id, $event)"
+            [nzChecked]="setOfCheckedId.has(data.id)"
+            [nzDisabled]="data.disabled"
+          ></td>
+          <td *ngFor="let column of listOfColumn">
+            <ng-template [ngIf]="column.isList" [ngIfElse]="normalDisplay">
+              <div>
+                <table>
+                  <tr *ngFor="let listData of data[column.name]">
+                    <td [width]="listColumn.width" *ngFor="let listColumn of column.listColumns">
+                      <div [innerHTML]="listData[listColumn.name] | noSanitize"></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </ng-template>
+            <ng-template #normalDisplay>
+              <div [innerHTML]="data[column.name] | noSanitize"></div>
+            </ng-template>
+          </td>
+
+          <td *ngIf="showActionColumn" nzRight>
+            <a *ngIf="showView" (click)="onViewAction(data, i)"><i nz-icon nzType="eye"></i></a>
+            <nz-divider *ngIf="showView" nzType="vertical"></nz-divider>
+            <a *ngIf="showEdit" (click)="onEditAction(data, i)"><i nz-icon nzType="edit"></i></a>
+            <nz-divider *ngIf="showEdit" nzType="vertical"></nz-divider>
+            <a *ngIf="showDelete" (click)="onDeleteAction(data, i)"><i nz-icon nzType="delete"></i></a>
+            <nz-divider *ngIf="showDelete" nzType="vertical"></nz-divider>
+            <a *ngIf="showCustomActions" nz-button nz-dropdown [nzDropdownMenu]="actionMenu" nzType="link"
+              ><i nz-icon nzType="more"></i
+            ></a>
+            <nz-dropdown-menu #actionMenu="nzDropdownMenu">
+              <ul nz-menu>
+                <li *ngFor="let action of listOfCustomActions" nz-menu-item>
+                  <a (click)="onCustomActionEvent(action, data); emitAction(action, i)">{{ action.name }}</a>
+                </li>
+              </ul>
+            </nz-dropdown-menu>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+  <div *ngIf="!showPagination">
+    <div nz-row nzAlign="middle" class="m-v-10">
+      <div nz-col nzFlex="300px">
+        <button nzShape="round" [disabled]="!hasPreviousPage" (click)="onPreviousAction()" nz-button nzType="primary">
+          Previous
+        </button>
+      </div>
+      <div nz-col nzFlex="auto">
+        <div nz-row nzJustify="end">
+          <button nzShape="round" [disabled]="!hasNextPage" (click)="onNextAction()" nz-button nzType="primary">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nz-spin>

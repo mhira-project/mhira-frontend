@@ -39,7 +39,8 @@ ul {
 }
 
 ::ng-deep {
-  .ant-menu-inline,.ant-menu-inline-collapsed{
+  .ant-menu-inline,
+  .ant-menu-inline-collapsed {
     border-right: 0 solid #f0f0f0 !important;
   }
 
@@ -55,7 +56,6 @@ ul {
   }
   .ant-menu-sub.ant-menu-inline {
     background-color: $app-dark;
-
   }
   .ant-menu-submenu-selected {
     .ant-menu-submenu-title {

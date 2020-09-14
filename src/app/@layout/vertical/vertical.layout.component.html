@@ -3,14 +3,11 @@
     <div class="logo">
       <div nz-row>
         <div nz-col nzFlex="auto" style="text-align: left">
-          <img *ngIf="!isCollapsed" width="36px" src="../../../assets/images/logo.svg">
+          <img *ngIf="!isCollapsed" width="36px" src="../../../assets/images/logo.svg" />
         </div>
-        <div nz-col> <i
-          class="trigger"
-          nz-icon
-          [nzType]="isCollapsed ? 'menu' : 'menu'"
-          (click)="isCollapsed = !isCollapsed"
-        ></i></div>
+        <div nz-col>
+          <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu' : 'menu'" (click)="isCollapsed = !isCollapsed"></i>
+        </div>
       </div>
     </div>
     <app-side-nav [isCollapsed]="isCollapsed"></app-side-nav>
