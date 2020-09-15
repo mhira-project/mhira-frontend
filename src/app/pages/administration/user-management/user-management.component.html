@@ -1,1 +1,9 @@
-<app-custom-table [listOfData]="listOfData" [listOfColumn]="listOfColumn" [buttonText]="'Add user'"> </app-custom-table>
+<app-custom-table
+  [showCustomActions]="true"
+  [listOfCustomActions]="listOfCustomActions"
+  (onAction)="onCustomActionEvent($event)"
+  [listOfData]="listOfData"
+  [listOfColumn]="listOfColumn"
+  [buttonText]="'Add user'"
+>
+</app-custom-table>

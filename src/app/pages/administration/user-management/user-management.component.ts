@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 // @ts-ignore
 const faker = require('faker');
+// @ts-ignore
+const moment = require('moment');
 
 @Component({
   selector: 'app-user-management',
@@ -8,6 +11,15 @@ const faker = require('faker');
   styleUrls: ['./user-management.component.scss'],
 })
 export class UserManagementComponent implements OnInit {
+  users: any[]=[];
+  user = {
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    phone: '',
+  };
+  selectedUserIndex = -1;
   listOfData: any[] = [];
   listOfColumn: any[] = [
     {
@@ -42,23 +54,61 @@ export class UserManagementComponent implements OnInit {
       isFilterable: false,
     },
   ];
-  constructor() {}
+  listOfCustomActions: any[] = [
+    {
+      type: 'edit',
+      name: 'Edit User'
+    },
+    {
+      type: 'changePassword',
+      name: 'Change Password'
+    },
+    {
+      type: 'delete',
+      name: 'Delete User'
+    }
+  ];
+  constructor(
+    private modalService: NzModalService,
+    private message: NzMessageService,
+  ) {}
 
   ngOnInit(): void {
-    for (var i = 0; i < 10; i++) {
+    for(var i=0; i<10; i++){
       var firstName = faker.name.firstName();
       var lastName = faker.name.lastName();
       var firstName = faker.name.firstName();
-      var phone = faker.phone.phoneNumber('+255#########');
+      var phone = faker.phone.phoneNumber('255#########');
       var createdAt = faker.date.past();
       this.listOfData.push({
-        firstName: firstName,
-        lastName: lastName,
-        email: `${firstName}.${lastName}@gmail.com`,
-        createdAt: createdAt,
-        phone: phone,
-        status: 'ACTIVE',
-      });
+        firstName:firstName,
+        lastName:lastName,
+        email:`${firstName}.${lastName}@gmail.com`,
+        createdAt:moment(createdAt).format('YYYY-MM-DD'),
+        phone:phone,
+        status: 'ACTIVE'
+      })
+    }
+  }
+  onCustomActionEvent(event: any) {
+    this.user = this.users[event.index];
+    this.selectedUserIndex = event.index;
+    switch (event.action.type) {
+      case 'edit':
+
+        break;
+      case 'changePassword':
+
+        break;
+      case 'delete':
+        this.modalService.confirm({
+          nzTitle: 'Confirm',
+          nzContent: `Are you sure you want to delete ${this.user.firstName}`,
+          nzOkText: 'Delete',
+          nzOnOk: () => {},
+          nzCancelText: 'Cancel'
+        });
+        break;
     }
   }
 }
