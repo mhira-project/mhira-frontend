@@ -1,5 +1,7 @@
 <app-custom-table
-
+  [showCustomActions]="true"
+  [listOfCustomActions]="listOfCustomActions"
+  (onAction)="onCustomActionEvent($event)"
   [listOfData]="listOfData"
   [listOfColumn]="listOfColumn"
   [buttonText]="'Add user'"
