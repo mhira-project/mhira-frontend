@@ -1,4 +1,4 @@
-<nz-tabset class="top-tabs" [nzType]="'card'" [nzSelectedIndex]="selectedIndex">
+<nz-tabset class="top-tabs m-l-15" [nzType]="'card'" [nzSelectedIndex]="selectedIndex">
   <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate" (nzClick)="navigateToTab(tab)">
     <ng-template #titleTemplate>
       <div class="m-5" nz-row>
