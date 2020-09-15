@@ -3,10 +3,6 @@
 @import "reset";
 @import "spaces";
 @import "~ng-zorro-antd/ng-zorro-antd.min.css";
-// Tail Wind
-@import "~tailwindcss/base";
-@import "~tailwindcss/components";
-@import "~tailwindcss/utilities";
 //Layout
 @import "layout/breakpoint";
 //Navigation
@@ -33,3 +29,7 @@
 @import "inputs/radio";
 @import "inputs/switch";
 @import "inputs/tree-select";
+//Others
+@import "others/buttons";
+@import "others/icons";
+@import "others/typography";

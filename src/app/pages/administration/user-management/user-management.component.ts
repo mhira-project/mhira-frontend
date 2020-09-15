@@ -12,6 +12,7 @@ const moment = require('moment');
 })
 export class UserManagementComponent implements OnInit {
   users: any[]=[];
+  userModal: boolean = false;
   user = {
     email: '',
     password: '',
@@ -68,6 +69,7 @@ export class UserManagementComponent implements OnInit {
       name: 'Delete User'
     }
   ];
+
   constructor(
     private modalService: NzModalService,
     private message: NzMessageService,
@@ -95,7 +97,7 @@ export class UserManagementComponent implements OnInit {
     this.selectedUserIndex = event.index;
     switch (event.action.type) {
       case 'edit':
-
+        this.userModal = true;
         break;
       case 'changePassword':
 
@@ -110,5 +112,17 @@ export class UserManagementComponent implements OnInit {
         });
         break;
     }
+  }
+
+  handleCancel() {
+    this.userModal = false;
+  }
+
+  handleOk() {
+    this.userModal = false;
+  }
+
+  onCreateUser() {
+    this.userModal = true;
   }
 }
