@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxInputSearchModule } from 'ngx-input-search';
-import { NgZorroAntdModule, NzDividerModule, NzTableModule, NzIconModule, NzAlertModule } from 'ng-zorro-antd';
 import { XlsExportService } from '@shared/services/xls-export.service';
 import { LoaderComponent } from '@shared/components/loader/loader.component';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
@@ -18,6 +17,7 @@ import {
   SearchPipe,
   TimingPipe,
 } from './pipes';
+import { NgZorroModule } from '@shared/ng-zorro.module';
 
 const PIPES = [
   CapitalizePipe,
@@ -32,17 +32,7 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    NzTableModule,
-    NzDividerModule,
-    NgZorroAntdModule,
-    NzIconModule,
-    NzAlertModule,
-    FormsModule,
-    NgxInputSearchModule,
-    ReactiveFormsModule,
-  ],
+  imports: [CommonModule, FormsModule, NgxInputSearchModule, ReactiveFormsModule, NgZorroModule],
   declarations: [LoaderComponent, CustomTableComponent, FormGeneratorComponent, PIPES],
   exports: [LoaderComponent, CustomTableComponent, FormGeneratorComponent, PIPES],
   providers: [XlsExportService],

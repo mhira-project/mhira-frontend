@@ -1,29 +1,58 @@
-@import "src/theme/theme-variables";
-@import "~bootstrap/scss/mixins/_breakpoints";
+@import "../../assets/scss/_variables";
 
-.login-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.login-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 100%;
-}
-
-.ng-invalid.ng-touched:not(form) {
-  border-left: 4px solid theme-color("danger");
-}
-
-@include media-breakpoint-down(xs) {
-  .container {
+nz-content {
+  min-height: 100vh;
+  background-color: #373a37;
+  .form-container {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     width: 100%;
   }
+}
+
+.app-logo {
+  margin-bottom: 20px;
+  text-align: center;
+  h1 {
+    color: #fff;
+    font-weight: normal;
+  }
+  img {
+    margin: auto;
+    height: 80px;
+  }
+}
+
+.form-title {
+  text-align: center;
+  color: #fff;
+  .line {
+    position: absolute;
+    top: 11px;
+    width: 100%;
+    border-bottom: 2px solid #fff;
+  }
+}
+
+.login-form {
+  margin: auto;
+  max-width: 400px;
+  .forgot-password {
+    color: #2a7a87;
+  }
+}
+
+.login-form-margin {
+  margin-bottom: 16px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+  background-color: #8ad080;
+  border-color: #8ad080;
 }
