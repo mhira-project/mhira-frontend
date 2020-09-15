@@ -11,7 +11,7 @@ const moment = require('moment');
   styleUrls: ['./user-management.component.scss'],
 })
 export class UserManagementComponent implements OnInit {
-  users: any[]=[];
+  users: any[] = [];
   userModal: boolean = false;
   user = {
     email: '',
@@ -58,38 +58,35 @@ export class UserManagementComponent implements OnInit {
   listOfCustomActions: any[] = [
     {
       type: 'edit',
-      name: 'Edit User'
+      name: 'Edit User',
     },
     {
       type: 'changePassword',
-      name: 'Change Password'
+      name: 'Change Password',
     },
     {
       type: 'delete',
-      name: 'Delete User'
-    }
+      name: 'Delete User',
+    },
   ];
 
-  constructor(
-    private modalService: NzModalService,
-    private message: NzMessageService,
-  ) {}
+  constructor(private modalService: NzModalService, private message: NzMessageService) {}
 
   ngOnInit(): void {
-    for(var i=0; i<10; i++){
+    for (var i = 0; i < 10; i++) {
       var firstName = faker.name.firstName();
       var lastName = faker.name.lastName();
       var firstName = faker.name.firstName();
       var phone = faker.phone.phoneNumber('255#########');
       var createdAt = faker.date.past();
       this.listOfData.push({
-        firstName:firstName,
-        lastName:lastName,
-        email:`${firstName}.${lastName}@gmail.com`,
-        createdAt:moment(createdAt).format('YYYY-MM-DD'),
-        phone:phone,
-        status: 'ACTIVE'
-      })
+        firstName: firstName,
+        lastName: lastName,
+        email: `${firstName}.${lastName}@gmail.com`,
+        createdAt: moment(createdAt).format('YYYY-MM-DD'),
+        phone: phone,
+        status: 'ACTIVE',
+      });
     }
   }
   onCustomActionEvent(event: any) {
@@ -100,7 +97,6 @@ export class UserManagementComponent implements OnInit {
         this.userModal = true;
         break;
       case 'changePassword':
-
         break;
       case 'delete':
         this.modalService.confirm({
@@ -108,7 +104,7 @@ export class UserManagementComponent implements OnInit {
           nzContent: `Are you sure you want to delete ${this.user.firstName}`,
           nzOkText: 'Delete',
           nzOnOk: () => {},
-          nzCancelText: 'Cancel'
+          nzCancelText: 'Cancel',
         });
         break;
     }
