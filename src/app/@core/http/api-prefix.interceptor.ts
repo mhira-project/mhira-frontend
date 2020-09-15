@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable, Injector } from '@angular/core';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
-import { environment } from '@env/environment';
-
+import { Router } from '@angular/router';
 /**
  * Prefixes all requests not starting with `http[s]` with `environment.serverUrl`.
  */
@@ -11,10 +11,33 @@ import { environment } from '@env/environment';
   providedIn: 'root',
 })
 export class ApiPrefixInterceptor implements HttpInterceptor {
+  constructor(private injector: Injector, private router: Router) {}
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    /* if (!/^(http|https):/i.test(request.url)) {
-      request = request.clone({ url: environment.serverUrl + request.url });
-    }*/
-    return next.handle(request);
+    const userStr = localStorage.getItem('auth_app_token');
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      if (user.accessToken) {
+        request = request.clone({
+          headers: request.headers.set('Authorization', 'Bearer ' + user.accessToken),
+        });
+      }
+    }
+    return next.handle(request).pipe(
+      tap((results) => {
+        if (results instanceof HttpResponse) {
+          if (results.body.errors && results.body.errors[0].message === 'Unauthorized') {
+            this.router.navigate(['/auth/login']);
+          }
+        }
+      }),
+      catchError((error: any) => {
+        if (error.status === 401) {
+          // return this.handle401Error(request, next);
+          this.router.navigate(['/auth/login']);
+        }
+        return throwError(error);
+      })
+    );
   }
 }

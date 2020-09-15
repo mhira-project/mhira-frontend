@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LayoutModule } from '@app/@layout/layout.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GraphQLModule } from '@app/graphql.module';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LayoutModule,
     CoreModule,
     SharedModule,
+    GraphQLModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
