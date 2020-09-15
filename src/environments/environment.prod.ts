@@ -10,6 +10,7 @@ export const environment = {
   production: true,
   hmr: false,
   version: env.npm_package_version,
+  baseURL: 'https://dev-etaarifaapi.codeblock.co.tz/graphql',
   serverUrl: 'https://api.chucknorris.io',
   defaultLanguage: 'en-US',
   supportedLanguages: ['en-US', 'fr-FR'],
