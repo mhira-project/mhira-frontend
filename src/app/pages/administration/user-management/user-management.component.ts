@@ -71,7 +71,7 @@ export class UserManagementComponent implements OnInit {
       name: 'Delete User',
     },
   ];
-  errors: any;
+  errors: any[] =[];
   changePasswordForm : FormItemType[] = form.changeUserPassword;
 
   constructor(private modalService: NzModalService, private message: NzMessageService) {}
@@ -129,4 +129,5 @@ export class UserManagementComponent implements OnInit {
   onFormSubmit($event: any) {
 
   }
+
 }
