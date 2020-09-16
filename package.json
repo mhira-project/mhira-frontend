@@ -17,7 +17,8 @@
     "prettier": "prettier --write \"./{src,e2e}/**/*.{ts,js,html,scss}\"",
     "prettier:check": "prettier --list-different \"./{src,e2e}/**/*.{ts,js,html,scss}\"",
     "postinstall": "npm run prettier -s",
-    "generate": "ng generate"
+    "generate": "ng generate",
+    "deploy": "ng build --aot --prod --extract-css false && aws s3 sync dist s3://mhira-portal --delete --profile Mhira --region=af-south-1 && aws cloudfront create-invalidation --distribution-id ELKUDD46VAWKE --paths \"/index.html\" --profile Mhira"
   },
   "dependencies": {
     "@angular/animations": "^10.0.14",

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { form } from '@app/pages/administration/user-management/form';
+import { FormItemType } from '@shared/components/form-generator/form-item.type';
 // @ts-ignore
 const faker = require('faker');
 // @ts-ignore
@@ -69,6 +71,8 @@ export class UserManagementComponent implements OnInit {
       name: 'Delete User',
     },
   ];
+  errors: any;
+  changePasswordForm : FormItemType[] = form.changeUserPassword;
 
   constructor(private modalService: NzModalService, private message: NzMessageService) {}
 
@@ -120,5 +124,9 @@ export class UserManagementComponent implements OnInit {
 
   onCreateUser() {
     this.userModal = true;
+  }
+
+  onFormSubmit($event: any) {
+
   }
 }
