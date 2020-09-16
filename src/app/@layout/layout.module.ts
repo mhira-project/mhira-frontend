@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18nModule } from '@app/i18n';
-import { AuthModule } from '@app/auth';
 import { AuthLayoutComponent } from './auth/auth.layout.component';
 import { VerticalLayoutComponent } from './vertical/vertical.layout.component';
 import { HorizontalLayoutComponent } from './horizontal/horizontal.layout.component';
@@ -25,6 +24,7 @@ import { ThemeConstantService } from '@shared/services/theme-constant.service';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { HeaderComponent } from './vertical/header/header.component';
 import { TabsComponent } from './vertical/header/tabs/tabs.component';
+import { AuthModule } from '@app/auth/auth.module';
 
 const antdModule = [
   NzBreadCrumbModule,

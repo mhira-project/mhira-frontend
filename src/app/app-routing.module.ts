@@ -5,7 +5,7 @@ import { HorizontalLayoutComponent } from '@app/@layout/horizontal/horizontal.la
 import { AuthLayoutComponent } from '@app/@layout/auth/auth.layout.component';
 import { VerticalLayoutComponent } from '@app/@layout/vertical/vertical.layout.component';
 import { extract } from '@app/i18n';
-import { AuthGuard } from '@app/auth';
+import { AuthGuard } from '@app/auth/auth.guard';
 
 const appRoutes: Routes = [
   /*{
