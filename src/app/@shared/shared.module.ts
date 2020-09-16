@@ -18,6 +18,7 @@ import {
   TimingPipe,
 } from './pipes';
 import { NgZorroModule } from '@shared/ng-zorro.module';
+import { FieldGeneratorComponent } from './components/field-generator/field-generator.component';
 
 const PIPES = [
   CapitalizePipe,
@@ -33,7 +34,7 @@ const PIPES = [
 
 @NgModule({
   imports: [CommonModule, FormsModule, NgxInputSearchModule, ReactiveFormsModule, NgZorroModule],
-  declarations: [LoaderComponent, CustomTableComponent, FormGeneratorComponent, PIPES],
+  declarations: [LoaderComponent, CustomTableComponent, FormGeneratorComponent, PIPES, FieldGeneratorComponent],
   exports: [LoaderComponent, CustomTableComponent, FormGeneratorComponent, PIPES],
   providers: [XlsExportService],
 })
