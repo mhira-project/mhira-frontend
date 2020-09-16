@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LayoutModule } from '@app/@layout/layout.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GraphQLModule } from '@app/graphql.module';
+import { AuthGuard } from '@app/auth';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { GraphQLModule } from '@app/graphql.module';
       provide: NZ_I18N,
       useValue: en_US,
     },
+    AuthGuard,
   ],
   bootstrap: [AppComponent],
 })

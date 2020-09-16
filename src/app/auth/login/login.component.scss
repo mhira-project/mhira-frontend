@@ -1,4 +1,4 @@
-@import "../../assets/scss/_variables";
+@import "../../../assets/scss/variables";
 
 nz-content {
   min-height: 100vh;
@@ -33,6 +33,10 @@ nz-content {
     width: 100%;
     border-bottom: 2px solid #fff;
   }
+}
+
+.errors {
+  margin-bottom: 10px;
 }
 
 .login-form {

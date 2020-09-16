@@ -2,7 +2,7 @@
   <nz-content>
     <div class="form-container">
       <div class="app-logo">
-        <img src="../../assets/images/logo.svg" />
+        <img src="../../../assets/images/logo.svg" />
         <h1 translate>APP_NAME</h1>
       </div>
       <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
@@ -17,10 +17,13 @@
             <div class="line"></div>
           </div>
         </div>
+        <div class="errors" *ngIf="hasErrors">
+          <nz-alert *ngFor="let error of errors" nzType="error" [nzDescription]="error" nzShowIcon></nz-alert>
+        </div>
         <nz-form-item>
           <nz-form-control nzErrorTip="Please input your username!">
             <nz-input-group nzPrefixIcon="user">
-              <input type="text" nz-input formControlName="userName" placeholder="Username or email" />
+              <input type="text" nz-input formControlName="identifier" placeholder="Username or email" />
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
@@ -31,7 +34,9 @@
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
-        <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
+        <button nz-button class="login-form-button login-form-margin" [nzLoading]="isLoading" [nzType]="'primary'">
+          Log in
+        </button>
         <a class="forgot-password" href="javascript:;">Forgot password</a>
       </form>
     </div>

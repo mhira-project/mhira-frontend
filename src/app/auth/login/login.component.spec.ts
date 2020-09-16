@@ -5,10 +5,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CoreModule } from '@core';
-import { AuthenticationService, CredentialsService } from '@app/auth';
-import { MockAuthenticationService } from '@app/auth/authentication.service.mock';
-import { MockCredentialsService } from '@app/auth/credentials.service.mock';
-import { I18nModule } from '@app/i18n';
+import { AuthService, CredentialsService } from '../index';
+import { MockAuthenticationService } from '../authentication.service.mock';
+import { MockCredentialsService } from '../credentials.service.mock';
+import { I18nModule } from '../../i18n/index';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {

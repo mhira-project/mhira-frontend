@@ -1,6 +1,6 @@
 import { Routes, Route } from '@angular/router';
 
-import { AuthenticationGuard } from '../../auth/index';
+import { AuthGuard } from '../../auth/index';
 import { HorizontalLayoutComponent } from '@app/@layout/horizontal/horizontal.layout.component';
 
 /**
@@ -17,7 +17,7 @@ export class Shell {
       path: '',
       component: HorizontalLayoutComponent,
       children: routes,
-      canActivate: [AuthenticationGuard],
+      canActivate: [AuthGuard],
       // Reuse ShellComponent instance when navigating between child views
       data: { reuse: true },
     };
