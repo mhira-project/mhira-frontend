@@ -9,9 +9,12 @@ import { HomeComponent } from './home.component';
 import { PatientsComponent } from './patients/patients.component';
 import { CaseManagersComponent } from './case-managers/case-managers.component';
 import { NzGridModule } from 'ng-zorro-antd';
+import { HomeService } from './home.service';
+import { PatientsService } from './patients/patients.service';
 
 @NgModule({
   imports: [CommonModule, TranslateModule, SharedModule, NzGridModule, HomeRoutingModule],
   declarations: [HomeComponent, PatientsComponent, CaseManagersComponent],
+  providers: [PatientsService, HomeService],
 })
 export class HomeModule {}

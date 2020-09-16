@@ -1,6 +1,15 @@
 <div nz-row>
-  <div nz-col nzSpan="12">col-12</div>
-  <div nz-col nzSpan="8">col-8</div>
+  <div nz-col nzSpan="20">
+    <app-custom-table
+      [showCustomActions]="true"
+      [showSearch]="false"
+      [listOfCustomActions]="actions"
+      [listOfData]="patientsTable.rows"
+      [listOfColumn]="patientsTable.columns"
+      [showButton]="false"
+      (onAction)="onActionSelect($event)"
+    >
+    </app-custom-table>
+  </div>
   <div nz-col nzSpan="4">col-4</div>
 </div>
-git
