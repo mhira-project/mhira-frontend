@@ -11,5 +11,9 @@
     >
     </app-custom-table>
   </div>
-  <div nz-col nzSpan="4">col-4</div>
+  <div nz-col nzSpan="4">
+    <nz-card>
+      <app-field-generator [fields]="patientForms.searchForm"></app-field-generator>
+    </nz-card>
+  </div>
 </div>

@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormItemType } from '@shared/components/form-generator/form-item.type';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import setHours from 'date-fns/setHours';
+import { Component, OnInit, Input } from '@angular/core';
+import { FieldType } from './field.type';
 
 @Component({
   selector: 'app-field-generator',
@@ -9,20 +7,28 @@ import setHours from 'date-fns/setHours';
   styleUrls: ['./field-generator.component.scss'],
 })
 export class FieldGeneratorComponent implements OnInit {
-  @Input() formItems: FormItemType[] = [];
-  @Input() validateForm: FormGroup;
-  @Input() timeDefaultValue = setHours(new Date(), 0);
-  @Input() fb: FormBuilder;
-  @Output() addMetaFieldEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Input() fields: FieldType[];
+
   constructor() {}
+
+  nzFilterOption = () => true;
 
   ngOnInit(): void {}
 
-  addMetaField(formItem: any) {
-    this.addMetaFieldEvent.emit(formItem);
-  }
-  removeMetaFiled(index: number, formItem: any) {
-    const meta = this.validateForm.get(formItem.name) as FormArray;
-    meta.removeAt(index);
+  search(value: string): void {}
+
+  parseCheckBoxValues(options: { value: number | string; label: string; checked: boolean }[], field: FieldType): void {
+    for (const option of options) {
+      const index = -1; // field.value.indexOf(option.value);
+      if (option.checked) {
+        if (index > -1) {
+          // field.value.push(option.value)
+        }
+      } else {
+        if (index !== -1) {
+          // field.value.splice(index, 1);
+        }
+      }
+    }
   }
 }
