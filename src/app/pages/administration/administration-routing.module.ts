@@ -4,6 +4,7 @@ import { extract } from '../../i18n/index';
 import { AdministrationComponent } from './administration.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
+import { UserFormComponent } from './user-management/user-form/user-form.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,13 @@ const routes: Routes = [
         component: UserManagementComponent,
         data: {
           title: extract('User Management'),
+        },
+      },
+      {
+        path: 'user-management/form/:id',
+        component: UserFormComponent,
+        data: {
+          title: extract('New User'),
         },
       },
       {

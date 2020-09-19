@@ -1,4 +1,5 @@
 import { FormItemType } from '../../../@shared/components/form-generator/form-item.type';
+import { FieldType } from '@shared/components/field-generator/field.type';
 
 
 const createUser: FormItemType[] = [
@@ -77,16 +78,16 @@ const updateUser: FormItemType[] = [
   },
 ];
 
-const changeUserPassword: FormItemType[] = [
+const changeUserPassword: FieldType[] = [
   {
-    name: 'newPassword',
+    title: 'Enter New Password',
     label: 'New Password',
     type: 'password',
-    pattern: '',
     isRequired: true,
     description: 'Enter new password',
-    validationMessage: 'Enter new password',
-    fillPercent: 100
+    validationMessage: '',
+    span: 24,
+    value: ""
   },
 ];
 
