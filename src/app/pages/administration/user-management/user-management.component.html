@@ -9,12 +9,8 @@
   (onButton)="onCreateUser()"
 >
 </app-custom-table>
-<nz-modal [(nzVisible)]="userModal" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-  <app-form-generator
-    [formItems]="changePasswordForm"
-    [formData]="user"
-    [rowItems]="1"
-    [submitButtonText]="'Submit'"
-    (submit)="onFormSubmit($event)"
-  ></app-form-generator>
+<nz-modal *ngIf="modalType" [(nzVisible)]="showModal" [nzTitle]="modalType?.title" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <app-field-generator
+    [fields]="changePasswordForm"
+  ></app-field-generator>
 </nz-modal>
