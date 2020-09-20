@@ -1,69 +1,83 @@
 <div nz-row [nzGutter]="[16, 24]">
-  <ng-container *ngFor="let field of fields; let i = index">
-    <div *ngIf="field.type !== 'button'" nz-col class="gutter-row form-item" [nzSpan]="field?.span">
-      <label for="field{{ i }}" translate>{{ field?.title }}</label>
-      <ng-container [ngSwitch]="field.type">
-        <div *ngSwitchCase="'select'">
-          <nz-select style="width: 100%" [(ngModel)]="field.value" [nzPlaceHolder]="field.description">
-            <nz-option *ngFor="let option of field.options" [nzValue]="option.value" [nzLabel]="option.label">
-            </nz-option>
-          </nz-select>
-        </div>
-        <div *ngSwitchCase="'checkBox'">
-          <nz-checkbox-group [(ngModel)]="field.options"> </nz-checkbox-group>
-        </div>
-        <div *ngSwitchCase="'radio'">
-          <nz-radio-group [(ngModel)]="field.value">
-            <label nz-radio *ngFor="let option of field.options" [nzValue]="option.value">{{ option.label }}</label>
-          </nz-radio-group>
-        </div>
-        <div *ngSwitchCase="'search'">
-          <nz-select
-            style="width: 100%"
-            [nzPlaceHolder]="field.description"
-            [(ngModel)]="field.value"
-            [nzShowArrow]="false"
-            [nzFilterOption]="nzFilterOption"
-            (nzOnSearch)="search($event)"
-          >
-            <nz-option
-              *ngFor="let option of field.option"
-              [nzLabel]="option.label"
-              [nzValue]="option.value"
-            ></nz-option>
-          </nz-select>
-        </div>
-        <div *ngSwitchCase="'textArea'">
-          <textarea
-            id="field{{ i }}"
-            nz-input
-            [attr.placeholder]="field.description"
-            [(ngModel)]="field.value"
-            [nzAutosize]="{ minRows: 3, maxRows: 5 }"
-          >
-          </textarea>
-        </div>
-        <div *ngSwitchDefault>
-          <nz-input-group [nzSuffix]="suffix">
-            <input
-              id="field{{ i }}"
-              [attr.type]="field.type"
+  <ng-container *ngFor="let group of form">
+    <h2 *ngIf="group.title">{{ group.title }}</h2>
+    <ng-container *ngFor="let field of group.fields; let i = index">
+      <div *ngIf="field.type !== 'submitButton'" nz-col class="gutter-row form-item" [nzSpan]="field?.span">
+        <label for="field{{ i }}" translate>{{ field?.title }}</label>
+        <ng-container [ngSwitch]="field.type">
+          <div *ngSwitchCase="'select'">
+            <nz-select
+              style="width: 100%"
+              (ngModelChange)="handleInputChange(field, $event)"
               [(ngModel)]="field.value"
+              [nzPlaceHolder]="field.description"
+            >
+              <nz-option *ngFor="let option of field.options" [nzValue]="option.value" [nzLabel]="option.label">
+              </nz-option>
+            </nz-select>
+          </div>
+          <div *ngSwitchCase="'checkBox'">
+            <nz-checkbox-group
+              [(ngModel)]="field.options"
+              (ngModelChange)="handleInputChange(field, $event)"
+            ></nz-checkbox-group>
+          </div>
+          <div *ngSwitchCase="'radio'">
+            <nz-radio-group [(ngModel)]="field.value" (ngModelChange)="handleInputChange(field, $event)">
+              <label nz-radio *ngFor="let option of field.options" [nzValue]="option.value">{{ option.label }}</label>
+            </nz-radio-group>
+          </div>
+          <div *ngSwitchCase="'search'">
+            <nz-select
+              style="width: 100%"
+              [nzPlaceHolder]="field.description"
+              [(ngModel)]="field.value"
+              [nzShowArrow]="false"
+              [nzFilterOption]="nzFilterOption"
+              (ngModelChange)="handleInputChange(field, $event)"
+              (nzOnSearch)="search($event)"
+            >
+              <nz-option
+                *ngFor="let option of field.option"
+                [nzLabel]="option.label"
+                [nzValue]="option.value"
+              ></nz-option>
+            </nz-select>
+          </div>
+          <div *ngSwitchCase="'textArea'">
+            <textarea
+              id="field{{ i }}"
               nz-input
               [attr.placeholder]="field.description"
-            />
-          </nz-input-group>
-        </div>
-      </ng-container>
-      <ng-template #suffix>
-        <i nz-icon [nzType]="field?.iconName"></i>
-      </ng-template>
-      <p translate>{{ field.validationMessage }}</p>
-    </div>
-    <div *ngIf="field.type === 'button'" nz-col class="gutter-row" [nzSpan]="field?.span">
-      <button nz-button style="width: 100%" [nzType]="'primary'">
-        {{ field.title }}
-      </button>
-    </div>
+              [(ngModel)]="field.value"
+              (change)="handleInputChange(field, $event)"
+              [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+            >
+            </textarea>
+          </div>
+          <div *ngSwitchDefault>
+            <nz-input-group [nzSuffix]="suffix">
+              <input
+                id="field{{ i }}"
+                [attr.type]="field.type"
+                [(ngModel)]="field.value"
+                (change)="handleInputChange(field, $event)"
+                nz-input
+                [attr.placeholder]="field.description"
+              />
+            </nz-input-group>
+          </div>
+        </ng-container>
+        <ng-template #suffix>
+          <i nz-icon [nzType]="field?.iconName"></i>
+        </ng-template>
+        <p *ngIf="field.isRequired && field.value === ''" translate>{{ field.validationMessage }}</p>
+      </div>
+      <div *ngIf="field.type === 'submitButton'" nz-col class="gutter-row" [nzSpan]="field?.span">
+        <button nz-button style="width: 100%" [nzType]="'primary'" (click)="handleSubmit($event)">
+          {{ field.title }}
+        </button>
+      </div>
+    </ng-container>
   </ng-container>
 </div>

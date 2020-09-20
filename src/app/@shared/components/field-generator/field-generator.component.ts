@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FieldType } from './field.type';
+import { FieldGroup } from '@shared/components/field-generator/field.group';
 
 @Component({
   selector: 'app-field-generator',
@@ -7,7 +8,9 @@ import { FieldType } from './field.type';
   styleUrls: ['./field-generator.component.scss'],
 })
 export class FieldGeneratorComponent implements OnInit {
-  @Input() fields: FieldType[];
+  @Input() form: FieldGroup[];
+  @Output() submitFields: EventEmitter<any> = new EventEmitter<any>();
+  @Output() inputChange: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {}
 
@@ -17,18 +20,43 @@ export class FieldGeneratorComponent implements OnInit {
 
   search(value: string): void {}
 
-  parseCheckBoxValues(options: { value: number | string; label: string; checked: boolean }[], field: FieldType): void {
+  handleSubmit(event: any) {
+    const fields = {};
+    for (const group of this.form) {
+      for (const field of group.fields) {
+        fields[field.title] = field.value;
+      }
+    }
+    this.submitFields.emit(fields);
+  }
+
+  handleInputChange(field: FieldType, event: any) {
+    if (field.type === 'checkBox') {
+      this.parseCheckBoxValues(event, field);
+      return;
+    }
+
+    if (field.type === 'select' || field.type === 'radio') {
+      this.inputChange.emit({ title: field.title, value: event });
+      return;
+    }
+
+    this.inputChange.emit({ title: field.title, value: event.target.value });
+  }
+
+  parseCheckBoxValues(options: { value: number | string; label: string; checked: boolean }[], field: any): void {
     for (const option of options) {
-      const index = -1; // field.value.indexOf(option.value);
+      const index = field.value.indexOf(option.value);
       if (option.checked) {
-        if (index > -1) {
-          // field.value.push(option.value)
+        if (index === -1) {
+          field.value.push(option.value);
         }
       } else {
         if (index !== -1) {
-          // field.value.splice(index, 1);
+          field.value.splice(index, 1);
         }
       }
     }
+    this.inputChange.emit({ title: field.title, value: field.value });
   }
 }

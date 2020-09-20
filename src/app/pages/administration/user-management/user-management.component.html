@@ -9,8 +9,12 @@
   (onButton)="onCreateUser()"
 >
 </app-custom-table>
-<nz-modal *ngIf="modalType" [(nzVisible)]="showModal" [nzTitle]="modalType?.title" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-  <app-field-generator
-    [fields]="changePasswordForm"
-  ></app-field-generator>
+<nz-modal
+  *ngIf="modalType"
+  [(nzVisible)]="showModal"
+  [nzTitle]="modalType?.title"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+>
+  <app-field-generator [form]="changePasswordForm"></app-field-generator>
 </nz-modal>

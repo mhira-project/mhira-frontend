@@ -3,7 +3,17 @@ export interface FieldType {
   title?: string;
   description?: string;
   label?: string;
-  type: 'text' | 'number' | 'password' | 'search' | 'textArea' | 'checkBox' | 'radio' | 'select' | 'date' | 'button';
+  type:
+    | 'text'
+    | 'number'
+    | 'password'
+    | 'search'
+    | 'textArea'
+    | 'checkBox'
+    | 'radio'
+    | 'select'
+    | 'date'
+    | 'submitButton';
   iconName?: string;
   validationMessage?: string;
   isRequired?: boolean;

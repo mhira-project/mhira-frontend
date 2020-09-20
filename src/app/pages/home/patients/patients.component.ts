@@ -50,4 +50,12 @@ export class PatientsComponent implements OnInit, OnChanges {
   }
 
   onActionSelect(action: any) {}
+
+  submit(fields: any[]) {
+    // console.log(fields);
+  }
+
+  handleInputChange(field: any) {
+    // console.log(field);
+  }
 }

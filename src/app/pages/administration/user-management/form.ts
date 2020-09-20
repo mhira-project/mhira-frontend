@@ -1,6 +1,5 @@
 import { FormItemType } from '../../../@shared/components/form-generator/form-item.type';
-import { FieldType } from '@shared/components/field-generator/field.type';
-
+import { FieldGroup } from '@shared/components/field-generator/field.group';
 
 const createUser: FormItemType[] = [
   {
@@ -11,7 +10,7 @@ const createUser: FormItemType[] = [
     isRequired: true,
     description: 'Enter your full name',
     validationMessage: 'Enter your full name',
-    fillPercent: 50
+    fillPercent: 50,
   },
   {
     name: 'email',
@@ -21,7 +20,7 @@ const createUser: FormItemType[] = [
     isRequired: true,
     description: 'Enter your Email',
     validationMessage: 'Enter your Email',
-    fillPercent: 50
+    fillPercent: 50,
   },
   {
     name: 'phone',
@@ -31,7 +30,7 @@ const createUser: FormItemType[] = [
     isRequired: true,
     description: 'Enter your Address',
     validationMessage: 'Enter your Address',
-    fillPercent: 100
+    fillPercent: 100,
   },
   {
     name: 'password',
@@ -41,7 +40,7 @@ const createUser: FormItemType[] = [
     isRequired: true,
     description: 'Enter your Password',
     validationMessage: 'Enter your Password',
-    fillPercent: 100
+    fillPercent: 100,
   },
 ];
 
@@ -54,7 +53,7 @@ const updateUser: FormItemType[] = [
     isRequired: true,
     description: 'Enter your full name',
     validationMessage: 'Enter your full name',
-    fillPercent: 50
+    fillPercent: 50,
   },
   {
     name: 'email',
@@ -64,7 +63,7 @@ const updateUser: FormItemType[] = [
     isRequired: true,
     description: 'Enter your Email',
     validationMessage: 'Enter your Email',
-    fillPercent: 50
+    fillPercent: 50,
   },
   {
     name: 'phone',
@@ -74,25 +73,30 @@ const updateUser: FormItemType[] = [
     isRequired: true,
     description: 'Enter your Address',
     validationMessage: 'Enter your Address',
-    fillPercent: 100
+    fillPercent: 100,
   },
 ];
 
-const changeUserPassword: FieldType[] = [
+const changeUserPassword: FieldGroup[] = [
   {
-    title: 'Enter New Password',
-    label: 'New Password',
-    type: 'password',
-    isRequired: true,
-    description: 'Enter new password',
-    validationMessage: '',
-    span: 24,
-    value: ""
+    title: '',
+    fields: [
+      {
+        title: 'Enter New Password',
+        label: 'New Password',
+        type: 'password',
+        isRequired: true,
+        description: 'Enter new password',
+        validationMessage: '',
+        span: 24,
+        value: '',
+      },
+    ],
   },
 ];
 
 export const form = {
   createUser,
   updateUser,
-  changeUserPassword
+  changeUserPassword,
 };

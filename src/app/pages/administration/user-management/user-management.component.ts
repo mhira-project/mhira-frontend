@@ -5,6 +5,7 @@ import { FormItemType } from '@shared/components/form-generator/form-item.type';
 import { FieldType } from '@shared/components/field-generator/field.type';
 import { ModalType } from '@app/pages/administration/user-management/modal.type';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FieldGroup } from '@shared/components/field-generator/field.group';
 // @ts-ignore
 const faker = require('faker');
 // @ts-ignore
@@ -18,18 +19,18 @@ const moment = require('moment');
 export class UserManagementComponent implements OnInit {
   users: any[] = [];
   showModal: boolean = false;
-  modalType:ModalType;
-  changePasswordModal:ModalType = {
-    title:"Change Password",
-    type:"changePassword"
-  }
+  modalType: ModalType;
+  changePasswordModal: ModalType = {
+    title: 'Change Password',
+    type: 'changePassword',
+  };
   user = {
     email: '',
     password: '',
     firstName: '',
     lastName: '',
     phone: '',
-    id:''
+    id: '',
   };
   selectedUserIndex = -1;
   listOfData: any[] = [];
@@ -80,8 +81,8 @@ export class UserManagementComponent implements OnInit {
       name: 'Delete User',
     },
   ];
-  errors: any[] =[];
-  changePasswordForm : FieldType[] = form.changeUserPassword;
+  errors: any[] = [];
+  changePasswordForm: FieldGroup[] = form.changeUserPassword;
 
   constructor(private modalService: NzModalService, private message: NzMessageService, private router: Router) {}
 
@@ -93,7 +94,7 @@ export class UserManagementComponent implements OnInit {
       var phone = faker.phone.phoneNumber('255#########');
       var createdAt = faker.date.past();
       this.listOfData.push({
-        id:id,
+        id: id,
         firstName: firstName,
         lastName: lastName,
         email: `${firstName}.${lastName}@gmail.com`,
@@ -105,17 +106,19 @@ export class UserManagementComponent implements OnInit {
   }
   onCustomActionEvent(event: any) {
     this.user = this.listOfData[event.index];
-    console.log(this.user)
+    console.log(this.user);
     this.selectedUserIndex = event.index;
     switch (event.action.type) {
       case 'edit':
         this.showModal = true;
-        this.router.navigate([`/mhira/administration/user-management/form`], {queryParams:{user:JSON.stringify(this.user)}})
+        this.router.navigate([`/mhira/administration/user-management/form`], {
+          queryParams: { user: JSON.stringify(this.user) },
+        });
         break;
       case 'changePassword':
         this.showModal = true;
-        this.modalType = Object.assign({}, this.changePasswordModal)
-        this.modalType.title =  `${this.modalType.title} for ${this.user.firstName} ${this.user.lastName}`
+        this.modalType = Object.assign({}, this.changePasswordModal);
+        this.modalType.title = `${this.modalType.title} for ${this.user.firstName} ${this.user.lastName}`;
         break;
       case 'delete':
         this.modalService.confirm({
@@ -141,8 +144,5 @@ export class UserManagementComponent implements OnInit {
     this.showModal = true;
   }
 
-  onFormSubmit($event: any) {
-
-  }
-
+  onFormSubmit($event: any) {}
 }
