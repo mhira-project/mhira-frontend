@@ -95,8 +95,57 @@ const changeUserPassword: FieldGroup[] = [
   },
 ];
 
+const userProfile: FieldGroup[] = [
+  {
+    title: 'Personal Information',
+    fields: [
+      {
+        title: 'First Name',
+        label: 'First name',
+        type: 'text',
+        isRequired: true,
+        description: 'Enter your first name',
+        validationMessage: '',
+        span: 6,
+        value: '',
+      },
+      {
+        title: 'First Name',
+        label: 'First name',
+        type: 'text',
+        isRequired: true,
+        description: 'Enter your first name',
+        validationMessage: '',
+        span: 6,
+        value: '',
+      },
+      {
+        title: 'First Name',
+        label: 'First name',
+        type: 'text',
+        isRequired: true,
+        description: 'Enter your first name',
+        validationMessage: '',
+        span: 6,
+        value: '',
+      },
+      {
+        title: 'First Name',
+        label: 'First name',
+        type: 'text',
+        isRequired: true,
+        description: 'Enter your first name',
+        validationMessage: '',
+        span: 6,
+        value: '',
+      },
+    ],
+  },
+];
+
 export const form = {
   createUser,
   updateUser,
   changeUserPassword,
+  userProfile
 };
