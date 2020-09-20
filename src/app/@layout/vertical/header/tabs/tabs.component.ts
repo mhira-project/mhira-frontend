@@ -25,10 +25,22 @@ export class TabsComponent implements OnInit {
       title: 'Untitled',
     };
     if (currentRoute.firstChild.children.length > 0) {
-      tab = {
-        path: this.router.url,
-        title: currentRoute.firstChild.children[0].data.title,
-      };
+      this.activatedRoute.queryParams.subscribe(params => {
+        if(params.user){
+          const user = JSON.parse(params.user);
+          tab = {
+            path: this.router.url,
+            title:  `${user.firstName} ${user.lastName}`,
+          };
+
+        }else{
+          tab = {
+            path: this.router.url,
+            title: currentRoute.firstChild.children[0].data.title,
+          };
+        }
+
+      });
     } else {
       if (currentRoute.firstChild.data) {
         tab = {
@@ -63,29 +75,50 @@ export class TabsComponent implements OnInit {
   }
 
   urlChange() {
+    let tab = {
+      path: this.router.url,
+      title: 'Untitled',
+    };
+
     this.router.events.subscribe((event: Event) => {
+
+
+
       if (event instanceof NavigationEnd) {
         if (event.url !== '/mhira/not-found' && event.url !== '/') {
           const pathFound = this.tabs.some((tab) => tab.path === event.url.slice(1));
           if (!pathFound) {
             const currentChild = this.activatedRoute.snapshot.firstChild;
-            let tab = {
-              path: this.router.url,
-              title: 'Untitled',
-            };
             if (currentChild.firstChild.children.length > 0) {
-              tab = {
-                path: this.router.url,
-                title: currentChild.firstChild.children[0].data.title,
-              };
+              this.activatedRoute.queryParams.subscribe(params => {
+                if(params.user){
+                  const user = JSON.parse(params.user);
+                  tab = {
+                    path: this.router.url,
+                    title:  `${user.firstName} ${user.lastName}`,
+                  };
+
+                }else{
+                  tab = {
+                    path: this.router.url,
+                    title: currentChild.firstChild.children[0].data.title,
+                  };
+                }
+
+              });
+
             } else {
               if (currentChild.firstChild.data) {
+
                 tab = {
                   path: this.router.url,
                   title: currentChild.firstChild.data.title,
                 };
               }
+
             }
+
+
 
             const isInArray =
               this.tabs.find((_tab) => {
@@ -93,6 +126,7 @@ export class TabsComponent implements OnInit {
               }) !== undefined;
 
             if (!isInArray) {
+              console.log(tab)
               this.tabs.push(tab);
             }
             this.tabs.filter((_tab) => {

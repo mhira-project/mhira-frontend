@@ -1,25 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ChangeDetectorRef, Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss']
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit, OnDestroy {
   user:any;
+  mySubscription:any;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router, private cd: ChangeDetectorRef) {
+
+  }
 
   ngOnInit(): void {
-    this.route.queryParams
-      .subscribe(params => {
-          this.user = JSON.parse(params.user);
-        this.route.data.subscribe(data=>{
-          data['title'] = `${this.user.firstName} ${this.user.lastName}`;
-        })
-        }
-      );
+    this.onChangeUser()
+
+  }
+
+  ngOnDestroy() {
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
+  }
+
+  onChangeUser(){
+
+
   }
 
 

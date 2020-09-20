@@ -22,11 +22,8 @@ const routes: Routes = [
         },
       },
       {
-        path: 'user-management/form/:id',
+        path: 'user-management/form',
         component: UserFormComponent,
-        data: {
-          title: extract('New User'),
-        },
       },
       {
         path: 'roles-and-permissions',

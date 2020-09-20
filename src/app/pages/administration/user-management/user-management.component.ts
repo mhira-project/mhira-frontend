@@ -110,7 +110,7 @@ export class UserManagementComponent implements OnInit {
     switch (event.action.type) {
       case 'edit':
         this.showModal = true;
-        this.router.navigate([`/mhira/administration/user-management/form/${this.user.id}`], {queryParams:{user:JSON.stringify(this.user)}})
+        this.router.navigate([`/mhira/administration/user-management/form`], {queryParams:{user:JSON.stringify(this.user)}})
         break;
       case 'changePassword':
         this.showModal = true;
