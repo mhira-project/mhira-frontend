@@ -185,8 +185,6 @@ const userProfile: FieldGroup[] = [
         span: 8,
         value: '',
       },
-
-
     ],
   },
 ];
