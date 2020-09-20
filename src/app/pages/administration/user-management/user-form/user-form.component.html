@@ -2,7 +2,14 @@
   <nz-tab nzTitle="Profile">
     <app-field-generator [form]="profileFields"></app-field-generator>
   </nz-tab>
-  <nz-tab nzTitle="Security">
-    Content of Tab Pane 2
+  <nz-tab nzTitle="Security" [nzForceRender]="true">
+    <div nz-row>
+      <div nz-col nzFlex="auto">
+        <app-field-generator [form]="userRolesPermissionsFields"></app-field-generator>
+      </div>
+      <div nz-col nzFlex="480px">
+        <app-field-generator [form]="changeUserPasswordFields"></app-field-generator>
+      </div>
+    </div>
   </nz-tab>
 </nz-tabset>

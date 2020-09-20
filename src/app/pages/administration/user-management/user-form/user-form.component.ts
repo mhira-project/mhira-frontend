@@ -7,20 +7,19 @@ import { form } from '@app/pages/administration/user-management/form';
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+  styleUrls: ['./user-form.component.scss'],
 })
 export class UserFormComponent implements OnInit, OnDestroy {
-  user:any;
-  mySubscription:any;
+  user: any;
+  mySubscription: any;
   profileFields: FieldGroup[] = form.userProfile;
+  userRolesPermissionsFields: FieldGroup[] = form.userRolesPermissions;
+  changeUserPasswordFields: FieldGroup[] = form.changeUserPassword;
 
-  constructor(private route: ActivatedRoute, private router: Router, private cd: ChangeDetectorRef) {
-
-  }
+  constructor(private route: ActivatedRoute, private router: Router, private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.onChangeUser()
-
+    this.onChangeUser();
   }
 
   ngOnDestroy() {
@@ -29,10 +28,5 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  onChangeUser(){
-
-
-  }
-
-
+  onChangeUser() {}
 }

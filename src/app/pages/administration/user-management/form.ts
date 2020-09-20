@@ -79,7 +79,7 @@ const updateUser: FormItemType[] = [
 
 const changeUserPassword: FieldGroup[] = [
   {
-    title: '',
+    title: 'Change password',
     fields: [
       {
         title: 'Enter New Password',
@@ -87,6 +87,16 @@ const changeUserPassword: FieldGroup[] = [
         type: 'password',
         isRequired: true,
         description: 'Enter new password',
+        validationMessage: '',
+        span: 24,
+        value: '',
+      },
+      {
+        title: 'Repeat Password',
+        label: 'Repeat Password',
+        type: 'password',
+        isRequired: true,
+        description: 'Repeat password',
         validationMessage: '',
         span: 24,
         value: '',
@@ -149,7 +159,6 @@ const userProfile: FieldGroup[] = [
         span: 8,
         value: '',
       },
-
     ],
   },
   {
@@ -188,10 +197,37 @@ const userProfile: FieldGroup[] = [
     ],
   },
 ];
-
+const userRolesPermissions: FieldGroup[] = [
+  {
+    title: 'Roles and permissions',
+    fields: [
+      {
+        title: 'User role',
+        label: 'User role',
+        type: 'text',
+        isRequired: true,
+        description: 'Select user role',
+        validationMessage: '',
+        span: 24,
+        value: '',
+      },
+      {
+        title: 'User permissions',
+        label: 'User permissions',
+        type: 'text',
+        isRequired: true,
+        description: 'Select user permissions',
+        validationMessage: '',
+        span: 24,
+        value: '',
+      },
+    ],
+  },
+];
 export const form = {
   createUser,
   updateUser,
   changeUserPassword,
-  userProfile
+  userProfile,
+  userRolesPermissions,
 };
