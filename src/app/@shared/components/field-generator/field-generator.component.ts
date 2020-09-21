@@ -11,7 +11,9 @@ import { Form } from '@shared/components/field-generator/formt';
 })
 export class FieldGeneratorComponent implements OnInit {
   @Input() form: Form;
-  @Output() submitFields: EventEmitter<any> = new EventEmitter<any>();
+  @Input() isLoading = false;
+  @Input() loadingMessage = '';
+  @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
   @Output() inputChange: EventEmitter<any> = new EventEmitter<any>();
   formGroup: FormGroup;
 
@@ -61,11 +63,11 @@ export class FieldGeneratorComponent implements OnInit {
 
   search(value: string): void {}
 
-  submitForm() {
+  handleSubmitForm() {
     if (this.formGroup.invalid) {
       return;
     }
-    this.submitFields.emit(this.formGroup.value);
+    this.submitForm.emit(this.formGroup.value);
   }
 
   handleInputChange(field: FieldType, event: any) {

@@ -1,13 +1,16 @@
 <nz-tabset nzSize="large">
   <nz-tab nzTitle="Profile">
-    <!--<div class="text-right">
-      <button nz-button nzType="primary">Save</button>
-    </div>-->
-    <app-field-generator class="mt-3" (inputChange)="handleInputChange($event)" [form]="patientForms.patient">
+    <app-field-generator
+      class="mt-3"
+      [form]="patientForms.patient"
+      [isLoading]="isLoading"
+      [loadingMessage]="loadingMessage"
+      (submitForm)="submitForm($event)"
+    >
     </app-field-generator>
   </nz-tab>
-  <nz-tab nzTitle="Clinicians/Informats"> Content of Tab Pane 2 </nz-tab>
-  <nz-tab nzTitle="Questionaires"> Content of Tab Pane 3 </nz-tab>
-  <nz-tab nzTitle="Reports"> Content of Tab Pane 4 </nz-tab>
-  <nz-tab nzTitle="Assessment"> Content of Tab Pane 5 </nz-tab>
+  <nz-tab nzTitle="Clinicians/Informats"> Content of Tab Pane 2</nz-tab>
+  <nz-tab nzTitle="Questionaires"> Content of Tab Pane 3</nz-tab>
+  <nz-tab nzTitle="Reports"> Content of Tab Pane 4</nz-tab>
+  <nz-tab nzTitle="Assessment"> Content of Tab Pane 5</nz-tab>
 </nz-tabset>

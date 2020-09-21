@@ -16,18 +16,20 @@ const createPatient = gql`
     $nationality: String
   ) {
     createPatient(
-      active: $active
-      medicalRecordNo: $medicalRecordNo
-      firstName: $firstName
-      middleName: $middleName
-      lastName: $lastName
-      phone: $phone
-      email: $email
-      address: $address
-      gender: $gender
-      birthDate: $birthDate
-      birthCountryCode: $birthCountryCode
-      nationality: $nationality
+      input: {
+        active: $active
+        medicalRecordNo: $medicalRecordNo
+        firstName: $firstName
+        middleName: $middleName
+        lastName: $lastName
+        phone: $phone
+        email: $email
+        address: $address
+        gender: $gender
+        birthDate: $birthDate
+        birthCountryCode: $birthCountryCode
+        nationality: $nationality
+      }
     ) {
       id
       active
@@ -66,18 +68,20 @@ const updatePatient = gql`
     $patientId: Int!
   ) {
     updatePatient(
-      active: $active
-      medicalRecordNo: $medicalRecordNo
-      firstName: $firstName
-      middleName: $middleName
-      lastName: $lastName
-      phone: $phone
-      email: $email
-      address: $address
-      gender: $gender
-      birthDate: $birthDate
-      birthCountryCode: $birthCountryCode
-      nationality: $nationality
+      input: {
+        active: $active
+        medicalRecordNo: $medicalRecordNo
+        firstName: $firstName
+        middleName: $middleName
+        lastName: $lastName
+        phone: $phone
+        email: $email
+        address: $address
+        gender: $gender
+        birthDate: $birthDate
+        birthCountryCode: $birthCountryCode
+        nationality: $nationality
+      }
       patientId: $patientId
     ) {
       id

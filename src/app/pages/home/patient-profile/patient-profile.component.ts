@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { PatientsService } from '../@services/patients.service';
 import { Patient } from '../home.interfaces';
 import * as moment from 'moment';
@@ -11,14 +12,16 @@ import { patientForms } from '../@forms/patient-forms';
 })
 export class PatientProfileComponent implements OnInit {
   isLoading = false;
+  loadingMessage = '';
   patientForms = patientForms;
 
-  constructor(private patientsService: PatientsService) {}
+  constructor(private patientsService: PatientsService, private message: NzMessageService) {}
 
   ngOnInit(): void {}
 
   createPatient(patient: Patient) {
     this.isLoading = true;
+    this.loadingMessage = `Creating patient ${patient.firstName} ${patient.lastName}`;
     this.patientsService.createPatient(patient).subscribe(
       async ({ data }) => {
         const patientData = data['createPatient'];
@@ -33,15 +36,18 @@ export class PatientProfileComponent implements OnInit {
         patientData.active = `<nz-tag class="${color}">${active}</nz-tag>`;
 
         this.isLoading = false;
+        this.loadingMessage = '';
       },
       (error) => {
         this.isLoading = false;
+        this.loadingMessage = '';
       }
     );
   }
 
   updatePatient(patient: Patient) {
     this.isLoading = true;
+    this.loadingMessage = `Updating patient ${patient.firstName} ${patient.lastName}`;
     this.patientsService.updatePatient(patient).subscribe(
       async ({ data }) => {
         const patientData = data['updatePatient'];
@@ -58,14 +64,21 @@ export class PatientProfileComponent implements OnInit {
         // const updatedIndex = this.patients.findIndex((_patient) => _patient.id === patient.id);
 
         this.isLoading = false;
+        this.loadingMessage = '';
+        this.message.create('success', `Patient has successfully been created`);
       },
       (error) => {
         this.isLoading = false;
+        this.loadingMessage = '';
       }
     );
   }
 
-  handleInputChange(field: any): void {
-    console.log(field);
+  submitForm(form: any): void {
+    if (form.id) {
+      this.updatePatient(form);
+    } else {
+      this.createPatient(form);
+    }
   }
 }
