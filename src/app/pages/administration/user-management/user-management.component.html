@@ -1,9 +1,10 @@
 <app-custom-table
+  [loading]="isLoading"
   [showCustomActions]="true"
-  [listOfCustomActions]="listOfCustomActions"
+  [listOfCustomActions]="actions"
   (onAction)="onCustomActionEvent($event)"
-  [listOfData]="listOfData"
-  [listOfColumn]="listOfColumn"
+  [listOfData]="usersTable.rows"
+  [listOfColumn]="usersTable.columns"
   [showButton]="true"
   [buttonText]="'Add User'"
   (onButton)="onCreateUser()"
