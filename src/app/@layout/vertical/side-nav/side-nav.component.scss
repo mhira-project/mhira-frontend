@@ -1,17 +1,8 @@
 @import "../../../../assets/scss/_variables";
 @import "../../../../assets/scss/_mixins";
 
-perfect-scrollbar {
+.side-nav {
   overflow: visible;
-
-  .ps {
-    overflow: visible;
-  }
-
-  .ps__rail-y,
-  .ps__rail-x {
-    display: none;
-  }
 }
 
 ul {

@@ -1,4 +1,4 @@
-<perfect-scrollbar class="side-nav" sideNav>
+<div class="side-nav" sideNav>
   <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
     <ng-container *ngFor="let item of menuItems">
       <li *ngIf="item.submenu.length == 0" nz-menu-item nz-tooltip nzTitle="item.title">
@@ -20,4 +20,4 @@
       </li>
     </ng-container>
   </ul>
-</perfect-scrollbar>
+</div>

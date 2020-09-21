@@ -10,9 +10,14 @@
         </div>
       </div>
     </div>
-    <app-side-nav [isCollapsed]="isCollapsed"></app-side-nav>
+    <div class="nav-menu">
+      <app-side-nav [isCollapsed]="isCollapsed"></app-side-nav>
+    </div>
   </nz-sider>
-  <nz-layout class="content-area">
+  <nz-layout
+    class="content-area"
+    [ngClass]="{ 'side-bar-collapsed': isCollapsed, 'side-bar-not-collapsed': !isCollapsed }"
+  >
     <nz-header>
       <app-header></app-header>
     </nz-header>

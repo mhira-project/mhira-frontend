@@ -1,6 +1,17 @@
 @import "../../../../assets/scss/_variables";
 @import "../../../../assets/scss/_mixins";
 
+.tabs {
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabs::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
 .header-menu {
   background-color: transparent;
   border: none;

@@ -1,3 +1,5 @@
+@import "../../../../../assets/scss/_variables";
+
 nz-tabset {
   position: absolute;
   bottom: -15px;
@@ -15,6 +17,13 @@ nz-tabset {
     height: 50px;
     margin-right: 10px;
   }
+  .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab:hover {
+    color: $app-green;
+  }
+  .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active {
+    color: $app-green;
+  }
+
   .top-tabs .ant-tabs-tab {
     background: #e2e5ef !important;
   }
