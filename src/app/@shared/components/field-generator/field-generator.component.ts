@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FieldType } from './field.type';
 import { FieldGroup } from '@shared/components/field-generator/field.group';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Form } from '@shared/components/field-generator/formt';
 
 @Component({
   selector: 'app-field-generator',
@@ -8,26 +10,62 @@ import { FieldGroup } from '@shared/components/field-generator/field.group';
   styleUrls: ['./field-generator.component.scss'],
 })
 export class FieldGeneratorComponent implements OnInit {
-  @Input() form: FieldGroup[];
+  @Input() form: Form;
   @Output() submitFields: EventEmitter<any> = new EventEmitter<any>();
   @Output() inputChange: EventEmitter<any> = new EventEmitter<any>();
+  formGroup: FormGroup;
 
   constructor() {}
 
   nzFilterOption = () => true;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.createForm();
+  }
+
+  createForm(): void {
+    const formControls = {};
+    for (const group of this.form.groups) {
+      for (const field of group.fields) {
+        if (field.isRequired) {
+          if (field.pattern) {
+            formControls[field.name] = new FormControl('', [Validators.required, Validators.pattern(field.pattern)]);
+          } else if (field.maxLength) {
+            formControls[field.name] = new FormControl('', [
+              Validators.required,
+              Validators.maxLength(field.maxLength),
+            ]);
+          } else if (field.minLength) {
+            formControls[field.name] = new FormControl('', [
+              Validators.required,
+              Validators.minLength(field.minLength),
+            ]);
+          } else {
+            formControls[field.name] = new FormControl('', Validators.required);
+          }
+        } else {
+          if (field.pattern) {
+            formControls[field.name] = new FormControl('', Validators.pattern(field.pattern));
+          } else if (field.maxLength) {
+            formControls[field.name] = new FormControl('', Validators.maxLength(field.maxLength));
+          } else if (field.minLength) {
+            formControls[field.name] = new FormControl('', Validators.minLength(field.minLength));
+          } else {
+            formControls[field.name] = new FormControl();
+          }
+        }
+      }
+    }
+    this.formGroup = new FormGroup(formControls);
+  }
 
   search(value: string): void {}
 
-  handleSubmit(event: any) {
-    const fields = {};
-    for (const group of this.form) {
-      for (const field of group.fields) {
-        fields[field.name] = field.value;
-      }
+  submitForm() {
+    if (this.formGroup.invalid) {
+      return;
     }
-    this.submitFields.emit(fields);
+    this.submitFields.emit(this.formGroup.value);
   }
 
   handleInputChange(field: FieldType, event: any) {

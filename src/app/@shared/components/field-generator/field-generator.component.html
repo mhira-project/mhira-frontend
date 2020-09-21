@@ -1,87 +1,117 @@
-<ng-container *ngFor="let group of form">
-   <div>
-     <h2 *ngIf="group.title">{{ group.title }}</h2>
-   </div>
-     <div nz-row nzGutter="16">
-       <ng-container *ngFor="let field of group.fields; let i = index">
-         <div *ngIf="field.type !== 'submitButton'" nz-col class="gutter-row form-item" [nzSpan]="field?.span">
-           <label for="field{{ i }}" translate>{{ field?.title }}</label>
-           <ng-container [ngSwitch]="field.type">
-             <div *ngSwitchCase="'select'">
-               <nz-select
-                 style="width: 100%"
-                 (ngModelChange)="handleInputChange(field, $event)"
-                 [(ngModel)]="field.value"
-                 [nzPlaceHolder]="field.description"
-               >
-                 <nz-option *ngFor="let option of field.options" [nzValue]="option.value" [nzLabel]="option.label">
-                 </nz-option>
-               </nz-select>
-             </div>
-             <div *ngSwitchCase="'checkBox'">
-               <nz-checkbox-group
-                 [(ngModel)]="field.options"
-                 (ngModelChange)="handleInputChange(field, $event)"
-               ></nz-checkbox-group>
-             </div>
-             <div *ngSwitchCase="'radio'">
-               <nz-radio-group [(ngModel)]="field.value" (ngModelChange)="handleInputChange(field, $event)">
-                 <label nz-radio *ngFor="let option of field.options" [nzValue]="option.value">{{ option.label }}</label>
-               </nz-radio-group>
-             </div>
-             <div *ngSwitchCase="'search'">
-               <nz-select
-                 style="width: 100%"
-                 [nzPlaceHolder]="field.description"
-                 [(ngModel)]="field.value"
-                 [nzShowArrow]="false"
-                 [nzFilterOption]="nzFilterOption"
-                 (ngModelChange)="handleInputChange(field, $event)"
-                 (nzOnSearch)="search($event)"
-               >
-                 <nz-option
-                   *ngFor="let option of field.option"
-                   [nzLabel]="option.label"
-                   [nzValue]="option.value"
-                 ></nz-option>
-               </nz-select>
-             </div>
-             <div *ngSwitchCase="'textArea'">
-            <textarea
-              id="field{{ i }}"
-              nz-input
-              [attr.placeholder]="field.description"
-              [(ngModel)]="field.value"
-              (change)="handleInputChange(field, $event)"
-              [nzAutosize]="{ minRows: 3, maxRows: 5 }"
-            >
-            </textarea>
-             </div>
-             <div *ngSwitchDefault>
-               <nz-input-group [nzSuffix]="suffix">
-                 <input
-                   id="field{{ i }}"
-                   [attr.type]="field.type"
-                   [(ngModel)]="field.value"
-                   (change)="handleInputChange(field, $event)"
-                   nz-input
-                   [attr.placeholder]="field.description"
-                 />
-               </nz-input-group>
-             </div>
-           </ng-container>
-           <ng-template #suffix>
-             <i nz-icon [nzType]="field?.iconName"></i>
-           </ng-template>
-           <p *ngIf="field.isRequired && field.value === ''" translate>{{ field.validationMessage }}</p>
-         </div>
-         <div *ngIf="field.type === 'submitButton'" nz-col class="gutter-row" [nzSpan]="field?.span">
-           <button nz-button style="width: 100%" [nzType]="'primary'" (click)="handleSubmit($event)">
-             {{ field.title }}
-           </button>
-         </div>
-       </ng-container>
-     </div>
-
+<ng-container [formGroup]="formGroup">
+  <ng-container *ngFor="let group of form.groups">
+    <ng-container *ngIf="!group.hidden">
+      <div>
+        <h2 *ngIf="group.title">{{ group.title }}</h2>
+      </div>
+      <div nz-row nzGutter="16">
+        <ng-container *ngFor="let field of group.fields; let i = index">
+          <div nz-col class="gutter-row form-item" [nzSpan]="field?.span">
+            <label for="field{{ i }}" translate>{{ field?.title }}</label>
+            <ng-container [ngSwitch]="field.type">
+              <div *ngSwitchCase="'select'">
+                <nz-select
+                  style="width: 100%"
+                  (ngModelChange)="handleInputChange(field, $event)"
+                  [(ngModel)]="field.value"
+                  [nzPlaceHolder]="field.description"
+                  [formControlName]="field.name"
+                  [ngClass]="{
+                    'has-error': formGroup.controls[field.name].invalid && formGroup.controls[field.name].dirty,
+                    'has-success': formGroup.controls[field.name].valid && formGroup.controls[field.name].dirty
+                  }"
+                >
+                  <nz-option *ngFor="let option of field.options" [nzValue]="option.value" [nzLabel]="option.label">
+                  </nz-option>
+                </nz-select>
+              </div>
+              <div *ngSwitchCase="'checkBox'">
+                <nz-checkbox-group
+                  [formControlName]="field.name"
+                  [(ngModel)]="field.options"
+                  (ngModelChange)="handleInputChange(field, $event)"
+                ></nz-checkbox-group>
+              </div>
+              <div *ngSwitchCase="'radio'">
+                <nz-radio-group
+                  [(ngModel)]="field.value"
+                  [formControlName]="field.name"
+                  (ngModelChange)="handleInputChange(field, $event)"
+                >
+                  <label nz-radio *ngFor="let option of field.options" [nzValue]="option.value">{{
+                    option.label
+                  }}</label>
+                </nz-radio-group>
+              </div>
+              <div *ngSwitchCase="'search'">
+                <nz-select
+                  style="width: 100%"
+                  [nzPlaceHolder]="field.description"
+                  [(ngModel)]="field.value"
+                  [nzShowArrow]="false"
+                  [nzFilterOption]="nzFilterOption"
+                  (ngModelChange)="handleInputChange(field, $event)"
+                  (nzOnSearch)="search($event)"
+                  [formControlName]="field.name"
+                  [ngClass]="{
+                    'has-error': formGroup.controls[field.name].invalid && formGroup.controls[field.name].dirty,
+                    'has-success': formGroup.controls[field.name].valid && formGroup.controls[field.name].dirty
+                  }"
+                >
+                  <nz-option
+                    *ngFor="let option of field.option"
+                    [nzLabel]="option.label"
+                    [nzValue]="option.value"
+                  ></nz-option>
+                </nz-select>
+              </div>
+              <div *ngSwitchCase="'textArea'">
+                <textarea
+                  id="field{{ i }}"
+                  nz-input
+                  [attr.placeholder]="field.description"
+                  [(ngModel)]="field.value"
+                  (change)="handleInputChange(field, $event)"
+                  [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+                  [formControlName]="field.name"
+                  [ngClass]="{
+                    'has-error': formGroup.controls[field.name].invalid && formGroup.controls[field.name].dirty,
+                    'has-success': formGroup.controls[field.name].valid && formGroup.controls[field.name].dirty
+                  }"
+                >
+                </textarea>
+              </div>
+              <div *ngSwitchDefault>
+                <nz-input-group
+                  [nzSuffix]="suffix"
+                  [ngClass]="{
+                    'has-error': formGroup.controls[field.name].invalid && formGroup.controls[field.name].dirty,
+                    'has-success': formGroup.controls[field.name].valid && formGroup.controls[field.name].dirty
+                  }"
+                >
+                  <input
+                    [attr.type]="field.type"
+                    [(ngModel)]="field.value"
+                    (change)="handleInputChange(field, $event)"
+                    nz-input
+                    [attr.placeholder]="field.description"
+                    [formControlName]="field.name"
+                  />
+                </nz-input-group>
+              </div>
+            </ng-container>
+            <ng-template #suffix>
+              <i nz-icon [nzType]="field?.iconName"></i>
+            </ng-template>
+            <p *ngIf="formGroup.controls[field.name].invalid && formGroup.controls[field.name].dirty" translate>
+              {{ field.validationMessage }}
+            </p>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
   </ng-container>
-
+  <button *ngIf="form.submitButtonText" nz-button nzType="primary" (click)="submitForm()">
+    {{ form.submitButtonText }}
+  </button>
+</ng-container>

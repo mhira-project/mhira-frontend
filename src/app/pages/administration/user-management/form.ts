@@ -1,5 +1,5 @@
 import { FormItemType } from '../../../@shared/components/form-generator/form-item.type';
-import { FieldGroup } from '@shared/components/field-generator/field.group';
+import { Form } from '@shared/components/field-generator/formt';
 
 const createUser: FormItemType[] = [
   {
@@ -77,154 +77,162 @@ const updateUser: FormItemType[] = [
   },
 ];
 
-const changeUserPassword: FieldGroup[] = [
-  {
-    title: 'Change password',
-    fields: [
-      {
-        title: 'Enter New Password',
-        label: 'New Password',
-        type: 'password',
-        isRequired: true,
-        description: 'Enter new password',
-        validationMessage: '',
-        span: 24,
-        value: '',
-      },
-      {
-        title: 'Repeat Password',
-        label: 'Repeat Password',
-        type: 'password',
-        isRequired: true,
-        description: 'Repeat password',
-        validationMessage: '',
-        span: 24,
-        value: '',
-      },
-    ],
-  },
-];
+const changeUserPassword: Form = {
+  groups: [
+    {
+      title: 'Change password',
+      fields: [
+        {
+          title: 'Enter New Password',
+          name: 'password',
+          label: 'New Password',
+          type: 'password',
+          isRequired: true,
+          description: 'Enter new password',
+          validationMessage: '',
+          span: 24,
+          value: '',
+        },
+        {
+          title: 'Repeat Password',
+          name: 'repeatPassword',
+          label: 'Repeat Password',
+          type: 'password',
+          isRequired: true,
+          description: 'Repeat password',
+          validationMessage: '',
+          span: 24,
+          value: '',
+        },
+      ],
+    },
+  ],
+};
 
-const userProfile: FieldGroup[] = [
-  {
-    title: 'Personal Information',
-    fields: [
-      {
-        title: 'First Name',
-        label: 'First name',
-        type: 'text',
-        isRequired: true,
-        description: 'Enter your first name',
-        validationMessage: '',
-        span: 8,
-        value: '',
-      },
-      {
-        title: 'Last Name',
-        label: 'Last name',
-        type: 'text',
-        isRequired: true,
-        description: 'Enter your last name',
-        validationMessage: '',
-        span: 8,
-        value: '',
-      },
-      {
-        title: 'Gender',
-        label: 'Gender',
-        type: 'text',
-        isRequired: true,
-        description: 'Choose gender',
-        validationMessage: '',
-        span: 8,
-        value: '',
-      },
-      {
-        title: 'Date of Birth',
-        label: 'Date of Birth',
-        type: 'text',
-        isRequired: true,
-        description: 'Enter your date of birth',
-        validationMessage: '',
-        span: 8,
-        value: '',
-      },
-      {
-        title: 'Hospital ID',
-        label: 'Hospital ID',
-        type: 'text',
-        isRequired: true,
-        description: 'Enter hospital id',
-        validationMessage: '',
-        span: 8,
-        value: '',
-      },
-    ],
-  },
-  {
-    title: 'Contact Information',
-    fields: [
-      {
-        title: 'Email',
-        label: 'Email',
-        type: 'text',
-        isRequired: true,
-        description: 'Enter valid email',
-        validationMessage: '',
-        span: 8,
-        value: '',
-      },
-      {
-        title: 'Phone number',
-        label: 'Phone number',
-        type: 'text',
-        isRequired: true,
-        description: 'Enter phone number',
-        validationMessage: '',
-        span: 8,
-        value: '',
-      },
-      {
-        title: 'Address',
-        label: 'Address',
-        type: 'text',
-        isRequired: true,
-        description: 'Enter Address',
-        validationMessage: '',
-        span: 8,
-        value: '',
-      },
-    ],
-  },
-];
-const userRolesPermissions: FieldGroup[] = [
-  {
-    title: 'Roles and permissions',
-    fields: [
-      {
-        title: 'User role',
-        label: 'User role',
-        type: 'text',
-        isRequired: true,
-        description: 'Select user role',
-        validationMessage: '',
-        span: 24,
-        value: '',
-      },
-      {
-        title: 'User permissions',
-        label: 'User permissions',
-        type: 'text',
-        isRequired: true,
-        description: 'Select user permissions',
-        validationMessage: '',
-        span: 24,
-        value: '',
-      },
-    ],
-  },
-];
-export const form = {
+const userProfile: Form = {
+  groups: [
+    {
+      title: 'Personal Information',
+      fields: [
+        {
+          title: 'First Name',
+          label: 'First name',
+          type: 'text',
+          isRequired: true,
+          description: 'Enter your first name',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+        {
+          title: 'Last Name',
+          label: 'Last name',
+          type: 'text',
+          isRequired: true,
+          description: 'Enter your last name',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+        {
+          title: 'Gender',
+          label: 'Gender',
+          type: 'text',
+          isRequired: true,
+          description: 'Choose gender',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+        {
+          title: 'Date of Birth',
+          label: 'Date of Birth',
+          type: 'text',
+          isRequired: true,
+          description: 'Enter your date of birth',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+        {
+          title: 'Hospital ID',
+          label: 'Hospital ID',
+          type: 'text',
+          isRequired: true,
+          description: 'Enter hospital id',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+      ],
+    },
+    {
+      title: 'Contact Information',
+      fields: [
+        {
+          title: 'Email',
+          label: 'Email',
+          type: 'text',
+          isRequired: true,
+          description: 'Enter valid email',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+        {
+          title: 'Phone number',
+          label: 'Phone number',
+          type: 'text',
+          isRequired: true,
+          description: 'Enter phone number',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+        {
+          title: 'Address',
+          label: 'Address',
+          type: 'text',
+          isRequired: true,
+          description: 'Enter Address',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+      ],
+    },
+  ],
+};
+const userRolesPermissions: Form = {
+  groups: [
+    {
+      title: 'Roles and permissions',
+      fields: [
+        {
+          title: 'User role',
+          label: 'User role',
+          type: 'text',
+          isRequired: true,
+          description: 'Select user role',
+          validationMessage: '',
+          span: 24,
+          value: '',
+        },
+        {
+          title: 'User permissions',
+          label: 'User permissions',
+          type: 'text',
+          isRequired: true,
+          description: 'Select user permissions',
+          validationMessage: '',
+          span: 24,
+          value: '',
+        },
+      ],
+    },
+  ],
+};
+export const userForms = {
   createUser,
   updateUser,
   changeUserPassword,

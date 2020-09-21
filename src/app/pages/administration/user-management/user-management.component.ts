@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { form } from '@app/pages/administration/user-management/form';
-import { FormItemType } from '@shared/components/form-generator/form-item.type';
-import { FieldType } from '@shared/components/field-generator/field.type';
+import { userForms } from '@app/pages/administration/user-management/form';
+import { Router } from '@angular/router';
 import { ModalType } from '@app/pages/administration/user-management/modal.type';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FieldGroup } from '@shared/components/field-generator/field.group';
+import { Form } from '@shared/components/field-generator/formt';
 // @ts-ignore
 const faker = require('faker');
 // @ts-ignore
@@ -82,7 +80,7 @@ export class UserManagementComponent implements OnInit {
     },
   ];
   errors: any[] = [];
-  changePasswordForm: FieldGroup[] = form.changeUserPassword;
+  changePasswordForm: Form = userForms.changeUserPassword;
 
   constructor(private modalService: NzModalService, private message: NzMessageService, private router: Router) {}
 
@@ -104,6 +102,7 @@ export class UserManagementComponent implements OnInit {
       });
     }
   }
+
   onCustomActionEvent(event: any) {
     this.user = this.listOfData[event.index];
     console.log(this.user);

@@ -4,18 +4,11 @@ export interface FieldType {
   name?: string;
   description?: string;
   label?: string;
-  type:
-    | 'text'
-    | 'number'
-    | 'password'
-    | 'search'
-    | 'textArea'
-    | 'checkBox'
-    | 'radio'
-    | 'select'
-    | 'date'
-    | 'submitButton';
+  type: 'text' | 'number' | 'password' | 'search' | 'textArea' | 'checkBox' | 'radio' | 'select' | 'date';
   iconName?: string;
+  pattern?: string;
+  minLength?: number;
+  maxLength?: number;
   validationMessage?: string;
   isRequired?: boolean;
   span?: number;
