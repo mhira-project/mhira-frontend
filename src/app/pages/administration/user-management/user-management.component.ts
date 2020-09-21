@@ -4,6 +4,9 @@ import { userForms } from '@app/pages/administration/user-management/form';
 import { Router } from '@angular/router';
 import { ModalType } from '@app/pages/administration/user-management/modal.type';
 import { Form } from '@shared/components/field-generator/formt';
+import { User } from '@app/pages/administration/administration.interfaces';
+import { userTable } from '@app/pages/administration/user-management/users.table';
+import { UserService } from '@app/pages/administration/@services/user.service';
 // @ts-ignore
 const faker = require('faker');
 // @ts-ignore
@@ -15,96 +18,75 @@ const moment = require('moment');
   styleUrls: ['./user-management.component.scss'],
 })
 export class UserManagementComponent implements OnInit {
-  users: any[] = [];
+  isLoading: boolean = false;
   showModal: boolean = false;
   modalType: ModalType;
   changePasswordModal: ModalType = {
     title: 'Change Password',
     type: 'changePassword',
   };
-  user = {
+  user: User = {
+    address: '',
+    gender: '',
+    birthDate: '',
     email: '',
-    password: '',
     firstName: '',
+    middleName: '',
     lastName: '',
     phone: '',
-    id: '',
+    id: 0,
   };
+  users: User[] = [];
+  usersTable: { columns: any[]; rows: User[] } = {
+    columns: userTable.columns,
+    rows: [],
+  };
+  actions = userTable.actions;
   selectedUserIndex = -1;
-  listOfData: any[] = [];
-  listOfColumn: any[] = [
-    {
-      title: 'First name',
-      name: 'firstName',
-      isFilterable: true,
-    },
-    {
-      title: 'Last name',
-      name: 'lastName',
-
-      isFilterable: true,
-    },
-    {
-      title: 'Email',
-      name: 'email',
-      isFilterable: true,
-    },
-    {
-      title: 'Phone',
-      name: 'phone',
-      isFilterable: false,
-    },
-    {
-      title: 'Status',
-      name: 'status',
-      isFilterable: false,
-    },
-    {
-      title: 'Created At',
-      name: 'createdAt',
-      isFilterable: false,
-    },
-  ];
-  listOfCustomActions: any[] = [
-    {
-      type: 'edit',
-      name: 'Edit User',
-    },
-    {
-      type: 'changePassword',
-      name: 'Change Password',
-    },
-    {
-      type: 'delete',
-      name: 'Delete User',
-    },
-  ];
   errors: any[] = [];
   changePasswordForm: Form = userForms.changeUserPassword;
 
-  constructor(private modalService: NzModalService, private message: NzMessageService, private router: Router) {}
+  constructor(
+    private modalService: NzModalService,
+    private message: NzMessageService,
+    private router: Router,
+    private usersService: UserService
+  ) {}
 
   ngOnInit(): void {
-    for (var i = 0; i < 10; i++) {
-      var id = faker.random.uuid();
-      var lastName = faker.name.lastName();
-      var firstName = faker.name.firstName();
-      var phone = faker.phone.phoneNumber('255#########');
-      var createdAt = faker.date.past();
-      this.listOfData.push({
-        id: id,
-        firstName: firstName,
-        lastName: lastName,
-        email: `${firstName}.${lastName}@gmail.com`,
-        createdAt: moment(createdAt).format('YYYY-MM-DD'),
-        phone: phone,
-        status: 'ACTIVE',
-      });
-    }
+    this.getUsers();
+  }
+
+  getUsers() {
+    this.isLoading = true;
+    this.users = [];
+    this.usersService.getUsers().subscribe(
+      async ({ data }) => {
+        const usersData = data['getUsers'];
+        usersData.edges.map((user: any) => {
+          const color = user.node.active
+            ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
+            : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
+
+          const active = user.node.active ? 'active' : 'inactive';
+
+          user.node.updatedAt = user.node.updatedAt ? moment(user.node.updatedAt).format('DD-MM-YYYY HH:mm') : '';
+          user.node.birthDate = user.node.birthDate ? moment(user.node.birthDate).format('DD-MM-YYYY HH:mm') : '';
+          user.node.active = `<nz-tag class="${color}">${active}</nz-tag>`;
+          this.users.push(user.node);
+        });
+        this.usersTable.rows = this.users;
+        this.isLoading = false;
+      },
+      (error) => {
+        this.errors = error.graphQLErrors.map((x: { message: any }) => x.message);
+        this.isLoading = false;
+      }
+    );
   }
 
   onCustomActionEvent(event: any) {
-    this.user = this.listOfData[event.index];
+    this.user = this.usersTable.rows[event.index];
     console.log(this.user);
     this.selectedUserIndex = event.index;
     switch (event.action.type) {
