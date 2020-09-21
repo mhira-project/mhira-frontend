@@ -2,6 +2,7 @@ import { Form } from '@shared/components/field-generator/formt';
 
 const searchForm: Form = {
   submitButtonText: '',
+  submitButtonClass: 'hide-submit',
   groups: [
     {
       fields: [
@@ -101,7 +102,8 @@ const searchForm: Form = {
 };
 
 const patient: Form = {
-  submitButtonText: 'Save',
+  submitButtonText: 'Save Patient',
+  submitButtonClass: 'right-align-submit',
   groups: [
     {
       title: 'Personal Information',

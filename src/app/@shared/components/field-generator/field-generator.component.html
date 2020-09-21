@@ -111,7 +111,13 @@
       </div>
     </ng-container>
   </ng-container>
-  <button *ngIf="form.submitButtonText" nz-button nzType="primary" (click)="submitForm()">
+  <button
+    *ngIf="form.submitButtonText"
+    nz-button
+    nzType="primary"
+    class="{{ form.submitButtonClass }}"
+    (click)="submitForm()"
+  >
     {{ form.submitButtonText }}
   </button>
 </ng-container>
