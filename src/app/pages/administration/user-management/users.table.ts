@@ -31,6 +31,11 @@ const columns: any[] = [
     isFilterable: true,
   },
   {
+    title: 'Work ID',
+    name: 'workID',
+    isFilterable: true,
+  },
+  {
     title: 'Phone',
     name: 'phone',
     isFilterable: false,

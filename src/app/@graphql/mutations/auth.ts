@@ -1,19 +1,23 @@
 import gql from 'graphql-tag';
 
 const login = gql`
-  query($identifier: String!, $password: String!) {
+  mutation($identifier: String!, $password: String!) {
     login(identifier: $identifier, password: $password) {
       accessToken
       refreshToken
       user {
         id
-        name
-        email
+        workID
+        firstName
+        lastName
         phone
-        createdAt
+        email
+        address
+        gender
+        birthDate
         updatedAt
+        createdAt
       }
-      guard
     }
   }
 `;
