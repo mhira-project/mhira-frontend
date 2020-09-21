@@ -18,6 +18,8 @@ const getPatients = gql`
           birthDate
           birthCountryCode
           nationality
+          updatedAt
+          createdAt
         }
       }
       pageInfo {

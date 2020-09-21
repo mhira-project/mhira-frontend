@@ -1,24 +1,26 @@
 <div nz-row>
-  <div nz-col nzSpan="20">
+  <div nz-col nzSpan="24">
     <app-custom-table
       [showCustomActions]="true"
       [showSearch]="false"
       [listOfCustomActions]="actions"
       [listOfData]="patientsTable.rows"
       [listOfColumn]="patientsTable.columns"
-      [showButton]="false"
       (onAction)="onActionSelect($event)"
+      [showButton]="true"
+      [buttonText]="'Create Patient'"
+      (onButton)="handleCreatePatient()"
     >
     </app-custom-table>
   </div>
-  <div nz-col nzSpan="4">
-    <!-- <nz-card>
+  <!--<div nz-col nzSpan="4">
+    <nz-card>
       <app-field-generator
         (inputChange)="handleInputChange($event)"
         (submitFields)="submit($event)"
         [form]="patientForms.searchForm"
       >
       </app-field-generator>
-    </nz-card>-->
-  </div>
+    </nz-card>
+  </div>-->
 </div>

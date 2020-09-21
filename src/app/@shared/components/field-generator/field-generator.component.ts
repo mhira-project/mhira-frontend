@@ -24,7 +24,7 @@ export class FieldGeneratorComponent implements OnInit {
     const fields = {};
     for (const group of this.form) {
       for (const field of group.fields) {
-        fields[field.title] = field.value;
+        fields[field.name] = field.value;
       }
     }
     this.submitFields.emit(fields);
@@ -37,11 +37,11 @@ export class FieldGeneratorComponent implements OnInit {
     }
 
     if (field.type === 'select' || field.type === 'radio') {
-      this.inputChange.emit({ title: field.title, value: event });
+      this.inputChange.emit({ name: field.name, value: event });
       return;
     }
 
-    this.inputChange.emit({ title: field.title, value: event.target.value });
+    this.inputChange.emit({ name: field.name, value: event.target.value });
   }
 
   parseCheckBoxValues(options: { value: number | string; label: string; checked: boolean }[], field: any): void {

@@ -1,6 +1,7 @@
 export interface FieldType {
   value: number | string | number[] | string[];
   title?: string;
+  name?: string;
   description?: string;
   label?: string;
   type:
@@ -18,5 +19,5 @@ export interface FieldType {
   validationMessage?: string;
   isRequired?: boolean;
   span?: number;
-  options?: { value: number | string; label: string }[];
+  options?: { value: number | boolean | string; label: string }[];
 }

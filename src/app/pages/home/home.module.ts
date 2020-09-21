@@ -8,15 +8,24 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { PatientsComponent } from './patients/patients.component';
 import { CaseManagersComponent } from './case-managers/case-managers.component';
-import { NzCardModule, NzGridModule } from 'ng-zorro-antd';
+import {
+  NzButtonModule,
+  NzCardModule,
+  NzGridModule,
+  NzModalModule,
+  NzTableModule,
+  NzTabsModule,
+  NzTagModule,
+} from 'ng-zorro-antd';
 import { HomeService } from './home.service';
-import { PatientsService } from './patients/patients.service';
+import { PatientsService } from './@services/patients.service';
+import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 
-const antModules = [NzGridModule, NzCardModule];
+const antModules = [NzGridModule, NzCardModule, NzTagModule, NzModalModule, NzButtonModule, NzTabsModule];
 
 @NgModule({
   imports: [...antModules, CommonModule, TranslateModule, SharedModule, HomeRoutingModule],
-  declarations: [HomeComponent, PatientsComponent, CaseManagersComponent],
+  declarations: [HomeComponent, PatientsComponent, CaseManagersComponent, PatientProfileComponent],
   providers: [PatientsService, HomeService],
 })
 export class HomeModule {}

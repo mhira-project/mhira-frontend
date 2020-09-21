@@ -4,6 +4,7 @@ import { extract } from '../../i18n/index';
 import { HomeComponent } from './home.component';
 import { PatientsComponent } from './patients/patients.component';
 import { CaseManagersComponent } from './case-managers/case-managers.component';
+import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,13 @@ const routes: Routes = [
         component: PatientsComponent,
         data: {
           title: extract('Patients'),
+        },
+      },
+      {
+        path: 'profile',
+        component: PatientProfileComponent,
+        data: {
+          title: extract('Patient Profile'),
         },
       },
       {
