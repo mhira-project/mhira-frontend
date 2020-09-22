@@ -39,7 +39,7 @@ export class PatientsService {
   deletePatient(patient: Patient): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: PatientsMutations.deletePatient,
-      variables: { patientId: patient.id },
+      variables: { id: patient.id },
       fetchPolicy: 'no-cache',
     });
   }

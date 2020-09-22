@@ -72,7 +72,7 @@ export class PatientsComponent implements OnInit, OnChanges {
       async ({ data }) => {
         const deletedIndex = this.patients.findIndex((_patient) => _patient.id === patient.id);
         this.patients.splice(deletedIndex, 1);
-        this.patientsTable.rows = this.patients;
+        this.patientsTable.rows.splice(deletedIndex, 1);
         this.isVisible = false;
         this.isOkLoading = false;
       },
