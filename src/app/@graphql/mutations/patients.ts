@@ -65,9 +65,10 @@ const updatePatient = gql`
     $birthDate: DateTime
     $birthCountryCode: String
     $nationality: String
-    $patientId: Int!
+    $id: Int!
   ) {
     updatePatient(
+      id: $id
       input: {
         active: $active
         medicalRecordNo: $medicalRecordNo
@@ -82,7 +83,6 @@ const updatePatient = gql`
         birthCountryCode: $birthCountryCode
         nationality: $nationality
       }
-      patientId: $patientId
     ) {
       id
       active

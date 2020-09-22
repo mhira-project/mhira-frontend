@@ -78,6 +78,7 @@ export class PatientProfileComponent implements OnInit {
         });
         this.isLoading = false;
         this.loadingMessage = '';
+        this.message.create('success', `Patient has successfully been created`);
       }
     );
   }
@@ -104,7 +105,7 @@ export class PatientProfileComponent implements OnInit {
 
         this.isLoading = false;
         this.loadingMessage = '';
-        this.message.create('success', `Patient has successfully been created`);
+        this.message.create('success', `Patient has successfully been updated`);
       },
       (error) => {
         this.hasErrors = true;
