@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
+
 /**
  * Prefixes all requests not starting with `http[s]` with `environment.serverUrl`.
  */
@@ -26,7 +27,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap((results) => {
         if (results instanceof HttpResponse) {
-          if (results.body.errors && results.body.errors[0].message === 'Unauthorized') {
+          if (results.body.errors && results.body.errors[0].extensions.code === 'UNAUTHENTICATED') {
             this.router.navigate(['/auth/login']);
           }
         }
