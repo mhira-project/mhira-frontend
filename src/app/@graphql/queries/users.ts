@@ -9,7 +9,9 @@ const getUsers = gql`
           id
           workID
           firstName
+          middleName
           lastName
+          username
           phone
           email
           address

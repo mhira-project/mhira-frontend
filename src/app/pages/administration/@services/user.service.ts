@@ -31,7 +31,7 @@ export class UserService {
   updateUser(user: User): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: UsersMutations.updateUser,
-      variables: { input: user, userId: user.id },
+      variables: user,
       fetchPolicy: 'no-cache',
     });
   }
