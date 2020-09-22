@@ -10,6 +10,7 @@ const getPatients = gql`
           active
           medicalRecordNo
           firstName
+          middleName
           lastName
           phone
           email
