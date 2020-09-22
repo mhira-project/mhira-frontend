@@ -85,7 +85,22 @@ export class UserManagementComponent implements OnInit {
       }
     );
   }
-
+  deleteUser(index: any) {
+    this.isLoading = true;
+    const user = this.users[index];
+    this.usersService.deleteUser(user).subscribe(
+      async ({ data }) => {
+        const deletedIndex = this.users.findIndex((_user) => _user.id === user.id);
+        this.users.splice(deletedIndex, 1);
+        this.usersTable.rows = this.users;
+        this.isLoading = false;
+        this.getUsers();
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
+  }
   onCustomActionEvent(event: any) {
     this.user = this.usersTable.rows[event.index];
     console.log(this.user);
@@ -110,7 +125,7 @@ export class UserManagementComponent implements OnInit {
           nzTitle: 'Confirm',
           nzContent: `Are you sure you want to delete ${this.user.firstName} ${this.user.lastName}`,
           nzOkText: 'Delete',
-          nzOnOk: () => {},
+          nzOnOk: () => this.deleteUser(event.index),
           nzCancelText: 'Cancel',
         });
         break;

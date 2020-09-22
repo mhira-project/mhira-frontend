@@ -93,8 +93,8 @@ const updateUser = gql`
 `;
 
 const deleteUser = gql`
-  mutation($userId: Int!) {
-    deleteUser(userId: $userId)
+  mutation($id: Float!) {
+    deleteUser(id: $id)
   }
 `;
 
