@@ -52,24 +52,28 @@ const updateUser = gql`
     $firstName: String!
     $middleName: String
     $lastName: String!
+    $username: String!
     $phone: String
     $email: String
     $address: String
     $gender: String
     $birthDate: DateTime
-    $userId: Int!
+    $id: Int!
   ) {
     updateUser(
-      workID: $workID
-      firstName: $firstName
-      middleName: $middleName
-      lastName: $lastName
-      phone: $phone
-      email: $email
-      address: $address
-      gender: $gender
-      birthDate: $birthDate
-      userId: $userId
+      input: {
+        workID: $workID
+        firstName: $firstName
+        middleName: $middleName
+        lastName: $lastName
+        username: $username
+        phone: $phone
+        email: $email
+        address: $address
+        gender: $gender
+        birthDate: $birthDate
+      }
+      id: $id
     ) {
       id
       workID

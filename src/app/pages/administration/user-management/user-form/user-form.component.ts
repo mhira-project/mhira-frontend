@@ -24,6 +24,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   changeUserPasswordFields: Form = userForms.changeUserPassword;
   tabSub: any;
   routeSub: any;
+  tabIndexSub: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -40,6 +41,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.routeSub.unsubscribe();
     this.tabSub.unsubscribe();
+    this.tabIndexSub.unsubscribe();
   }
 
   getUserFromUrl(): void {
@@ -48,6 +50,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         const bytes = CryptoJS.AES.decrypt(params.user, environment.secretKey);
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.user = decryptedData;
+        this.profileFields = userForms.userProfileEdit;
         this.onChangeUser();
         this.profileFields.groups.map((group) => {
           group.fields.map((field) => {
@@ -59,13 +62,13 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   onChangeUser() {
-    this.tabSub = this.tabsDataService.selectedIndex.subscribe((index) => {
+    this.tabIndexSub = this.tabsDataService.selectedIndex.subscribe((index) => {
       if (index !== -1) {
-        this.tabsDataService.tabs.subscribe((tabs) => {
+        this.tabSub = this.tabsDataService.tabs.subscribe((tabs) => {
           if (this.user) {
-            tabs[index].title = `${this.user.firstName} ${this.user.lastName}`;
+            tabs[index]['title'] = `${this.user.firstName} ${this.user.lastName}`;
           } else {
-            tabs[index].title = 'New User';
+            tabs[index]['title'] = 'New User';
           }
         });
       }
@@ -122,7 +125,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
     );
   }
   submitForm(form: any): void {
-    if (form.id) {
+    if (this.user.id) {
+      form.id = this.user.id;
       this.updateUser(form);
     } else {
       this.createUser(form);
