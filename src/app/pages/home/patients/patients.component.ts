@@ -43,7 +43,7 @@ export class PatientsComponent implements OnInit, OnChanges {
       async ({ data }) => {
         const patientsData = data['getPatients'];
         patientsData.edges.map((patient: any) => {
-          const row = patient.node;
+          const row = Object.assign({}, patient.node);
 
           const color = row.active
             ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
