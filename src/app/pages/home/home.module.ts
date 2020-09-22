@@ -12,6 +12,7 @@ import {
   NzButtonModule,
   NzCardModule,
   NzGridModule,
+  NzMessageModule,
   NzModalModule,
   NzTableModule,
   NzTabsModule,
@@ -21,7 +22,15 @@ import { HomeService } from './home.service';
 import { PatientsService } from './@services/patients.service';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 
-const antModules = [NzGridModule, NzCardModule, NzTagModule, NzModalModule, NzButtonModule, NzTabsModule];
+const antModules = [
+  NzGridModule,
+  NzCardModule,
+  NzTagModule,
+  NzModalModule,
+  NzButtonModule,
+  NzTabsModule,
+  NzMessageModule,
+];
 
 @NgModule({
   imports: [...antModules, CommonModule, TranslateModule, SharedModule, HomeRoutingModule],

@@ -115,9 +115,11 @@
     *ngIf="form.submitButtonText"
     nz-button
     nzType="primary"
-    class="{{ form.submitButtonClass }}"
-    (click)="submitForm()"
+    [ngClass]="form.submitButtonClass"
+    (click)="handleSubmitForm()"
+    [disabled]="formGroup.invalid"
   >
     {{ form.submitButtonText }}
   </button>
 </ng-container>
+<app-loader [isLoading]="isLoading" [message]="loadingMessage"></app-loader>

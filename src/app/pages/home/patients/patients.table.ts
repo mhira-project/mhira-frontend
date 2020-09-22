@@ -13,17 +13,17 @@ const columns: any[] = [
   {
     title: 'First name',
     name: 'firstName',
-    isFilterable: true,
+    isFilterable: false,
   },
   {
     title: 'Last name',
     name: 'lastName',
-    isFilterable: true,
+    isFilterable: false,
   },
   {
     title: 'Date of Birth',
     name: 'birthDate',
-    isFilterable: true,
+    isFilterable: false,
   },
   {
     title: 'Status',
