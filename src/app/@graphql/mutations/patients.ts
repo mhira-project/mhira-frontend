@@ -105,8 +105,8 @@ const updatePatient = gql`
 `;
 
 const deletePatient = gql`
-  mutation($patientId: Int!) {
-    deletePatient(patientId: $patientId)
+  mutation($id: Int!) {
+    deletePatient(id: $id)
   }
 `;
 

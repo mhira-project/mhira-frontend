@@ -5,7 +5,7 @@ import { Patient } from '../home.interfaces';
 import * as moment from 'moment';
 import { patientForms } from '../@forms/patient-forms';
 import { environment } from '@env/environment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const CryptoJS = require('crypto-js');
 
@@ -25,11 +25,21 @@ export class PatientProfileComponent implements OnInit {
   constructor(
     private patientsService: PatientsService,
     private message: NzMessageService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.clearForms();
     this.getPatientFromUrl();
+  }
+
+  clearForms() {
+    this.patientForms.patient.groups.map((group) => {
+      group.fields.map((field) => {
+        field.value = null;
+      });
+    });
   }
 
   getPatientFromUrl(): void {
@@ -70,6 +80,8 @@ export class PatientProfileComponent implements OnInit {
 
         this.isLoading = false;
         this.loadingMessage = '';
+        this.message.create('success', `Patient has successfully been created`);
+        this.router.navigate(['/mhira/home/patients']);
       },
       (error) => {
         this.hasErrors = true;
@@ -78,7 +90,6 @@ export class PatientProfileComponent implements OnInit {
         });
         this.isLoading = false;
         this.loadingMessage = '';
-        this.message.create('success', `Patient has successfully been created`);
       }
     );
   }
@@ -119,7 +130,7 @@ export class PatientProfileComponent implements OnInit {
   }
 
   submitForm(patientData: any): void {
-    if (this.patient.id) {
+    if (this.patient) {
       patientData.id = this.patient.id;
       this.updatePatient(patientData);
     } else {
