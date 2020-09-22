@@ -60,23 +60,19 @@ export class UserManagementComponent implements OnInit {
   getUsers() {
     this.isLoading = true;
     this.users = [];
+    let rows: User[] = [];
     this.usersService.getUsers().subscribe(
       async ({ data }) => {
         const usersData = data['getUsers'];
         usersData.edges.map((user: any) => {
-          const row = Object.assign({}, user.node);
-          const color = row.active
-            ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
-            : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-
-          const active = row.active ? 'active' : 'inactive';
+          let row = Object.assign({}, user.node);
 
           row.updatedAt = row.updatedAt ? moment(row.updatedAt).format('DD-MM-YYYY HH:mm') : '';
           row.birthDate = row.birthDate ? moment(row.birthDate).format('DD-MM-YYYY HH:mm') : '';
-          row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
-          this.usersTable.rows.push(row);
+          rows.push(row);
           this.users.push(user.node);
         });
+        this.usersTable.rows = rows;
         this.isLoading = false;
       },
       (error) => {
