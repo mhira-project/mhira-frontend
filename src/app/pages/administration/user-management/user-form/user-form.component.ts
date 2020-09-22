@@ -38,8 +38,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
     this.getUserFromUrl();
   }
   ngOnDestroy() {
-    this.tabSub.unsubscribe();
     this.routeSub.unsubscribe();
+    this.tabSub.unsubscribe();
   }
 
   getUserFromUrl(): void {
@@ -64,7 +64,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
         this.tabsDataService.tabs.subscribe((tabs) => {
           if (this.user) {
             tabs[index].title = `${this.user.firstName} ${this.user.lastName}`;
-            tabs[index].path = `${tabs[index].path}?user=${JSON.stringify(this.user)}`;
           } else {
             tabs[index].title = 'New User';
           }
