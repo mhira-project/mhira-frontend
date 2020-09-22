@@ -40,17 +40,9 @@ export class UserFormComponent implements OnInit {
       if (index !== -1) {
         this.tabsDataService.tabs.subscribe((tabs) => {
           if (!tabs[index].title) tabs[index].title = 'New User';
-        });
-      }
-    });
-  }
-  updateTab(user: User) {
-    this.tabsDataService.selectedIndex.subscribe((index) => {
-      if (index !== -1) {
-        this.tabsDataService.tabs.subscribe((tabs) => {
-          if (!tabs[index].title) {
-            tabs[index].title = `${user.firstName} ${user.lastName}`;
-            tabs[index].path = `${tabs[index].path}?user=${JSON.stringify(user)}`;
+          if (this.user) {
+            tabs[index].title = `${this.user.firstName} ${this.user.lastName}`;
+            tabs[index].path = `${tabs[index].path}?user=${JSON.stringify(this.user)}`;
           }
         });
       }
@@ -69,7 +61,7 @@ export class UserFormComponent implements OnInit {
         //close this tab
         this.user = userData;
         //open another
-        this.updateTab(userData);
+        this.onChangeUser();
       },
       (error) => {
         this.isLoading = false;
