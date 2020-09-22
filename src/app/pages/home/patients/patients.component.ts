@@ -92,7 +92,6 @@ export class PatientsComponent implements OnInit, OnChanges {
   }
 
   handleActionClick(event: any): void {
-    console.log(this.patients[event.index]);
     switch (event.action.name) {
       case 'Delete Patient':
         this.isVisible = true;

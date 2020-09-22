@@ -19,6 +19,8 @@ export class PatientProfileComponent implements OnInit {
   loadingMessage = '';
   patientForms = patientForms;
   patient: Patient;
+  hasErrors = false;
+  errors: string[] = [];
 
   constructor(
     private patientsService: PatientsService,
@@ -36,6 +38,7 @@ export class PatientProfileComponent implements OnInit {
         const bytes = CryptoJS.AES.decrypt(params.profile, environment.secretKey);
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.patient = decryptedData;
+        this.patient.birthDate = decryptedData.birthDate.slice(0, 10);
         this.patientForms.patient.groups.map((group) => {
           group.fields.map((field) => {
             field.value = decryptedData[field.name];
@@ -47,6 +50,8 @@ export class PatientProfileComponent implements OnInit {
 
   createPatient(patient: Patient) {
     this.isLoading = true;
+    this.hasErrors = false;
+    this.errors = [];
     this.loadingMessage = `Creating patient ${patient.firstName} ${patient.lastName}`;
     this.patientsService.createPatient(patient).subscribe(
       async ({ data }) => {
@@ -65,6 +70,10 @@ export class PatientProfileComponent implements OnInit {
         this.loadingMessage = '';
       },
       (error) => {
+        this.hasErrors = true;
+        error.graphQLErrors.map((_error: any) => {
+          this.errors.push(_error.message);
+        });
         this.isLoading = false;
         this.loadingMessage = '';
       }
@@ -73,6 +82,8 @@ export class PatientProfileComponent implements OnInit {
 
   updatePatient(patient: Patient) {
     this.isLoading = true;
+    this.hasErrors = false;
+    this.errors = [];
     this.loadingMessage = `Updating patient ${patient.firstName} ${patient.lastName}`;
     this.patientsService.updatePatient(patient).subscribe(
       async ({ data }) => {
@@ -94,6 +105,10 @@ export class PatientProfileComponent implements OnInit {
         this.message.create('success', `Patient has successfully been created`);
       },
       (error) => {
+        this.hasErrors = true;
+        error.graphQLErrors.map((_error: any) => {
+          this.errors.push(_error.message);
+        });
         this.isLoading = false;
         this.loadingMessage = '';
       }

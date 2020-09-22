@@ -9,6 +9,7 @@ import { HomeComponent } from './home.component';
 import { PatientsComponent } from './patients/patients.component';
 import { CaseManagersComponent } from './case-managers/case-managers.component';
 import {
+  NzAlertModule,
   NzButtonModule,
   NzCardModule,
   NzGridModule,
@@ -30,6 +31,7 @@ const antModules = [
   NzButtonModule,
   NzTabsModule,
   NzMessageModule,
+  NzAlertModule,
 ];
 
 @NgModule({

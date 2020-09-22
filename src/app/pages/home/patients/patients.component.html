@@ -1,6 +1,7 @@
 <div nz-row>
   <div nz-col nzSpan="24">
     <app-custom-table
+      [loading]="isLoading"
       [showCustomActions]="true"
       [showSearch]="false"
       [listOfCustomActions]="actions"
