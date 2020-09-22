@@ -4,6 +4,10 @@ import { PatientsService } from '../@services/patients.service';
 import { Patient } from '../home.interfaces';
 import * as moment from 'moment';
 import { patientForms } from '../@forms/patient-forms';
+import { environment } from '@env/environment';
+import { ActivatedRoute } from '@angular/router';
+
+const CryptoJS = require('crypto-js');
 
 @Component({
   selector: 'app-patient-profile',
@@ -14,10 +18,32 @@ export class PatientProfileComponent implements OnInit {
   isLoading = false;
   loadingMessage = '';
   patientForms = patientForms;
+  patient: Patient;
 
-  constructor(private patientsService: PatientsService, private message: NzMessageService) {}
+  constructor(
+    private patientsService: PatientsService,
+    private message: NzMessageService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getPatientFromUrl();
+  }
+
+  getPatientFromUrl(): void {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params.profile) {
+        const bytes = CryptoJS.AES.decrypt(params.profile, environment.secretKey);
+        const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        this.patient = decryptedData;
+        this.patientForms.patient.groups.map((group) => {
+          group.fields.map((field) => {
+            field.value = decryptedData[field.name];
+          });
+        });
+      }
+    });
+  }
 
   createPatient(patient: Patient) {
     this.isLoading = true;
@@ -74,11 +100,12 @@ export class PatientProfileComponent implements OnInit {
     );
   }
 
-  submitForm(form: any): void {
-    if (form.id) {
-      this.updatePatient(form);
+  submitForm(patientData: any): void {
+    if (this.patient.id) {
+      patientData.id = this.patient.id;
+      this.updatePatient(patientData);
     } else {
-      this.createPatient(form);
+      this.createPatient(patientData);
     }
   }
 }

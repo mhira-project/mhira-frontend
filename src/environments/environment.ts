@@ -12,6 +12,7 @@ import { env } from './.env';
 
 export const environment = {
   production: false,
+  secretKey: 'hfsdjfhdufhiuegewurge8365746543785643785638276423874',
   hmr: true,
   version: env.npm_package_version + '-dev',
   baseURL: ' https://api.mhira.net/graphql',

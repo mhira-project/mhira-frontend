@@ -129,7 +129,6 @@ export class TabsComponent implements OnInit {
               }) !== undefined;
 
             if (!isInArray) {
-              console.log(tab);
               this.tabs.push(tab);
             }
             this.tabs.filter((_tab) => {

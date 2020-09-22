@@ -5,6 +5,9 @@ import { PatientsService } from '@app/pages/home/@services/patients.service';
 import { patientForms } from '@app/pages/home/@forms/patient-forms';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { environment } from '@env/environment';
+
+const CryptoJS = require('crypto-js');
 
 @Component({
   selector: 'app-patients',
@@ -13,13 +16,16 @@ import { Router } from '@angular/router';
 })
 export class PatientsComponent implements OnInit, OnChanges {
   isLoading = false;
-  patients: Patient[] = [];
+  isVisible = false;
+  isOkLoading = false;
+  patients: any[] = [];
   patientsTable: { columns: any[]; rows: Patient[] } = {
     columns: table.columns,
     rows: [],
   };
   actions = table.actions;
   patientForms = patientForms;
+  currentPatientIndex: number;
 
   constructor(private patientsService: PatientsService, private router: Router) {}
 
@@ -32,26 +38,25 @@ export class PatientsComponent implements OnInit, OnChanges {
   getPatients() {
     this.isLoading = true;
     this.patients = [];
+    const _patients: any[] = [];
     this.patientsService.getPatients().subscribe(
       async ({ data }) => {
         const patientsData = data['getPatients'];
         patientsData.edges.map((patient: any) => {
-          const color = patient.node.active
+          const row = patient.node;
+
+          const color = row.active
             ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
             : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-
-          const active = patient.node.active ? 'active' : 'inactive';
-
-          patient.node.updatedAt = patient.node.updatedAt
-            ? moment(patient.node.updatedAt).format('DD-MM-YYYY HH:mm')
-            : '';
-          patient.node.birthDate = patient.node.birthDate
-            ? moment(patient.node.birthDate).format('DD-MM-YYYY HH:mm')
-            : '';
-          patient.node.active = `<nz-tag class="${color}">${active}</nz-tag>`;
+          const active = row.active ? 'active' : 'inactive';
+          row.updatedAt = row.updatedAt ? moment(row.updatedAt).format('DD-MM-YYYY HH:mm') : '';
+          row.birthDate = row.birthDate ? moment(row.birthDate).format('DD-MM-YYYY HH:mm') : '';
+          row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
+          _patients.push(row);
           this.patients.push(patient.node);
         });
-        this.patientsTable.rows = this.patients;
+
+        this.patientsTable.rows = _patients;
         this.isLoading = false;
       },
       (error) => {
@@ -60,24 +65,47 @@ export class PatientsComponent implements OnInit, OnChanges {
     );
   }
 
-  deletePatient(patient: Patient) {
-    this.isLoading = true;
+  deletePatient() {
+    this.isOkLoading = true;
+    const patient = this.patients[this.currentPatientIndex];
     this.patientsService.deletePatient(patient).subscribe(
       async ({ data }) => {
         const deletedIndex = this.patients.findIndex((_patient) => _patient.id === patient.id);
         this.patients.splice(deletedIndex, 1);
         this.patientsTable.rows = this.patients;
-        this.isLoading = false;
+        this.isVisible = false;
+        this.isOkLoading = false;
       },
       (error) => {
-        this.isLoading = false;
+        this.isVisible = false;
+        this.isOkLoading = false;
       }
     );
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 
   handleCreatePatient(): void {
     this.router.navigate(['/mhira/home/profile']);
   }
 
-  onActionSelect(action: any) {}
+  handleActionClick(event: any): void {
+    console.log(this.patients[event.index]);
+    switch (event.action.name) {
+      case 'Delete Patient':
+        this.isVisible = true;
+        this.currentPatientIndex = event.index;
+        break;
+      case 'Edit Patient':
+        const dataString = CryptoJS.AES.encrypt(
+          JSON.stringify(this.patients[event.index]),
+          environment.secretKey
+        ).toString();
+        this.router.navigate(['/mhira/home/profile'], {
+          queryParams: { profile: dataString },
+        });
+    }
+  }
 }
