@@ -38,7 +38,9 @@ export class PatientProfileComponent implements OnInit {
         const bytes = CryptoJS.AES.decrypt(params.profile, environment.secretKey);
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.patient = decryptedData;
-        this.patient.birthDate = decryptedData.birthDate.slice(0, 10);
+        if (this.patient.birthDate) {
+          this.patient.birthDate = decryptedData.birthDate.slice(0, 10);
+        }
         this.patientForms.patient.groups.map((group) => {
           group.fields.map((field) => {
             field.value = decryptedData[field.name];
