@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Event, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TabInterface } from '@app/@layout/vertical/header/tabs/tab.interface';
+import { TopTabsDataService } from '@shared/services/tabs-data.service';
 
 @Component({
   selector: 'app-tabs',
@@ -11,9 +12,15 @@ export class TabsComponent implements OnInit {
   tabs: TabInterface[] = [];
   selectedIndex = -1;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private tabsDataService: TopTabsDataService
+  ) {}
 
   ngOnInit(): void {
+    this.tabsDataService.tabs.subscribe((x) => (this.tabs = x));
+    this.tabsDataService.selectedIndex.subscribe((x) => (this.selectedIndex = x));
     this.getCurrentRoute();
     this.urlChange();
   }
@@ -25,21 +32,19 @@ export class TabsComponent implements OnInit {
       title: 'Untitled',
     };
     if (currentRoute.firstChild.children.length > 0) {
-      this.activatedRoute.queryParams.subscribe(params => {
-        if(params.user){
+      this.activatedRoute.queryParams.subscribe((params) => {
+        if (params.user) {
           const user = JSON.parse(params.user);
           tab = {
             path: this.router.url,
-            title:  `${user.firstName} ${user.lastName}`,
+            title: `${user.firstName} ${user.lastName}`,
           };
-
-        }else{
+        } else {
           tab = {
             path: this.router.url,
             title: currentRoute.firstChild.children[0].data.title,
           };
         }
-
       });
     } else {
       if (currentRoute.firstChild.data) {
@@ -51,6 +56,8 @@ export class TabsComponent implements OnInit {
     }
     this.tabs.push(tab);
     this.selectedIndex = 0;
+    //update the global values of tabs and index
+    this.upDateTabService(this.tabs, this.selectedIndex);
   }
 
   closeTab(tab: TabInterface): void {
@@ -74,6 +81,12 @@ export class TabsComponent implements OnInit {
     });
   }
 
+  upDateTabService(tabs: TabInterface[], index: number) {
+    //update the global values of tabs and index
+    this.tabsDataService.updateTabs(tabs);
+    this.tabsDataService.updateSelectedIndex(index);
+  }
+
   urlChange() {
     let tab = {
       path: this.router.url,
@@ -81,44 +94,34 @@ export class TabsComponent implements OnInit {
     };
 
     this.router.events.subscribe((event: Event) => {
-
-
-
       if (event instanceof NavigationEnd) {
         if (event.url !== '/mhira/not-found' && event.url !== '/') {
           const pathFound = this.tabs.some((tab) => tab.path === event.url.slice(1));
           if (!pathFound) {
             const currentChild = this.activatedRoute.snapshot.firstChild;
             if (currentChild.firstChild.children.length > 0) {
-              this.activatedRoute.queryParams.subscribe(params => {
-                if(params.user){
+              this.activatedRoute.queryParams.subscribe((params) => {
+                if (params.user) {
                   const user = JSON.parse(params.user);
                   tab = {
                     path: this.router.url,
-                    title:  `${user.firstName} ${user.lastName}`,
+                    title: `${user.firstName} ${user.lastName}`,
                   };
-
-                }else{
+                } else {
                   tab = {
                     path: this.router.url,
                     title: currentChild.firstChild.children[0].data.title,
                   };
                 }
-
               });
-
             } else {
               if (currentChild.firstChild.data) {
-
                 tab = {
                   path: this.router.url,
                   title: currentChild.firstChild.data.title,
                 };
               }
-
             }
-
-
 
             const isInArray =
               this.tabs.find((_tab) => {
@@ -126,7 +129,7 @@ export class TabsComponent implements OnInit {
               }) !== undefined;
 
             if (!isInArray) {
-              console.log(tab)
+              console.log(tab);
               this.tabs.push(tab);
             }
             this.tabs.filter((_tab) => {
@@ -135,11 +138,15 @@ export class TabsComponent implements OnInit {
                 return;
               }
             });
+            //update the global values of tabs and index
+            this.upDateTabService(this.tabs, this.selectedIndex);
           } else {
             const tab = this.tabs.filter((_tab) => {
               return _tab.path === this.router.url;
             })[0];
             this.selectedIndex = this.tabs.indexOf(tab);
+            //update the global values of tabs and index
+            this.upDateTabService(this.tabs, this.selectedIndex);
             this.navigateToTab(tab);
           }
         }

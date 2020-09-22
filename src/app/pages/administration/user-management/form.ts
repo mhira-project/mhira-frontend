@@ -110,6 +110,8 @@ const changeUserPassword: Form = {
 };
 
 const userProfile: Form = {
+  submitButtonText: 'Save User',
+  submitButtonClass: 'right-align-submit',
   groups: [
     {
       title: 'Personal Information',
@@ -117,6 +119,7 @@ const userProfile: Form = {
         {
           title: 'First Name',
           label: 'First name',
+          name: 'firstName',
           type: 'text',
           isRequired: true,
           description: 'Enter your first name',
@@ -127,6 +130,7 @@ const userProfile: Form = {
         {
           title: 'Last Name',
           label: 'Last name',
+          name: 'lastName',
           type: 'text',
           isRequired: true,
           description: 'Enter your last name',
@@ -137,6 +141,7 @@ const userProfile: Form = {
         {
           title: 'Gender',
           label: 'Gender',
+          name: 'gender',
           type: 'text',
           isRequired: true,
           description: 'Choose gender',
@@ -147,6 +152,7 @@ const userProfile: Form = {
         {
           title: 'Date of Birth',
           label: 'Date of Birth',
+          name: 'birthDate',
           type: 'text',
           isRequired: true,
           description: 'Enter your date of birth',
@@ -157,6 +163,7 @@ const userProfile: Form = {
         {
           title: 'Hospital ID',
           label: 'Hospital ID',
+          name: 'hospitalID',
           type: 'text',
           isRequired: true,
           description: 'Enter hospital id',
@@ -172,6 +179,7 @@ const userProfile: Form = {
         {
           title: 'Email',
           label: 'Email',
+          name: 'email',
           type: 'text',
           isRequired: true,
           description: 'Enter valid email',
@@ -182,6 +190,7 @@ const userProfile: Form = {
         {
           title: 'Phone number',
           label: 'Phone number',
+          name: 'phone',
           type: 'text',
           isRequired: true,
           description: 'Enter phone number',
@@ -192,6 +201,7 @@ const userProfile: Form = {
         {
           title: 'Address',
           label: 'Address',
+          name: 'address',
           type: 'text',
           isRequired: true,
           description: 'Enter Address',

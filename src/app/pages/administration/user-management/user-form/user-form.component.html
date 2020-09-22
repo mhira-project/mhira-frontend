@@ -1,9 +1,13 @@
 <nz-tabset>
   <nz-tab nzTitle="Profile">
-    <app-field-generator [form]="profileFields"></app-field-generator>
+    <app-field-generator
+      [form]="profileFields"
+      (submitFields)="saveProfile()"
+      (inputChange)="onProfileFormChange($event)"
+    ></app-field-generator>
   </nz-tab>
-  <nz-tab nzTitle="Security" [nzForceRender]="true">
-    <div nz-row>
+  <nz-tab nzTitle="Security">
+    <div nz-row nzGutter="16">
       <div nz-col nzFlex="auto">
         <app-field-generator [form]="userRolesPermissionsFields"></app-field-generator>
       </div>

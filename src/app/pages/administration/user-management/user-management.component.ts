@@ -122,7 +122,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   onCreateUser() {
-    this.showModal = true;
+    this.router.navigate([`/mhira/administration/user-management/form`]);
   }
 
   onFormSubmit($event: any) {}
