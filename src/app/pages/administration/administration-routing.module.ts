@@ -24,6 +24,9 @@ const routes: Routes = [
       {
         path: 'user-management/form',
         component: UserFormComponent,
+        data: {
+          title: extract('Users Edit'),
+        },
       },
       {
         path: 'roles-and-permissions',

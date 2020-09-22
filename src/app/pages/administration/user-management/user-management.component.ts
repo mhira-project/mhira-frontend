@@ -7,9 +7,9 @@ import { Form } from '@shared/components/field-generator/formt';
 import { User } from '@app/pages/administration/administration.interfaces';
 import { userTable } from '@app/pages/administration/user-management/users.table';
 import { UserService } from '@app/pages/administration/@services/user.service';
-// @ts-ignore
-const faker = require('faker');
-// @ts-ignore
+import { environment } from '@env/environment';
+
+const CryptoJS = require('crypto-js');
 const moment = require('moment');
 
 @Component({
@@ -64,18 +64,19 @@ export class UserManagementComponent implements OnInit {
       async ({ data }) => {
         const usersData = data['getUsers'];
         usersData.edges.map((user: any) => {
-          const color = user.node.active
+          const row = Object.assign({}, user.node);
+          const color = row.active
             ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
             : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
 
-          const active = user.node.active ? 'active' : 'inactive';
+          const active = row.active ? 'active' : 'inactive';
 
-          user.node.updatedAt = user.node.updatedAt ? moment(user.node.updatedAt).format('DD-MM-YYYY HH:mm') : '';
-          user.node.birthDate = user.node.birthDate ? moment(user.node.birthDate).format('DD-MM-YYYY HH:mm') : '';
-          user.node.active = `<nz-tag class="${color}">${active}</nz-tag>`;
+          row.updatedAt = row.updatedAt ? moment(row.updatedAt).format('DD-MM-YYYY HH:mm') : '';
+          row.birthDate = row.birthDate ? moment(row.birthDate).format('DD-MM-YYYY HH:mm') : '';
+          row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
+          this.usersTable.rows.push(row);
           this.users.push(user.node);
         });
-        this.usersTable.rows = this.users;
         this.isLoading = false;
       },
       (error) => {
@@ -91,9 +92,12 @@ export class UserManagementComponent implements OnInit {
     this.selectedUserIndex = event.index;
     switch (event.action.type) {
       case 'edit':
-        this.showModal = true;
-        this.router.navigate([`/mhira/administration/user-management/form`], {
-          queryParams: { user: JSON.stringify(this.user) },
+        const dataString = CryptoJS.AES.encrypt(
+          JSON.stringify(this.users[event.index]),
+          environment.secretKey
+        ).toString();
+        this.router.navigate(['/mhira/administration/user-management/form'], {
+          queryParams: { user: dataString },
         });
         break;
       case 'changePassword':

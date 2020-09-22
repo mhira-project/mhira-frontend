@@ -8,22 +8,25 @@ import { User } from '@app/pages/administration/administration.interfaces';
 import { UserService } from '@app/pages/administration/@services/user.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { TabInterface } from '@app/@layout/vertical/header/tabs/tab.interface';
-
+import { environment } from '@env/environment';
+const CryptoJS = require('crypto-js');
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit, OnDestroy {
   user: User;
   isLoading = false;
   loadingMessage = '';
   profileFields: Form = userForms.userProfile;
   userRolesPermissionsFields: Form = userForms.userRolesPermissions;
   changeUserPasswordFields: Form = userForms.changeUserPassword;
+  tabSub: any;
+  routeSub: any;
 
   constructor(
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     private cd: ChangeDetectorRef,
     private tabsDataService: TopTabsDataService,
@@ -32,17 +35,38 @@ export class UserFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.onChangeUser();
+    this.getUserFromUrl();
+  }
+  ngOnDestroy() {
+    this.tabSub.unsubscribe();
+    this.routeSub.unsubscribe();
+  }
+
+  getUserFromUrl(): void {
+    this.routeSub = this.activatedRoute.queryParams.subscribe((params) => {
+      if (params.user) {
+        const bytes = CryptoJS.AES.decrypt(params.user, environment.secretKey);
+        const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        this.user = decryptedData;
+        this.onChangeUser();
+        this.profileFields.groups.map((group) => {
+          group.fields.map((field) => {
+            field.value = decryptedData[field.name];
+          });
+        });
+      }
+    });
   }
 
   onChangeUser() {
-    this.tabsDataService.selectedIndex.subscribe((index) => {
+    this.tabSub = this.tabsDataService.selectedIndex.subscribe((index) => {
       if (index !== -1) {
         this.tabsDataService.tabs.subscribe((tabs) => {
-          if (!tabs[index].title) tabs[index].title = 'New User';
           if (this.user) {
             tabs[index].title = `${this.user.firstName} ${this.user.lastName}`;
             tabs[index].path = `${tabs[index].path}?user=${JSON.stringify(this.user)}`;
+          } else {
+            tabs[index].title = 'New User';
           }
         });
       }

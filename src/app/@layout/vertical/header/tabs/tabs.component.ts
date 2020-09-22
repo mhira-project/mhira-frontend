@@ -32,20 +32,10 @@ export class TabsComponent implements OnInit {
       title: 'Untitled',
     };
     if (currentRoute.firstChild.children.length > 0) {
-      this.activatedRoute.queryParams.subscribe((params) => {
-        if (params.user) {
-          const user = JSON.parse(params.user);
-          tab = {
-            path: this.router.url,
-            title: `${user.firstName} ${user.lastName}`,
-          };
-        } else {
-          tab = {
-            path: this.router.url,
-            title: currentRoute.firstChild.children[0].data.title,
-          };
-        }
-      });
+      tab = {
+        path: this.router.url,
+        title: currentRoute.firstChild.children[0].data.title,
+      };
     } else {
       if (currentRoute.firstChild.data) {
         tab = {
@@ -100,20 +90,10 @@ export class TabsComponent implements OnInit {
           if (!pathFound) {
             const currentChild = this.activatedRoute.snapshot.firstChild;
             if (currentChild.firstChild.children.length > 0) {
-              this.activatedRoute.queryParams.subscribe((params) => {
-                if (params.user) {
-                  const user = JSON.parse(params.user);
-                  tab = {
-                    path: this.router.url,
-                    title: `${user.firstName} ${user.lastName}`,
-                  };
-                } else {
-                  tab = {
-                    path: this.router.url,
-                    title: currentChild.firstChild.children[0].data.title,
-                  };
-                }
-              });
+              tab = {
+                path: this.router.url,
+                title: currentChild.firstChild.children[0].data.title,
+              };
             } else {
               if (currentChild.firstChild.data) {
                 tab = {
