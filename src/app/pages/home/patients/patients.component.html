@@ -6,7 +6,7 @@
       [listOfCustomActions]="actions"
       [listOfData]="patientsTable.rows"
       [listOfColumn]="patientsTable.columns"
-      (onAction)="onActionSelect($event)"
+      (onAction)="handleActionClick($event)"
       [showButton]="true"
       [buttonText]="'Create Patient'"
       (onButton)="handleCreatePatient()"
@@ -24,3 +24,16 @@
     </nz-card>
   </div>-->
 </div>
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Delete Patient"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="deletePatient()"
+  [nzOkLoading]="isOkLoading"
+>
+  <p>
+    Are you sure you want to delete
+    <b>{{ patients[currentPatientIndex]?.firstName }} {{ patients[currentPatientIndex]?.lastName }}</b
+    >? This action is irreversible
+  </p>
+</nz-modal>

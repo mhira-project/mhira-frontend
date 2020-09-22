@@ -7,6 +7,10 @@ const actions: any[] = [
     type: 'Edit Patient',
     name: 'Edit Patient',
   },
+  {
+    type: 'Delete Patient',
+    name: 'Delete Patient',
+  },
 ];
 
 const columns: any[] = [
