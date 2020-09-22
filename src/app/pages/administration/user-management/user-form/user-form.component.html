@@ -1,9 +1,10 @@
 <nz-tabset>
   <nz-tab nzTitle="Profile">
     <app-field-generator
+      [isLoading]="isLoading"
+      [loadingMessage]="loadingMessage"
       [form]="profileFields"
-      (submitFields)="saveProfile()"
-      (inputChange)="onProfileFormChange($event)"
+      (submitForm)="submitForm($event)"
     ></app-field-generator>
   </nz-tab>
   <nz-tab nzTitle="Security">

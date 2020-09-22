@@ -6,6 +6,8 @@ const createUser = gql`
     $firstName: String!
     $middleName: String
     $lastName: String!
+    $password: String!
+    $username: String!
     $phone: String
     $email: String
     $address: String
@@ -13,15 +15,19 @@ const createUser = gql`
     $birthDate: DateTime
   ) {
     createUser(
-      workId: $workID
-      firstName: $firstName
-      middleName: $middleName
-      lastName: $lastName
-      phone: $phone
-      email: $email
-      address: $address
-      gender: $gender
-      birthDate: $birthDate
+      input: {
+        workID: $workID
+        firstName: $firstName
+        middleName: $middleName
+        lastName: $lastName
+        password: $password
+        username: $username
+        phone: $phone
+        email: $email
+        address: $address
+        gender: $gender
+        birthDate: $birthDate
+      }
     ) {
       id
       workID
