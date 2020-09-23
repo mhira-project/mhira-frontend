@@ -41,8 +41,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.routeSub.unsubscribe();
-    // this.tabSub.unsubscribe();
-    // this.tabIndexSub.unsubscribe();
+    if (this.tabSub) this.tabSub.unsubscribe();
+    if (this.tabIndexSub) this.tabIndexSub.unsubscribe();
   }
 
   getUserFromUrl(): void {
