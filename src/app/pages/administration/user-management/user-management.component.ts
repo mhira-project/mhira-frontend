@@ -114,7 +114,7 @@ export class UserManagementComponent implements OnInit {
             title: `${this.user.firstName} ${this.user.lastName}`,
           },
           queryParams: {
-            profile: dataString,
+            user: dataString,
           },
         });
         break;

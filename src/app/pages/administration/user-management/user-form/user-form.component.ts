@@ -10,7 +10,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { TabInterface } from '@app/@layout/vertical/header/tabs/tab.interface';
 import { environment } from '@env/environment';
 import { UserUpdatePasswordInput } from './user-update-password.type';
+
 const CryptoJS = require('crypto-js');
+
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
@@ -39,10 +41,11 @@ export class UserFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getUserFromUrl();
   }
+
   ngOnDestroy() {
-    this.routeSub.unsubscribe();
+    /*this.routeSub.unsubscribe();
     if (this.tabSub) this.tabSub.unsubscribe();
-    if (this.tabIndexSub) this.tabIndexSub.unsubscribe();
+    if (this.tabIndexSub) this.tabIndexSub.unsubscribe();*/
   }
 
   getUserFromUrl(): void {
@@ -52,7 +55,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.user = decryptedData;
         this.profileFields = userForms.userProfileEdit;
-        this.onChangeUser();
+        // this.onChangeUser();
         this.profileFields.groups.map((group) => {
           group.fields.map((field) => {
             field.value = decryptedData[field.name];
@@ -75,6 +78,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   createUser(user: User) {
     this.isLoading = true;
     this.loadingMessage = `Creating user ${user.firstName} ${user.lastName}`;
@@ -88,7 +92,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         //close this tab
         this.user = userData;
         //open another
-        this.onChangeUser();
+        // this.onChangeUser();
       },
       (error) => {
         this.isLoading = false;
@@ -129,6 +133,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
       }
     );
   }
+
   submitForm(form: any): void {
     if (this.user) {
       form.id = this.user.id;
