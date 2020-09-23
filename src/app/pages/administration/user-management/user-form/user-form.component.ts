@@ -9,6 +9,7 @@ import { UserService } from '@app/pages/administration/@services/user.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { TabInterface } from '@app/@layout/vertical/header/tabs/tab.interface';
 import { environment } from '@env/environment';
+import { UserUpdatePasswordInput } from './user-update-password.type';
 const CryptoJS = require('crypto-js');
 @Component({
   selector: 'app-user-form',
@@ -125,11 +126,46 @@ export class UserFormComponent implements OnInit, OnDestroy {
     );
   }
   submitForm(form: any): void {
-    if (this.user.id) {
+    if (this.user) {
       form.id = this.user.id;
       this.updateUser(form);
     } else {
       this.createUser(form);
+    }
+  }
+
+  changePassword(form: any) {
+    if (this.user.id) {
+      this.isLoading = true;
+      this.loadingMessage = `Updating user ${this.user.firstName} ${this.user.lastName}`;
+      const inputs: UserUpdatePasswordInput = {
+        id: this.user.id,
+        newPassword: form.newPassword,
+        newPasswordConfirmation: form.newPasswordConfirmation,
+      };
+      this.usersService.changeUserPassword(inputs).subscribe(
+        async ({ data }) => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+          this.message.create('success', `Password has successfully been changed`);
+        },
+        (error) => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+          const graphError = error.graphQLErrors.map((x: any) => x.message);
+          this.onError(graphError);
+        }
+      );
+    }
+  }
+
+  onError(errors: any) {
+    if (errors.length > 0) {
+      for (const error of errors) {
+        this.message.create('error', `${error}`);
+      }
+    } else {
+      this.message.create('error', `${errors['error']['message']}`);
     }
   }
 }

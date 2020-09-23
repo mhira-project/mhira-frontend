@@ -5,6 +5,7 @@ import { FetchResult } from 'apollo-link';
 import { UsersMutations } from '../../../@graphql/mutations/users';
 import { UsersQueries } from '../../../@graphql/queries/users';
 import { User } from '../administration.interfaces';
+import { UserUpdatePasswordInput } from '../user-management/user-form/user-update-password.type';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +36,13 @@ export class UserService {
       fetchPolicy: 'no-cache',
     });
   }
-
+  changeUserPassword(inputs: UserUpdatePasswordInput): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: UsersMutations.updateUserPassword,
+      variables: inputs,
+      fetchPolicy: 'no-cache',
+    });
+  }
   deleteUser(user: User): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: UsersMutations.deleteUser,

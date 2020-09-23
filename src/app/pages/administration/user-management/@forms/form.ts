@@ -78,13 +78,14 @@ const updateUser: FormItemType[] = [
 ];
 
 const changeUserPassword: Form = {
+  submitButtonText: 'Change password',
   groups: [
     {
       title: 'Change password',
       fields: [
         {
           title: 'Enter New Password',
-          name: 'password',
+          name: 'newPassword',
           label: 'New Password',
           type: 'password',
           isRequired: true,
@@ -95,7 +96,7 @@ const changeUserPassword: Form = {
         },
         {
           title: 'Repeat Password',
-          name: 'repeatPassword',
+          name: 'newPasswordConfirmation',
           label: 'Repeat Password',
           type: 'password',
           isRequired: true,

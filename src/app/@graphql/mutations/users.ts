@@ -92,6 +92,11 @@ const updateUser = gql`
   }
 `;
 
+const updateUserPassword = gql`
+  mutation($newPassword: String!, $newPasswordConfirmation: String!, $id: Int!) {
+    updateUserPassword(input: { newPassword: $newPassword, newPasswordConfirmation: $newPasswordConfirmation }, id: $id)
+  }
+`;
 const deleteUser = gql`
   mutation($id: Float!) {
     deleteUser(id: $id)
@@ -102,4 +107,5 @@ export const UsersMutations = {
   createUser,
   updateUser,
   deleteUser,
+  updateUserPassword,
 };
