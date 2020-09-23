@@ -81,6 +81,7 @@ export class UserManagementComponent implements OnInit {
       }
     );
   }
+
   deleteUser(index: any) {
     this.isLoading = true;
     const user = this.users[index];
@@ -97,6 +98,7 @@ export class UserManagementComponent implements OnInit {
       }
     );
   }
+
   onCustomActionEvent(event: any) {
     this.user = this.usersTable.rows[event.index];
     console.log(this.user);
@@ -108,7 +110,12 @@ export class UserManagementComponent implements OnInit {
           environment.secretKey
         ).toString();
         this.router.navigate(['/mhira/administration/user-management/form'], {
-          queryParams: { user: dataString },
+          state: {
+            title: `${this.user.firstName} ${this.user.lastName}`,
+          },
+          queryParams: {
+            profile: dataString,
+          },
         });
         break;
       case 'changePassword':
