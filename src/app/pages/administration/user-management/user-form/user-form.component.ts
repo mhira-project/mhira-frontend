@@ -54,6 +54,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         const bytes = CryptoJS.AES.decrypt(params.user, environment.secretKey);
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.user = decryptedData;
+
         this.profileFields = userForms.userProfileEdit;
         // this.onChangeUser();
         this.profileFields.groups.map((group) => {
@@ -89,6 +90,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         userData.birthDate = userData.birthDate ? moment(userData.birthDate).format('DD-MM-YYYY HH:mm') : '';
         this.isLoading = false;
         this.loadingMessage = '';
+        this.message.create('success', `User has successfully been created`);
         //close this tab
         this.user = userData;
         //open another
@@ -123,7 +125,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
         this.isLoading = false;
         this.loadingMessage = '';
-        this.message.create('success', `User has successfully been created`);
+        this.message.create('success', `User has successfully been updated`);
       },
       (error) => {
         this.isLoading = false;
