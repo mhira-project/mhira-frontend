@@ -93,6 +93,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
       (error) => {
         this.isLoading = false;
         this.loadingMessage = '';
+        const graphError = error.graphQLErrors.map((x: any) => x.message);
+        this.onError(graphError);
       }
     );
   }
@@ -122,6 +124,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
       (error) => {
         this.isLoading = false;
         this.loadingMessage = '';
+        const graphError = error.graphQLErrors.map((x: any) => x.message);
+        this.onError(graphError);
       }
     );
   }
