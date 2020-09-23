@@ -101,7 +101,6 @@ export class UserManagementComponent implements OnInit {
 
   onCustomActionEvent(event: any) {
     this.user = this.usersTable.rows[event.index];
-    console.log(this.user);
     this.selectedUserIndex = event.index;
     switch (event.action.type) {
       case 'edit':
@@ -114,7 +113,7 @@ export class UserManagementComponent implements OnInit {
             title: `${this.user.firstName} ${this.user.lastName}`,
           },
           queryParams: {
-            profile: dataString,
+            user: dataString,
           },
         });
         break;
