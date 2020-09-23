@@ -126,7 +126,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     );
   }
   submitForm(form: any): void {
-    if (this.user.id) {
+    if (this.user) {
       form.id = this.user.id;
       this.updateUser(form);
     } else {
