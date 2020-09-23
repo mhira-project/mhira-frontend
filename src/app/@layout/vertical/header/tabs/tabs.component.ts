@@ -156,10 +156,9 @@ export class TabsComponent implements OnInit {
       path: this.router.url,
       title,
     };
-    console.log(tab);
     const isInArray =
       this.tabs.find((_tab) => {
-        return _tab.id === tab.id;
+        return _tab.id === tab.id || _tab.path === this.router.url;
       }) !== undefined;
 
     if (!isInArray) {
