@@ -103,7 +103,12 @@ export class PatientsComponent implements OnInit, OnChanges {
           environment.secretKey
         ).toString();
         this.router.navigate(['/mhira/home/profile'], {
-          queryParams: { profile: dataString },
+          state: {
+            title: `${this.patients[event.index].firstName} ${this.patients[event.index].lastName}`,
+          },
+          queryParams: {
+            profile: dataString,
+          },
         });
     }
   }
