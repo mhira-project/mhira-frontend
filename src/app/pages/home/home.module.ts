@@ -13,6 +13,9 @@ import {
   NzButtonModule,
   NzCardModule,
   NzGridModule,
+  NzIconModule,
+  NzInputModule,
+  NzListModule,
   NzMessageModule,
   NzModalModule,
   NzTableModule,
@@ -22,6 +25,8 @@ import {
 import { HomeService } from './home.service';
 import { PatientsService } from './@services/patients.service';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
+import { CreatePatientComponent } from './patient-profile/create-patient/create-patient.component';
+import { InformantsComponent } from './patient-profile/informants/informants.component';
 
 const antModules = [
   NzGridModule,
@@ -32,11 +37,21 @@ const antModules = [
   NzTabsModule,
   NzMessageModule,
   NzAlertModule,
+  NzListModule,
+  NzInputModule,
+  NzIconModule,
 ];
 
 @NgModule({
   imports: [...antModules, CommonModule, TranslateModule, SharedModule, HomeRoutingModule],
-  declarations: [HomeComponent, PatientsComponent, CaseManagersComponent, PatientProfileComponent],
+  declarations: [
+    HomeComponent,
+    PatientsComponent,
+    CaseManagersComponent,
+    PatientProfileComponent,
+    CreatePatientComponent,
+    InformantsComponent,
+  ],
   providers: [PatientsService, HomeService],
 })
 export class HomeModule {}

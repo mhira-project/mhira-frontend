@@ -1,20 +1,10 @@
 <nz-tabset nzSize="large">
   <nz-tab nzTitle="Profile">
-    <div nz-row>
-      <div nz-col nzSpan="12" *ngIf="hasErrors">
-        <nz-alert *ngFor="let error of errors" nzType="error" [nzDescription]="error" nzShowIcon></nz-alert>
-      </div>
-    </div>
-    <app-field-generator
-      class="mt-3"
-      [form]="patientForms.patient"
-      [isLoading]="isLoading"
-      [loadingMessage]="loadingMessage"
-      (submitForm)="submitForm($event)"
-    >
-    </app-field-generator>
+    <app-create-patient></app-create-patient>
   </nz-tab>
-  <nz-tab nzTitle="Clinicians/Informants"> Content of Tab Pane 2</nz-tab>
+  <nz-tab nzTitle="Clinicians/Informants">
+    <app-informants></app-informants>
+  </nz-tab>
   <nz-tab nzTitle="Questionnaires"> Content of Tab Pane 3</nz-tab>
   <nz-tab nzTitle="Reports"> Content of Tab Pane 4</nz-tab>
   <nz-tab nzTitle="Assessment"> Content of Tab Pane 5</nz-tab>

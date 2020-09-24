@@ -5,6 +5,7 @@ import { FetchResult } from 'apollo-link';
 import { PatientsMutations } from '../../../@graphql/mutations/patients';
 import { PatientsQueries } from '../../../@graphql/queries/patients';
 import { Patient } from '../home.interfaces';
+import { UsersQueries } from '@app/@graphql/queries/users';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,14 @@ export class PatientsService {
   getPatients(): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: PatientsQueries.getPatients,
+      variables: {},
+      fetchPolicy: 'no-cache',
+    });
+  }
+
+  getUsers(): Observable<FetchResult<any>> {
+    return this.apollo.query({
+      query: UsersQueries.getUsers,
       variables: {},
       fetchPolicy: 'no-cache',
     });

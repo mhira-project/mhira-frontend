@@ -1,0 +1,13 @@
+<div nz-row>
+  <div nz-col nzSpan="12" *ngIf="hasErrors">
+    <nz-alert *ngFor="let error of errors" nzType="error" [nzDescription]="error" nzShowIcon></nz-alert>
+  </div>
+</div>
+<app-field-generator
+  class="mt-3"
+  [form]="patientForms.patient"
+  [isLoading]="isLoading"
+  [loadingMessage]="loadingMessage"
+  (submitForm)="submitForm($event)"
+>
+</app-field-generator>
