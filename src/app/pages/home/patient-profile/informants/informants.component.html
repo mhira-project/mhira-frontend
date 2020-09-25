@@ -18,29 +18,44 @@
   </div>
 </nz-card>
 <ng-template #addClinician>
-  <button nz-button (click)="handleAssignUser()" nzType="primary">Add clinician to patient</button>
+  <button nz-button (click)="handleAssign()" nzType="primary">Add clinician to patient</button>
 </ng-template>
 <nz-modal
   [nzWidth]="600"
   [(nzVisible)]="isVisible"
   nzTitle="Assign Case manager to Jon Konjufca"
   (nzOnCancel)="handleCancel()"
-  (nzOnOk)="assignUser()"
+  (nzOnOk)="handleCancel()"
   [nzOkLoading]="isOkLoading"
 >
   <nz-input-group class="rounded-input" [nzSuffix]="suffixTemplate">
-    <input type="text" nz-input placeholder="search case manager name" />
+    <input
+      type="text"
+      ([ngModel])="(searchKeyword)"
+      (keyup)="keyUp.next($event)"
+      nz-input
+      placeholder="search case manager name"
+    />
   </nz-input-group>
   <ng-template #suffixTemplate>
     <i nz-icon nzType="search" nzTheme="outline"></i>
   </ng-template>
-  <ul nz-list [nzBordered]="false" [nzDataSource]="managers" nzBordered nzSize="large">
-    <li nz-list-item *ngFor="let manager of managers" nzNoFlex>
+  <ul nz-list [nzBordered]="false" [nzDataSource]="users" nzBordered nzSize="large">
+    <li nz-list-item *ngFor="let user of users" nzNoFlex>
       <div nz-row>
-        <div nz-col nzSpan="8">{{ manager.firstName }} {{ manager.lastName }}</div>
-        <div nz-col nzSpan="12">{{ manager.email }}</div>
+        <div nz-col nzSpan="8">{{ user.firstName }} {{ user.lastName }}</div>
+        <div nz-col nzSpan="12">{{ user.email }}</div>
         <div nz-col nzSpan="4">
-          <button class="assign-button" nz-button nzType="primary" nzSize="small" nzShape="round">Assign</button>
+          <button
+            class="assign-button"
+            nz-button
+            nzType="primary"
+            (click)="assignInformant(user)"
+            nzSize="small"
+            nzShape="round"
+          >
+            Assign
+          </button>
         </div>
       </div>
     </li>

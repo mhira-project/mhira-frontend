@@ -110,8 +110,36 @@ const deletePatient = gql`
   }
 `;
 
+const assignClinician = gql`
+  mutation($userId: Int!, $patientId: Int!) {
+    assignClinician(userId: $userId, patientId: $patientId)
+  }
+`;
+
+const assignInformant = gql`
+  mutation($userId: Int!, $patientId: Int!) {
+    assignInformant(userId: $userId, patientId: $patientId)
+  }
+`;
+
+const unassignClinician = gql`
+  mutation($userId: Int!, $patientId: Int!) {
+    unassignClinician(userId: $userId, patientId: $patientId)
+  }
+`;
+
+const unassignInformant = gql`
+  mutation($userId: Int!, $patientId: Int!) {
+    unassignInformant(userId: $userId, patientId: $patientId)
+  }
+`;
+
 export const PatientsMutations = {
   createPatient,
   updatePatient,
   deletePatient,
+  assignClinician,
+  assignInformant,
+  unassignClinician,
+  unassignInformant,
 };

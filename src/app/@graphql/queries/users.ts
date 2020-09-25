@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 const getUsers = gql`
-  query {
-    getUsers {
+  query($searchKeyword: String, $first: Int, $after: String, $last: Int, $before: String) {
+    getUsers(searchKeyword: $searchKeyword, first: $first, after: $after, last: $last, before: $before) {
       edges {
         cursor
         node {
