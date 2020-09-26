@@ -35,10 +35,7 @@ const getPatients = gql`
 
 const getPatientInformants = gql`
   query($patientId: Int!, $first: Int, $after: String, $last: Int, $before: String) {
-    getPatientInformants(
-      patientId: $patientId
-      pagination: { first: $first, after: $after, last: $last, before: $before }
-    ) {
+    getPatientInformants(patientId: $patientId, first: $first, after: $after, last: $last, before: $before) {
       edges {
         cursor
         node {
@@ -69,10 +66,7 @@ const getPatientInformants = gql`
 
 const getPatientCaseManagers = gql`
   query($patientId: Int!, $first: Int, $after: String, $last: Int, $before: String) {
-    getPatientCaseManagers(
-      patientId: $patientId
-      pagination: { first: $first, after: $after, last: $last, before: $before }
-    ) {
+    getPatientCaseManagers(patientId: $patientId, first: $first, after: $after, last: $last, before: $before) {
       edges {
         cursor
         node {

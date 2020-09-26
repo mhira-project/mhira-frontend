@@ -1,4 +1,4 @@
-<nz-card nzTitle="Case managers (03)" [nzExtra]="addClinician">
+<nz-card nzTitle="Informants ({{ informantsTable.rows.length }})" [nzExtra]="addClinician">
   <div nz-row>
     <div nz-col nzSpan="24">
       <app-custom-table
@@ -18,7 +18,7 @@
   </div>
 </nz-card>
 <ng-template #addClinician>
-  <button nz-button (click)="handleAssign()" nzType="primary">Add clinician to patient</button>
+  <button nz-button (click)="handleAssign()" nzType="primary">Add informant to patient</button>
 </ng-template>
 <nz-modal
   [nzWidth]="600"
@@ -32,7 +32,7 @@
     <input
       type="text"
       ([ngModel])="(searchKeyword)"
-      (keyup)="keyUp.next($event)"
+      (keyup)="searchUsers(keyUp.next($event))"
       nz-input
       placeholder="search case manager name"
     />

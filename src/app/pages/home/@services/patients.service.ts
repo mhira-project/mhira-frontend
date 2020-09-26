@@ -21,27 +21,32 @@ export class PatientsService {
     });
   }
 
-  getPatientManagers(managerType: string, patientId: number): Observable<FetchResult<any>> {
-    switch (managerType) {
-      case 'informants':
-        return this.apollo.query({
-          query: PatientsQueries.getPatientInformants,
-          variables: { patientId },
-          fetchPolicy: 'no-cache',
-        });
-      case 'caseManagers':
-        return this.apollo.query({
+  getPatientManagers(query: string, patientId: number): Observable<FetchResult<any>> {
+    let result: Observable<FetchResult<any>>;
+    switch (query) {
+      case 'getPatientCaseManagers':
+        result = this.apollo.query({
           query: PatientsQueries.getPatientCaseManagers,
           variables: { patientId },
           fetchPolicy: 'no-cache',
         });
-      default:
-        return this.apollo.query({
+        break;
+      case 'getPatientInformants':
+        result = this.apollo.query({
           query: PatientsQueries.getPatientInformants,
           variables: { patientId },
           fetchPolicy: 'no-cache',
         });
+        break;
+      default:
+        result = this.apollo.query({
+          query: PatientsQueries.getPatientInformants,
+          variables: { patientId },
+          fetchPolicy: 'no-cache',
+        });
+        break;
     }
+    return result;
   }
 
   searchUser(searchKeyword: string): Observable<FetchResult<any>> {
@@ -76,35 +81,59 @@ export class PatientsService {
     });
   }
 
-  assignClinician(userId: number, patientId: number): Observable<FetchResult<any>> {
-    return this.apollo.mutate({
-      mutation: PatientsMutations.assignClinician,
-      variables: { userId, patientId },
-      fetchPolicy: 'no-cache',
-    });
+  assignManager(query: string, userId: number, patientId: number): Observable<FetchResult<any>> {
+    let result: Observable<FetchResult<any>>;
+    switch (query) {
+      case 'assignPatientCaseManager':
+        result = this.apollo.mutate({
+          mutation: PatientsMutations.assignPatientCaseManager,
+          variables: { userId, patientId },
+          fetchPolicy: 'no-cache',
+        });
+        break;
+      case 'assignPatientInformant':
+        result = this.apollo.mutate({
+          mutation: PatientsMutations.assignPatientInformant,
+          variables: { userId, patientId },
+          fetchPolicy: 'no-cache',
+        });
+        break;
+      default:
+        result = this.apollo.mutate({
+          mutation: PatientsMutations.assignPatientInformant,
+          variables: { userId, patientId },
+          fetchPolicy: 'no-cache',
+        });
+        break;
+    }
+    return result;
   }
 
-  assignInformant(userId: number, patientId: number): Observable<FetchResult<any>> {
-    return this.apollo.mutate({
-      mutation: PatientsMutations.assignInformant,
-      variables: { userId, patientId },
-      fetchPolicy: 'no-cache',
-    });
-  }
-
-  unassignClinician(userId: number, patientId: number): Observable<FetchResult<any>> {
-    return this.apollo.mutate({
-      mutation: PatientsMutations.unassignClinician,
-      variables: { userId, patientId },
-      fetchPolicy: 'no-cache',
-    });
-  }
-
-  unassignInformant(userId: number, patientId: number): Observable<FetchResult<any>> {
-    return this.apollo.mutate({
-      mutation: PatientsMutations.unassignInformant,
-      variables: { userId, patientId },
-      fetchPolicy: 'no-cache',
-    });
+  unassignManager(query: string, userId: number, patientId: number): Observable<FetchResult<any>> {
+    let result: Observable<FetchResult<any>>;
+    switch (query) {
+      case 'unassignPatientCaseManager':
+        result = this.apollo.mutate({
+          mutation: PatientsMutations.unassignPatientCaseManager,
+          variables: { userId, patientId },
+          fetchPolicy: 'no-cache',
+        });
+        break;
+      case 'unassignPatientInformant':
+        result = this.apollo.mutate({
+          mutation: PatientsMutations.unassignPatientInformant,
+          variables: { userId, patientId },
+          fetchPolicy: 'no-cache',
+        });
+        break;
+      default:
+        result = this.apollo.mutate({
+          mutation: PatientsMutations.unassignPatientInformant,
+          variables: { userId, patientId },
+          fetchPolicy: 'no-cache',
+        });
+        break;
+    }
+    return result;
   }
 }

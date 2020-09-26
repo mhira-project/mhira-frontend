@@ -110,27 +110,27 @@ const deletePatient = gql`
   }
 `;
 
-const assignClinician = gql`
+const assignPatientCaseManager = gql`
   mutation($userId: Int!, $patientId: Int!) {
-    assignClinician(userId: $userId, patientId: $patientId)
+    assignPatientCaseManager(userId: $userId, patientId: $patientId)
   }
 `;
 
-const assignInformant = gql`
+const assignPatientInformant = gql`
   mutation($userId: Int!, $patientId: Int!) {
-    assignInformant(userId: $userId, patientId: $patientId)
+    assignPatientInformant(userId: $userId, patientId: $patientId)
   }
 `;
 
-const unassignClinician = gql`
+const unassignPatientInformant = gql`
   mutation($userId: Int!, $patientId: Int!) {
-    unassignClinician(userId: $userId, patientId: $patientId)
+    unassignPatientInformant(userId: $userId, patientId: $patientId)
   }
 `;
 
-const unassignInformant = gql`
+const unassignPatientCaseManager = gql`
   mutation($userId: Int!, $patientId: Int!) {
-    unassignInformant(userId: $userId, patientId: $patientId)
+    unassignPatientCaseManager(userId: $userId, patientId: $patientId)
   }
 `;
 
@@ -138,8 +138,8 @@ export const PatientsMutations = {
   createPatient,
   updatePatient,
   deletePatient,
-  assignClinician,
-  assignInformant,
-  unassignClinician,
-  unassignInformant,
+  assignPatientCaseManager,
+  assignPatientInformant,
+  unassignPatientInformant,
+  unassignPatientCaseManager,
 };

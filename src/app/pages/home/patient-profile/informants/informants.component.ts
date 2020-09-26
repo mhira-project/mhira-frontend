@@ -47,12 +47,12 @@ export class InformantsComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         flatMap((search) => of(search).pipe(delay(500)))
       )
-      .subscribe(console.log);
+      .subscribe();
   }
 
   ngOnInit(): void {
     this.getPatient();
-    this.getManagers('informants');
+    this.getManagers('getPatientInformants');
   }
 
   ngOnDestroy() {
@@ -68,13 +68,13 @@ export class InformantsComponent implements OnInit, OnDestroy {
     });
   }
 
-  getManagers(managerType: string) {
+  getManagers(query: string) {
     this.isLoading = true;
     this.managers = [];
     const _managers: any[] = [];
-    this.patientsService.getPatientManagers(managerType, this.patient.id).subscribe(
+    this.patientsService.getPatientManagers(query, this.patient.id).subscribe(
       async ({ data }) => {
-        const managersData = data['getUsers'];
+        const managersData = data[query];
         managersData.edges.map((manager: any) => {
           const row = Object.assign({}, manager.node);
 
@@ -118,8 +118,6 @@ export class InformantsComponent implements OnInit, OnDestroy {
           _users.push(row);
           this.users.push(user.node);
         });
-
-        this.informantsTable.rows = _users;
         this.isLoading = false;
       },
       (error) => {
@@ -133,15 +131,14 @@ export class InformantsComponent implements OnInit, OnDestroy {
   }
 
   handleActionClick(event: any) {
+    const rows = this.informantsTable.rows;
     switch (event.action.name) {
       case 'Remove Assignment':
         this.modalService.confirm({
           nzTitle: 'Confirm',
-          nzContent: `Are you sure you want to remove ${this.users[event.index].firstName} ${
-            this.users[event.index].lastName
-          }`,
+          nzContent: `Are you sure you want to remove ${rows[event.index].firstName} ${rows[event.index].lastName}`,
           nzOkText: 'Remove',
-          nzOnOk: () => this.removeInformant(this.users[event.index]),
+          nzOnOk: () => this.removeInformant(rows[event.index]),
           // nzVisible: this.isOkLoading,
           nzOkDisabled: this.isOkLoading,
           nzCancelText: 'Cancel',
@@ -155,10 +152,12 @@ export class InformantsComponent implements OnInit, OnDestroy {
   }
 
   assignInformant(user: any) {
-    this.patientsService.assignClinician(user.id, this.patient.id).subscribe(
+    const rows = this.informantsTable.rows;
+    this.patientsService.assignManager('assignPatientInformant', user.id, this.patient.id).subscribe(
       async ({ data }) => {
-        this.users.unshift(user);
-        this.informantsTable.rows = this.users;
+        user.updatedAt = user.updatedAt ? moment(user.updatedAt).format('DD-MM-YYYY HH:mm') : '';
+        rows.unshift(user);
+        this.informantsTable.rows = rows;
         this.isVisible = false;
         this.isOkLoading = false;
         this.message.create('success', `Informant has been successfully assigned`);
@@ -173,11 +172,12 @@ export class InformantsComponent implements OnInit, OnDestroy {
 
   removeInformant(user: any) {
     this.isOkLoading = true;
-    this.patientsService.unassignClinician(user.id, this.patient.id).subscribe(
+    const rows = this.informantsTable.rows;
+    this.patientsService.unassignManager('unassignPatientInformant', user.id, this.patient.id).subscribe(
       async ({ data }) => {
-        const deletedIndex = this.users.findIndex((_user) => _user.id === user.id);
-        this.users.splice(deletedIndex, 1);
-        this.informantsTable.rows.splice(deletedIndex, 1);
+        const deletedIndex = rows.findIndex((_user) => _user.id === user.id);
+        rows.splice(deletedIndex, 1);
+        this.informantsTable.rows = rows;
         this.isVisible = false;
         this.isOkLoading = false;
         this.message.create('success', `Informant has been successfully removed`);
