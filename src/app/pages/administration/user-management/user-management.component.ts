@@ -8,6 +8,7 @@ import { User } from '@app/pages/administration/administration.interfaces';
 import { userTable } from '@app/pages/administration/user-management/users.table';
 import { UserService } from '@app/pages/administration/@services/user.service';
 import { environment } from '@env/environment';
+import { UserUpdatePasswordInput } from '@app/pages/administration/user-management/user-form/user-update-password.type';
 
 const CryptoJS = require('crypto-js');
 const moment = require('moment');
@@ -45,6 +46,7 @@ export class UserManagementComponent implements OnInit {
   selectedUserIndex = -1;
   errors: any[] = [];
   changePasswordForm: Form = userForms.changeUserPassword;
+  loadingMessage: any;
 
   constructor(
     private modalService: NzModalService,
@@ -133,6 +135,30 @@ export class UserManagementComponent implements OnInit {
         break;
     }
   }
+  changePassword(form: any) {
+    if (this.user.id) {
+      this.isLoading = true;
+      this.loadingMessage = `Updating user ${this.user.firstName} ${this.user.lastName}`;
+      const inputs: UserUpdatePasswordInput = {
+        id: this.user.id,
+        newPassword: form.newPassword,
+        newPasswordConfirmation: form.newPasswordConfirmation,
+      };
+      this.usersService.changeUserPassword(inputs).subscribe(
+        async ({ data }) => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+          this.message.create('success', `Password has successfully been changed`);
+        },
+        (error) => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+          const graphError = error.graphQLErrors.map((x: any) => x.message);
+          this.onError(graphError);
+        }
+      );
+    }
+  }
 
   handleCancel() {
     this.showModal = false;
@@ -147,4 +173,14 @@ export class UserManagementComponent implements OnInit {
   }
 
   onFormSubmit($event: any) {}
+
+  onError(errors: any) {
+    if (errors.length > 0) {
+      for (const error of errors) {
+        this.message.create('error', `${error}`);
+      }
+    } else {
+      this.message.create('error', `${errors['error']['message']}`);
+    }
+  }
 }

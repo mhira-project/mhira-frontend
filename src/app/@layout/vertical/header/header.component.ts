@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { Router } from '@angular/router';
-
+import { environment } from '@env/environment';
+const CryptoJS = require('crypto-js');
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -21,6 +22,18 @@ export class HeaderComponent implements OnInit {
   getUser() {
     const userObj = JSON.parse(localStorage.getItem('user'));
     if (userObj) this.user = userObj.user;
+  }
+
+  editUserProfile() {
+    const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.user), environment.secretKey).toString();
+    this.router.navigate(['/mhira/administration/user-management/form'], {
+      state: {
+        title: `${this.user.firstName} ${this.user.lastName}`,
+      },
+      queryParams: {
+        user: dataString,
+      },
+    });
   }
 
   logout() {

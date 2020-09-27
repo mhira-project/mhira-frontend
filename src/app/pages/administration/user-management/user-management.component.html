@@ -16,6 +16,12 @@
   [nzTitle]="modalType?.title"
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleOk()"
+  [nzFooter]="null"
 >
-  <app-field-generator [form]="changePasswordForm"></app-field-generator>
+  <app-field-generator
+    [isLoading]="isLoading"
+    [loadingMessage]="loadingMessage"
+    (submitForm)="changePassword($event)"
+    [form]="changePasswordForm"
+  ></app-field-generator>
 </nz-modal>
