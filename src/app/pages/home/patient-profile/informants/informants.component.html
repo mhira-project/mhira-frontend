@@ -29,13 +29,7 @@
   [nzOkLoading]="isOkLoading"
 >
   <nz-input-group class="rounded-input" [nzSuffix]="suffixTemplate">
-    <input
-      type="text"
-      ([ngModel])="(searchKeyword)"
-      (keyup)="searchUsers(keyUp.next($event))"
-      nz-input
-      placeholder="search case manager name"
-    />
+    <input type="text" ([ngModel])="(searchKeyword)" nz-input placeholder="search case manager name" />
   </nz-input-group>
   <ng-template #suffixTemplate>
     <i nz-icon nzType="search" nzTheme="outline"></i>

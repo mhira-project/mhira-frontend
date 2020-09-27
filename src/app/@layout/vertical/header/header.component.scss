@@ -42,4 +42,8 @@
     color: inherit;
     border: none;
   }
+  .usermenu .ant-menu-item,
+  .usermenu .ant-menu-item:hover {
+    border: 0px solid !important;
+  }
 }

@@ -49,3 +49,87 @@
 .rounded {
   border-radius: 8px !important;
 }
+/* Display */
+
+.display-block {
+  display: block !important;
+}
+
+.inline-block {
+  display: inline-block !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+/* Position */
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.static {
+  position: static;
+}
+
+/* Overflow */
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+/* Float */
+@include screen-mobile {
+  .pull-left-sm {
+    float: left !important;
+  }
+
+  .pull-right-sm {
+    float: right !important;
+  }
+
+  .pull-none-sm {
+    float: none !important;
+  }
+}
+
+/* Image */
+.img-circle {
+  border-radius: 50% !important;
+}
+
+/* Background */
+.bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}

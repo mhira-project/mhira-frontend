@@ -23,12 +23,8 @@ const login = gql`
 `;
 
 const logout = gql`
-  mutation($currentPassword: String!, $newPassword: String!, $newPasswordConfirmation: String!) {
-    changePassword(
-      currentPassword: $currentPassword
-      newPassword: $newPassword
-      newPasswordConfirmation: $newPasswordConfirmation
-    )
+  mutation {
+    logout
   }
 `;
 

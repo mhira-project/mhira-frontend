@@ -20,9 +20,6 @@ export class AuthService {
   }
 
   logout(): Observable<FetchResult<any>> {
-    localStorage.removeItem('auth_app_token');
-    localStorage.removeItem('user');
-    this.router.navigate(['/auth/login']);
     return this.apollo.query({
       query: AuthMutations.logout,
       variables: {},
