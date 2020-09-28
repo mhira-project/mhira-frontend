@@ -65,6 +65,9 @@ export class CustomTableComponent implements OnInit, OnChanges {
   showPagination: boolean = true;
 
   @Input()
+  showNext = true;
+
+  @Input()
   showActionColumn: boolean = true;
 
   @Input()
