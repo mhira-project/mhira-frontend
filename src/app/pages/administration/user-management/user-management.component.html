@@ -1,4 +1,6 @@
 <app-custom-table
+  [showFilterButton]="true"
+  (onFilterButton)="showFilterPanelAction()"
   [loading]="isLoading"
   [showCustomActions]="true"
   [listOfCustomActions]="actions"
@@ -25,3 +27,12 @@
     [form]="changePasswordForm"
   ></app-field-generator>
 </nz-modal>
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="showFilterPanel"
+  nzPlacement="right"
+  nzTitle="Filter Users"
+  (nzOnClose)="closeFilterPanel()"
+>
+  <app-custom-filter [form]="filterForm"></app-custom-filter>
+</nz-drawer>

@@ -46,7 +46,9 @@ export class UserManagementComponent implements OnInit {
   selectedUserIndex = -1;
   errors: any[] = [];
   changePasswordForm: Form = userForms.changeUserPassword;
+  filterForm: Form = userForms.userFilter;
   loadingMessage: any;
+  showFilterPanel: boolean = false;
 
   constructor(
     private modalService: NzModalService,
@@ -182,5 +184,13 @@ export class UserManagementComponent implements OnInit {
     } else {
       this.message.create('error', `${errors['error']['message']}`);
     }
+  }
+
+  showFilterPanelAction() {
+    this.showFilterPanel = true;
+  }
+
+  closeFilterPanel() {
+    this.showFilterPanel = false;
   }
 }

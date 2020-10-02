@@ -152,6 +152,7 @@ import {
   SearchPipe,
   TimingPipe,
 } from '../pipes';
+import { CustomFilterComponent } from './custom-filter/custom-filter.component';
 
 const PIPES = [
   CapitalizePipe,
@@ -167,8 +168,22 @@ const PIPES = [
 
 @NgModule({
   imports: [...antModules, CommonModule, FormsModule, NgxInputSearchModule, ReactiveFormsModule],
-  declarations: [PIPES, LoaderComponent, CustomTableComponent, FormGeneratorComponent, FieldGeneratorComponent],
-  exports: [PIPES, LoaderComponent, CustomTableComponent, FormGeneratorComponent, FieldGeneratorComponent],
+  declarations: [
+    PIPES,
+    LoaderComponent,
+    CustomTableComponent,
+    FormGeneratorComponent,
+    FieldGeneratorComponent,
+    CustomFilterComponent,
+  ],
+  exports: [
+    PIPES,
+    LoaderComponent,
+    CustomTableComponent,
+    FormGeneratorComponent,
+    FieldGeneratorComponent,
+    CustomFilterComponent,
+  ],
   providers: [XlsExportService],
 })
 export class ComponentsModule {}

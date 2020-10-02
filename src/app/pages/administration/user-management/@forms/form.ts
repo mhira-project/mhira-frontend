@@ -345,9 +345,41 @@ const userRolesPermissions: Form = {
     },
   ],
 };
+
+const userFilter: Form = {
+  groups: [
+    {
+      fields: [
+        {
+          title: '',
+          label: 'First name',
+          name: 'firstName',
+          type: 'text',
+          isRequired: false,
+          description: 'First name',
+          validationMessage: '',
+          span: 24,
+          value: '',
+        },
+        {
+          title: '',
+          label: 'Last name',
+          name: 'lastName',
+          type: 'text',
+          isRequired: false,
+          description: 'Last name',
+          validationMessage: '',
+          span: 24,
+          value: '',
+        },
+      ],
+    },
+  ],
+};
 export const userForms = {
   changeUserPassword,
   userProfile,
   userRolesPermissions,
   userProfileEdit,
+  userFilter,
 };

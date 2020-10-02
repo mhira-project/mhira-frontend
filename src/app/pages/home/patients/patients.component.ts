@@ -41,7 +41,7 @@ export class PatientsComponent implements OnInit, OnChanges {
     const _patients: any[] = [];
     this.patientsService.getPatients().subscribe(
       async ({ data }) => {
-        const patientsData = data['getPatients'];
+        const patientsData = data.getPatients;
         patientsData.edges.map((patient: any) => {
           const row = Object.assign({}, patient.node);
 

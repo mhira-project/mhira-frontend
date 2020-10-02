@@ -16,6 +16,9 @@ export class CustomTableComponent implements OnInit, OnChanges {
   exportWithOption: boolean = false;
 
   @Input()
+  showFilterButton: boolean = false;
+
+  @Input()
   listOfExportOptions: ExportChoiceType[] = [];
 
   @Input()
@@ -105,6 +108,10 @@ export class CustomTableComponent implements OnInit, OnChanges {
 
   @Output()
   onEdit: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  onFilterButton: EventEmitter<any> = new EventEmitter<any>();
+
   @Output()
   onDelete: EventEmitter<any> = new EventEmitter<any>();
   @Output()
@@ -200,6 +207,10 @@ export class CustomTableComponent implements OnInit, OnChanges {
 
   onNewAction() {
     this.onButton.emit();
+  }
+
+  onFilterButtonAction() {
+    this.onFilterButton.emit();
   }
 
   onFilterSearch(column: any): void {

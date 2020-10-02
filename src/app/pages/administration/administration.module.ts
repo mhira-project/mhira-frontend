@@ -8,7 +8,7 @@ import { AdministrationComponent } from './administration.component';
 import { AdministrationRoutingModule } from './administration-routing.module';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
-import { NzGridModule, NzModalModule, NzTabsModule } from 'ng-zorro-antd';
+import { NzDrawerModule, NzGridModule, NzModalModule, NzTabsModule } from 'ng-zorro-antd';
 import { UserFormComponent } from './user-management/user-form/user-form.component';
 
 @NgModule({
@@ -20,6 +20,7 @@ import { UserFormComponent } from './user-management/user-form/user-form.compone
     NzModalModule,
     NzTabsModule,
     NzGridModule,
+    NzDrawerModule,
   ],
   declarations: [AdministrationComponent, UserManagementComponent, RolesAndPermissionsComponent, UserFormComponent],
 })

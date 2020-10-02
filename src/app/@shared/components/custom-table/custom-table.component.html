@@ -107,6 +107,9 @@
         >
           <i nz-icon [nzType]="buttonIcon"></i>{{ buttonText }}
         </button>
+        <button *ngIf="showFilterButton" (click)="onFilterButtonAction()" nz-button nzType="primary" nzShape="circle">
+          <i nz-icon nzType="filter"></i>
+        </button>
       </div>
     </div>
   </div>
