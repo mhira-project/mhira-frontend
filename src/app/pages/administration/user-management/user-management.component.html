@@ -34,5 +34,5 @@
   nzTitle="Filter Users"
   (nzOnClose)="closeFilterPanel()"
 >
-  <app-custom-filter [form]="filterForm"></app-custom-filter>
+  <app-custom-filter [form]="filterForm" (submitForm)="filterEvent($event)"></app-custom-filter>
 </nz-drawer>

@@ -193,4 +193,8 @@ export class UserManagementComponent implements OnInit {
   closeFilterPanel() {
     this.showFilterPanel = false;
   }
+
+  filterEvent($event: any) {
+    console.log($event);
+  }
 }
