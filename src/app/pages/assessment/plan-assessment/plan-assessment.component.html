@@ -1,0 +1,65 @@
+<div nz-row [nzGutter]="16">
+  <div nz-col nzSpan="16">
+    <nz-card nzTitle="Add Questionnaires or Groups of questionnaire" [nzExtra]="addQuestionnaire">
+      <nz-card class="added-questionnaire-card" *ngFor="let questionnaire of addedQuestionnaires">
+        <div nz-row>
+          <div nz-col nzSpan="22">
+            <span>LOPFQ Questionnaire</span>
+          </div>
+          <div nz-col nzSpan="2">
+            <i nz-icon nzType="exclamation-circle" nzTheme="outline"></i>
+            <i nz-icon nzType="close" nzTheme="outline"></i>
+          </div>
+        </div>
+      </nz-card>
+    </nz-card>
+    <ng-template #addQuestionnaire>
+      <button nz-button nzType="primary" (click)="handleAddQuestionaire()">Add Questionnaire Group</button>
+    </ng-template>
+  </div>
+  <div nz-col nzSpan="8">
+    <nz-card>
+      <app-field-generator
+        class="mt-3"
+        [form]="planAssessmentForm"
+        [isLoading]="isLoading"
+        [loadingMessage]="loadingMessage"
+        (submitForm)="submitForm($event)"
+      >
+      </app-field-generator>
+    </nz-card>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="600"
+  [(nzVisible)]="modalIsVisible"
+  nzTitle="Add Questionnaires"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleCancel()"
+  [nzOkLoading]="modalIsLoading"
+>
+  <nz-input-group class="rounded-input" [nzSuffix]="suffixTemplate">
+    <input
+      type="text"
+      (keyup)="searchQuestionnaires()"
+      ([ngModel])="(searchKeyword)"
+      nz-input
+      placeholder="search Questionnaires"
+    />
+  </nz-input-group>
+  <ng-template #suffixTemplate>
+    <i nz-icon nzType="search" nzTheme="outline"></i>
+  </ng-template>
+  <ul nz-list [nzBordered]="false" [nzDataSource]="questionnaires" nzBordered nzSize="large">
+    <li nz-list-item *ngFor="let questionnaire of questionnaires" nzNoFlex>
+      <div nz-row>
+        <div nz-col nzSpan="16">{{ questionnaire.name }}</div>
+        <div nz-col nzSpan="4"></div>
+        <div nz-col nzSpan="4">
+          <button class="assign-button" nz-button nzType="primary" nzSize="small" nzShape="round">Add</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</nz-modal>

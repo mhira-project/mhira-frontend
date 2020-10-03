@@ -1,0 +1,19 @@
+.added-questionnaire-card {
+  margin-bottom: 15px;
+  i {
+    font-size: 23px;
+  }
+  i:first-child {
+    margin-right: 10px;
+    color: #89d080;
+  }
+  i:last-child {
+    color: #f1b0b0;
+  }
+}
+
+::ng-deep {
+  .full-width {
+    width: 100%;
+  }
+}

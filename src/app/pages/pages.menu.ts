@@ -33,15 +33,15 @@ export const MENU: SideNavInterface[] = [
     icon: 'edit',
     submenu: [
       {
-        path: 'assessments/plan-assessments',
-        title: extract('Plan assessment'),
+        path: 'assessments',
+        title: extract('Planned Assessments'),
         iconType: '',
         iconTheme: '',
         submenu: [],
       },
       {
-        path: 'assessments/planned-assessments',
-        title: extract('View planned assessment'),
+        path: 'assessments/plan-assessments',
+        title: extract('Plan assessment'),
         iconType: '',
         iconTheme: '',
         submenu: [],

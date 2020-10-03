@@ -1,0 +1,18 @@
+<nz-card nzTitle="Assessments ({{ assessmentsTable.rows.length }})">
+  <div nz-row>
+    <div nz-col nzSpan="24">
+      <app-custom-table
+        [loading]="isLoading"
+        [showPagination]="false"
+        [showCustomActions]="true"
+        [showSearch]="false"
+        [listOfCustomActions]="actions"
+        [listOfData]="assessmentsTable.rows"
+        [listOfColumn]="assessmentsTable.columns"
+        [showButton]="false"
+        (onAction)="handleActionClick($event)"
+      >
+      </app-custom-table>
+    </div>
+  </div>
+</nz-card>

@@ -1,18 +1,26 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { extract } from '../../i18n/index';
-import { AssessmentsComponent } from './assessments.component';
+import { AssessmentComponent } from './assessment.component';
 import { PlanAssessmentComponent } from './plan-assessment/plan-assessment.component';
-import { PlannedAssessmentComponent } from './planned-assessment/planned-assessment.component';
+import { AssessmentsListComponent } from './assessments-list/assessments-list.component';
+import { DoAssessmentComponent } from './do-assessment/do-assessment.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AssessmentsComponent,
+    component: AssessmentComponent,
     data: {
       title: extract('Assessments'),
     },
     children: [
+      {
+        path: '',
+        component: AssessmentsListComponent,
+        data: {
+          title: extract('Planned Assessments'),
+        },
+      },
       {
         path: 'plan-assessments',
         component: PlanAssessmentComponent,
@@ -21,10 +29,10 @@ const routes: Routes = [
         },
       },
       {
-        path: 'planned-assessments',
-        component: PlannedAssessmentComponent,
+        path: 'do-assessments',
+        component: DoAssessmentComponent,
         data: {
-          title: extract('Planned Assessments'),
+          title: extract('Assessment'),
         },
       },
     ],
@@ -35,4 +43,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AssessmentsRoutingModule {}
+export class AssessmentRoutingModule {}
