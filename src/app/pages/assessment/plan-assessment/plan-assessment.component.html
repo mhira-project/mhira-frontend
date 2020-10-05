@@ -1,20 +1,32 @@
 <div nz-row [nzGutter]="16">
   <div nz-col nzSpan="16">
     <nz-card nzTitle="Add Questionnaires or Groups of questionnaire" [nzExtra]="addQuestionnaire">
-      <nz-card class="added-questionnaire-card" *ngFor="let questionnaire of addedQuestionnaires">
+      <nz-card class="added-questionnaire-card" *ngFor="let questionnaire of addedQuestionnaires; let i = index">
         <div nz-row>
-          <div nz-col nzSpan="22">
-            <span>LOPFQ Questionnaire</span>
+          <div nz-col nzSpan="18">
+            <span>{{ questionnaire.name }}</span>
           </div>
-          <div nz-col nzSpan="2">
-            <i nz-icon nzType="exclamation-circle" nzTheme="outline"></i>
-            <i nz-icon nzType="close" nzTheme="outline"></i>
+          <div nz-col nzSpan="6" class="text-right">
+            <nz-button-group [nzSize]="'small'">
+              <button
+                [nzTooltipTitle]="questionnaire.description"
+                [nzTooltipPlacement]="'bottom'"
+                [nzShape]="'circle'"
+                nz-button
+                nz-tooltip
+              >
+                <i nz-icon [nzType]="'exclamation-circle'" [nzTheme]="'outline'"></i>
+              </button>
+              <button [nzShape]="'circle'" nz-button (click)="removeAddedQuestionnaires(i)">
+                <i nz-icon [nzType]="'close'" [nzTheme]="'outline'"></i>
+              </button>
+            </nz-button-group>
           </div>
         </div>
       </nz-card>
     </nz-card>
     <ng-template #addQuestionnaire>
-      <button nz-button nzType="primary" (click)="handleAddQuestionaire()">Add Questionnaire Group</button>
+      <button nz-button [nzType]="'primary'" (click)="handleAddQuestionaire()">Add Questionnaire Group</button>
     </ng-template>
   </div>
   <div nz-col nzSpan="8">
@@ -24,6 +36,8 @@
         [form]="planAssessmentForm"
         [isLoading]="isLoading"
         [loadingMessage]="loadingMessage"
+        (searchOptions)="handleSearchOptions($event)"
+        (inputChange)="handleInputChange($event)"
         (submitForm)="submitForm($event)"
       >
       </app-field-generator>
@@ -37,16 +51,11 @@
   nzTitle="Add Questionnaires"
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleCancel()"
+  [nzFooter]="modalFooter"
   [nzOkLoading]="modalIsLoading"
 >
   <nz-input-group class="rounded-input" [nzSuffix]="suffixTemplate">
-    <input
-      type="text"
-      (keyup)="searchQuestionnaires()"
-      ([ngModel])="(searchKeyword)"
-      nz-input
-      placeholder="search Questionnaires"
-    />
+    <input type="text" (keyup)="questionnaireSearch.next($event)" nz-input placeholder="search Questionnaires" />
   </nz-input-group>
   <ng-template #suffixTemplate>
     <i nz-icon nzType="search" nzTheme="outline"></i>
@@ -57,9 +66,19 @@
         <div nz-col nzSpan="16">{{ questionnaire.name }}</div>
         <div nz-col nzSpan="4"></div>
         <div nz-col nzSpan="4">
-          <button class="assign-button" nz-button nzType="primary" nzSize="small" nzShape="round">Add</button>
+          <button
+            (click)="selectQuestionnaire(questionnaire)"
+            class="assign-button"
+            nz-button
+            [nzType]="'primary'"
+            [nzSize]="'small'"
+            [nzShape]="'round'"
+          >
+            Add
+          </button>
         </div>
       </div>
     </li>
   </ul>
+  <ng-template #modalFooter> </ng-template>
 </nz-modal>

@@ -1,8 +1,28 @@
 import gql from 'graphql-tag';
 
 const getPatients = gql`
-  query {
-    getPatients {
+  query(
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+    $searchKeyword: String
+    $active: Boolean
+    $createdAtFrom: DateTime
+    $createdAtTo: DateTime
+    $caseManagerId: Int
+  ) {
+    getPatients(
+      first: $first
+      after: $after
+      last: $last
+      before: $before
+      searchKeyword: $searchKeyword
+      active: $active
+      createdAtFrom: $createdAtFrom
+      createdAtTo: $createdAtTo
+      caseManagerId: $caseManagerId
+    ) {
       edges {
         cursor
         node {
@@ -34,8 +54,8 @@ const getPatients = gql`
 `;
 
 const getPatientInformants = gql`
-  query($patientId: Int!, $first: Int, $after: String, $last: Int, $before: String) {
-    getPatientInformants(patientId: $patientId, first: $first, after: $after, last: $last, before: $before) {
+  query($first: Int, $after: String, $last: Int, $before: String, $patientId: Int!) {
+    getPatientInformants(first: $first, after: $after, last: $last, before: $before, patientId: $patientId) {
       edges {
         cursor
         node {
@@ -65,8 +85,24 @@ const getPatientInformants = gql`
 `;
 
 const getPatientCaseManagers = gql`
-  query($patientId: Int!, $first: Int, $after: String, $last: Int, $before: String) {
-    getPatientCaseManagers(patientId: $patientId, first: $first, after: $after, last: $last, before: $before) {
+  query(
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+    $searchKeyword: String
+    $patientId: Int!
+    $caseManagerId: Int
+  ) {
+    getPatientCaseManagers(
+      first: $first
+      after: $after
+      last: $last
+      before: $before
+      searchKeyword: $searchKeyword
+      patientId: $patientId
+      caseManagerId: $caseManagerId
+    ) {
       edges {
         cursor
         node {

@@ -13,35 +13,56 @@ import { UsersQueries } from '@app/@graphql/queries/users';
 export class PatientsService {
   constructor(private apollo: Apollo) {}
 
-  getPatients(): Observable<FetchResult<any>> {
+  getPatients(filter?: {
+    first?: number;
+    after?: string;
+    last?: number;
+    before?: string;
+    searchKeyword?: string;
+    active?: boolean;
+    createdAtFrom?: string;
+    createdAtTo?: string;
+    caseManagerId?: number;
+  }): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: PatientsQueries.getPatients,
-      variables: {},
+      variables: filter,
       fetchPolicy: 'no-cache',
     });
   }
 
-  getPatientManagers(query: string, patientId: number): Observable<FetchResult<any>> {
+  getPatientManagers(
+    query: string,
+    filter?: {
+      first?: number;
+      after?: string;
+      last?: number;
+      before?: string;
+      searchKeyword?: string;
+      patientId?: number;
+      caseManagerId?: number;
+    }
+  ): Observable<FetchResult<any>> {
     let result: Observable<FetchResult<any>>;
     switch (query) {
       case 'getPatientCaseManagers':
         result = this.apollo.query({
           query: PatientsQueries.getPatientCaseManagers,
-          variables: { patientId },
+          variables: filter,
           fetchPolicy: 'no-cache',
         });
         break;
       case 'getPatientInformants':
         result = this.apollo.query({
           query: PatientsQueries.getPatientInformants,
-          variables: { patientId },
+          variables: filter,
           fetchPolicy: 'no-cache',
         });
         break;
       default:
         result = this.apollo.query({
           query: PatientsQueries.getPatientInformants,
-          variables: { patientId },
+          variables: filter,
           fetchPolicy: 'no-cache',
         });
         break;

@@ -7,16 +7,16 @@ export const planAssessmentForm: Form = {
     {
       fields: [
         {
-          value: '',
+          value: null,
           name: 'patientId',
           title: 'Select a patient',
           label: 'Select a patient',
           description: 'Search and Select a patient',
-          type: 'select',
+          type: 'search',
           validationMessage: 'please enter first name',
           isRequired: true,
           span: 24,
-          options: [{ label: 'Edgar Emmanuel', value: 1 }],
+          options: [],
         },
         {
           value: '',
@@ -24,11 +24,11 @@ export const planAssessmentForm: Form = {
           title: 'Select a clinician',
           label: 'Select a clinician',
           description: 'Search and Select a clinician',
-          type: 'select',
+          type: 'search',
           validationMessage: 'please select clinician',
           isRequired: true,
           span: 24,
-          options: [{ label: 'Eric Maro', value: 1 }],
+          options: [],
         },
         {
           value: '',
@@ -36,11 +36,11 @@ export const planAssessmentForm: Form = {
           title: 'Select a informant',
           label: 'Select a informant',
           description: 'Search and Select an informant',
-          type: 'select',
+          type: 'search',
           validationMessage: 'please select clinician',
           isRequired: false,
           span: 24,
-          options: [{ label: 'Eric Maro', value: 1 }],
+          options: [],
         },
         {
           value: '',

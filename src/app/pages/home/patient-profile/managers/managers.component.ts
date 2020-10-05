@@ -82,7 +82,7 @@ export class ManagersComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.managers = [];
     const _managers: any[] = [];
-    this.patientsService.getPatientManagers(query, this.patient.id).subscribe(
+    this.patientsService.getPatientManagers(query, { patientId: this.patient.id }).subscribe(
       async ({ data }) => {
         const managersData = data[query];
         managersData.edges.map((manager: any) => {

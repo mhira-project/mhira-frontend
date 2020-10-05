@@ -46,12 +46,12 @@
               <div *ngSwitchCase="'search'">
                 <nz-select
                   style="width: 100%"
+                  nzShowSearch
                   [nzPlaceHolder]="field.description"
                   [(ngModel)]="field.value"
                   [nzShowArrow]="false"
-                  [nzFilterOption]="nzFilterOption"
                   (ngModelChange)="handleInputChange(field, $event)"
-                  (nzOnSearch)="search($event)"
+                  (nzOnSearch)="currentSearchedField = field; optionsSearch.next($event)"
                   [formControlName]="field.name"
                   [ngClass]="{
                     'has-error': formGroup.controls[field.name].invalid && formGroup.controls[field.name].dirty,
@@ -59,7 +59,7 @@
                   }"
                 >
                   <nz-option
-                    *ngFor="let option of field.option"
+                    *ngFor="let option of field.options"
                     [nzLabel]="option.label"
                     [nzValue]="option.value"
                   ></nz-option>

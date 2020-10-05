@@ -1,28 +1,44 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { FieldType } from './field.type';
-import { FieldGroup } from '@shared/components/field-generator/field.group';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Form } from '@shared/components/field-generator/formt';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-field-generator',
   templateUrl: './field-generator.component.html',
   styleUrls: ['./field-generator.component.scss'],
 })
-export class FieldGeneratorComponent implements OnInit {
+export class FieldGeneratorComponent implements OnInit, OnDestroy {
   @Input() form: Form;
   @Input() isLoading = false;
   @Input() loadingMessage = '';
+  @Output() searchOptions: EventEmitter<any> = new EventEmitter<any>();
   @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
   @Output() inputChange: EventEmitter<any> = new EventEmitter<any>();
   formGroup: FormGroup;
+  currentSearchedField: FieldType;
 
-  constructor() {}
+  public optionsSearch = new Subject<string>();
+  private optionsSearchSubscription: Subscription;
 
-  nzFilterOption = () => true;
+  constructor() {
+    this.optionsSearchSubscription = this.optionsSearch
+      .pipe(debounceTime(1000), distinctUntilChanged())
+      .subscribe((value) => {
+        if (value && value !== '') {
+          this.search(value);
+        }
+      });
+  }
 
   ngOnInit(): void {
     this.createForm();
+  }
+
+  ngOnDestroy(): void {
+    this.optionsSearchSubscription.unsubscribe();
   }
 
   createForm(): void {
@@ -61,7 +77,9 @@ export class FieldGeneratorComponent implements OnInit {
     this.formGroup = new FormGroup(formControls);
   }
 
-  search(value: string): void {}
+  search(value: string): void {
+    this.searchOptions.emit({ field: this.currentSearchedField, keyword: value });
+  }
 
   handleSubmitForm() {
     if (this.formGroup.invalid) {
@@ -71,17 +89,18 @@ export class FieldGeneratorComponent implements OnInit {
   }
 
   handleInputChange(field: FieldType, event: any) {
-    if (field.type === 'checkBox') {
-      this.parseCheckBoxValues(event, field);
-      return;
-    }
+    if (event) {
+      if (field.type === 'checkBox') {
+        this.parseCheckBoxValues(event, field);
+        return;
+      }
 
-    if (field.type === 'select' || field.type === 'radio') {
-      this.inputChange.emit({ name: field.name, value: event });
-      return;
+      if (field.type === 'select' || field.type === 'search' || field.type === 'radio') {
+        this.inputChange.emit({ name: field.name, value: event });
+        return;
+      }
+      this.inputChange.emit({ name: field.name, value: event.target.value });
     }
-
-    this.inputChange.emit({ name: field.name, value: event.target.value });
   }
 
   parseCheckBoxValues(options: { value: number | string; label: string; checked: boolean }[], field: any): void {

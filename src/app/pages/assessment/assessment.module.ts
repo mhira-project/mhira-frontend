@@ -21,7 +21,9 @@ import {
   NzMessageModule,
   NzModalModule,
   NzTabsModule,
+  NzToolTipModule,
 } from 'ng-zorro-antd';
+import { PatientsService } from '../home/@services/patients.service';
 
 const antModules = [
   NzGridModule,
@@ -34,11 +36,12 @@ const antModules = [
   NzListModule,
   NzInputModule,
   NzIconModule,
+  NzToolTipModule,
 ];
 
 @NgModule({
   imports: [...antModules, CommonModule, TranslateModule, SharedModule, AssessmentRoutingModule],
   declarations: [AssessmentComponent, PlanAssessmentComponent, AssessmentsListComponent, DoAssessmentComponent],
-  providers: [AssessmentService],
+  providers: [PatientsService, AssessmentService],
 })
 export class AssessmentModule {}

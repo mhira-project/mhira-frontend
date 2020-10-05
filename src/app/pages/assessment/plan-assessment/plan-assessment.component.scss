@@ -1,13 +1,17 @@
 .added-questionnaire-card {
   margin-bottom: 15px;
-  i {
-    font-size: 23px;
+  button {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    i {
+      font-size: 23px;
+    }
   }
-  i:first-child {
-    margin-right: 10px;
+  button:first-child {
     color: #89d080;
   }
-  i:last-child {
+  button:last-child {
     color: #f1b0b0;
   }
 }
