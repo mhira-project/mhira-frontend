@@ -46,22 +46,6 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy {
     this.questionnaireSearch.unsubscribe();
   }
 
-  searchQuestionnaires(keyword: string) {
-    this.isLoading = true;
-    this.questionnaires = [];
-    this.assessmentService.getQuestionnaires(keyword).subscribe(
-      async ({ data }) => {
-        data['getQuestionnaires'].edges.map((questionnaire: any) => {
-          this.questionnaires.push(questionnaire.node);
-        });
-        this.isLoading = false;
-      },
-      (error) => {
-        this.isLoading = false;
-      }
-    );
-  }
-
   handleSearchOptions(search: any) {
     switch (search.field.name) {
       case 'patientId':
@@ -76,12 +60,41 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy {
     }
   }
 
+  handleCancel() {
+    this.questionnaires = [];
+    this.modalIsVisible = false;
+  }
+
+  handleAddQuestionaire(): void {
+    this.modalIsVisible = true;
+  }
+
   handleInputChange(input: any) {
     switch (input.name) {
       case 'patientId':
         this.selectedPatientId = input.value;
+        this.planAssessmentForm.groups[0].fields[1].value = null;
+        this.planAssessmentForm.groups[0].fields[1].options = [];
+        this.planAssessmentForm.groups[0].fields[2].value = null;
+        this.planAssessmentForm.groups[0].fields[2].options = [];
         break;
     }
+  }
+
+  searchQuestionnaires(keyword: string) {
+    this.isLoading = true;
+    this.questionnaires = [];
+    this.assessmentService.getQuestionnaires(keyword).subscribe(
+      async ({ data }) => {
+        data['getQuestionnaires'].edges.map((questionnaire: any) => {
+          this.questionnaires.push(questionnaire.node);
+        });
+        this.isLoading = false;
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
   }
 
   searchPatient(keyword: string) {
@@ -148,15 +161,6 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy {
 
   removeAddedQuestionnaires(index: number) {
     this.addedQuestionnaires.splice(index, 1);
-  }
-
-  handleCancel() {
-    this.questionnaires = [];
-    this.modalIsVisible = false;
-  }
-
-  handleAddQuestionaire(): void {
-    this.modalIsVisible = true;
   }
 
   submitForm(form: any) {

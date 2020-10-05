@@ -8,15 +8,14 @@ import { extract } from '@app/i18n';
 import { AuthGuard } from '@app/auth/auth.guard';
 
 const appRoutes: Routes = [
-  /*{
-    path: 'mhira',
+  {
+    path: 'assessment',
     data: {
-      breadcrumb: 'Workspace'
+      breadcrumb: 'Workspace',
     },
     component: HorizontalLayoutComponent,
-    loadChildren: () => import('./pages/pages.module')
-      .then(m => m.PagesModule),
-  },*/
+    loadChildren: () => import('./questionnaire/questionnaire.module').then((m) => m.QuestionnaireModule),
+  },
   {
     path: 'mhira',
     canActivate: [AuthGuard],
