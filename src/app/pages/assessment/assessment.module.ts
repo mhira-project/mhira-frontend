@@ -8,7 +8,6 @@ import { AssessmentComponent } from './assessment.component';
 import { AssessmentRoutingModule } from './assessment-routing.module';
 import { PlanAssessmentComponent } from './plan-assessment/plan-assessment.component';
 import { AssessmentsListComponent } from './assessments-list/assessments-list.component';
-import { DoAssessmentComponent } from './do-assessment/do-assessment.component';
 import { AssessmentService } from './@services/assessment.service';
 import {
   NzAlertModule,
@@ -41,7 +40,7 @@ const antModules = [
 
 @NgModule({
   imports: [...antModules, CommonModule, TranslateModule, SharedModule, AssessmentRoutingModule],
-  declarations: [AssessmentComponent, PlanAssessmentComponent, AssessmentsListComponent, DoAssessmentComponent],
+  declarations: [AssessmentComponent, PlanAssessmentComponent, AssessmentsListComponent],
   providers: [PatientsService, AssessmentService],
 })
 export class AssessmentModule {}

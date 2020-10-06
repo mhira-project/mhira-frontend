@@ -16,6 +16,7 @@ import {
 import { QuestionnairesListComponent } from './questionnaires-list/questionnaires-list.component';
 import { QuestionnaireRoutingModule } from './questionnaire-routing.module';
 import { QuestionComponent } from './question/question.component';
+import { DoAssessmentComponent } from './do-assessment/do-assessment.component';
 
 const antModules = [
   NzFormModule,
@@ -31,6 +32,6 @@ const antModules = [
 
 @NgModule({
   imports: [...antModules, CommonModule, ReactiveFormsModule, TranslateModule, QuestionnaireRoutingModule],
-  declarations: [QuestionnairesListComponent, QuestionComponent],
+  declarations: [QuestionnairesListComponent, QuestionComponent, DoAssessmentComponent],
 })
 export class QuestionnaireModule {}

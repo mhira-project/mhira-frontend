@@ -4,7 +4,6 @@ import { extract } from '../../i18n/index';
 import { AssessmentComponent } from './assessment.component';
 import { PlanAssessmentComponent } from './plan-assessment/plan-assessment.component';
 import { AssessmentsListComponent } from './assessments-list/assessments-list.component';
-import { DoAssessmentComponent } from './do-assessment/do-assessment.component';
 
 const routes: Routes = [
   {
@@ -26,13 +25,6 @@ const routes: Routes = [
         component: PlanAssessmentComponent,
         data: {
           title: extract('Plan Assessments'),
-        },
-      },
-      {
-        path: 'do-assessments',
-        component: DoAssessmentComponent,
-        data: {
-          title: extract('Assessment'),
         },
       },
     ],

@@ -48,8 +48,11 @@
     cursor: pointer;
     .ant-card {
       background-color: #f1f4ff;
-      border: 1px solid #89d17f;
+      border: 2px solid #89d17f;
       border-radius: 10px;
+    }
+    .active {
+      border-color: #808781;
     }
     .ant-card-head {
       border-bottom: 0;

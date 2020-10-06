@@ -1,0 +1,30 @@
+.mt-3 {
+  margin-top: 30px;
+}
+
+.patient-details {
+  h4 {
+    color: #2c8aa7;
+    margin-bottom: 0;
+  }
+
+  h3 {
+    color: #f3b013;
+  }
+}
+
+.questionnaire-name {
+  text-align: right;
+  h2 {
+    color: #2c8aa7;
+  }
+}
+
+.questionnaire-details {
+  font-size: 25px;
+  color: #2c8aa7;
+  span {
+    position: relative;
+    left: 10px;
+  }
+}

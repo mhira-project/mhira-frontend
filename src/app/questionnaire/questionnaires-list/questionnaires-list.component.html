@@ -4,19 +4,26 @@
     <h3>ID: 1234-543242</h3>
   </div>
   <div nz-col nzSpan="12" class="text-right">
-    <button nz-button [nzType]="'primary'" [nzSize]="'large'" [nzShape]="'round'">Start Assessment</button>
+    <button nz-button [nzType]="'primary'" [nzSize]="'large'" [nzShape]="'round'" (click)="navigateToQuestionnaire()">
+      Start Assessment
+    </button>
   </div>
 </div>
 
 <div nz-row>
   <div nz-col nzSpan="24" class="questionnaire-description">
-    <nz-alert nzType="info" [nzDescription]="description" [nzShowIcon]="true"> </nz-alert>
+    <nz-alert nzType="info" [nzDescription]="description" [nzShowIcon]="true"></nz-alert>
   </div>
 </div>
 
 <div nz-row class="mt-3">
   <div nz-col nzSpan="12" class="gutter-row questionnaire" *ngFor="let questionnaire of questionnaires; let i = index">
-    <nz-card [nzTitle]="questionnaire.name" [nzExtra]="extraTemplate">
+    <nz-card
+      [ngClass]="{ active: i === activeIndex }"
+      [nzTitle]="questionnaire.name"
+      [nzExtra]="extraTemplate"
+      (click)="selectQuestionnaire(i)"
+    >
       <p></p>
       <p></p>
       <p>{{ questionnaire.summary }}</p>

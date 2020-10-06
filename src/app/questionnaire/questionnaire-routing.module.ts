@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { QuestionnairesListComponent } from './questionnaires-list/questionnaires-list.component';
-import { QuestionComponent } from './question/question.component';
+import { DoAssessmentComponent } from './do-assessment/do-assessment.component';
 
 const routes: Routes = [
   {
@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'questionnaire',
-    component: QuestionComponent,
+    component: DoAssessmentComponent,
   },
 ];
 
