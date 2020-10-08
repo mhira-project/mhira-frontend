@@ -5,6 +5,8 @@ export interface Question {
   help: string;
   isOptional: boolean;
   isPersonalInformation: boolean;
+  options: any[];
+  value: number | string | number[] | string[];
   validationRules: {
     minimum?: number;
     maximum?: number;
@@ -18,6 +20,7 @@ export interface Question {
     regex?: string;
   };
   displayProperties: {
+    rows?: number;
     width?: number;
     height?: number;
     representation?: string;

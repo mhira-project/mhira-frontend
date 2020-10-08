@@ -1,0 +1,64 @@
+.question-text {
+  color: #373737;
+  font-weight: normal;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.question-navigation {
+  margin-top: 40px;
+  .navigation {
+    color: #2c8aa7;
+    i {
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    span {
+      position: relative;
+      font-size: 20px;
+      bottom: 9px;
+      cursor: pointer;
+    }
+  }
+  .next {
+    text-align: right;
+  }
+}
+
+.option {
+  background-color: #2c8aa7;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  p {
+    color: #fff;
+    font-weight: normal;
+  }
+}
+
+.option.active {
+  background-color: #41d5a7;
+}
+
+::ng-deep {
+  .question {
+    .ant-card {
+      background-color: #f1f4ff;
+      border: 1px solid #89d17f;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    .ant-card-head {
+      border-bottom: 0;
+    }
+    .ant-card-head-title {
+      font-weight: normal;
+      font-size: 15px;
+      color: #373737;
+      white-space: initial;
+    }
+  }
+}

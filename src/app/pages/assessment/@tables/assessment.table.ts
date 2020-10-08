@@ -25,8 +25,8 @@ const columns: any[] = [
     isFilterable: false,
   },
   {
-    title: 'Hospital ID',
-    name: 'hospitalId',
+    title: 'Medical ID',
+    name: 'medicalRecordNo',
     isFilterable: false,
   },
   {

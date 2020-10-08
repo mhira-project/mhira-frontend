@@ -12,61 +12,45 @@ import { AssessmentsMutations } from '@app/@graphql/mutations/assessments';
 export class AssessmentService {
   constructor(private apollo: Apollo) {}
 
-  getAssessments(): Observable<FetchResult<any>> {
-    /*return this.apollo.query({
-      query: AssessmentsQueries.getAssessments,
-      variables: {},
+  getAssessments(params?: { paging?: any; filter?: any; sorting?: any }): Observable<FetchResult<any>> {
+    return this.apollo.query({
+      query: AssessmentsQueries.assessments,
+      variables: {
+        paging:
+          params && params.paging
+            ? {
+                before: params.paging.before ? params.paging.before : undefined,
+                after: params.paging.after ? params.paging.after : undefined,
+                first: params.paging.first ? params.paging.first : undefined,
+                last: params.paging.last ? params.paging.last : undefined,
+              }
+            : undefined,
+        filter:
+          params && params.filter
+            ? {
+                and: params.filter.and ? params.filter.and : undefined,
+                or: params.filter.or ? params.filter.or : undefined,
+                id: params.filter.id ? params.filter.id : undefined,
+                date: params.filter.date ? params.filter.date : undefined,
+                name: params.filter.name ? params.filter.name : undefined,
+                patientId: params.filter.patientId ? params.filter.patientId : undefined,
+                clinicianId: params.filter.clinicianId ? params.filter.clinicianId : undefined,
+                informantId: params.filter.informantId ? params.filter.informantId : undefined,
+                status: params.filter.status ? params.filter.status : undefined,
+                createdAt: params.filter.createdAt ? params.filter.createdAt : undefined,
+                updatedAt: params.filter.updatedAt ? params.filter.updatedAt : undefined,
+              }
+            : undefined,
+        sorting:
+          params && params.sorting
+            ? {
+                field: params.sorting.field ? params.sorting.field : undefined,
+                direction: params.sorting.direction ? params.sorting.direction : undefined,
+                nulls: params.sorting.nulls ? params.sorting.nulls : undefined,
+              }
+            : undefined,
+      },
       fetchPolicy: 'no-cache',
-    });*/
-    return new Observable((observer) => {
-      const assessments: {
-        data: {
-          getAssessments: {
-            edges: any[];
-            pageInfo: {
-              endCursor: string;
-              hasNextPage: boolean;
-              hasPreviousPage: boolean;
-              startCursor: string;
-            };
-          };
-        };
-      } = {
-        data: {
-          getAssessments: {
-            edges: [],
-            pageInfo: {
-              endCursor: 'dW5kZWZpbmVk',
-              hasNextPage: false,
-              hasPreviousPage: false,
-              startCursor: 'dW5kZWZpbmVk',
-            },
-          },
-        },
-      };
-      for (let i = 0; i < 10; i++) {
-        assessments.data.getAssessments.edges.push({
-          cursor: 'dW5kZWZpbmVk',
-          node: {
-            id: i,
-            active: i % 5 !== 0,
-            firstName: 'Edgar',
-            middleName: 'Emmanuel',
-            lastName: 'Alexander',
-            hospitalId: 'hk23342',
-            clinician: {
-              id: 31,
-              firstName: 'Eric',
-              middleName: 'Justo',
-              lastName: 'Maro',
-            },
-            plannedDate: '2020-09-22T14:13:46.384Z',
-            firstVisit: '2020-09-22T14:13:46.384Z',
-          },
-        });
-      }
-      observer.next(assessments);
-      observer.complete();
     });
   }
 

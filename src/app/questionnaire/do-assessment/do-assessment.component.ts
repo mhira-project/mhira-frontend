@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 const CryptoJS = require('crypto-js');
 import { environment } from '@env/environment';
+import { questions } from '@app/questionnaire/do-assessment/data';
 
 @Component({
   selector: 'app-do-assessment',
@@ -11,6 +12,7 @@ import { environment } from '@env/environment';
 })
 export class DoAssessmentComponent implements OnInit {
   questionnaire: any;
+  currentQuestionIndex = 0;
 
   constructor(private activatedRoute: ActivatedRoute) {}
 
@@ -23,7 +25,20 @@ export class DoAssessmentComponent implements OnInit {
       if (params.questionnaire) {
         const bytes = CryptoJS.AES.decrypt(params.questionnaire, environment.secretKey);
         this.questionnaire = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        this.questionnaire.questions = questions;
       }
     });
+  }
+
+  getNextQuestion() {
+    if (this.questionnaire.questions.length > this.currentQuestionIndex) {
+      this.currentQuestionIndex = this.currentQuestionIndex + 1;
+    }
+  }
+
+  getPreviousQuestion() {
+    if (this.currentQuestionIndex > 0) {
+      this.currentQuestionIndex = this.currentQuestionIndex - 1;
+    }
   }
 }

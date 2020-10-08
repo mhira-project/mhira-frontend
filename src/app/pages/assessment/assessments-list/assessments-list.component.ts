@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { patientForms } from '@app/pages/home/@forms/patient-forms';
 import { Assessment } from '../@types/assessment';
 import { assessmentTable } from '@app/pages/assessment/@tables/assessment.table';
 import { AssessmentService } from '@app/pages/assessment/@services/assessment.service';
 import * as moment from 'moment';
-import { environment } from '@env/environment';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 
 @Component({
@@ -38,7 +36,7 @@ export class AssessmentsListComponent implements OnInit {
     const _assessments: any[] = [];
     this.assessmentsService.getAssessments().subscribe(
       async ({ data }) => {
-        const assessments = data.getAssessments;
+        const assessments = data.assessments;
         assessments.edges.map((assessment: any) => {
           const row = Object.assign({}, assessment.node);
 
@@ -46,11 +44,15 @@ export class AssessmentsListComponent implements OnInit {
             ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
             : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
           const active = row.active ? 'active' : 'inactive';
-          row.plannedDate = row.plannedDate ? moment(row.plannedDate).format('DD-MM-YYYY HH:mm') : '';
-          row.firstVisit = row.firstVisit ? moment(row.firstVisit).format('DD-MM-YYYY HH:mm') : '';
-          row.clinician = `${row.clinician.firstName} ${row.clinician.lastName}`;
-          row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
-          _assessments.push(row);
+          _assessments.push({
+            firstName: row.patient.firstName,
+            lastName: row.patient.lastName,
+            medicalRecordNo: row.patient.medicalRecordNo,
+            clinician: `${row.clinician.firstName} ${row.clinician.lastName}`,
+            plannedDate: row.createdAt ? moment(row.createdAt).format('DD-MM-YYYY HH:mm') : '',
+            active: `<nz-tag class="${color}">${active}</nz-tag>`,
+            firstVisit: '',
+          });
           this.assessments.push(assessment.node);
         });
 

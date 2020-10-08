@@ -15,6 +15,11 @@
 
 <div nz-row class="mt-3">
   <div nz-col nzSpan="24">
-    <app-question></app-question>
+    <app-question
+      [question]="questionnaire?.questions[currentQuestionIndex]"
+      (getNextQuestion)="getNextQuestion()"
+      (getPreviousQuestion)="getPreviousQuestion()"
+    >
+    </app-question>
   </div>
 </div>
