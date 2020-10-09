@@ -37,5 +37,6 @@ export class CustomFilterComponent implements OnInit {
 
   secondaryButtonAction() {
     this.child.formGroup.reset();
+    this.submitForm.emit({});
   }
 }
