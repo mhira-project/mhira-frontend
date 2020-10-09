@@ -1,44 +1,86 @@
 import gql from 'graphql-tag';
 
-const planAssessment = gql`
-  mutation(
-    $patientId: Int!
-    $clinicianId: Int!
-    $informantId: Int!
-    $assessmentDate: DateTime
-    $questionnaires: [Int!]
-  ) {
-    planAssessment(
+const createOneAssessment = gql`
+  mutation($patientId: Int!, $date: DateTime, $name: String, $clinicianId: Int!, $informantId: Int!) {
+    createOneAssessment(
       input: {
-        patientId: $patientId
-        clinicianId: $clinicianId
-        informantId: $informantId
-        assessmentDate: $assessmentDate
-        questionnaires: $questionnaires
+        assessment: {
+          patientId: $patientId
+          date: $date
+          name: $name
+          clinicianId: $clinicianId
+          informantId: $informantId
+        }
       }
     ) {
       id
-      active
-      medicalRecordNo
-      firstName
-      middleName
-      lastName
-      phone
-      email
-      address
-      gender
-      birthDate
-      birthCountryCode
-      nationality
-      updatedAt
+      date
+      name
+      patientId
+      clinicianId
+      informantId
+      status
       createdAt
+      updatedAt
+      deletedAt
+      informant {
+        id
+        username
+        active
+        firstName
+        middleName
+        lastName
+        email
+        phone
+        workID
+        address
+        gender
+        birthDate
+        nationality
+        createdAt
+        updatedAt
+      }
+      clinician {
+        id
+        username
+        active
+        firstName
+        middleName
+        lastName
+        email
+        phone
+        workID
+        address
+        gender
+        birthDate
+        nationality
+        createdAt
+        updatedAt
+      }
+      patient {
+        id
+        active
+        medicalRecordNo
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        address
+        gender
+        birthDate
+        birthCountryCode
+        nationality
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
 
 const deleteOneAssessment = gql`
-  mutation($input: DeleteOneInput!) {
-    deleteOneAssessment(input: $input) {
+  mutation($id: ID!) {
+    deleteOneAssessment(input: { id: $id }) {
       id
       date
       name
@@ -54,6 +96,6 @@ const deleteOneAssessment = gql`
 `;
 
 export const AssessmentsMutations = {
-  planAssessment,
+  createOneAssessment,
   deleteOneAssessment,
 };

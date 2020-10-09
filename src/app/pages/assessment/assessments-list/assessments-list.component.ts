@@ -4,6 +4,7 @@ import { assessmentTable } from '@app/pages/assessment/@tables/assessment.table'
 import { AssessmentService } from '@app/pages/assessment/@services/assessment.service';
 import * as moment from 'moment';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-planned-assessment',
@@ -23,7 +24,8 @@ export class AssessmentsListComponent implements OnInit {
   constructor(
     private assessmentsService: AssessmentService,
     private modalService: NzModalService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -73,16 +75,11 @@ export class AssessmentsListComponent implements OnInit {
         this.assessments.splice(deletedIndex, 1);
         this.assessmentsTable.rows.splice(deletedIndex, 1);
         this.modalLoading = false;
-        this.message.create('success', `${assessment.firstName} ${assessment.lastName} has been successfully deleted`);
+        this.message.create('success', `assessment has been successfully deleted`);
       },
       (error) => {
-        // to be removed when api is available
-        const deletedIndex = this.assessments.findIndex((_assessment) => _assessment.id === assessment.id);
-        this.assessments.splice(deletedIndex, 1);
-        this.assessmentsTable.rows.splice(deletedIndex, 1);
-
         this.modalLoading = false;
-        this.message.create('success', `${assessment.firstName} ${assessment.lastName} has been successfully deleted`);
+        this.message.create('error', `could not remove assessment for ${assessment.firstName} ${assessment.lastName}`);
       }
     );
   }
@@ -97,10 +94,13 @@ export class AssessmentsListComponent implements OnInit {
             rows[event.index].lastName
           }`,
           nzOkText: 'Delete',
-          nzOnOk: () => this.deleteAssessment(rows[event.index]),
+          nzOnOk: () => this.deleteAssessment(this.assessments[event.index]),
           nzOkDisabled: this.modalLoading,
           nzCancelText: 'Cancel',
         });
+        break;
+      case 'Do Assessment':
+        this.router.navigate(['/assessment']);
         break;
       case 'View Results':
         console.log('view results');

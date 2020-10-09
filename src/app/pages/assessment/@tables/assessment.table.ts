@@ -8,6 +8,10 @@ const actions: any[] = [
     name: 'View Results',
   },
   {
+    type: 'Do Assessment',
+    name: 'Do Assessment',
+  },
+  {
     type: 'Go to Report',
     name: 'Go to Report',
   },

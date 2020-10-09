@@ -77,7 +77,7 @@ export class AssessmentService {
 
   planAssessment(assessment: Assessment): Observable<FetchResult<any>> {
     return this.apollo.mutate({
-      mutation: AssessmentsMutations.planAssessment,
+      mutation: AssessmentsMutations.createOneAssessment,
       variables: assessment,
       fetchPolicy: 'no-cache',
     });
@@ -86,7 +86,7 @@ export class AssessmentService {
   deleteAssessment(assessment: Assessment): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: AssessmentsMutations.deleteOneAssessment,
-      variables: { input: assessment.id },
+      variables: { id: assessment.id },
       fetchPolicy: 'no-cache',
     });
   }

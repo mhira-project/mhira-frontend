@@ -73,10 +73,10 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy {
     switch (input.name) {
       case 'patientId':
         this.selectedPatientId = input.value;
-        this.planAssessmentForm.groups[0].fields[1].value = null;
-        this.planAssessmentForm.groups[0].fields[1].options = [];
         this.planAssessmentForm.groups[0].fields[2].value = null;
         this.planAssessmentForm.groups[0].fields[2].options = [];
+        this.planAssessmentForm.groups[0].fields[3].value = null;
+        this.planAssessmentForm.groups[0].fields[3].options = [];
         break;
     }
   }
@@ -107,7 +107,7 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy {
             options.push(option);
           }
         });
-        this.planAssessmentForm.groups[0].fields[0].options = options;
+        this.planAssessmentForm.groups[0].fields[1].options = options;
       },
       (error) => {
         this.isLoading = false;
@@ -140,10 +140,10 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy {
           });
           switch (managerType) {
             case 'clinician':
-              this.planAssessmentForm.groups[0].fields[1].options = options;
+              this.planAssessmentForm.groups[0].fields[2].options = options;
               break;
             case 'informant':
-              this.planAssessmentForm.groups[0].fields[2].options = options;
+              this.planAssessmentForm.groups[0].fields[3].options = options;
               break;
           }
         },
@@ -176,6 +176,7 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy {
     form.questionnaires = this.addedQuestionnaires;
     this.assessmentService.planAssessment(form).subscribe(
       async ({ data }) => {
+        console.log(data);
         this.isLoading = false;
         this.loadingMessage = '';
         this.router.navigate(['/mhira/assessments']);
@@ -183,7 +184,7 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy {
       (error) => {
         this.isLoading = false;
         this.loadingMessage = '';
-        this.router.navigate(['/mhira/assessments']);
+        console.log(error);
       }
     );
   }

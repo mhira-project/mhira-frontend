@@ -67,22 +67,6 @@ const assessments = gql`
             createdAt
             updatedAt
           }
-          questionnaires {
-            id
-            name
-            version
-            abbreviation
-            language
-            timeToComplete
-            description
-            copyright
-            license
-            website
-            references
-            icd10
-            createdAt
-            updatedAt
-          }
         }
       }
       pageInfo {
@@ -134,6 +118,22 @@ const getQuestionnaires = gql`
     }
   }
 `;
+const c = `questionnaires {
+            id
+            name
+            version
+            abbreviation
+            language
+            timeToComplete
+            description
+            copyright
+            license
+            website
+            references
+            icd10
+            createdAt
+            updatedAt
+          }`;
 
 export const AssessmentsQueries = {
   assessments,
