@@ -1,4 +1,5 @@
 <app-custom-table
+  [showSearch]="false"
   [showFilterButton]="true"
   (onFilterButton)="showFilterPanelAction()"
   [loading]="isLoading"
@@ -28,7 +29,8 @@
   ></app-field-generator>
 </nz-modal>
 <nz-drawer
-  [nzClosable]="false"
+  [nzMask]="false"
+  [nzClosable]="true"
   [nzVisible]="showFilterPanel"
   nzPlacement="right"
   nzTitle="Filter Users"

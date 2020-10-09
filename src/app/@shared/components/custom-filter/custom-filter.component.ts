@@ -3,6 +3,8 @@ import { Form } from '@shared/components/field-generator/formt';
 import { FormGroup } from '@angular/forms';
 import { $e } from 'codelyzer/angular/styles/chars';
 import { FieldGeneratorComponent } from '@shared/components/field-generator/field-generator.component';
+import { FieldGroup } from '@shared/components/field-generator/field.group';
+import { FieldType } from '@shared/components/field-generator/field.type';
 
 @Component({
   selector: 'app-custom-filter',
@@ -23,8 +25,52 @@ export class CustomFilterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  submitFormEvent($event: any) {
-    this.submitForm.emit($event);
+  submitFormEvent(data: any) {
+    const filter = {};
+    if (Object.keys(data).length > 0) {
+      Object.keys(data).forEach((key: string) => {
+        // work on progress
+        // get formItem in form using key
+        let foundFields: FieldType[];
+        foundFields = [];
+        if (data[key] !== null && data[key].length > 0) {
+          this.form.groups.forEach((group: FieldGroup) => {
+            group.fields.find((field) => {
+              if (field.name === key) return foundFields.push(field);
+            });
+          });
+          foundFields.forEach((field: FieldType) => {
+            switch (field.type) {
+              case 'text':
+                filter[key] = { iLike: `%${data[key]}%` };
+                break;
+              case 'textArea':
+                filter[key] = { iLike: `%${data[key]}%` };
+                break;
+              case 'number':
+                filter[key] = { iLike: `%${data[key]}%` };
+                break;
+              case 'select':
+                filter[key] = { iLike: `%${data[key]}%` };
+                break;
+              case 'checkBox':
+                filter[key] = { is: `${data[key]}` };
+                break;
+              case 'radio':
+                filter[key] = { is: `${data[key]}` };
+                break;
+              case 'date':
+                filter[key] = { eq: `${data[key]}` };
+                break;
+              default:
+                filter[key] = { Like: `%${data[key]}%` };
+            }
+          });
+        }
+      });
+    }
+
+    this.submitForm.emit(filter);
   }
 
   inputChangeEvent($event: any) {

@@ -199,17 +199,8 @@ export class UserManagementComponent implements OnInit {
   }
 
   filterEvent(data: any) {
-    if (Object.keys(data).length > 0) {
-      this.pagination = { first: 10 };
-      this.filter = {};
-      Object.keys(data).forEach((key: string) => {
-        if (data[key] !== null && data[key].length > 0) this.filter[key] = { iLike: `%${data[key]}%` };
-      });
-      this.getUsers();
-    } else {
-      this.pagination = { first: 10 };
-      this.filter = {};
-      this.getUsers();
-    }
+    this.pagination = { first: 10 };
+    this.filter = data;
+    this.getUsers();
   }
 }
