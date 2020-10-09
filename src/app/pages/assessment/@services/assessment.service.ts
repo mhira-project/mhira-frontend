@@ -5,6 +5,9 @@ import { FetchResult } from 'apollo-link';
 import { AssessmentsQueries } from '../../../@graphql/queries/assessments';
 import { Assessment } from '@app/pages/assessment/@types/assessment';
 import { AssessmentsMutations } from '@app/@graphql/mutations/assessments';
+import { Filter } from '@shared/@types/filter';
+import { Sorting } from '@shared/@types/sorting';
+import { Paging } from '@shared/@types/paging';
 
 @Injectable({
   providedIn: 'root',
@@ -12,43 +15,13 @@ import { AssessmentsMutations } from '@app/@graphql/mutations/assessments';
 export class AssessmentService {
   constructor(private apollo: Apollo) {}
 
-  getAssessments(params?: { paging?: any; filter?: any; sorting?: any }): Observable<FetchResult<any>> {
+  getAssessments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: AssessmentsQueries.assessments,
       variables: {
-        paging:
-          params && params.paging
-            ? {
-                before: params.paging.before ? params.paging.before : undefined,
-                after: params.paging.after ? params.paging.after : undefined,
-                first: params.paging.first ? params.paging.first : undefined,
-                last: params.paging.last ? params.paging.last : undefined,
-              }
-            : undefined,
-        filter:
-          params && params.filter
-            ? {
-                and: params.filter.and ? params.filter.and : undefined,
-                or: params.filter.or ? params.filter.or : undefined,
-                id: params.filter.id ? params.filter.id : undefined,
-                date: params.filter.date ? params.filter.date : undefined,
-                name: params.filter.name ? params.filter.name : undefined,
-                patientId: params.filter.patientId ? params.filter.patientId : undefined,
-                clinicianId: params.filter.clinicianId ? params.filter.clinicianId : undefined,
-                informantId: params.filter.informantId ? params.filter.informantId : undefined,
-                status: params.filter.status ? params.filter.status : undefined,
-                createdAt: params.filter.createdAt ? params.filter.createdAt : undefined,
-                updatedAt: params.filter.updatedAt ? params.filter.updatedAt : undefined,
-              }
-            : undefined,
-        sorting:
-          params && params.sorting
-            ? {
-                field: params.sorting.field ? params.sorting.field : undefined,
-                direction: params.sorting.direction ? params.sorting.direction : undefined,
-                nulls: params.sorting.nulls ? params.sorting.nulls : undefined,
-              }
-            : undefined,
+        paging: params && params.paging ? params.paging : undefined,
+        filter: params && params.filter ? params.filter : undefined,
+        sorting: params && params.sorting ? params.sorting : undefined,
       },
       fetchPolicy: 'no-cache',
     });
@@ -112,8 +85,8 @@ export class AssessmentService {
 
   deleteAssessment(assessment: Assessment): Observable<FetchResult<any>> {
     return this.apollo.mutate({
-      mutation: AssessmentsMutations.deleteAssessment,
-      variables: { id: assessment.id },
+      mutation: AssessmentsMutations.deleteOneAssessment,
+      variables: { input: assessment.id },
       fetchPolicy: 'no-cache',
     });
   }

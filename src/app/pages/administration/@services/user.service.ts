@@ -6,7 +6,7 @@ import { UsersMutations } from '../../../@graphql/mutations/users';
 import { UsersQueries } from '../../../@graphql/queries/users';
 import { User } from '../administration.interfaces';
 import { UserUpdatePasswordInput } from '../user-management/user-form/user-update-password.type';
-import { CursorPaging } from '@shared/interfaces/cursor-paging.type';
+import { Paging } from '@shared/@types/paging';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ import { CursorPaging } from '@shared/interfaces/cursor-paging.type';
 export class UserService {
   constructor(private apollo: Apollo) {}
 
-  getUsers(filter: any, paging: CursorPaging): Observable<FetchResult<any>> {
+  getUsers(filter: any, paging: Paging): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: UsersQueries.getUsers,
       variables: { filter, paging },

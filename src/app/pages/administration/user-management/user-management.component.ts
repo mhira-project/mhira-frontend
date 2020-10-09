@@ -9,7 +9,7 @@ import { userTable } from '@app/pages/administration/user-management/users.table
 import { UserService } from '@app/pages/administration/@services/user.service';
 import { environment } from '@env/environment';
 import { UserUpdatePasswordInput } from '@app/pages/administration/user-management/user-form/user-update-password.type';
-import { CursorPaging } from '@shared/interfaces/cursor-paging.type';
+import { Paging } from '@shared/@types/paging';
 
 const CryptoJS = require('crypto-js');
 const moment = require('moment');
@@ -28,7 +28,7 @@ export class UserManagementComponent implements OnInit {
     type: 'changePassword',
   };
   filter: any = {};
-  pagination: CursorPaging = {
+  pagination: Paging = {
     first: 10,
   };
   user: User = {

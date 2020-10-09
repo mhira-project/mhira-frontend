@@ -1,4 +1,4 @@
-export interface CursorPaging {
+export interface Paging {
   before?: string;
   after?: string;
   first?: number;

@@ -1,4 +1,4 @@
-export interface ConnectionCursor {
+export interface Pagination {
   startCursor: string;
   endCursor: string;
   hasNextPage: boolean;

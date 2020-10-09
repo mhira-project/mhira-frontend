@@ -36,13 +36,24 @@ const planAssessment = gql`
   }
 `;
 
-const deleteAssessment = gql`
-  mutation($id: Int!) {
-    deleteAssessment(id: $id)
+const deleteOneAssessment = gql`
+  mutation($input: DeleteOneInput!) {
+    deleteOneAssessment(input: $input) {
+      id
+      date
+      name
+      patientId
+      clinicianId
+      informantId
+      status
+      createdAt
+      updatedAt
+      deletedAt
+    }
   }
 `;
 
 export const AssessmentsMutations = {
   planAssessment,
-  deleteAssessment,
+  deleteOneAssessment,
 };
