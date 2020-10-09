@@ -19,7 +19,6 @@ export class CustomFilterComponent implements OnInit {
   @Input() secondaryButtonTitle = 'Clear';
   @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
   @Output() inputChange: EventEmitter<any> = new EventEmitter<any>();
-  formGroup: FormGroup;
   constructor() {}
 
   ngOnInit(): void {}
@@ -34,5 +33,9 @@ export class CustomFilterComponent implements OnInit {
 
   primaryButtonAction() {
     this.child.handleSubmitForm();
+  }
+
+  secondaryButtonAction() {
+    this.child.formGroup.reset();
   }
 }

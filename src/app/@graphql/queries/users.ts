@@ -1,31 +1,34 @@
 import gql from 'graphql-tag';
 
 const getUsers = gql`
-  query($searchKeyword: String, $first: Int, $after: String, $last: Int, $before: String) {
-    getUsers(searchKeyword: $searchKeyword, first: $first, after: $after, last: $last, before: $before) {
+  query($paging: CursorPaging, $filter: UserFilter) {
+    users(paging: $paging, filter: $filter) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
       edges {
-        cursor
         node {
           id
-          workID
+          username
+          active
           firstName
           middleName
           lastName
-          username
-          phone
           email
+          phone
+          workID
           address
           gender
           birthDate
-          updatedAt
+          nationality
           createdAt
+          updatedAt
+          deletedAt
         }
-      }
-      pageInfo {
-        startCursor
-        endCursor
-        hasNextPage
-        hasPreviousPage
+        cursor
       }
     }
   }

@@ -9,6 +9,7 @@ import { userTable } from '@app/pages/administration/user-management/users.table
 import { UserService } from '@app/pages/administration/@services/user.service';
 import { environment } from '@env/environment';
 import { UserUpdatePasswordInput } from '@app/pages/administration/user-management/user-form/user-update-password.type';
+import { CursorPaging } from '@shared/interfaces/cursor-paging.type';
 
 const CryptoJS = require('crypto-js');
 const moment = require('moment');
@@ -25,6 +26,10 @@ export class UserManagementComponent implements OnInit {
   changePasswordModal: ModalType = {
     title: 'Change Password',
     type: 'changePassword',
+  };
+  filter: any = {};
+  pagination: CursorPaging = {
+    first: 10,
   };
   user: User = {
     address: '',
@@ -64,13 +69,12 @@ export class UserManagementComponent implements OnInit {
   getUsers() {
     this.isLoading = true;
     this.users = [];
-    let rows: User[] = [];
-    this.usersService.getUsers().subscribe(
+    const rows: User[] = [];
+    this.usersService.getUsers(this.filter, this.pagination).subscribe(
       async ({ data }) => {
-        const usersData = data['getUsers'];
+        const usersData = data.users;
         usersData.edges.map((user: any) => {
-          let row = Object.assign({}, user.node);
-
+          const row = Object.assign({}, user.node);
           row.updatedAt = row.updatedAt ? moment(row.updatedAt).format('DD-MM-YYYY HH:mm') : '';
           row.birthDate = row.birthDate ? moment(row.birthDate).format('DD-MM-YYYY HH:mm') : '';
           rows.push(row);
