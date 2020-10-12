@@ -25,6 +25,16 @@ const columns: any[] = [
     isFilterable: false,
   },
   {
+    title: 'Hospital ID',
+    name: 'medicalRecordNo',
+    isFilterable: false,
+  },
+  {
+    title: 'Gender',
+    name: 'gender',
+    isFilterable: false,
+  },
+  {
     title: 'Date of Birth',
     name: 'birthDate',
     isFilterable: false,

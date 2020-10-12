@@ -6,6 +6,7 @@ import { PatientsMutations } from '../../../@graphql/mutations/patients';
 import { PatientsQueries } from '../../../@graphql/queries/patients';
 import { Patient } from '../home.interfaces';
 import { UsersQueries } from '@app/@graphql/queries/users';
+import { Paging } from '@shared/@types/paging';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,13 @@ export class PatientsService {
       fetchPolicy: 'no-cache',
     });
   }
-
+  getPatients2(filter: any, paging: Paging): Observable<FetchResult<any>> {
+    return this.apollo.query({
+      query: PatientsQueries.getPatients2,
+      variables: { filter, paging },
+      fetchPolicy: 'no-cache',
+    });
+  }
   getPatientManagers(
     query: string,
     filter?: {
