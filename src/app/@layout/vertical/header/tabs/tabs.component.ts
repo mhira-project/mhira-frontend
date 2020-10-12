@@ -31,12 +31,12 @@ export class TabsComponent implements OnInit {
     if (tabs) {
       if (tabs.length > 0) {
         this.tabs = tabs;
-        if (selectedIndex) {
+        if (selectedIndex !== -1) {
           this.selectedIndex = selectedIndex;
         } else {
           this.selectedIndex = 0;
         }
-        this.router.navigateByUrl(this.tabs[selectedIndex].path);
+        this.router.navigateByUrl(this.tabs[this.selectedIndex].path);
         return;
       }
     }
@@ -56,7 +56,6 @@ export class TabsComponent implements OnInit {
 
   closeTab(tab: TabInterface): void {
     const closedTabIndex = this.tabs.indexOf(tab);
-    console.log(closedTabIndex);
     this.tabs.splice(closedTabIndex, 1);
     localStorage.setItem('tabs', JSON.stringify(this.tabs));
     localStorage.setItem('activeTabIndex', JSON.stringify(this.selectedIndex));

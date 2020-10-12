@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
 import { Form } from '@shared/components/field-generator/formt';
-import { userForms } from '@app/pages/administration/user-management/@forms/form';
 
 const CryptoJS = require('crypto-js');
 
@@ -26,14 +25,13 @@ export class PatientsComponent implements OnInit, OnChanges {
   pagination: Paging = {
     first: 10,
   };
-  showFilterPanel: boolean = false;
+  showFilterPanel = false;
   filterForm: Form = patientForms.patientFilter;
   patientsTable: { columns: any[]; rows: Patient[] } = {
     columns: table.columns,
     rows: [],
   };
   actions = table.actions;
-  patientForms = patientForms;
   currentPatientIndex: number;
 
   constructor(private patientsService: PatientsService, private router: Router) {}
