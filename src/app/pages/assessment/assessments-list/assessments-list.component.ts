@@ -50,6 +50,7 @@ export class AssessmentsListComponent implements OnInit {
             : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
           const active = row.active ? 'active' : 'inactive';
           _assessments.push({
+            name: row.name,
             firstName: row.patient.firstName,
             lastName: row.patient.lastName,
             medicalRecordNo: row.patient.medicalRecordNo,

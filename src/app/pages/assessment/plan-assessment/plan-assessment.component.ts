@@ -97,8 +97,9 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy, AfterViewInit
                 break;
             }
             if (field.options !== undefined) {
-              field.options = Object.assign(field.options, options);
+              field.options = options;
             }
+            this.planAssessmentForm.submitButtonText = `Update Assessment`;
           });
         });
       }

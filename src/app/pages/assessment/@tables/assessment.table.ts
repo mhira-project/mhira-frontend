@@ -23,12 +23,17 @@ const actions: any[] = [
 
 const columns: any[] = [
   {
-    title: 'First name',
+    title: 'Assessment Name',
+    name: 'name',
+    isFilterable: false,
+  },
+  {
+    title: 'First Name',
     name: 'firstName',
     isFilterable: false,
   },
   {
-    title: 'Last name',
+    title: 'Last Name',
     name: 'lastName',
     isFilterable: false,
   },
