@@ -7,7 +7,7 @@ export const planAssessmentForm: Form = {
     {
       fields: [
         {
-          value: null,
+          value: '',
           name: 'name',
           title: 'Assessment Name',
           label: 'Assessment Name',
@@ -19,7 +19,7 @@ export const planAssessmentForm: Form = {
           options: [],
         },
         {
-          value: null,
+          value: '',
           name: 'patientId',
           title: 'Select a patient',
           label: 'Select a patient',

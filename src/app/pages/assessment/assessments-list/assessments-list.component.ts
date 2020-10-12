@@ -5,6 +5,9 @@ import { AssessmentService } from '@app/pages/assessment/@services/assessment.se
 import * as moment from 'moment';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
+import { environment } from '@env/environment';
+
+const CryptoJS = require('crypto-js');
 
 @Component({
   selector: 'app-planned-assessment',
@@ -79,20 +82,37 @@ export class AssessmentsListComponent implements OnInit {
       },
       (error) => {
         this.modalLoading = false;
-        this.message.create('error', `could not remove assessment for ${assessment.firstName} ${assessment.lastName}`);
+        this.message.create(
+          'error',
+          `could not remove assessment for ${assessment.patient.firstName} ${assessment.patient.lastName}`
+        );
       }
     );
   }
 
   handleActionClick(event: any): void {
     switch (event.action.name) {
+      case 'Edit Assessment':
+        const dataString = CryptoJS.AES.encrypt(
+          JSON.stringify(this.assessments[event.index]),
+          environment.secretKey
+        ).toString();
+        this.router.navigate(['/mhira/assessments/plan-assessments'], {
+          state: {
+            title: `${this.assessments[event.index].name}`,
+          },
+          queryParams: {
+            assessment: dataString,
+          },
+        });
+        break;
       case 'Delete Assessment':
-        const rows = this.assessmentsTable.rows;
         this.modalService.confirm({
           nzTitle: 'Confirm',
-          nzContent: `Are you sure you want to delete assessment for ${rows[event.index].firstName} ${
-            rows[event.index].lastName
-          }`,
+          nzContent: `Are you sure you want to delete assessment for
+               <b>${this.assessments[event.index].patient.firstName} ${
+            this.assessments[event.index].patient.lastName
+          }</b>`,
           nzOkText: 'Delete',
           nzOnOk: () => this.deleteAssessment(this.assessments[event.index]),
           nzOkDisabled: this.modalLoading,

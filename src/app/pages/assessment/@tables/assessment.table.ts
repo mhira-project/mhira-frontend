@@ -1,5 +1,9 @@
 const actions: any[] = [
   {
+    type: 'Edit Assessment',
+    name: 'Edit Assessment',
+  },
+  {
     type: 'Delete Assessment',
     name: 'Delete Assessment',
   },

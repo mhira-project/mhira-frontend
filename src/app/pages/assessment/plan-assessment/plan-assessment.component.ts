@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { planAssessmentForm } from '@app/pages/assessment/@forms/plan-assessment.form';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 import { Subject, Subscription } from 'rxjs';
@@ -6,14 +6,18 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AssessmentService } from '@app/pages/assessment/@services/assessment.service';
 import { Questionnaire } from '@app/pages/assessment/@types/questionnaire';
 import { PatientsService } from '@app/pages/home/@services/patients.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Assessment } from '@app/pages/assessment/@types/assessment';
+import { environment } from '@env/environment';
+
+const CryptoJS = require('crypto-js');
 
 @Component({
   selector: 'app-plan-assessment',
   templateUrl: './plan-assessment.component.html',
   styleUrls: ['./plan-assessment.component.scss'],
 })
-export class PlanAssessmentComponent implements OnInit, OnDestroy {
+export class PlanAssessmentComponent implements OnInit, OnDestroy, AfterViewInit {
   modalIsVisible = false;
   modalIsLoading = false;
   isLoading = false;
@@ -22,6 +26,7 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy {
   addedQuestionnaires: Questionnaire[] = [];
   planAssessmentForm = planAssessmentForm;
   selectedPatientId: number;
+  assessment: Assessment;
 
   public questionnaireSearch = new Subject<string>();
   private questionnaireSearchSubscription: Subscription;
@@ -31,7 +36,8 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy {
     private patientService: PatientsService,
     private message: NzMessageService,
     private modal: NzModalService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     this.questionnaireSearchSubscription = this.questionnaireSearch
       .pipe(debounceTime(400), distinctUntilChanged())
@@ -42,8 +48,61 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.getAssessment();
+    });
+  }
+
   ngOnDestroy(): void {
     this.questionnaireSearch.unsubscribe();
+  }
+
+  getAssessment() {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params.assessment) {
+        const bytes = CryptoJS.AES.decrypt(params.assessment, environment.secretKey);
+        this.assessment = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        if (this.assessment.date) {
+          this.assessment.date = this.assessment.date.slice(0, 10);
+        }
+        this.planAssessmentForm.groups.map((group) => {
+          group.fields.map((field) => {
+            field.value = this.assessment[field.name];
+            let options: any[] = [];
+            switch (field.name) {
+              case 'patientId':
+                options = [
+                  {
+                    value: this.assessment.patient.id,
+                    label: `${this.assessment.patient.firstName} ${this.assessment.patient.lastName}`,
+                  },
+                ];
+                break;
+              case 'clinicianId':
+                options = [
+                  {
+                    value: this.assessment.clinician.id,
+                    label: `${this.assessment.clinician.firstName} ${this.assessment.clinician.lastName}`,
+                  },
+                ];
+                break;
+              case 'informantId':
+                options = [
+                  {
+                    value: this.assessment.clinician.id,
+                    label: `${this.assessment.clinician.firstName} ${this.assessment.clinician.lastName}`,
+                  },
+                ];
+                break;
+            }
+            if (field.options !== undefined) {
+              field.options = Object.assign(field.options, options);
+            }
+          });
+        });
+      }
+    });
   }
 
   handleSearchOptions(search: any) {
@@ -164,6 +223,25 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy {
   }
 
   submitForm(form: any) {
+    this.isLoading = true;
+    this.loadingMessage = 'creating an assessment';
+    form.questionnaires = this.addedQuestionnaires;
+    if (this.assessment.id) {
+      form.id = this.assessment.id;
+      this.assessmentService.updateAssessment(form).subscribe(
+        async ({ data }) => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+          this.message.create('success', `assessment has been successfully updated`);
+        },
+        (error) => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+          this.message.error('Could not update an assessment');
+        }
+      );
+      return;
+    }
     if (this.addedQuestionnaires.length === 0) {
       this.modal.error({
         nzTitle: 'Cannot create a plan',
@@ -171,12 +249,8 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy {
       });
       return;
     }
-    this.isLoading = true;
-    this.loadingMessage = 'creating an assessment';
-    form.questionnaires = this.addedQuestionnaires;
     this.assessmentService.planAssessment(form).subscribe(
       async ({ data }) => {
-        console.log(data);
         this.isLoading = false;
         this.loadingMessage = '';
         this.router.navigate(['/mhira/assessments']);

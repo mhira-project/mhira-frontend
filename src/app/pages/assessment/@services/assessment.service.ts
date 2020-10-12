@@ -83,6 +83,14 @@ export class AssessmentService {
     });
   }
 
+  updateAssessment(assessment: Assessment): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: AssessmentsMutations.updateOneAssessment,
+      variables: assessment,
+      fetchPolicy: 'no-cache',
+    });
+  }
+
   deleteAssessment(assessment: Assessment): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: AssessmentsMutations.deleteOneAssessment,
