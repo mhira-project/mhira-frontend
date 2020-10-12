@@ -258,7 +258,91 @@ const patient: Form = {
   ],
 };
 
+const patientFilter: Form = {
+  groups: [
+    {
+      fields: [
+        {
+          title: '',
+          label: 'First name',
+          name: 'firstName',
+          type: 'text',
+          isRequired: false,
+          description: 'First name',
+          validationMessage: '',
+          span: 24,
+          value: '',
+        },
+        {
+          title: '',
+          label: 'Last name',
+          name: 'lastName',
+          type: 'text',
+          isRequired: false,
+          description: 'Last name',
+          validationMessage: '',
+          span: 24,
+          value: '',
+        },
+        {
+          title: '',
+          label: 'Hospital ID',
+          name: 'medicalRecordNo',
+          type: 'text',
+          isRequired: false,
+          description: 'Hospital ID',
+          validationMessage: '',
+          span: 24,
+          value: '',
+        },
+        {
+          value: '',
+          title: '',
+          name: 'active',
+          label: 'Status',
+          description: 'Status',
+          type: 'radio',
+          validationMessage: 'please enter value',
+          isRequired: false,
+          options: [
+            { label: 'Active', value: true },
+            { label: 'Archived', value: false },
+          ],
+          span: 24,
+        },
+        {
+          value: '',
+          title: '',
+          name: 'gender',
+          label: 'Gender',
+          description: 'Gender',
+          type: 'select',
+          validationMessage: 'please enter value',
+          isRequired: false,
+          options: [
+            { label: 'Male', value: 'male' },
+            { label: 'Female', value: 'female' },
+          ],
+          span: 24,
+        },
+        {
+          value: '',
+          title: '',
+          label: 'Date Registered',
+          name: 'createdAt',
+          description: 'Enter date',
+          type: 'date',
+          validationMessage: 'please enter date',
+          isRequired: false,
+          span: 24,
+        },
+      ],
+    },
+  ],
+};
+
 export const patientForms = {
   searchForm,
   patient,
+  patientFilter,
 };

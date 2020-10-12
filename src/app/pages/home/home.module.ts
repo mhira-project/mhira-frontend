@@ -12,6 +12,7 @@ import {
   NzAlertModule,
   NzButtonModule,
   NzCardModule,
+  NzDrawerModule,
   NzGridModule,
   NzIconModule,
   NzInputModule,
@@ -45,7 +46,7 @@ const antModules = [
 ];
 
 @NgModule({
-  imports: [...antModules, CommonModule, TranslateModule, SharedModule, HomeRoutingModule],
+  imports: [...antModules, CommonModule, TranslateModule, SharedModule, HomeRoutingModule, NzDrawerModule],
   declarations: [
     HomeComponent,
     PatientsComponent,

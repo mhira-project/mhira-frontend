@@ -6,6 +6,9 @@ import { patientForms } from '@app/pages/home/@forms/patient-forms';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
+import { Paging } from '@shared/@types/paging';
+import { Form } from '@shared/components/field-generator/formt';
+import { userForms } from '@app/pages/administration/user-management/@forms/form';
 
 const CryptoJS = require('crypto-js');
 
@@ -19,6 +22,12 @@ export class PatientsComponent implements OnInit, OnChanges {
   isVisible = false;
   isOkLoading = false;
   patients: any[] = [];
+  filter: any = {};
+  pagination: Paging = {
+    first: 10,
+  };
+  showFilterPanel: boolean = false;
+  filterForm: Form = patientForms.patientFilter;
   patientsTable: { columns: any[]; rows: Patient[] } = {
     columns: table.columns,
     rows: [],
@@ -39,16 +48,15 @@ export class PatientsComponent implements OnInit, OnChanges {
     this.isLoading = true;
     this.patients = [];
     const _patients: any[] = [];
-    this.patientsService.getPatients().subscribe(
+    this.patientsService.getPatients2(this.filter, this.pagination).subscribe(
       async ({ data }) => {
-        const patientsData = data.getPatients;
+        const patientsData = data.patients;
         patientsData.edges.map((patient: any) => {
           const row = Object.assign({}, patient.node);
-
           const color = row.active
             ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
             : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-          const active = row.active ? 'active' : 'inactive';
+          const active = row.active ? 'ACTIVE' : 'ARCHIVED';
           row.updatedAt = row.updatedAt ? moment(row.updatedAt).format('DD-MM-YYYY HH:mm') : '';
           row.birthDate = row.birthDate ? moment(row.birthDate).format('DD-MM-YYYY HH:mm') : '';
           row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
@@ -111,5 +119,17 @@ export class PatientsComponent implements OnInit, OnChanges {
           },
         });
     }
+  }
+  filterEvent(data: any) {
+    this.pagination = { first: 10 };
+    this.filter = data;
+    this.getPatients();
+  }
+  closeFilterPanel() {
+    this.showFilterPanel = false;
+  }
+
+  showFilterPanelAction() {
+    this.showFilterPanel = true;
   }
 }

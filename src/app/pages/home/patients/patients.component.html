@@ -3,6 +3,8 @@
     <app-custom-table
       [loading]="isLoading"
       [showPagination]="false"
+      [showFilterButton]="true"
+      (onFilterButton)="showFilterPanelAction()"
       [showCustomActions]="true"
       [showSearch]="false"
       [listOfCustomActions]="actions"
@@ -39,3 +41,13 @@
     >? This action is irreversible
   </p>
 </nz-modal>
+<nz-drawer
+  [nzMask]="false"
+  [nzClosable]="true"
+  [nzVisible]="showFilterPanel"
+  nzPlacement="right"
+  nzTitle="Filter Patients"
+  (nzOnClose)="closeFilterPanel()"
+>
+  <app-custom-filter [form]="filterForm" (submitForm)="filterEvent($event)"></app-custom-filter>
+</nz-drawer>
