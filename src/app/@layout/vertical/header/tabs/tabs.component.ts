@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Event, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TabInterface } from '@app/@layout/vertical/header/tabs/tab.interface';
-import { TopTabsDataService } from '@shared/services/tabs-data.service';
 
 @Component({
   selector: 'app-tabs',
@@ -12,15 +11,9 @@ export class TabsComponent implements OnInit {
   tabs: TabInterface[] = [];
   selectedIndex = -1;
 
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private tabsDataService: TopTabsDataService
-  ) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    /*this.tabsDataService.tabs.subscribe((x) => (this.tabs = x));
-    this.tabsDataService.selectedIndex.subscribe((x) => (this.selectedIndex = x));*/
     this.openTabs();
     this.urlChange();
   }
@@ -38,6 +31,9 @@ export class TabsComponent implements OnInit {
         }
         this.router.navigateByUrl(this.tabs[this.selectedIndex].path);
         return;
+      } else {
+        this.router.navigateByUrl('mhira/miscellaneous/home');
+        return;
       }
     }
 
@@ -50,8 +46,6 @@ export class TabsComponent implements OnInit {
       this.generateTab('Untitled');
     }
     this.selectedIndex = 0;
-    /*//update the global values of tabs and index
-    this.upDateTabService(this.tabs, this.selectedIndex);*/
   }
 
   closeTab(tab: TabInterface): void {
@@ -72,6 +66,8 @@ export class TabsComponent implements OnInit {
       } else {
         this.navigateToTab(this.tabs[this.tabs.length - 1]);
       }
+    } else {
+      this.router.navigateByUrl('mhira/miscellaneous/home');
     }
   }
 
@@ -82,12 +78,6 @@ export class TabsComponent implements OnInit {
         localStorage.setItem('activeTabIndex', JSON.stringify(this.selectedIndex));
       }
     });
-  }
-
-  upDateTabService(tabs: TabInterface[], index: number) {
-    //update the global values of tabs and index
-    this.tabsDataService.updateTabs(tabs);
-    this.tabsDataService.updateSelectedIndex(index);
   }
 
   urlChange() {
@@ -126,8 +116,6 @@ export class TabsComponent implements OnInit {
             this.selectedIndex = this.tabs.indexOf(activeTab);
             this.navigateToTab(activeTab);
           }
-          /*//update the global values of tabs and index
-           this.upDateTabService(this.tabs, this.selectedIndex);*/
         }
       }
     });
@@ -150,6 +138,9 @@ export class TabsComponent implements OnInit {
   }
 
   generateTab(title: string, id: string = '') {
+    if (title === 'No Tabs' || title === 'Not Found') {
+      return;
+    }
     const tab = {
       id: id !== '' ? id : this.generateUUID(),
       path: this.router.url,

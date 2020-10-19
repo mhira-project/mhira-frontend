@@ -25,6 +25,10 @@ const routes: Routes = [
     loadChildren: () => import('./feedback/feedback.module').then((m) => m.FeedbackModule),
   },
   {
+    path: 'miscellaneous',
+    loadChildren: () => import('./miscellaneous/miscellaneous.module').then((m) => m.MiscellaneousModule),
+  },
+  {
     path: '',
     data: {
       title: extract('Home'),
@@ -32,10 +36,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
-  /*{
+  {
     path: '**',
-    component: NotFoundComponent,
-  },*/
+    redirectTo: 'miscellaneous/not-found',
+  },
 ];
 
 @NgModule({
