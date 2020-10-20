@@ -28,6 +28,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
   tabSub: any;
   routeSub: any;
   tabIndexSub: any;
+  inputMode = true;
+  showCancelButton = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -51,15 +53,27 @@ export class UserFormComponent implements OnInit, OnDestroy {
   getUserFromUrl(): void {
     this.routeSub = this.activatedRoute.queryParams.subscribe((params) => {
       if (params.user) {
+        this.inputMode = false;
+        this.showCancelButton = true;
         const bytes = CryptoJS.AES.decrypt(params.user, environment.secretKey);
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.user = decryptedData;
-
+        if (this.user.birthDate) {
+          this.user.birthDate = decryptedData.birthDate.slice(0, 10);
+        }
         this.profileFields = userForms.userProfileEdit;
         // this.onChangeUser();
         this.profileFields.groups.map((group) => {
           group.fields.map((field) => {
             field.value = decryptedData[field.name];
+          });
+        });
+      } else {
+        this.inputMode = true;
+        this.showCancelButton = false;
+        this.profileFields.groups.map((group) => {
+          group.fields.map((field) => {
+            field.value = null;
           });
         });
       }

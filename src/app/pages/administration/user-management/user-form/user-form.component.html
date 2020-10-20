@@ -3,6 +3,8 @@
     <app-field-generator
       [isLoading]="isLoading"
       [loadingMessage]="loadingMessage"
+      [inputMode]="inputMode"
+      [showCancelButton]="showCancelButton"
       [form]="profileFields"
       (submitForm)="submitForm($event)"
     ></app-field-generator>
@@ -16,6 +18,7 @@
         <app-field-generator
           [isLoading]="isLoading"
           [loadingMessage]="loadingMessage"
+          [showCancelButton]="false"
           [form]="changeUserPasswordFields"
           (submitForm)="changePassword($event)"
         ></app-field-generator>

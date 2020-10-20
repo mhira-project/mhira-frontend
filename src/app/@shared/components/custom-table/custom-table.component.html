@@ -173,7 +173,7 @@
     </thead>
     <tbody>
       <ng-container *ngFor="let data of rowSelectionTable.data; let i = index">
-        <tr>
+        <tr class="table-row" (click)="handleRowClick(data, i)">
           <td
             *ngIf="showCheckBoxColumn"
             (nzCheckedChange)="onItemChecked(data.id, $event)"

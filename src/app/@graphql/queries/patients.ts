@@ -96,7 +96,6 @@ const getPatientInformants = gql`
           firstName
           middleName
           lastName
-          patientname
           phone
           email
           address
@@ -143,7 +142,6 @@ const getPatientCaseManagers = gql`
           firstName
           middleName
           lastName
-          patientname
           phone
           email
           address

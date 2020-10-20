@@ -21,6 +21,8 @@ export class CreatePatientComponent implements OnInit {
   patient: Patient;
   hasErrors = false;
   errors: string[] = [];
+  inputMode = true;
+  showCancelButton = false;
 
   constructor(
     private patientsService: PatientsService,
@@ -45,6 +47,8 @@ export class CreatePatientComponent implements OnInit {
   getPatientFromUrl(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params.profile) {
+        this.inputMode = false;
+        this.showCancelButton = true;
         const bytes = CryptoJS.AES.decrypt(params.profile, environment.secretKey);
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.patient = decryptedData;
@@ -54,6 +58,14 @@ export class CreatePatientComponent implements OnInit {
         this.patientForms.patient.groups.map((group) => {
           group.fields.map((field) => {
             field.value = decryptedData[field.name];
+          });
+        });
+      } else {
+        this.inputMode = true;
+        this.showCancelButton = false;
+        this.patientForms.patient.groups.map((group) => {
+          group.fields.map((field) => {
+            field.value = null;
           });
         });
       }

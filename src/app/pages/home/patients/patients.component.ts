@@ -55,8 +55,9 @@ export class PatientsComponent implements OnInit, OnChanges {
             ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
             : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
           const active = row.active ? 'ACTIVE' : 'ARCHIVED';
-          row.updatedAt = row.updatedAt ? moment(row.updatedAt).format('DD-MM-YYYY HH:mm') : '';
-          row.birthDate = row.birthDate ? moment(row.birthDate).format('DD-MM-YYYY HH:mm') : '';
+          const settings = JSON.parse(localStorage.getItem('settings'));
+          row.updatedAt = row.updatedAt ? moment(row.updatedAt).format(settings.dateTimeFormat) : '';
+          row.birthDate = row.birthDate ? moment(row.birthDate).format(settings.dateFormat) : '';
           row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
           _patients.push(row);
           this.patients.push(patient.node);
@@ -103,26 +104,30 @@ export class PatientsComponent implements OnInit, OnChanges {
         this.isVisible = true;
         this.currentPatientIndex = event.index;
         break;
-      case 'Edit Patient':
-        const dataString = CryptoJS.AES.encrypt(
-          JSON.stringify(this.patients[event.index]),
-          environment.secretKey
-        ).toString();
-        this.router.navigate(['/mhira/home/profile'], {
-          state: {
-            title: `${this.patients[event.index].firstName} ${this.patients[event.index].lastName}`,
-          },
-          queryParams: {
-            profile: dataString,
-          },
-        });
     }
   }
+
+  handleRowClick(event: any) {
+    const dataString = CryptoJS.AES.encrypt(
+      JSON.stringify(this.patients[event.index]),
+      environment.secretKey
+    ).toString();
+    this.router.navigate(['/mhira/home/profile'], {
+      state: {
+        title: `${this.patients[event.index].firstName} ${this.patients[event.index].lastName}`,
+      },
+      queryParams: {
+        profile: dataString,
+      },
+    });
+  }
+
   filterEvent(data: any) {
     this.pagination = { first: 10 };
     this.filter = data;
     this.getPatients();
   }
+
   closeFilterPanel() {
     this.showFilterPanel = false;
   }

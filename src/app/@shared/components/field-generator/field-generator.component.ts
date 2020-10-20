@@ -14,6 +14,8 @@ export class FieldGeneratorComponent implements OnInit, OnDestroy {
   @Input() form: Form;
   @Input() isLoading = false;
   @Input() loadingMessage = '';
+  @Input() inputMode = true;
+  @Input() showCancelButton = true;
   @Output() searchOptions: EventEmitter<any> = new EventEmitter<any>();
   @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
   @Output() inputChange: EventEmitter<any> = new EventEmitter<any>();
@@ -86,6 +88,10 @@ export class FieldGeneratorComponent implements OnInit, OnDestroy {
       return;
     }
     this.submitForm.emit(this.formGroup.value);
+  }
+
+  toggleEdit() {
+    this.inputMode = !this.inputMode;
   }
 
   handleInputChange(field: FieldType, event: any) {

@@ -9,6 +9,12 @@
   .has-error {
     border: 1px solid #ff4d4e;
   }
+  .field-value {
+    padding: 0.375rem 0;
+    color: #495057;
+    line-height: 1.5;
+    background-color: transparent;
+  }
 }
 
 nz-select {

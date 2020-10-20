@@ -11,6 +11,7 @@
   [showButton]="true"
   [buttonText]="'Add User'"
   (onButton)="onCreateUser()"
+  (rowClick)="handleRowClick($event)"
 >
 </app-custom-table>
 <nz-modal

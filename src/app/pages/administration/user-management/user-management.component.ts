@@ -75,8 +75,9 @@ export class UserManagementComponent implements OnInit {
         const usersData = data.users;
         usersData.edges.map((user: any) => {
           const row = Object.assign({}, user.node);
-          row.updatedAt = row.updatedAt ? moment(row.updatedAt).format('DD-MM-YYYY HH:mm') : '';
-          row.birthDate = row.birthDate ? moment(row.birthDate).format('DD-MM-YYYY HH:mm') : '';
+          const settings = JSON.parse(localStorage.getItem('settings'));
+          row.updatedAt = row.updatedAt ? moment(row.updatedAt).format(settings.dateTimeFormat) : '';
+          row.birthDate = row.birthDate ? moment(row.birthDate).format(settings.dateFormat) : '';
           rows.push(row);
           this.users.push(user.node);
         });
@@ -111,20 +112,6 @@ export class UserManagementComponent implements OnInit {
     this.user = this.usersTable.rows[event.index];
     this.selectedUserIndex = event.index;
     switch (event.action.type) {
-      case 'edit':
-        const dataString = CryptoJS.AES.encrypt(
-          JSON.stringify(this.users[event.index]),
-          environment.secretKey
-        ).toString();
-        this.router.navigate(['/mhira/administration/user-management/form'], {
-          state: {
-            title: `${this.user.firstName} ${this.user.lastName}`,
-          },
-          queryParams: {
-            user: dataString,
-          },
-        });
-        break;
       case 'changePassword':
         this.showModal = true;
         this.modalType = Object.assign({}, this.changePasswordModal);
@@ -141,6 +128,19 @@ export class UserManagementComponent implements OnInit {
         break;
     }
   }
+
+  handleRowClick(event: any) {
+    const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.users[event.index]), environment.secretKey).toString();
+    this.router.navigate(['/mhira/administration/user-management/form'], {
+      state: {
+        title: `${this.user.firstName} ${this.user.lastName}`,
+      },
+      queryParams: {
+        user: dataString,
+      },
+    });
+  }
+
   changePassword(form: any) {
     if (this.user.id) {
       this.isLoading = true;

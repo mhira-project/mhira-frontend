@@ -11,12 +11,19 @@
 .search-box button {
   width: 90px;
 }
+
 .search-button {
   margin-right: 8px;
 }
+
 [nz-radio] {
   display: block;
 }
+
+.table-row {
+  cursor: pointer;
+}
+
 .loadingSpinner {
   position: absolute;
   text-align: center;

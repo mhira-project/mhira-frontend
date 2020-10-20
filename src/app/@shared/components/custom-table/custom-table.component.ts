@@ -9,139 +9,58 @@ import { XlsExportService } from '@shared/services/xls-export.service';
   styleUrls: ['./custom-table.component.css'],
 })
 export class CustomTableComponent implements OnInit, OnChanges {
+  @Input() exportWithOption = false;
+  @Input() showFilterButton = false;
+  @Input() listOfExportOptions: ExportChoiceType[] = [];
+  @Input() frontPagination = false;
+  @Input() loading = false;
+  @Input() hasNextPage = true;
+  @Input() hasPreviousPage = true;
+  @Input() total = 50;
+  @Input() limit = 5;
+  @Input() currentPage = 1;
+  @Input() showDateFilter = false;
+  @Input() showCustomActions = false;
+  @Input() showPagination = true;
+  @Input() showNext = true;
+  @Input() showActionColumn = true;
+  @Input() showCheckBoxColumn = true;
+  @Input() showSearch = true;
+  @Input() showExport = false;
+  @Input() showImport = false;
+  @Input() listOfColumn: any[] = [];
+  @Input() showEdit = false;
+  @Input() showDelete = false;
+  @Input() showView = false;
+  @Input() showButton = false;
+  @Input() buttonText = 'Add';
+  @Input() buttonIcon = 'plus';
+  @Input() listOfCustomActions: any[] = [];
+  @Input() exportData: any[] = [];
+  @Input() listOfData: any[] = [];
+
+  @Output() onEdit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onFilterButton: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onView: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onButton: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onSearch: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onImport: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onCustomAction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onAction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onNext: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onPrevious: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onParamChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onDateFilter: EventEmitter<any> = new EventEmitter<any>();
+  @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
+
   checked = false;
   dateRange: any[] = [];
-
-  @Input()
-  exportWithOption: boolean = false;
-
-  @Input()
-  showFilterButton: boolean = false;
-
-  @Input()
-  listOfExportOptions: ExportChoiceType[] = [];
-
-  @Input()
-  frontPagination: boolean = false;
-
-  @Input()
-  loading: boolean = false;
-
-  @Input()
-  hasNextPage: boolean = true;
-
-  @Input()
-  hasPreviousPage: boolean = true;
-
-  @Input()
-  total: number = 50;
-
-  @Input()
-  limit: number = 5;
-
-  @Input()
-  currentPage: number = 1;
-
   indeterminate = false;
-
   searchValue: any = '';
-
-  @Input()
-  listOfCustomActions: any[] = [];
-
-  @Input()
-  exportData: any[] = [];
-
-  @Input()
-  listOfData: any[] = [];
   listOfDisplayData: any[] = [];
   listOfCurrentPageData: any[] = [];
   setOfCheckedId = new Set<number>();
-
-  @Input()
-  showDateFilter: boolean = false;
-
-  @Input()
-  showCustomActions: boolean = false;
-
-  @Input()
-  showPagination: boolean = true;
-
-  @Input()
-  showNext = true;
-
-  @Input()
-  showActionColumn: boolean = true;
-
-  @Input()
-  showCheckBoxColumn: boolean = true;
-
-  @Input()
-  showSearch: boolean = true;
-
-  @Input()
-  showExport: boolean = false;
-
-  @Input()
-  showImport: boolean = false;
-
-  @Input()
-  listOfColumn: any[] = [];
-
-  @Input()
-  showEdit: boolean = false;
-
-  @Input()
-  showDelete: boolean = false;
-
-  @Input()
-  showView: boolean = false;
-
-  @Input()
-  showButton: boolean = false;
-
-  @Input()
-  buttonText: string = 'Add';
-
-  @Input()
-  buttonIcon: string = 'plus';
-
-  @Output()
-  onEdit: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  onFilterButton: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  onDelete: EventEmitter<any> = new EventEmitter<any>();
-  @Output()
-  onView: EventEmitter<any> = new EventEmitter<any>();
-  @Output()
-  onButton: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  onSearch: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  onImport: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  onCustomAction: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  onAction: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  onNext: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  onPrevious: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  onParamChange: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  onDateFilter: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private xlsExportService: XlsExportService) {}
 
@@ -166,11 +85,6 @@ export class CustomTableComponent implements OnInit, OnChanges {
     this.refreshCheckedStatus();
   }
 
-  onQueryParamsChange(params: NzTableQueryParams) {
-    const { pageSize, pageIndex, sort, filter } = params;
-    this.onParamChange.emit(params);
-  }
-
   refreshCheckedStatus(): void {
     const listOfEnabledData = this.listOfCurrentPageData.filter(({ disabled }) => !disabled);
     this.checked = listOfEnabledData.every(({ id }) => this.setOfCheckedId.has(id));
@@ -187,6 +101,34 @@ export class CustomTableComponent implements OnInit, OnChanges {
       .filter(({ disabled }) => !disabled)
       .forEach(({ id }) => this.updateCheckedSet(id, checked));
     this.refreshCheckedStatus();
+  }
+
+  reset(): void {
+    this.searchValue = '';
+    this.onFilterSearch(null);
+  }
+
+  onFilterSearch(column: any): void {
+    if (this.exportData.length > 0) {
+      this.frontPagination = true;
+      this.listOfDisplayData = this.exportData;
+    } else {
+      if (column) {
+        this.listOfDisplayData = this.listOfData.filter(
+          (item: string) => item[column]?.indexOf(this.searchValue) !== -1
+        );
+      } else {
+        this.listOfDisplayData = this.listOfData;
+      }
+    }
+  }
+
+  onExportAction() {
+    this.xlsExportService.exportExcel(this.listOfDisplayData, 'exportedData');
+  }
+
+  onQueryParamsChange(params: NzTableQueryParams) {
+    this.onParamChange.emit(params);
   }
 
   onViewAction(data: any, index: number = -1) {
@@ -213,24 +155,8 @@ export class CustomTableComponent implements OnInit, OnChanges {
     this.onFilterButton.emit();
   }
 
-  onFilterSearch(column: any): void {
-    if (this.exportData.length > 0) {
-      this.frontPagination = true;
-      this.listOfDisplayData = this.exportData;
-    } else {
-      if (column) {
-        this.listOfDisplayData = this.listOfData.filter(
-          (item: string) => item[column]?.indexOf(this.searchValue) !== -1
-        );
-      } else {
-        this.listOfDisplayData = this.listOfData;
-      }
-    }
-  }
-
   onSearchAction(data: any) {
-    const stringEmitted = (data.target as HTMLInputElement).value;
-    this.onSearch.emit(stringEmitted);
+    this.onSearch.emit((data.target as HTMLInputElement).value);
   }
 
   onCustomActionEvent(event: any, data: any) {
@@ -242,17 +168,8 @@ export class CustomTableComponent implements OnInit, OnChanges {
     this.onAction.emit({ action, index });
   }
 
-  reset(): void {
-    this.searchValue = '';
-    this.onFilterSearch(null);
-  }
-
   onDateFilterChange($event: any) {
     this.onDateFilter.emit($event);
-  }
-
-  onExportAction() {
-    this.xlsExportService.exportExcel(this.listOfDisplayData, 'exportedData');
   }
 
   onPreviousAction() {
@@ -261,5 +178,9 @@ export class CustomTableComponent implements OnInit, OnChanges {
 
   onNextAction() {
     this.onNext.emit();
+  }
+
+  handleRowClick(row: any, index: number) {
+    this.rowClick.emit({ row, index });
   }
 }

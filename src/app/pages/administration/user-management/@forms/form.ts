@@ -36,6 +36,7 @@ const changeUserPassword: Form = {
 
 const userProfile: Form = {
   submitButtonText: 'Save User',
+  editButtonText: 'Edit User',
   submitButtonClass: 'right-align-submit',
   groups: [
     {
@@ -183,6 +184,7 @@ const userProfile: Form = {
 
 const userProfileEdit: Form = {
   submitButtonText: 'Save User',
+  editButtonText: 'Edit User',
   submitButtonClass: 'right-align-submit',
   groups: [
     {
@@ -231,8 +233,8 @@ const userProfileEdit: Form = {
           validationMessage: 'please select gender',
           isRequired: true,
           options: [
-            { label: 'Male', value: 'male' },
-            { label: 'Female', value: 'female' },
+            { label: 'Male', value: 'MALE' },
+            { label: 'Female', value: 'FEMALE' },
           ],
           span: 8,
         },

@@ -7,8 +7,10 @@
       <div nz-row nzGutter="16">
         <ng-container *ngFor="let field of group.fields; let i = index">
           <div nz-col class="gutter-row form-item" [nzSpan]="field?.span">
-            <label for="field{{ i }}" translate>{{ field?.title }}</label>
-            <ng-container [ngSwitch]="field.type">
+            <label for="field{{ i }}" translate
+              ><b>{{ field?.title }}</b></label
+            >
+            <ng-container *ngIf="inputMode" [ngSwitch]="field.type">
               <div *ngSwitchCase="'select'">
                 <nz-select
                   style="width: 100%"
@@ -100,10 +102,17 @@
                 </nz-input-group>
               </div>
             </ng-container>
+            <div class="field-value" *ngIf="!inputMode">
+              <span *ngIf="field.type !== 'date'">{{ field?.value }}</span>
+              <span *ngIf="field.type === 'date'">{{ field?.value | formatDate }}</span>
+            </div>
             <ng-template #suffix>
               <i nz-icon [nzType]="field?.iconName"></i>
             </ng-template>
-            <p *ngIf="formGroup.controls[field.name].invalid && formGroup.controls[field.name].dirty" translate>
+            <p
+              *ngIf="formGroup.controls[field.name].invalid && formGroup.controls[field.name].dirty && inputMode"
+              translate
+            >
               {{ field.validationMessage }}
             </p>
           </div>
@@ -111,15 +120,54 @@
       </div>
     </ng-container>
   </ng-container>
-  <button
-    *ngIf="form.submitButtonText"
-    nz-button
-    nzType="primary"
-    [ngClass]="form.submitButtonClass"
-    (click)="handleSubmitForm()"
-    [disabled]="formGroup.invalid"
-  >
+  <nz-button-group *ngIf="form.submitButtonText && inputMode" [ngClass]="form.submitButtonClass">
+    <button nz-button *ngIf="showCancelButton" [nzShape]="'round'" (click)="toggleEdit()">Cancel</button>
+    <button
+      nz-button
+      [disabled]="formGroup.invalid"
+      [nzShape]="'round'"
+      (click)="handleSubmitForm()"
+      [nzType]="'primary'"
+    >
+      {{ form.submitButtonText }}
+    </button>
+  </nz-button-group>
+  <!--<button nz-button
+          nz-dropdown
+          nzTrigger="click"
+          *ngIf="form.submitButtonText && editMode"
+          [ngClass]="form.submitButtonClass"
+          [nzDropdownMenu]="actions"
+          [nzPlacement]="'bottomCenter'">
     {{ form.submitButtonText }}
+  </button>
+  <nz-dropdown-menu #actions="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item>
+        <button nz-button
+                nzBlock
+                (click)="handleSubmitForm()"
+                [disabled]="formGroup.invalid"
+                nzType="primary">
+          {{ form.submitButtonText }}
+        </button>
+      </li>
+      <li nz-menu-item>
+        <button nz-button nzBlock nzType="default" (click)="toggleEdit()">
+          Cancel
+        </button>
+      </li>
+    </ul>
+  </nz-dropdown-menu>-->
+  <button
+    *ngIf="form.submitButtonText && !inputMode"
+    nz-button
+    [nzType]="'primary'"
+    [nzShape]="'round'"
+    [ngClass]="form.submitButtonClass"
+    (click)="toggleEdit()"
+  >
+    {{ form.editButtonText }}
   </button>
 </ng-container>
 <app-loader [isLoading]="isLoading" [message]="loadingMessage"></app-loader>

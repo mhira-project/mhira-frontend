@@ -1,9 +1,5 @@
 const actions: any[] = [
   {
-    type: 'edit',
-    name: 'Edit User',
-  },
-  {
     type: 'changePassword',
     name: 'Change Password',
   },

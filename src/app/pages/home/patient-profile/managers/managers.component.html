@@ -24,7 +24,7 @@
 <nz-modal
   [nzWidth]="600"
   [(nzVisible)]="isVisible"
-  nzTitle="Assign {{ managerType }} to {{ patient.firstName }} {{ patient.lastName }}"
+  nzTitle="Assign {{ managerType }} to {{ patient?.firstName }} {{ patient?.lastName }}"
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="handleCancel()"
   [nzOkLoading]="isOkLoading"
@@ -44,8 +44,8 @@
   <ul nz-list [nzBordered]="false" [nzDataSource]="users" nzBordered nzSize="large">
     <li nz-list-item *ngFor="let user of users" nzNoFlex>
       <div nz-row>
-        <div nz-col nzSpan="8">{{ user.firstName }} {{ user.lastName }}</div>
-        <div nz-col nzSpan="12">{{ user.email }}</div>
+        <div nz-col nzSpan="8">{{ user?.firstName }} {{ user?.lastName }}</div>
+        <div nz-col nzSpan="12">{{ user?.email }}</div>
         <div nz-col nzSpan="4">
           <button
             class="assign-button"

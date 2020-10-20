@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
+
 const CryptoJS = require('crypto-js');
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -40,8 +42,10 @@ export class HeaderComponent implements OnInit {
     this.authService.logout().subscribe(
       async ({ data }) => {
         this.isOkLoading = false;
-        localStorage.removeItem('auth_app_token');
-        localStorage.removeItem('user');
+        const items = ['auth_app_token', 'user', 'settings', 'tabs', 'activeTabIndex'];
+        for (const item of items) {
+          localStorage.removeItem(item);
+        }
         this.router.navigate(['/auth/login']);
       },
       (error) => {

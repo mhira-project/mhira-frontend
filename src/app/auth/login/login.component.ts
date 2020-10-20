@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
             user: data['login'].user,
           })
         );
+        this.getSettings();
         this.isLoading = false;
         this.router.navigate(['/mhira/home/patients']);
       },
@@ -51,6 +52,17 @@ export class LoginComponent implements OnInit {
           this.errors.push(error.graphQLErrors[i].message);
         }
         this.isLoading = false;
+      }
+    );
+  }
+
+  getSettings() {
+    this.authService.getSettings().subscribe(
+      ({ data }) => {
+        localStorage.setItem('settings', JSON.stringify(data['settings']));
+      },
+      (error) => {
+        console.log(error);
       }
     );
   }

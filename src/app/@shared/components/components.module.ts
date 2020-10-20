@@ -143,6 +143,7 @@ const antModules = [
 
 import {
   CapitalizePipe,
+  DatePipe,
   DynamicPipe,
   IconFilterPipe,
   NoSanitizePipe,
@@ -164,12 +165,13 @@ const PIPES = [
   RoundPipe,
   SearchPipe,
   TimingPipe,
+  DatePipe,
 ];
 
 @NgModule({
   imports: [...antModules, CommonModule, FormsModule, NgxInputSearchModule, ReactiveFormsModule],
   declarations: [
-    PIPES,
+    ...PIPES,
     LoaderComponent,
     CustomTableComponent,
     FormGeneratorComponent,
@@ -177,7 +179,7 @@ const PIPES = [
     CustomFilterComponent,
   ],
   exports: [
-    PIPES,
+    ...PIPES,
     LoaderComponent,
     CustomTableComponent,
     FormGeneratorComponent,

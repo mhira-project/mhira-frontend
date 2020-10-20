@@ -4,10 +4,6 @@ const actions: any[] = [
     name: 'Plan Assessment',
   },
   {
-    type: 'Edit Patient',
-    name: 'Edit Patient',
-  },
-  {
     type: 'Delete Patient',
     name: 'Delete Patient',
   },

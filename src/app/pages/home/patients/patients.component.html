@@ -10,10 +10,11 @@
       [listOfCustomActions]="actions"
       [listOfData]="patientsTable.rows"
       [listOfColumn]="patientsTable.columns"
-      (onAction)="handleActionClick($event)"
       [showButton]="true"
       [buttonText]="'Create Patient'"
+      (onAction)="handleActionClick($event)"
       (onButton)="handleCreatePatient()"
+      (rowClick)="handleRowClick($event)"
     >
     </app-custom-table>
   </div>

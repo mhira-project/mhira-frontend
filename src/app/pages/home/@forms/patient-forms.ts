@@ -103,6 +103,7 @@ const searchForm: Form = {
 
 const patient: Form = {
   submitButtonText: 'Save Patient',
+  editButtonText: 'Edit Patient',
   submitButtonClass: 'right-align-submit',
   groups: [
     {
