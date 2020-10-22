@@ -2,13 +2,6 @@
   "name": "ng-x-rocket",
   "version": "1.0.0",
   "private": true,
-  "budgets": [
-    {
-      "type": "initial",
-      "maximumWarning": "5mb",
-      "maximumError": "10mb"
-    }
-  ],
   "scripts": {
     "ng": "ng",
     "build": "npm run env -s && ng build --aot --prod --extract-css false",
