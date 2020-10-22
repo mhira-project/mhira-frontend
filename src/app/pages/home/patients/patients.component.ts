@@ -25,6 +25,7 @@ export class PatientsComponent implements OnInit, OnChanges {
   paging: Paging = {
     first: 10,
   };
+  pageInfo: any;
   showFilterPanel = false;
   filterForm: Form = patientForms.patientFilter;
   patientsTable: { columns: any[]; rows: Patient[] } = {
@@ -64,13 +65,27 @@ export class PatientsComponent implements OnInit, OnChanges {
         });
 
         this.patientsTable.rows = _patients;
-        this.paging = data.patients.pageInfo;
+        this.paging.after = data.patients.pageInfo.startCursor;
+        this.paging.before = data.patients.pageInfo.endCursor;
+        this.pageInfo = data.patients.pageInfo;
         this.isLoading = false;
       },
       (error) => {
         this.isLoading = false;
       }
     );
+  }
+
+  navigatePages(direction: string) {
+    switch (direction) {
+      case 'next':
+        this.paging.before = null;
+        break;
+      case 'previous':
+        this.paging.after = null;
+        break;
+    }
+    this.getPatients(this.paging);
   }
 
   deletePatient() {

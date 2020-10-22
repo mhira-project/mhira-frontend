@@ -22,6 +22,7 @@ export class AssessmentsListComponent implements OnInit {
   modalLoading = false;
   assessments: Assessment[] = [];
   paging: Paging;
+  pageInfo: any;
   assessmentsTable: { columns: any[]; rows: Assessment[] } = {
     columns: assessmentTable.columns,
     rows: [],
@@ -67,13 +68,27 @@ export class AssessmentsListComponent implements OnInit {
         });
 
         this.assessmentsTable.rows = _assessments;
-        this.paging = data.assessments.pageInfo;
+        this.paging.after = data.assessments.pageInfo.startCursor;
+        this.paging.before = data.assessments.pageInfo.endCursor;
+        this.pageInfo = data.assessments.pageInfo;
         this.isLoading = false;
       },
       (error) => {
         this.isLoading = false;
       }
     );
+  }
+
+  navigatePages(direction: string) {
+    switch (direction) {
+      case 'next':
+        this.paging.before = null;
+        break;
+      case 'previous':
+        this.paging.after = null;
+        break;
+    }
+    this.getAssessments({ paging: this.paging });
   }
 
   deleteAssessment(assessment: Assessment) {

@@ -31,6 +31,7 @@ export class UserManagementComponent implements OnInit {
   paging: Paging = {
     first: 10,
   };
+  pageInfo: any;
   user: User = {
     address: '',
     gender: '',
@@ -82,7 +83,9 @@ export class UserManagementComponent implements OnInit {
           this.users.push(user.node);
         });
         this.usersTable.rows = rows;
-        this.paging = data.users.pageInfo;
+        this.paging.after = data.users.pageInfo.startCursor;
+        this.paging.before = data.users.pageInfo.endCursor;
+        this.pageInfo = data.users.pageInfo;
         this.isLoading = false;
       },
       (error) => {
@@ -90,6 +93,18 @@ export class UserManagementComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+
+  navigatePages(direction: string) {
+    switch (direction) {
+      case 'next':
+        this.paging.before = null;
+        break;
+      case 'previous':
+        this.paging.after = null;
+        break;
+    }
+    this.getUsers(this.paging);
   }
 
   deleteUser(index: any) {
