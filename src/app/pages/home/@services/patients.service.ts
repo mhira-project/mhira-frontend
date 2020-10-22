@@ -7,6 +7,8 @@ import { PatientsQueries } from '../../../@graphql/queries/patients';
 import { Patient } from '../home.interfaces';
 import { UsersQueries } from '@app/@graphql/queries/users';
 import { Paging } from '@shared/@types/paging';
+import { Filter } from '@shared/@types/filter';
+import { Sorting } from '@shared/@types/sorting';
 
 @Injectable({
   providedIn: 'root',
@@ -14,30 +16,18 @@ import { Paging } from '@shared/@types/paging';
 export class PatientsService {
   constructor(private apollo: Apollo) {}
 
-  getPatients(filter?: {
-    first?: number;
-    after?: string;
-    last?: number;
-    before?: string;
-    searchKeyword?: string;
-    active?: boolean;
-    createdAtFrom?: string;
-    createdAtTo?: string;
-    caseManagerId?: number;
-  }): Observable<FetchResult<any>> {
+  getPatients(params?: { paging?: Paging; filter?: any; sorting?: Sorting }): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: PatientsQueries.getPatients,
-      variables: filter,
+      variables: {
+        paging: params && params.paging ? params.paging : undefined,
+        filter: params && params.filter ? params.filter : undefined,
+        sorting: params && params.sorting ? params.sorting : undefined,
+      },
       fetchPolicy: 'no-cache',
     });
   }
-  getPatients2(filter: any, paging: Paging): Observable<FetchResult<any>> {
-    return this.apollo.query({
-      query: PatientsQueries.getPatients2,
-      variables: { filter, paging },
-      fetchPolicy: 'no-cache',
-    });
-  }
+
   getPatientManagers(
     query: string,
     filter?: {

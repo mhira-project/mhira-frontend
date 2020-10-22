@@ -2,6 +2,7 @@ import { Form } from '@shared/components/field-generator/formt';
 
 export const planAssessmentForm: Form = {
   submitButtonText: 'Plan',
+  editButtonText: 'Edit Assessment',
   submitButtonClass: 'full-width',
   groups: [
     {

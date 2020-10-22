@@ -22,7 +22,7 @@ export class PatientsComponent implements OnInit, OnChanges {
   isOkLoading = false;
   patients: any[] = [];
   filter: any = {};
-  pagination: Paging = {
+  paging: Paging = {
     first: 10,
   };
   showFilterPanel = false;
@@ -37,16 +37,16 @@ export class PatientsComponent implements OnInit, OnChanges {
   constructor(private patientsService: PatientsService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getPatients();
+    this.getPatients(this.paging);
   }
 
   ngOnChanges() {}
 
-  getPatients() {
+  getPatients(paging: Paging) {
     this.isLoading = true;
     this.patients = [];
     const _patients: any[] = [];
-    this.patientsService.getPatients2(this.filter, this.pagination).subscribe(
+    this.patientsService.getPatients({ filter: this.filter, paging }).subscribe(
       async ({ data }) => {
         const patientsData = data.patients;
         patientsData.edges.map((patient: any) => {
@@ -64,6 +64,7 @@ export class PatientsComponent implements OnInit, OnChanges {
         });
 
         this.patientsTable.rows = _patients;
+        this.paging = data.patients.pageInfo;
         this.isLoading = false;
       },
       (error) => {
@@ -123,9 +124,8 @@ export class PatientsComponent implements OnInit, OnChanges {
   }
 
   filterEvent(data: any) {
-    this.pagination = { first: 10 };
     this.filter = data;
-    this.getPatients();
+    this.getPatients({ first: 10 });
   }
 
   closeFilterPanel() {

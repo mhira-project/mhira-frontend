@@ -6,6 +6,9 @@ import * as moment from 'moment';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
+import { Paging } from '@shared/@types/paging';
+import { Filter } from '@shared/@types/filter';
+import { Sorting } from '@shared/@types/sorting';
 
 const CryptoJS = require('crypto-js');
 
@@ -18,6 +21,7 @@ export class AssessmentsListComponent implements OnInit {
   isLoading = false;
   modalLoading = false;
   assessments: Assessment[] = [];
+  paging: Paging;
   assessmentsTable: { columns: any[]; rows: Assessment[] } = {
     columns: assessmentTable.columns,
     rows: [],
@@ -35,11 +39,11 @@ export class AssessmentsListComponent implements OnInit {
     this.getAssessments();
   }
 
-  getAssessments() {
+  getAssessments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
     this.isLoading = true;
     this.assessments = [];
     const _assessments: any[] = [];
-    this.assessmentsService.getAssessments().subscribe(
+    this.assessmentsService.getAssessments(params).subscribe(
       async ({ data }) => {
         const assessments = data.assessments;
         assessments.edges.map((assessment: any) => {
@@ -63,6 +67,7 @@ export class AssessmentsListComponent implements OnInit {
         });
 
         this.assessmentsTable.rows = _assessments;
+        this.paging = data.assessments.pageInfo;
         this.isLoading = false;
       },
       (error) => {
@@ -93,20 +98,6 @@ export class AssessmentsListComponent implements OnInit {
 
   handleActionClick(event: any): void {
     switch (event.action.name) {
-      case 'Edit Assessment':
-        const dataString = CryptoJS.AES.encrypt(
-          JSON.stringify(this.assessments[event.index]),
-          environment.secretKey
-        ).toString();
-        this.router.navigate(['/mhira/assessments/plan-assessments'], {
-          state: {
-            title: `${this.assessments[event.index].name}`,
-          },
-          queryParams: {
-            assessment: dataString,
-          },
-        });
-        break;
       case 'Delete Assessment':
         this.modalService.confirm({
           nzTitle: 'Confirm',
@@ -130,5 +121,20 @@ export class AssessmentsListComponent implements OnInit {
         console.log('Go to Report');
         break;
     }
+  }
+
+  handleRowClick(event: any) {
+    const dataString = CryptoJS.AES.encrypt(
+      JSON.stringify(this.assessments[event.index]),
+      environment.secretKey
+    ).toString();
+    this.router.navigate(['/mhira/assessments/plan-assessments'], {
+      state: {
+        title: `${this.assessments[event.index].name}`,
+      },
+      queryParams: {
+        assessment: dataString,
+      },
+    });
   }
 }

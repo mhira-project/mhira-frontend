@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const getPatients2 = gql`
+const getPatients = gql`
   query($paging: CursorPaging, $filter: PatientFilter) {
     patients(paging: $paging, filter: $filter) {
       pageInfo {
@@ -28,58 +28,6 @@ const getPatients2 = gql`
           createdAt
         }
         cursor
-      }
-    }
-  }
-`;
-const getPatients = gql`
-  query(
-    $first: Int
-    $after: String
-    $last: Int
-    $before: String
-    $searchKeyword: String
-    $active: Boolean
-    $createdAtFrom: DateTime
-    $createdAtTo: DateTime
-    $caseManagerId: Int
-  ) {
-    getPatients(
-      first: $first
-      after: $after
-      last: $last
-      before: $before
-      searchKeyword: $searchKeyword
-      active: $active
-      createdAtFrom: $createdAtFrom
-      createdAtTo: $createdAtTo
-      caseManagerId: $caseManagerId
-    ) {
-      edges {
-        cursor
-        node {
-          id
-          active
-          medicalRecordNo
-          firstName
-          middleName
-          lastName
-          phone
-          email
-          address
-          gender
-          birthDate
-          birthCountryCode
-          nationality
-          updatedAt
-          createdAt
-        }
-      }
-      pageInfo {
-        startCursor
-        endCursor
-        hasNextPage
-        hasPreviousPage
       }
     }
   }
@@ -165,5 +113,4 @@ export const PatientsQueries = {
   getPatients,
   getPatientInformants,
   getPatientCaseManagers,
-  getPatients2,
 };

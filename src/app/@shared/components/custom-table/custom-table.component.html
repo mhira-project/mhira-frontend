@@ -219,7 +219,7 @@
       </ng-container>
     </tbody>
   </nz-table>
-  <div *ngIf="!showPagination && showNext">
+  <div *ngIf="!showPagination && showNext" style="margin-top: 10px">
     <div nz-row nzAlign="middle" class="m-v-10">
       <div nz-col nzFlex="300px">
         <button nzShape="round" [disabled]="!hasPreviousPage" (click)="onPreviousAction()" nz-button nzType="primary">

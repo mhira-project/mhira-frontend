@@ -22,11 +22,13 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy, AfterViewInit
   modalIsLoading = false;
   isLoading = false;
   loadingMessage = '';
+  inputMode = false;
   questionnaires: Questionnaire[];
   addedQuestionnaires: Questionnaire[] = [];
   planAssessmentForm = planAssessmentForm;
   selectedPatientId: number;
   assessment: Assessment;
+  showCancelButton = false;
 
   public questionnaireSearch = new Subject<string>();
   private questionnaireSearchSubscription: Subscription;
@@ -61,6 +63,8 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy, AfterViewInit
   getAssessment() {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params.assessment) {
+        this.inputMode = false;
+        this.showCancelButton = true;
         const bytes = CryptoJS.AES.decrypt(params.assessment, environment.secretKey);
         this.assessment = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         if (this.assessment.date) {
@@ -100,6 +104,14 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy, AfterViewInit
               field.options = options;
             }
             this.planAssessmentForm.submitButtonText = `Update Assessment`;
+          });
+        });
+      } else {
+        this.inputMode = true;
+        this.showCancelButton = false;
+        this.planAssessmentForm.groups.map((group) => {
+          group.fields.map((field) => {
+            field.value = null;
           });
         });
       }
@@ -144,9 +156,9 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy, AfterViewInit
   searchQuestionnaires(keyword: string) {
     this.isLoading = true;
     this.questionnaires = [];
-    this.assessmentService.getQuestionnaires(keyword).subscribe(
+    this.assessmentService.getQuestionnaires({ filter: { name: keyword } }).subscribe(
       async ({ data }) => {
-        data['getQuestionnaires'].edges.map((questionnaire: any) => {
+        data.getQuestionnaires.edges.map((questionnaire: any) => {
           this.questionnaires.push(questionnaire.node);
         });
         this.isLoading = false;
@@ -159,9 +171,9 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy, AfterViewInit
 
   searchPatient(keyword: string) {
     const options: { label: string; value: number }[] = [];
-    this.patientService.getPatients({ searchKeyword: keyword }).subscribe(
+    this.patientService.getPatients({ filter: { firstName: { iLike: keyword } } }).subscribe(
       async ({ data }) => {
-        data['getPatients'].edges.map((patient: any) => {
+        data.patients.edges.map((patient: any) => {
           const option = { value: patient.node.id, label: `${patient.node.firstName} ${patient.node.lastName}` };
           if (options.indexOf(option) === -1) {
             options.push(option);

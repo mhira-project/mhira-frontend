@@ -10,7 +10,12 @@
         [listOfData]="assessmentsTable.rows"
         [listOfColumn]="assessmentsTable.columns"
         [showButton]="false"
+        [hasNextPage]="paging?.hasNextPage"
+        [hasPreviousPage]="paging?.hasPreviousPage"
+        (onNext)="getAssessments({ paging: paging })"
+        (onPrevious)="getAssessments({ paging: paging })"
         (onAction)="handleActionClick($event)"
+        (rowClick)="handleRowClick($event)"
       >
       </app-custom-table>
     </div>
