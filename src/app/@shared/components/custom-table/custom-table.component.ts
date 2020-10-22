@@ -14,8 +14,8 @@ export class CustomTableComponent implements OnInit, OnChanges {
   @Input() listOfExportOptions: ExportChoiceType[] = [];
   @Input() frontPagination = false;
   @Input() loading = false;
-  @Input() hasNextPage = true;
-  @Input() hasPreviousPage = true;
+  @Input() hasNextPage = false;
+  @Input() hasPreviousPage = false;
   @Input() total = 50;
   @Input() limit = 5;
   @Input() currentPage = 1;

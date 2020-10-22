@@ -20,17 +20,18 @@ const moment = require('moment');
   styleUrls: ['./user-management.component.scss'],
 })
 export class UserManagementComponent implements OnInit {
-  isLoading: boolean = false;
-  showModal: boolean = false;
+  isLoading = false;
+  showModal = false;
   modalType: ModalType;
   changePasswordModal: ModalType = {
     title: 'Change Password',
     type: 'changePassword',
   };
   filter: any = {};
-  pagination: Paging = {
+  paging: Paging = {
     first: 10,
   };
+  pageInfo: any;
   user: User = {
     address: '',
     gender: '',
@@ -53,7 +54,7 @@ export class UserManagementComponent implements OnInit {
   changePasswordForm: Form = userForms.changeUserPassword;
   filterForm: Form = userForms.userFilter;
   loadingMessage: any;
-  showFilterPanel: boolean = false;
+  showFilterPanel = false;
 
   constructor(
     private modalService: NzModalService,
@@ -63,14 +64,14 @@ export class UserManagementComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getUsers();
+    this.getUsers(this.paging);
   }
 
-  getUsers() {
+  getUsers(paging?: Paging) {
     this.isLoading = true;
     this.users = [];
     const rows: User[] = [];
-    this.usersService.getUsers(this.filter, this.pagination).subscribe(
+    this.usersService.getUsers(this.filter, paging).subscribe(
       async ({ data }) => {
         const usersData = data.users;
         usersData.edges.map((user: any) => {
@@ -82,6 +83,9 @@ export class UserManagementComponent implements OnInit {
           this.users.push(user.node);
         });
         this.usersTable.rows = rows;
+        this.paging.after = data.users.pageInfo.startCursor;
+        this.paging.before = data.users.pageInfo.endCursor;
+        this.pageInfo = data.users.pageInfo;
         this.isLoading = false;
       },
       (error) => {
@@ -89,6 +93,18 @@ export class UserManagementComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+
+  navigatePages(direction: string) {
+    switch (direction) {
+      case 'next':
+        this.paging.before = null;
+        break;
+      case 'previous':
+        this.paging.after = null;
+        break;
+    }
+    this.getUsers(this.paging);
   }
 
   deleteUser(index: any) {
@@ -100,7 +116,7 @@ export class UserManagementComponent implements OnInit {
         this.users.splice(deletedIndex, 1);
         this.usersTable.rows = this.users;
         this.isLoading = false;
-        this.getUsers();
+        this.getUsers(this.paging);
       },
       (error) => {
         this.isLoading = false;
@@ -199,8 +215,8 @@ export class UserManagementComponent implements OnInit {
   }
 
   filterEvent(data: any) {
-    this.pagination = { first: 10 };
+    this.paging = { first: 10 };
     this.filter = data;
-    this.getUsers();
+    this.getUsers(this.paging);
   }
 }

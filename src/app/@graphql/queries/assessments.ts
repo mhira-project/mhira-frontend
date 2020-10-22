@@ -79,34 +79,27 @@ const assessments = gql`
   }
 `;
 
-const getQuestionnaires = gql`
-  query($searchKeyword: String, $first: Int, $after: String, $last: Int, $before: String) {
-    getQuestionnaires(searchKeyword: $searchKeyword, first: $first, after: $after, last: $last, before: $before) {
+const questionnaires = gql`
+  query($paging: CursorPaging, $filter: AssessmentFilter, $sorting: [AssessmentSort!]) {
+    questionnaires(paging: $paging, filter: $filter, sorting: $sorting) {
       edges {
         cursor
         node {
           id
           name
-          status
-          questions {
-            id
-            type
-            text
-            help
-            isOptional
-            isPersonalInformation
-            validationRules {
-              minimum
-              maximum
-              precision
-              regex
-            }
-            validationMessages {
-              regex
-            }
-          }
-          updatedAt
+          version
+          abbreviation
+          language
+          timeToComplete
+          description
+          copyright
+          license
+          website
+          references
+          icd10
           createdAt
+          updatedAt
+          deletedAt
         }
       }
       pageInfo {
@@ -137,5 +130,5 @@ const c = `questionnaires {
 
 export const AssessmentsQueries = {
   assessments,
-  getQuestionnaires,
+  questionnaires,
 };

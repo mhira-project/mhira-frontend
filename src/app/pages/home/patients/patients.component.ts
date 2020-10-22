@@ -22,9 +22,10 @@ export class PatientsComponent implements OnInit, OnChanges {
   isOkLoading = false;
   patients: any[] = [];
   filter: any = {};
-  pagination: Paging = {
+  paging: Paging = {
     first: 10,
   };
+  pageInfo: any;
   showFilterPanel = false;
   filterForm: Form = patientForms.patientFilter;
   patientsTable: { columns: any[]; rows: Patient[] } = {
@@ -37,16 +38,16 @@ export class PatientsComponent implements OnInit, OnChanges {
   constructor(private patientsService: PatientsService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getPatients();
+    this.getPatients(this.paging);
   }
 
   ngOnChanges() {}
 
-  getPatients() {
+  getPatients(paging: Paging) {
     this.isLoading = true;
     this.patients = [];
     const _patients: any[] = [];
-    this.patientsService.getPatients2(this.filter, this.pagination).subscribe(
+    this.patientsService.getPatients({ filter: this.filter, paging }).subscribe(
       async ({ data }) => {
         const patientsData = data.patients;
         patientsData.edges.map((patient: any) => {
@@ -64,12 +65,27 @@ export class PatientsComponent implements OnInit, OnChanges {
         });
 
         this.patientsTable.rows = _patients;
+        this.paging.after = data.patients.pageInfo.startCursor;
+        this.paging.before = data.patients.pageInfo.endCursor;
+        this.pageInfo = data.patients.pageInfo;
         this.isLoading = false;
       },
       (error) => {
         this.isLoading = false;
       }
     );
+  }
+
+  navigatePages(direction: string) {
+    switch (direction) {
+      case 'next':
+        this.paging.before = null;
+        break;
+      case 'previous':
+        this.paging.after = null;
+        break;
+    }
+    this.getPatients(this.paging);
   }
 
   deletePatient() {
@@ -123,9 +139,8 @@ export class PatientsComponent implements OnInit, OnChanges {
   }
 
   filterEvent(data: any) {
-    this.pagination = { first: 10 };
     this.filter = data;
-    this.getPatients();
+    this.getPatients({ first: 10 });
   }
 
   closeFilterPanel() {
