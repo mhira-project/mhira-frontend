@@ -83,8 +83,8 @@ export class UserManagementComponent implements OnInit {
           this.users.push(user.node);
         });
         this.usersTable.rows = rows;
-        this.paging.after = data.users.pageInfo.startCursor;
-        this.paging.before = data.users.pageInfo.endCursor;
+        this.paging.after = data.users.pageInfo.endCursor;
+        this.paging.before = data.users.pageInfo.startCursor;
         this.pageInfo = data.users.pageInfo;
         this.isLoading = false;
       },
@@ -95,13 +95,17 @@ export class UserManagementComponent implements OnInit {
     );
   }
 
-  navigatePages(direction: string) {
+  navigatePages(direction: string, pageSize: number = 10) {
     switch (direction) {
       case 'next':
-        this.paging.before = null;
+        this.paging.before = undefined;
+        this.paging.first = pageSize;
+        this.paging.last = undefined;
         break;
       case 'previous':
-        this.paging.after = null;
+        this.paging.after = undefined;
+        this.paging.first = undefined;
+        this.paging.last = pageSize;
         break;
     }
     this.getUsers(this.paging);

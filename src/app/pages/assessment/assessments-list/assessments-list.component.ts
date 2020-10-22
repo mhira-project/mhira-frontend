@@ -68,8 +68,8 @@ export class AssessmentsListComponent implements OnInit {
         });
 
         this.assessmentsTable.rows = _assessments;
-        this.paging.after = data.assessments.pageInfo.startCursor;
-        this.paging.before = data.assessments.pageInfo.endCursor;
+        this.paging.after = data.assessments.pageInfo.endCursor;
+        this.paging.before = data.assessments.pageInfo.startCursor;
         this.pageInfo = data.assessments.pageInfo;
         this.isLoading = false;
       },
@@ -79,13 +79,17 @@ export class AssessmentsListComponent implements OnInit {
     );
   }
 
-  navigatePages(direction: string) {
+  navigatePages(direction: string, pageSize: number = 10) {
     switch (direction) {
       case 'next':
-        this.paging.before = null;
+        this.paging.before = undefined;
+        this.paging.first = pageSize;
+        this.paging.last = undefined;
         break;
       case 'previous':
-        this.paging.after = null;
+        this.paging.after = undefined;
+        this.paging.first = undefined;
+        this.paging.last = pageSize;
         break;
     }
     this.getAssessments({ paging: this.paging });

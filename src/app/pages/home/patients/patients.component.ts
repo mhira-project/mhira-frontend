@@ -65,8 +65,8 @@ export class PatientsComponent implements OnInit, OnChanges {
         });
 
         this.patientsTable.rows = _patients;
-        this.paging.after = data.patients.pageInfo.startCursor;
-        this.paging.before = data.patients.pageInfo.endCursor;
+        this.paging.after = data.patients.pageInfo.endCursor;
+        this.paging.before = data.patients.pageInfo.startCursor;
         this.pageInfo = data.patients.pageInfo;
         this.isLoading = false;
       },
@@ -76,13 +76,17 @@ export class PatientsComponent implements OnInit, OnChanges {
     );
   }
 
-  navigatePages(direction: string) {
+  navigatePages(direction: string, pageSize: number = 10) {
     switch (direction) {
       case 'next':
-        this.paging.before = null;
+        this.paging.before = undefined;
+        this.paging.first = pageSize;
+        this.paging.last = undefined;
         break;
       case 'previous':
-        this.paging.after = null;
+        this.paging.after = undefined;
+        this.paging.first = undefined;
+        this.paging.last = pageSize;
         break;
     }
     this.getPatients(this.paging);
