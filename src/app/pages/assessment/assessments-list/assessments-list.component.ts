@@ -21,7 +21,9 @@ export class AssessmentsListComponent implements OnInit {
   isLoading = false;
   modalLoading = false;
   assessments: Assessment[] = [];
-  paging: Paging;
+  paging: Paging = {
+    first: 10,
+  };
   pageInfo: any;
   assessmentsTable: { columns: any[]; rows: Assessment[] } = {
     columns: assessmentTable.columns,
