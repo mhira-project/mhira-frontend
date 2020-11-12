@@ -8,20 +8,59 @@ import { AdministrationComponent } from './administration.component';
 import { AdministrationRoutingModule } from './administration-routing.module';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
-import { NzDrawerModule, NzGridModule, NzModalModule, NzTabsModule } from 'ng-zorro-antd';
+import {
+  NzAlertModule,
+  NzButtonModule,
+  NzCardModule,
+  NzCheckboxModule,
+  NzDrawerModule,
+  NzGridModule,
+  NzIconModule,
+  NzInputModule,
+  NzListModule,
+  NzMessageModule,
+  NzModalModule,
+  NzTableModule,
+  NzTabsModule,
+  NzToolTipModule,
+} from 'ng-zorro-antd';
 import { UserFormComponent } from './user-management/user-form/user-form.component';
+import { PermissionsComponent } from './permissions/permissions.component';
+import { RolesComponent } from './roles/roles.component';
+import { PermissionsService } from './@services/permissions.service';
+import { RolesService } from './@services/roles.service';
+import { FormsModule } from '@angular/forms';
+
+const antModules = [
+  NzGridModule,
+  NzCardModule,
+  NzModalModule,
+  NzButtonModule,
+  NzTabsModule,
+  NzMessageModule,
+  NzAlertModule,
+  NzListModule,
+  NzInputModule,
+  NzIconModule,
+  NzToolTipModule,
+  NzModalModule,
+  NzTabsModule,
+  NzGridModule,
+  NzDrawerModule,
+  NzTableModule,
+  NzCheckboxModule,
+];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    SharedModule,
-    AdministrationRoutingModule,
-    NzModalModule,
-    NzTabsModule,
-    NzGridModule,
-    NzDrawerModule,
+  imports: [...antModules, FormsModule, CommonModule, TranslateModule, SharedModule, AdministrationRoutingModule],
+  declarations: [
+    AdministrationComponent,
+    UserManagementComponent,
+    RolesAndPermissionsComponent,
+    UserFormComponent,
+    PermissionsComponent,
+    RolesComponent,
   ],
-  declarations: [AdministrationComponent, UserManagementComponent, RolesAndPermissionsComponent, UserFormComponent],
+  providers: [PermissionsService, RolesService],
 })
 export class AdministrationModule {}

@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Assessment } from '../@types/assessment';
 import { assessmentTable } from '@app/pages/assessment/@tables/assessment.table';
 import { AssessmentService } from '@app/pages/assessment/@services/assessment.service';
-import * as moment from 'moment';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
 import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
+import { DateService } from '@shared/services/date.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -35,6 +35,7 @@ export class AssessmentsListComponent implements OnInit {
     private assessmentsService: AssessmentService,
     private modalService: NzModalService,
     private message: NzMessageService,
+    private dateService: DateService,
     private router: Router
   ) {}
 
@@ -62,7 +63,7 @@ export class AssessmentsListComponent implements OnInit {
             lastName: row.patient.lastName,
             medicalRecordNo: row.patient.medicalRecordNo,
             clinician: `${row.clinician.firstName} ${row.clinician.lastName}`,
-            plannedDate: row.createdAt ? moment(row.createdAt).format('DD-MM-YYYY HH:mm') : '',
+            plannedDate: row.createdAt ? this.dateService.formatDate(row.createdAt) : '',
             active: `<nz-tag class="${color}">${active}</nz-tag>`,
             firstVisit: '',
           });

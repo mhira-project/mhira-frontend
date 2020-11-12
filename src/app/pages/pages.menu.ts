@@ -80,7 +80,21 @@ export const MENU: SideNavInterface[] = [
       },
       {
         path: 'administration/roles-and-permissions',
-        title: extract('Roles and Permissions'),
+        title: extract('Permission Matrix'),
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+      {
+        path: 'administration/permissions',
+        title: extract('Permissions'),
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+      {
+        path: 'administration/roles',
+        title: extract('Roles'),
         iconType: '',
         iconTheme: '',
         submenu: [],

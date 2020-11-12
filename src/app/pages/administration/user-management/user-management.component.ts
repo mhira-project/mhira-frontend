@@ -10,9 +10,9 @@ import { UserService } from '@app/pages/administration/@services/user.service';
 import { environment } from '@env/environment';
 import { UserUpdatePasswordInput } from '@app/pages/administration/user-management/user-form/user-update-password.type';
 import { Paging } from '@shared/@types/paging';
+import { DateService } from '@shared/services/date.service';
 
 const CryptoJS = require('crypto-js');
-const moment = require('moment');
 
 @Component({
   selector: 'app-user-management',
@@ -59,6 +59,7 @@ export class UserManagementComponent implements OnInit {
   constructor(
     private modalService: NzModalService,
     private message: NzMessageService,
+    private dateService: DateService,
     private router: Router,
     private usersService: UserService
   ) {}
@@ -77,8 +78,8 @@ export class UserManagementComponent implements OnInit {
         usersData.edges.map((user: any) => {
           const row = Object.assign({}, user.node);
           const settings = JSON.parse(localStorage.getItem('settings'));
-          row.updatedAt = row.updatedAt ? moment(row.updatedAt).format(settings.dateTimeFormat) : '';
-          row.birthDate = row.birthDate ? moment(row.birthDate).format(settings.dateFormat) : '';
+          row.updatedAt = row.updatedAt ? this.dateService.formatDate(row.updatedAt) : '';
+          row.birthDate = row.birthDate ? this.dateService.formatDate(row.birthDate) : '';
           rows.push(row);
           this.users.push(user.node);
         });

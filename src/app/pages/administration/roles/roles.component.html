@@ -1,0 +1,43 @@
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <app-custom-table
+      [loading]="isLoading"
+      [showPagination]="false"
+      [showCustomActions]="true"
+      [showSearch]="false"
+      [listOfCustomActions]="actions"
+      [listOfData]="rolesTable.rows"
+      [listOfColumn]="rolesTable.columns"
+      [showButton]="true"
+      [buttonText]="'Create Role'"
+      [hasNextPage]="pageInfo?.hasNextPage"
+      [hasPreviousPage]="pageInfo?.hasPreviousPage"
+      (onNext)="navigatePages('next')"
+      (onPrevious)="navigatePages('previous')"
+      (onAction)="handleActionClick($event)"
+      (rowClick)="handleRowClick($event)"
+      (onButton)="toggleCreatePanel()"
+    >
+    </app-custom-table>
+  </div>
+</div>
+
+<nz-drawer
+  [nzMask]="false"
+  [nzClosable]="true"
+  [nzVisible]="showCreateRole"
+  nzPlacement="right"
+  [nzTitle]="panelTitle"
+  (nzOnClose)="toggleCreatePanel()"
+>
+  <app-field-generator
+    class="mt-3"
+    [form]="roleForms"
+    [isLoading]="isLoading"
+    [inputMode]="inputMode"
+    [showCancelButton]="showCancelButton"
+    [loadingMessage]="loadingMessage"
+    (submitForm)="submitForm($event)"
+  >
+  </app-field-generator>
+</nz-drawer>

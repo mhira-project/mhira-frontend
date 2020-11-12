@@ -3,11 +3,11 @@ import { Patient } from '../home.interfaces';
 import { table } from '../patients/patients.table';
 import { PatientsService } from '@app/pages/home/@services/patients.service';
 import { patientForms } from '@app/pages/home/@forms/patient-forms';
-import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
 import { Form } from '@shared/components/field-generator/formt';
+import { DateService } from '@shared/services/date.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -35,7 +35,7 @@ export class PatientsComponent implements OnInit, OnChanges {
   actions = table.actions;
   currentPatientIndex: number;
 
-  constructor(private patientsService: PatientsService, private router: Router) {}
+  constructor(private patientsService: PatientsService, private dateService: DateService, private router: Router) {}
 
   ngOnInit(): void {
     this.getPatients(this.paging);
@@ -56,9 +56,8 @@ export class PatientsComponent implements OnInit, OnChanges {
             ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
             : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
           const active = row.active ? 'ACTIVE' : 'ARCHIVED';
-          const settings = JSON.parse(localStorage.getItem('settings'));
-          row.updatedAt = row.updatedAt ? moment(row.updatedAt).format(settings.dateTimeFormat) : '';
-          row.birthDate = row.birthDate ? moment(row.birthDate).format(settings.dateFormat) : '';
+          row.updatedAt = row.updatedAt ? this.dateService.formatDate(row.updatedAt) : '';
+          row.birthDate = row.birthDate ? this.dateService.formatDate(row.birthDate) : '';
           row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
           _patients.push(row);
           this.patients.push(patient.node);

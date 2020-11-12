@@ -5,6 +5,8 @@ import { AdministrationComponent } from './administration.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { UserFormComponent } from './user-management/user-form/user-form.component';
+import { PermissionsComponent } from './permissions/permissions.component';
+import { RolesComponent } from './roles/roles.component';
 
 const routes: Routes = [
   {
@@ -33,6 +35,20 @@ const routes: Routes = [
         component: RolesAndPermissionsComponent,
         data: {
           title: extract('Roles & Permissions'),
+        },
+      },
+      {
+        path: 'roles',
+        component: RolesComponent,
+        data: {
+          title: extract('Roles'),
+        },
+      },
+      {
+        path: 'permissions',
+        component: PermissionsComponent,
+        data: {
+          title: extract('Permissions'),
         },
       },
     ],
