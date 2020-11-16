@@ -5,7 +5,6 @@ const changeUserPassword: Form = {
   submitButtonText: 'Change password',
   groups: [
     {
-      title: 'Change password',
       fields: [
         {
           title: 'Enter New Password',
@@ -177,6 +176,17 @@ const userProfile: Form = {
           span: 8,
           value: '',
         },
+        {
+          title: 'Repeat Password',
+          name: 'passwordConfirmation',
+          label: 'Repeat Password',
+          type: 'password',
+          isRequired: true,
+          description: 'Repeat password',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
       ],
     },
   ],
@@ -197,7 +207,7 @@ const userProfileEdit: Form = {
           type: 'text',
           isRequired: true,
           description: 'Enter your first name',
-          validationMessage: 'Please enter your Firsrt name',
+          validationMessage: 'Please enter your First name',
           span: 8,
           value: '',
         },

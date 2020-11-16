@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Form } from '@shared/components/field-generator/formt';
-import { FormGroup } from '@angular/forms';
-import { $e } from 'codelyzer/angular/styles/chars';
 import { FieldGeneratorComponent } from '@shared/components/field-generator/field-generator.component';
 import { FieldGroup } from '@shared/components/field-generator/field.group';
 import { FieldType } from '@shared/components/field-generator/field.type';
