@@ -85,9 +85,9 @@ export class UserFormComponent implements OnInit, OnDestroy {
       if (index !== -1) {
         this.tabSub = this.tabsDataService.tabs.subscribe((tabs) => {
           if (this.user) {
-            tabs[index]['title'] = `${this.user.firstName} ${this.user.lastName}`;
+            tabs[index].title = `${this.user.firstName} ${this.user.lastName}`;
           } else {
-            tabs[index]['title'] = 'New User';
+            tabs[index].title = 'New User';
           }
         });
       }
@@ -99,15 +99,15 @@ export class UserFormComponent implements OnInit, OnDestroy {
     this.loadingMessage = `Creating user ${user.firstName} ${user.lastName}`;
     this.usersService.createUser(user).subscribe(
       async ({ data }) => {
-        const userData = data['createUser'];
+        const userData = data.createUser;
         userData.updatedAt = userData.updatedAt ? moment(userData.updatedAt).format('DD-MM-YYYY HH:mm') : '';
         userData.birthDate = userData.birthDate ? moment(userData.birthDate).format('DD-MM-YYYY HH:mm') : '';
         this.isLoading = false;
         this.loadingMessage = '';
         this.message.create('success', `User has successfully been created`);
-        //close this tab
+        // close this tab
         this.user = userData;
-        //open another
+        // open another
         // this.onChangeUser();
       },
       (error) => {
@@ -124,7 +124,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     this.loadingMessage = `Updating user ${user.firstName} ${user.lastName}`;
     this.usersService.updateUser(user).subscribe(
       async ({ data }) => {
-        const userData = data['updateUser'];
+        const userData = data.updateUser;
         const color = userData.active
           ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
           : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
@@ -155,7 +155,12 @@ export class UserFormComponent implements OnInit, OnDestroy {
       form.id = this.user.id;
       this.updateUser(form);
     } else {
-      this.createUser(form);
+      console.log(form);
+      if (form.password !== form.passwordConfirmation) {
+        this.message.create('error', `Password does not match`);
+      } else {
+        this.createUser(form);
+      }
     }
   }
 
@@ -190,7 +195,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         this.message.create('error', `${error}`);
       }
     } else {
-      this.message.create('error', `${errors['error']['message']}`);
+      this.message.create('error', `${errors.error.message}`);
     }
   }
 }
