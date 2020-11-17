@@ -95,7 +95,7 @@ export class FieldGeneratorComponent implements OnInit, OnDestroy {
   }
 
   handleInputChange(field: FieldType, event: any) {
-    if (event) {
+    if (event || event === false) {
       if (field.type === 'checkBox') {
         this.parseCheckBoxValues(event, field);
         return;
