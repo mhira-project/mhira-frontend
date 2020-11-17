@@ -154,7 +154,7 @@ export class UserManagementComponent implements OnInit {
     const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.users[event.index]), environment.secretKey).toString();
     this.router.navigate(['/mhira/administration/user-management/form'], {
       state: {
-        title: `${this.user.firstName} ${this.user.lastName}`,
+        title: `${this.users[event.index].firstName} ${this.users[event.index].lastName}`,
       },
       queryParams: {
         user: dataString,

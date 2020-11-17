@@ -27,7 +27,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   user: User;
   isLoading = false;
   loadingMessage = '';
-  profileFields: Form = userForms.userProfile;
+  profileFields: Form = userForms.userProfileEdit;
   userRolesPermissionsFields: Form = userForms.userRolesPermissions;
   changeUserPasswordFields: Form = userForms.changeUserPassword;
   tabSub: any;
@@ -69,7 +69,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
           this.roles.push(_role);
           options.push({ label: _role.name, value: _role.id });
         });
-        console.log(this.roles);
         this.userRolesPermissionsFields.groups[0].fields[0].options = options;
       },
       (error: any) => {}
@@ -200,6 +199,21 @@ export class UserFormComponent implements OnInit, OnDestroy {
         console.log(error);
         this.isLoading = false;
         this.message.create('error', `could not add role to ${this.user.firstName}`);
+      }
+    );
+  }
+
+  assignRoles() {
+    this.isLoading = true;
+    this.rolesService.addRolesToUser(this.user.id, this.selectedRoles).subscribe(
+      async ({ data }: any) => {
+        this.isLoading = false;
+        this.message.create('success', `the role(s) have been successful assigned to ${this.user.firstName}`);
+      },
+      (error: any) => {
+        console.log(error);
+        this.isLoading = false;
+        this.message.create('error', `could not assign role(s) to ${this.user.firstName}`);
       }
     );
   }

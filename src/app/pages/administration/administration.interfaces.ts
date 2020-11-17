@@ -3,7 +3,7 @@ import { Permission } from '@app/pages/administration/@types/permission';
 
 export interface User {
   id?: number;
-  workId?: boolean;
+  workId?: string;
   firstName: string;
   middleName?: string;
   lastName: string;
@@ -12,6 +12,7 @@ export interface User {
   address: string;
   gender: string;
   birthDate: string;
+  active?: boolean;
   roles?: Role[];
   permissions?: Permission[];
 }

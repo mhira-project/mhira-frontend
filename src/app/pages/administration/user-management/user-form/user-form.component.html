@@ -19,7 +19,16 @@
             </div>
           </div>
         </nz-checkbox-wrapper>
-        <button *ngIf="roles.length > 0" nz-button nzSize="small" nzType="primary">Assign Roles</button>
+        <button
+          *ngIf="roles.length > 0"
+          nz-button
+          nzSize="small"
+          (click)="assignRoles()"
+          [disabled]="selectedRoles.length == 0"
+          nzType="primary"
+        >
+          Assign Roles
+        </button>
         <!--<app-field-generator [form]="userRolesPermissionsFields"
                              [isLoading]="isLoading"
                              (submitForm)="assignRoleToUser($event)"
