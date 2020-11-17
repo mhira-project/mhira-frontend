@@ -4,13 +4,12 @@
 // This is useful for granularity you might need beyond just the environment.
 // Note that as usual, any environment variables you expose through it will end up in your
 // bundle, and you should not use it for any sensitive information like passwords or keys.
-import { env } from './.env';
-
+// import { env } from './.env';
 export const environment = {
   production: true,
   secretKey: 'hfsdjfhdufhiuegewurge8365746543785643785638276423874',
   hmr: false,
-  version: env.npm_package_version,
+  // version: env.npm_package_version,
   baseURL: ' https://api.mhira.net/graphql',
   defaultLanguage: 'en-US',
   supportedLanguages: ['en-US', 'fr-FR'],
