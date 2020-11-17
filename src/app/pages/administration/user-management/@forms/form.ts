@@ -307,6 +307,17 @@ const userProfileEdit: Form = {
           span: 8,
           value: '',
         },
+        {
+          title: 'Active',
+          label: 'active',
+          name: 'address',
+          type: 'checkBox',
+          isRequired: false,
+          description: 'Enable user',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
       ],
     },
     {
