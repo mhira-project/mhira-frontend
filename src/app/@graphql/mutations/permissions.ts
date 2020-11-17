@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const removePermissionsFromUser = gql`
-  query($input: RelationInput!) {
+  mutation($input: RelationInput!) {
     removePermissionsFromUser(input: $input) {
       id
       username
@@ -23,7 +23,7 @@ const removePermissionsFromUser = gql`
 `;
 
 const setPermissionsOnUser = gql`
-  query($input: RelationInput!) {
+  mutation($input: RelationInput!) {
     setPermissionsOnUser(input: $input) {
       id
       username
@@ -45,7 +45,7 @@ const setPermissionsOnUser = gql`
 `;
 
 const removeUsersFromPermission = gql`
-  query($input: RelationInput!) {
+  mutation($input: RelationInput!) {
     removeUsersFromPermission(input: $input) {
       id
       name
@@ -74,7 +74,7 @@ const removeUsersFromPermission = gql`
 `;
 
 const removeRolesFromPermission = gql`
-  query($input: RelationInput!) {
+  mutation($input: RelationInput!) {
     removeRolesFromPermission(input: $input) {
       id
       name
@@ -103,7 +103,7 @@ const removeRolesFromPermission = gql`
 `;
 
 const setUsersOnPermission = gql`
-  query($input: RelationInput!) {
+  mutation($input: RelationInput!) {
     setUsersOnPermission(input: $input) {
       id
       name
@@ -132,7 +132,7 @@ const setUsersOnPermission = gql`
 `;
 
 const setRolesOnPermission = gql`
-  query($input: RelationInput!) {
+  mutation($input: RelationInput!) {
     setRolesOnPermission(input: $input) {
       id
       name

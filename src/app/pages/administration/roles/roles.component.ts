@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Paging } from '@shared/@types/paging';
 import { Role } from '@app/pages/administration/@types/role';
 import { RolesTable } from '@app/pages/administration/@tables/roles.table';
-import * as moment from 'moment';
 import { Sorting } from '@shared/@types/sorting';
 import { Filter } from '@shared/@types/filter';
 import { environment } from '@env/environment';
@@ -10,6 +9,7 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { RolesService } from '@app/pages/administration/@services/roles.service';
 import { RoleForm } from '@app/pages/administration/@forms/role.form';
+import { Convert } from '@shared/classes/convert';
 
 const CryptoJS = require('crypto-js');
 
@@ -56,21 +56,13 @@ export class RolesComponent implements OnInit {
   getRoles(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
     this.isLoading = true;
     this.roles = [];
-    const _roles: any[] = [];
+    this.rolesTable.rows = [];
     this.rolesService.roles(params).subscribe(
       async ({ data }: any) => {
-        const roles = data.roles;
-        roles.edges.map((role: any) => {
-          const row = Object.assign({}, role.node);
-          _roles.push({
-            name: row.name,
-            guard: row.guard,
-            createdAt: row.createdAt ? moment(row.createdAt).format('DD-MM-YYYY HH:mm') : '',
-          });
-          this.roles.push(role.node);
+        data.roles.edges.map((role: any) => {
+          this.roles.push(Convert.toRole(role.node));
         });
-
-        this.rolesTable.rows = _roles;
+        this.rolesTable.rows = this.roles;
         this.paging.after = data.roles.pageInfo.endCursor;
         this.paging.before = data.roles.pageInfo.startCursor;
         this.pageInfo = data.roles.pageInfo;
@@ -157,20 +149,13 @@ export class RolesComponent implements OnInit {
     this.hasErrors = false;
     this.errors = [];
     this.loadingMessage = `Creating role ${role.name}`;
-    const _roles: any[] = this.rolesTable.rows;
     this.rolesService.createRole(role).subscribe(
       async ({ data }) => {
-        const roleData = data.createOneRole;
-        this.roles.push(roleData);
-        _roles.push({
-          name: roleData.name,
-          guard: roleData.guard,
-          createdAt: roleData.createdAt ? moment(roleData.createdAt).format('DD-MM-YYYY HH:mm') : '',
-        });
-
-        this.rolesTable.rows = _roles;
+        this.roles.push(Convert.toRole(data.createOneRole));
+        this.rolesTable.rows = this.roles;
         this.isLoading = false;
         this.loadingMessage = '';
+        this.toggleCreatePanel();
         this.message.create('success', `Role has successfully been created`);
       },
       (error) => {

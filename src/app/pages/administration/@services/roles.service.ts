@@ -32,7 +32,9 @@ export class RolesService {
   createRole(role: Role): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: RolesMutations.createOneRole,
-      variables: role,
+      variables: {
+        input: { role },
+      },
       fetchPolicy: 'no-cache',
     });
   }
@@ -40,7 +42,48 @@ export class RolesService {
   updateRole(role: Role): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: RolesMutations.updateOneRole,
-      variables: role,
+      variables: {
+        input: { role },
+      },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
+  addPermissionsToRole(roleId: number, permissionIds: number[]): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: RolesMutations.addPermissionsToRole,
+      variables: {
+        input: {
+          id: roleId,
+          relationIds: permissionIds,
+        },
+      },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
+  addUsersToRole(roleId: number, usersIds: number[]): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: RolesMutations.addUsersToRole,
+      variables: {
+        input: {
+          id: roleId,
+          relationIds: usersIds,
+        },
+      },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
+  removePermissionsFromRole(roleId: number, permissionsId: number[]): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: RolesMutations.removePermissionsFromRole,
+      variables: {
+        input: {
+          id: roleId,
+          relationIds: permissionsId,
+        },
+      },
       fetchPolicy: 'no-cache',
     });
   }
@@ -48,7 +91,9 @@ export class RolesService {
   deleteRole(role: Role): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: RolesMutations.deleteOneRole,
-      variables: { id: role.id },
+      variables: {
+        input: { id: role.id },
+      },
       fetchPolicy: 'no-cache',
     });
   }

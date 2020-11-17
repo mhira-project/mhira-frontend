@@ -1,3 +1,6 @@
+import { Role } from '@app/pages/administration/@types/role';
+import { Permission } from '@app/pages/administration/@types/permission';
+
 export interface User {
   id?: number;
   workId?: boolean;
@@ -9,4 +12,6 @@ export interface User {
   address: string;
   gender: string;
   birthDate: string;
+  roles?: Role[];
+  permissions?: Permission[];
 }

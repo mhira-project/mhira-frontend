@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { userForms } from '@app/pages/administration/user-management/@forms/form';
 import { Form } from '@shared/components/field-generator/formt';
 import { TopTabsDataService } from '@shared/services/tabs-data.service';
@@ -7,9 +7,14 @@ import * as moment from 'moment';
 import { User } from '@app/pages/administration/administration.interfaces';
 import { UserService } from '@app/pages/administration/@services/user.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { TabInterface } from '@app/@layout/vertical/header/tabs/tab.interface';
 import { environment } from '@env/environment';
 import { UserUpdatePasswordInput } from './user-update-password.type';
+import { Sorting } from '@shared/@types/sorting';
+import { Paging } from '@shared/@types/paging';
+import { Filter } from '@shared/@types/filter';
+import { RolesService } from '@app/pages/administration/@services/roles.service';
+import { Convert } from '@shared/classes/convert';
+import { Role } from '@app/pages/administration/@types/role';
 
 const CryptoJS = require('crypto-js');
 
@@ -30,6 +35,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
   tabIndexSub: any;
   inputMode = true;
   showCancelButton = false;
+  roles: Role[] = [];
+  selectedRoles: number[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -37,17 +44,49 @@ export class UserFormComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private tabsDataService: TopTabsDataService,
     private usersService: UserService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private rolesService: RolesService
   ) {}
 
   ngOnInit(): void {
     this.getUserFromUrl();
+    this.getRoles();
   }
 
   ngOnDestroy() {
     /*this.routeSub.unsubscribe();
     if (this.tabSub) this.tabSub.unsubscribe();
     if (this.tabIndexSub) this.tabIndexSub.unsubscribe();*/
+  }
+
+  getRoles(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
+    const options: any = [];
+    this.roles = [];
+    this.rolesService.roles(params).subscribe(
+      async ({ data }: any) => {
+        data.roles.edges.map((role: any) => {
+          const _role = Convert.toRole(role.node);
+          this.roles.push(_role);
+          options.push({ label: _role.name, value: _role.id });
+        });
+        console.log(this.roles);
+        this.userRolesPermissionsFields.groups[0].fields[0].options = options;
+      },
+      (error: any) => {}
+    );
+  }
+
+  userHasRole(role: Role): boolean {
+    for (const _role of this.user.roles) {
+      if (_role.id === role.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  collectRoles(roles: number[]) {
+    this.selectedRoles = roles;
   }
 
   getUserFromUrl(): void {
@@ -146,6 +185,21 @@ export class UserFormComponent implements OnInit, OnDestroy {
         this.loadingMessage = '';
         const graphError = error.graphQLErrors.map((x: any) => x.message);
         this.onError(graphError);
+      }
+    );
+  }
+
+  assignRoleToUser(role: any) {
+    this.isLoading = true;
+    this.rolesService.addUsersToRole(role.roleId, [this.user.id]).subscribe(
+      async ({ data }: any) => {
+        this.isLoading = false;
+        this.message.create('success', `the role has been successful assigned to ${this.user.firstName}`);
+      },
+      (error: any) => {
+        console.log(error);
+        this.isLoading = false;
+        this.message.create('error', `could not add role to ${this.user.firstName}`);
       }
     );
   }

@@ -1,4 +1,3 @@
-import { FormItemType } from '../../../../@shared/components/form-generator/form-item.type';
 import { Form } from '../../../../@shared/components/field-generator/formt';
 
 const changeUserPassword: Form = {
@@ -328,30 +327,24 @@ const userProfileEdit: Form = {
     },
   ],
 };
+
 const userRolesPermissions: Form = {
+  submitButtonText: 'Update Role',
   groups: [
     {
-      title: 'Roles and permissions',
+      title: 'User Role',
       fields: [
         {
-          title: 'User role',
-          label: 'User role',
-          type: 'text',
-          isRequired: true,
-          description: 'Select user role',
-          validationMessage: '',
-          span: 24,
           value: '',
-        },
-        {
-          title: 'User permissions',
-          label: 'User permissions',
-          type: 'text',
+          name: 'roleId',
+          title: 'User Role',
+          label: 'User Role',
+          description: 'select user role',
+          type: 'select',
+          validationMessage: 'please enter value',
           isRequired: true,
-          description: 'Select user permissions',
-          validationMessage: '',
+          options: [],
           span: 24,
-          value: '',
         },
       ],
     },
@@ -414,6 +407,7 @@ const userFilter: Form = {
     },
   ],
 };
+
 export const userForms = {
   changeUserPassword,
   userProfile,

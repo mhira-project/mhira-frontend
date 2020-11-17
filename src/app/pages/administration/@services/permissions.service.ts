@@ -28,33 +28,11 @@ export class PermissionsService {
   }
 
   setRolesOnPermission(permissionId: number, roleId: number): Observable<FetchResult<any>> {
-    return this.apollo.query({
-      query: PermissionsMutations.setRolesOnPermission,
+    return this.apollo.mutate({
+      mutation: PermissionsMutations.setRolesOnPermission,
       variables: {
         id: permissionId,
         relationId: roleId,
-      },
-      fetchPolicy: 'no-cache',
-    });
-  }
-
-  setPermissionsOnRole(roleId: number, permissionId: number): Observable<FetchResult<any>> {
-    return this.apollo.query({
-      query: RolesMutations.setPermissionsOnRole,
-      variables: {
-        id: roleId,
-        relationId: permissionId,
-      },
-      fetchPolicy: 'no-cache',
-    });
-  }
-
-  removePermissionsFromRole(roleId: number, permissionId: number): Observable<FetchResult<any>> {
-    return this.apollo.query({
-      query: RolesMutations.removePermissionsFromRole,
-      variables: {
-        id: roleId,
-        relationId: permissionId,
       },
       fetchPolicy: 'no-cache',
     });

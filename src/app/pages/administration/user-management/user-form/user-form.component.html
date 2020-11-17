@@ -12,7 +12,20 @@
   <nz-tab nzTitle="Security">
     <div nz-row nzGutter="16">
       <div nz-col nzFlex="auto">
-        <app-field-generator [form]="userRolesPermissionsFields"></app-field-generator>
+        <nz-checkbox-wrapper style="width: 100%" (nzOnChange)="collectRoles($event)">
+          <div nz-row>
+            <div nz-col nzSpan="24" *ngFor="let role of roles">
+              <label nz-checkbox [nzValue]="role.id" [ngModel]="userHasRole(role)">{{ role.name }}</label>
+            </div>
+          </div>
+        </nz-checkbox-wrapper>
+        <button *ngIf="roles.length > 0" nz-button nzSize="small" nzType="primary">Assign Roles</button>
+        <!--<app-field-generator [form]="userRolesPermissionsFields"
+                             [isLoading]="isLoading"
+                             (submitForm)="assignRoleToUser($event)"
+                             [showCancelButton]="false">
+
+        </app-field-generator>-->
       </div>
       <div nz-col nzFlex="480px">
         <app-field-generator

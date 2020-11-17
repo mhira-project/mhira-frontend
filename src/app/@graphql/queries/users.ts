@@ -27,6 +27,20 @@ const getUsers = gql`
           createdAt
           updatedAt
           deletedAt
+          roles {
+            id
+            name
+            guard
+            createdAt
+            updatedAt
+          }
+          permissions {
+            id
+            name
+            guard
+            createdAt
+            updatedAt
+          }
         }
         cursor
       }

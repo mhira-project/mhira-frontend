@@ -20,6 +20,7 @@ import {
   NzListModule,
   NzMessageModule,
   NzModalModule,
+  NzSpinModule,
   NzTableModule,
   NzTabsModule,
   NzToolTipModule,
@@ -49,6 +50,7 @@ const antModules = [
   NzDrawerModule,
   NzTableModule,
   NzCheckboxModule,
+  NzSpinModule,
 ];
 
 @NgModule({

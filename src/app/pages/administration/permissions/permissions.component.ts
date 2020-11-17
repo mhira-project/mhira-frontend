@@ -9,6 +9,7 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { PermissionsService } from '@app/pages/administration/@services/permissions.service';
 import { DateService } from '@shared/services/date.service';
+import { Convert } from '@shared/classes/convert';
 
 const CryptoJS = require('crypto-js');
 
@@ -46,21 +47,13 @@ export class PermissionsComponent implements OnInit {
   getPermissions(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
     this.isLoading = true;
     this.permissions = [];
-    const _permissions: any[] = [];
     this.permissionsService.permissions(params).subscribe(
       async ({ data }) => {
-        const permissions = data.permissions;
-        permissions.edges.map((permission: any) => {
-          const row = Object.assign({}, permission.node);
-          _permissions.push({
-            name: row.name,
-            guard: row.guard,
-            createdAt: row.createdAt ? this.dateService.formatDate(row.createdAt) : '',
-          });
-          this.permissions.push(permission.node);
+        data.permissions.edges.map((permission: any) => {
+          this.permissions.push(Convert.toPermission(permission.node));
         });
 
-        this.permissionsTable.rows = _permissions;
+        this.permissionsTable.rows = this.permissions;
         this.paging.after = data.permissions.pageInfo.endCursor;
         this.paging.before = data.permissions.pageInfo.startCursor;
         this.pageInfo = data.permissions.pageInfo;
