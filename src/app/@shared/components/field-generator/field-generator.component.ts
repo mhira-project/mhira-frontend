@@ -16,6 +16,7 @@ export class FieldGeneratorComponent implements OnInit, OnDestroy {
   @Input() loadingMessage = '';
   @Input() inputMode = true;
   @Input() showCancelButton = true;
+  @Input() showEditButton = true;
   @Output() searchOptions: EventEmitter<any> = new EventEmitter<any>();
   @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
   @Output() inputChange: EventEmitter<any> = new EventEmitter<any>();

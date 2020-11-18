@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { patientForms } from '../../@forms/patient-forms';
 import { environment } from '@env/environment';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -28,7 +29,8 @@ export class CreatePatientComponent implements OnInit {
     private patientsService: PatientsService,
     private message: NzMessageService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public perms: AppPermissionsService
   ) {}
 
   ngOnInit(): void {

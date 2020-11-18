@@ -8,6 +8,7 @@ import { PatientsService } from '../../@services/patients.service';
 import { of, Subject, Subscription } from 'rxjs';
 import { debounceTime, delay, distinctUntilChanged, flatMap, map } from 'rxjs/operators';
 import * as moment from 'moment';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -39,7 +40,8 @@ export class ManagersComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private modalService: NzModalService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    public perms: AppPermissionsService
   ) {
     this.keyUpSubscription = this.keyUp
       .pipe(

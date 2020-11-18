@@ -8,6 +8,7 @@
   [form]="patientForms.patient"
   [isLoading]="isLoading"
   [inputMode]="inputMode"
+  [showEditButton]="perms.permissionsOnly('manage patients')"
   [showCancelButton]="showCancelButton"
   [loadingMessage]="loadingMessage"
   (submitForm)="submitForm($event)"

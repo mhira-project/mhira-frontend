@@ -19,7 +19,9 @@
   </div>
 </nz-card>
 <ng-template #addManager>
-  <button nz-button (click)="handleAssign()" nzType="primary">Add {{ managerType }} to patient</button>
+  <button nz-button (click)="handleAssign()" nzType="primary" *ngIf="perms.permissionsOnly('manage patients')">
+    Add {{ managerType }} to patient
+  </button>
 </ng-template>
 <nz-modal
   [nzWidth]="600"
