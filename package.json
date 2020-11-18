@@ -52,7 +52,6 @@
     "ng-zorro-antd": "^9.3.0",
     "ngx-input-search": "^3.0.8",
     "ngx-perfect-scrollbar": "^10.0.1",
-    "ngx-permissions": "^8.1.1",
     "rxjs": "^6.5.5",
     "tailwindcss": "^1.8.8",
     "tslib": "^2.0.0",

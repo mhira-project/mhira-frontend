@@ -160,7 +160,7 @@
     </ul>
   </nz-dropdown-menu>-->
   <button
-    *ngIf="form.submitButtonText && !inputMode"
+    *ngIf="form.submitButtonText && !inputMode && showEditButton"
     nz-button
     [nzType]="'primary'"
     [nzShape]="'round'"
