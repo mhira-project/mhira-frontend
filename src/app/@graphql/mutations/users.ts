@@ -54,6 +54,7 @@ const updateUser = gql`
     $lastName: String!
     $username: String!
     $phone: String
+    $active: Boolean
     $email: String
     $address: String
     $gender: String
@@ -67,6 +68,7 @@ const updateUser = gql`
         middleName: $middleName
         lastName: $lastName
         username: $username
+        active: $active
         phone: $phone
         email: $email
         address: $address

@@ -308,10 +308,10 @@ const userProfileEdit: Form = {
           value: '',
         },
         {
-          title: 'Active',
+          title: 'Activate User',
           label: 'active',
           name: 'active',
-          type: 'select',
+          type: 'radio',
           isRequired: false,
           description: 'Enable user',
           validationMessage: '',
