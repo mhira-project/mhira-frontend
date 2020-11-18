@@ -1,6 +1,7 @@
 <div nz-row>
   <div nz-col nzSpan="24">
     <app-custom-table
+      *ngxPermissionsOnly="['view patients', 'manage patients']"
       [loading]="isLoading"
       [showPagination]="false"
       [showFilterButton]="true"

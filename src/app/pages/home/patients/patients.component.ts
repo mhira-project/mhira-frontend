@@ -8,6 +8,8 @@ import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
 import { Form } from '@shared/components/field-generator/formt';
 import { DateService } from '@shared/services/date.service';
+import { NgxPermissionsService } from 'ngx-permissions';
+import { Permission } from '@app/pages/administration/@types/permission';
 
 const CryptoJS = require('crypto-js');
 
@@ -35,13 +37,29 @@ export class PatientsComponent implements OnInit, OnChanges {
   actions = table.actions;
   currentPatientIndex: number;
 
-  constructor(private patientsService: PatientsService, private dateService: DateService, private router: Router) {}
+  constructor(
+    private patientsService: PatientsService,
+    private dateService: DateService,
+    private router: Router,
+    private permissionsService: NgxPermissionsService
+  ) {}
 
   ngOnInit(): void {
     this.getPatients(this.paging);
+    this.loadPermissions();
   }
 
   ngOnChanges() {}
+
+  loadPermissions() {
+    let permissions = JSON.parse(localStorage.getItem('permissions'));
+    if (permissions) {
+      permissions = permissions.map((permission: Permission) => {
+        return permission.name;
+      });
+      this.permissionsService.loadPermissions(permissions);
+    }
+  }
 
   getPatients(paging: Paging) {
     this.isLoading = true;

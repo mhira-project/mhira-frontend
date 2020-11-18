@@ -47,6 +47,19 @@ const permissions = gql`
   }
 `;
 
+const userPermissionGrants = gql`
+  query {
+    userPermissionGrants {
+      id
+      name
+      guard
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 export const PermissionsQueries = {
   permissions,
+  userPermissionGrants,
 };

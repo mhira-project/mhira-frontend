@@ -15,19 +15,12 @@
         <nz-checkbox-wrapper style="width: 100%" (nzOnChange)="collectRoles($event)">
           <div nz-row>
             <div nz-col nzSpan="24" *ngFor="let role of roles">
-              <label nz-checkbox [nzValue]="role.id" [ngModel]="userHasRole(role)">{{ role.name }}</label>
+              <label nz-checkbox [nzValue]="role.id" [ngModel]="userHasRole(role.id)">{{ role.name }}</label>
             </div>
           </div>
         </nz-checkbox-wrapper>
-        <button
-          *ngIf="roles.length > 0"
-          nz-button
-          nzSize="small"
-          (click)="assignRoles()"
-          [disabled]="selectedRoles.length == 0"
-          nzType="primary"
-        >
-          Assign Roles
+        <button *ngIf="roles.length > 0" nz-button nzSize="small" (click)="submitRoles()" nzType="primary">
+          Submit Roles
         </button>
         <!--<app-field-generator [form]="userRolesPermissionsFields"
                              [isLoading]="isLoading"

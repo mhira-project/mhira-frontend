@@ -68,28 +68,6 @@ const deleteManyRoles = gql`
   }
 `;
 
-const removeRolesFromUser = gql`
-  mutation($input: RelationInput!) {
-    removeRolesFromUser(input: $input) {
-      id
-      username
-      active
-      firstName
-      middleName
-      lastName
-      email
-      phone
-      workID
-      address
-      gender
-      birthDate
-      nationality
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
 const setRolesOnUser = gql`
   mutation($input: RelationInput!) {
     setRolesOnUser(input: $input) {
@@ -279,6 +257,28 @@ const addRolesToUser = gql`
   }
 `;
 
+const removeRolesFromUser = gql`
+  mutation($input: RelationsInput!) {
+    removeRolesFromUser(input: $input) {
+      id
+      username
+      active
+      firstName
+      middleName
+      lastName
+      email
+      phone
+      workID
+      address
+      gender
+      birthDate
+      nationality
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 export const RolesMutations = {
   createOneRole,
   createManyRoles,
@@ -286,7 +286,6 @@ export const RolesMutations = {
   updateManyRoles,
   deleteOneRole,
   deleteManyRoles,
-  removeRolesFromUser,
   setRolesOnUser,
   removeUsersFromRole,
   removePermissionsFromRole,
@@ -294,4 +293,5 @@ export const RolesMutations = {
   addPermissionsToRole,
   addUsersToRole,
   addRolesToUser,
+  removeRolesFromUser,
 };

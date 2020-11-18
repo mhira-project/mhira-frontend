@@ -22,8 +22,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getUser() {
-    const userObj = JSON.parse(localStorage.getItem('user'));
-    if (userObj) this.user = userObj.user;
+    this.user = JSON.parse(localStorage.getItem('user'));
   }
 
   editUserProfile() {
@@ -42,7 +41,7 @@ export class HeaderComponent implements OnInit {
     this.authService.logout().subscribe(
       async ({ data }) => {
         this.isOkLoading = false;
-        const items = ['auth_app_token', 'user', 'settings', 'tabs', 'activeTabIndex'];
+        const items = ['auth_app_token', 'user', 'settings', 'tabs', 'activeTabIndex', 'permissions'];
         for (const item of items) {
           localStorage.removeItem(item);
         }

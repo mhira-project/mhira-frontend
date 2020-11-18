@@ -18,6 +18,20 @@ const login = gql`
         birthDate
         updatedAt
         createdAt
+        roles {
+          id
+          name
+          guard
+          createdAt
+          updatedAt
+        }
+        permissions {
+          id
+          name
+          guard
+          createdAt
+          updatedAt
+        }
       }
     }
   }
