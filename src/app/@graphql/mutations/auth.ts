@@ -13,6 +13,7 @@ const login = gql`
         phone
         email
         address
+        passwordChangeRequired
         gender
         birthDate
         updatedAt
