@@ -17,10 +17,18 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.clearAllStorage();
     this.validateForm = this.fb.group({
       identifier: [null, [Validators.required]],
       password: [null, [Validators.required]],
     });
+  }
+
+  clearAllStorage() {
+    const items = ['auth_app_token', 'user', 'settings', 'tabs', 'activeTabIndex', 'permissions'];
+    for (const item of items) {
+      localStorage.removeItem(item);
+    }
   }
 
   signIn(credentials: any) {
