@@ -5,7 +5,7 @@ export interface UserUpdatePasswordInput {
 }
 
 export interface UserChangePasswordInput {
-  currentPassword: number;
+  currentPassword: string;
   newPassword: string;
   newPasswordConfirmation: string;
 }
