@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/auth/auth.service';
+import {
+  UserChangePasswordInput,
+  UserUpdatePasswordInput,
+} from '@app/pages/administration/user-management/user-form/user-update-password.type';
+import { UserService } from '@app/pages/administration/@services/user.service';
+import { User } from '@app/pages/administration/administration.interfaces';
 
 @Component({
   selector: 'app-change-password',
@@ -14,52 +20,79 @@ export class ChangePasswordComponent implements OnInit {
   hasErrors = false;
   errors: string[] = [];
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+    private usersService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
+      currentPassword: [null, [Validators.required]],
       repeatPassword: [null, [Validators.required]],
       password: [null, [Validators.required]],
     });
   }
 
-  signIn(credentials: any) {
-    this.hasErrors = false;
-    this.errors = [];
-    this.isLoading = true;
-    this.authService.login(credentials).subscribe(
+  changePassword(form: any) {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      const user: User = JSON.parse(userStr);
+      console.log(user);
+      this.hasErrors = false;
+      this.errors = [];
+      this.isLoading = true;
+      const inputs: UserChangePasswordInput = {
+        currentPassword: form.currentPassword,
+        newPassword: form.password,
+        newPasswordConfirmation: form.repeatPassword,
+      };
+      this.usersService.changeUserPassword(inputs).subscribe(
+        async ({ data }) => {
+          this.isLoading = false;
+          this.logout();
+        },
+        (error) => {
+          this.isLoading = false;
+          this.hasErrors = true;
+          const graphError = error.graphQLErrors.map((x: any) => x.message);
+          this.onError(graphError);
+        }
+      );
+    }
+  }
+
+  logout() {
+    this.authService.logout().subscribe(
       async ({ data }) => {
-        localStorage.setItem(
-          'auth_app_token',
-          JSON.stringify({
-            accessToken: data['login'].accessToken,
-            refreshToken: data['login'].refreshToken,
-          })
-        );
-        localStorage.setItem(
-          'user',
-          JSON.stringify({
-            user: data['login'].user,
-          })
-        );
-        this.getSettings();
         this.isLoading = false;
-        this.router.navigate(['/mhira/home/patients']);
+        const items = ['auth_app_token', 'user', 'settings', 'tabs', 'activeTabIndex', 'permissions'];
+        for (const item of items) {
+          localStorage.removeItem(item);
+        }
+        this.router.navigate(['/auth/login']);
       },
       (error) => {
-        this.hasErrors = true;
-        for (let i = 0; i < error.graphQLErrors.length; i++) {
-          this.errors.push(error.graphQLErrors[i].message);
-        }
         this.isLoading = false;
       }
     );
   }
 
+  onError(errors: any) {
+    if (errors.length > 0) {
+      for (const error of errors) {
+        this.errors.push(error);
+      }
+    } else {
+      this.errors.push(`${errors.error.message}`);
+    }
+  }
+
   getSettings() {
     this.authService.getSettings().subscribe(
       ({ data }) => {
-        localStorage.setItem('settings', JSON.stringify(data['settings']));
+        localStorage.setItem('settings', JSON.stringify(data.settings));
       },
       (error) => {
         console.log(error);
@@ -70,10 +103,11 @@ export class ChangePasswordComponent implements OnInit {
   submitForm(): void {
     if (this.validateForm.status === 'VALID') {
       const credentials = {
-        identifier: this.validateForm.controls.identifier.value,
+        currentPassword: this.validateForm.controls.currentPassword.value,
+        repeatPassword: this.validateForm.controls.repeatPassword.value,
         password: this.validateForm.controls.password.value,
       };
-      this.signIn(credentials);
+      this.changePassword(credentials);
     }
   }
 }

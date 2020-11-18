@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
+import { User } from '@app/pages/administration/administration.interfaces';
 
 const CryptoJS = require('crypto-js');
 
@@ -12,7 +13,7 @@ const CryptoJS = require('crypto-js');
 })
 export class HeaderComponent implements OnInit {
   isOkLoading: boolean = false;
-  user: any;
+  user: User;
   notificationList: any = [];
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit {
 
   getUser() {
     this.user = JSON.parse(localStorage.getItem('user'));
+    console.log(this.user.lastName);
   }
 
   editUserProfile() {

@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
     this.isLoading = true;
     this.authService.login(credentials).subscribe(
       async ({ data }) => {
+        console.log(data?.login?.user);
         localStorage.setItem(
           'auth_app_token',
           JSON.stringify({
@@ -38,9 +39,12 @@ export class LoginComponent implements OnInit {
         );
         localStorage.setItem('user', JSON.stringify(data.login.user));
         this.getSettings();
-        this.getUserPermissions();
         this.isLoading = false;
-        this.router.navigate(['/mhira/home/patients']);
+        if (data?.login?.user?.passwordChangeRequired) {
+          this.router.navigate(['/auth/change-password']);
+        } else {
+          this.router.navigate(['/mhira/home/patients']);
+        }
       },
       (error) => {
         this.hasErrors = true;

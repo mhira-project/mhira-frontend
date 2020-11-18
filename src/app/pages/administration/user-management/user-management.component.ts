@@ -171,7 +171,7 @@ export class UserManagementComponent implements OnInit {
         newPassword: form.newPassword,
         newPasswordConfirmation: form.newPasswordConfirmation,
       };
-      this.usersService.changeUserPassword(inputs).subscribe(
+      this.usersService.updateUserPassword(inputs).subscribe(
         async ({ data }) => {
           this.isLoading = false;
           this.loadingMessage = '';
