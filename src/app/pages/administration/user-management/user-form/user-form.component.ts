@@ -37,6 +37,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   showCancelButton = false;
   roles: Role[] = [];
   selectedRoles: number[] = [];
+  unselectedRoles: number[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,11 +54,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     this.getRoles();
   }
 
-  ngOnDestroy() {
-    /*this.routeSub.unsubscribe();
-    if (this.tabSub) this.tabSub.unsubscribe();
-    if (this.tabIndexSub) this.tabIndexSub.unsubscribe();*/
-  }
+  ngOnDestroy() {}
 
   getRoles(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
     const options: any = [];
@@ -75,9 +72,9 @@ export class UserFormComponent implements OnInit, OnDestroy {
     );
   }
 
-  userHasRole(role: Role): boolean {
+  userHasRole(roleId: number): boolean {
     for (const _role of this.user.roles) {
-      if (_role.id === role.id) {
+      if (_role.id === roleId) {
         return true;
       }
     }
@@ -85,7 +82,15 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   collectRoles(roles: number[]) {
+    const rolesIds: number[] = [];
+    this.roles.map((role) => rolesIds.push(role.id));
     this.selectedRoles = roles;
+    this.unselectedRoles = rolesIds.filter((id) => !this.selectedRoles.includes(id));
+    for (const role of roles) {
+      if (this.userHasRole(role)) {
+        this.selectedRoles.splice(this.selectedRoles.indexOf(role), role);
+      }
+    }
   }
 
   getUserFromUrl(): void {
@@ -188,32 +193,51 @@ export class UserFormComponent implements OnInit, OnDestroy {
     );
   }
 
-  assignRoleToUser(role: any) {
-    this.isLoading = true;
-    this.rolesService.addUsersToRole(role.roleId, [this.user.id]).subscribe(
-      async ({ data }: any) => {
-        this.isLoading = false;
-        this.message.create('success', `the role has been successful assigned to ${this.user.firstName}`);
-      },
-      (error: any) => {
-        console.log(error);
-        this.isLoading = false;
-        this.message.create('error', `could not add role to ${this.user.firstName}`);
-      }
-    );
+  submitRoles() {
+    if (this.selectedRoles.length > 0) {
+      this.assignRoles();
+    }
+
+    if (this.unselectedRoles.length > 0) {
+      this.unassignRoles();
+    }
   }
 
   assignRoles() {
     this.isLoading = true;
     this.rolesService.addRolesToUser(this.user.id, this.selectedRoles).subscribe(
       async ({ data }: any) => {
+        /*for (const roleId of this.selectedRoles) {
+          this.user.roles.map((role) => {
+            if (role.id !== roleId) {
+              this.roles.map((_role) => {
+                if (_role.id === roleId) {
+                  this.user.roles.push(_role);
+                }
+              });
+            }
+          });
+        }*/
         this.isLoading = false;
         this.message.create('success', `the role(s) have been successful assigned to ${this.user.firstName}`);
       },
       (error: any) => {
-        console.log(error);
         this.isLoading = false;
         this.message.create('error', `could not assign role(s) to ${this.user.firstName}`);
+      }
+    );
+  }
+
+  unassignRoles() {
+    this.isLoading = true;
+    this.rolesService.removeRolesFromUser(this.user.id, this.unselectedRoles).subscribe(
+      async ({ data }: any) => {
+        this.isLoading = false;
+        this.message.create('success', `the role(s) have been successful removed from ${this.user.firstName}`);
+      },
+      (error: any) => {
+        this.isLoading = false;
+        this.message.create('error', `could not remove role(s) to ${this.user.firstName}`);
       }
     );
   }
