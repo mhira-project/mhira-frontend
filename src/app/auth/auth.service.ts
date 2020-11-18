@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { FetchResult } from 'apollo-link';
 import { Router } from '@angular/router';
 import { SettingsQueries } from '@app/@graphql/queries/settings';
+import { PermissionsQueries } from '@app/@graphql/queries/permissions';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,13 @@ export class AuthService {
     return this.apollo.query({
       query: AuthMutations.login,
       variables: credentials,
+      fetchPolicy: 'no-cache',
+    });
+  }
+
+  getUserPermissions(): Observable<FetchResult<any>> {
+    return this.apollo.query({
+      query: PermissionsQueries.userPermissionGrants,
       fetchPolicy: 'no-cache',
     });
   }

@@ -15,6 +15,7 @@ import { LayoutModule } from '@app/@layout/layout.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GraphQLModule } from '@app/graphql.module';
 import { AuthGuard } from '@app/auth/auth.guard';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { AuthGuard } from '@app/auth/auth.guard';
     FormsModule,
     HttpClientModule,
     TranslateModule.forRoot(),
+    NgxPermissionsModule.forRoot(),
     NgbModule,
     LayoutModule,
     CoreModule,
