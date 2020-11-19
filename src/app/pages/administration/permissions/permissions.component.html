@@ -1,6 +1,7 @@
 <div nz-row>
   <div nz-col nzSpan="24">
     <app-custom-table
+      *ngIf="perms.permissionsOnly(['view permissions'])"
       [loading]="isLoading"
       [showPagination]="false"
       [showCustomActions]="true"

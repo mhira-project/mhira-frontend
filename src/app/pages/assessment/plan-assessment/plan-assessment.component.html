@@ -1,5 +1,5 @@
 <div nz-row [nzGutter]="16">
-  <div nz-col nzSpan="16">
+  <div nz-col nzSpan="16" *ngIf="perms.permissionsOnly(['manage assessments'])">
     <nz-card nzTitle="Add Questionnaires or Groups of questionnaire" [nzExtra]="addQuestionnaire">
       <nz-card class="added-questionnaire-card" *ngFor="let questionnaire of addedQuestionnaires; let i = index">
         <div nz-row>

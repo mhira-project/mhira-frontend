@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { RolesService } from '@app/pages/administration/@services/roles.service';
 import { RoleForm } from '@app/pages/administration/@forms/role.form';
 import { Convert } from '@shared/classes/convert';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -46,7 +47,8 @@ export class RolesComponent implements OnInit {
     private rolesService: RolesService,
     private modalService: NzModalService,
     private message: NzMessageService,
-    private router: Router
+    private router: Router,
+    public perms: AppPermissionsService
   ) {}
 
   ngOnInit(): void {

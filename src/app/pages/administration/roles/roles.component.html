@@ -1,6 +1,7 @@
 <div nz-row>
   <div nz-col nzSpan="24">
     <app-custom-table
+      *ngIf="perms.permissionsOnly(['view roles'])"
       [loading]="isLoading"
       [showPagination]="false"
       [showCustomActions]="true"
@@ -8,7 +9,7 @@
       [listOfCustomActions]="actions"
       [listOfData]="rolesTable.rows"
       [listOfColumn]="rolesTable.columns"
-      [showButton]="true"
+      [showButton]="perms.permissionsOnly(['manage roles'])"
       [buttonText]="'Create Role'"
       [hasNextPage]="pageInfo?.hasNextPage"
       [hasPreviousPage]="pageInfo?.hasPreviousPage"

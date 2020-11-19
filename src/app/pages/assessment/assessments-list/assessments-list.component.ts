@@ -9,6 +9,7 @@ import { Paging } from '@shared/@types/paging';
 import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
 import { DateService } from '@shared/services/date.service';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -36,7 +37,8 @@ export class AssessmentsListComponent implements OnInit {
     private modalService: NzModalService,
     private message: NzMessageService,
     private dateService: DateService,
-    private router: Router
+    private router: Router,
+    public perms: AppPermissionsService
   ) {}
 
   ngOnInit(): void {

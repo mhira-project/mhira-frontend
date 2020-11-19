@@ -11,6 +11,7 @@ import { environment } from '@env/environment';
 import { UserUpdatePasswordInput } from '@app/pages/administration/user-management/user-form/user-update-password.type';
 import { Paging } from '@shared/@types/paging';
 import { DateService } from '@shared/services/date.service';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -61,7 +62,8 @@ export class UserManagementComponent implements OnInit {
     private message: NzMessageService,
     private dateService: DateService,
     private router: Router,
-    private usersService: UserService
+    private usersService: UserService,
+    public perms: AppPermissionsService
   ) {}
 
   ngOnInit(): void {
