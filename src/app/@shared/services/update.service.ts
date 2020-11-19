@@ -16,7 +16,7 @@ export class UpdateService {
           this.notification.create(
             'info',
             'New update Available',
-            `There is a new  version of this application reload to update.<br/> <a nz-button nzType="link">Reload</a>`
+            `There is a new  version of this application reload to update.<br/> <a nz-button nzType="link">Reload Test</a>`
           );
         });
       });
@@ -25,7 +25,7 @@ export class UpdateService {
         this.notification.create(
           'info',
           'New update Available',
-          `There is a new  version of this application reload to update.<br/> <a nz-button nzType="link">Reload</a>`
+          `There is a new  version of this application reload to update.<br/> <a nz-button nzType="link">Reload Test</a>`
         );
       });
     }
