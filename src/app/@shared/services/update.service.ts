@@ -21,6 +21,7 @@ export class UpdateService {
         });
       });
     } else {
+      console.log('Yeeey');
       this.swUpdate.available.subscribe((evt) => {
         this.notification.create(
           'info',
