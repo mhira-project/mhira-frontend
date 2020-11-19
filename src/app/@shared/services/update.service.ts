@@ -12,7 +12,7 @@ export class UpdateService {
     this.swUpdate.available.subscribe((evt) => {
       this.notification.create(
         'info',
-        'Update Available',
+        'New update Available',
         `There is a new  version of this application reload to update.<br/> <a nz-button nzType="link">Reload</a>`
       );
     });
