@@ -265,7 +265,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         newPassword: form.newPassword,
         newPasswordConfirmation: form.newPasswordConfirmation,
       };
-      this.usersService.changeUserPassword(inputs).subscribe(
+      this.usersService.updateUserPassword(inputs).subscribe(
         async ({ data }) => {
           this.isLoading = false;
           this.loadingMessage = '';

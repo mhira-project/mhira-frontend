@@ -93,7 +93,15 @@ const updateUser = gql`
     }
   }
 `;
-
+const changeUserPassword = gql`
+  mutation($currentPassword: String!, $newPassword: String!, $newPasswordConfirmation: String!) {
+    changePassword(
+      currentPassword: $currentPassword
+      newPassword: $newPassword
+      newPasswordConfirmation: $newPasswordConfirmation
+    )
+  }
+`;
 const updateUserPassword = gql`
   mutation($newPassword: String!, $newPasswordConfirmation: String!, $id: Int!) {
     updateUserPassword(input: { newPassword: $newPassword, newPasswordConfirmation: $newPasswordConfirmation }, id: $id)
@@ -110,4 +118,5 @@ export const UsersMutations = {
   updateUser,
   deleteUser,
   updateUserPassword,
+  changeUserPassword,
 };

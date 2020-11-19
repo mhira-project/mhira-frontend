@@ -8,6 +8,7 @@ import { I18nModule } from '@app/i18n';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { NzAlertModule, NzButtonModule, NzFormModule, NzInputModule, NzLayoutModule } from 'ng-zorro-antd';
+import { ChangePasswordComponent } from '@app/auth/change-password/change-password.component';
 
 const antModules = [NzFormModule, NzAlertModule, NzLayoutModule, NzInputModule, NzButtonModule];
 
@@ -21,6 +22,6 @@ const antModules = [NzFormModule, NzAlertModule, NzLayoutModule, NzInputModule, 
     I18nModule,
     AuthRoutingModule,
   ],
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, ChangePasswordComponent],
 })
 export class AuthModule {}

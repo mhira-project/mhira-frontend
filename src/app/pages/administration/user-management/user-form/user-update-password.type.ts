@@ -3,3 +3,9 @@ export interface UserUpdatePasswordInput {
   newPassword: string;
   newPasswordConfirmation: string;
 }
+
+export interface UserChangePasswordInput {
+  currentPassword: string;
+  newPassword: string;
+  newPasswordConfirmation: string;
+}
