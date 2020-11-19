@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Event, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TabInterface } from '@app/@layout/vertical/header/tabs/tab.interface';
+import { UpdateService } from '@shared/services/update.service';
 
 @Component({
   selector: 'app-tabs',
@@ -11,7 +12,7 @@ export class TabsComponent implements OnInit {
   tabs: TabInterface[] = [];
   selectedIndex = -1;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private updateService: UpdateService) {}
 
   ngOnInit(): void {
     this.openTabs();
@@ -83,6 +84,7 @@ export class TabsComponent implements OnInit {
   urlChange() {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
+        this.updateService.checkForUpdates();
         if (event.url !== '/mhira/not-found' && event.url !== '/') {
           const pathFound = this.tabs.some((tab) => tab.path === event.url.slice(1));
           if (!pathFound) {

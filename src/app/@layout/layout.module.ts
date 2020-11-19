@@ -25,6 +25,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { HeaderComponent } from './vertical/header/header.component';
 import { TabsComponent } from './vertical/header/tabs/tabs.component';
 import { AuthModule } from '@app/auth/auth.module';
+import { UpdateService } from '@shared/services/update.service';
 
 const antdModule = [
   NzBreadCrumbModule,
@@ -59,6 +60,6 @@ const antdModule = [
     TabsComponent,
   ],
   exports: [AuthLayoutComponent, VerticalLayoutComponent, HorizontalLayoutComponent],
-  providers: [ThemeConstantService],
+  providers: [ThemeConstantService, UpdateService],
 })
 export class LayoutModule {}

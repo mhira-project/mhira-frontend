@@ -3,6 +3,7 @@ import { AuthService } from '@app/auth/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { User } from '@app/pages/administration/administration.interfaces';
+import { UpdateService } from '@shared/services/update.service';
 
 const CryptoJS = require('crypto-js');
 
