@@ -22,14 +22,19 @@ export class UpdateService {
       });
     } else {
       console.log('Yeeey');
-      this.swUpdate.available.subscribe((evt) => {
-        console.log(evt);
-        this.notification.create(
-          'info',
-          'New update Available',
-          `There is a new  version of this application reload to update.<br/> <a nz-button nzType="link">Reload Test</a>`
-        );
-      });
+      this.swUpdate.available.subscribe(
+        (evt) => {
+          console.log('here', evt);
+          this.notification.create(
+            'info',
+            'New update Available',
+            `There is a new  version of this application reload to update.<br/> <a nz-button nzType="link">Reload Test</a>`
+          );
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 }
