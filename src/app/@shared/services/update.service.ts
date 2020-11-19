@@ -23,6 +23,7 @@ export class UpdateService {
     } else {
       console.log('Yeeey');
       this.swUpdate.available.subscribe((evt) => {
+        console.log(evt);
         this.notification.create(
           'info',
           'New update Available',
