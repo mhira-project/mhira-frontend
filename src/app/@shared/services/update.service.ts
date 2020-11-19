@@ -9,12 +9,25 @@ export class UpdateService {
   constructor(private swUpdate: SwUpdate, private notification: NzNotificationService) {}
 
   checkForUpdates() {
-    this.swUpdate.available.subscribe((evt) => {
-      this.notification.create(
-        'info',
-        'New update Available',
-        `There is a new  version of this application reload to update.<br/> <a nz-button nzType="link">Reload</a>`
-      );
-    });
+    if (!this.swUpdate.isEnabled) {
+      console.log('Nope 🙁');
+      this.swUpdate.activateUpdate().then(() => {
+        this.swUpdate.available.subscribe((evt) => {
+          this.notification.create(
+            'info',
+            'New update Available',
+            `There is a new  version of this application reload to update.<br/> <a nz-button nzType="link">Reload</a>`
+          );
+        });
+      });
+    } else {
+      this.swUpdate.available.subscribe((evt) => {
+        this.notification.create(
+          'info',
+          'New update Available',
+          `There is a new  version of this application reload to update.<br/> <a nz-button nzType="link">Reload</a>`
+        );
+      });
+    }
   }
 }
