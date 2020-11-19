@@ -7,6 +7,7 @@ import { Paging } from '@shared/@types/paging';
 import { Filter } from '@shared/@types/filter';
 import { RolesService } from '@app/pages/administration/@services/roles.service';
 import { RolePermission } from '@app/pages/administration/@types/role_permissions';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
 
 @Component({
   selector: 'app-roles-and-permissions',
@@ -28,7 +29,11 @@ export class RolesAndPermissionsComponent implements OnInit {
     permissions: [],
   };
 
-  constructor(private rolesService: RolesService, private permissionService: PermissionsService) {}
+  constructor(
+    private rolesService: RolesService,
+    private permissionService: PermissionsService,
+    public perms: AppPermissionsService
+  ) {}
 
   ngOnInit(): void {
     this.getPermissions();

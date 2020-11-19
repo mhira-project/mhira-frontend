@@ -9,6 +9,7 @@ import { PatientsService } from '@app/pages/home/@services/patients.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Assessment } from '@app/pages/assessment/@types/assessment';
 import { environment } from '@env/environment';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -39,7 +40,8 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy, AfterViewInit
     private message: NzMessageService,
     private modal: NzModalService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public perms: AppPermissionsService
   ) {
     this.questionnaireSearchSubscription = this.questionnaireSearch
       .pipe(debounceTime(400), distinctUntilChanged())

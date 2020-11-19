@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { PermissionsService } from '@app/pages/administration/@services/permissions.service';
 import { DateService } from '@shared/services/date.service';
 import { Convert } from '@shared/classes/convert';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -37,7 +38,8 @@ export class PermissionsComponent implements OnInit {
     private modalService: NzModalService,
     private message: NzMessageService,
     private dateService: DateService,
-    private router: Router
+    private router: Router,
+    public perms: AppPermissionsService
   ) {}
 
   ngOnInit(): void {
