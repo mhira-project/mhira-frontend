@@ -81,7 +81,7 @@ export class CreatePatientComponent implements OnInit {
     this.loadingMessage = `Creating patient ${patient.firstName} ${patient.lastName}`;
     this.patientsService.createPatient(patient).subscribe(
       async ({ data }) => {
-        const patientData = data['createPatient'];
+        const patientData = data.createPatient;
         const color = patientData.active
           ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
           : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
@@ -115,7 +115,7 @@ export class CreatePatientComponent implements OnInit {
     this.loadingMessage = `Updating patient ${patient.firstName} ${patient.lastName}`;
     this.patientsService.updatePatient(patient).subscribe(
       async ({ data }) => {
-        const patientData = data['updatePatient'];
+        const patientData = data.updatePatient;
         const color = patientData.active
           ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
           : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';

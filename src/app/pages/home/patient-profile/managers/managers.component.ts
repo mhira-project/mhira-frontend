@@ -116,7 +116,7 @@ export class ManagersComponent implements OnInit, OnDestroy {
     const _users: any[] = [];
     this.patientsService.searchUser(this.searchKeyword).subscribe(
       async ({ data }) => {
-        const usersData = data['getUsers'];
+        const usersData = data.getUsers;
         usersData.edges.map((user: any) => {
           const row = Object.assign({}, user.node);
 
