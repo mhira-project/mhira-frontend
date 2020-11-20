@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
         );
         localStorage.setItem('user', JSON.stringify(data.login.user));
         this.getSettings();
+        this.getUserPermissions();
         this.isLoading = false;
         if (data?.login?.user?.passwordChangeRequired) {
           this.router.navigate(['/auth/change-password']);
