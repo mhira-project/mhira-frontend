@@ -39,7 +39,6 @@ export class ChangePasswordComponent implements OnInit {
     const userStr = localStorage.getItem('user');
     if (userStr) {
       const user: User = JSON.parse(userStr);
-      console.log(user);
       this.hasErrors = false;
       this.errors = [];
       this.isLoading = true;
