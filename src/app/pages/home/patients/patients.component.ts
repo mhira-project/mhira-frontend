@@ -6,7 +6,7 @@ import { patientForms } from '@app/pages/home/@forms/patient-forms';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
-import { Form } from '@shared/components/field-generator/formt';
+import { Form } from '@shared/components/field-generator/form';
 import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 

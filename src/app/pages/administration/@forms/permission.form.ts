@@ -1,4 +1,4 @@
-import { Form } from '@shared/components/field-generator/formt';
+import { Form } from '@shared/components/field-generator/form';
 
 export const PermissionForm: Form = {
   submitButtonText: 'Create Permission',

@@ -31,6 +31,7 @@ import { RolesComponent } from './roles/roles.component';
 import { PermissionsService } from './@services/permissions.service';
 import { RolesService } from './@services/roles.service';
 import { FormsModule } from '@angular/forms';
+import { DepartmentsComponent } from './departments/departments.component';
 
 const antModules = [
   NzGridModule,
@@ -62,6 +63,7 @@ const antModules = [
     UserFormComponent,
     PermissionsComponent,
     RolesComponent,
+    DepartmentsComponent,
   ],
   providers: [PermissionsService, RolesService],
 })

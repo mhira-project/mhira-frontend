@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { FieldType } from './field.type';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Form } from '@shared/components/field-generator/formt';
+import { Form } from '@shared/components/field-generator/form';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 

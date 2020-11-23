@@ -1,4 +1,4 @@
-import { Form } from '@shared/components/field-generator/formt';
+import { Form } from '@shared/components/field-generator/form';
 
 export const planAssessmentForm: Form = {
   submitButtonText: 'Plan',
