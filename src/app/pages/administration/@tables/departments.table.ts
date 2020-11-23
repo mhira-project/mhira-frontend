@@ -16,6 +16,11 @@ const columns: any[] = [
     isFilterable: false,
   },
   {
+    title: 'Status',
+    name: 'active',
+    isFilterable: false,
+  },
+  {
     title: 'Created At',
     name: 'createdAt',
     isFilterable: false,
