@@ -61,4 +61,11 @@ export class UserService {
       fetchPolicy: 'no-cache',
     });
   }
+  softDeleteUser(user: User): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: UsersMutations.softDeleteUser,
+      variables: { id: user.id },
+      fetchPolicy: 'no-cache',
+    });
+  }
 }
