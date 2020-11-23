@@ -112,6 +112,16 @@ export class UserFormComponent implements OnInit, OnDestroy {
           });
         });
       } else {
+        this.user = {
+          address: '',
+          birthDate: '',
+          email: '',
+          firstName: '',
+          gender: '',
+          lastName: '',
+          phone: '',
+          roles: [],
+        };
         this.inputMode = true;
         this.showCancelButton = false;
         this.profileFields.groups.map((group) => {

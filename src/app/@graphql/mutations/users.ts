@@ -113,10 +113,31 @@ const deleteUser = gql`
   }
 `;
 
+const softDeleteUser = gql`
+  mutation($id: ID!) {
+    updateOneUser(input: { id: $id, update: { deleted: true } }) {
+      id
+      workID
+      firstName
+      middleName
+      lastName
+      phone
+      email
+      address
+      gender
+      birthDate
+      createdAt
+      updatedAt
+      deletedAt
+    }
+  }
+`;
+
 export const UsersMutations = {
   createUser,
   updateUser,
   deleteUser,
+  softDeleteUser,
   updateUserPassword,
   changeUserPassword,
 };
