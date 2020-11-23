@@ -1,5 +1,5 @@
 <ng-template #indicatorTemplate><i nz-icon class="loadingSpinner" nzType="loading"></i></ng-template>
-<nz-spin [nzSpinning]="loading" [nzIndicator]="indicatorTemplate" *ngIf="perms.permissionsOnly(['manage roles'])">
+<nz-spin [nzSpinning]="loading" [nzIndicator]="indicatorTemplate">
   <nz-table [nzShowPagination]="false" [nzBordered]="true" [nzData]="matrix.permissions" nzSize="middle">
     <thead>
       <tr>
