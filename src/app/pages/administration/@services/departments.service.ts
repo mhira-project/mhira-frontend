@@ -27,29 +27,29 @@ export class DepartmentsService {
     });
   }
 
-  createDepartment(role: Department): Observable<FetchResult<any>> {
+  createDepartment(department: Department): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: DepartmentsMutations.createOneDepartment,
       variables: {
-        input: { role },
+        input: { department },
       },
     });
   }
 
-  updateDepartment(role: Department): Observable<FetchResult<any>> {
+  updateDepartment(department: Department): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: DepartmentsMutations.updateOneDepartment,
       variables: {
-        input: { role },
+        input: { department },
       },
     });
   }
 
-  deleteDepartment(role: Department): Observable<FetchResult<any>> {
+  deleteDepartment(department: Department): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: DepartmentsMutations.deleteOneDepartment,
       variables: {
-        input: { id: role.id },
+        input: { id: department.id },
       },
     });
   }

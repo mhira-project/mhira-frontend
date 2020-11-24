@@ -1,13 +1,15 @@
 import gql from 'graphql-tag';
 
 const departments = gql`
-  query($paging: CursorPaging, $filter: RoleFilter, $sorting: [RoleSort!]) {
+  query($paging: CursorPaging, $filter: DepartmentFilter, $sorting: [DepartmentSort!]) {
     departments(paging: $paging, filter: $filter, sorting: $sorting) {
       edges {
         cursor
         node {
           id
-          guard
+          name
+          description
+          active
           createdAt
           updatedAt
           users {

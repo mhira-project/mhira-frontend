@@ -5,7 +5,8 @@ const createOneDepartment = gql`
     createOneDepartment(input: $input) {
       id
       name
-      guard
+      description
+      active
       createdAt
       updatedAt
     }
@@ -17,7 +18,8 @@ const createManyDepartments = gql`
     createManyDepartments(input: $input) {
       id
       name
-      guard
+      description
+      active
       createdAt
       updatedAt
     }
@@ -29,7 +31,8 @@ const updateOneDepartment = gql`
     updateOneDepartment(input: $input) {
       id
       name
-      guard
+      description
+      active
       createdAt
       updatedAt
     }
@@ -41,7 +44,8 @@ const updateManyDepartments = gql`
     updateManyDepartments(input: $input) {
       id
       name
-      guard
+      description
+      active
       createdAt
       updatedAt
     }
@@ -53,7 +57,8 @@ const deleteOneDepartment = gql`
     deleteOneDepartment(input: $input) {
       id
       name
-      guard
+      description
+      active
       createdAt
       updatedAt
     }
@@ -95,7 +100,8 @@ const removeUsersFromDepartment = gql`
     removeUsersFromDepartment(input: $input) {
       id
       name
-      guard
+      description
+      active
       createdAt
       updatedAt
       users {
@@ -124,7 +130,8 @@ const setUsersOnDepartment = gql`
     setUsersOnDepartment(input: $input) {
       id
       name
-      guard
+      description
+      active
       createdAt
       updatedAt
       users {
@@ -153,7 +160,8 @@ const addUsersToDepartment = gql`
     addUsersToDepartment(input: $input) {
       id
       name
-      guard
+      description
+      active
       createdAt
       updatedAt
       users {

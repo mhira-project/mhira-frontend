@@ -5,12 +5,12 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { DepartmentsService } from '../@services/departments.service';
 import { DepartmentForm } from '../@forms/department.form';
-import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
-import { Convert } from '../../../@shared/classes/convert';
-import { environment } from '../../../../environments/environment';
-import { Paging } from '../../../@shared/@types/paging';
-import { Filter } from '../../../@shared/@types/filter';
-import { Sorting } from '../../../@shared/@types/sorting';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { Convert } from '@shared/classes/convert';
+import { environment } from '@env/environment';
+import { Paging } from '@shared/@types/paging';
+import { Filter } from '@shared/@types/filter';
+import { Sorting } from '@shared/@types/sorting';
 
 const CryptoJS = require('crypto-js');
 
