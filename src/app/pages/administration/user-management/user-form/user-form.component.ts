@@ -26,6 +26,7 @@ const CryptoJS = require('crypto-js');
 export class UserFormComponent implements OnInit, OnDestroy {
   user: User;
   isLoading = false;
+  newMode = false;
   loadingMessage = '';
   profileFields: Form = userForms.userProfileEdit;
   userRolesPermissionsFields: Form = userForms.userRolesPermissions;
@@ -67,6 +68,13 @@ export class UserFormComponent implements OnInit, OnDestroy {
           options.push({ label: _role.name, value: _role.id });
         });
         this.userRolesPermissionsFields.groups[0].fields[0].options = options;
+        this.profileFields.groups.map((group) => {
+          group.fields.map((field) => {
+            if (field.name === 'roleId') {
+              field.options = options;
+            }
+          });
+        });
       },
       (error: any) => {}
     );
@@ -122,7 +130,9 @@ export class UserFormComponent implements OnInit, OnDestroy {
           phone: '',
           roles: [],
         };
+        this.newMode = true;
         this.inputMode = true;
+        this.profileFields = userForms.userProfile;
         this.showCancelButton = false;
         this.profileFields.groups.map((group) => {
           group.fields.map((field) => {
@@ -160,6 +170,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         this.message.create('success', `User has successfully been created`);
         // close this tab
         this.user = userData;
+        if (this.selectedRoles.length > 0) this.assignRoles();
         // open another
         // this.onChangeUser();
       },
@@ -253,14 +264,16 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   submitForm(form: any): void {
-    if (this.user) {
+    if (this.user.id != null) {
       form.id = this.user.id;
       this.updateUser(form);
     } else {
-      console.log(form);
       if (form.password !== form.passwordConfirmation) {
         this.message.create('error', `Password does not match`);
       } else {
+        if (form.roleId) {
+          this.selectedRoles.push(form.roleId);
+        }
         this.createUser(form);
       }
     }

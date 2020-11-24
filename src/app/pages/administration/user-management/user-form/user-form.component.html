@@ -9,7 +9,7 @@
       (submitForm)="submitForm($event)"
     ></app-field-generator>
   </nz-tab>
-  <nz-tab nzTitle="Security">
+  <nz-tab *ngIf="!newMode" nzTitle="Security">
     <div nz-row nzGutter="16">
       <div nz-col nzFlex="auto">
         <nz-checkbox-wrapper style="width: 100%" (nzOnChange)="collectRoles($event)">
