@@ -8,7 +8,7 @@
         <ng-container *ngFor="let field of group.fields; let i = index">
           <div nz-col class="gutter-row form-item" [nzSpan]="field?.span">
             <label for="field{{ i }}" translate
-              ><b>{{ field?.title }}<span style="color: red" *ngIf="field?.isRequired"> *</span></b></label
+              ><b>{{ field?.title }}<span style="color: red" *ngIf="field?.isRequired && inputMode"> *</span></b></label
             >
             <ng-container *ngIf="inputMode" [ngSwitch]="field.type">
               <div *ngSwitchCase="'select'">
