@@ -279,6 +279,50 @@ const removeRolesFromUser = gql`
   }
 `;
 
+const addDepartmentsToUser = gql`
+  mutation($input: RelationsInput!) {
+    addDepartmentsToUser(input: $input) {
+      id
+      username
+      active
+      firstName
+      middleName
+      lastName
+      email
+      phone
+      workID
+      address
+      gender
+      birthDate
+      nationality
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+const removeDepartmentsFromUser = gql`
+  mutation($input: RelationsInput!) {
+    removeDepartmentsFromUser(input: $input) {
+      id
+      username
+      active
+      firstName
+      middleName
+      lastName
+      email
+      phone
+      workID
+      address
+      gender
+      birthDate
+      nationality
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 export const RolesMutations = {
   createOneRole,
   createManyRoles,
@@ -293,5 +337,7 @@ export const RolesMutations = {
   addPermissionsToRole,
   addUsersToRole,
   addRolesToUser,
+  addDepartmentsToUser,
   removeRolesFromUser,
+  removeDepartmentsFromUser,
 };

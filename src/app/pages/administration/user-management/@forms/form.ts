@@ -200,6 +200,18 @@ const userProfile: Form = {
           span: 8,
         },
         {
+          value: '',
+          name: 'departmentId',
+          title: 'Department',
+          label: 'Department',
+          description: 'Select Department',
+          type: 'select',
+          validationMessage: 'please select department',
+          isRequired: true,
+          options: [],
+          span: 8,
+        },
+        {
           title: 'Activate User',
           label: 'active',
           name: 'active',
