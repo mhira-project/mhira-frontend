@@ -255,7 +255,7 @@ const userProfileEdit: Form = {
           label: 'Middle name',
           name: 'middleName',
           type: 'text',
-          isRequired: true,
+          isRequired: false,
           description: 'Enter your middle name',
           validationMessage: 'Please enter your Middle name',
           span: 8,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Department } from '../@types/department';
+import { Department, UpdateOneDepartmentInput } from '../@types/department';
 import { DepartmentsTable } from '../@tables/departments.table';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
@@ -32,7 +32,7 @@ export class DepartmentsComponent implements OnInit {
     rows: [],
   };
   actions = DepartmentsTable.actions;
-
+  department: Department;
   showCreateDepartment = false;
   panelTitle = 'Create Department';
   loadingMessage = '';
@@ -110,6 +110,7 @@ export class DepartmentsComponent implements OnInit {
   }
 
   handleActionClick(event: any): void {
+    this.department = Object.assign({}, this.departments[event.index]);
     switch (event.action.name) {
       case 'Delete Department':
         this.modalService.confirm({
@@ -123,6 +124,13 @@ export class DepartmentsComponent implements OnInit {
         });
         break;
       case 'Edit Department':
+        this.showCreateDepartment = true;
+        this.isCreateAction = false;
+        this.departmentForms.groups.map((group) => {
+          group.fields.map((field) => {
+            field.value = this.department[field.name];
+          });
+        });
         console.log('view results');
         break;
     }
@@ -170,8 +178,41 @@ export class DepartmentsComponent implements OnInit {
     if (this.isCreateAction) {
       this.createDepartment(departmentData);
     } else {
-      // departmentData.id = this.department.id;
-      // this.updateDepartment(departmentData);
+      departmentData.id = this.department.id;
+      this.updateDepartment(departmentData);
     }
+  }
+
+  private updateDepartment(department: Department) {
+    const updateOneDepartmentInput: UpdateOneDepartmentInput = {
+      id: department.id,
+      update: {
+        name: department.name,
+        description: department.description,
+        active: department.active,
+      },
+    };
+    this.isLoading = true;
+    this.hasErrors = false;
+    this.errors = [];
+    this.loadingMessage = `Updating department ${department.name}`;
+    this.departmentsService.updateDepartment(updateOneDepartmentInput).subscribe(
+      async ({ data }) => {
+        this.departments.push(Convert.toDepartment(data.createOneDepartment));
+        this.departmentsTable.rows = this.departments;
+        this.isLoading = false;
+        this.loadingMessage = '';
+        this.toggleCreatePanel();
+        this.message.create('success', `Department has successfully been updated`);
+      },
+      (error) => {
+        this.hasErrors = true;
+        error.graphQLErrors.map((_error: any) => {
+          this.errors.push(_error.message);
+        });
+        this.isLoading = false;
+        this.loadingMessage = '';
+      }
+    );
   }
 }

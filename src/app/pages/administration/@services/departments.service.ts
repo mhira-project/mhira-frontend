@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { Department } from '../@types/department';
+import { Department, UpdateOneDepartmentInput } from '../@types/department';
 import { Paging } from '../../../@shared/@types/paging';
 import { Filter } from '../../../@shared/@types/filter';
 import { Sorting } from '../../../@shared/@types/sorting';
@@ -36,7 +36,7 @@ export class DepartmentsService {
     });
   }
 
-  updateDepartment(department: Department): Observable<FetchResult<any>> {
+  updateDepartment(department: UpdateOneDepartmentInput): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: DepartmentsMutations.updateOneDepartment,
       variables: {
