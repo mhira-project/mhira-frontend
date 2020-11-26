@@ -27,12 +27,11 @@ export class SettingsService {
     });
   }
 
-  updateSetting(setting: Setting): Observable<FetchResult<any>> {
+  updateSetting(input: Setting): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: SettingsMutations.updateSettings,
-      variables: {
-        input: { settings: setting },
-      },
+      variables: { input },
+
       fetchPolicy: 'no-cache',
     });
   }
