@@ -124,8 +124,7 @@ export class DepartmentsComponent implements OnInit {
         });
         break;
       case 'Edit Department':
-        this.showCreateDepartment = true;
-        this.isCreateAction = false;
+        this.toggleCreatePanel(false);
         this.departmentForms.groups.map((group) => {
           group.fields.map((field) => {
             field.value = this.department[field.name];
@@ -147,6 +146,7 @@ export class DepartmentsComponent implements OnInit {
     this.showCreateDepartment = !this.showCreateDepartment;
     this.isCreateAction = create;
     this.panelTitle = this.isCreateAction ? 'Create Department' : 'Update Department';
+    this.departmentForms.submitButtonText = this.isCreateAction ? 'Create Department' : 'Update Department';
   }
 
   createDepartment(department: Department) {
@@ -198,7 +198,13 @@ export class DepartmentsComponent implements OnInit {
     this.loadingMessage = `Updating department ${department.name}`;
     this.departmentsService.updateDepartment(updateOneDepartmentInput).subscribe(
       async ({ data }) => {
-        this.departments.push(Convert.toDepartment(data.createOneDepartment));
+        const updatedDepartment: Department = Convert.toDepartment(data.updateOneDepartment);
+        this.departments = this.departments.map((dep: Department) => {
+          if (dep.id === updatedDepartment.id) {
+            dep = updatedDepartment;
+          }
+          return dep;
+        });
         this.departmentsTable.rows = this.departments;
         this.isLoading = false;
         this.loadingMessage = '';

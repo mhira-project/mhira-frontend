@@ -40,7 +40,7 @@ export class DepartmentsService {
     return this.apollo.mutate({
       mutation: DepartmentsMutations.updateOneDepartment,
       variables: {
-        input: { department },
+        input: { id: department.id, update: department.update },
       },
     });
   }
