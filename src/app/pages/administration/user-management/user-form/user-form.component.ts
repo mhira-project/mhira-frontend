@@ -153,6 +153,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         });
       } else {
         this.user = {
+          username: '',
           address: '',
           birthDate: '',
           email: '',
