@@ -206,7 +206,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         if (this.selectedRoles.length > 0) this.assignRoles();
         if (this.selectedDepartments.length > 0) this.assignDepartments();
         // open another
-        // this.onChangeUser();
+        this.afterCreate();
       },
       (error) => {
         this.isLoading = false;
@@ -256,6 +256,18 @@ export class UserFormComponent implements OnInit, OnDestroy {
     if (this.unselectedRoles.length > 0) {
       this.unassignRoles();
     }
+  }
+
+  afterCreate() {
+    const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.user), environment.secretKey).toString();
+    this.router.navigate(['/mhira/administration/user-management/form'], {
+      state: {
+        title: `${this.user.firstName} ${this.user.lastName}`,
+      },
+      queryParams: {
+        user: dataString,
+      },
+    });
   }
 
   assignRoles() {
