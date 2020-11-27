@@ -22,21 +22,6 @@
         <button *ngIf="roles.length > 0" nz-button nzSize="small" (click)="submitRoles()" nzType="primary">
           Submit Roles
         </button>
-        <!--<app-field-generator [form]="userRolesPermissionsFields"
-                             [isLoading]="isLoading"
-                             (submitForm)="assignRoleToUser($event)"
-                             [showCancelButton]="false">
-
-        </app-field-generator>-->
-      </div>
-      <div nz-col nzFlex="480px">
-        <app-field-generator
-          [isLoading]="isLoading"
-          [loadingMessage]="loadingMessage"
-          [showCancelButton]="false"
-          [form]="changeUserPasswordFields"
-          (submitForm)="changePassword($event)"
-        ></app-field-generator>
       </div>
     </div>
   </nz-tab>
