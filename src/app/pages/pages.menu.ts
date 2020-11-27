@@ -8,12 +8,14 @@ export const MENU: SideNavInterface[] = [
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'home',
+    permissions: ['view patients', 'manage patients'],
     submenu: [
       {
         path: 'home/patients',
         title: extract('Patients'),
         iconType: '',
         iconTheme: '',
+        permissions: ['view patients', 'manage patients'],
         submenu: [],
       },
       {

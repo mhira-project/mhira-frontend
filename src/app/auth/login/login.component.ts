@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit {
     this.isLoading = true;
     this.authService.login(credentials).subscribe(
       async ({ data }) => {
-        console.log(data?.login?.user);
         localStorage.setItem(
           'auth_app_token',
           JSON.stringify({

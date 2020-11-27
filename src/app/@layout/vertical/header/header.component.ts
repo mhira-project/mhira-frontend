@@ -3,7 +3,6 @@ import { AuthService } from '@app/auth/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { User } from '@app/pages/administration/administration.interfaces';
-import { UpdateService } from '@shared/services/update.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -13,7 +12,7 @@ const CryptoJS = require('crypto-js');
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  isOkLoading: boolean = false;
+  isOkLoading = false;
   user: User;
   notificationList: any = [];
 
@@ -25,7 +24,6 @@ export class HeaderComponent implements OnInit {
 
   getUser() {
     this.user = JSON.parse(localStorage.getItem('user'));
-    console.log(this.user.lastName);
   }
 
   editUserProfile() {
