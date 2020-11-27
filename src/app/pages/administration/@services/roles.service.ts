@@ -8,8 +8,6 @@ import { Paging } from '@shared/@types/paging';
 import { RolesQueries } from '../../../@graphql/queries/roles';
 import { Role } from '@app/pages/administration/@types/role';
 import { RolesMutations } from '@app/@graphql/mutations/roles';
-import { Assessment } from '@app/pages/assessment/@types/assessment';
-import { AssessmentsMutations } from '@app/@graphql/mutations/assessments';
 
 @Injectable({
   providedIn: 'root',
