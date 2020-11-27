@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MENU } from '@app/pages/pages.menu';
 import { ThemeConstantService } from '@shared/services/theme-constant.service';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -13,7 +14,7 @@ export class SideNavComponent implements OnInit {
   public menuItems = MENU;
   @Input() isCollapsed = false;
 
-  constructor(private themeService: ThemeConstantService) {}
+  constructor(private themeService: ThemeConstantService, public perms: AppPermissionsService) {}
 
   ngOnInit(): void {
     this.themeService.isMenuFoldedChanges.subscribe((isFolded) => (this.isFolded = isFolded));

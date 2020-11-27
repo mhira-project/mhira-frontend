@@ -8,6 +8,7 @@ import { UserFormComponent } from './user-management/user-form/user-form.compone
 import { PermissionsComponent } from './permissions/permissions.component';
 import { RolesComponent } from './roles/roles.component';
 import { DepartmentsComponent } from './departments/departments.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,13 @@ const routes: Routes = [
         component: RolesComponent,
         data: {
           title: extract('Roles'),
+        },
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent,
+        data: {
+          title: extract('Settings'),
         },
       },
       {

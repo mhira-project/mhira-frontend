@@ -37,7 +37,7 @@
         <button nz-button class="login-form-button login-form-margin" [nzLoading]="isLoading" [nzType]="'primary'">
           Log in
         </button>
-        <a class="forgot-password" href="javascript:;">Forgot password</a>
+        <a class="forgot-password" href="javascript:;" (click)="forgotPassword()">Forgot password</a>
       </form>
     </div>
   </nz-content>

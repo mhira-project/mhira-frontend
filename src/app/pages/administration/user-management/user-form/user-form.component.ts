@@ -15,6 +15,8 @@ import { Filter } from '@shared/@types/filter';
 import { RolesService } from '@app/pages/administration/@services/roles.service';
 import { Convert } from '@shared/classes/convert';
 import { Role } from '@app/pages/administration/@types/role';
+import { DepartmentsService } from '@app/pages/administration/@services/departments.service';
+import { Department } from '@app/pages/administration/@types/department';
 
 const CryptoJS = require('crypto-js');
 
@@ -26,6 +28,7 @@ const CryptoJS = require('crypto-js');
 export class UserFormComponent implements OnInit, OnDestroy {
   user: User;
   isLoading = false;
+  newMode = false;
   loadingMessage = '';
   profileFields: Form = userForms.userProfileEdit;
   userRolesPermissionsFields: Form = userForms.userRolesPermissions;
@@ -38,6 +41,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
   roles: Role[] = [];
   selectedRoles: number[] = [];
   unselectedRoles: number[] = [];
+  selectedDepartments: number[] = [];
+  unselectedDepartment: number[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,16 +51,44 @@ export class UserFormComponent implements OnInit, OnDestroy {
     private tabsDataService: TopTabsDataService,
     private usersService: UserService,
     private message: NzMessageService,
-    private rolesService: RolesService
+    private rolesService: RolesService,
+    private departmentsService: DepartmentsService
   ) {}
 
   ngOnInit(): void {
     this.getUserFromUrl();
     this.getRoles();
+    this.getDepartments();
   }
 
   ngOnDestroy() {}
 
+  getDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
+    this.isLoading = true;
+
+    this.departmentsService.departments(params).subscribe(
+      async ({ data }: any) => {
+        const page = data.departments;
+        this.profileFields.groups.map((group) => {
+          group.fields.map((field) => {
+            if (field.name === 'departmentId') {
+              field.options = page.edges.map((departmentData: any) => {
+                const department: Department = departmentData.node;
+                return {
+                  value: department.id,
+                  label: `${department.name}`,
+                };
+              });
+            }
+          });
+        });
+        this.isLoading = false;
+      },
+      (error: any) => {
+        this.isLoading = false;
+      }
+    );
+  }
   getRoles(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
     const options: any = [];
     this.roles = [];
@@ -67,6 +100,13 @@ export class UserFormComponent implements OnInit, OnDestroy {
           options.push({ label: _role.name, value: _role.id });
         });
         this.userRolesPermissionsFields.groups[0].fields[0].options = options;
+        this.profileFields.groups.map((group) => {
+          group.fields.map((field) => {
+            if (field.name === 'roleId') {
+              field.options = options;
+            }
+          });
+        });
       },
       (error: any) => {}
     );
@@ -113,6 +153,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         });
       } else {
         this.user = {
+          username: '',
           address: '',
           birthDate: '',
           email: '',
@@ -122,7 +163,9 @@ export class UserFormComponent implements OnInit, OnDestroy {
           phone: '',
           roles: [],
         };
+        this.newMode = true;
         this.inputMode = true;
+        this.profileFields = userForms.userProfile;
         this.showCancelButton = false;
         this.profileFields.groups.map((group) => {
           group.fields.map((field) => {
@@ -160,8 +203,10 @@ export class UserFormComponent implements OnInit, OnDestroy {
         this.message.create('success', `User has successfully been created`);
         // close this tab
         this.user = userData;
+        if (this.selectedRoles.length > 0) this.assignRoles();
+        if (this.selectedDepartments.length > 0) this.assignDepartments();
         // open another
-        // this.onChangeUser();
+        this.afterCreate();
       },
       (error) => {
         this.isLoading = false;
@@ -213,27 +258,42 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  afterCreate() {
+    const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.user), environment.secretKey).toString();
+    this.router.navigate(['/mhira/administration/user-management/form'], {
+      state: {
+        title: `${this.user.firstName} ${this.user.lastName}`,
+      },
+      queryParams: {
+        user: dataString,
+      },
+    });
+  }
+
   assignRoles() {
     this.isLoading = true;
     this.rolesService.addRolesToUser(this.user.id, this.selectedRoles).subscribe(
       async ({ data }: any) => {
-        /*for (const roleId of this.selectedRoles) {
-          this.user.roles.map((role) => {
-            if (role.id !== roleId) {
-              this.roles.map((_role) => {
-                if (_role.id === roleId) {
-                  this.user.roles.push(_role);
-                }
-              });
-            }
-          });
-        }*/
         this.isLoading = false;
         this.message.create('success', `the role(s) have been successful assigned to ${this.user.firstName}`);
       },
       (error: any) => {
         this.isLoading = false;
         this.message.create('error', `could not assign role(s) to ${this.user.firstName}`);
+      }
+    );
+  }
+
+  assignDepartments() {
+    this.isLoading = true;
+    this.rolesService.addDepartmentsToUser(this.user.id, this.selectedDepartments).subscribe(
+      async ({ data }: any) => {
+        this.isLoading = false;
+        this.message.create('success', `the department(s) have been successful assigned to ${this.user.firstName}`);
+      },
+      (error: any) => {
+        this.isLoading = false;
+        this.message.create('error', `could not assign department(s) to ${this.user.firstName}`);
       }
     );
   }
@@ -252,15 +312,34 @@ export class UserFormComponent implements OnInit, OnDestroy {
     );
   }
 
+  unassignDepartment() {
+    this.isLoading = true;
+    this.rolesService.removeDepartmentsFromUser(this.user.id, this.unselectedDepartment).subscribe(
+      async ({ data }: any) => {
+        this.isLoading = false;
+        this.message.create('success', `the department(s) have been successful removed from ${this.user.firstName}`);
+      },
+      (error: any) => {
+        this.isLoading = false;
+        this.message.create('error', `could not remove department(s) to ${this.user.firstName}`);
+      }
+    );
+  }
+
   submitForm(form: any): void {
-    if (this.user) {
+    if (this.user.id != null) {
       form.id = this.user.id;
       this.updateUser(form);
     } else {
-      console.log(form);
       if (form.password !== form.passwordConfirmation) {
         this.message.create('error', `Password does not match`);
       } else {
+        if (form.roleId) {
+          this.selectedRoles.push(form.roleId);
+        }
+        if (form.departmentId) {
+          this.selectedDepartments.push(form.departmentId);
+        }
         this.createUser(form);
       }
     }

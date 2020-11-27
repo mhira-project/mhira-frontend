@@ -86,9 +86,35 @@ export class RolesService {
     });
   }
 
+  addDepartmentsToUser(userId: number, rolesIds: number[]): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: RolesMutations.addDepartmentsToUser,
+      variables: {
+        input: {
+          id: userId,
+          relationIds: rolesIds,
+        },
+      },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
   removeRolesFromUser(userId: number, rolesIds: number[]): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: RolesMutations.removeRolesFromUser,
+      variables: {
+        input: {
+          id: userId,
+          relationIds: rolesIds,
+        },
+      },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
+  removeDepartmentsFromUser(userId: number, rolesIds: number[]): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: RolesMutations.removeDepartmentsFromUser,
       variables: {
         input: {
           id: userId,

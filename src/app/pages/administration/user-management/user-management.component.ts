@@ -34,6 +34,7 @@ export class UserManagementComponent implements OnInit {
   };
   pageInfo: any;
   user: User = {
+    username: '',
     address: '',
     gender: '',
     birthDate: '',
@@ -155,7 +156,7 @@ export class UserManagementComponent implements OnInit {
       case 'changePassword':
         this.showModal = true;
         this.modalType = Object.assign({}, this.changePasswordModal);
-        this.modalType.title = `${this.modalType.title} for ${this.user.firstName} ${this.user.lastName}`;
+        this.modalType.title = `${this.modalType.title} for ${this.user.username}: ${this.user.firstName} ${this.user.lastName}`;
         break;
       case 'delete':
         this.modalService.confirm({
@@ -226,7 +227,7 @@ export class UserManagementComponent implements OnInit {
         this.message.create('error', `${error}`);
       }
     } else {
-      this.message.create('error', `${errors['error']['message']}`);
+      this.message.create('error', `${errors.error.message}`);
     }
   }
 

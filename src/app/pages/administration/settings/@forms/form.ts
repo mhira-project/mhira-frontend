@@ -1,0 +1,92 @@
+import { Form } from '../../../../@shared/components/field-generator/form';
+
+const general: Form = {
+  submitButtonText: 'Save',
+  groups: [
+    {
+      fields: [
+        {
+          title: 'Set system locale',
+          name: 'systemLocale',
+          label: 'Set system localed',
+          type: 'text',
+          isRequired: false,
+          description: 'Set system locale',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+        {
+          title: 'Set system time zone',
+          name: 'systemTimezone',
+          label: 'Set system time zone',
+          type: 'text',
+          isRequired: false,
+          description: 'Set ystem time zone',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+        {
+          title: 'Set date format',
+          name: 'dateFormat',
+          label: 'Set date format',
+          type: 'text',
+          isRequired: false,
+          description: 'Set date format',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+        {
+          title: 'Set time format',
+          name: 'timeFormat',
+          label: 'Set time format',
+          type: 'text',
+          isRequired: false,
+          description: 'Set time format',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+        {
+          title: 'Set date time format',
+          name: 'dateTimeFormat',
+          label: 'Set date time format',
+          type: 'text',
+          isRequired: false,
+          description: 'Set date time format',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+        {
+          title: 'Password life time (In Days)',
+          name: 'passwordLifeTimeInDays',
+          label: 'Set password life time',
+          type: 'text',
+          isRequired: false,
+          description: 'Set password life time',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+        {
+          title: 'Password re-use cut off(In Days)',
+          name: 'passwordReUseCutoffInDays',
+          label: 'Set password re-use cut off',
+          type: 'text',
+          isRequired: false,
+          description: 'Set password re-use cut off',
+          validationMessage: '',
+          span: 8,
+          value: '',
+        },
+      ],
+    },
+  ],
+};
+
+export const settingsForms = {
+  general,
+};

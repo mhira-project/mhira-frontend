@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/auth/auth.service';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,12 @@ export class LoginComponent implements OnInit {
   hasErrors = false;
   errors: string[] = [];
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+    private notification: NzNotificationService
+  ) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -57,6 +63,13 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  forgotPassword() {
+    this.notification
+      .blank('Do you need to change Password?', 'To reset your password, please contact the user manager.')
+      .onClick.subscribe(() => {
+        console.log('notification clicked!');
+      });
+  }
   getUserPermissions() {
     this.authService.getUserPermissions().subscribe(
       ({ data }) => {

@@ -100,6 +100,13 @@ export const MENU: SideNavInterface[] = [
         submenu: [],
       },
       {
+        path: 'administration/settings',
+        title: extract('Settings'),
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+      {
         path: 'administration/departments',
         title: extract('Departments'),
         iconType: '',
