@@ -27,6 +27,11 @@ const getUsers = gql`
           createdAt
           updatedAt
           deletedAt
+          departments {
+            name
+            description
+            active
+          }
           roles {
             id
             name

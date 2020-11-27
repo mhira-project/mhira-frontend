@@ -83,6 +83,21 @@ export class UserManagementComponent implements OnInit {
           const settings = JSON.parse(localStorage.getItem('settings'));
           row.updatedAt = row.updatedAt ? this.dateService.formatDate(row.updatedAt) : '';
           row.birthDate = row.birthDate ? this.dateService.formatDate(row.birthDate) : '';
+          const color = row.active
+            ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
+            : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
+          const active = row.active ? 'ACTIVE' : 'INACTIVE';
+
+          row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
+          row.roles = '';
+          user.node.roles.forEach((role: { name: any }) => {
+            row.roles += `<nz-tag class="ant-tag-blue ant-tag ml-5">${role.name}</nz-tag>`;
+          });
+
+          row.departments = '';
+          user.node.departments.forEach((department: { name: any }) => {
+            row.departments += `<nz-tag class="ant-tag-cyan ant-tag ml-5">${department.name}</nz-tag>`;
+          });
           rows.push(row);
           this.users.push(user.node);
         });

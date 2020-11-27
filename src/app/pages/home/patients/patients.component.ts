@@ -69,9 +69,9 @@ export class PatientsComponent implements OnInit, OnChanges {
             ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
             : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
           const active = row.active ? 'ACTIVE' : 'ARCHIVED';
+          row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
           row.updatedAt = row.updatedAt ? this.dateService.formatDate(row.updatedAt) : '';
           row.birthDate = row.birthDate ? this.dateService.formatDate(row.birthDate) : '';
-          row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
           _patients.push(row);
           this.patients.push(patient.node);
         });

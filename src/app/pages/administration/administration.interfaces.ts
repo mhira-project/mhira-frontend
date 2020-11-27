@@ -1,5 +1,6 @@
 import { Role } from '@app/pages/administration/@types/role';
 import { Permission } from '@app/pages/administration/@types/permission';
+import { Department } from '@app/pages/administration/@types/department';
 
 export interface User {
   id?: number;
@@ -15,5 +16,6 @@ export interface User {
   birthDate: string;
   active?: boolean;
   roles?: Role[];
+  departments?: Department[];
   permissions?: Permission[];
 }
