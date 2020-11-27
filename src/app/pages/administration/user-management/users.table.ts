@@ -18,12 +18,6 @@ const columns: any[] = [
   {
     title: 'Last name',
     name: 'lastName',
-
-    isFilterable: true,
-  },
-  {
-    title: 'Email',
-    name: 'email',
     isFilterable: true,
   },
   {
@@ -37,13 +31,23 @@ const columns: any[] = [
     isFilterable: false,
   },
   {
-    title: 'Gender',
-    name: 'gender',
+    title: 'Username',
+    name: 'username',
     isFilterable: false,
   },
   {
-    title: 'Birdth Date',
-    name: 'birthDate',
+    title: 'Roles',
+    name: 'roles',
+    isFilterable: false,
+  },
+  {
+    title: 'Active',
+    name: 'active',
+    isFilterable: false,
+  },
+  {
+    title: 'Departments',
+    name: 'departments',
     isFilterable: false,
   },
 ];
