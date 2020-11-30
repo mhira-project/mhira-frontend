@@ -8,7 +8,7 @@ export const MENU: SideNavInterface[] = [
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'home',
-    permissions: ['view patients', 'manage patients'],
+    permissions: ['view patients'],
     submenu: [
       {
         path: 'home/patients',
@@ -30,6 +30,7 @@ export const MENU: SideNavInterface[] = [
   {
     path: 'assessments',
     title: extract('Assessments'),
+    permissions: ['view assessments'],
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'edit',
@@ -37,6 +38,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'assessments/plan-assessments',
         title: extract('Plan assessment'),
+        permissions: ['manage assessments'],
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -44,6 +46,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'assessments',
         title: extract('Planned Assessments'),
+        permissions: ['view assessments'],
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -69,6 +72,7 @@ export const MENU: SideNavInterface[] = [
   {
     path: 'administration',
     title: extract('Administration'),
+    permissions: ['view users'],
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'setting',
@@ -76,6 +80,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'administration/user-management',
         title: extract('User Management'),
+        permissions: ['manage users'],
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -83,6 +88,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'administration/roles-and-permissions',
         title: extract('Permission Matrix'),
+        permissions: ['manage users'],
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -90,6 +96,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'administration/permissions',
         title: extract('Permissions'),
+        permissions: ['manage users'],
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -97,6 +104,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'administration/roles',
         title: extract('Roles'),
+        permissions: ['manage users'],
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -104,6 +112,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'administration/settings',
         title: extract('Settings'),
+        permissions: ['manage users'],
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -111,6 +120,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'administration/departments',
         title: extract('Departments'),
+        permissions: ['manage users'],
         iconType: '',
         iconTheme: '',
         icon: '',
