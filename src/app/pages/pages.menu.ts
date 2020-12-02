@@ -4,7 +4,7 @@ import { extract } from '@app/i18n';
 export const MENU: SideNavInterface[] = [
   {
     path: 'home',
-    title: extract('Home'),
+    title: extract('Case Management'),
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'home',
@@ -21,6 +21,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'home/case-managers',
         title: extract('Case Managers'),
+        permissions: ['view patients', 'manage patients'],
         iconType: '',
         iconTheme: '',
         submenu: [],
