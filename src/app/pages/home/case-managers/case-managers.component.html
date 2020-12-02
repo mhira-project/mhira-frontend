@@ -5,18 +5,73 @@
       [showPagination]="false"
       [showCustomActions]="true"
       [showSearch]="false"
+      [showFilterButton]="true"
       [listOfCustomActions]="actions"
       [listOfData]="caseManagersTable.rows"
       [listOfColumn]="caseManagersTable.columns"
       [showButton]="true"
-      [buttonText]="'Add Case Manager'"
+      [buttonText]="'Add Manager'"
       [hasNextPage]="pageInfo?.hasNextPage"
       [hasPreviousPage]="pageInfo?.hasPreviousPage"
       (onNext)="navigatePages('next')"
       (onPrevious)="navigatePages('previous')"
       (onAction)="handleActionClick($event)"
-      (onButton)="toggleCreatePanel()"
+      (onButton)="toggleAssignModal()"
+      (onFilterButton)="toggleFilterDrawer()"
     >
     </app-custom-table>
   </div>
 </div>
+
+<nz-drawer
+  [nzMask]="false"
+  [nzClosable]="true"
+  [nzVisible]="showFilter"
+  nzPlacement="right"
+  nzTitle="Filter Case Managers"
+  (nzOnClose)="toggleFilterDrawer()"
+>
+  <app-custom-filter
+    [processFilter]="false"
+    [form]="caseManagersFilterForm"
+    (searchOptions)="handleSearchOptions($event)"
+    (submitForm)="filterCaseManagers($event)"
+  >
+  </app-custom-filter>
+</nz-drawer>
+
+<nz-modal
+  [nzWidth]="600"
+  [(nzVisible)]="showAssignModal"
+  nzTitle="Assign manager to {{ patient?.firstName }} {{ patient?.lastName }}"
+  (nzOnCancel)="toggleAssignModal()"
+  (nzOnOk)="toggleAssignModal()"
+  [nzOkLoading]="isLoading"
+>
+  <nz-input-group class="rounded-input" [nzSuffix]="suffixTemplate">
+    <input type="text" (keyup)="searchKeyword.next($event)" nz-input placeholder="search manager name" />
+  </nz-input-group>
+  <ng-template #suffixTemplate>
+    <i nz-icon nzType="search" nzTheme="outline"></i>
+  </ng-template>
+  <ul nz-list [nzBordered]="false" [nzDataSource]="users" nzBordered nzSize="large">
+    <li nz-list-item *ngFor="let manager of users" nzNoFlex>
+      <div nz-row>
+        <div nz-col nzSpan="8">{{ manager?.firstName }} {{ manager?.lastName }}</div>
+        <div nz-col nzSpan="12">{{ manager?.email }}</div>
+        <div nz-col nzSpan="4">
+          <button
+            class="assign-button"
+            nz-button
+            nzType="primary"
+            (click)="assignManager(manager)"
+            nzSize="small"
+            nzShape="round"
+          >
+            Assign
+          </button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</nz-modal>

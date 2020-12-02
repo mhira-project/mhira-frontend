@@ -18,4 +18,12 @@ export class CaseManagersService {
       fetchPolicy: 'no-cache',
     });
   }
+
+  getPatientInformants(filter?: CaseManagerFilter): Observable<FetchResult<any>> {
+    return this.apollo.query({
+      query: CaseManagersQueries.getPatientInformants,
+      variables: filter,
+      fetchPolicy: 'no-cache',
+    });
+  }
 }

@@ -9,6 +9,8 @@ import { of, Subject, Subscription } from 'rxjs';
 import { debounceTime, delay, distinctUntilChanged, flatMap, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { CaseManagersService } from '@app/pages/home/@services/case-managers.service';
+import { CaseManagerModel } from '@app/pages/home/@models/case-manager.model';
 
 const CryptoJS = require('crypto-js');
 
@@ -37,6 +39,7 @@ export class ManagersComponent implements OnInit, OnDestroy {
 
   constructor(
     private patientsService: PatientsService,
+    private caseManagersService: CaseManagersService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private modalService: NzModalService,
@@ -55,16 +58,7 @@ export class ManagersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getPatient();
-    switch (this.managerType.toLowerCase()) {
-      case 'informant':
-        this.getManagers('getPatientInformants');
-        break;
-      case 'clinician':
-        this.getManagers('getPatientCaseManagers');
-        break;
-      default:
-        this.getManagers('getPatientInformants');
-    }
+    this.getManagers();
   }
 
   ngOnDestroy() {
@@ -80,34 +74,39 @@ export class ManagersComponent implements OnInit, OnDestroy {
     });
   }
 
-  getManagers(query: string) {
+  getManagers() {
     this.isLoading = true;
     this.managers = [];
-    const _managers: any[] = [];
-    this.patientsService.getPatientManagers(query, { patientId: this.patient?.id }).subscribe(
-      async ({ data }) => {
-        const managersData = data[query];
-        managersData.edges.map((manager: any) => {
-          const row = Object.assign({}, manager.node);
-
-          const color = row.active
-            ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
-            : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-          const active = row.active ? 'active' : 'inactive';
-          row.updatedAt = row.updatedAt ? moment(row.updatedAt).format('DD-MM-YYYY HH:mm') : '';
-          row.birthDate = row.birthDate ? moment(row.birthDate).format('DD-MM-YYYY HH:mm') : '';
-          row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
-          _managers.push(row);
-          this.managers.push(manager.node);
-        });
-
-        this.managersTable.rows = _managers;
-        this.isLoading = false;
-      },
-      (error) => {
-        this.isLoading = false;
-      }
-    );
+    switch (this.managerType.toLowerCase()) {
+      case 'informant':
+        this.caseManagersService.getPatientInformants({ patientId: this.patient?.id }).subscribe(
+          async ({ data }) => {
+            data.getPatientInformants.edges.map((caseManager: any) => {
+              this.managers.push(CaseManagerModel.fromJson(caseManager.node));
+            });
+            this.managersTable.rows = this.managers;
+            this.isLoading = false;
+          },
+          (error) => {
+            this.isLoading = false;
+          }
+        );
+        break;
+      case 'clinician':
+        this.caseManagersService.getPatientCaseManagers({ patientId: this.patient?.id }).subscribe(
+          async ({ data }) => {
+            data.getPatientCaseManagers.edges.map((caseManager: any) => {
+              this.managers.push(CaseManagerModel.fromJson(caseManager.node));
+            });
+            this.managersTable.rows = this.managers;
+            this.isLoading = false;
+          },
+          (error) => {
+            this.isLoading = false;
+          }
+        );
+        break;
+    }
   }
 
   searchUsers() {

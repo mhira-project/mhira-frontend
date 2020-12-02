@@ -14,10 +14,10 @@ import { Paging } from '@shared/@types/paging';
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class UsersService {
   constructor(private apollo: Apollo) {}
 
-  getUsers(filter: any, paging: Paging): Observable<FetchResult<any>> {
+  getUsers(filter?: any, paging?: Paging): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: UsersQueries.getUsers,
       variables: { filter, paging },
@@ -40,6 +40,7 @@ export class UserService {
       fetchPolicy: 'no-cache',
     });
   }
+
   changeUserPassword(inputs: UserChangePasswordInput): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: UsersMutations.changeUserPassword,
@@ -47,6 +48,7 @@ export class UserService {
       fetchPolicy: 'no-cache',
     });
   }
+
   updateUserPassword(inputs: UserUpdatePasswordInput): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: UsersMutations.updateUserPassword,
@@ -54,6 +56,7 @@ export class UserService {
       fetchPolicy: 'no-cache',
     });
   }
+
   deleteUser(user: User): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: UsersMutations.deleteUser,
@@ -61,6 +64,7 @@ export class UserService {
       fetchPolicy: 'no-cache',
     });
   }
+
   softDeleteUser(user: User): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: UsersMutations.softDeleteUser,

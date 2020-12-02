@@ -28,44 +28,23 @@ export class PatientsService {
     });
   }
 
-  getPatientManagers(
-    query: string,
-    filter?: {
-      first?: number;
-      after?: string;
-      last?: number;
-      before?: string;
-      searchKeyword?: string;
-      patientId?: number;
-      caseManagerId?: number;
-    }
-  ): Observable<FetchResult<any>> {
-    let result: Observable<FetchResult<any>>;
-    switch (query) {
-      case 'getPatientCaseManagers':
-        result = this.apollo.query({
-          query: PatientsQueries.getPatientCaseManagers,
-          variables: filter,
-          fetchPolicy: 'no-cache',
+  /*searchPatients(keyword: string) {
+    const options: { label: string; value: number }[] = [];
+    this.patientService.getPatients({filter: {firstName: {iLike: keyword}}}).subscribe(
+      async ({data}) => {
+        data.patients.edges.map((patient: any) => {
+          const option = {value: patient.node.id, label: `${patient.node.firstName} ${patient.node.lastName}`};
+          if (options.indexOf(option) === -1) {
+            options.push(option);
+          }
         });
-        break;
-      case 'getPatientInformants':
-        result = this.apollo.query({
-          query: PatientsQueries.getPatientInformants,
-          variables: filter,
-          fetchPolicy: 'no-cache',
-        });
-        break;
-      default:
-        result = this.apollo.query({
-          query: PatientsQueries.getPatientInformants,
-          variables: filter,
-          fetchPolicy: 'no-cache',
-        });
-        break;
-    }
-    return result;
-  }
+        this.caseManagersFilterForm.groups[0].fields[1].options = options;
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
+  }*/
 
   searchUser(searchKeyword: string): Observable<FetchResult<any>> {
     return this.apollo.query({

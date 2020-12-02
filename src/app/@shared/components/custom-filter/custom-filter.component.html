@@ -1,6 +1,7 @@
 <app-field-generator
   (submitForm)="submitFormEvent($event)"
   (inputChange)="inputChangeEvent($event)"
+  (searchOptions)="search($event)"
   [isLoading]="isLoading"
   [form]="form"
   [loadingMessage]="loadingMessage"

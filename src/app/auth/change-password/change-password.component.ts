@@ -6,7 +6,7 @@ import {
   UserChangePasswordInput,
   UserUpdatePasswordInput,
 } from '@app/pages/administration/user-management/user-form/user-update-password.type';
-import { UserService } from '@app/pages/administration/@services/user.service';
+import { UsersService } from '@app/pages/administration/@services/users.service';
 import { User } from '@app/pages/administration/@types/user';
 
 @Component({
@@ -24,7 +24,7 @@ export class ChangePasswordComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private usersService: UserService
+    private usersService: UsersService
   ) {}
 
   ngOnInit(): void {
