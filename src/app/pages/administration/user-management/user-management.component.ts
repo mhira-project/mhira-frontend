@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { userForms } from '@app/pages/administration/user-management/@forms/form';
+import { userForms } from '@app/pages/administration/@forms/user.form';
 import { Router } from '@angular/router';
 import { ModalType } from '@app/pages/administration/user-management/modal.type';
 import { Form } from '@shared/components/field-generator/form';
-import { User } from '@app/pages/administration/administration.interfaces';
-import { userTable } from '@app/pages/administration/user-management/users.table';
+import { User } from '@app/pages/administration/@types/user';
+import { userTable } from '@app/pages/administration/@tables/users.table';
 import { UserService } from '@app/pages/administration/@services/user.service';
 import { environment } from '@env/environment';
 import { UserUpdatePasswordInput } from '@app/pages/administration/user-management/user-form/user-update-password.type';

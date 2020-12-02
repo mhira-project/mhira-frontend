@@ -1,13 +1,4 @@
-const actions: any[] = [
-  {
-    type: 'Edit Permission',
-    name: 'Edit Permission',
-  },
-  {
-    type: 'Delete Permission',
-    name: 'Delete Permission',
-  },
-];
+const actions: any[] = [];
 
 const columns: any[] = [
   {

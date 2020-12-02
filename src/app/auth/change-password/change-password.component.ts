@@ -7,7 +7,7 @@ import {
   UserUpdatePasswordInput,
 } from '@app/pages/administration/user-management/user-form/user-update-password.type';
 import { UserService } from '@app/pages/administration/@services/user.service';
-import { User } from '@app/pages/administration/administration.interfaces';
+import { User } from '@app/pages/administration/@types/user';
 
 @Component({
   selector: 'app-change-password',

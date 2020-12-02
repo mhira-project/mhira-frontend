@@ -1,4 +1,4 @@
-import { Form } from '../../../../@shared/components/field-generator/form';
+import { Form } from '../../../@shared/components/field-generator/form';
 
 const changeUserPassword: Form = {
   submitButtonText: 'Change password',

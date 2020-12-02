@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Patient } from '../../home.interfaces';
+import { Patient } from '../../@types/patient';
 import { environment } from '../../../../../environments/environment';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { table } from './managers.table';

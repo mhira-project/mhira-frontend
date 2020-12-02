@@ -1,1 +1,22 @@
-<p>case-managers works!</p>
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <app-custom-table
+      [loading]="isLoading"
+      [showPagination]="false"
+      [showCustomActions]="true"
+      [showSearch]="false"
+      [listOfCustomActions]="actions"
+      [listOfData]="caseManagersTable.rows"
+      [listOfColumn]="caseManagersTable.columns"
+      [showButton]="true"
+      [buttonText]="'Add Case Manager'"
+      [hasNextPage]="pageInfo?.hasNextPage"
+      [hasPreviousPage]="pageInfo?.hasPreviousPage"
+      (onNext)="navigatePages('next')"
+      (onPrevious)="navigatePages('previous')"
+      (onAction)="handleActionClick($event)"
+      (onButton)="toggleCreatePanel()"
+    >
+    </app-custom-table>
+  </div>
+</div>

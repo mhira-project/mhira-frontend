@@ -10,7 +10,6 @@ export class UpdateService {
 
   checkForUpdates() {
     if (!this.swUpdate.isEnabled) {
-      console.log('Nope 🙁');
       // this.swUpdate.activateUpdate().then(() => {
       //   this.swUpdate.available.subscribe((evt) => {
       //     this.notification.create(
@@ -21,7 +20,6 @@ export class UpdateService {
       //   });
       // });
     } else {
-      console.log('Yeeey');
       // this.swUpdate.available.subscribe(
       //   (evt) => {
       //     console.log('here', evt);

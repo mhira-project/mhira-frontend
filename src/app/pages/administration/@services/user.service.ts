@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { FetchResult } from 'apollo-link';
 import { UsersMutations } from '../../../@graphql/mutations/users';
 import { UsersQueries } from '../../../@graphql/queries/users';
-import { User } from '../administration.interfaces';
+import { User } from '../@types/user';
 import {
   UserChangePasswordInput,
   UserUpdatePasswordInput,

@@ -22,13 +22,13 @@ import {
   NzTabsModule,
   NzTagModule,
 } from 'ng-zorro-antd';
-import { HomeService } from './home.service';
 import { PatientsService } from './@services/patients.service';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { CreatePatientComponent } from './patient-profile/create-patient/create-patient.component';
 import { InformantsComponent } from './patient-profile/informants/informants.component';
 import { ManagersComponent } from './patient-profile/managers/managers.component';
 import { CliniciansComponent } from './patient-profile/clinicians/clinicians.component';
+import { CaseManagersService } from './@services/case-managers.service';
 
 const antModules = [
   NzGridModule,
@@ -42,10 +42,11 @@ const antModules = [
   NzListModule,
   NzInputModule,
   NzIconModule,
+  NzDrawerModule,
 ];
 
 @NgModule({
-  imports: [...antModules, CommonModule, TranslateModule, SharedModule, HomeRoutingModule, NzDrawerModule],
+  imports: [...antModules, CommonModule, TranslateModule, SharedModule, HomeRoutingModule],
   declarations: [
     HomeComponent,
     PatientsComponent,
@@ -56,6 +57,6 @@ const antModules = [
     ManagersComponent,
     CliniciansComponent,
   ],
-  providers: [PatientsService, HomeService],
+  providers: [PatientsService, CaseManagersService],
 })
 export class HomeModule {}

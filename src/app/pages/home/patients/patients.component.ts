@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { Patient } from '../home.interfaces';
-import { table } from '../patients/patients.table';
+import { Patient } from '../@types/patient';
+import { table } from '../@tables/patients.table';
 import { PatientsService } from '@app/pages/home/@services/patients.service';
 import { patientForms } from '@app/pages/home/@forms/patient-forms';
 import { Router } from '@angular/router';

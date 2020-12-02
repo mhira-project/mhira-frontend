@@ -24,6 +24,7 @@ export const MENU: SideNavInterface[] = [
         permissions: ['view patients', 'manage patients'],
         iconType: '',
         iconTheme: '',
+        permissions: ['view patients'],
         submenu: [],
       },
     ],

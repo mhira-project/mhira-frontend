@@ -1,6 +1,6 @@
-import { Role } from '@app/pages/administration/@types/role';
-import { Permission } from '@app/pages/administration/@types/permission';
-import { Department } from '@app/pages/administration/@types/department';
+import { Role } from './role';
+import { Permission } from './permission';
+import { Department } from './department';
 
 export interface User {
   id?: number;
