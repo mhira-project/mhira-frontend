@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { FetchResult } from 'apollo-link';
 import { PatientsMutations } from '../../../@graphql/mutations/patients';
 import { PatientsQueries } from '../../../@graphql/queries/patients';
-import { Patient } from '../home.interfaces';
+import { Patient } from '../@types/patient';
 import { UsersQueries } from '@app/@graphql/queries/users';
 import { Paging } from '@shared/@types/paging';
 import { Filter } from '@shared/@types/filter';

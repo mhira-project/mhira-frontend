@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { PatientsService } from '../../@services/patients.service';
-import { Patient } from '../../home.interfaces';
+import { Patient } from '../../@types/patient';
 import * as moment from 'moment';
 import { patientForms } from '../../@forms/patient-forms';
 import { environment } from '@env/environment';

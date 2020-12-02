@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { userForms } from '@app/pages/administration/user-management/@forms/form';
+import { userForms } from '@app/pages/administration/@forms/user.form';
 import { Form } from '@shared/components/field-generator/form';
 import { TopTabsDataService } from '@shared/services/tabs-data.service';
 import * as moment from 'moment';
-import { User } from '@app/pages/administration/administration.interfaces';
+import { User } from '@app/pages/administration/@types/user';
 import { UserService } from '@app/pages/administration/@services/user.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { environment } from '@env/environment';

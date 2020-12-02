@@ -23,6 +23,7 @@ export const MENU: SideNavInterface[] = [
         title: extract('Case Managers'),
         iconType: '',
         iconTheme: '',
+        permissions: ['view patients'],
         submenu: [],
       },
     ],

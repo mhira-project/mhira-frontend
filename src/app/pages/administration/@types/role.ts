@@ -1,5 +1,5 @@
 import { Permission } from './permission';
-import { User } from '../administration.interfaces';
+import { User } from './user';
 
 export interface Role {
   id: number;

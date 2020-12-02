@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { Department, UpdateOneDepartmentInput } from '../@types/department';
-import { Paging } from '../../../@shared/@types/paging';
-import { Filter } from '../../../@shared/@types/filter';
-import { Sorting } from '../../../@shared/@types/sorting';
+import { Paging } from '@shared/@types/paging';
+import { Filter } from '@shared/@types/filter';
+import { Sorting } from '@shared/@types/sorting';
 import { FetchResult } from 'apollo-link';
-import { DepartmentsQueries } from '../../../@graphql/queries/departments';
-import { DepartmentsMutations } from '../../../@graphql/mutations/departments';
+import { DepartmentsQueries } from '@app/@graphql/queries/departments';
+import { DepartmentsMutations } from '@app/@graphql/mutations/departments';
 
 @Injectable({
   providedIn: 'root',

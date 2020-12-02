@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
-import { User } from '@app/pages/administration/administration.interfaces';
+import { User } from '@app/pages/administration/@types/user';
 
 const CryptoJS = require('crypto-js');
 
