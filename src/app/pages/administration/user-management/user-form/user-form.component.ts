@@ -32,7 +32,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   loadingMessage = '';
   profileFields: Form = userForms.userProfileEdit;
   userRolesPermissionsFields: Form = userForms.userRolesPermissions;
-  changeUserPasswordFields: Form = userForms.changeUserPassword;
+  updateUserPasswordFields: Form = userForms.updateUserPassword;
   tabSub: any;
   routeSub: any;
   tabIndexSub: any;

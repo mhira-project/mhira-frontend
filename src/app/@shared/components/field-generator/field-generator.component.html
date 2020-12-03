@@ -132,6 +132,7 @@
   <nz-button-group *ngIf="form.submitButtonText && inputMode" [ngClass]="form.submitButtonClass">
     <button nz-button *ngIf="showCancelButton" [nzShape]="'round'" (click)="toggleEdit()">Cancel</button>
     <button
+      *ngIf="showSubmitButton"
       nz-button
       [disabled]="formGroup.invalid"
       [nzShape]="'round'"

@@ -79,6 +79,21 @@
               </div>
             </li>
             <li nz-menu-item>
+              <a (click)="showChangePasswordModal()" class="p-v-5">
+                <div nz-row>
+                  <div nz-col>
+                    <i class="opacity-04 font-size-16" nz-icon nzType="key" theme="outline"></i>
+                  </div>
+                  <div nz-col nzFlex="auto">
+                    <span class="m-l-10">Change password</span>
+                  </div>
+                  <div nz-col>
+                    <i class="font-size-10" nz-icon nzType="right" theme="outline"></i>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li nz-menu-item>
               <a (click)="editUserProfile()" class="p-v-5">
                 <div nz-row>
                   <div nz-col>
@@ -108,3 +123,19 @@
     </ul>
   </div>
 </div>
+
+<nz-modal
+  [(nzVisible)]="changePasswordModal"
+  nzTitle="Change your password"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="clickChangePassword()"
+>
+  <app-field-generator
+    [isLoading]="isLoading"
+    [showSubmitButton]="false"
+    [showCancelButton]="false"
+    [loadingMessage]="loadingMessage"
+    (submitForm)="changePassword($event)"
+    [form]="changePasswordForm"
+  ></app-field-generator>
+</nz-modal>
