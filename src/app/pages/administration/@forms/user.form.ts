@@ -1,10 +1,53 @@
 import { Form } from '../../../@shared/components/field-generator/form';
 
+const updateUserPassword: Form = {
+  submitButtonText: 'Change password',
+  groups: [
+    {
+      fields: [
+        {
+          title: 'Enter New Password',
+          name: 'newPassword',
+          label: 'New Password',
+          type: 'password',
+          isRequired: true,
+          description: 'Enter new password',
+          validationMessage: '',
+          span: 24,
+          value: '',
+        },
+        {
+          title: 'Repeat Password',
+          name: 'newPasswordConfirmation',
+          label: 'Repeat Password',
+          type: 'password',
+          isRequired: true,
+          description: 'Repeat password',
+          validationMessage: '',
+          span: 24,
+          value: '',
+        },
+      ],
+    },
+  ],
+};
+
 const changeUserPassword: Form = {
   submitButtonText: 'Change password',
   groups: [
     {
       fields: [
+        {
+          title: 'Enter current Password',
+          name: 'currentPassword',
+          label: 'New Password',
+          type: 'password',
+          isRequired: true,
+          description: 'Enter current password',
+          validationMessage: '',
+          span: 24,
+          value: '',
+        },
         {
           title: 'Enter New Password',
           name: 'newPassword',
@@ -417,4 +460,5 @@ export const userForms = {
   userRolesPermissions,
   userProfileEdit,
   userFilter,
+  updateUserPassword,
 };

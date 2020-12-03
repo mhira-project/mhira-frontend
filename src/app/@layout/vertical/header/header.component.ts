@@ -3,6 +3,14 @@ import { AuthService } from '@app/auth/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { User } from '@app/pages/administration/@types/user';
+import { Form } from '@shared/components/field-generator/form';
+import { userForms } from '@app/pages/administration/@forms/user.form';
+import {
+  UserChangePasswordInput,
+  UserUpdatePasswordInput,
+} from '@app/pages/administration/user-management/user-form/user-update-password.type';
+import { UserService } from '@app/pages/administration/@services/user.service';
+import { NzMessageService } from 'ng-zorro-antd';
 
 const CryptoJS = require('crypto-js');
 
@@ -15,8 +23,17 @@ export class HeaderComponent implements OnInit {
   isOkLoading = false;
   user: User;
   notificationList: any = [];
+  changePasswordModal = false;
+  loadingMessage = '';
+  changePasswordForm: Form = userForms.changeUserPassword;
+  isLoading = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private usersService: UserService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.getUser();
@@ -37,6 +54,30 @@ export class HeaderComponent implements OnInit {
       },
     });
   }
+  changePassword(form: any) {
+    if (this.user.id) {
+      this.isLoading = true;
+      this.loadingMessage = `Updating user ${this.user.firstName} ${this.user.lastName}`;
+      const inputs: UserChangePasswordInput = {
+        currentPassword: form.newPassword,
+        newPassword: form.newPassword,
+        newPasswordConfirmation: form.newPasswordConfirmation,
+      };
+      this.usersService.changeUserPassword(inputs).subscribe(
+        async ({ data }) => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+          this.message.create('success', `Password has successfully been changed`);
+        },
+        (error) => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+          const graphError = error.graphQLErrors.map((x: any) => x.message);
+          this.onError(graphError);
+        }
+      );
+    }
+  }
 
   logout() {
     this.authService.logout().subscribe(
@@ -52,5 +93,22 @@ export class HeaderComponent implements OnInit {
         this.isOkLoading = false;
       }
     );
+  }
+
+  handleCancel() {
+    this.changePasswordModal = false;
+  }
+
+  showChangePasswordModal() {
+    this.changePasswordModal = true;
+  }
+  onError(errors: any) {
+    if (errors.length > 0) {
+      for (const error of errors) {
+        this.message.create('error', `${error}`);
+      }
+    } else {
+      this.message.create('error', `${errors.error.message}`);
+    }
   }
 }

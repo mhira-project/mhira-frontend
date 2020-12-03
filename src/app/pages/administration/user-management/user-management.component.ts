@@ -53,7 +53,7 @@ export class UserManagementComponent implements OnInit {
   actions = userTable.actions;
   selectedUserIndex = -1;
   errors: any[] = [];
-  changePasswordForm: Form = userForms.changeUserPassword;
+  updatePasswordForm: Form = userForms.updateUserPassword;
   filterForm: Form = userForms.userFilter;
   loadingMessage: any;
   showFilterPanel = false;

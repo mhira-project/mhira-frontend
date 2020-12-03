@@ -19,6 +19,7 @@ import {
   NzBadgeModule,
   NzGridModule,
   NzTabsModule,
+  NzModalModule,
 } from 'ng-zorro-antd';
 import { ThemeConstantService } from '@shared/services/theme-constant.service';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -26,6 +27,7 @@ import { HeaderComponent } from './vertical/header/header.component';
 import { TabsComponent } from './vertical/header/tabs/tabs.component';
 import { AuthModule } from '@app/auth/auth.module';
 import { UpdateService } from '@shared/services/update.service';
+import { ComponentsModule } from '@shared/components/components.module';
 
 const antdModule = [
   NzBreadCrumbModule,
@@ -50,6 +52,8 @@ const antdModule = [
     I18nModule,
     RouterModule,
     PerfectScrollbarModule,
+    NzModalModule,
+    ComponentsModule,
   ],
   declarations: [
     AuthLayoutComponent,
