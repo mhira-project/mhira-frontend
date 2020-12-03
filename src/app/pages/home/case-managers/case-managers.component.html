@@ -6,11 +6,12 @@
       [showCustomActions]="true"
       [showSearch]="false"
       [showFilterButton]="true"
+      [showCheckBoxColumn]="false"
       [listOfCustomActions]="actions"
       [listOfData]="caseManagersTable.rows"
       [listOfColumn]="caseManagersTable.columns"
-      [showButton]="true"
-      [buttonText]="'Add Manager'"
+      [showButton]="showAssignButton"
+      [buttonText]="'Add ' + caseManagerNiceName"
       [hasNextPage]="pageInfo?.hasNextPage"
       [hasPreviousPage]="pageInfo?.hasPreviousPage"
       (onNext)="navigatePages('next')"
@@ -28,7 +29,7 @@
   [nzClosable]="true"
   [nzVisible]="showFilter"
   nzPlacement="right"
-  nzTitle="Filter Case Managers"
+  [nzTitle]="drawerTitle"
   (nzOnClose)="toggleFilterDrawer()"
 >
   <app-custom-filter
@@ -43,13 +44,18 @@
 <nz-modal
   [nzWidth]="600"
   [(nzVisible)]="showAssignModal"
-  nzTitle="Assign manager to {{ patient?.firstName }} {{ patient?.lastName }}"
+  nzTitle="Assign {{ caseManagerNiceName }} to {{ patient?.firstName }} {{ patient?.lastName }}"
   (nzOnCancel)="toggleAssignModal()"
   (nzOnOk)="toggleAssignModal()"
   [nzOkLoading]="isLoading"
 >
   <nz-input-group class="rounded-input" [nzSuffix]="suffixTemplate">
-    <input type="text" (keyup)="searchKeyword.next($event)" nz-input placeholder="search manager name" />
+    <input
+      type="text"
+      (keyup)="searchKeyword.next($event)"
+      nz-input
+      placeholder="search {{ caseManagerNiceName }} name"
+    />
   </nz-input-group>
   <ng-template #suffixTemplate>
     <i nz-icon nzType="search" nzTheme="outline"></i>
@@ -64,7 +70,7 @@
             class="assign-button"
             nz-button
             nzType="primary"
-            (click)="assignManager(manager)"
+            (click)="assignCaseManager(manager)"
             nzSize="small"
             nzShape="round"
           >

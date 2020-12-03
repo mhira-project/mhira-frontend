@@ -11,6 +11,7 @@ import { UsersService } from '@app/pages/administration/@services/users.service'
 import { Patient } from '@app/pages/home/@types/patient';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-case-managers',
@@ -18,9 +19,10 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./case-managers.component.scss'],
 })
 export class CaseManagersComponent implements OnInit {
-  @Input() query = 'getPatientCaseManagers';
+  @Input() managerType = 'caseManager';
   @Input() filter: CaseManagerFilter;
   @Input() patient: Patient;
+  @Input() showAssignButton = false;
   paging: Paging = {
     first: 10,
   };
@@ -37,6 +39,8 @@ export class CaseManagersComponent implements OnInit {
   isLoading = false;
   showFilter = false;
   showAssignModal = false;
+  drawerTitle = '';
+  caseManagerNiceName = '';
 
   public searchKeyword = new Subject<string>();
   private searchKeywordSearchSubscription: Subscription;
@@ -44,6 +48,8 @@ export class CaseManagersComponent implements OnInit {
   constructor(
     private caseManagersService: CaseManagersService,
     private patientService: PatientsService,
+    private message: NzMessageService,
+    private modalService: NzModalService,
     private usersService: UsersService
   ) {
     this.searchKeywordSearchSubscription = this.searchKeyword
@@ -57,6 +63,37 @@ export class CaseManagersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCaseManagers();
+    this.drawerTitle = this.managerType === 'caseManager' ? 'Filter Case Managers' : 'Filter Informants';
+    this.caseManagerNiceName = this.managerType === 'caseManager' ? 'Case Manager' : 'Informant';
+  }
+
+  setCaseManagerServicePropertyNama(action: string): string {
+    let property =
+      action === 'get'
+        ? 'getPatientCaseManagers'
+        : action === 'assign'
+        ? 'assignPatientCaseManager'
+        : 'unassignPatientCaseManager';
+
+    switch (this.managerType) {
+      case 'caseManager':
+        property =
+          action === 'get'
+            ? 'getPatientCaseManagers'
+            : action === 'assign'
+            ? 'assignPatientCaseManager'
+            : 'unassignPatientCaseManager';
+        break;
+      case 'informant':
+        property =
+          action === 'get'
+            ? 'getPatientInformants'
+            : action === 'assign'
+            ? 'assignPatientInformant'
+            : 'unassignPatientInformant';
+        break;
+    }
+    return property;
   }
 
   getCaseManagerServiceProperty(property: any, params?: any) {
@@ -67,19 +104,71 @@ export class CaseManagersComponent implements OnInit {
     this.isLoading = true;
     this.caseManagers = [];
     this.caseManagersTable.rows = [];
-    this.getCaseManagerServiceProperty(this.query, this.filter).subscribe(
+    const query = this.setCaseManagerServicePropertyNama('get');
+    this.getCaseManagerServiceProperty(query, this.filter).subscribe(
       async ({ data }: any) => {
-        data[this.query].edges.map((caseManager: any) => {
+        data[query].edges.map((caseManager: any) => {
           this.caseManagers.push(CaseManagerModel.fromJson(caseManager.node));
         });
         this.caseManagersTable.rows = this.caseManagers;
-        this.paging.after = data[this.query].pageInfo.endCursor;
-        this.paging.before = data[this.query].pageInfo.startCursor;
-        this.pageInfo = data[this.query].pageInfo;
+        this.paging.after = data[query].pageInfo.endCursor;
+        this.paging.before = data[query].pageInfo.startCursor;
+        this.pageInfo = data[query].pageInfo;
         this.isLoading = false;
       },
       (error: any) => {
         this.isLoading = false;
+      }
+    );
+  }
+
+  assignCaseManager(manager: CaseManager) {
+    this.isLoading = true;
+    const query = this.setCaseManagerServicePropertyNama('assign');
+    this.getCaseManagerServiceProperty(query, { userId: manager.id, patientId: this.patient.id }).subscribe(
+      async ({ data }: any) => {
+        this.isLoading = false;
+        this.showAssignModal = false;
+        if (data) {
+          this.caseManagersTable.rows = [];
+          this.caseManagers.unshift(CaseManagerModel.fromJson(manager));
+          this.caseManagersTable.rows = this.caseManagers;
+          this.message.create(
+            'success',
+            `${manager.firstName} has been successfully assigned to ${this.patient.firstName}`
+          );
+        } else {
+          this.message.create('error', `${manager.firstName} could not be assigned to ${this.patient.firstName}`);
+        }
+      },
+      (error: any) => {
+        this.isLoading = false;
+        this.message.create('error', `${manager.firstName} could not be assigned to ${this.patient.firstName}`);
+      }
+    );
+  }
+
+  unAssignCaseManager(manager: CaseManager) {
+    this.isLoading = true;
+    const query = this.setCaseManagerServicePropertyNama('remove');
+    this.getCaseManagerServiceProperty(query, { userId: manager.id, patientId: this.patient.id }).subscribe(
+      async ({ data }: any) => {
+        this.isLoading = false;
+        if (data) {
+          const deletedIndex = this.caseManagers.findIndex((_manager) => _manager.id === manager.id);
+          this.caseManagers.splice(deletedIndex, 1);
+          this.caseManagersTable.rows = this.caseManagers;
+          this.message.create(
+            'success',
+            `${manager.firstName} has been successfully removed from patient ${this.patient.firstName}`
+          );
+        } else {
+          this.message.create('error', `${manager.firstName} could not be removed from ${this.patient.firstName}`);
+        }
+      },
+      (error: any) => {
+        this.isLoading = false;
+        this.message.create('error', `${this.managerType} could not be assigned to ${this.patient.firstName}`);
       }
     );
   }
@@ -124,8 +213,6 @@ export class CaseManagersComponent implements OnInit {
     );
   }
 
-  assignManager(manager: CaseManager) {}
-
   navigatePages(direction: string, pageSize: number = 10) {
     switch (direction) {
       case 'next':
@@ -164,7 +251,18 @@ export class CaseManagersComponent implements OnInit {
   handleActionClick(event: any): void {
     this.selectedIndex = event.index;
     switch (event.action.name) {
-      case 'Delete':
+      case 'Remove':
+        this.modalService.confirm({
+          nzTitle: 'Confirm',
+          nzContent: `Are you sure you want to remove ${this.caseManagers[this.selectedIndex].firstName} ${
+            this.caseManagers[this.selectedIndex].lastName
+          }`,
+          nzOkText: 'Remove',
+          nzOnOk: () => this.unAssignCaseManager(this.caseManagers[this.selectedIndex]),
+          // nzVisible: this.isOkLoading,
+          nzOkDisabled: this.isLoading,
+          nzCancelText: 'Cancel',
+        });
         break;
     }
   }

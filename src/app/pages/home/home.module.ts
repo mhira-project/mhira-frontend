@@ -25,9 +25,6 @@ import {
 import { PatientsService } from './@services/patients.service';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { CreatePatientComponent } from './patient-profile/create-patient/create-patient.component';
-import { InformantsComponent } from './patient-profile/informants/informants.component';
-import { ManagersComponent } from './patient-profile/managers/managers.component';
-import { CliniciansComponent } from './patient-profile/clinicians/clinicians.component';
 import { CaseManagersService } from './@services/case-managers.service';
 
 const antModules = [
@@ -53,9 +50,6 @@ const antModules = [
     CaseManagersComponent,
     PatientProfileComponent,
     CreatePatientComponent,
-    InformantsComponent,
-    ManagersComponent,
-    CliniciansComponent,
   ],
   providers: [PatientsService, CaseManagersService],
 })
