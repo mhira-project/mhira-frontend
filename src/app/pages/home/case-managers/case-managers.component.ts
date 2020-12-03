@@ -67,7 +67,7 @@ export class CaseManagersComponent implements OnInit {
     this.caseManagerNiceName = this.managerType === 'caseManager' ? 'Case Manager' : 'Informant';
   }
 
-  setCaseManagerServicePropertyNama(action: string): string {
+  setCaseManagerServicePropertyName(action: string): string {
     let property =
       action === 'get'
         ? 'getPatientCaseManagers'
@@ -104,7 +104,7 @@ export class CaseManagersComponent implements OnInit {
     this.isLoading = true;
     this.caseManagers = [];
     this.caseManagersTable.rows = [];
-    const query = this.setCaseManagerServicePropertyNama('get');
+    const query = this.setCaseManagerServicePropertyName('get');
     this.getCaseManagerServiceProperty(query, this.filter).subscribe(
       async ({ data }: any) => {
         data[query].edges.map((caseManager: any) => {
@@ -124,7 +124,7 @@ export class CaseManagersComponent implements OnInit {
 
   assignCaseManager(manager: CaseManager) {
     this.isLoading = true;
-    const query = this.setCaseManagerServicePropertyNama('assign');
+    const query = this.setCaseManagerServicePropertyName('assign');
     this.getCaseManagerServiceProperty(query, { userId: manager.id, patientId: this.patient.id }).subscribe(
       async ({ data }: any) => {
         this.isLoading = false;
@@ -150,7 +150,7 @@ export class CaseManagersComponent implements OnInit {
 
   unAssignCaseManager(manager: CaseManager) {
     this.isLoading = true;
-    const query = this.setCaseManagerServicePropertyNama('remove');
+    const query = this.setCaseManagerServicePropertyName('remove');
     this.getCaseManagerServiceProperty(query, { userId: manager.id, patientId: this.patient.id }).subscribe(
       async ({ data }: any) => {
         this.isLoading = false;
