@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { User } from '@app/pages/administration/@types/user';
 import { Form } from '@shared/components/field-generator/form';
 import { userForms } from '@app/pages/administration/@forms/user.form';
-import {
-  UserChangePasswordInput,
-  UserUpdatePasswordInput,
-} from '@app/pages/administration/user-management/user-form/user-update-password.type';
-import { UserService } from '@app/pages/administration/@services/user.service';
+import { UserChangePasswordInput } from '@app/pages/administration/user-management/user-form/user-update-password.type';
 import { NzMessageService } from 'ng-zorro-antd';
+import { UsersService } from '@app/pages/administration/@services/users.service';
+import { FieldGeneratorComponent } from '@shared/components/field-generator/field-generator.component';
 
 const CryptoJS = require('crypto-js');
 
@@ -20,6 +18,7 @@ const CryptoJS = require('crypto-js');
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @ViewChild(FieldGeneratorComponent) child: FieldGeneratorComponent;
   isOkLoading = false;
   user: User;
   notificationList: any = [];
@@ -31,7 +30,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private usersService: UserService,
+    private usersService: UsersService,
     private message: NzMessageService
   ) {}
 
@@ -41,6 +40,10 @@ export class HeaderComponent implements OnInit {
 
   getUser() {
     this.user = JSON.parse(localStorage.getItem('user'));
+  }
+
+  clickChangePassword() {
+    this.child.handleSubmitForm();
   }
 
   editUserProfile() {

@@ -128,10 +128,12 @@
   [(nzVisible)]="changePasswordModal"
   nzTitle="Change your password"
   (nzOnCancel)="handleCancel()"
-  (nzOnOk)="('')"
+  (nzOnOk)="clickChangePassword()"
 >
   <app-field-generator
     [isLoading]="isLoading"
+    [showSubmitButton]="false"
+    [showCancelButton]="false"
     [loadingMessage]="loadingMessage"
     (submitForm)="changePassword($event)"
     [form]="changePasswordForm"
