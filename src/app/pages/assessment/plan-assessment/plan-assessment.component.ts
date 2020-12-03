@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Assessment } from '@app/pages/assessment/@types/assessment';
 import { environment } from '@env/environment';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { CaseManagersService } from '@app/pages/home/@services/case-managers.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -37,6 +38,7 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy, AfterViewInit
   constructor(
     private assessmentService: AssessmentService,
     private patientService: PatientsService,
+    private caseManagersService: CaseManagersService,
     private message: NzMessageService,
     private modal: NzModalService,
     private router: Router,
@@ -51,6 +53,10 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngOnInit(): void {}
+
+  getCaseManagerServiceProperty(property: any, params?: any) {
+    return this.caseManagersService[property](params);
+  }
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -199,32 +205,30 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy, AfterViewInit
       });
       return;
     }
-    this.patientService
-      .getPatientManagers(query, {
-        patientId: this.selectedPatientId,
-        searchKeyword: keyword,
-      })
-      .subscribe(
-        async ({ data }) => {
-          data[query].edges.map((manager: any) => {
-            const option = { value: manager.node.id, label: `${manager.node.firstName} ${manager.node.lastName}` };
-            if (options.indexOf(option) === -1) {
-              options.push(option);
-            }
-          });
-          switch (managerType) {
-            case 'clinician':
-              this.planAssessmentForm.groups[0].fields[2].options = options;
-              break;
-            case 'informant':
-              this.planAssessmentForm.groups[0].fields[3].options = options;
-              break;
+    this.getCaseManagerServiceProperty(query, {
+      patientId: this.selectedPatientId,
+      searchKeyword: keyword,
+    }).subscribe(
+      async ({ data }: any) => {
+        data[query].edges.map((manager: any) => {
+          const option = { value: manager.node.id, label: `${manager.node.firstName} ${manager.node.lastName}` };
+          if (options.indexOf(option) === -1) {
+            options.push(option);
           }
-        },
-        (error) => {
-          this.isLoading = false;
+        });
+        switch (managerType) {
+          case 'clinician':
+            this.planAssessmentForm.groups[0].fields[2].options = options;
+            break;
+          case 'informant':
+            this.planAssessmentForm.groups[0].fields[3].options = options;
+            break;
         }
-      );
+      },
+      (error: any) => {
+        this.isLoading = false;
+      }
+    );
   }
 
   selectQuestionnaire(questionnaire: Questionnaire) {

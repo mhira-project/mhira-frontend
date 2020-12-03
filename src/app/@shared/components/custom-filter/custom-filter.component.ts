@@ -14,11 +14,14 @@ export class CustomFilterComponent implements OnInit {
 
   @Input() form: Form;
   @Input() isLoading = false;
+  @Input() processFilter = true;
   @Input() loadingMessage = '';
   @Input() primaryButtonTitle = 'Apply';
   @Input() secondaryButtonTitle = 'Clear';
   @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
   @Output() inputChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() searchOptions: EventEmitter<any> = new EventEmitter<any>();
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -27,11 +30,9 @@ export class CustomFilterComponent implements OnInit {
     const filter = {};
     if (Object.keys(data).length > 0) {
       Object.keys(data).forEach((key: string) => {
-        // work on progress
-        // get formItem in form using key
         let foundFields: FieldType[];
         foundFields = [];
-        if (data[key] !== null && data[key].length > 0) {
+        if (data[key]) {
           this.form.groups.forEach((group: FieldGroup) => {
             group.fields.find((field) => {
               if (field.name === key) return foundFields.push(field);
@@ -51,6 +52,9 @@ export class CustomFilterComponent implements OnInit {
               case 'select':
                 filter[key] = { iLike: `%${data[key]}%` };
                 break;
+              case 'search':
+                filter[key] = { iLike: `${data[key]}` };
+                break;
               case 'checkBox':
                 filter[key] = { is: `${data[key]}` };
                 break;
@@ -67,8 +71,11 @@ export class CustomFilterComponent implements OnInit {
         }
       });
     }
-
-    this.submitForm.emit(filter);
+    if (this.processFilter) {
+      this.submitForm.emit(filter);
+    } else {
+      this.submitForm.emit(data);
+    }
   }
 
   inputChangeEvent($event: any) {
@@ -77,6 +84,10 @@ export class CustomFilterComponent implements OnInit {
 
   primaryButtonAction() {
     this.child.handleSubmitForm();
+  }
+
+  search(value: string): void {
+    this.searchOptions.emit(value);
   }
 
   secondaryButtonAction() {

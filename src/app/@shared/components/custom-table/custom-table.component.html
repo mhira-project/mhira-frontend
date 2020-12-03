@@ -1,7 +1,7 @@
 <ng-template #indicatorTemplate><i nz-icon class="loadingSpinner" nzType="loading"></i></ng-template>
 <nz-spin [nzSpinning]="loading" [nzIndicator]="indicatorTemplate">
   <div
-    *ngIf="showSearch || setOfCheckedId.size > 0 || showImport || showExport || showButton"
+    *ngIf="showSearch || setOfCheckedId.size > 0 || showImport || showExport || showButton || showFilterButton"
     class="p-b-30 p-t-30"
     nz-row
   >

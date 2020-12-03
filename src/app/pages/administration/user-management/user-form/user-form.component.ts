@@ -5,7 +5,7 @@ import { Form } from '@shared/components/field-generator/form';
 import { TopTabsDataService } from '@shared/services/tabs-data.service';
 import * as moment from 'moment';
 import { User } from '@app/pages/administration/@types/user';
-import { UserService } from '@app/pages/administration/@services/user.service';
+import { UsersService } from '@app/pages/administration/@services/users.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { environment } from '@env/environment';
 import { UserUpdatePasswordInput } from './user-update-password.type';
@@ -49,7 +49,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     private router: Router,
     private cd: ChangeDetectorRef,
     private tabsDataService: TopTabsDataService,
-    private usersService: UserService,
+    private usersService: UsersService,
     private message: NzMessageService,
     private rolesService: RolesService,
     private departmentsService: DepartmentsService

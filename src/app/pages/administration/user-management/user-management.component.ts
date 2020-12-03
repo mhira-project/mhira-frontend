@@ -6,7 +6,7 @@ import { ModalType } from '@app/pages/administration/user-management/modal.type'
 import { Form } from '@shared/components/field-generator/form';
 import { User } from '@app/pages/administration/@types/user';
 import { userTable } from '@app/pages/administration/@tables/users.table';
-import { UserService } from '@app/pages/administration/@services/user.service';
+import { UsersService } from '@app/pages/administration/@services/users.service';
 import { environment } from '@env/environment';
 import { UserUpdatePasswordInput } from '@app/pages/administration/user-management/user-form/user-update-password.type';
 import { Paging } from '@shared/@types/paging';
@@ -63,7 +63,7 @@ export class UserManagementComponent implements OnInit {
     private message: NzMessageService,
     private dateService: DateService,
     private router: Router,
-    private usersService: UserService,
+    private usersService: UsersService,
     public perms: AppPermissionsService
   ) {}
 

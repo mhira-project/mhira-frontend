@@ -1,7 +1,7 @@
 const actions: any[] = [
   {
-    type: 'Delete',
-    name: 'Remove Case Manager',
+    type: 'Remove',
+    name: 'Remove',
   },
 ];
 
