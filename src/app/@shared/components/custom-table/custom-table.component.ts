@@ -159,6 +159,10 @@ export class CustomTableComponent implements OnInit, OnChanges {
     this.onSearch.emit((data.target as HTMLInputElement).value);
   }
 
+  handleEmptySearch() {
+    this.onSearch.emit('');
+  }
+
   onCustomActionEvent(event: any, data: any) {
     event.data = data;
     this.onCustomAction.emit(event);

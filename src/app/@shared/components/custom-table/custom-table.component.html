@@ -9,6 +9,7 @@
       <nz-input-group *ngIf="showSearch" [nzSuffix]="suffixIconSearch">
         <input
           (ngxInputSearch)="onSearchAction($event)"
+          (emptyInput)="handleEmptySearch()"
           [debounceTime]="300"
           nz-input
           placeholder="Search"
@@ -18,9 +19,6 @@
       <ng-template #suffixIconSearch>
         <i nz-icon nzType="search"></i>
       </ng-template>
-      <!--    <div *ngIf="setOfCheckedId.size>0">-->
-      <!--      Selected {{ setOfCheckedId.size }} items-->
-      <!--    </div>-->
     </div>
     <div nz-col nzFlex="auto">
       <div nz-row nzJustify="end">

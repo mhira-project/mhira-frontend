@@ -179,7 +179,7 @@ export class PlanAssessmentComponent implements OnInit, OnDestroy, AfterViewInit
 
   searchPatient(keyword: string) {
     const options: { label: string; value: number }[] = [];
-    this.patientService.getPatients({ filter: { firstName: { iLike: keyword } } }).subscribe(
+    this.patientService.patients({ filter: { firstName: { iLike: keyword } } }).subscribe(
       async ({ data }) => {
         data.patients.edges.map((patient: any) => {
           const option = { value: patient.node.id, label: `${patient.node.firstName} ${patient.node.lastName}` };

@@ -33,7 +33,7 @@
   (nzOnClose)="toggleFilterDrawer()"
 >
   <app-custom-filter
-    [processFilter]="false"
+    [processFilter]="true"
     [form]="caseManagersFilterForm"
     (searchOptions)="handleSearchOptions($event)"
     (submitForm)="filterCaseManagers($event)"

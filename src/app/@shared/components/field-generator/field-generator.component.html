@@ -83,6 +83,15 @@
                 >
                 </textarea>
               </div>
+              <div *ngSwitchCase="'dateRange'">
+                <nz-range-picker
+                  [attr.placeholder]="field.description"
+                  [formControlName]="field.name"
+                  [(ngModel)]="field.value"
+                  (ngModelChange)="handleInputChange(field, $event)"
+                >
+                </nz-range-picker>
+              </div>
               <div *ngSwitchDefault>
                 <nz-input-group
                   [nzSuffix]="suffix"

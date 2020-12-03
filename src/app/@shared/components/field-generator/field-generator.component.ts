@@ -101,6 +101,10 @@ export class FieldGeneratorComponent implements OnInit, OnDestroy {
         this.parseCheckBoxValues(event, field);
         return;
       }
+      if (field.type === 'dateRange') {
+        this.inputChange.emit({ name: field.name, value: field.value });
+        return;
+      }
 
       if (field.type === 'select' || field.type === 'search' || field.type === 'radio') {
         this.inputChange.emit({ name: field.name, value: event });

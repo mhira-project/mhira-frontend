@@ -32,17 +32,17 @@ const columns: any[] = [
   },
   {
     title: 'Date of Birth',
-    name: 'birthDate',
+    name: 'formattedBirthDate',
     isFilterable: false,
   },
   {
     title: 'Status',
-    name: 'active',
+    name: 'formattedActive',
     isFilterable: false,
   },
   {
-    title: 'Modified Date',
-    name: 'updatedAt',
+    title: 'Created Date',
+    name: 'formattedCreatedAt',
     isFilterable: false,
   },
 ];

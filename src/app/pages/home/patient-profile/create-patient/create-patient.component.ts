@@ -3,10 +3,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { PatientsService } from '../../@services/patients.service';
 import { Patient } from '../../@types/patient';
 import * as moment from 'moment';
-import { patientForms } from '../../@forms/patient-forms';
 import { environment } from '@env/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { PatientForm } from '@app/pages/home/@forms/patient-form';
 
 const CryptoJS = require('crypto-js');
 
@@ -18,7 +18,7 @@ const CryptoJS = require('crypto-js');
 export class CreatePatientComponent implements OnInit {
   isLoading = false;
   loadingMessage = '';
-  patientForms = patientForms;
+  patientForm = PatientForm;
   patient: Patient;
   hasErrors = false;
   errors: string[] = [];
@@ -39,7 +39,7 @@ export class CreatePatientComponent implements OnInit {
   }
 
   clearForms() {
-    this.patientForms.patient.groups.map((group) => {
+    this.patientForm.groups.map((group) => {
       group.fields.map((field) => {
         field.value = null;
       });
@@ -57,7 +57,7 @@ export class CreatePatientComponent implements OnInit {
         if (this.patient.birthDate) {
           this.patient.birthDate = decryptedData.birthDate.slice(0, 10);
         }
-        this.patientForms.patient.groups.map((group) => {
+        this.patientForm.groups.map((group) => {
           group.fields.map((field) => {
             field.value = decryptedData[field.name];
           });
@@ -65,7 +65,7 @@ export class CreatePatientComponent implements OnInit {
       } else {
         this.inputMode = true;
         this.showCancelButton = false;
-        this.patientForms.patient.groups.map((group) => {
+        this.patientForm.groups.map((group) => {
           group.fields.map((field) => {
             field.value = null;
           });
