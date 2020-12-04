@@ -6,7 +6,7 @@
       [showPagination]="false"
       [showFilterButton]="true"
       [showCustomActions]="true"
-      [showSearch]="false"
+      [showSearch]="true"
       [showCheckBoxColumn]="false"
       [listOfCustomActions]="actions"
       [listOfData]="patientsTable.rows"
@@ -21,19 +21,10 @@
       (onAction)="handleActionClick($event)"
       (onButton)="handleCreatePatient()"
       (rowClick)="handleRowClick($event)"
+      (onSearch)="searchPatients($event)"
     >
     </app-custom-table>
   </div>
-  <!--<div nz-col nzSpan="4">
-    <nz-card>
-      <app-field-generator
-        (inputChange)="handleInputChange($event)"
-        (submitFields)="submit($event)"
-        [form]="patientForms.searchForm"
-      >
-      </app-field-generator>
-    </nz-card>
-  </div>-->
 </div>
 <nz-modal
   [(nzVisible)]="isVisible"
@@ -56,5 +47,9 @@
   nzTitle="Filter Patients"
   (nzOnClose)="closeFilterPanel()"
 >
-  <app-custom-filter [form]="filterForm" (submitForm)="filterEvent($event)"></app-custom-filter>
+  <app-custom-filter
+    [form]="patientFilterForm"
+    [processFilter]="false"
+    (submitForm)="filterPatients($event)"
+  ></app-custom-filter>
 </nz-drawer>

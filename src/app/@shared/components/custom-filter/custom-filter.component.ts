@@ -26,7 +26,7 @@ export class CustomFilterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  submitFormEvent(data: any) {
+  submitFormData(data: any) {
     const filter = {};
     if (Object.keys(data).length > 0) {
       Object.keys(data).forEach((key: string) => {
@@ -50,7 +50,7 @@ export class CustomFilterComponent implements OnInit {
                 filter[key] = { iLike: `%${data[key]}%` };
                 break;
               case 'select':
-                filter[key] = { iLike: `%${data[key]}%` };
+                filter[key] = { iLike: data[key] };
                 break;
               case 'search':
                 filter[key] = { iLike: `${data[key]}` };
@@ -59,7 +59,7 @@ export class CustomFilterComponent implements OnInit {
                 filter[key] = { is: `${data[key]}` };
                 break;
               case 'radio':
-                filter[key] = { is: `${data[key]}` };
+                filter[key] = { is: data[key] };
                 break;
               case 'date':
                 filter[key] = { eq: `${data[key]}` };
@@ -92,6 +92,6 @@ export class CustomFilterComponent implements OnInit {
 
   secondaryButtonAction() {
     this.child.formGroup.reset();
-    this.submitForm.emit({});
+    this.child.handleSubmitForm();
   }
 }

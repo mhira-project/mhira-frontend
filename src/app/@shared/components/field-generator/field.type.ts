@@ -4,7 +4,7 @@ export interface FieldType {
   name?: string;
   description?: string;
   label?: string;
-  type: 'text' | 'number' | 'password' | 'search' | 'textArea' | 'checkBox' | 'radio' | 'select' | 'date';
+  type: 'text' | 'number' | 'password' | 'search' | 'textArea' | 'checkBox' | 'radio' | 'select' | 'date' | 'dateRange';
   iconName?: string;
   pattern?: string;
   minLength?: number;

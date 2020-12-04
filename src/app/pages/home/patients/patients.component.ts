@@ -2,13 +2,15 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { Patient } from '../@types/patient';
 import { table } from '../@tables/patients.table';
 import { PatientsService } from '@app/pages/home/@services/patients.service';
-import { patientForms } from '@app/pages/home/@forms/patient-forms';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
 import { Form } from '@shared/components/field-generator/form';
 import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { PatientModel } from '@app/pages/home/@models/patient.model';
+import { PatientFilterForm } from '@app/pages/home/@forms/patients-filter.form';
+import { PatientFilter } from '@app/pages/home/@types/patient-filter';
 
 const CryptoJS = require('crypto-js');
 
@@ -22,13 +24,13 @@ export class PatientsComponent implements OnInit, OnChanges {
   isVisible = false;
   isOkLoading = false;
   patients: any[] = [];
-  filter: any = {};
+  filter: PatientFilter = {};
   paging: Paging = {
     first: 10,
   };
   pageInfo: any;
   showFilterPanel = false;
-  filterForm: Form = patientForms.patientFilter;
+  patientFilterForm: Form = PatientFilterForm;
   patientsTable: { columns: any[]; rows: Patient[] } = {
     columns: table.columns,
     rows: [],
@@ -59,28 +61,17 @@ export class PatientsComponent implements OnInit, OnChanges {
   getPatients(paging: Paging) {
     this.isLoading = true;
     this.patients = [];
-    const _patients: any[] = [];
-    this.patientsService.getPatients({ filter: this.filter, paging }).subscribe(
+    this.patientsService.patients({ filter: this.filter, paging }).subscribe(
       async ({ data }) => {
-        const patientsData = data.patients;
-        patientsData.edges.map((patient: any) => {
-          const row = Object.assign({}, patient.node);
-          const color = row.active
-            ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
-            : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-          const active = row.active ? 'ACTIVE' : 'ARCHIVED';
-          row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
-          row.updatedAt = row.updatedAt ? this.dateService.formatDate(row.updatedAt) : '';
-          row.birthDate = row.birthDate ? this.dateService.formatDate(row.birthDate) : '';
-          _patients.push(row);
-          this.patients.push(patient.node);
+        data.patients.edges.map((patient: any) => {
+          this.patients.push(PatientModel.fromJson(patient.node));
         });
-
-        this.patientsTable.rows = _patients;
+        this.patientsTable.rows = this.patients;
         this.paging.after = data.patients.pageInfo.endCursor;
         this.paging.before = data.patients.pageInfo.startCursor;
         this.pageInfo = data.patients.pageInfo;
         this.isLoading = false;
+        this.closeFilterPanel();
       },
       (error) => {
         this.isLoading = false;
@@ -154,8 +145,33 @@ export class PatientsComponent implements OnInit, OnChanges {
     });
   }
 
-  filterEvent(data: any) {
-    this.filter = data;
+  searchPatients(searchString: string) {
+    this.filter.or = [
+      // {birthDate : {between: {lower: value[0], upper: value[1]}}}
+      { firstName: { iLike: `%${searchString}%` } },
+      { middleName: { iLike: `%${searchString}%` } },
+      { lastName: { iLike: `%${searchString}%` } },
+      { medicalRecordNo: { iLike: `%${searchString}%` } },
+    ];
+    this.getPatients({ first: 10 });
+  }
+
+  filterPatients(filter: PatientFilter) {
+    for (const [key, value] of Object.entries(filter)) {
+      if (value === null) {
+        this.filter[key] = undefined;
+        continue;
+      }
+      if (key === 'active') {
+        this.filter[key] = { is: value };
+        continue;
+      }
+      if (key === 'createdAt') {
+        this.filter[key] = { between: { lower: value[0], upper: value[1] } };
+        continue;
+      }
+      this.filter[key] = { iLike: `%${value}%` };
+    }
     this.getPatients({ first: 10 });
   }
 
