@@ -12,7 +12,7 @@
   <nz-tab *ngIf="!newMode" nzTitle="Security">
     <div nz-row nzGutter="16">
       <div nz-col>
-        <nz-card style="width: 300px" nzTitle="User's Roles" [nzExtra]="rolesTemplate">
+        <nz-card style="width: 300px" nzTitle="{{ user.firstName }}'s Roles" [nzExtra]="rolesTemplate">
           <nz-checkbox-wrapper style="width: 100%" (nzOnChange)="collectRoles($event)">
             <div nz-row>
               <div nz-col nzSpan="24" *ngFor="let role of roles">
@@ -26,7 +26,7 @@
         </ng-template>
       </div>
       <div nz-col>
-        <nz-card style="width: 300px" nzTitle="User's Departments" [nzExtra]="departmentTemplate">
+        <nz-card style="width: 300px" nzTitle="{{ user.firstName }}'s Departments" [nzExtra]="departmentTemplate">
           <nz-checkbox-wrapper style="width: 100%" (nzOnChange)="collectDepartments($event)">
             <div nz-row>
               <div nz-col nzSpan="24" *ngFor="let department of departments">
@@ -43,7 +43,7 @@
       </div>
 
       <div nz-col>
-        <nz-card style="width: 300px" nzTitle="Enable or Disable user">
+        <nz-card style="width: 300px" nzTitle="Enable or Disable {{ user.firstName }}">
           <p>To disable and Enable {{ user.firstName }} toggle the switch below.</p>
           <nz-switch (ngModelChange)="activateUser(user)" [(ngModel)]="user.active"></nz-switch>
         </nz-card>

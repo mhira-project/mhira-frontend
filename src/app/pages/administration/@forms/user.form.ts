@@ -90,7 +90,7 @@ const userProfile: Form = {
           type: 'text',
           isRequired: true,
           description: 'Enter your first name',
-          validationMessage: 'Please enter your Firsrt name',
+          validationMessage: 'Please enter your First name',
           span: 8,
           value: '',
         },
