@@ -11,17 +11,35 @@
   </nz-tab>
   <nz-tab *ngIf="!newMode" nzTitle="Security">
     <div nz-row nzGutter="16">
-      <div nz-col nzFlex="auto">
-        <nz-checkbox-wrapper style="width: 100%" (nzOnChange)="collectRoles($event)">
-          <div nz-row>
-            <div nz-col nzSpan="24" *ngFor="let role of roles">
-              <label nz-checkbox [nzValue]="role.id" [ngModel]="userHasRole(role.id)">{{ role.name }}</label>
+      <div nz-col>
+        <nz-card style="width: 300px" nzTitle="User's Roles" [nzExtra]="rolesTemplate">
+          <nz-checkbox-wrapper style="width: 100%" (nzOnChange)="collectRoles($event)">
+            <div nz-row>
+              <div nz-col nzSpan="24" *ngFor="let role of roles">
+                <label nz-checkbox [nzValue]="role.id" [ngModel]="userHasRole(role.id)">{{ role.name }}</label>
+              </div>
             </div>
-          </div>
-        </nz-checkbox-wrapper>
-        <button *ngIf="roles.length > 0" nz-button nzSize="small" (click)="submitRoles()" nzType="primary">
-          Submit Roles
-        </button>
+          </nz-checkbox-wrapper>
+        </nz-card>
+        <ng-template #rolesTemplate>
+          <a *ngIf="roles.length > 0" nz-button nzSize="small" (click)="submitRoles()">Save</a>
+        </ng-template>
+      </div>
+      <div nz-col>
+        <nz-card style="width: 300px" nzTitle="User's Departments" [nzExtra]="departmentTemplate">
+          <nz-checkbox-wrapper style="width: 100%" (nzOnChange)="collectDepartments($event)">
+            <div nz-row>
+              <div nz-col nzSpan="24" *ngFor="let department of departments">
+                <label nz-checkbox [nzValue]="department.id" [ngModel]="userHasDepartment(department.id)">{{
+                  department.name
+                }}</label>
+              </div>
+            </div>
+          </nz-checkbox-wrapper>
+        </nz-card>
+        <ng-template #departmentTemplate>
+          <a *ngIf="departments.length > 0" nz-button nzSize="small" (click)="submitDepartments()">Save</a>
+        </ng-template>
       </div>
     </div>
   </nz-tab>

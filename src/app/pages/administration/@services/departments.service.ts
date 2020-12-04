@@ -8,6 +8,7 @@ import { Sorting } from '@shared/@types/sorting';
 import { FetchResult } from 'apollo-link';
 import { DepartmentsQueries } from '@app/@graphql/queries/departments';
 import { DepartmentsMutations } from '@app/@graphql/mutations/departments';
+import { RolesMutations } from '@app/@graphql/mutations/roles';
 
 @Injectable({
   providedIn: 'root',
@@ -51,6 +52,32 @@ export class DepartmentsService {
       variables: {
         input: { id: department.id },
       },
+    });
+  }
+
+  addDepartmentsToUser(userId: number, rolesIds: number[]): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: RolesMutations.addDepartmentsToUser,
+      variables: {
+        input: {
+          id: userId,
+          relationIds: rolesIds,
+        },
+      },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
+  removeDepartmentsFromUser(userId: number, rolesIds: number[]): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: RolesMutations.removeDepartmentsFromUser,
+      variables: {
+        input: {
+          id: userId,
+          relationIds: rolesIds,
+        },
+      },
+      fetchPolicy: 'no-cache',
     });
   }
 }

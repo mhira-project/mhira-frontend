@@ -32,6 +32,14 @@ const login = gql`
           createdAt
           updatedAt
         }
+        departments {
+          id
+          name
+          description
+          active
+          createdAt
+          updatedAt
+        }
       }
     }
   }

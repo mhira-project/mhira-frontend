@@ -39,10 +39,11 @@ export class UserFormComponent implements OnInit, OnDestroy {
   inputMode = true;
   showCancelButton = false;
   roles: Role[] = [];
+  departments: Department[] = [];
   selectedRoles: number[] = [];
   unselectedRoles: number[] = [];
   selectedDepartments: number[] = [];
-  unselectedDepartment: number[];
+  unselectedDepartments: number[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -69,11 +70,17 @@ export class UserFormComponent implements OnInit, OnDestroy {
     this.departmentsService.departments(params).subscribe(
       async ({ data }: any) => {
         const page = data.departments;
+        page.edges.map((departmentData: any) => {
+          const _department = Convert.toDepartment(departmentData.node);
+          this.departments.push(_department);
+        });
+
         this.profileFields.groups.map((group) => {
           group.fields.map((field) => {
             if (field.name === 'departmentId') {
               field.options = page.edges.map((departmentData: any) => {
                 const department: Department = departmentData.node;
+                this.departments.push(department);
                 return {
                   value: department.id,
                   label: `${department.name}`,
@@ -121,6 +128,15 @@ export class UserFormComponent implements OnInit, OnDestroy {
     return false;
   }
 
+  userHasDepartment(departmentId: number): boolean {
+    for (const _department of this.user.departments) {
+      if (_department.id === departmentId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   collectRoles(roles: number[]) {
     const rolesIds: number[] = [];
     this.roles.map((role) => rolesIds.push(role.id));
@@ -133,6 +149,18 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  collectDepartments(departments: number[]) {
+    const departmentsIds: number[] = [];
+    this.departments.map((department) => departmentsIds.push(department.id));
+    this.selectedDepartments = departments;
+    this.unselectedDepartments = departmentsIds.filter((id) => !this.selectedDepartments.includes(id));
+    for (const department of departments) {
+      if (this.userHasDepartment(department)) {
+        this.selectedDepartments.splice(this.selectedDepartments.indexOf(department), department);
+      }
+    }
+  }
+
   getUserFromUrl(): void {
     this.routeSub = this.activatedRoute.queryParams.subscribe((params) => {
       if (params.user) {
@@ -141,6 +169,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         const bytes = CryptoJS.AES.decrypt(params.user, environment.secretKey);
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.user = decryptedData;
+        console.log(this.user);
         if (this.user.birthDate) {
           this.user.birthDate = decryptedData.birthDate.slice(0, 10);
         }
@@ -258,6 +287,16 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  submitDepartments() {
+    if (this.selectedDepartments.length > 0) {
+      this.assignDepartments();
+    }
+
+    if (this.selectedDepartments.length > 0) {
+      this.unassignDepartment();
+    }
+  }
+
   afterCreate() {
     const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.user), environment.secretKey).toString();
     this.router.navigate(['/mhira/administration/user-management/form'], {
@@ -286,7 +325,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   assignDepartments() {
     this.isLoading = true;
-    this.rolesService.addDepartmentsToUser(this.user.id, this.selectedDepartments).subscribe(
+    this.departmentsService.addDepartmentsToUser(this.user.id, this.selectedDepartments).subscribe(
       async ({ data }: any) => {
         this.isLoading = false;
         this.message.create('success', `the department(s) have been successful assigned to ${this.user.firstName}`);
@@ -314,7 +353,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   unassignDepartment() {
     this.isLoading = true;
-    this.rolesService.removeDepartmentsFromUser(this.user.id, this.unselectedDepartment).subscribe(
+    this.departmentsService.removeDepartmentsFromUser(this.user.id, this.unselectedDepartments).subscribe(
       async ({ data }: any) => {
         this.isLoading = false;
         this.message.create('success', `the department(s) have been successful removed from ${this.user.firstName}`);

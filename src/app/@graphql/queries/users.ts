@@ -28,6 +28,7 @@ const getUsers = gql`
           updatedAt
           deletedAt
           departments {
+            id
             name
             description
             active
