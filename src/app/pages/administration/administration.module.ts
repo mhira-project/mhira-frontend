@@ -21,6 +21,7 @@ import {
   NzMessageModule,
   NzModalModule,
   NzSpinModule,
+  NzSwitchModule,
   NzTableModule,
   NzTabsModule,
   NzToolTipModule,
@@ -56,7 +57,15 @@ const antModules = [
 ];
 
 @NgModule({
-  imports: [...antModules, FormsModule, CommonModule, TranslateModule, SharedModule, AdministrationRoutingModule],
+  imports: [
+    ...antModules,
+    FormsModule,
+    CommonModule,
+    TranslateModule,
+    SharedModule,
+    AdministrationRoutingModule,
+    NzSwitchModule,
+  ],
   declarations: [
     AdministrationComponent,
     UserManagementComponent,

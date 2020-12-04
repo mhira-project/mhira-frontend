@@ -418,4 +418,9 @@ export class UserFormComponent implements OnInit, OnDestroy {
       this.message.create('error', `${errors.error.message}`);
     }
   }
+
+  activateUser(user: User) {
+    user.active = !user.active;
+    this.updateUser(user);
+  }
 }

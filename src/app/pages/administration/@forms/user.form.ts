@@ -338,21 +338,6 @@ const userProfileEdit: Form = {
           span: 8,
           value: '',
         },
-        {
-          title: 'Activate User',
-          label: 'active',
-          name: 'active',
-          type: 'radio',
-          isRequired: false,
-          description: 'Enable user',
-          validationMessage: '',
-          span: 8,
-          value: '',
-          options: [
-            { label: 'Active', value: true },
-            { label: 'Inactive', value: false },
-          ],
-        },
       ],
     },
     {

@@ -41,6 +41,13 @@
           <a *ngIf="departments.length > 0" nz-button nzSize="small" (click)="submitDepartments()">Save</a>
         </ng-template>
       </div>
+
+      <div nz-col>
+        <nz-card style="width: 300px" nzTitle="Enable or Disable user">
+          <p>To disable and Enable {{ user.firstName }} toggle the switch below.</p>
+          <nz-switch (ngModelChange)="activateUser(user)" [(ngModel)]="user.active"></nz-switch>
+        </nz-card>
+      </div>
     </div>
   </nz-tab>
 </nz-tabset>
