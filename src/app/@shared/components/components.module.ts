@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxInputSearchModule } from 'ngx-input-search';
 import { XlsExportService } from '@shared/services/xls-export.service';
-import { FieldGeneratorComponent } from './field-generator/field-generator.component';
 import { LoaderComponent } from './loader/loader.component';
-import { CustomTableComponent } from './custom-table/custom-table.component';
+import { TableComponent } from './table/table.component';
 import { FormGeneratorComponent } from './form-generator/form-generator.component';
 import {
   NzAffixModule,
@@ -154,6 +153,7 @@ import {
   TimingPipe,
 } from '../pipes';
 import { CustomFilterComponent } from './custom-filter/custom-filter.component';
+import { AppFormModule } from '@shared/components/form/app-form.module';
 
 const PIPES = [
   CapitalizePipe,
@@ -169,23 +169,9 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [...antModules, CommonModule, FormsModule, NgxInputSearchModule, ReactiveFormsModule],
-  declarations: [
-    ...PIPES,
-    LoaderComponent,
-    CustomTableComponent,
-    FormGeneratorComponent,
-    FieldGeneratorComponent,
-    CustomFilterComponent,
-  ],
-  exports: [
-    ...PIPES,
-    LoaderComponent,
-    CustomTableComponent,
-    FormGeneratorComponent,
-    FieldGeneratorComponent,
-    CustomFilterComponent,
-  ],
+  imports: [...antModules, CommonModule, FormsModule, AppFormModule, NgxInputSearchModule, ReactiveFormsModule],
+  declarations: [...PIPES, LoaderComponent, TableComponent, FormGeneratorComponent, CustomFilterComponent],
+  exports: [...PIPES, LoaderComponent, TableComponent, FormGeneratorComponent, CustomFilterComponent],
   providers: [XlsExportService],
 })
 export class ComponentsModule {}

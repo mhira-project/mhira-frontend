@@ -75,6 +75,8 @@ export class CreatePatientComponent implements OnInit {
   }
 
   createPatient(patient: Patient) {
+    console.log(patient.emergencyContacts);
+    return;
     this.isLoading = true;
     this.hasErrors = false;
     this.errors = [];

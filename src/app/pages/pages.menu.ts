@@ -12,7 +12,7 @@ export const MENU: SideNavInterface[] = [
     submenu: [
       {
         path: 'home/patients',
-        title: extract('Patients'),
+        title: extract('Patient list'),
         iconType: '',
         iconTheme: '',
         permissions: ['view patients', 'manage patients'],

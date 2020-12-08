@@ -23,6 +23,7 @@ import {
   NzToolTipModule,
 } from 'ng-zorro-antd';
 import { PatientsService } from '../home/@services/patients.service';
+import { AppFormModule } from '../../@shared/components/form/app-form.module';
 
 const antModules = [
   NzGridModule,
@@ -39,7 +40,7 @@ const antModules = [
 ];
 
 @NgModule({
-  imports: [...antModules, CommonModule, TranslateModule, SharedModule, AssessmentRoutingModule],
+  imports: [...antModules, CommonModule, AppFormModule, TranslateModule, SharedModule, AssessmentRoutingModule],
   declarations: [AssessmentComponent, PlanAssessmentComponent, AssessmentsListComponent],
   providers: [PatientsService, AssessmentService],
 })

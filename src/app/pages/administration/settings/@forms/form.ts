@@ -1,4 +1,4 @@
-import { Form } from '../../../../@shared/components/field-generator/form';
+import { Form } from '../../../../@shared/components/form/@types/form';
 
 const general: Form = {
   submitButtonText: 'Save',

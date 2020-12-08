@@ -1,7 +1,7 @@
-import { FieldType } from './field.type';
+import { Field } from './field';
 
 export interface FieldGroup {
   title?: string;
   hidden?: boolean;
-  fields: FieldType[];
+  fields: Field[];
 }

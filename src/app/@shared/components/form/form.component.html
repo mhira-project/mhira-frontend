@@ -10,7 +10,7 @@
             <label for="field{{ i }}" translate
               ><b>{{ field?.title }}<span style="color: red" *ngIf="field?.isRequired && inputMode"> *</span></b></label
             >
-            <ng-container *ngIf="inputMode" [ngSwitch]="field.type">
+            <ng-container *ngIf="inputMode && !field.isArray" [ngSwitch]="field.type">
               <div *ngSwitchCase="'select'">
                 <nz-select
                   style="width: 100%"
@@ -113,17 +113,24 @@
             </ng-container>
             <div class="field-value" *ngIf="!inputMode">
               <span *ngIf="field.type !== 'date'">{{ field?.value }}</span>
-              <span *ngIf="field.type === 'date'">{{ field?.value | formatDate }}</span>
+              <!--<span *ngIf="field.type === 'date'">{{ field?.value | formatDate }}</span>-->
             </div>
             <ng-template #suffix>
               <i nz-icon [nzType]="field?.iconName"></i>
             </ng-template>
-            <p
-              *ngIf="formGroup.controls[field.name].invalid && formGroup.controls[field.name].dirty && inputMode"
-              translate
-            >
-              {{ field.validationMessage }}
-            </p>
+            <ng-container *ngIf="!field.isArray">
+              <p
+                *ngIf="
+                  formGroup.controls[field.name].invalid &&
+                  !field.isArray &&
+                  formGroup.controls[field.name].dirty &&
+                  inputMode
+                "
+                translate
+              >
+                {{ field.validationMessage }}
+              </p>
+            </ng-container>
           </div>
         </ng-container>
       </div>
@@ -180,4 +187,4 @@
     {{ form.editButtonText }}
   </button>
 </ng-container>
-<app-loader [isLoading]="isLoading" [message]="loadingMessage"></app-loader>
+<!--<app-loader [isLoading]="isLoading" [message]="loadingMessage"></app-loader>-->

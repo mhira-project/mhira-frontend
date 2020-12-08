@@ -1,13 +1,13 @@
 <nz-tabset>
   <nz-tab nzTitle="Profile">
-    <app-field-generator
+    <app-form
       [isLoading]="isLoading"
       [loadingMessage]="loadingMessage"
       [inputMode]="inputMode"
       [showCancelButton]="showCancelButton"
       [form]="profileFields"
       (submitForm)="submitForm($event)"
-    ></app-field-generator>
+    ></app-form>
   </nz-tab>
   <nz-tab *ngIf="!newMode" nzTitle="Security">
     <div nz-row nzGutter="16">
