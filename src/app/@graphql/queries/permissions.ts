@@ -49,7 +49,7 @@ const permissions = gql`
 
 const userPermissionGrants = gql`
   query {
-    userPermissionGrants(paging: { limit: 50 }) {
+    userPermissionGrants {
       id
       name
       guard
