@@ -3,7 +3,7 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { userForms } from '@app/pages/administration/@forms/user.form';
 import { Router } from '@angular/router';
 import { ModalType } from '@app/pages/administration/user-management/modal.type';
-import { Form } from '@shared/components/field-generator/form';
+import { Form } from '@shared/components/form/@types/form';
 import { User } from '@app/pages/administration/@types/user';
 import { userTable } from '@app/pages/administration/@tables/users.table';
 import { UsersService } from '@app/pages/administration/@services/users.service';

@@ -1,4 +1,4 @@
-import { Form } from '@shared/components/field-generator/form';
+import { Form } from '@shared/components/form/@types/form';
 
 export const RoleForm: Form = {
   submitButtonText: 'Create Role',

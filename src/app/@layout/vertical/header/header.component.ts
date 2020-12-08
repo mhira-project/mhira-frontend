@@ -3,12 +3,12 @@ import { AuthService } from '@app/auth/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { User } from '@app/pages/administration/@types/user';
-import { Form } from '@shared/components/field-generator/form';
+import { Form } from '@shared/components/form/@types/form';
 import { userForms } from '@app/pages/administration/@forms/user.form';
 import { UserChangePasswordInput } from '@app/pages/administration/user-management/user-form/user-update-password.type';
 import { NzMessageService } from 'ng-zorro-antd';
 import { UsersService } from '@app/pages/administration/@services/users.service';
-import { FieldGeneratorComponent } from '@shared/components/field-generator/field-generator.component';
+import { FormComponent } from '@shared/components/form/form.component';
 
 const CryptoJS = require('crypto-js');
 
@@ -18,7 +18,7 @@ const CryptoJS = require('crypto-js');
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  @ViewChild(FieldGeneratorComponent) child: FieldGeneratorComponent;
+  @ViewChild(FormComponent) child: FormComponent;
   isOkLoading = false;
   user: User;
   notificationList: any = [];

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CustomTableComponent } from './custom-table.component';
+import { DateInputComponent } from './date-input.component';
 
-describe('CustomTableComponent', () => {
-  let component: CustomTableComponent;
-  let fixture: ComponentFixture<CustomTableComponent>;
+describe('DateInputComponent', () => {
+  let component: DateInputComponent;
+  let fixture: ComponentFixture<DateInputComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CustomTableComponent],
+      declarations: [DateInputComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CustomTableComponent);
+    fixture = TestBed.createComponent(DateInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

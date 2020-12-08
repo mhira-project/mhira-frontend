@@ -1,11 +1,11 @@
-<app-field-generator
+<app-form
   (submitForm)="submitFormData($event)"
   (inputChange)="inputChangeEvent($event)"
   (searchOptions)="search($event)"
   [isLoading]="isLoading"
   [form]="form"
   [loadingMessage]="loadingMessage"
-></app-field-generator>
+></app-form>
 <button nz-button nzType="primary" (click)="primaryButtonAction()" class="m-b-15" nzShape="round" nzBlock>
   {{ primaryButtonTitle }}
 </button>

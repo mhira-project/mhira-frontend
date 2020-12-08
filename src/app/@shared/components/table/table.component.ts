@@ -4,11 +4,11 @@ import { ExportChoiceType } from './export-choice.type';
 import { XlsExportService } from '@shared/services/xls-export.service';
 
 @Component({
-  selector: 'app-custom-table',
-  templateUrl: './custom-table.component.html',
-  styleUrls: ['./custom-table.component.css'],
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.css'],
 })
-export class CustomTableComponent implements OnInit, OnChanges {
+export class TableComponent implements OnInit, OnChanges {
   @Input() exportWithOption = false;
   @Input() showFilterButton = false;
   @Input() listOfExportOptions: ExportChoiceType[] = [];

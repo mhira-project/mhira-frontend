@@ -1,4 +1,4 @@
-export interface FieldType {
+export interface Field {
   value: number | string | number[] | string[];
   title?: string;
   name?: string;
@@ -12,5 +12,6 @@ export interface FieldType {
   validationMessage?: string;
   isRequired?: boolean;
   span?: number;
+  isArray?: boolean;
   options?: { value: number | boolean | string; label: string }[];
 }

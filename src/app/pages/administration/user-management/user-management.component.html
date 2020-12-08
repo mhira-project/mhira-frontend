@@ -1,4 +1,4 @@
-<app-custom-table
+<app-table
   *ngIf="perms.permissionsOnly(['view users'])"
   [showSearch]="false"
   [buttonText]="'Add User'"
@@ -19,8 +19,22 @@
   (onButton)="onCreateUser()"
   (rowClick)="handleRowClick($event)"
 >
-</app-custom-table>
-
+</app-table>
+<nz-modal
+  *ngIf="modalType"
+  [(nzVisible)]="showModal"
+  [nzTitle]="modalType?.title"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzFooter]="null"
+>
+  <app-form
+    [isLoading]="isLoading"
+    [loadingMessage]="loadingMessage"
+    (submitForm)="changePassword($event)"
+    [form]="updatePasswordForm"
+  ></app-form>
+</nz-modal>
 <nz-drawer
   [nzMask]="false"
   [nzClosable]="true"

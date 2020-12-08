@@ -5,7 +5,7 @@ import { PatientsService } from '@app/pages/home/@services/patients.service';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
-import { Form } from '@shared/components/field-generator/form';
+import { Form } from '@shared/components/form/@types/form';
 import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { PatientModel } from '@app/pages/home/@models/patient.model';

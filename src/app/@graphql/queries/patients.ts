@@ -12,20 +12,79 @@ const getPatients = gql`
       edges {
         node {
           id
-          active
+          statusId
           medicalRecordNo
           firstName
           middleName
           lastName
           phone
+          phone2
           email
-          address
+          addressStreet
+          addressNumber
+          addressApartment
+          addressPlace
+          addressPostalCode
+          addressCountryId
           gender
           birthDate
           birthCountryCode
           nationality
-          updatedAt
           createdAt
+          updatedAt
+          emergencyContacts {
+            id
+            firstName
+            middleName
+            lastName
+            phone
+            email
+            createdAt
+            updatedAt
+          }
+          informants {
+            id
+            firstName
+            middleName
+            lastName
+            phone
+            email
+            address
+            createdAt
+            updatedAt
+          }
+          caseManagers {
+            id
+            username
+            active
+            firstName
+            middleName
+            lastName
+            email
+            phone
+            workID
+            address
+            gender
+            birthDate
+            nationality
+            createdAt
+            updatedAt
+            deletedAt
+          }
+          country {
+            id
+            name
+            code
+            createdAt
+            updatedAt
+          }
+          status {
+            id
+            name
+            description
+            createdAt
+            updatedAt
+          }
         }
         cursor
       }

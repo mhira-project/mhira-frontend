@@ -1,6 +1,6 @@
 <div nz-row>
   <div nz-col nzSpan="24">
-    <app-custom-table
+    <app-table
       [loading]="isLoading"
       [showPagination]="false"
       [showCustomActions]="true"
@@ -19,7 +19,7 @@
       (rowClick)="handleRowClick($event)"
       (onButton)="toggleCreatePanel()"
     >
-    </app-custom-table>
+    </app-table>
   </div>
 </div>
 
@@ -31,7 +31,7 @@
   [nzTitle]="panelTitle"
   (nzOnClose)="toggleCreatePanel()"
 >
-  <app-field-generator
+  <app-form
     class="mt-3"
     [form]="departmentForms"
     [isLoading]="isLoading"
@@ -40,5 +40,5 @@
     [loadingMessage]="loadingMessage"
     (submitForm)="submitForm($event)"
   >
-  </app-field-generator>
+  </app-form>
 </nz-drawer>

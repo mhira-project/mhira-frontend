@@ -1,7 +1,7 @@
 <nz-card nzTitle="Assessments ({{ assessmentsTable.rows.length }})">
   <div nz-row>
     <div nz-col nzSpan="24">
-      <app-custom-table
+      <app-table
         *ngIf="perms.permissionsOnly(['view assessments'])"
         [loading]="isLoading"
         [showPagination]="false"
@@ -18,7 +18,7 @@
         (onAction)="handleActionClick($event)"
         (rowClick)="handleRowClick($event)"
       >
-      </app-custom-table>
+      </app-table>
     </div>
   </div>
 </nz-card>

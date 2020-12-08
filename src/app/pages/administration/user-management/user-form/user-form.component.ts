@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { userForms } from '@app/pages/administration/@forms/user.form';
-import { Form } from '@shared/components/field-generator/form';
+import { Form } from '@shared/components/form/@types/form';
 import { TopTabsDataService } from '@shared/services/tabs-data.service';
 import * as moment from 'moment';
 import { User } from '@app/pages/administration/@types/user';

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Form } from '@shared/components/field-generator/form';
+import { Form } from '@shared/components/form/@types/form';
 import { settingsForms } from '@app/pages/administration/settings/@forms/form';
 import { SettingsService } from '@app/pages/administration/@services/settings.service';
 import { Setting } from '@app/pages/administration/@types/setting';

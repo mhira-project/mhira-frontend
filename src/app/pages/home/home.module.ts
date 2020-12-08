@@ -18,7 +18,6 @@ import {
   NzListModule,
   NzMessageModule,
   NzModalModule,
-  NzTableModule,
   NzTabsModule,
   NzTagModule,
 } from 'ng-zorro-antd';
@@ -26,6 +25,7 @@ import { PatientsService } from './@services/patients.service';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { CreatePatientComponent } from './patient-profile/create-patient/create-patient.component';
 import { CaseManagersService } from './@services/case-managers.service';
+import { AppFormModule } from '../../@shared/components/form/app-form.module';
 
 const antModules = [
   NzGridModule,
@@ -43,7 +43,7 @@ const antModules = [
 ];
 
 @NgModule({
-  imports: [...antModules, CommonModule, TranslateModule, SharedModule, HomeRoutingModule],
+  imports: [...antModules, CommonModule, AppFormModule, TranslateModule, SharedModule, HomeRoutingModule],
   declarations: [
     HomeComponent,
     PatientsComponent,

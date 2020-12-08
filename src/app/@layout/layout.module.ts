@@ -28,6 +28,7 @@ import { TabsComponent } from './vertical/header/tabs/tabs.component';
 import { AuthModule } from '@app/auth/auth.module';
 import { UpdateService } from '@shared/services/update.service';
 import { ComponentsModule } from '@shared/components/components.module';
+import { AppFormModule } from '@shared/components/form/app-form.module';
 
 const antdModule = [
   NzBreadCrumbModule,
@@ -47,6 +48,7 @@ const antdModule = [
     ...antdModule,
     CommonModule,
     TranslateModule,
+    AppFormModule,
     NgbModule,
     AuthModule,
     I18nModule,

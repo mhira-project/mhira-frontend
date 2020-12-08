@@ -1,16 +1,16 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
-import { FieldType } from './field.type';
+import { Field } from './@types/field';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Form } from '@shared/components/field-generator/form';
+import { Form } from '@shared/components/form/@types/form';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-field-generator',
-  templateUrl: './field-generator.component.html',
-  styleUrls: ['./field-generator.component.scss'],
+  selector: 'app-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.scss'],
 })
-export class FieldGeneratorComponent implements OnInit, OnDestroy {
+export class FormComponent implements OnInit, OnDestroy {
   @Input() form: Form;
   @Input() isLoading = false;
   @Input() loadingMessage = '';
@@ -22,7 +22,7 @@ export class FieldGeneratorComponent implements OnInit, OnDestroy {
   @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
   @Output() inputChange: EventEmitter<any> = new EventEmitter<any>();
   formGroup: FormGroup;
-  currentSearchedField: FieldType;
+  currentSearchedField: Field;
 
   public optionsSearch = new Subject<string>();
   private optionsSearchSubscription: Subscription;
@@ -49,36 +49,46 @@ export class FieldGeneratorComponent implements OnInit, OnDestroy {
     const formControls = {};
     for (const group of this.form.groups) {
       for (const field of group.fields) {
+        let control: FormControl | FormGroup;
         if (field.isRequired) {
           if (field.pattern) {
-            formControls[field.name] = new FormControl('', [Validators.required, Validators.pattern(field.pattern)]);
+            control = new FormControl('', [Validators.required, Validators.pattern(field.pattern)]);
           } else if (field.maxLength) {
-            formControls[field.name] = new FormControl('', [
-              Validators.required,
-              Validators.maxLength(field.maxLength),
-            ]);
+            control = new FormControl('', [Validators.required, Validators.maxLength(field.maxLength)]);
           } else if (field.minLength) {
-            formControls[field.name] = new FormControl('', [
-              Validators.required,
-              Validators.minLength(field.minLength),
-            ]);
+            control = new FormControl('', [Validators.required, Validators.minLength(field.minLength)]);
           } else {
-            formControls[field.name] = new FormControl('', Validators.required);
+            control = new FormControl('', Validators.required);
           }
         } else {
           if (field.pattern) {
-            formControls[field.name] = new FormControl('', Validators.pattern(field.pattern));
+            control = new FormControl('', Validators.pattern(field.pattern));
           } else if (field.maxLength) {
-            formControls[field.name] = new FormControl('', Validators.maxLength(field.maxLength));
+            control = new FormControl('', Validators.maxLength(field.maxLength));
           } else if (field.minLength) {
-            formControls[field.name] = new FormControl('', Validators.minLength(field.minLength));
+            control = new FormControl('', Validators.minLength(field.minLength));
           } else {
-            formControls[field.name] = new FormControl();
+            control = new FormControl();
           }
         }
+
+        if (field.isArray) {
+          const nameParts = field.name.split('.');
+          if (formControls[nameParts[0]]) {
+            formControls[nameParts[0]].addControl(nameParts[1], control);
+          } else {
+            console.log('not defined');
+            formControls[nameParts[0]] = new FormGroup({
+              [nameParts[1]]: control,
+            });
+          }
+          continue;
+        }
+        formControls[field.name] = control;
       }
     }
     this.formGroup = new FormGroup(formControls);
+    console.log(this.formGroup);
   }
 
   search(value: string): void {
@@ -96,7 +106,7 @@ export class FieldGeneratorComponent implements OnInit, OnDestroy {
     this.inputMode = !this.inputMode;
   }
 
-  handleInputChange(field: FieldType, event: any) {
+  handleInputChange(field: Field, event: any) {
     if (event || event === false) {
       if (field.type === 'checkBox') {
         this.parseCheckBoxValues(event, field);

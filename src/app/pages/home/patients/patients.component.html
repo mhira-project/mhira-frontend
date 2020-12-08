@@ -1,6 +1,6 @@
 <div nz-row>
   <div nz-col nzSpan="24">
-    <app-custom-table
+    <app-table
       *ngIf="perms.permissionsOnly(['manage patients', 'view patients'])"
       [loading]="isLoading"
       [showPagination]="false"
@@ -23,7 +23,7 @@
       (rowClick)="handleRowClick($event)"
       (onSearch)="searchPatients($event)"
     >
-    </app-custom-table>
+    </app-table>
   </div>
 </div>
 <nz-modal

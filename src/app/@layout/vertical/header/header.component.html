@@ -130,12 +130,12 @@
   (nzOnCancel)="handleCancel()"
   (nzOnOk)="clickChangePassword()"
 >
-  <app-field-generator
+  <app-form
     [isLoading]="isLoading"
     [showSubmitButton]="false"
     [showCancelButton]="false"
     [loadingMessage]="loadingMessage"
     (submitForm)="changePassword($event)"
     [form]="changePasswordForm"
-  ></app-field-generator>
+  ></app-form>
 </nz-modal>

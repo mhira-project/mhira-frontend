@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Form } from '@shared/components/field-generator/form';
-import { FieldGeneratorComponent } from '@shared/components/field-generator/field-generator.component';
-import { FieldGroup } from '@shared/components/field-generator/field.group';
-import { FieldType } from '@shared/components/field-generator/field.type';
+import { Form } from '@shared/components/form/@types/form';
+import { FormComponent } from '@shared/components/form/form.component';
+import { FieldGroup } from '@shared/components/form/@types/field.group';
+import { Field } from '@shared/components/form/@types/field';
 
 @Component({
   selector: 'app-custom-filter',
@@ -10,7 +10,7 @@ import { FieldType } from '@shared/components/field-generator/field.type';
   styleUrls: ['./custom-filter.component.scss'],
 })
 export class CustomFilterComponent implements OnInit {
-  @ViewChild(FieldGeneratorComponent) child: FieldGeneratorComponent;
+  @ViewChild(FormComponent) child: FormComponent;
 
   @Input() form: Form;
   @Input() isLoading = false;
@@ -30,7 +30,7 @@ export class CustomFilterComponent implements OnInit {
     const filter = {};
     if (Object.keys(data).length > 0) {
       Object.keys(data).forEach((key: string) => {
-        let foundFields: FieldType[];
+        let foundFields: Field[];
         foundFields = [];
         if (data[key]) {
           this.form.groups.forEach((group: FieldGroup) => {
@@ -38,7 +38,7 @@ export class CustomFilterComponent implements OnInit {
               if (field.name === key) return foundFields.push(field);
             });
           });
-          foundFields.forEach((field: FieldType) => {
+          foundFields.forEach((field: Field) => {
             switch (field.type) {
               case 'text':
                 filter[key] = { iLike: `%${data[key]}%` };
