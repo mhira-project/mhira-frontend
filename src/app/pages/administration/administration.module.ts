@@ -21,6 +21,7 @@ import {
   NzMessageModule,
   NzModalModule,
   NzSpinModule,
+  NzSwitchModule,
   NzTableModule,
   NzTabsModule,
   NzToolTipModule,
@@ -65,6 +66,7 @@ const antModules = [
     TranslateModule,
     SharedModule,
     AdministrationRoutingModule,
+    NzSwitchModule,
   ],
   declarations: [
     AdministrationComponent,

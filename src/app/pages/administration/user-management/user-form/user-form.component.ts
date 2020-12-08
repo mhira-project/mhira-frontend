@@ -17,6 +17,7 @@ import { Convert } from '@shared/classes/convert';
 import { Role } from '@app/pages/administration/@types/role';
 import { DepartmentsService } from '@app/pages/administration/@services/departments.service';
 import { Department } from '@app/pages/administration/@types/department';
+import { ModalType } from '@app/pages/administration/user-management/modal.type';
 
 const CryptoJS = require('crypto-js');
 
@@ -28,6 +29,13 @@ const CryptoJS = require('crypto-js');
 export class UserFormComponent implements OnInit, OnDestroy {
   user: User;
   isLoading = false;
+  showModal = false;
+  modalType: ModalType;
+  updatePasswordForm: Form = userForms.updateUserPassword;
+  changePasswordModal: ModalType = {
+    title: 'Change Password',
+    type: 'changePassword',
+  };
   newMode = false;
   loadingMessage = '';
   profileFields: Form = userForms.userProfileEdit;
@@ -96,6 +104,11 @@ export class UserFormComponent implements OnInit, OnDestroy {
       }
     );
   }
+  showChangePasswordForm() {
+    this.showModal = true;
+    this.modalType = Object.assign({}, this.changePasswordModal);
+    this.modalType.title = `${this.modalType.title} for ${this.user.username}: ${this.user.firstName} ${this.user.lastName}`;
+  }
   getRoles(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
     const options: any = [];
     this.roles = [];
@@ -126,6 +139,13 @@ export class UserFormComponent implements OnInit, OnDestroy {
       }
     }
     return false;
+  }
+  handleCancel() {
+    this.showModal = false;
+  }
+
+  handleOk() {
+    this.showModal = false;
   }
 
   userHasDepartment(departmentId: number): boolean {
@@ -417,5 +437,10 @@ export class UserFormComponent implements OnInit, OnDestroy {
     } else {
       this.message.create('error', `${errors.error.message}`);
     }
+  }
+
+  activateUser(user: User) {
+    user.active = !user.active;
+    this.updateUser(user);
   }
 }
