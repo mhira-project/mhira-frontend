@@ -20,21 +20,7 @@
   (rowClick)="handleRowClick($event)"
 >
 </app-custom-table>
-<nz-modal
-  *ngIf="modalType"
-  [(nzVisible)]="showModal"
-  [nzTitle]="modalType?.title"
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()"
-  [nzFooter]="null"
->
-  <app-field-generator
-    [isLoading]="isLoading"
-    [loadingMessage]="loadingMessage"
-    (submitForm)="changePassword($event)"
-    [form]="updatePasswordForm"
-  ></app-field-generator>
-</nz-modal>
+
 <nz-drawer
   [nzMask]="false"
   [nzClosable]="true"

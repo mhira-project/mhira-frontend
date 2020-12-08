@@ -48,6 +48,27 @@
           <nz-switch (ngModelChange)="activateUser(user)" [(ngModel)]="user.active"></nz-switch>
         </nz-card>
       </div>
+      <div nz-col>
+        <nz-card style="width: 300px" nzTitle="Change {{ user.firstName }}'s password">
+          <p>To change password for {{ user.firstName }} toggle the button below.</p>
+          <button (click)="showChangePasswordForm()" nz-button nzType="primary">Change Password</button>
+        </nz-card>
+      </div>
     </div>
   </nz-tab>
 </nz-tabset>
+<nz-modal
+  *ngIf="modalType"
+  [(nzVisible)]="showModal"
+  [nzTitle]="modalType?.title"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzFooter]="null"
+>
+  <app-field-generator
+    [isLoading]="isLoading"
+    [loadingMessage]="loadingMessage"
+    (submitForm)="changePassword($event)"
+    [form]="updatePasswordForm"
+  ></app-field-generator>
+</nz-modal>
