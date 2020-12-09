@@ -36,7 +36,7 @@ export class ArrayInputComponent implements OnInit {
   handleInputChange(row: any, child: Field, value: any) {
     row[child.name] = value;
     this.valueChange.emit({
-      [this.field.name]: this.rows,
+      [this.field.name]: this.field.values,
     });
   }
 }
