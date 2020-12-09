@@ -1,1 +1,29 @@
-<p>select-input works!</p>
+<label translate>
+  <b>{{ field?.title }}<span style="color: red" *ngIf="field?.isRequired && inputMode"> *</span></b>
+</label>
+<ng-container *ngIf="inputMode">
+  <nz-input-group [formGroup]="inputGroup">
+    <nz-select
+      style="width: 100%"
+      (ngModelChange)="handleValueChange($event)"
+      [(ngModel)]="field.value"
+      [nzPlaceHolder]="field.description"
+      [formControlName]="field.name"
+      [ngClass]="{
+        'has-error': inputIsValid() === false,
+        'has-success': inputIsValid() === true
+      }"
+    >
+      <nz-option *ngFor="let option of field.options" [nzValue]="option.value" [nzLabel]="option.label"> </nz-option>
+    </nz-select>
+  </nz-input-group>
+</ng-container>
+<div class="field-value" *ngIf="!inputMode">
+  <span>{{ field?.value }}</span>
+</div>
+<p
+  *ngIf="this.inputGroup.controls[this.field.name].dirty && this.inputGroup.controls[this.field.name].invalid"
+  translate
+>
+  {{ field.validationMessage }}
+</p>

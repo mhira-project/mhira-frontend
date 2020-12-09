@@ -158,7 +158,7 @@ export class PatientsComponent implements OnInit, OnChanges {
 
   filterPatients(filter: PatientFilter) {
     for (const [key, value] of Object.entries(filter)) {
-      if (value === null) {
+      if (value === null || value === '') {
         this.filter[key] = undefined;
         continue;
       }

@@ -1,112 +1,192 @@
 import gql from 'graphql-tag';
 
 const createPatient = gql`
-  mutation(
-    $active: Boolean
-    $medicalRecordNo: String
-    $firstName: String!
-    $middleName: String
-    $lastName: String!
-    $phone: String
-    $email: String
-    $address: String
-    $gender: String
-    $birthDate: DateTime
-    $birthCountryCode: String
-    $nationality: String
-  ) {
-    createPatient(
-      input: {
-        active: $active
-        medicalRecordNo: $medicalRecordNo
-        firstName: $firstName
-        middleName: $middleName
-        lastName: $lastName
-        phone: $phone
-        email: $email
-        address: $address
-        gender: $gender
-        birthDate: $birthDate
-        birthCountryCode: $birthCountryCode
-        nationality: $nationality
-      }
-    ) {
+  mutation($input: CreateOnePatientInput!) {
+    createOnePatient(input: $input) {
       id
-      active
+      statusId
       medicalRecordNo
       firstName
       middleName
       lastName
       phone
+      phone2
       email
-      address
+      addressStreet
+      addressNumber
+      addressApartment
+      addressPlace
+      addressPostalCode
+      addressCountryId
       gender
       birthDate
       birthCountryCode
       nationality
       createdAt
       updatedAt
-      deletedAt
+      emergencyContacts {
+        id
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        createdAt
+        updatedAt
+      }
+      informants {
+        id
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        address
+        createdAt
+        updatedAt
+      }
+      caseManagers {
+        id
+        username
+        active
+        firstName
+        middleName
+        lastName
+        email
+        phone
+        workID
+        address
+        gender
+        birthDate
+        nationality
+        createdAt
+        updatedAt
+        deletedAt
+      }
+      country {
+        id
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      status {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
 
 const updatePatient = gql`
-  mutation(
-    $active: Boolean
-    $medicalRecordNo: String
-    $firstName: String!
-    $middleName: String
-    $lastName: String!
-    $phone: String
-    $email: String
-    $address: String
-    $gender: String
-    $birthDate: DateTime
-    $birthCountryCode: String
-    $nationality: String
-    $id: Int!
-  ) {
-    updatePatient(
-      id: $id
-      input: {
-        active: $active
-        medicalRecordNo: $medicalRecordNo
-        firstName: $firstName
-        middleName: $middleName
-        lastName: $lastName
-        phone: $phone
-        email: $email
-        address: $address
-        gender: $gender
-        birthDate: $birthDate
-        birthCountryCode: $birthCountryCode
-        nationality: $nationality
-      }
-    ) {
+  mutation($input: UpdateOnePatientInput!) {
+    updateOnePatient(input: $input) {
       id
-      active
+      statusId
       medicalRecordNo
       firstName
       middleName
       lastName
       phone
+      phone2
       email
-      address
+      addressStreet
+      addressNumber
+      addressApartment
+      addressPlace
+      addressPostalCode
+      addressCountryId
       gender
       birthDate
       birthCountryCode
       nationality
       createdAt
       updatedAt
-      deletedAt
+      emergencyContacts {
+        id
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        createdAt
+        updatedAt
+      }
+      informants {
+        id
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        address
+        createdAt
+        updatedAt
+      }
+      caseManagers {
+        id
+        username
+        active
+        firstName
+        middleName
+        lastName
+        email
+        phone
+        workID
+        address
+        gender
+        birthDate
+        nationality
+        createdAt
+        updatedAt
+        deletedAt
+      }
+      country {
+        id
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      status {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
 
 const deletePatient = gql`
-  mutation($id: Int!) {
-    deletePatient(id: $id)
+  mutation($input: DeleteOneInput!) {
+    deleteOnePatient(input: $input) {
+      id
+      statusId
+      medicalRecordNo
+      firstName
+      middleName
+      lastName
+      phone
+      phone2
+      email
+      addressStreet
+      addressNumber
+      addressApartment
+      addressPlace
+      addressPostalCode
+      addressCountryId
+      gender
+      birthDate
+      birthCountryCode
+      nationality
+      createdAt
+      updatedAt
+    }
   }
 `;
 

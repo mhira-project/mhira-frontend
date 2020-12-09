@@ -1,1 +1,28 @@
-<p>text-area-input works!</p>
+<label translate>
+  <b>{{ field?.title }}<span style="color: red" *ngIf="field?.isRequired && inputMode"> *</span></b>
+</label>
+<ng-container *ngIf="inputMode">
+  <nz-input-group
+    [formGroup]="inputGroup"
+    [ngClass]="{ 'has-error': inputIsValid() === false, 'has-success': inputIsValid() === true }"
+  >
+    <textarea
+      nz-input
+      [attr.placeholder]="field.description"
+      [(ngModel)]="field.value"
+      (change)="handleValueChange($event)"
+      [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+      [formControlName]="field.name"
+    >
+    </textarea>
+  </nz-input-group>
+</ng-container>
+<div class="field-value" *ngIf="!inputMode">
+  <span>{{ field?.value }}</span>
+</div>
+<p
+  *ngIf="this.inputGroup.controls[this.field.name].dirty && this.inputGroup.controls[this.field.name].invalid"
+  translate
+>
+  {{ field.validationMessage }}
+</p>

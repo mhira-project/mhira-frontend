@@ -1,0 +1,14 @@
+@import "../../form.component";
+@import "../../../../../../assets/scss/variables";
+
+:host {
+  .ant-divider-horizontal.ant-divider-with-text-left::before {
+    width: 0;
+  }
+  .ant-divider-horizontal.ant-divider-with-text-left::after {
+    border-top: 1px solid $app-green;
+  }
+  .ant-divider-horizontal.ant-divider-with-text-left {
+    padding-left: 0;
+  }
+}

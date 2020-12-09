@@ -1,1 +1,31 @@
-<p>text-input works!</p>
+<label translate>
+  <b>{{ field?.title }}<span style="color: red" *ngIf="field?.isRequired && inputMode"> *</span></b>
+</label>
+<ng-container *ngIf="inputMode">
+  <nz-input-group
+    [formGroup]="inputGroup"
+    [nzSuffix]="suffix"
+    [ngClass]="{ 'has-error': inputIsValid() === false, 'has-success': inputIsValid() === true }"
+  >
+    <input
+      [attr.type]="field.type"
+      [(ngModel)]="field.value"
+      (change)="handleValueChange($event)"
+      nz-input
+      [attr.placeholder]="field.description"
+      [formControlName]="field.name"
+    />
+  </nz-input-group>
+</ng-container>
+<div class="field-value" *ngIf="!inputMode">
+  <span>{{ field?.value }}</span>
+</div>
+<ng-template #suffix>
+  <i nz-icon [nzType]="field?.iconName"></i>
+</ng-template>
+<p
+  *ngIf="this.inputGroup.controls[this.field.name].dirty && this.inputGroup.controls[this.field.name].invalid"
+  translate
+>
+  {{ field.validationMessage }}
+</p>

@@ -4,14 +4,30 @@ export interface Field {
   name?: string;
   description?: string;
   label?: string;
-  type: 'text' | 'number' | 'password' | 'search' | 'textArea' | 'checkBox' | 'radio' | 'select' | 'date' | 'dateRange';
+  type:
+    | 'text'
+    | 'number'
+    | 'password'
+    | 'search'
+    | 'textArea'
+    | 'checkBox'
+    | 'radio'
+    | 'select'
+    | 'date'
+    | 'dateRange'
+    | 'array';
+  children?: Field[];
+  values?: any;
   iconName?: string;
   pattern?: string;
   minLength?: number;
   maxLength?: number;
   validationMessage?: string;
   isRequired?: boolean;
+  isValid?: boolean;
   span?: number;
-  isArray?: boolean;
-  options?: { value: number | boolean | string; label: string }[];
+  options?: {
+    value: number | boolean | string;
+    label: string;
+  }[];
 }

@@ -79,6 +79,7 @@ import { RadioInputComponent } from './input-types/radio-input/radio-input.compo
 import { SelectInputComponent } from './input-types/select-input/select-input.component';
 import { DateInputComponent } from './input-types/date-input/date-input.component';
 import { DateRangeInputComponent } from './input-types/date-range-input/date-range-input.component';
+import { ArrayInputComponent } from './input-types/array-input/array-input.component';
 
 const antModules = [
   NzAffixModule,
@@ -161,6 +162,7 @@ const antModules = [
     SelectInputComponent,
     DateInputComponent,
     DateRangeInputComponent,
+    ArrayInputComponent,
   ],
   exports: [FormComponent],
   providers: [],

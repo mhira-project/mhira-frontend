@@ -1,1 +1,33 @@
-<p>search-input works!</p>
+<label translate>
+  <b>{{ field?.title }}<span style="color: red" *ngIf="field?.isRequired && inputMode"> *</span></b>
+</label>
+<ng-container *ngIf="inputMode" [formGroup]="inputGroup">
+  <nz-select
+    style="width: 100%"
+    nzShowSearch
+    [nzPlaceHolder]="field.description"
+    [(ngModel)]="field.value"
+    [nzShowArrow]="false"
+    (ngModelChange)="handleValueChange($event)"
+    (nzOnSearch)="optionsSearch.next($event)"
+    [formControlName]="field.name"
+    [ngClass]="{
+      'has-error': inputIsValid() === false,
+      'has-success': inputIsValid() === true
+    }"
+  >
+    <nz-option *ngFor="let option of field.options" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+  </nz-select>
+</ng-container>
+<div class="field-value" *ngIf="!inputMode">
+  <span>{{ field?.value }}</span>
+</div>
+<ng-template #suffix>
+  <i nz-icon [nzType]="field?.iconName"></i>
+</ng-template>
+<p
+  *ngIf="this.inputGroup.controls[this.field.name].dirty && this.inputGroup.controls[this.field.name].invalid"
+  translate
+>
+  {{ field.validationMessage }}
+</p>

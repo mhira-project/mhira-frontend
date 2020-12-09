@@ -91,7 +91,11 @@ export class CustomFilterComponent implements OnInit {
   }
 
   secondaryButtonAction() {
-    this.child.formGroup.reset();
+    this.form.groups.forEach((group: FieldGroup) => {
+      group.fields.find((field) => {
+        field.value = null;
+      });
+    });
     this.child.handleSubmitForm();
   }
 }

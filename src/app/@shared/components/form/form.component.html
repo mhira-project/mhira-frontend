@@ -1,4 +1,7 @@
-<ng-container [formGroup]="formGroup">
+<ng-template #indicatorTemplate>
+  <i nz-icon class="loadingSpinner" nzType="loading"></i>
+</ng-template>
+<nz-spin [nzSpinning]="isLoading" [nzIndicator]="indicatorTemplate">
   <ng-container *ngFor="let group of form.groups">
     <ng-container *ngIf="!group.hidden">
       <div>
@@ -7,129 +10,90 @@
       <div nz-row nzGutter="16">
         <ng-container *ngFor="let field of group.fields; let i = index">
           <div nz-col class="gutter-row form-item" [nzSpan]="field?.span">
-            <label for="field{{ i }}" translate
-              ><b>{{ field?.title }}<span style="color: red" *ngIf="field?.isRequired && inputMode"> *</span></b></label
-            >
-            <ng-container *ngIf="inputMode && !field.isArray" [ngSwitch]="field.type">
-              <div *ngSwitchCase="'select'">
-                <nz-select
-                  style="width: 100%"
-                  (ngModelChange)="handleInputChange(field, $event)"
-                  [(ngModel)]="field.value"
-                  [nzPlaceHolder]="field.description"
-                  [formControlName]="field.name"
-                  [ngClass]="{
-                    'has-error': formGroup.controls[field.name].invalid && formGroup.controls[field.name].dirty,
-                    'has-success': formGroup.controls[field.name].valid && formGroup.controls[field.name].dirty
-                  }"
+            <ng-container *ngIf="inputMode" [ngSwitch]="field.type">
+              <div *ngSwitchCase="'text'">
+                <app-text-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
                 >
-                  <nz-option *ngFor="let option of field.options" [nzValue]="option.value" [nzLabel]="option.label">
-                  </nz-option>
-                </nz-select>
-              </div>
-              <div *ngSwitchCase="'checkBox'">
-                <nz-checkbox-group
-                  [formControlName]="field.name"
-                  [(ngModel)]="field.options"
-                  (ngModelChange)="handleInputChange(field, $event)"
-                ></nz-checkbox-group>
-              </div>
-              <div *ngSwitchCase="'radio'">
-                <nz-radio-group
-                  [(ngModel)]="field.value"
-                  [formControlName]="field.name"
-                  (ngModelChange)="handleInputChange(field, $event)"
-                >
-                  <label nz-radio *ngFor="let option of field.options" [nzValue]="option.value">{{
-                    option.label
-                  }}</label>
-                </nz-radio-group>
-              </div>
-              <div *ngSwitchCase="'search'">
-                <nz-select
-                  style="width: 100%"
-                  nzShowSearch
-                  [nzPlaceHolder]="field.description"
-                  [(ngModel)]="field.value"
-                  [nzShowArrow]="false"
-                  (ngModelChange)="handleInputChange(field, $event)"
-                  (nzOnSearch)="currentSearchedField = field; optionsSearch.next($event)"
-                  [formControlName]="field.name"
-                  [ngClass]="{
-                    'has-error': formGroup.controls[field.name].invalid && formGroup.controls[field.name].dirty,
-                    'has-success': formGroup.controls[field.name].valid && formGroup.controls[field.name].dirty
-                  }"
-                >
-                  <nz-option
-                    *ngFor="let option of field.options"
-                    [nzLabel]="option.label"
-                    [nzValue]="option.value"
-                  ></nz-option>
-                </nz-select>
+                </app-text-input>
               </div>
               <div *ngSwitchCase="'textArea'">
-                <textarea
-                  id="field{{ i }}"
-                  nz-input
-                  [attr.placeholder]="field.description"
-                  [(ngModel)]="field.value"
-                  (change)="handleInputChange(field, $event)"
-                  [nzAutosize]="{ minRows: 3, maxRows: 5 }"
-                  [formControlName]="field.name"
-                  [ngClass]="{
-                    'has-error': formGroup.controls[field.name].invalid && formGroup.controls[field.name].dirty,
-                    'has-success': formGroup.controls[field.name].valid && formGroup.controls[field.name].dirty
-                  }"
+                <app-text-area-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
                 >
-                </textarea>
+                </app-text-area-input>
+              </div>
+              <div *ngSwitchCase="'number'">
+                <app-number-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-number-input>
+              </div>
+              <div *ngSwitchCase="'select'">
+                <app-select-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-select-input>
+              </div>
+              <div *ngSwitchCase="'search'">
+                <app-search-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-search-input>
+              </div>
+              <div *ngSwitchCase="'checkBox'">
+                <app-check-box-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-check-box-input>
+              </div>
+              <div *ngSwitchCase="'radio'">
+                <app-radio-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-radio-input>
+              </div>
+              <div *ngSwitchCase="'date'">
+                <app-date-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-date-input>
               </div>
               <div *ngSwitchCase="'dateRange'">
-                <nz-range-picker
-                  [attr.placeholder]="field.description"
-                  [formControlName]="field.name"
-                  [(ngModel)]="field.value"
-                  (ngModelChange)="handleInputChange(field, $event)"
+                <app-date-range-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
                 >
-                </nz-range-picker>
+                </app-date-range-input>
               </div>
-              <div *ngSwitchDefault>
-                <nz-input-group
-                  [nzSuffix]="suffix"
-                  [ngClass]="{
-                    'has-error': formGroup.controls[field.name].invalid && formGroup.controls[field.name].dirty,
-                    'has-success': formGroup.controls[field.name].valid && formGroup.controls[field.name].dirty
-                  }"
+              <div *ngSwitchCase="'password'">
+                <app-password-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
                 >
-                  <input
-                    [attr.type]="field.type"
-                    [(ngModel)]="field.value"
-                    (change)="handleInputChange(field, $event)"
-                    nz-input
-                    [attr.placeholder]="field.description"
-                    [formControlName]="field.name"
-                  />
-                </nz-input-group>
+                </app-password-input>
               </div>
-            </ng-container>
-            <div class="field-value" *ngIf="!inputMode">
-              <span *ngIf="field.type !== 'date'">{{ field?.value }}</span>
-              <!--<span *ngIf="field.type === 'date'">{{ field?.value | formatDate }}</span>-->
-            </div>
-            <ng-template #suffix>
-              <i nz-icon [nzType]="field?.iconName"></i>
-            </ng-template>
-            <ng-container *ngIf="!field.isArray">
-              <p
-                *ngIf="
-                  formGroup.controls[field.name].invalid &&
-                  !field.isArray &&
-                  formGroup.controls[field.name].dirty &&
-                  inputMode
-                "
-                translate
-              >
-                {{ field.validationMessage }}
-              </p>
+              <div *ngSwitchCase="'array'">
+                <app-array-input [field]="field" [inputMode]="inputMode"> </app-array-input>
+              </div>
             </ng-container>
           </div>
         </ng-container>
@@ -141,7 +105,7 @@
     <button
       *ngIf="showSubmitButton"
       nz-button
-      [disabled]="formGroup.invalid"
+      [disabled]="!isValidForm()"
       [nzShape]="'round'"
       (click)="handleSubmitForm()"
       [nzType]="'primary'"
@@ -149,33 +113,6 @@
       {{ form.submitButtonText }}
     </button>
   </nz-button-group>
-  <!--<button nz-button
-          nz-dropdown
-          nzTrigger="click"
-          *ngIf="form.submitButtonText && editMode"
-          [ngClass]="form.submitButtonClass"
-          [nzDropdownMenu]="actions"
-          [nzPlacement]="'bottomCenter'">
-    {{ form.submitButtonText }}
-  </button>
-  <nz-dropdown-menu #actions="nzDropdownMenu">
-    <ul nz-menu>
-      <li nz-menu-item>
-        <button nz-button
-                nzBlock
-                (click)="handleSubmitForm()"
-                [disabled]="formGroup.invalid"
-                nzType="primary">
-          {{ form.submitButtonText }}
-        </button>
-      </li>
-      <li nz-menu-item>
-        <button nz-button nzBlock nzType="default" (click)="toggleEdit()">
-          Cancel
-        </button>
-      </li>
-    </ul>
-  </nz-dropdown-menu>-->
   <button
     *ngIf="form.submitButtonText && !inputMode && showEditButton"
     nz-button
@@ -186,5 +123,4 @@
   >
     {{ form.editButtonText }}
   </button>
-</ng-container>
-<!--<app-loader [isLoading]="isLoading" [message]="loadingMessage"></app-loader>-->
+</nz-spin>

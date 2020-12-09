@@ -7,6 +7,7 @@ import { environment } from '@env/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { PatientForm } from '@app/pages/home/@forms/patient-form';
+import { PatientModel } from '@app/pages/home/@models/patient.model';
 
 const CryptoJS = require('crypto-js');
 
@@ -75,24 +76,14 @@ export class CreatePatientComponent implements OnInit {
   }
 
   createPatient(patient: Patient) {
-    console.log(patient.emergencyContacts);
-    return;
     this.isLoading = true;
     this.hasErrors = false;
     this.errors = [];
     this.loadingMessage = `Creating patient ${patient.firstName} ${patient.lastName}`;
     this.patientsService.createPatient(patient).subscribe(
-      async ({ data }) => {
-        const patientData = data.createPatient;
-        const color = patientData.active
-          ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
-          : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-
-        const active = patientData.active ? 'active' : 'inactive';
-
-        patientData.updatedAt = patientData.updatedAt ? moment(patientData.updatedAt).format('DD-MM-YYYY HH:mm') : '';
-        patientData.birthDate = patientData.birthDate ? moment(patientData.birthDate).format('DD-MM-YYYY HH:mm') : '';
-        patientData.active = `<nz-tag class="${color}">${active}</nz-tag>`;
+      async ({ data }: any) => {
+        const patientData = data.createOnePatient;
+        PatientModel.fromJson(patientData);
 
         this.isLoading = false;
         this.loadingMessage = '';
@@ -117,19 +108,8 @@ export class CreatePatientComponent implements OnInit {
     this.loadingMessage = `Updating patient ${patient.firstName} ${patient.lastName}`;
     this.patientsService.updatePatient(patient).subscribe(
       async ({ data }) => {
-        const patientData = data.updatePatient;
-        const color = patientData.active
-          ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
-          : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-
-        const active = patientData.active ? 'active' : 'inactive';
-
-        patientData.updatedAt = patientData.updatedAt ? moment(patientData.updatedAt).format('DD-MM-YYYY HH:mm') : '';
-        patientData.birthDate = patientData.birthDate ? moment(patientData.birthDate).format('DD-MM-YYYY HH:mm') : '';
-        patientData.active = `<nz-tag class="${color}">${active}</nz-tag>`;
-
-        // const updatedIndex = this.patients.findIndex((_patient) => _patient.id === patient.id);
-
+        const patientData = data.updateOnePatient;
+        PatientModel.fromJson(patientData);
         this.isLoading = false;
         this.loadingMessage = '';
         this.message.create('success', `Patient has successfully been updated`);

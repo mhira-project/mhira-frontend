@@ -1,1 +1,22 @@
-<p>radio-input works!</p>
+<label translate>
+  <b>{{ field?.title }}<span style="color: red" *ngIf="field?.isRequired && inputMode"> *</span></b>
+</label>
+<ng-container *ngIf="inputMode" [formGroup]="inputGroup">
+  <nz-radio-group
+    [(ngModel)]="field.value"
+    [formControlName]="field.name"
+    [ngClass]="{ 'has-error': inputIsValid() === false, 'has-success': inputIsValid() === true }"
+    (ngModelChange)="handleValueChange($event)"
+  >
+    <label nz-radio *ngFor="let option of field.options" [nzValue]="option.value">{{ option.label }}</label>
+  </nz-radio-group>
+</ng-container>
+<div class="field-value" *ngIf="!inputMode">
+  <span>{{ field?.value }}</span>
+</div>
+<p
+  *ngIf="this.inputGroup.controls[this.field.name].dirty && this.inputGroup.controls[this.field.name].invalid"
+  translate
+>
+  {{ field.validationMessage }}
+</p>
