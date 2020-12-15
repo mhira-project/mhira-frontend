@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Patient } from '@app/pages/home/@types/patient';
+import { Patient } from '@app/pages/patients-management/@types/patient';
 import { environment } from '@env/environment';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CaseManagerFilter } from '@app/pages/home/@types/case-manager-filter';
+import { CaseManagerFilter } from '@app/pages/patients-management/@types/case-manager-filter';
 
 const CryptoJS = require('crypto-js');
 

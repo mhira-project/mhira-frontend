@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
-import { HomeRoutingModule } from './home-routing.module';
-import { HomeComponent } from './home.component';
+import { PatientsManagementRoutingModule } from './patients-management-routing.module';
+import { PatientsManagementComponent } from './patients-management.component';
 import { PatientsComponent } from './patients/patients.component';
 import { CaseManagersComponent } from './case-managers/case-managers.component';
 import {
   NzAlertModule,
+  NzAvatarModule,
   NzButtonModule,
   NzCardModule,
   NzDrawerModule,
@@ -26,6 +27,7 @@ import { PatientProfileComponent } from './patient-profile/patient-profile.compo
 import { CreatePatientComponent } from './patient-profile/create-patient/create-patient.component';
 import { CaseManagersService } from './@services/case-managers.service';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
+import { EmergencyContactsService } from './@services/contacts.service';
 
 const antModules = [
   NzGridModule,
@@ -40,17 +42,18 @@ const antModules = [
   NzInputModule,
   NzIconModule,
   NzDrawerModule,
+  NzAvatarModule,
 ];
 
 @NgModule({
-  imports: [...antModules, CommonModule, AppFormModule, TranslateModule, SharedModule, HomeRoutingModule],
+  imports: [...antModules, CommonModule, AppFormModule, TranslateModule, SharedModule, PatientsManagementRoutingModule],
   declarations: [
-    HomeComponent,
+    PatientsManagementComponent,
     PatientsComponent,
     CaseManagersComponent,
     PatientProfileComponent,
     CreatePatientComponent,
   ],
-  providers: [PatientsService, CaseManagersService],
+  providers: [PatientsService, CaseManagersService, EmergencyContactsService],
 })
-export class HomeModule {}
+export class PatientsManagementModule {}

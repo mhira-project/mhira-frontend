@@ -1,4 +1,6 @@
 export interface CaseManagerFilter {
+  and?: any[];
+  or?: any[];
   first?: number;
   after?: string;
   last?: number;

@@ -4,7 +4,7 @@
       [loading]="isLoading"
       [showPagination]="false"
       [showCustomActions]="true"
-      [showSearch]="false"
+      [showSearch]="true"
       [showFilterButton]="true"
       [showCheckBoxColumn]="false"
       [listOfCustomActions]="actions"
@@ -19,6 +19,7 @@
       (onAction)="handleActionClick($event)"
       (onButton)="toggleAssignModal()"
       (onFilterButton)="toggleFilterDrawer()"
+      (onSearch)="searchManagers($event)"
     >
     </app-table>
   </div>

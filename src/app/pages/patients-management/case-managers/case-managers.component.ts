@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CaseManagersTable } from '../@tables/case-managers.table';
-import { CaseManager } from '@app/pages/home/@types/case-manager';
-import { CaseManagersService } from '@app/pages/home/@services/case-managers.service';
+import { CaseManager } from '@app/pages/patients-management/@types/case-manager';
+import { CaseManagersService } from '@app/pages/patients-management/@services/case-managers.service';
 import { Paging } from '@shared/@types/paging';
-import { CaseManagerModel } from '@app/pages/home/@models/case-manager.model';
-import { CaseManagersFilterForm } from '@app/pages/home/@forms/case-managers-filter.form';
-import { PatientsService } from '@app/pages/home/@services/patients.service';
-import { CaseManagerFilter } from '@app/pages/home/@types/case-manager-filter';
+import { CaseManagerModel } from '@app/pages/patients-management/@models/case-manager.model';
+import { CaseManagersFilterForm } from '@app/pages/patients-management/@forms/case-managers-filter.form';
+import { PatientsService } from '@app/pages/patients-management/@services/patients.service';
+import { CaseManagerFilter } from '@app/pages/patients-management/@types/case-manager-filter';
 import { UsersService } from '@app/pages/administration/@services/users.service';
-import { Patient } from '@app/pages/home/@types/patient';
+import { Patient } from '@app/pages/patients-management/@types/patient';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
@@ -20,7 +20,7 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 })
 export class CaseManagersComponent implements OnInit {
   @Input() managerType = 'caseManager';
-  @Input() filter: CaseManagerFilter;
+  @Input() filter: CaseManagerFilter = {};
   @Input() patient: Patient;
   @Input() showAssignButton = false;
   paging: Paging = {
@@ -265,6 +265,17 @@ export class CaseManagersComponent implements OnInit {
         });
         break;
     }
+  }
+
+  searchManagers(searchString: string) {
+    console.log(searchString);
+    this.filter.or = [
+      { firstName: { iLike: `%${searchString}%` } },
+      { middleName: { iLike: `%${searchString}%` } },
+      { lastName: { iLike: `%${searchString}%` } },
+      { medicalRecordNo: { iLike: `%${searchString}%` } },
+    ];
+    this.getCaseManagers();
   }
 
   filterCaseManagers(filter: any) {

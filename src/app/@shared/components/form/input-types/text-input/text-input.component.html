@@ -23,9 +23,6 @@
 <ng-template #suffix>
   <i nz-icon [nzType]="field?.iconName"></i>
 </ng-template>
-<p
-  *ngIf="this.inputGroup.controls[this.field.name].dirty && this.inputGroup.controls[this.field.name].invalid"
-  translate
->
+<p *ngIf="inputGroup.controls[field.name].dirty && inputGroup.controls[field.name].invalid" translate>
   {{ field.validationMessage }}
 </p>

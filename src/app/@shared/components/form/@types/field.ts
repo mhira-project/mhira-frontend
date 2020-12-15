@@ -17,7 +17,7 @@ export interface Field {
     | 'dateRange'
     | 'array';
   children?: Field[];
-  values?: any;
+  rows?: any;
   iconName?: string;
   pattern?: string;
   minLength?: number;

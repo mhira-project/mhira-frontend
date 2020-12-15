@@ -6,8 +6,10 @@ import * as moment from 'moment';
 import { environment } from '@env/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
-import { PatientForm } from '@app/pages/home/@forms/patient-form';
-import { PatientModel } from '@app/pages/home/@models/patient.model';
+import { PatientForm } from '@app/pages/patients-management/@forms/patient-form';
+import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
+import { EmergencyContactsService } from '@app/pages/patients-management/@services/contacts.service';
+import { Contact } from '@app/pages/patients-management/@types/contact';
 
 const CryptoJS = require('crypto-js');
 
@@ -28,6 +30,7 @@ export class CreatePatientComponent implements OnInit {
 
   constructor(
     private patientsService: PatientsService,
+    private emergencyContactsService: EmergencyContactsService,
     private message: NzMessageService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -75,20 +78,66 @@ export class CreatePatientComponent implements OnInit {
     });
   }
 
-  createPatient(patient: Patient) {
+  createEmergencyContacts(patientId: number, contacts: Contact[]) {
     this.isLoading = true;
     this.hasErrors = false;
     this.errors = [];
-    this.loadingMessage = `Creating patient ${patient.firstName} ${patient.lastName}`;
-    this.patientsService.createPatient(patient).subscribe(
+    this.emergencyContactsService.createManyEmergencyContacts(contacts).subscribe(
       async ({ data }: any) => {
-        const patientData = data.createOnePatient;
-        PatientModel.fromJson(patientData);
+        const ids = data.createManyEmergencyContacts.edges.filter((contact: any) => {
+          return contact.id;
+        });
+        this.addEmergencyContactsToPatients(patientId, ids);
+        this.isLoading = false;
+        this.loadingMessage = '';
+      },
+      (error) => {
+        this.hasErrors = true;
+        error.graphQLErrors.map((_error: any) => {
+          this.errors.push(_error.message);
+        });
+        this.isLoading = false;
+        this.loadingMessage = '';
+      }
+    );
+  }
 
+  addEmergencyContactsToPatients(patientId: number, emergencyContactsIds: number[]) {
+    this.isLoading = true;
+    this.hasErrors = false;
+    this.errors = [];
+    this.emergencyContactsService.addEmergencyContactsToPatient(patientId, emergencyContactsIds).subscribe(
+      async ({ data }: any) => {
         this.isLoading = false;
         this.loadingMessage = '';
         this.message.create('success', `Patient has successfully been created`);
         this.router.navigate(['/mhira/home/patients']);
+      },
+      (error) => {
+        this.hasErrors = true;
+        error.graphQLErrors.map((_error: any) => {
+          this.errors.push(_error.message);
+        });
+        this.isLoading = false;
+        this.loadingMessage = '';
+      }
+    );
+  }
+
+  createPatient(patient: Patient) {
+    this.isLoading = true;
+    this.hasErrors = false;
+    this.errors = [];
+    const emergencyContacts = patient.emergencyContacts;
+    patient.emergencyContacts = undefined;
+    this.loadingMessage = `Creating patient ${patient.firstName} ${patient.lastName}`;
+    this.patientsService.createPatient(patient).subscribe(
+      async ({ data }: any) => {
+        const patientData = data.createOnePatient;
+        patient.emergencyContacts = emergencyContacts;
+        this.isLoading = false;
+        this.loadingMessage = '';
+        this.createEmergencyContacts(patientData.id, emergencyContacts);
       },
       (error) => {
         this.hasErrors = true;
@@ -106,6 +155,8 @@ export class CreatePatientComponent implements OnInit {
     this.hasErrors = false;
     this.errors = [];
     this.loadingMessage = `Updating patient ${patient.firstName} ${patient.lastName}`;
+    const emergencyContacts = patient.emergencyContacts;
+    patient.emergencyContacts = undefined;
     this.patientsService.updatePatient(patient).subscribe(
       async ({ data }) => {
         const patientData = data.updateOnePatient;

@@ -5,12 +5,12 @@ import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AssessmentService } from '@app/pages/assessment/@services/assessment.service';
 import { Questionnaire } from '@app/pages/assessment/@types/questionnaire';
-import { PatientsService } from '@app/pages/home/@services/patients.service';
+import { PatientsService } from '@app/pages/patients-management/@services/patients.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Assessment } from '@app/pages/assessment/@types/assessment';
 import { environment } from '@env/environment';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
-import { CaseManagersService } from '@app/pages/home/@services/case-managers.service';
+import { CaseManagersService } from '@app/pages/patients-management/@services/case-managers.service';
 
 const CryptoJS = require('crypto-js');
 

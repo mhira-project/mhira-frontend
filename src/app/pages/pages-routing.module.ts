@@ -6,7 +6,8 @@ import { extract } from '../i18n';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+    loadChildren: () =>
+      import('./patients-management/patients-management.module').then((m) => m.PatientsManagementModule),
   },
   {
     path: 'assessments',

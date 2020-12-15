@@ -131,7 +131,13 @@
           [nzIndeterminate]="indeterminate"
           (nzCheckedChange)="onAllChecked($event)"
         ></th>
-        <th [nzWidth]="column.width" *ngFor="let column of listOfColumn">
+        <th
+          *ngFor="let column of listOfColumn"
+          [nzWidth]="column.width"
+          [nzSortFn]="column.sort"
+          [nzColumnKey]="column.name"
+          [nzSortDirections]="column.sortDirections"
+        >
           {{ column.title }}
           <nz-filter-trigger *ngIf="column.isFilterable" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
             <i nz-icon nzType="search"></i>
@@ -157,12 +163,8 @@
           </nz-dropdown-menu>
           <ng-container *ngIf="column.isList">
             <nz-divider class="m-v-10"></nz-divider>
-            <div>
-              <table>
-                <td [width]="listColumn.width" *ngFor="let listColumn of column.listColumns">
-                  {{ listColumn.title }}
-                </td>
-              </table>
+            <div [attr.width]="listColumn.width" *ngFor="let listColumn of column.listColumns">
+              {{ listColumn.title }}
             </div>
           </ng-container>
         </th>

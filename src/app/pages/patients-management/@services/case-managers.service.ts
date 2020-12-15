@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { FetchResult } from 'apollo-link';
 import { CaseManagersQueries } from '@app/@graphql/queries/case-managers';
-import { CaseManagerFilter } from '@app/pages/home/@types/case-manager-filter';
+import { CaseManagerFilter } from '@app/pages/patients-management/@types/case-manager-filter';
 import { CaseManagersMutations } from '@app/@graphql/mutations/case-managers';
 
 @Injectable({

@@ -1,16 +1,18 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { Patient } from '../@types/patient';
 import { table } from '../@tables/patients.table';
-import { PatientsService } from '@app/pages/home/@services/patients.service';
+import { PatientsService } from '@app/pages/patients-management/@services/patients.service';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
 import { Form } from '@shared/components/form/@types/form';
 import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
-import { PatientModel } from '@app/pages/home/@models/patient.model';
-import { PatientFilterForm } from '@app/pages/home/@forms/patients-filter.form';
-import { PatientFilter } from '@app/pages/home/@types/patient-filter';
+import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
+import { PatientFilterForm } from '@app/pages/patients-management/@forms/patients-filter.form';
+import { PatientFilter } from '@app/pages/patients-management/@types/patient-filter';
+import { NzTableQueryParams } from 'ng-zorro-antd';
+import { Sorting } from '@shared/@types/sorting';
 
 const CryptoJS = require('crypto-js');
 
@@ -47,7 +49,8 @@ export class PatientsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loadPermissions();
-    this.getPatients(this.paging);
+    // to be called from the sort fuction
+    // this.getPatients(this.paging);
   }
 
   loadPermissions() {
@@ -58,10 +61,10 @@ export class PatientsComponent implements OnInit, OnChanges {
 
   ngOnChanges() {}
 
-  getPatients(paging: Paging) {
+  getPatients(paging: Paging, sorting: Sorting[] = []) {
     this.isLoading = true;
     this.patients = [];
-    this.patientsService.patients({ filter: this.filter, paging }).subscribe(
+    this.patientsService.patients({ filter: this.filter, paging, sorting }).subscribe(
       async ({ data }) => {
         data.patients.edges.map((patient: any) => {
           this.patients.push(PatientModel.fromJson(patient.node));
@@ -147,13 +150,24 @@ export class PatientsComponent implements OnInit, OnChanges {
 
   searchPatients(searchString: string) {
     this.filter.or = [
-      // {birthDate : {between: {lower: value[0], upper: value[1]}}}
       { firstName: { iLike: `%${searchString}%` } },
       { middleName: { iLike: `%${searchString}%` } },
       { lastName: { iLike: `%${searchString}%` } },
       { medicalRecordNo: { iLike: `%${searchString}%` } },
     ];
     this.getPatients({ first: 10 });
+  }
+
+  sortPatients(params: NzTableQueryParams) {
+    const sorting: Sorting[] = [];
+    params.sort.map((item: { key: string; value: string }) => {
+      sorting.push({
+        field: item.key,
+        direction: item.value === 'ascend' ? 'ASC' : 'DESC',
+      });
+    });
+
+    this.getPatients({ first: 10 }, sorting);
   }
 
   filterPatients(filter: PatientFilter) {

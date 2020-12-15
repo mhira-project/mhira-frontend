@@ -9,6 +9,7 @@ import { UserChangePasswordInput } from '@app/pages/administration/user-manageme
 import { NzMessageService } from 'ng-zorro-antd';
 import { UsersService } from '@app/pages/administration/@services/users.service';
 import { FormComponent } from '@shared/components/form/form.component';
+import { FieldGroup } from '@shared/components/form/@types/field.group';
 
 const CryptoJS = require('crypto-js');
 
@@ -57,6 +58,7 @@ export class HeaderComponent implements OnInit {
       },
     });
   }
+
   changePassword(form: any) {
     if (this.user.id) {
       this.isLoading = true;
@@ -100,11 +102,17 @@ export class HeaderComponent implements OnInit {
 
   handleCancel() {
     this.changePasswordModal = false;
+    this.changePasswordForm.groups.forEach((group: FieldGroup) => {
+      group.fields.find((field) => {
+        field.value = null;
+      });
+    });
   }
 
   showChangePasswordModal() {
     this.changePasswordModal = true;
   }
+
   onError(errors: any) {
     if (errors.length > 0) {
       for (const error of errors) {

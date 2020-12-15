@@ -1,7 +1,7 @@
-import { Contact } from '@app/pages/home/@types/contact';
-import { Informant } from '@app/pages/home/@types/informant';
+import { Contact } from '@app/pages/patients-management/@types/contact';
+import { Informant } from '@app/pages/patients-management/@types/informant';
 import { User } from '@app/pages/administration/@types/user';
-import { PatientStatus } from '@app/pages/home/@types/patient-status';
+import { PatientStatus } from '@app/pages/patients-management/@types/patient-status';
 
 export interface Patient {
   id?: number;
@@ -28,8 +28,10 @@ export interface Patient {
   updatedAt?: string;
   formattedUpdatedAt?: string;
   emergencyContacts: Contact[];
-  informants: Informant[];
-  caseManagers: User[];
+  informants?: Informant[];
+  formattedInformants?: string;
+  caseManagers?: User[];
+  formattedCaseManagers?: string;
   country: any;
   status: PatientStatus;
 }

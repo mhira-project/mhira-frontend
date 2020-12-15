@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { extract } from '../../i18n/index';
-import { HomeComponent } from './home.component';
+import { PatientsManagementComponent } from './patients-management.component';
 import { PatientsComponent } from './patients/patients.component';
 import { CaseManagersComponent } from './case-managers/case-managers.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
@@ -9,7 +9,7 @@ import { PatientProfileComponent } from './patient-profile/patient-profile.compo
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: PatientsManagementComponent,
     data: {
       title: extract('Home'),
     },
@@ -43,4 +43,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class HomeRoutingModule {}
+export class PatientsManagementRoutingModule {}

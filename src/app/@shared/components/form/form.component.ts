@@ -55,7 +55,7 @@ export class FormComponent implements OnInit {
     this.form.groups.map((group) => {
       group.fields.map((field) => {
         if (field.type === 'array') {
-          formData[field.name] = field.values;
+          formData[field.name] = field.rows;
         } else {
           formData[field.name] = field.value;
         }

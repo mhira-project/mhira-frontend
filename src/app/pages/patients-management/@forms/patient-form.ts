@@ -208,7 +208,7 @@ export const PatientForm: Form = {
           validationMessage: 'please alternative enter phone number',
           isRequired: false,
           span: 24,
-          values: [],
+          rows: [],
           children: [
             {
               value: '',

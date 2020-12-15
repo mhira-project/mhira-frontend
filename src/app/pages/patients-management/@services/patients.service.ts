@@ -14,7 +14,7 @@ import { Sorting } from '@shared/@types/sorting';
 export class PatientsService {
   constructor(private apollo: Apollo) {}
 
-  patients(params?: { paging?: Paging; filter?: any; sorting?: Sorting }): Observable<FetchResult<any>> {
+  patients(params?: { paging?: Paging; filter?: any; sorting?: Sorting[] }): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: PatientsQueries.getPatients,
       variables: {
@@ -49,7 +49,9 @@ export class PatientsService {
   deletePatient(patient: Patient): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: PatientsMutations.deletePatient,
-      variables: { id: patient.id },
+      variables: {
+        input: { id: patient.id },
+      },
       fetchPolicy: 'no-cache',
     });
   }
