@@ -190,8 +190,37 @@ const deletePatient = gql`
   }
 `;
 
+const addInformantsToPatient = gql`
+  mutation($input: RelationInput!) {
+    addInformantsToPatient(input: $input) {
+      id
+      statusId
+      medicalRecordNo
+      firstName
+      middleName
+      lastName
+      phone
+      phone2
+      email
+      addressStreet
+      addressNumber
+      addressApartment
+      addressPlace
+      addressPostalCode
+      addressCountryId
+      gender
+      birthDate
+      birthCountryCode
+      nationality
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 export const PatientsMutations = {
   createPatient,
   updatePatient,
   deletePatient,
+  addInformantsToPatient,
 };

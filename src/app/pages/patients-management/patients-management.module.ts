@@ -28,6 +28,7 @@ import { CreatePatientComponent } from './patient-profile/create-patient/create-
 import { CaseManagersService } from './@services/case-managers.service';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
 import { EmergencyContactsService } from './@services/contacts.service';
+import { InformantsListComponent } from './informants-list/informants-list.component';
 
 const antModules = [
   NzGridModule,
@@ -51,6 +52,7 @@ const antModules = [
     PatientsManagementComponent,
     PatientsComponent,
     CaseManagersComponent,
+    InformantsListComponent,
     PatientProfileComponent,
     CreatePatientComponent,
   ],

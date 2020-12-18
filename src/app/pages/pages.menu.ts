@@ -26,6 +26,14 @@ export const MENU: SideNavInterface[] = [
         iconTheme: '',
         submenu: [],
       },
+      {
+        path: 'home/informants',
+        title: extract('Informants'),
+        permissions: ['view patients', 'manage patients'],
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
     ],
   },
   {

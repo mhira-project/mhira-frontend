@@ -1,4 +1,4 @@
-import { Patient } from './patient';
+import { Patient } from '@app/pages/patients-management/@types/patient';
 
 export interface Informant {
   id?: number;
@@ -6,12 +6,17 @@ export interface Informant {
   firstName: string;
   middleName?: string;
   lastName: string;
-  phone: string;
+  phone?: string;
   email?: string;
-  address?: string;
-  createdAt?: string;
-  formattedCreatedAt?: string;
+  address: string;
+  relationshipTypeId?: number;
+  createdAt: string;
   updatedAt?: string;
-  formattedUpdatedAt?: string;
+  relationshipType: {
+    id?: number;
+    name: string;
+    createdAt: string;
+    updatedAt?: string;
+  };
   patient: Patient;
 }

@@ -47,6 +47,10 @@ export class FormComponent implements OnInit {
     this.inputChange.emit({ name: field.name, value });
   }
 
+  handleSearch(value: any) {
+    this.searchOptions.emit(value);
+  }
+
   handleSubmitForm() {
     if (!this.isValidForm()) {
       return;

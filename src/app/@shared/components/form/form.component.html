@@ -47,6 +47,7 @@
                 <app-search-input
                   [field]="field"
                   [inputMode]="inputMode"
+                  (searchOptions)="handleSearch($event)"
                   (valueChange)="handleInputChange(field, $event)"
                 >
                 </app-search-input>

@@ -5,6 +5,7 @@ import { PatientsManagementComponent } from './patients-management.component';
 import { PatientsComponent } from './patients/patients.component';
 import { CaseManagersComponent } from './case-managers/case-managers.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
+import { InformantsListComponent } from './informants-list/informants-list.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,13 @@ const routes: Routes = [
         component: CaseManagersComponent,
         data: {
           title: extract('Case Managers'),
+        },
+      },
+      {
+        path: 'informants',
+        component: InformantsListComponent,
+        data: {
+          title: extract('Informants'),
         },
       },
     ],
