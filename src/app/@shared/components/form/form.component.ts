@@ -47,6 +47,10 @@ export class FormComponent implements OnInit {
     this.inputChange.emit({ name: field.name, value });
   }
 
+  handleSearch(value: any) {
+    this.searchOptions.emit(value);
+  }
+
   handleSubmitForm() {
     if (!this.isValidForm()) {
       return;
@@ -55,7 +59,7 @@ export class FormComponent implements OnInit {
     this.form.groups.map((group) => {
       group.fields.map((field) => {
         if (field.type === 'array') {
-          formData[field.name] = field.values;
+          formData[field.name] = field.rows;
         } else {
           formData[field.name] = field.value;
         }

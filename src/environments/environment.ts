@@ -15,7 +15,7 @@ export const environment = {
   secretKey: 'hfsdjfhdufhiuegewurge8365746543785643785638276423874',
   hmr: true,
   // version: env.npm_package_version + '-dev',
-  baseURL: ' https://api.mhira.net/graphql',
+  baseURL: 'https://api.mhira.net/graphql',
   defaultLanguage: 'en-US',
   supportedLanguages: ['en-US', 'fr-FR'],
 };

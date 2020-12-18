@@ -1,0 +1,14 @@
+<nz-tabset nzSize="large">
+  <nz-tab nzTitle="Profile">
+    <app-create-patient></app-create-patient>
+  </nz-tab>
+  <nz-tab nzTitle="Clinicians/Informants">
+    <app-case-managers [managerType]="'caseManager'" [patient]="patient" [showAssignButton]="true" [filter]="filter">
+    </app-case-managers>
+    <div class="separator"></div>
+    <app-informants-list [patient]="patient"> </app-informants-list>
+  </nz-tab>
+  <nz-tab nzTitle="Questionnaires"> Content of Tab Pane 3</nz-tab>
+  <nz-tab nzTitle="Reports"> Content of Tab Pane 4</nz-tab>
+  <nz-tab nzTitle="Assessment"> Content of Tab Pane 5</nz-tab>
+</nz-tabset>

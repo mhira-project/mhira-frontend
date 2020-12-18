@@ -10,7 +10,7 @@
       <div nz-row nzGutter="16">
         <ng-container *ngFor="let field of group.fields; let i = index">
           <div nz-col class="gutter-row form-item" [nzSpan]="field?.span">
-            <ng-container *ngIf="inputMode" [ngSwitch]="field.type">
+            <ng-container [ngSwitch]="field.type">
               <div *ngSwitchCase="'text'">
                 <app-text-input
                   [field]="field"
@@ -47,6 +47,7 @@
                 <app-search-input
                   [field]="field"
                   [inputMode]="inputMode"
+                  (searchOptions)="handleSearch($event)"
                   (valueChange)="handleInputChange(field, $event)"
                 >
                 </app-search-input>

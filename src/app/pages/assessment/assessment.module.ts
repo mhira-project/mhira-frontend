@@ -22,7 +22,7 @@ import {
   NzTabsModule,
   NzToolTipModule,
 } from 'ng-zorro-antd';
-import { PatientsService } from '../home/@services/patients.service';
+import { PatientsService } from '../patients-management/@services/patients.service';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
 
 const antModules = [

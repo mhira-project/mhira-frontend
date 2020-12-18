@@ -1,0 +1,56 @@
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <app-table
+      *ngIf="perms.permissionsOnly(['manage patients', 'view patients'])"
+      [loading]="isLoading"
+      [showPagination]="false"
+      [showFilterButton]="true"
+      [showCustomActions]="true"
+      [showSearch]="true"
+      [showCheckBoxColumn]="false"
+      [listOfCustomActions]="actions"
+      [listOfData]="patientsTable.rows"
+      [listOfColumn]="patientsTable.columns"
+      [showButton]="perms.permissionsOnly(['manage patients'])"
+      [buttonText]="'Create Patient'"
+      [hasNextPage]="pageInfo?.hasNextPage"
+      [hasPreviousPage]="pageInfo?.hasPreviousPage"
+      (onNext)="navigatePages('next')"
+      (onPrevious)="navigatePages('previous')"
+      (onFilterButton)="showFilterPanelAction()"
+      (onAction)="handleActionClick($event)"
+      (onButton)="handleCreatePatient()"
+      (rowClick)="handleRowClick($event)"
+      (onSearch)="searchPatients($event)"
+      (onParamChange)="sortPatients($event)"
+    >
+    </app-table>
+  </div>
+</div>
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Delete Patient"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="deletePatient()"
+  [nzOkLoading]="isOkLoading"
+>
+  <p>
+    Are you sure you want to delete
+    <b>{{ patients[currentPatientIndex]?.firstName }} {{ patients[currentPatientIndex]?.lastName }}</b
+    >? This action is irreversible
+  </p>
+</nz-modal>
+<nz-drawer
+  [nzMask]="false"
+  [nzClosable]="true"
+  [nzVisible]="showFilterPanel"
+  nzPlacement="right"
+  nzTitle="Filter Patients"
+  (nzOnClose)="closeFilterPanel()"
+>
+  <app-custom-filter
+    [form]="patientFilterForm"
+    [processFilter]="false"
+    (submitForm)="filterPatients($event)"
+  ></app-custom-filter>
+</nz-drawer>

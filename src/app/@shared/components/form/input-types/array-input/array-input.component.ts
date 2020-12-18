@@ -10,33 +10,32 @@ export class ArrayInputComponent implements OnInit {
   @Input() field: Field;
   @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
   @Input() inputMode = false;
-  rows: any[] = [];
-  children: any[];
 
   constructor() {}
 
   ngOnInit(): void {
+    this.field.rows = [];
     this.addRow();
   }
 
   addRow() {
-    const childField = {};
+    const childItems: any[] = [];
     this.field.children.map((child: Field) => {
-      childField[child.name] = null;
+      childItems.push(child);
     });
-    this.rows.push(childField);
-    this.field.values.push(childField);
+    this.field.rows.push(childItems);
   }
 
   removeRow(rowIndex: number) {
-    this.rows.splice(rowIndex, 1);
-    this.field.values.splice(rowIndex, 1);
+    this.field.rows.splice(rowIndex, 1);
   }
 
-  handleInputChange(row: any, child: Field, value: any) {
-    row[child.name] = value;
+  handleInputChange(child: Field, value: any, rowIndex: number) {
+    /*const childItem = {};
+    childItem[child.name] = value;
+    this.field.rows[rowIndex] = childItem;
     this.valueChange.emit({
-      [this.field.name]: this.field.values,
-    });
+      [this.field.name]: this.field.rows,
+    });*/
   }
 }
