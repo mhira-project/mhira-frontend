@@ -19,6 +19,7 @@ import { DepartmentsService } from '@app/pages/administration/@services/departme
 import { Department } from '@app/pages/administration/@types/department';
 import { ModalType } from '@app/pages/administration/user-management/modal.type';
 import { FormComponent } from '@shared/components/form/form.component';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -54,6 +55,7 @@ export class UserFormComponent implements OnInit {
   unselectedRoles: number[] = [];
   selectedDepartments: number[] = [];
   unselectedDepartments: number[];
+  currentUser: User;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -63,6 +65,7 @@ export class UserFormComponent implements OnInit {
     private usersService: UsersService,
     private message: NzMessageService,
     private rolesService: RolesService,
+    public perms: AppPermissionsService,
     private departmentsService: DepartmentsService
   ) {}
 
@@ -70,6 +73,7 @@ export class UserFormComponent implements OnInit {
     this.getUserFromUrl();
     this.getRoles();
     this.getDepartments();
+    this.getUser();
   }
 
   getDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
@@ -103,6 +107,9 @@ export class UserFormComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+  getUser() {
+    this.currentUser = JSON.parse(localStorage.getItem('user')) as User;
   }
   clickChangePassword() {
     console.log('change');
@@ -458,5 +465,13 @@ export class UserFormComponent implements OnInit {
   activateUser(user: User) {
     user.active = !user.active;
     this.updateUser(user);
+  }
+
+  showIfPermissionIs(action: string) {
+    return this.perms.permissionsOnly(action);
+  }
+
+  isCurrentUser(): boolean {
+    return this.user.id === this.currentUser.id;
   }
 }
