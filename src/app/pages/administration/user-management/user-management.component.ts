@@ -223,6 +223,11 @@ export class UserManagementComponent implements OnInit {
   }
 
   handleCancel() {
+    this.updatePasswordForm.groups.map((group) => {
+      group.fields.map((field) => {
+        field.value = '';
+      });
+    });
     this.showModal = false;
   }
 

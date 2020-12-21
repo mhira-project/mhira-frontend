@@ -145,6 +145,11 @@ export class UserFormComponent implements OnInit {
     return false;
   }
   handleCancel() {
+    this.updatePasswordForm.groups.map((group) => {
+      group.fields.map((field) => {
+        field.value = '';
+      });
+    });
     this.showModal = false;
   }
 
@@ -386,25 +391,29 @@ export class UserFormComponent implements OnInit {
   }
 
   submitForm(form: any): void {
-    if (this.user.id != null) {
-      form.id = this.user.id;
-      this.updateUser(form);
+    if (form.newPassword !== undefined) {
+      this.updateUserPassword(form);
     } else {
-      if (form.password !== form.passwordConfirmation) {
-        this.message.create('error', `Password does not match`);
+      if (this.user.id != null) {
+        form.id = this.user.id;
+        this.updateUser(form);
       } else {
-        if (form.roleId) {
-          this.selectedRoles.push(form.roleId);
+        if (form.password !== form.passwordConfirmation) {
+          this.message.create('error', `Password does not match`);
+        } else {
+          if (form.roleId) {
+            this.selectedRoles.push(form.roleId);
+          }
+          if (form.departmentId) {
+            this.selectedDepartments.push(form.departmentId);
+          }
+          this.createUser(form);
         }
-        if (form.departmentId) {
-          this.selectedDepartments.push(form.departmentId);
-        }
-        this.createUser(form);
       }
     }
   }
 
-  changePassword(form: any) {
+  updateUserPassword(form: any) {
     console.log(form);
     if (this.user.id) {
       this.isLoading = true;
@@ -418,7 +427,13 @@ export class UserFormComponent implements OnInit {
         async ({ data }) => {
           this.isLoading = false;
           this.loadingMessage = '';
+          this.showModal = false;
           this.message.create('success', `Password has successfully been changed`);
+          this.updatePasswordForm.groups.map((group) => {
+            group.fields.map((field) => {
+              field.value = '';
+            });
+          });
         },
         (error) => {
           this.isLoading = false;
