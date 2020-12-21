@@ -17,11 +17,11 @@ import { AppPermissionsService } from '@shared/services/app-permissions.service'
 export class RolesAndPermissionsComponent implements OnInit {
   loading = false;
   rolesPaging: Paging = {
-    first: 10,
+    first: 50,
   };
   rolesPageInfo: any;
   permissionsPaging: Paging = {
-    first: 10,
+    first: 50,
   };
   permissionsPageInfo: any;
   matrix: { roles: Role[]; permissions: Permission[] } = {
@@ -36,7 +36,7 @@ export class RolesAndPermissionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getPermissions();
+    this.getPermissions({ paging: this.permissionsPaging });
     this.getRoles();
   }
 
