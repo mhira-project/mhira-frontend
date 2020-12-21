@@ -93,7 +93,7 @@
                 </app-password-input>
               </div>
               <div *ngSwitchCase="'array'">
-                <app-array-input [field]="field" [inputMode]="inputMode"> </app-array-input>
+                <app-array-input [field]="field" [inputMode]="inputMode"></app-array-input>
               </div>
             </ng-container>
           </div>
@@ -106,9 +106,9 @@
     <button
       *ngIf="showSubmitButton"
       nz-button
-      [disabled]="!isValidForm()"
+      [disabled]="!isValidForm(form)"
       [nzShape]="'round'"
-      (click)="handleSubmitForm()"
+      (click)="handleSubmitForm(form)"
       [nzType]="'primary'"
     >
       {{ form.submitButtonText }}

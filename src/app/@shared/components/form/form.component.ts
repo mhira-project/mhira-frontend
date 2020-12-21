@@ -21,6 +21,7 @@ export class FormComponent implements OnInit {
   @Output() searchOptions: EventEmitter<any> = new EventEmitter<any>();
   @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
   @Output() inputChange: EventEmitter<any> = new EventEmitter<any>();
+  // @Output() manual: EventEmitter<any> = new EventEmitter<any>();
   formGroup: FormGroup;
 
   constructor() {}
@@ -31,9 +32,9 @@ export class FormComponent implements OnInit {
     this.inputMode = !this.inputMode;
   }
 
-  isValidForm(): boolean {
+  isValidForm(form?: Form): boolean {
     let isValid = true;
-    this.form.groups.map((group: FieldGroup) => {
+    form.groups.map((group: FieldGroup) => {
       group.fields.map((field: Field) => {
         if (field.type !== 'array') {
           isValid = field.isValid && isValid;
@@ -51,12 +52,12 @@ export class FormComponent implements OnInit {
     this.searchOptions.emit(value);
   }
 
-  handleSubmitForm() {
-    if (!this.isValidForm()) {
+  handleSubmitForm(form?: Form) {
+    if (!this.isValidForm(form)) {
       return;
     }
     const formData = {};
-    this.form.groups.map((group) => {
+    form.groups.map((group) => {
       group.fields.map((field) => {
         if (field.type === 'array') {
           formData[field.name] = field.rows;

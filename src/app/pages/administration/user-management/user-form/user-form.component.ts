@@ -106,7 +106,7 @@ export class UserFormComponent implements OnInit {
   }
   clickChangePassword() {
     console.log('change');
-    this._child.handleSubmitForm();
+    this._child.handleSubmitForm(this.updatePasswordForm);
   }
   showChangePasswordForm() {
     this.showModal = true;
