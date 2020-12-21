@@ -11,30 +11,51 @@
         <i nz-icon nzType="minus" nzTheme="outline"></i>
       </button>
     </div>
-    <div nz-col class="gutter-row form-item" *ngFor="let child of row" [nzSpan]="child?.span">
+    <div nz-col class="gutter-row form-item" *ngFor="let child of row; let childIndex = index" [nzSpan]="child?.span">
       <ng-container [ngSwitch]="child.type">
         <div *ngSwitchCase="'text'">
-          <app-text-input [field]="child" [inputMode]="inputMode" (valueChange)="handleInputChange(child, $event, i)">
+          <app-text-input
+            [field]="child"
+            [inputMode]="inputMode"
+            [name]="i + child.name + childIndex"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
           </app-text-input>
         </div>
         <div *ngSwitchCase="'textArea'">
           <app-text-area-input
             [field]="child"
+            [inputModel]="child.value"
             [inputMode]="inputMode"
             (valueChange)="handleInputChange(child, $event, i)"
           >
           </app-text-area-input>
         </div>
         <div *ngSwitchCase="'number'">
-          <app-number-input [field]="child" [inputMode]="inputMode" (valueChange)="handleInputChange(child, $event, i)">
+          <app-number-input
+            [field]="child"
+            [inputModel]="child.value"
+            [inputMode]="inputMode"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
           </app-number-input>
         </div>
         <div *ngSwitchCase="'select'">
-          <app-select-input [field]="child" [inputMode]="inputMode" (valueChange)="handleInputChange(child, $event, i)">
+          <app-select-input
+            [field]="child"
+            [inputModel]="child.value"
+            [inputMode]="inputMode"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
           </app-select-input>
         </div>
         <div *ngSwitchCase="'search'">
-          <app-search-input [field]="child" [inputMode]="inputMode" (valueChange)="handleInputChange(child, $event, i)">
+          <app-search-input
+            [field]="child"
+            [inputModel]="child.value"
+            [inputMode]="inputMode"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
           </app-search-input>
         </div>
         <div *ngSwitchCase="'checkBox'">
@@ -46,16 +67,27 @@
           </app-check-box-input>
         </div>
         <div *ngSwitchCase="'radio'">
-          <app-radio-input [field]="child" [inputMode]="inputMode" (valueChange)="handleInputChange(child, $event, i)">
+          <app-radio-input
+            [field]="child"
+            [inputModel]="child.value"
+            [inputMode]="inputMode"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
           </app-radio-input>
         </div>
         <div *ngSwitchCase="'date'">
-          <app-date-input [field]="child" [inputMode]="inputMode" (valueChange)="handleInputChange(child, $event, i)">
+          <app-date-input
+            [field]="child"
+            [inputModel]="child.value"
+            [inputMode]="inputMode"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
           </app-date-input>
         </div>
         <div *ngSwitchCase="'dateRange'">
           <app-date-range-input
             [field]="child"
+            [inputModel]="child.value"
             [inputMode]="inputMode"
             (valueChange)="handleInputChange(child, $event, i)"
           >
@@ -64,6 +96,7 @@
         <div *ngSwitchCase="'password'">
           <app-password-input
             [field]="child"
+            [inputModel]="child.value"
             [inputMode]="inputMode"
             (valueChange)="handleInputChange(child, $event, i)"
           >

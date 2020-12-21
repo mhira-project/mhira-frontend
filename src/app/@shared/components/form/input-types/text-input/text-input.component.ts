@@ -9,6 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class TextInputComponent implements OnInit {
   @Input() field: Field;
+  @Input() name: string;
   @Input() inputMode = false;
   @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
   inputGroup: FormGroup;

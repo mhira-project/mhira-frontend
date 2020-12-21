@@ -10,6 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class NumberInputComponent implements OnInit {
   @Input() field: Field;
   @Input() inputMode = false;
+  @Input() inputModel: any;
   @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
   inputGroup: FormGroup;
 
