@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { userForms } from '@app/pages/administration/@forms/user.form';
 import { Form } from '@shared/components/form/@types/form';
@@ -18,6 +18,7 @@ import { Role } from '@app/pages/administration/@types/role';
 import { DepartmentsService } from '@app/pages/administration/@services/departments.service';
 import { Department } from '@app/pages/administration/@types/department';
 import { ModalType } from '@app/pages/administration/user-management/modal.type';
+import { FormComponent } from '@shared/components/form/form.component';
 
 const CryptoJS = require('crypto-js');
 
@@ -26,7 +27,8 @@ const CryptoJS = require('crypto-js');
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
 })
-export class UserFormComponent implements OnInit, OnDestroy {
+export class UserFormComponent implements OnInit {
+  @ViewChild(FormComponent) _child: FormComponent;
   user: User;
   isLoading = false;
   showModal = false;
@@ -70,8 +72,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
     this.getDepartments();
   }
 
-  ngOnDestroy() {}
-
   getDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
     this.isLoading = true;
 
@@ -103,6 +103,10 @@ export class UserFormComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       }
     );
+  }
+  clickChangePassword() {
+    console.log('change');
+    this._child.handleSubmitForm();
   }
   showChangePasswordForm() {
     this.showModal = true;
@@ -141,10 +145,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
     return false;
   }
   handleCancel() {
-    this.showModal = false;
-  }
-
-  handleOk() {
     this.showModal = false;
   }
 
@@ -405,6 +405,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   changePassword(form: any) {
+    console.log(form);
     if (this.user.id) {
       this.isLoading = true;
       this.loadingMessage = `Updating user ${this.user.firstName} ${this.user.lastName}`;

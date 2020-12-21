@@ -58,15 +58,15 @@
   </nz-tab>
 </nz-tabset>
 <nz-modal
-  *ngIf="modalType"
   [(nzVisible)]="showModal"
   [nzTitle]="modalType?.title"
   (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()"
-  [nzFooter]="null"
+  (nzOnOk)="clickChangePassword()"
 >
   <app-form
     [isLoading]="isLoading"
+    [showSubmitButton]="false"
+    [showCancelButton]="false"
     [loadingMessage]="loadingMessage"
     (submitForm)="changePassword($event)"
     [form]="updatePasswordForm"

@@ -60,6 +60,7 @@ export class HeaderComponent implements OnInit {
   }
 
   changePassword(form: any) {
+    console.log(form);
     if (this.user.id) {
       this.isLoading = true;
       this.loadingMessage = `Updating user ${this.user.firstName} ${this.user.lastName}`;
