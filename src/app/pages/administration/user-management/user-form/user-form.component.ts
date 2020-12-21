@@ -19,6 +19,7 @@ import { DepartmentsService } from '@app/pages/administration/@services/departme
 import { Department } from '@app/pages/administration/@types/department';
 import { ModalType } from '@app/pages/administration/user-management/modal.type';
 import { FormComponent } from '@shared/components/form/form.component';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -54,6 +55,7 @@ export class UserFormComponent implements OnInit {
   unselectedRoles: number[] = [];
   selectedDepartments: number[] = [];
   unselectedDepartments: number[];
+  currentUser: User;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -63,6 +65,7 @@ export class UserFormComponent implements OnInit {
     private usersService: UsersService,
     private message: NzMessageService,
     private rolesService: RolesService,
+    public perms: AppPermissionsService,
     private departmentsService: DepartmentsService
   ) {}
 
@@ -70,6 +73,7 @@ export class UserFormComponent implements OnInit {
     this.getUserFromUrl();
     this.getRoles();
     this.getDepartments();
+    this.getUser();
   }
 
   getDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
@@ -103,6 +107,9 @@ export class UserFormComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+  getUser() {
+    this.currentUser = JSON.parse(localStorage.getItem('user')) as User;
   }
   clickChangePassword() {
     console.log('change');
@@ -145,6 +152,11 @@ export class UserFormComponent implements OnInit {
     return false;
   }
   handleCancel() {
+    this.updatePasswordForm.groups.map((group) => {
+      group.fields.map((field) => {
+        field.value = '';
+      });
+    });
     this.showModal = false;
   }
 
@@ -386,25 +398,29 @@ export class UserFormComponent implements OnInit {
   }
 
   submitForm(form: any): void {
-    if (this.user.id != null) {
-      form.id = this.user.id;
-      this.updateUser(form);
+    if (form.newPassword !== undefined) {
+      this.updateUserPassword(form);
     } else {
-      if (form.password !== form.passwordConfirmation) {
-        this.message.create('error', `Password does not match`);
+      if (this.user.id != null) {
+        form.id = this.user.id;
+        this.updateUser(form);
       } else {
-        if (form.roleId) {
-          this.selectedRoles.push(form.roleId);
+        if (form.password !== form.passwordConfirmation) {
+          this.message.create('error', `Password does not match`);
+        } else {
+          if (form.roleId) {
+            this.selectedRoles.push(form.roleId);
+          }
+          if (form.departmentId) {
+            this.selectedDepartments.push(form.departmentId);
+          }
+          this.createUser(form);
         }
-        if (form.departmentId) {
-          this.selectedDepartments.push(form.departmentId);
-        }
-        this.createUser(form);
       }
     }
   }
 
-  changePassword(form: any) {
+  updateUserPassword(form: any) {
     console.log(form);
     if (this.user.id) {
       this.isLoading = true;
@@ -418,7 +434,13 @@ export class UserFormComponent implements OnInit {
         async ({ data }) => {
           this.isLoading = false;
           this.loadingMessage = '';
+          this.showModal = false;
           this.message.create('success', `Password has successfully been changed`);
+          this.updatePasswordForm.groups.map((group) => {
+            group.fields.map((field) => {
+              field.value = '';
+            });
+          });
         },
         (error) => {
           this.isLoading = false;
@@ -443,5 +465,13 @@ export class UserFormComponent implements OnInit {
   activateUser(user: User) {
     user.active = !user.active;
     this.updateUser(user);
+  }
+
+  showIfPermissionIs(action: string) {
+    return this.perms.permissionsOnly(action);
+  }
+
+  isCurrentUser(): boolean {
+    return this.user.id === this.currentUser.id;
   }
 }

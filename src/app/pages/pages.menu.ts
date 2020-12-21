@@ -79,6 +79,32 @@ export const MENU: SideNavInterface[] = [
     ],
   },
   {
+    path: 'User Manager',
+    title: extract('Manage Users'),
+    permissions: ['view users', 'manage users', 'manage departments'],
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'user',
+    submenu: [
+      {
+        path: 'administration/user-management',
+        title: extract('List users'),
+        permissions: ['manage users'],
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+      {
+        path: 'administration/user-management/form',
+        title: extract('New user'),
+        permissions: ['manage users'],
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+    ],
+  },
+  {
     path: 'administration',
     title: extract('Administration'),
     permissions: ['view users', 'manage roles', 'manage settings', 'manage departments'],
@@ -87,17 +113,9 @@ export const MENU: SideNavInterface[] = [
     icon: 'setting',
     submenu: [
       {
-        path: 'administration/user-management',
-        title: extract('User Management'),
-        permissions: ['manage users'],
-        iconType: '',
-        iconTheme: '',
-        submenu: [],
-      },
-      {
         path: 'administration/roles-and-permissions',
         title: extract('Permission Matrix'),
-        permissions: ['manage users'],
+        permissions: ['manage roles'],
         iconType: '',
         iconTheme: '',
         submenu: [],

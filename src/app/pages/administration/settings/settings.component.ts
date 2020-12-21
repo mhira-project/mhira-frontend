@@ -25,9 +25,11 @@ export class SettingsComponent implements OnInit {
   }
 
   getSettings() {
+    this.isLoading = true;
     this.settingsService.settings().subscribe(
       async ({ data }) => {
         this.settings = Object.assign({}, data.settings);
+
         this.settingsForm.groups.map((group) => {
           group.fields.map((field) => {
             field.value = this.settings[field.name];
@@ -42,14 +44,14 @@ export class SettingsComponent implements OnInit {
   }
 
   saveSettings($event: any) {
+    this.isLoading = true;
     this.settingsService.updateSetting($event).subscribe(
       async ({ data }) => {
-        this.settings = Object.assign({}, data.settings);
-        this.settingsForm.groups.map((group) => {
-          group.fields.map((field) => {
-            field.value = this.settings[field.name];
-          });
-        });
+        if (data) {
+          console.log($event);
+          localStorage.setItem('settings', JSON.stringify($event));
+        }
+
         this.isLoading = false;
       },
       (error) => {

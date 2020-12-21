@@ -9,9 +9,16 @@
       (submitForm)="submitForm($event)"
     ></app-form>
   </nz-tab>
-  <nz-tab *ngIf="!newMode" nzTitle="Security">
+  <nz-tab
+    *ngIf="
+      !newMode &&
+      !isCurrentUser() &&
+      perms.permissionsOnly(['manage users', 'manage departments', 'manage users', 'manage roles'])
+    "
+    nzTitle="Security"
+  >
     <div nz-row nzGutter="16">
-      <div nz-col>
+      <div nz-col *ngIf="showIfPermissionIs('manage roles')">
         <nz-card style="width: 300px" nzTitle="{{ user.firstName }}'s Roles" [nzExtra]="rolesTemplate">
           <nz-checkbox-wrapper style="width: 100%" (nzOnChange)="collectRoles($event)">
             <div nz-row>
@@ -25,7 +32,7 @@
           <a *ngIf="roles.length > 0" nz-button nzSize="small" (click)="submitRoles()">Save</a>
         </ng-template>
       </div>
-      <div nz-col>
+      <div nz-col *ngIf="showIfPermissionIs('manage departments')">
         <nz-card style="width: 300px" nzTitle="{{ user.firstName }}'s Departments" [nzExtra]="departmentTemplate">
           <nz-checkbox-wrapper style="width: 100%" (nzOnChange)="collectDepartments($event)">
             <div nz-row>
@@ -42,7 +49,7 @@
         </ng-template>
       </div>
 
-      <div nz-col>
+      <div nz-col *ngIf="showIfPermissionIs('manage users')">
         <nz-card style="width: 300px" nzTitle="Enable or Disable {{ user.firstName }}">
           <p>To disable and Enable {{ user.firstName }} toggle the switch below.</p>
           <nz-switch (ngModelChange)="activateUser(user)" [(ngModel)]="user.active"></nz-switch>
@@ -68,7 +75,7 @@
     [showSubmitButton]="false"
     [showCancelButton]="false"
     [loadingMessage]="loadingMessage"
-    (submitForm)="changePassword($event)"
+    (submitForm)="submitForm($event)"
     [form]="updatePasswordForm"
   ></app-form>
 </nz-modal>

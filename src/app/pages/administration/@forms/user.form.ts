@@ -127,11 +127,6 @@ const userProfile: Form = {
           span: 8,
           value: '',
         },
-      ],
-    },
-    {
-      title: 'Contact Information',
-      fields: [
         {
           title: 'Email',
           label: 'Email',
@@ -165,11 +160,6 @@ const userProfile: Form = {
           span: 8,
           value: '',
         },
-      ],
-    },
-    {
-      title: 'User Credentials',
-      fields: [
         {
           title: 'Login Username',
           label: 'Username',
@@ -203,45 +193,6 @@ const userProfile: Form = {
           validationMessage: '',
           span: 8,
           value: '',
-        },
-        {
-          value: '',
-          name: 'roleId',
-          title: 'Role',
-          label: 'Role',
-          description: 'Select Role',
-          type: 'select',
-          validationMessage: 'please select role',
-          isRequired: true,
-          options: [],
-          span: 8,
-        },
-        {
-          value: '',
-          name: 'departmentId',
-          title: 'Department',
-          label: 'Department',
-          description: 'Select Department',
-          type: 'select',
-          validationMessage: 'please select department',
-          isRequired: true,
-          options: [],
-          span: 8,
-        },
-        {
-          title: 'Activate User',
-          label: 'active',
-          name: 'active',
-          type: 'radio',
-          isRequired: false,
-          description: 'Enable user',
-          validationMessage: '',
-          span: 8,
-          value: '',
-          options: [
-            { label: 'Active', value: true },
-            { label: 'Inactive', value: false },
-          ],
         },
       ],
     },
@@ -300,11 +251,6 @@ const userProfileEdit: Form = {
           span: 8,
           value: '',
         },
-      ],
-    },
-    {
-      title: 'Contact Information',
-      fields: [
         {
           title: 'Email',
           label: 'Email',
@@ -338,11 +284,6 @@ const userProfileEdit: Form = {
           span: 8,
           value: '',
         },
-      ],
-    },
-    {
-      title: 'User Credentials',
-      fields: [
         {
           title: 'Login Username',
           label: 'Username',
