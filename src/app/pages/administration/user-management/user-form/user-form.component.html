@@ -5,6 +5,7 @@
       [loadingMessage]="loadingMessage"
       [inputMode]="inputMode"
       [showCancelButton]="showCancelButton"
+      [showEditButton]="perms.permissionsOnly(['manage users'])"
       [form]="profileFields"
       (submitForm)="submitForm($event)"
     ></app-form>
