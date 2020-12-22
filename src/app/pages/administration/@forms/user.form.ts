@@ -99,7 +99,7 @@ const userProfile: Form = {
           label: 'ID',
           name: 'workID',
           type: 'text',
-          isRequired: false,
+          isRequired: true,
           description: 'Enter work id',
           validationMessage: 'Please fill in ID',
           span: 12,
