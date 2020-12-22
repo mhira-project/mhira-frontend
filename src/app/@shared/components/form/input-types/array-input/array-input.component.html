@@ -14,12 +14,7 @@
     <div nz-col class="gutter-row form-item" *ngFor="let child of row; let childIndex = index" [nzSpan]="child?.span">
       <ng-container [ngSwitch]="child.type">
         <div *ngSwitchCase="'text'">
-          <app-text-input
-            [field]="child"
-            [inputMode]="inputMode"
-            [name]="i + child.name + childIndex"
-            (valueChange)="handleInputChange(child, $event, i)"
-          >
+          <app-text-input [field]="child" [inputMode]="inputMode" (valueChange)="handleInputChange(child, $event, i)">
           </app-text-input>
         </div>
         <div *ngSwitchCase="'textArea'">

@@ -104,7 +104,6 @@ export class CreatePatientComponent implements OnInit {
   }
 
   createPatient(patient: Patient) {
-    return;
     this.isLoading = true;
     this.hasErrors = false;
     this.errors = [];
