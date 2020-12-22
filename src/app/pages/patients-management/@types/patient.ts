@@ -24,14 +24,10 @@ export interface Patient {
   birthCountryCode?: string;
   nationality?: string;
   createdAt?: string;
-  formattedCreatedAt?: string;
   updatedAt?: string;
-  formattedUpdatedAt?: string;
   emergencyContacts: Contact[];
   informants?: Informant[];
-  formattedInformants?: string;
   caseManagers?: User[];
-  formattedCaseManagers?: string;
   country: any;
   status: PatientStatus;
 }

@@ -82,31 +82,10 @@ export class CreatePatientComponent implements OnInit {
     this.isLoading = true;
     this.hasErrors = false;
     this.errors = [];
+    contacts.map((contact: Contact) => {
+      contact.patientId = patientId;
+    });
     this.emergencyContactsService.createManyEmergencyContacts(contacts).subscribe(
-      async ({ data }: any) => {
-        const ids = data.createManyEmergencyContacts.edges.filter((contact: any) => {
-          return contact.id;
-        });
-        this.addEmergencyContactsToPatients(patientId, ids);
-        this.isLoading = false;
-        this.loadingMessage = '';
-      },
-      (error) => {
-        this.hasErrors = true;
-        error.graphQLErrors.map((_error: any) => {
-          this.errors.push(_error.message);
-        });
-        this.isLoading = false;
-        this.loadingMessage = '';
-      }
-    );
-  }
-
-  addEmergencyContactsToPatients(patientId: number, emergencyContactsIds: number[]) {
-    this.isLoading = true;
-    this.hasErrors = false;
-    this.errors = [];
-    this.emergencyContactsService.addEmergencyContactsToPatient(patientId, emergencyContactsIds).subscribe(
       async ({ data }: any) => {
         this.isLoading = false;
         this.loadingMessage = '';

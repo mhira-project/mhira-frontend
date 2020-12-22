@@ -48,7 +48,7 @@ export class PatientsComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
-    this.loadPermissions();
+    // this.loadPermissions();
     // to be called from the sort fuction
     // this.getPatients(this.paging);
   }

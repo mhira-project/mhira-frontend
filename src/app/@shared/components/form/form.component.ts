@@ -60,12 +60,21 @@ export class FormComponent implements OnInit {
     form.groups.map((group) => {
       group.fields.map((field) => {
         if (field.type === 'array') {
-          formData[field.name] = field.rows;
+          const items: any[] = [];
+          for (const row of field.rows) {
+            const rowData = {};
+            for (const item of row) {
+              rowData[item.name] = item.value;
+            }
+            items.push(rowData);
+          }
+          formData[field.name] = items;
         } else {
           formData[field.name] = field.value;
         }
       });
     });
+    console.log(formData);
     this.submitForm.emit(formData);
   }
 }

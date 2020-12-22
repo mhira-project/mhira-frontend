@@ -6,7 +6,5 @@ export interface Contact {
   lastName: string;
   phone: string;
   createdAt?: string;
-  formattedCreatedAt?: string;
   updatedAt?: string;
-  formattedUpdatedAt?: string;
 }

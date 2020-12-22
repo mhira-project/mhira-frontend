@@ -8,7 +8,7 @@
     [ngClass]="{ 'has-error': inputIsValid() === false, 'has-success': inputIsValid() === true }"
   >
     <input
-      [attr.type]="field.type"
+      type="text"
       [(ngModel)]="field.value"
       (change)="handleValueChange($event)"
       nz-input
