@@ -107,7 +107,7 @@ export const MENU: SideNavInterface[] = [
   {
     path: 'administration',
     title: extract('Administration'),
-    permissions: ['view users', 'manage roles', 'manage settings', 'manage departments'],
+    permissions: ['manage roles', 'manage settings', 'manage departments'],
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'setting',
