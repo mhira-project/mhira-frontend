@@ -4,6 +4,10 @@ const actions: any[] = [
     name: 'Plan Assessment',
   },
   {
+    type: 'Change Status',
+    name: 'Change Status',
+  },
+  {
     type: 'Delete Patient',
     name: 'Delete Patient',
   },
@@ -41,7 +45,7 @@ const columns: any[] = [
   },
   {
     title: 'Status',
-    name: 'formattedActive',
+    name: 'formattedStatus',
     isFilterable: false,
   },
   {

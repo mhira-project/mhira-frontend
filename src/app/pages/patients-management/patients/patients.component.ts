@@ -25,6 +25,7 @@ export class PatientsComponent implements OnInit, OnChanges {
   isLoading = false;
   isVisible = false;
   isOkLoading = false;
+  isVisibleStatusModal = false;
   patients: any[] = [];
   filter: PatientFilter = {};
   paging: Paging = {
@@ -39,6 +40,7 @@ export class PatientsComponent implements OnInit, OnChanges {
   };
   actions = table.actions;
   currentPatientIndex: number;
+  statusId: number;
 
   constructor(
     private patientsService: PatientsService,
@@ -116,6 +118,22 @@ export class PatientsComponent implements OnInit, OnChanges {
     );
   }
 
+  updatePatient(patient: Patient) {
+    this.isOkLoading = true;
+    patient.statusId = this.statusId;
+    this.patientsService.updatePatient(patient).subscribe(
+      async ({ data }) => {
+        patient = PatientModel.fromJson(data.updateOnePatient);
+        this.isVisibleStatusModal = false;
+        this.isOkLoading = false;
+      },
+      (error) => {
+        this.isVisible = false;
+        this.isOkLoading = false;
+      }
+    );
+  }
+
   handleCancel(): void {
     this.isVisible = false;
   }
@@ -125,10 +143,14 @@ export class PatientsComponent implements OnInit, OnChanges {
   }
 
   handleActionClick(event: any): void {
+    this.currentPatientIndex = event.index;
     switch (event.action.name) {
       case 'Delete Patient':
         this.isVisible = true;
-        this.currentPatientIndex = event.index;
+        break;
+
+      case 'Change Status':
+        this.isVisibleStatusModal = true;
         break;
     }
   }

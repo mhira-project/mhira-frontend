@@ -53,7 +53,7 @@ export class DateRangeInputComponent implements OnInit {
 
   handleValueChange(input: any) {
     if (input) {
-      this.valueChange.emit(input.target.value);
+      this.valueChange.emit(input);
     }
   }
 }

@@ -6,12 +6,24 @@ export class PatientModel {
     json.formattedCreatedAt = json.createdAt ? AppDate.formatDate(json.createdAt) : '';
     json.formattedUpdatedAt = json.updatedAt ? AppDate.formatDate(json.updatedAt) : '';
     json.formattedBirthDate = json.birthDate ? AppDate.formatDate(json.birthDate) : '';
-    const color = json.active
-      ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
-      : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-    const active = json.active ? 'ACTIVE' : 'INACTIVE';
+    let color;
+    if (json.status) {
+      switch (json.status.name) {
+        case 'active':
+          color = 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag';
+          break;
+        case 'inactive':
+          color = 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
+          break;
+        case 'archived':
+          color = 'ng-trigger ng-trigger-fadeMotion ant-tag-orange ant-tag';
+          break;
+      }
+    } else {
+      color = 'ng-trigger ng-trigger-fadeMotion ant-tag-orange ant-tag';
+    }
 
-    json.formattedActive = `<nz-tag class="${color}">${active}</nz-tag>`;
+    json.formattedStatus = `<nz-tag class="${color}">${json.status ? json.status.name : 'not set'}</nz-tag>`;
     json.formattedInformants = ``;
     json.informants.map((informant: any) => {
       json.formattedInformants =

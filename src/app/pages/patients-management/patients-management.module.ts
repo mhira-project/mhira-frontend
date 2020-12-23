@@ -19,6 +19,7 @@ import {
   NzListModule,
   NzMessageModule,
   NzModalModule,
+  NzSelectModule,
   NzTabsModule,
   NzTagModule,
 } from 'ng-zorro-antd';
@@ -44,6 +45,7 @@ const antModules = [
   NzIconModule,
   NzDrawerModule,
   NzAvatarModule,
+  NzSelectModule,
 ];
 
 @NgModule({

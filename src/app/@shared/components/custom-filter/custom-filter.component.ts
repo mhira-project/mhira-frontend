@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Form } from '@shared/components/form/@types/form';
-import { FormComponent } from '@shared/components/form/form.component';
-import { FieldGroup } from '@shared/components/form/@types/field.group';
-import { Field } from '@shared/components/form/@types/field';
+import { FormComponent } from '../form/form.component';
+import { FieldGroup } from '../form/@types/field.group';
+import { Field } from '../form/@types/field';
+import { Form } from '../form/@types/form';
 
 @Component({
   selector: 'app-custom-filter',
@@ -83,7 +83,7 @@ export class CustomFilterComponent implements OnInit {
   }
 
   primaryButtonAction() {
-    this.child.handleSubmitForm();
+    this.child.handleSubmitForm(this.form);
   }
 
   search(value: string): void {
@@ -96,6 +96,6 @@ export class CustomFilterComponent implements OnInit {
         field.value = null;
       });
     });
-    this.child.handleSubmitForm();
+    this.child.handleSubmitForm(this.form);
   }
 }

@@ -218,9 +218,91 @@ const addInformantsToPatient = gql`
   }
 `;
 
+const removeStatusFromPatient = gql`
+  mutation($input: RelationInput!) {
+    removeStatusFromPatient(input: $input) {
+      id
+      statusId
+      medicalRecordNo
+      firstName
+      middleName
+      lastName
+      phone
+      phone2
+      email
+      addressStreet
+      addressNumber
+      addressApartment
+      addressPlace
+      addressPostalCode
+      addressCountryId
+      gender
+      birthDate
+      birthCountryCode
+      nationality
+      createdAt
+      updatedAt
+      emergencyContacts {
+        id
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        createdAt
+        updatedAt
+      }
+      informants {
+        id
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        address
+        createdAt
+        updatedAt
+      }
+      caseManagers {
+        id
+        username
+        active
+        firstName
+        middleName
+        lastName
+        email
+        phone
+        workID
+        address
+        gender
+        birthDate
+        nationality
+        createdAt
+        updatedAt
+        deletedAt
+      }
+      country {
+        id
+        name
+        code
+        createdAt
+        updatedAt
+      }
+      status {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 export const PatientsMutations = {
   createPatient,
   updatePatient,
   deletePatient,
   addInformantsToPatient,
+  removeStatusFromPatient,
 };
