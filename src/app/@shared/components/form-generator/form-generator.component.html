@@ -27,14 +27,29 @@
           <nz-form-control *ngIf="formItem.type === 'text'" [nzErrorTip]="formItem.validationMessage">
             <nz-input-group>
               <label>
-                <input [formControlName]="formItem.name" nz-input [placeholder]="formItem.label" />
+                <input
+                  [formControlName]="formItem.name"
+                  nz-input
+                  readonly
+                  onfocus="this.removeAttribute('readonly')"
+                  autocomplete="off"
+                  [placeholder]="formItem.label"
+                />
               </label>
             </nz-input-group>
           </nz-form-control>
           <nz-form-control *ngIf="formItem.type === 'password'" [nzErrorTip]="formItem.validationMessage">
             <nz-input-group>
               <label>
-                <input [formControlName]="formItem.name" nz-input type="password" [placeholder]="formItem.label" />
+                <input
+                  [formControlName]="formItem.name"
+                  nz-input
+                  type="password"
+                  readonly
+                  onfocus="this.removeAttribute('readonly')"
+                  autocomplete="off"
+                  [placeholder]="formItem.label"
+                />
               </label>
             </nz-input-group>
           </nz-form-control>

@@ -12,9 +12,7 @@
   </nz-tab>
   <nz-tab
     *ngIf="
-      !newMode &&
-      !isCurrentUser() &&
-      perms.permissionsOnly(['manage users', 'manage departments', 'manage users', 'manage roles'])
+      !newMode && !isCurrentUser() && perms.permissionsOnly(['manage departments', 'manage users', 'manage roles'])
     "
     nzTitle="Security"
   >
