@@ -153,6 +153,19 @@ export class UserFormComponent implements OnInit {
     }
     return false;
   }
+  deleteUser(user: User) {
+    this.isLoading = true;
+    this.usersService.deleteUser(user).subscribe(
+      async ({ data }) => {
+        this.isLoading = false;
+        this.router.navigate(['/mhira/administration/user-management']);
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
+  }
+
   handleCancel() {
     this.updatePasswordForm.groups.map((group) => {
       group.fields.map((field) => {

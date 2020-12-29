@@ -58,6 +58,12 @@
           <button (click)="showChangePasswordForm()" nz-button nzType="primary">Change Password</button>
         </nz-card>
       </div>
+      <div nz-col>
+        <nz-card style="width: 300px" nzTitle="Delete User {{ user.firstName }} ({{ user.username }})">
+          <p>To remove User {{ user.firstName }} toggle the button below.</p>
+          <button (click)="deleteUser(user)" nz-button nzType="danger">Delete User</button>
+        </nz-card>
+      </div>
     </div>
   </nz-tab>
 </nz-tabset>
