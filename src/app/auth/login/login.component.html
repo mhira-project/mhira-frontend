@@ -23,14 +23,30 @@
         <nz-form-item>
           <nz-form-control nzErrorTip="Please input your username!">
             <nz-input-group nzPrefixIcon="user">
-              <input type="text" nz-input formControlName="identifier" placeholder="Username or email" />
+              <input
+                readonly
+                onfocus="this.removeAttribute('readonly')"
+                autocomplete="off"
+                type="text"
+                nz-input
+                formControlName="identifier"
+                placeholder="Username or email"
+              />
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-control nzErrorTip="Please input your Password!">
             <nz-input-group nzPrefixIcon="lock">
-              <input type="password" nz-input formControlName="password" placeholder="Password" />
+              <input
+                readonly
+                onfocus="this.removeAttribute('readonly')"
+                autocomplete="off"
+                type="password"
+                nz-input
+                formControlName="password"
+                placeholder="Password"
+              />
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
