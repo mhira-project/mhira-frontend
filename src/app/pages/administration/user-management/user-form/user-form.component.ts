@@ -20,6 +20,7 @@ import { Department } from '@app/pages/administration/@types/department';
 import { ModalType } from '@app/pages/administration/user-management/modal.type';
 import { FormComponent } from '@shared/components/form/form.component';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { NzModalService } from 'ng-zorro-antd';
 
 const CryptoJS = require('crypto-js');
 
@@ -58,6 +59,7 @@ export class UserFormComponent implements OnInit {
   currentUser: User;
 
   constructor(
+    private modalService: NzModalService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private cd: ChangeDetectorRef,
@@ -152,6 +154,15 @@ export class UserFormComponent implements OnInit {
       }
     }
     return false;
+  }
+  handleDeleteAction(user: User) {
+    this.modalService.confirm({
+      nzTitle: 'Confirm',
+      nzContent: `Are you sure you want to delete ${this.user.firstName} ${this.user.lastName}`,
+      nzOkText: 'Delete',
+      nzOnOk: () => this.deleteUser(user),
+      nzCancelText: 'Cancel',
+    });
   }
   deleteUser(user: User) {
     this.isLoading = true;
