@@ -11,9 +11,7 @@
     ></app-form>
   </nz-tab>
   <nz-tab
-    *ngIf="
-      !newMode && !isCurrentUser() && perms.permissionsOnly(['manage departments', 'manage users', 'manage roles'])
-    "
+    *ngIf="user.id && !isCurrentUser() && perms.permissionsOnly(['manage departments', 'manage users', 'manage roles'])"
     nzTitle="Security"
   >
     <div nz-row nzGutter="16">

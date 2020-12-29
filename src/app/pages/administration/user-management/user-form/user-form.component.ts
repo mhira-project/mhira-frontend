@@ -70,6 +70,9 @@ export class UserFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.init();
+  }
+  init() {
     this.getUserFromUrl();
     this.getRoles();
     this.getDepartments();
@@ -78,7 +81,6 @@ export class UserFormComponent implements OnInit {
 
   getDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
     this.isLoading = true;
-
     this.departmentsService.departments(params).subscribe(
       async ({ data }: any) => {
         const page = data.departments;
@@ -161,11 +163,16 @@ export class UserFormComponent implements OnInit {
   }
 
   userHasDepartment(departmentId: number): boolean {
-    for (const _department of this.user.departments) {
-      if (_department.id === departmentId) {
-        return true;
+    if (this.user) {
+      console.log(this.user);
+      for (const _department of this.user.departments) {
+        if (_department.id === departmentId) {
+          return true;
+        }
       }
+      return false;
     }
+
     return false;
   }
 
@@ -339,6 +346,8 @@ export class UserFormComponent implements OnInit {
         user: dataString,
       },
     });
+    this.newMode = false;
+    this.getUserFromUrl();
   }
 
   assignRoles() {
