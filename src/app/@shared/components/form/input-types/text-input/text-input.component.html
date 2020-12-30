@@ -9,6 +9,9 @@
   >
     <input
       type="text"
+      readonly
+      onfocus="this.removeAttribute('readonly')"
+      autocomplete="off"
       [(ngModel)]="field.value"
       (change)="handleValueChange($event)"
       nz-input
