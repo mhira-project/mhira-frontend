@@ -19,3 +19,23 @@ export interface User {
   departments?: Department[];
   permissions?: Permission[];
 }
+
+export interface CreateOneUserInput {
+  user: CreateUserInput;
+}
+
+export interface CreateUserInput {
+  username: string;
+  password: string;
+  active?: boolean;
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+  email?: string;
+  phone?: string;
+  workID?: string;
+  address?: string;
+  gender?: string;
+  birthDate?: string;
+  nationality?: string;
+}

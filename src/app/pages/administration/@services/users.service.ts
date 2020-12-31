@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { FetchResult } from 'apollo-link';
 import { UsersMutations } from '../../../@graphql/mutations/users';
 import { UsersQueries } from '../../../@graphql/queries/users';
-import { User } from '../@types/user';
+import { CreateOneUserInput, User } from '../@types/user';
 import {
   UserChangePasswordInput,
   UserUpdatePasswordInput,
@@ -25,10 +25,10 @@ export class UsersService {
     });
   }
 
-  createUser(user: User): Observable<FetchResult<any>> {
+  createUser(createOneUserInput: CreateOneUserInput): Observable<FetchResult<any>> {
     return this.apollo.mutate({
-      mutation: UsersMutations.createUser,
-      variables: user,
+      mutation: UsersMutations.createOneUser,
+      variables: { createOneUserInput },
       fetchPolicy: 'no-cache',
     });
   }

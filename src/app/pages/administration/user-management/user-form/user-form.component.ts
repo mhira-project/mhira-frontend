@@ -4,7 +4,7 @@ import { userForms } from '@app/pages/administration/@forms/user.form';
 import { Form } from '@shared/components/form/@types/form';
 import { TopTabsDataService } from '@shared/services/tabs-data.service';
 import * as moment from 'moment';
-import { User } from '@app/pages/administration/@types/user';
+import { CreateOneUserInput, CreateUserInput, User } from '@app/pages/administration/@types/user';
 import { UsersService } from '@app/pages/administration/@services/users.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { environment } from '@env/environment';
@@ -282,12 +282,22 @@ export class UserFormComponent implements OnInit {
     });
   }
 
-  createUser(user: User) {
+  createUser(formData: any) {
+    console.log(formData);
+    if (formData.password !== formData.passwordConfirmation) {
+      this.message.create('error', `Password dont match`);
+      return;
+    }
+    delete formData.passwordConfirmation;
+    const inputData = Object.assign({}, formData);
+    const userInput: CreateOneUserInput = {
+      user: inputData,
+    };
     this.isLoading = true;
-    this.loadingMessage = `Creating user ${user.firstName} ${user.lastName}`;
-    this.usersService.createUser(user).subscribe(
+    this.loadingMessage = `Creating user ${inputData.firstName} ${inputData.lastName}`;
+    this.usersService.createUser(userInput).subscribe(
       async ({ data }) => {
-        const userData = data.createUser;
+        const userData = data.createOneUser;
         userData.updatedAt = userData.updatedAt ? moment(userData.updatedAt).format('DD-MM-YYYY HH:mm') : '';
         userData.birthDate = userData.birthDate ? moment(userData.birthDate).format('DD-MM-YYYY HH:mm') : '';
         this.isLoading = false;
