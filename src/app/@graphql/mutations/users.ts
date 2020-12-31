@@ -43,51 +43,27 @@ const createOneUser = gql`
   }
 `;
 
-const updateUser = gql`
-  mutation(
-    $workID: String
-    $firstName: String!
-    $middleName: String
-    $lastName: String!
-    $username: String!
-    $phone: String
-    $active: Boolean
-    $email: String
-    $address: String
-    $gender: String
-    $birthDate: DateTime
-    $id: Int!
-  ) {
-    updateUser(
-      input: {
-        workID: $workID
-        firstName: $firstName
-        middleName: $middleName
-        lastName: $lastName
-        username: $username
-        active: $active
-        phone: $phone
-        email: $email
-        address: $address
-        gender: $gender
-        birthDate: $birthDate
-      }
-      id: $id
-    ) {
+const updateOneUser = gql`
+  mutation($updateOneUserInput: UpdateOneUserInput!) {
+    updateOneUser(input: $updateOneUserInput) {
       id
-      workID
+      username
+      active
       firstName
       middleName
       lastName
-      phone
       email
+      phone
+      workID
       address
       gender
       birthDate
+      nationality
       createdAt
       updatedAt
       deletedAt
       departments {
+        id
         name
         description
         active
@@ -151,7 +127,7 @@ const softDeleteUser = gql`
 
 export const UsersMutations = {
   createOneUser,
-  updateUser,
+  updateOneUser,
   deleteUser,
   softDeleteUser,
   updateUserPassword,

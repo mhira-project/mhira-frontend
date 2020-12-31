@@ -24,6 +24,11 @@ export interface CreateOneUserInput {
   user: CreateUserInput;
 }
 
+export interface UpdateOneUserInput {
+  id: number;
+  update: CreateUserInput;
+}
+
 export interface CreateUserInput {
   username: string;
   password: string;

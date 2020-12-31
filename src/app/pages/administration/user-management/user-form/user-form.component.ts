@@ -4,7 +4,7 @@ import { userForms } from '@app/pages/administration/@forms/user.form';
 import { Form } from '@shared/components/form/@types/form';
 import { TopTabsDataService } from '@shared/services/tabs-data.service';
 import * as moment from 'moment';
-import { CreateOneUserInput, CreateUserInput, User } from '@app/pages/administration/@types/user';
+import { CreateOneUserInput, CreateUserInput, UpdateOneUserInput, User } from '@app/pages/administration/@types/user';
 import { UsersService } from '@app/pages/administration/@services/users.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { environment } from '@env/environment';
@@ -289,7 +289,7 @@ export class UserFormComponent implements OnInit {
       return;
     }
     delete formData.passwordConfirmation;
-    const inputData = Object.assign({}, formData);
+    const inputData: CreateUserInput = Object.assign({}, formData);
     const userInput: CreateOneUserInput = {
       user: inputData,
     };
@@ -319,12 +319,17 @@ export class UserFormComponent implements OnInit {
     );
   }
 
-  updateUser(user: User) {
+  updateUser(formData: any) {
+    const inputData: CreateUserInput = Object.assign({}, formData);
+    const userInput: UpdateOneUserInput = {
+      id: this.user.id,
+      update: inputData,
+    };
     this.isLoading = true;
-    this.loadingMessage = `Updating user ${user.firstName} ${user.lastName}`;
-    this.usersService.updateUser(user).subscribe(
+    this.loadingMessage = `Updating user ${inputData.firstName} ${inputData.lastName}`;
+    this.usersService.updateUser(userInput).subscribe(
       async ({ data }) => {
-        const userData = data.updateUser;
+        const userData = data.updateOneUser;
         const color = userData.active
           ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
           : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
@@ -445,7 +450,6 @@ export class UserFormComponent implements OnInit {
       this.updateUserPassword(form);
     } else {
       if (this.user.id != null) {
-        form.id = this.user.id;
         this.updateUser(form);
       } else {
         if (form.password !== form.passwordConfirmation) {
