@@ -6,7 +6,7 @@ import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
 import { Paging } from '@shared/@types/paging';
 import { RolesQueries } from '../../../@graphql/queries/roles';
-import { Role } from '@app/pages/administration/@types/role';
+import { Role, UpdateOneRoleInput } from '@app/pages/administration/@types/role';
 import { RolesMutations } from '@app/@graphql/mutations/roles';
 
 @Injectable({
@@ -37,11 +37,11 @@ export class RolesService {
     });
   }
 
-  updateRole(role: Role): Observable<FetchResult<any>> {
+  updateRole(updateOneRoleInput: UpdateOneRoleInput): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: RolesMutations.updateOneRole,
       variables: {
-        input: { role },
+        input: updateOneRoleInput,
       },
       fetchPolicy: 'no-cache',
     });

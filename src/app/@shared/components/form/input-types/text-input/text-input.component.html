@@ -9,6 +9,9 @@
   >
     <input
       type="text"
+      readonly
+      onfocus="this.removeAttribute('readonly')"
+      autocomplete="off"
       [(ngModel)]="field.value"
       [attr.autocomplete]="autoFill"
       (change)="handleValueChange($event)"
@@ -19,7 +22,7 @@
   </nz-input-group>
 </ng-container>
 <div class="field-value" *ngIf="!inputMode">
-  <span>{{ field?.value }}</span>
+  <span>{{ field?.value ? field?.value : '-' }}</span>
 </div>
 <ng-template #suffix>
   <i nz-icon [nzType]="field?.iconName"></i>

@@ -130,23 +130,6 @@ export class UserManagementComponent implements OnInit {
     this.getUsers(this.paging);
   }
 
-  softDeleteUser(index: any) {
-    this.isLoading = true;
-    const user = this.users[index];
-    this.usersService.softDeleteUser(user).subscribe(
-      async ({ data }) => {
-        const deletedIndex = this.users.findIndex((_user) => _user.id === user.id);
-        this.users.splice(deletedIndex, 1);
-        this.usersTable.rows = this.users;
-        this.isLoading = false;
-        this.getUsers(this.paging);
-      },
-      (error) => {
-        this.isLoading = false;
-      }
-    );
-  }
-
   deleteUser(index: any) {
     this.isLoading = true;
     const user = this.users[index];
@@ -154,7 +137,7 @@ export class UserManagementComponent implements OnInit {
       async ({ data }) => {
         const deletedIndex = this.users.findIndex((_user) => _user.id === user.id);
         this.users.splice(deletedIndex, 1);
-        this.usersTable.rows = this.users;
+        this.usersTable.rows.splice(deletedIndex, 1);
         this.isLoading = false;
         this.getUsers(this.paging);
       },
@@ -178,7 +161,7 @@ export class UserManagementComponent implements OnInit {
           nzTitle: 'Confirm',
           nzContent: `Are you sure you want to delete ${this.user.firstName} ${this.user.lastName}`,
           nzOkText: 'Delete',
-          nzOnOk: () => this.softDeleteUser(event.index),
+          nzOnOk: () => this.deleteUser(event.index),
           nzCancelText: 'Cancel',
         });
         break;

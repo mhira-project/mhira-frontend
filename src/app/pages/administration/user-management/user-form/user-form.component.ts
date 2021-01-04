@@ -4,7 +4,7 @@ import { userForms } from '@app/pages/administration/@forms/user.form';
 import { Form } from '@shared/components/form/@types/form';
 import { TopTabsDataService } from '@shared/services/tabs-data.service';
 import * as moment from 'moment';
-import { User } from '@app/pages/administration/@types/user';
+import { CreateOneUserInput, CreateUserInput, UpdateOneUserInput, User } from '@app/pages/administration/@types/user';
 import { UsersService } from '@app/pages/administration/@services/users.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { environment } from '@env/environment';
@@ -20,6 +20,7 @@ import { Department } from '@app/pages/administration/@types/department';
 import { ModalType } from '@app/pages/administration/user-management/modal.type';
 import { FormComponent } from '@shared/components/form/form.component';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { NzModalService } from 'ng-zorro-antd';
 
 const CryptoJS = require('crypto-js');
 
@@ -58,6 +59,7 @@ export class UserFormComponent implements OnInit {
   currentUser: User;
 
   constructor(
+    private modalService: NzModalService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private cd: ChangeDetectorRef,
@@ -70,6 +72,10 @@ export class UserFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.init();
+  }
+
+  init() {
     this.getUserFromUrl();
     this.getRoles();
     this.getDepartments();
@@ -78,7 +84,6 @@ export class UserFormComponent implements OnInit {
 
   getDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
     this.isLoading = true;
-
     this.departmentsService.departments(params).subscribe(
       async ({ data }: any) => {
         const page = data.departments;
@@ -156,6 +161,29 @@ export class UserFormComponent implements OnInit {
     return false;
   }
 
+  handleDeleteAction(user: User) {
+    this.modalService.confirm({
+      nzTitle: 'Confirm',
+      nzContent: `Are you sure you want to delete ${this.user.firstName} ${this.user.lastName}`,
+      nzOkText: 'Delete',
+      nzOnOk: () => this.deleteUser(user),
+      nzCancelText: 'Cancel',
+    });
+  }
+
+  deleteUser(user: User) {
+    this.isLoading = true;
+    this.usersService.deleteUser(user).subscribe(
+      async ({ data }) => {
+        this.isLoading = false;
+        this.router.navigate(['/mhira/administration/user-management']);
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
+  }
+
   handleCancel() {
     this.updatePasswordForm.groups.map((group) => {
       group.fields.map((field) => {
@@ -166,11 +194,16 @@ export class UserFormComponent implements OnInit {
   }
 
   userHasDepartment(departmentId: number): boolean {
-    for (const _department of this.user.departments) {
-      if (_department.id === departmentId) {
-        return true;
+    if (this.user) {
+      console.log(this.user);
+      for (const _department of this.user.departments) {
+        if (_department.id === departmentId) {
+          return true;
+        }
       }
+      return false;
     }
+
     return false;
   }
 
@@ -256,12 +289,22 @@ export class UserFormComponent implements OnInit {
     });
   }
 
-  createUser(user: User) {
+  createUser(formData: any) {
+    console.log(formData);
+    if (formData.password !== formData.passwordConfirmation) {
+      this.message.create('error', `Password dont match`);
+      return;
+    }
+    delete formData.passwordConfirmation;
+    const inputData: CreateUserInput = Object.assign({}, formData);
+    const userInput: CreateOneUserInput = {
+      user: inputData,
+    };
     this.isLoading = true;
-    this.loadingMessage = `Creating user ${user.firstName} ${user.lastName}`;
-    this.usersService.createUser(user).subscribe(
+    this.loadingMessage = `Creating user ${inputData.firstName} ${inputData.lastName}`;
+    this.usersService.createUser(userInput).subscribe(
       async ({ data }) => {
-        const userData = data.createUser;
+        const userData = data.createOneUser;
         userData.updatedAt = userData.updatedAt ? moment(userData.updatedAt).format('DD-MM-YYYY HH:mm') : '';
         userData.birthDate = userData.birthDate ? moment(userData.birthDate).format('DD-MM-YYYY HH:mm') : '';
         this.isLoading = false;
@@ -283,12 +326,17 @@ export class UserFormComponent implements OnInit {
     );
   }
 
-  updateUser(user: User) {
+  updateUser(formData: any) {
+    const inputData: CreateUserInput = Object.assign({}, formData);
+    const userInput: UpdateOneUserInput = {
+      id: this.user.id,
+      update: inputData,
+    };
     this.isLoading = true;
-    this.loadingMessage = `Updating user ${user.firstName} ${user.lastName}`;
-    this.usersService.updateUser(user).subscribe(
+    this.loadingMessage = `Updating user ${inputData.firstName} ${inputData.lastName}`;
+    this.usersService.updateUser(userInput).subscribe(
       async ({ data }) => {
-        const userData = data.updateUser;
+        const userData = data.updateOneUser;
         const color = userData.active
           ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
           : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
@@ -344,6 +392,8 @@ export class UserFormComponent implements OnInit {
         user: dataString,
       },
     });
+    this.newMode = false;
+    this.getUserFromUrl();
   }
 
   assignRoles() {
@@ -407,7 +457,6 @@ export class UserFormComponent implements OnInit {
       this.updateUserPassword(form);
     } else {
       if (this.user.id != null) {
-        form.id = this.user.id;
         this.updateUser(form);
       } else {
         if (form.password !== form.passwordConfirmation) {

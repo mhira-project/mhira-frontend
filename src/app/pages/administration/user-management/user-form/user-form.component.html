@@ -11,11 +11,7 @@
     ></app-form>
   </nz-tab>
   <nz-tab
-    *ngIf="
-      !newMode &&
-      !isCurrentUser() &&
-      perms.permissionsOnly(['manage users', 'manage departments', 'manage users', 'manage roles'])
-    "
+    *ngIf="user.id && !isCurrentUser() && perms.permissionsOnly(['manage departments', 'manage users', 'manage roles'])"
     nzTitle="Security"
   >
     <div nz-row nzGutter="16">
@@ -60,6 +56,12 @@
         <nz-card style="width: 300px" nzTitle="Change {{ user.firstName }}'s password">
           <p>To change password for {{ user.firstName }} toggle the button below.</p>
           <button (click)="showChangePasswordForm()" nz-button nzType="primary">Change Password</button>
+        </nz-card>
+      </div>
+      <div nz-col>
+        <nz-card style="width: 300px" nzTitle="Delete User {{ user.firstName }} ({{ user.username }})">
+          <p>To remove User {{ user.firstName }} toggle the button below.</p>
+          <button (click)="handleDeleteAction(user)" nz-button nzType="danger">Delete User</button>
         </nz-card>
       </div>
     </div>

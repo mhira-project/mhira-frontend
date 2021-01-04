@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Paging } from '@shared/@types/paging';
-import { Role } from '@app/pages/administration/@types/role';
+import { Role, UpdateOneRoleInput } from '@app/pages/administration/@types/role';
 import { RolesTable } from '@app/pages/administration/@tables/roles.table';
 import { Sorting } from '@shared/@types/sorting';
 import { Filter } from '@shared/@types/filter';
@@ -42,6 +42,7 @@ export class RolesComponent implements OnInit {
   inputMode = true;
   showCancelButton = false;
   isCreateAction = false;
+  role: Role;
 
   constructor(
     private rolesService: RolesService,
@@ -110,6 +111,7 @@ export class RolesComponent implements OnInit {
   }
 
   handleActionClick(event: any): void {
+    this.role = this.roles[event.index];
     switch (event.action.name) {
       case 'Delete Role':
         this.modalService.confirm({
@@ -123,21 +125,23 @@ export class RolesComponent implements OnInit {
         });
         break;
       case 'Edit Role':
-        console.log('view results');
+        this.roleForms.groups.map((group) => {
+          group.fields.map((field) => {
+            field.value = this.role[field.name];
+          });
+        });
+        this.toggleCreatePanel(false);
         break;
     }
   }
 
   handleRowClick(event: any) {
-    const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.roles[event.index]), environment.secretKey).toString();
-    this.router.navigate(['/mhira/roles/plan-roles'], {
-      state: {
-        title: `${this.roles[event.index].name}`,
-      },
-      queryParams: {
-        role: dataString,
-      },
+    this.roleForms.groups.map((group) => {
+      group.fields.map((field) => {
+        field.value = this.role[field.name];
+      });
     });
+    this.toggleCreatePanel(false);
   }
 
   toggleCreatePanel(create: boolean = true) {
@@ -171,12 +175,50 @@ export class RolesComponent implements OnInit {
     );
   }
 
+  private updateRole(role: Role) {
+    const updateOneRoleInput: UpdateOneRoleInput = {
+      id: role.id,
+      update: {
+        name: role.name,
+        guard: role.guard,
+      },
+    };
+    this.isLoading = true;
+    this.hasErrors = false;
+    this.errors = [];
+    this.loadingMessage = `Updating role ${role.name}`;
+    this.rolesService.updateRole(updateOneRoleInput).subscribe(
+      async ({ data }) => {
+        const updatedRole: Role = Convert.toRole(data.updateOneRole);
+        this.roles = this.roles.map((dep: Role) => {
+          if (dep.id === updatedRole.id) {
+            dep = updatedRole;
+          }
+          return dep;
+        });
+        this.rolesTable.rows = this.roles;
+        this.isLoading = false;
+        this.loadingMessage = '';
+        this.toggleCreatePanel();
+        this.message.create('success', `Role has successfully been updated`);
+      },
+      (error) => {
+        this.hasErrors = true;
+        error.graphQLErrors.map((_error: any) => {
+          this.errors.push(_error.message);
+        });
+        this.isLoading = false;
+        this.loadingMessage = '';
+      }
+    );
+  }
+
   submitForm(roleData: any) {
     if (this.isCreateAction) {
       this.createRole(roleData);
     } else {
-      // roleData.id = this.role.id;
-      // this.updateRole(roleData);
+      roleData.id = this.role.id;
+      this.updateRole(roleData);
     }
   }
 }

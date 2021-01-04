@@ -10,3 +10,11 @@ export interface Role {
   users?: User[];
   permissions?: Permission[];
 }
+
+export interface UpdateOneRoleInput {
+  id: number;
+  update: {
+    name: string;
+    guard: string;
+  };
+}

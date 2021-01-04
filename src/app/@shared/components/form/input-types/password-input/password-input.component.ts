@@ -13,6 +13,7 @@ export class PasswordInputComponent implements OnInit {
   @Input() autoFill = false;
   @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
   inputGroup: FormGroup;
+  passwordVisible = false;
 
   constructor() {}
 

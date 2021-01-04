@@ -19,7 +19,7 @@
   </nz-input-group>
 </ng-container>
 <div class="field-value" *ngIf="!inputMode">
-  <span>{{ field?.value }}</span>
+  <span>{{ field?.value ? field?.value : '-' }}</span>
 </div>
 <ng-template #suffix>
   <i nz-icon [nzType]="field?.iconName"></i>

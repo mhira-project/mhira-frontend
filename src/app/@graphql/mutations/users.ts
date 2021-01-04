@@ -1,48 +1,26 @@
 import gql from 'graphql-tag';
 
-const createUser = gql`
-  mutation(
-    $workID: String
-    $firstName: String!
-    $middleName: String
-    $lastName: String!
-    $password: String!
-    $username: String!
-    $phone: String
-    $email: String
-    $address: String
-    $gender: String
-    $birthDate: DateTime
-  ) {
-    createUser(
-      input: {
-        workID: $workID
-        firstName: $firstName
-        middleName: $middleName
-        lastName: $lastName
-        password: $password
-        username: $username
-        phone: $phone
-        email: $email
-        address: $address
-        gender: $gender
-        birthDate: $birthDate
-      }
-    ) {
+const createOneUser = gql`
+  mutation($createOneUserInput: CreateOneUserInput!) {
+    createOneUser(input: $createOneUserInput) {
       id
-      workID
+      username
+      active
       firstName
       middleName
       lastName
-      phone
       email
+      phone
+      workID
       address
       gender
       birthDate
+      nationality
       createdAt
       updatedAt
       deletedAt
       departments {
+        id
         name
         description
         active
@@ -65,51 +43,27 @@ const createUser = gql`
   }
 `;
 
-const updateUser = gql`
-  mutation(
-    $workID: String
-    $firstName: String!
-    $middleName: String
-    $lastName: String!
-    $username: String!
-    $phone: String
-    $active: Boolean
-    $email: String
-    $address: String
-    $gender: String
-    $birthDate: DateTime
-    $id: Int!
-  ) {
-    updateUser(
-      input: {
-        workID: $workID
-        firstName: $firstName
-        middleName: $middleName
-        lastName: $lastName
-        username: $username
-        active: $active
-        phone: $phone
-        email: $email
-        address: $address
-        gender: $gender
-        birthDate: $birthDate
-      }
-      id: $id
-    ) {
+const updateOneUser = gql`
+  mutation($updateOneUserInput: UpdateOneUserInput!) {
+    updateOneUser(input: $updateOneUserInput) {
       id
-      workID
+      username
+      active
       firstName
       middleName
       lastName
-      phone
       email
+      phone
+      workID
       address
       gender
       birthDate
+      nationality
       createdAt
       updatedAt
       deletedAt
       departments {
+        id
         name
         description
         active
@@ -172,8 +126,8 @@ const softDeleteUser = gql`
 `;
 
 export const UsersMutations = {
-  createUser,
-  updateUser,
+  createOneUser,
+  updateOneUser,
   deleteUser,
   softDeleteUser,
   updateUserPassword,

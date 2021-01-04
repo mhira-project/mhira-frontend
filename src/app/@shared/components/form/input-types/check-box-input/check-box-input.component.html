@@ -12,7 +12,7 @@
   </nz-checkbox-group>
 </ng-container>
 <div class="field-value" *ngIf="!inputMode">
-  <span>{{ field?.value }}</span>
+  <span>{{ field?.value ? field?.value : '-' }}</span>
 </div>
 <p
   *ngIf="this.inputGroup.controls[this.field.name].dirty && this.inputGroup.controls[this.field.name].invalid"

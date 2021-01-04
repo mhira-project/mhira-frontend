@@ -64,7 +64,7 @@
                   "maximumWarning": "6kb"
                 }
               ],
-              "serviceWorker": true,
+              "serviceWorker": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
