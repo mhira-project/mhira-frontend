@@ -4,6 +4,7 @@
 <ng-container *ngIf="inputMode" [formGroup]="inputGroup">
   <nz-checkbox-group
     [formControlName]="field.name"
+    [attr.autocomplete]="autoFill"
     [(ngModel)]="field.options"
     [ngClass]="{ 'has-error': inputIsValid() === false, 'has-success': inputIsValid() === true }"
     (ngModelChange)="handleValueChange($event)"

@@ -30,6 +30,8 @@ import { CaseManagersService } from './@services/case-managers.service';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
 import { EmergencyContactsService } from './@services/contacts.service';
 import { InformantsListComponent } from './informants-list/informants-list.component';
+import { PatientStatusesService } from './@services/patient-statuses.service';
+import { FormsModule } from '@angular/forms';
 
 const antModules = [
   NzGridModule,
@@ -49,7 +51,15 @@ const antModules = [
 ];
 
 @NgModule({
-  imports: [...antModules, CommonModule, AppFormModule, TranslateModule, SharedModule, PatientsManagementRoutingModule],
+  imports: [
+    ...antModules,
+    FormsModule,
+    CommonModule,
+    AppFormModule,
+    TranslateModule,
+    SharedModule,
+    PatientsManagementRoutingModule,
+  ],
   declarations: [
     PatientsManagementComponent,
     PatientsComponent,
@@ -58,6 +68,6 @@ const antModules = [
     PatientProfileComponent,
     CreatePatientComponent,
   ],
-  providers: [PatientsService, CaseManagersService, EmergencyContactsService],
+  providers: [PatientsService, CaseManagersService, EmergencyContactsService, PatientStatusesService],
 })
 export class PatientsManagementModule {}

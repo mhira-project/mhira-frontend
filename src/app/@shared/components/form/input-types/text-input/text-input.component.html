@@ -13,6 +13,7 @@
       onfocus="this.removeAttribute('readonly')"
       autocomplete="off"
       [(ngModel)]="field.value"
+      [attr.autocomplete]="autoFill"
       (change)="handleValueChange($event)"
       nz-input
       [attr.placeholder]="field.description"

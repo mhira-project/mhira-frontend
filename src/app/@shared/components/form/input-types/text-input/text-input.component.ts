@@ -11,6 +11,7 @@ export class TextInputComponent implements OnInit {
   @Input() field: Field;
   @Input() name: string;
   @Input() inputMode = false;
+  @Input() autoFill = false;
   @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
   inputGroup: FormGroup;
 

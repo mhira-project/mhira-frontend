@@ -5,6 +5,7 @@
   <nz-radio-group
     [(ngModel)]="field.value"
     [formControlName]="field.name"
+    [attr.autocomplete]="autoFill"
     [ngClass]="{ 'has-error': inputIsValid() === false, 'has-success': inputIsValid() === true }"
     (ngModelChange)="handleValueChange($event)"
   >

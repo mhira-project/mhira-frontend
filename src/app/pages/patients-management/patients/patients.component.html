@@ -65,9 +65,11 @@
   [nzOkLoading]="isOkLoading"
 >
   <ng-container>
-    <nz-select ngModel="lucy" style="width: 100%">
-      <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-      <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+    <div class="errors">
+      <nz-alert *ngFor="let error of errors" nzType="error" [nzDescription]="error" nzShowIcon></nz-alert>
+    </div>
+    <nz-select [(ngModel)]="statusId" style="width: 100%">
+      <nz-option *ngFor="let status of patientStatues" [nzValue]="status.id" [nzLabel]="status.name"></nz-option>
     </nz-select>
   </ng-container>
 </nz-modal>

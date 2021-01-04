@@ -14,6 +14,7 @@ export class FormComponent implements OnInit {
   @Input() isLoading = false;
   @Input() loadingMessage = '';
   @Input() inputMode = true;
+  @Input() autoFill = false;
   @Input() resetForm = false;
   @Input() showCancelButton = true;
   @Input() showSubmitButton = true;
@@ -74,7 +75,6 @@ export class FormComponent implements OnInit {
         }
       });
     });
-    console.log(formData);
     this.submitForm.emit(formData);
   }
 }

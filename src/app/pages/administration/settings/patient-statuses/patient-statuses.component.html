@@ -1,0 +1,47 @@
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <app-table
+      [loading]="isLoading"
+      [showPagination]="false"
+      [showCustomActions]="true"
+      [showSearch]="true"
+      [listOfCustomActions]="actions"
+      [listOfData]="patientStatusesTable.rows"
+      [listOfColumn]="patientStatusesTable.columns"
+      [showButton]="true"
+      [buttonText]="'Create PatientStatus'"
+      [hasNextPage]="pageInfo?.hasNextPage"
+      [hasPreviousPage]="pageInfo?.hasPreviousPage"
+      (onNext)="navigatePages('next')"
+      (onPrevious)="navigatePages('previous')"
+      (onAction)="handleActionClick($event)"
+      (onButton)="toggleCreatePanel()"
+    >
+    </app-table>
+  </div>
+</div>
+
+<nz-drawer
+  [nzMask]="false"
+  [nzClosable]="true"
+  [nzVisible]="showCreatePatientStatus"
+  nzPlacement="right"
+  [nzTitle]="panelTitle"
+  (nzOnClose)="toggleCreatePanel()"
+>
+  <div nz-row>
+    <div nz-col nzSpan="12" *ngIf="errors.length > 0">
+      <nz-alert *ngFor="let error of errors" nzType="error" [nzDescription]="error" nzShowIcon></nz-alert>
+    </div>
+  </div>
+  <app-form
+    class="mt-3"
+    [form]="patientStatusForms"
+    [isLoading]="isLoading"
+    [inputMode]="inputMode"
+    [showCancelButton]="showCancelButton"
+    [loadingMessage]="loadingMessage"
+    (submitForm)="submitForm($event)"
+  >
+  </app-form>
+</nz-drawer>

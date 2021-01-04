@@ -50,6 +50,34 @@ export class PatientModel {
     return json;
   }
 
+  public static updateData(json: any): Patient {
+    const excludedProperties = [
+      'caseManagers',
+      'informants',
+      'updatedAt',
+      'createdAt',
+      'country',
+      'status',
+      'emergencyContacts',
+      'formattedCaseManagers',
+      'formattedCreatedAt',
+      'formattedUpdatedAt',
+      'formattedBirthDate',
+      'formattedStatus',
+      'formattedInformants',
+      '__typename',
+    ];
+    const patient: any = {};
+    for (const key in json) {
+      if (json.hasOwnProperty(key)) {
+        if (!excludedProperties.includes(key)) {
+          patient[key] = json[key];
+        }
+      }
+    }
+    return patient;
+  }
+
   public static toJson(value: Patient): string {
     return JSON.stringify(value);
   }

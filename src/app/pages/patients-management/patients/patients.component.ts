@@ -11,8 +11,10 @@ import { AppPermissionsService } from '@shared/services/app-permissions.service'
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
 import { PatientFilterForm } from '@app/pages/patients-management/@forms/patients-filter.form';
 import { PatientFilter } from '@app/pages/patients-management/@types/patient-filter';
-import { NzTableQueryParams } from 'ng-zorro-antd';
+import { NzMessageService, NzTableQueryParams } from 'ng-zorro-antd';
 import { Sorting } from '@shared/@types/sorting';
+import { PatientStatus } from '@app/pages/patients-management/@types/patient-status';
+import { PatientStatusesService } from '@app/pages/patients-management/@services/patient-statuses.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -27,6 +29,7 @@ export class PatientsComponent implements OnInit, OnChanges {
   isOkLoading = false;
   isVisibleStatusModal = false;
   patients: any[] = [];
+  patientStatues: PatientStatus[] = [];
   filter: PatientFilter = {};
   paging: Paging = {
     first: 10,
@@ -41,10 +44,13 @@ export class PatientsComponent implements OnInit, OnChanges {
   actions = table.actions;
   currentPatientIndex: number;
   statusId: number;
+  errors: string[];
 
   constructor(
     private patientsService: PatientsService,
+    private patientStatusesService: PatientStatusesService,
     private dateService: DateService,
+    private message: NzMessageService,
     private router: Router,
     public perms: AppPermissionsService
   ) {}
@@ -53,6 +59,7 @@ export class PatientsComponent implements OnInit, OnChanges {
     // this.loadPermissions();
     // to be called from the sort fuction
     // this.getPatients(this.paging);
+    this.getPatientStatuses();
   }
 
   loadPermissions() {
@@ -77,6 +84,20 @@ export class PatientsComponent implements OnInit, OnChanges {
         this.pageInfo = data.patients.pageInfo;
         this.isLoading = false;
         this.closeFilterPanel();
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
+  }
+
+  getPatientStatuses() {
+    this.patientStatues = [];
+    this.patientStatusesService.patientStatuses().subscribe(
+      async ({ data }) => {
+        data.patientStatuses.edges.map((status: any) => {
+          this.patientStatues.push(status.node);
+        });
       },
       (error) => {
         this.isLoading = false;
@@ -120,16 +141,26 @@ export class PatientsComponent implements OnInit, OnChanges {
 
   updatePatient(patient: Patient) {
     this.isOkLoading = true;
+    this.errors = [];
     patient.statusId = this.statusId;
-    this.patientsService.updatePatient(patient).subscribe(
+    this.patientsService.updatePatient(PatientModel.updateData(patient)).subscribe(
       async ({ data }) => {
         patient = PatientModel.fromJson(data.updateOnePatient);
         this.isVisibleStatusModal = false;
         this.isOkLoading = false;
+        this.message.success('Patient has successful been updated', {
+          nzDuration: 3000,
+        });
       },
       (error) => {
+        for (const gqlError of error.graphQLErrors) {
+          this.errors.push(gqlError.message);
+        }
         this.isVisible = false;
         this.isOkLoading = false;
+        this.message.error('An error occurred could not update patient', {
+          nzDuration: 3000,
+        });
       }
     );
   }
@@ -150,6 +181,7 @@ export class PatientsComponent implements OnInit, OnChanges {
         break;
 
       case 'Change Status':
+        this.statusId = this.patients[event.index].statusId;
         this.isVisibleStatusModal = true;
         break;
     }

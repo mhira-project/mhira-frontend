@@ -74,6 +74,7 @@ export class UserFormComponent implements OnInit {
   ngOnInit(): void {
     this.init();
   }
+
   init() {
     this.getUserFromUrl();
     this.getRoles();
@@ -112,18 +113,22 @@ export class UserFormComponent implements OnInit {
       }
     );
   }
+
   getUser() {
     this.currentUser = JSON.parse(localStorage.getItem('user')) as User;
   }
+
   clickChangePassword() {
     console.log('change');
     this._child.handleSubmitForm(this.updatePasswordForm);
   }
+
   showChangePasswordForm() {
     this.showModal = true;
     this.modalType = Object.assign({}, this.changePasswordModal);
     this.modalType.title = `${this.modalType.title} for ${this.user.username}: ${this.user.firstName} ${this.user.lastName}`;
   }
+
   getRoles(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
     const options: any = [];
     this.roles = [];
@@ -155,6 +160,7 @@ export class UserFormComponent implements OnInit {
     }
     return false;
   }
+
   handleDeleteAction(user: User) {
     this.modalService.confirm({
       nzTitle: 'Confirm',
@@ -164,6 +170,7 @@ export class UserFormComponent implements OnInit {
       nzCancelText: 'Cancel',
     });
   }
+
   deleteUser(user: User) {
     this.isLoading = true;
     this.usersService.deleteUser(user).subscribe(
