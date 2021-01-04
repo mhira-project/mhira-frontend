@@ -108,18 +108,22 @@ export class UserFormComponent implements OnInit {
       }
     );
   }
+
   getUser() {
     this.currentUser = JSON.parse(localStorage.getItem('user')) as User;
   }
+
   clickChangePassword() {
     console.log('change');
     this._child.handleSubmitForm(this.updatePasswordForm);
   }
+
   showChangePasswordForm() {
     this.showModal = true;
     this.modalType = Object.assign({}, this.changePasswordModal);
     this.modalType.title = `${this.modalType.title} for ${this.user.username}: ${this.user.firstName} ${this.user.lastName}`;
   }
+
   getRoles(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
     const options: any = [];
     this.roles = [];
@@ -151,6 +155,7 @@ export class UserFormComponent implements OnInit {
     }
     return false;
   }
+
   handleCancel() {
     this.updatePasswordForm.groups.map((group) => {
       group.fields.map((field) => {

@@ -10,6 +10,7 @@
     <input
       type="text"
       [(ngModel)]="field.value"
+      [attr.autocomplete]="autoFill"
       (change)="handleValueChange($event)"
       nz-input
       [attr.placeholder]="field.description"

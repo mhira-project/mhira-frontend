@@ -10,6 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class CheckBoxInputComponent implements OnInit {
   @Input() field: Field;
   @Input() inputMode = false;
+  @Input() autoFill = false;
   @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
   inputGroup: FormGroup;
   values: any[] = [];

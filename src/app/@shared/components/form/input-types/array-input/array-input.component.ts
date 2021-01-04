@@ -10,6 +10,7 @@ export class ArrayInputComponent implements OnInit {
   @Input() field: Field;
   @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
   @Input() inputMode = false;
+  @Input() autoFill = false;
   inputsString: string;
 
   constructor() {}

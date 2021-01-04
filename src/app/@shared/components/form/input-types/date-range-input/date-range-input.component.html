@@ -10,6 +10,7 @@
     <nz-range-picker
       [attr.placeholder]="field.description"
       [formControlName]="field.name"
+      [attr.autocomplete]="autoFill"
       [(ngModel)]="field.value"
       (ngModelChange)="handleValueChange($event)"
     >

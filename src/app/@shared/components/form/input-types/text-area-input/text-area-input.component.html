@@ -9,6 +9,7 @@
     <textarea
       nz-input
       [attr.placeholder]="field.description"
+      [attr.autocomplete]="autoFill"
       [(ngModel)]="field.value"
       (change)="handleValueChange($event)"
       [nzAutosize]="{ minRows: 3, maxRows: 5 }"
