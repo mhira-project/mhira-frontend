@@ -11,7 +11,7 @@ import { AppPermissionsService } from '@shared/services/app-permissions.service'
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
 import { PatientFilterForm } from '@app/pages/patients-management/@forms/patients-filter.form';
 import { PatientFilter } from '@app/pages/patients-management/@types/patient-filter';
-import { NzTableQueryParams } from 'ng-zorro-antd';
+import { NzMessageService, NzTableQueryParams } from 'ng-zorro-antd';
 import { Sorting } from '@shared/@types/sorting';
 import { PatientStatus } from '@app/pages/patients-management/@types/patient-status';
 import { PatientStatusesService } from '@app/pages/patients-management/@services/patient-statuses.service';
@@ -50,6 +50,7 @@ export class PatientsComponent implements OnInit, OnChanges {
     private patientsService: PatientsService,
     private patientStatusesService: PatientStatusesService,
     private dateService: DateService,
+    private message: NzMessageService,
     private router: Router,
     public perms: AppPermissionsService
   ) {}
@@ -147,6 +148,9 @@ export class PatientsComponent implements OnInit, OnChanges {
         patient = PatientModel.fromJson(data.updateOnePatient);
         this.isVisibleStatusModal = false;
         this.isOkLoading = false;
+        this.message.success('Patient has successful been updated', {
+          nzDuration: 3000,
+        });
       },
       (error) => {
         for (const gqlError of error.graphQLErrors) {
@@ -154,6 +158,9 @@ export class PatientsComponent implements OnInit, OnChanges {
         }
         this.isVisible = false;
         this.isOkLoading = false;
+        this.message.error('An error occurred could not update patient', {
+          nzDuration: 3000,
+        });
       }
     );
   }
