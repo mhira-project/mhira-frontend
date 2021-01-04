@@ -19,6 +19,9 @@ export class ChangePasswordComponent implements OnInit {
   isLoading = false;
   hasErrors = false;
   errors: string[] = [];
+  passwordVisible = false;
+  currentPassword = false;
+  repeatPassword = false;
 
   constructor(
     private fb: FormBuilder,
