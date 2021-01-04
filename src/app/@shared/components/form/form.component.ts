@@ -75,7 +75,6 @@ export class FormComponent implements OnInit {
         }
       });
     });
-    console.log(formData);
     this.submitForm.emit(formData);
   }
 }

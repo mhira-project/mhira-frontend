@@ -38,10 +38,15 @@ export class PatientStatusesService {
   }
 
   updatePatientStatus(patientStatus: PatientStatus): Observable<FetchResult<any>> {
+    const id = patientStatus.id;
+    delete patientStatus.id;
     return this.apollo.mutate({
       mutation: PatientStatusesMutations.updateOnePatientStatus,
       variables: {
-        input: { patientStatus },
+        input: {
+          id,
+          update: patientStatus,
+        },
       },
       fetchPolicy: 'no-cache',
     });

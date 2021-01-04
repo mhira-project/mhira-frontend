@@ -16,8 +16,23 @@
           <ul>
             <ng-container *ngFor="let submenu of item.submenu">
               <ng-container *ngIf="perms.permissionsOnly(submenu.permissions)">
-                <li nz-menu-item [routerLink]="submenu.path">
+                <li *ngIf="submenu.submenu.length === 0" nz-menu-item [routerLink]="submenu.path">
                   <span [translate]="submenu.title"></span>
+                </li>
+                <li *ngIf="submenu.submenu.length > 0" nz-submenu class="no-padding">
+                  <span title>
+                    <i nz-icon nzType="{{ submenu.icon }}" nzTheme="{{ submenu.iconTheme }}"></i>
+                    <span *ngIf="!isCollapsed" [translate]="submenu.title"></span>
+                  </span>
+                  <ul>
+                    <ng-container *ngFor="let subsubmenu of submenu.submenu">
+                      <ng-container *ngIf="perms.permissionsOnly(subsubmenu.permissions)">
+                        <li nz-menu-item [routerLink]="subsubmenu.path">
+                          <span [translate]="subsubmenu.title"></span>
+                        </li>
+                      </ng-container>
+                    </ng-container>
+                  </ul>
                 </li>
               </ng-container>
             </ng-container>

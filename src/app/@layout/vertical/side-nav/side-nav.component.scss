@@ -30,6 +30,16 @@ ul {
 }
 
 ::ng-deep {
+  .no-padding {
+    div {
+      padding-left: 18px !important;
+      li {
+        padding-left: 43px !important;
+        margin-top: 11px !important;
+        margin-bottom: 9px !important;
+      }
+    }
+  }
   .ant-menu-inline,
   .ant-menu-inline-collapsed {
     border-right: 0 solid #f0f0f0 !important;
