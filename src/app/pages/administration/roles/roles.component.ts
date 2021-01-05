@@ -98,7 +98,6 @@ export class RolesComponent implements OnInit {
     this.rolesService.deleteRole(role).subscribe(
       async ({ data }: any) => {
         const deletedIndex = this.roles.findIndex((_role) => _role.id === role.id);
-        this.roles.splice(deletedIndex, 1);
         this.rolesTable.rows.splice(deletedIndex, 1);
         this.modalLoading = false;
         this.message.create('success', `role has been successfully deleted`);
