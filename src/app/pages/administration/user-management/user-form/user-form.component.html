@@ -12,7 +12,7 @@
   </nz-tab>
   <nz-tab nzTitle="Security">
     <div nz-row nzGutter="16">
-      <div nz-col>
+      <div *ngIf="roles.length > 0" nz-col>
         <nz-card style="width: 300px" nzTitle="{{ user.firstName }}'s Roles" [nzExtra]="rolesTemplate">
           <nz-checkbox-wrapper style="width: 100%" (nzOnChange)="collectRoles($event)">
             <div nz-row>
@@ -32,7 +32,7 @@
           <a *ngIf="roles.length > 0" nz-button nzSize="small" (click)="submitRoles()">Save</a>
         </ng-template>
       </div>
-      <div nz-col>
+      <div *ngIf="departments.length > 0" nz-col>
         <nz-card style="width: 300px" nzTitle="{{ user.firstName }}'s Departments">
           <nz-checkbox-wrapper style="width: 100%" (nzOnChange)="collectDepartments($event)">
             <div nz-row>

@@ -188,7 +188,7 @@ export class RolesComponent implements OnInit {
   }
 
   submitForm(roleData: any) {
-    if (this.role?.id) {
+    if (this.isCreateAction) {
       this.createRole(roleData);
     } else {
       roleData.id = this.role.id;

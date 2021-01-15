@@ -194,7 +194,7 @@ export class UserFormComponent implements OnInit {
   }
 
   userHasDepartment(departmentId: number): boolean {
-    if (this.user) {
+    if (this.user && this.user.departments) {
       for (const _department of this.user.departments) {
         if (_department.id === departmentId) {
           return true;
