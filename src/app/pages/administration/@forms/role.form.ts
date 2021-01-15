@@ -1,7 +1,7 @@
 import { Form } from '@shared/components/form/@types/form';
 
 export const RoleForm: Form = {
-  submitButtonText: 'Create Role',
+  submitButtonText: 'Save Role',
   editButtonText: 'Edit Role',
   submitButtonClass: 'full-width',
   groups: [

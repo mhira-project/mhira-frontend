@@ -24,7 +24,7 @@ export class RolesComponent implements OnInit {
   modalLoading = false;
   roles: Role[] = [];
   paging: Paging = {
-    first: 50,
+    first: 10,
   };
   pageInfo: any;
   rolesTable: { columns: any[]; rows: Role[] } = {
@@ -146,7 +146,19 @@ export class RolesComponent implements OnInit {
   toggleCreatePanel(create: boolean = true) {
     this.showCreateRole = !this.showCreateRole;
     this.isCreateAction = create;
-    this.panelTitle = this.isCreateAction ? 'Create Role' : 'Update Role';
+    if (create) {
+      this.role = null;
+      this.clearForm();
+    }
+    this.panelTitle = !this.isCreateAction ? 'Update Role' : 'Create Role';
+  }
+
+  clearForm() {
+    this.roleForms.groups.map((group) => {
+      group.fields.map((field) => {
+        field.value = '';
+      });
+    });
   }
 
   createRole(role: Role) {
@@ -162,6 +174,7 @@ export class RolesComponent implements OnInit {
         this.loadingMessage = '';
         this.toggleCreatePanel();
         this.message.create('success', `Role has successfully been created`);
+        this.clearForm();
       },
       (error) => {
         this.hasErrors = true;
@@ -172,6 +185,15 @@ export class RolesComponent implements OnInit {
         this.loadingMessage = '';
       }
     );
+  }
+
+  submitForm(roleData: any) {
+    if (this.role?.id) {
+      this.createRole(roleData);
+    } else {
+      roleData.id = this.role.id;
+      this.updateRole(roleData);
+    }
   }
 
   private updateRole(role: Role) {
@@ -200,6 +222,8 @@ export class RolesComponent implements OnInit {
         this.loadingMessage = '';
         this.toggleCreatePanel();
         this.message.create('success', `Role has successfully been updated`);
+        this.clearForm();
+        this.role = null;
       },
       (error) => {
         this.hasErrors = true;
@@ -210,14 +234,5 @@ export class RolesComponent implements OnInit {
         this.loadingMessage = '';
       }
     );
-  }
-
-  submitForm(roleData: any) {
-    if (this.isCreateAction) {
-      this.createRole(roleData);
-    } else {
-      roleData.id = this.role.id;
-      this.updateRole(roleData);
-    }
   }
 }
