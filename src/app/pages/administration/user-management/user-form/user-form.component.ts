@@ -154,12 +154,11 @@ export class UserFormComponent implements OnInit {
   }
 
   userHasRole(roleId: number): boolean {
-    for (const _role of this.user.roles) {
-      if (_role.id === roleId) {
-        return true;
-      }
+    if (this.user && this.user.roles) {
+      return this.user.roles.map((d) => d.id === roleId)[0];
+    } else {
+      return false;
     }
-    return false;
   }
 
   handleDeleteAction(user: User) {
@@ -196,15 +195,10 @@ export class UserFormComponent implements OnInit {
 
   userHasDepartment(departmentId: number): boolean {
     if (this.user && this.user.departments) {
-      for (const _department of this.user.departments) {
-        if (_department.id === departmentId) {
-          return true;
-        }
-      }
+      return this.user.departments.map((d) => d.id === departmentId)[0];
+    } else {
       return false;
     }
-
-    return false;
   }
 
   collectRoles(roles: number[]) {
