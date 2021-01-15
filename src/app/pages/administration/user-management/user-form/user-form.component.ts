@@ -195,7 +195,6 @@ export class UserFormComponent implements OnInit {
 
   userHasDepartment(departmentId: number): boolean {
     if (this.user) {
-      console.log(this.user);
       for (const _department of this.user.departments) {
         if (_department.id === departmentId) {
           return true;
@@ -220,15 +219,17 @@ export class UserFormComponent implements OnInit {
   }
 
   collectDepartments(departments: number[]) {
-    const departmentsIds: number[] = [];
-    this.departments.map((department) => departmentsIds.push(department.id));
+    const departmentsIds: number[] = this.departments.map((department) => department.id);
     this.selectedDepartments = departments;
     this.unselectedDepartments = departmentsIds.filter((id) => !this.selectedDepartments.includes(id));
-    for (const department of departments) {
-      if (this.userHasDepartment(department)) {
-        this.selectedDepartments.splice(this.selectedDepartments.indexOf(department), department);
-      }
-    }
+    console.log(this.selectedDepartments);
+    console.log(this.unselectedDepartments);
+    // for (const department of departments) {
+    //   if (this.userHasDepartment(department)) {
+    //     this.selectedDepartments.splice(this.selectedDepartments.indexOf(department), department);
+    //   }
+    // }
+    this.submitDepartments();
   }
 
   getUserFromUrl(): void {

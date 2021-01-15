@@ -6,6 +6,7 @@
     [formControlName]="field.name"
     [attr.autocomplete]="autoFill"
     [(ngModel)]="field.options"
+    [disabled]="field.disabled ? field.disabled : false"
     [ngClass]="{ 'has-error': inputIsValid() === false, 'has-success': inputIsValid() === true }"
     (ngModelChange)="handleValueChange($event)"
   >

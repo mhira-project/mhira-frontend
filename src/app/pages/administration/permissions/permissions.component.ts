@@ -24,7 +24,7 @@ export class PermissionsComponent implements OnInit {
   modalLoading = false;
   permissions: Permission[] = [];
   paging: Paging = {
-    first: 10,
+    first: 50,
   };
   pageInfo: any;
   permissionsTable: { columns: any[]; rows: Permission[] } = {

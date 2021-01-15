@@ -24,6 +24,7 @@ export interface Field {
   maxLength?: number;
   validationMessage?: string;
   isRequired?: boolean;
+  disabled?: boolean;
   isValid?: boolean;
   span?: number;
   options?: {

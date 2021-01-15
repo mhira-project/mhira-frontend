@@ -24,7 +24,7 @@ export class RolesComponent implements OnInit {
   modalLoading = false;
   roles: Role[] = [];
   paging: Paging = {
-    first: 10,
+    first: 50,
   };
   pageInfo: any;
   rolesTable: { columns: any[]; rows: Role[] } = {
