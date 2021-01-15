@@ -107,7 +107,6 @@ export class RolesAndPermissionsComponent implements OnInit {
           this.loading = false;
         },
         (error: any) => {
-          console.log(error);
           this.loading = false;
         }
       );

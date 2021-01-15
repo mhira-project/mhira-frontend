@@ -21,6 +21,7 @@ import { ModalType } from '@app/pages/administration/user-management/modal.type'
 import { FormComponent } from '@shared/components/form/form.component';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { NzModalService } from 'ng-zorro-antd';
+import { Permission } from '@app/pages/administration/@types/permission';
 
 const CryptoJS = require('crypto-js');
 
@@ -222,8 +223,6 @@ export class UserFormComponent implements OnInit {
     const departmentsIds: number[] = this.departments.map((department) => department.id);
     this.selectedDepartments = departments;
     this.unselectedDepartments = departmentsIds.filter((id) => !this.selectedDepartments.includes(id));
-    console.log(this.selectedDepartments);
-    console.log(this.unselectedDepartments);
     // for (const department of departments) {
     //   if (this.userHasDepartment(department)) {
     //     this.selectedDepartments.splice(this.selectedDepartments.indexOf(department), department);
@@ -240,7 +239,6 @@ export class UserFormComponent implements OnInit {
         const bytes = CryptoJS.AES.decrypt(params.user, environment.secretKey);
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.user = decryptedData;
-        console.log(this.user);
         if (this.user.birthDate) {
           this.user.birthDate = decryptedData.birthDate.slice(0, 10);
         }
@@ -397,9 +395,10 @@ export class UserFormComponent implements OnInit {
     this.getUserFromUrl();
   }
 
-  assignRoles() {
+  assignRoles(role?: Role) {
     this.isLoading = true;
-    this.rolesService.addRolesToUser(this.user.id, this.selectedRoles).subscribe(
+    const rolesIds: number[] = role ? [role.id] : this.selectedRoles;
+    this.rolesService.addRolesToUser(this.user.id, rolesIds).subscribe(
       async ({ data }: any) => {
         this.isLoading = false;
         this.message.create('success', `the role(s) have been successful assigned to ${this.user.firstName}`);
@@ -411,23 +410,10 @@ export class UserFormComponent implements OnInit {
     );
   }
 
-  assignDepartments() {
+  unassignRoles(role?: Role) {
     this.isLoading = true;
-    this.departmentsService.addDepartmentsToUser(this.user.id, this.selectedDepartments).subscribe(
-      async ({ data }: any) => {
-        this.isLoading = false;
-        this.message.create('success', `the department(s) have been successful assigned to ${this.user.firstName}`);
-      },
-      (error: any) => {
-        this.isLoading = false;
-        this.message.create('error', `could not assign department(s) to ${this.user.firstName}`);
-      }
-    );
-  }
-
-  unassignRoles() {
-    this.isLoading = true;
-    this.rolesService.removeRolesFromUser(this.user.id, this.unselectedRoles).subscribe(
+    const rolesIds: number[] = role ? [role.id] : this.unselectedRoles;
+    this.rolesService.removeRolesFromUser(this.user.id, rolesIds).subscribe(
       async ({ data }: any) => {
         this.isLoading = false;
         this.message.create('success', `the role(s) have been successful removed from ${this.user.firstName}`);
@@ -439,9 +425,33 @@ export class UserFormComponent implements OnInit {
     );
   }
 
-  unassignDepartment() {
+  assignRoleToUser(role: Role, checked: boolean) {
+    if (checked) {
+      this.assignRoles(role);
+    } else {
+      this.unassignRoles(role);
+    }
+  }
+
+  assignDepartments(department?: Department) {
     this.isLoading = true;
-    this.departmentsService.removeDepartmentsFromUser(this.user.id, this.unselectedDepartments).subscribe(
+    const departmentsIds: number[] = department ? [department.id] : this.selectedDepartments;
+    this.departmentsService.addDepartmentsToUser(this.user.id, departmentsIds).subscribe(
+      async ({ data }: any) => {
+        this.isLoading = false;
+        this.message.create('success', `the department(s) have been successful assigned to ${this.user.firstName}`);
+      },
+      (error: any) => {
+        this.isLoading = false;
+        this.message.create('error', `could not assign department(s) to ${this.user.firstName}`);
+      }
+    );
+  }
+
+  unassignDepartment(department?: Department) {
+    this.isLoading = true;
+    const departmentsIds: number[] = department ? [department.id] : this.unselectedDepartments;
+    this.departmentsService.removeDepartmentsFromUser(this.user.id, departmentsIds).subscribe(
       async ({ data }: any) => {
         this.isLoading = false;
         this.message.create('success', `the department(s) have been successful removed from ${this.user.firstName}`);
@@ -451,6 +461,14 @@ export class UserFormComponent implements OnInit {
         this.message.create('error', `could not remove department(s) to ${this.user.firstName}`);
       }
     );
+  }
+
+  assignDepartmentToUser(department: Department, checked: boolean) {
+    if (checked) {
+      this.assignDepartments(department);
+    } else {
+      this.unassignDepartment(department);
+    }
   }
 
   submitForm(form: any): void {
@@ -476,7 +494,6 @@ export class UserFormComponent implements OnInit {
   }
 
   updateUserPassword(form: any) {
-    console.log(form);
     if (this.user.id) {
       this.isLoading = true;
       this.loadingMessage = `Updating user ${this.user.firstName} ${this.user.lastName}`;
