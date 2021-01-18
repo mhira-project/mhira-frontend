@@ -195,7 +195,7 @@ export class UserFormComponent implements OnInit {
   }
 
   userHasDepartment(departmentId: number): boolean {
-    if (this.user && this.user.roles) {
+    if (this.user && this.user.departments) {
       const userDepartmentsIds: number[] = this.user.departments.map((dept) => dept.id);
       return userDepartmentsIds.includes(departmentId);
     } else {

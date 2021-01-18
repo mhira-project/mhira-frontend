@@ -1,6 +1,12 @@
 <ng-template #indicatorTemplate><i nz-icon class="loadingSpinner" nzType="loading"></i></ng-template>
 <nz-spin [nzSpinning]="loading" [nzIndicator]="indicatorTemplate">
-  <nz-table [nzShowPagination]="false" [nzBordered]="true" [nzData]="matrix.permissions" nzSize="middle">
+  <nz-table
+    *ngIf="perms.permissionsOnly(['view roles'])"
+    [nzShowPagination]="false"
+    [nzBordered]="true"
+    [nzData]="matrix.permissions"
+    nzSize="middle"
+  >
     <thead>
       <tr>
         <th rowspan="2">Permissions</th>
@@ -16,6 +22,7 @@
         <td *ngFor="let role of matrix.roles" nzAlign="center">
           <div
             nz-checkbox
+            [disabled]="!perms.permissionsOnly(['manage roles'])"
             [ngModel]="permissionInRole(permission, role)"
             (ngModelChange)="assignPermissionToRole(permission, role, $event)"
           ></div>

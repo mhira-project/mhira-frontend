@@ -115,7 +115,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'administration/roles-and-permissions',
         title: extract('Permission Matrix'),
-        permissions: ['manage roles'],
+        permissions: ['view roles'],
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -123,7 +123,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'administration/permissions',
         title: extract('Permissions'),
-        permissions: ['manage roles'],
+        permissions: ['view roles'],
         iconType: '',
         iconTheme: '',
         submenu: [],
