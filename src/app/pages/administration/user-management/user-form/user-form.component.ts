@@ -155,7 +155,8 @@ export class UserFormComponent implements OnInit {
 
   userHasRole(roleId: number): boolean {
     if (this.user && this.user.roles) {
-      return this.user.roles.map((d) => d.id === roleId)[0];
+      const userRolesIds: number[] = this.user.roles.map((role) => role.id);
+      return userRolesIds.includes(roleId);
     } else {
       return false;
     }
@@ -194,8 +195,9 @@ export class UserFormComponent implements OnInit {
   }
 
   userHasDepartment(departmentId: number): boolean {
-    if (this.user && this.user.departments) {
-      return this.user.departments.map((d) => d.id === departmentId)[0];
+    if (this.user && this.user.roles) {
+      const userDepartmentsIds: number[] = this.user.departments.map((dept) => dept.id);
+      return userDepartmentsIds.includes(departmentId);
     } else {
       return false;
     }
@@ -233,6 +235,7 @@ export class UserFormComponent implements OnInit {
         const bytes = CryptoJS.AES.decrypt(params.user, environment.secretKey);
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.user = decryptedData;
+        console.log(this.user);
         if (this.user.birthDate) {
           this.user.birthDate = decryptedData.birthDate.slice(0, 10);
         }
@@ -434,6 +437,7 @@ export class UserFormComponent implements OnInit {
       async ({ data }: any) => {
         this.isLoading = false;
         this.message.create('success', `the department(s) have been successful assigned to ${this.user.firstName}`);
+        this.user.departments.push(department);
       },
       (error: any) => {
         this.isLoading = false;
