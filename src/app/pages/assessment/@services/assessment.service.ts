@@ -8,6 +8,7 @@ import { AssessmentsMutations } from '@app/@graphql/mutations/assessments';
 import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
 import { Paging } from '@shared/@types/paging';
+import { AssessmentFilter } from '@app/pages/assessment/@types/assessment-filter';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,11 @@ import { Paging } from '@shared/@types/paging';
 export class AssessmentService {
   constructor(private apollo: Apollo) {}
 
-  getAssessments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }): Observable<FetchResult<any>> {
+  getAssessments(params?: {
+    paging?: Paging;
+    filter?: AssessmentFilter;
+    sorting?: Sorting[];
+  }): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: AssessmentsQueries.assessments,
       variables: {
