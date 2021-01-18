@@ -8,6 +8,7 @@ import { Filter } from '@shared/@types/filter';
 import { RolesService } from '@app/pages/administration/@services/roles.service';
 import { RolePermission } from '@app/pages/administration/@types/role_permissions';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-roles-and-permissions',
@@ -32,6 +33,7 @@ export class RolesAndPermissionsComponent implements OnInit {
   constructor(
     private rolesService: RolesService,
     private permissionService: PermissionsService,
+    private message: NzMessageService,
     public perms: AppPermissionsService
   ) {}
 
@@ -55,6 +57,7 @@ export class RolesAndPermissionsComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
+        this.message.create('error', `${error.message}`);
         this.loading = false;
       }
     );
@@ -81,12 +84,8 @@ export class RolesAndPermissionsComponent implements OnInit {
   }
 
   permissionInRole(permission: Permission, role: Role): boolean {
-    for (const _permission of role.permissions) {
-      if (_permission.id === permission.id) {
-        return true;
-      }
-    }
-    return false;
+    const permIds: number[] = role.permissions.map((perm) => perm.id);
+    return permIds.includes(permission.id);
   }
 
   assignPermissionToRole(permission: Permission, role: Role, checked: boolean) {
@@ -97,7 +96,7 @@ export class RolesAndPermissionsComponent implements OnInit {
           this.loading = false;
         },
         (error: any) => {
-          console.log(error);
+          this.message.create('error', `${error.message}`);
           this.loading = false;
         }
       );
@@ -107,6 +106,7 @@ export class RolesAndPermissionsComponent implements OnInit {
           this.loading = false;
         },
         (error: any) => {
+          this.message.create('error', `${error.message}`);
           this.loading = false;
         }
       );

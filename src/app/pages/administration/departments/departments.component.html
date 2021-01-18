@@ -1,4 +1,4 @@
-<div nz-row>
+<div *ngIf="perms.permissionsOnly('view departments')" nz-row>
   <div nz-col nzSpan="24">
     <app-table
       [loading]="isLoading"
@@ -9,7 +9,7 @@
       [listOfCustomActions]="actions"
       [listOfData]="departmentsTable.rows"
       [listOfColumn]="departmentsTable.columns"
-      [showButton]="true"
+      [showButton]="perms.permissionsOnly('manage departments')"
       [buttonText]="'Create Department'"
       [hasNextPage]="pageInfo?.hasNextPage"
       [hasPreviousPage]="pageInfo?.hasPreviousPage"
