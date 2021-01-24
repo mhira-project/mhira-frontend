@@ -10,27 +10,43 @@
 # -----
 image: node:latest
 
+definitions:
+  steps:
+    - step: &install
+        name: Installation
+        caches:
+          - node
+        script:
+          - npm ci
+
+    - step: &lint
+        name: Lint
+        caches:
+          - node
+        script:
+          - npm run lint:ts
+
+    - step: &build
+        name: Build
+        caches:
+          - node
+        script:
+          - npm run build
+        artifacts:
+          - dist/**
+
 pipelines:
+  pull-requests:
+    '**':
+      - step: *install
+      - step: *lint
+      - step: *build
+
   branches:
-    master:
-      - step:
-          name: Lint
-          caches:
-            - node
-          script:
-            - npm ci
-            - npm run lint
-          artifacts:
-            - dist/*
-      - step:
-          name: Build
-          caches:
-            - node
-          script:
-            - npm ci
-            - npm run build
-          artifacts:
-            - dist/*
+    develop:
+      - step: *install
+      - step: *lint
+      - step: *build
       - step:
           name: Deploy to S3
           script:
