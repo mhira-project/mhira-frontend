@@ -1,5 +1,4 @@
 export * from './capitalize.pipe';
-export * from './dynamic.pipe';
 export * from './iconFilter.pipe';
 export * from './nosanitize.pipe';
 export * from './number-with-commas.pipe';
