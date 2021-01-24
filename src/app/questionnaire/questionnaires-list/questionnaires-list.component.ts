@@ -11,8 +11,7 @@ import { NzModalService } from 'ng-zorro-antd';
   styleUrls: ['./questionnaires-list.component.scss'],
 })
 export class QuestionnairesListComponent implements OnInit {
-  description =
-    "Hello Jon, thank your for answering the following assessment. The information you're providing is very important for a proper diagnosis and treatment. Please start the assessment by pressing the button below. The questionnaires are in fixed order";
+  description = `Hello Jon, thank your for answering the following assessment. The information you're providing is very important for a proper diagnosis and treatment. Please start the assessment by pressing the button below. The questionnaires are in fixed order`;
   questionnaires: any[] = [
     {
       name: 'Patient Health Questionnaire - 9',
