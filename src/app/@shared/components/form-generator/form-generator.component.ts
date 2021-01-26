@@ -15,7 +15,7 @@ export class FormGeneratorComponent implements OnInit, OnChanges {
   @Input() rowItems = 1;
   @Input() submitButtonText = 'Submit';
   @Input() formItems: FormItemType[] = [];
-  @Output() submit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
 
   today = new Date();
   timeDefaultValue = setHours(new Date(), 0);
@@ -99,13 +99,13 @@ export class FormGeneratorComponent implements OnInit, OnChanges {
     this.validateForm = this.fb.group(rules);
   }
 
-  addMetaField(formItem: any) {
+  addMetaField(formItem: FormItemType) {
     const meta = this.validateForm.get(formItem.name) as FormArray;
     switch (formItem.type) {
       case 'metaWithOptions':
         const controls = {};
-        for (let i = 0; i < formItem.fields.length; i++) {
-          controls[formItem.fields[i].name] = new FormControl('');
+        for (const field of formItem.fields) {
+          controls[field.name] = new FormControl('');
         }
         meta.push(this.fb.group(controls));
         break;
@@ -131,15 +131,16 @@ export class FormGeneratorComponent implements OnInit, OnChanges {
     meta.removeAt(index);
   }
 
-  submitForm(event: any): void {
+  onSubmitForm(event: any): void {
     event.stopPropagation();
-    for (const i in this.validateForm.controls) {
-      const control = this.validateForm.controls[i];
+
+    for (const control of Object.values(this.validateForm.controls)) {
       control.markAsDirty();
       control.updateValueAndValidity();
     }
+
     if (this.validateForm.valid) {
-      this.submit.emit(this.validateForm.value);
+      this.submitForm.emit(this.validateForm.value);
     }
   }
 }

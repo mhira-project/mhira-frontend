@@ -1,4 +1,4 @@
-<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm($event)">
+<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="onSubmitForm($event)">
   <div nz-row [nzGutter]="[16, 16]">
     <div nz-col class="gutter-row" *ngFor="let formItem of formItems" [style.width]="formItem.fillPercent + '%'">
       <nz-form-item>
