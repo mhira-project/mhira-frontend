@@ -59,9 +59,11 @@
           >
             <nz-avatar [nzText]="user?.firstName.charAt(0)"> </nz-avatar>
             <span class="pl-3 user-name">{{ user?.firstName }} {{ user?.lastName }}</span>
-            (<span *ngIf="user?.roles.length > 0"
-              ><span class="pl-3 roles" *ngFor="let role of user?.roles">{{ role?.name }}</span></span
-            ><span *ngIf="user?.roles.length === 0">no role</span>)
+            (<span *ngIf="user?.roles"
+              ><span *ngIf="user?.roles.length > 0"
+                ><span class="pl-3 roles" *ngFor="let role of user?.roles">{{ role?.name }}</span></span
+              ><span *ngIf="user?.roles.length === 0">no role</span></span
+            >)
           </span>
         </div>
         <nz-dropdown-menu #profile="nzDropdownMenu">
