@@ -5,7 +5,7 @@
       [loadingMessage]="loadingMessage"
       [inputMode]="inputMode"
       [showCancelButton]="showCancelButton"
-      [showEditButton]="perms.permissionsOnly(['update own profile']) || perms.permissionsOnly(['manage users'])"
+      [showEditButton]="perms.permissionsOnly(['update own profile', 'manage users'])"
       [form]="profileFields"
       (submitForm)="submitForm($event)"
     ></app-form>
@@ -18,7 +18,7 @@
             <div nz-row>
               <div nz-col nzSpan="24" *ngFor="let role of roles">
                 <label
-                  [disabled]="perms.permissionsOnly(['update own profile']) || perms.permissionsOnly(['manage roles'])"
+                  [disabled]="perms.permissionsOnly(['update own profile', 'manage roles'])"
                   nz-checkbox
                   [nzValue]="role.id"
                   [ngModel]="userHasRole(role.id)"
@@ -39,9 +39,7 @@
             <div nz-row>
               <div nz-col nzSpan="24" *ngFor="let department of departments">
                 <label
-                  [disabled]="
-                    !(perms.permissionsOnly(['update own profile']) || perms.permissionsOnly(['manage departments']))
-                  "
+                  [disabled]="!perms.permissionsOnly(['update own profile', 'manage departments'])"
                   nz-checkbox
                   [nzValue]="department.id"
                   [ngModel]="userHasDepartment(department.id)"
