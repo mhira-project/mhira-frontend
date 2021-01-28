@@ -143,7 +143,6 @@ const antModules = [
 import {
   CapitalizePipe,
   DatePipe,
-  DynamicPipe,
   IconFilterPipe,
   NoSanitizePipe,
   NumberWithCommasPipe,
@@ -157,7 +156,6 @@ import { AppFormModule } from '@shared/components/form/app-form.module';
 
 const PIPES = [
   CapitalizePipe,
-  DynamicPipe,
   IconFilterPipe,
   NoSanitizePipe,
   NumberWithCommasPipe,

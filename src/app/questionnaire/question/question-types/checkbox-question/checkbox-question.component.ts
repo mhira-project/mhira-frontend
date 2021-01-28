@@ -26,6 +26,7 @@ export class CheckboxQuestionComponent implements OnInit {
       this.selectedOptionIndices.splice(optionIndex, 1);
     }
     const values = [];
+    /* tslint:disable-next-line:prefer-for-of */
     for (let i = 0; i < this.selectedOptionIndices.length; i++) {
       values.push(this.question.options[index].value);
     }

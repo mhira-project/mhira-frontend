@@ -4,9 +4,9 @@ import { Observable, BehaviorSubject } from 'rxjs';
 @Injectable()
 export class ThemeConstantService {
   // Theme Config
-  isMenuFolded: boolean = false;
-  isSideNavDark: boolean = false;
-  headerColor: string = 'default';
+  isMenuFolded = false;
+  isSideNavDark = false;
+  headerColor = 'default';
   private colorConfig: any = {
     colors: {
       magenta: '#eb2f96',
@@ -42,17 +42,26 @@ export class ThemeConstantService {
     },
   };
 
+  public get isMenuFoldedChanges(): Observable<boolean> {
+    return this.isMenuFoldedActived.asObservable();
+  }
+
+  public get isSideNavDarkChanges(): Observable<boolean> {
+    return this.isSideNavDarkActived.asObservable();
+  }
+
+  public get isExpandChanges(): Observable<boolean> {
+    return this.isExpandActived.asObservable();
+  }
+
+  public get selectedHeaderColor(): Observable<string> {
+    return this.currentHeaderColor.asObservable();
+  }
+
   private isMenuFoldedActived = new BehaviorSubject<boolean>(this.isMenuFolded);
-  isMenuFoldedChanges: Observable<boolean> = this.isMenuFoldedActived.asObservable();
-
   private isSideNavDarkActived = new BehaviorSubject<boolean>(this.isSideNavDark);
-  isSideNavDarkChanges: Observable<boolean> = this.isSideNavDarkActived.asObservable();
-
   private isExpandActived = new BehaviorSubject<boolean>(false);
-  isExpandChanges: Observable<boolean> = this.isExpandActived.asObservable();
-
-  private currentHeaderColor = new BehaviorSubject(this.headerColor);
-  selectedHeaderColor = this.currentHeaderColor.asObservable();
+  private currentHeaderColor = new BehaviorSubject<string>(this.headerColor);
 
   get() {
     return this.colorConfig;

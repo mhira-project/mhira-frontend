@@ -6,10 +6,11 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
-import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
 import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { User } from '@app/pages/administration/@types/user';
+import { AssessmentFilter } from '@app/pages/assessment/@types/assessment-filter';
 
 const CryptoJS = require('crypto-js');
 
@@ -25,6 +26,7 @@ export class AssessmentsListComponent implements OnInit {
   paging: Paging = {
     first: 10,
   };
+  filter: AssessmentFilter = {};
   pageInfo: any;
   assessmentsTable: { columns: any[]; rows: Assessment[] } = {
     columns: assessmentTable.columns,
@@ -45,11 +47,18 @@ export class AssessmentsListComponent implements OnInit {
     this.getAssessments();
   }
 
-  getAssessments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
+  getAssessments(paging?: Paging, sorting: Sorting[] = []) {
+    const user: User = JSON.parse(localStorage.getItem('user'));
+    if (!this.perms.permissionsOnly(['manage assessments'])) {
+      this.filter = {
+        ...this.filter,
+        clinicianId: { eq: user.id },
+      };
+    }
     this.isLoading = true;
     this.assessments = [];
     const _assessments: any[] = [];
-    this.assessmentsService.getAssessments(params).subscribe(
+    this.assessmentsService.getAssessments({ filter: this.filter, paging, sorting }).subscribe(
       async ({ data }) => {
         const assessments = data.assessments;
         assessments.edges.map((assessment: any) => {
@@ -84,6 +93,11 @@ export class AssessmentsListComponent implements OnInit {
     );
   }
 
+  searchAssesments(searchString: string) {
+    this.filter.or = [{ name: { iLike: `%${searchString}%` } }];
+    this.getAssessments({ first: 10 });
+  }
+
   navigatePages(direction: string, pageSize: number = 10) {
     switch (direction) {
       case 'next':
@@ -97,7 +111,7 @@ export class AssessmentsListComponent implements OnInit {
         this.paging.last = pageSize;
         break;
     }
-    this.getAssessments({ paging: this.paging });
+    this.getAssessments(this.paging);
   }
 
   deleteAssessment(assessment: Assessment) {

@@ -207,6 +207,24 @@ export class PatientsComponent implements OnInit, OnChanges {
       { firstName: { iLike: `%${searchString}%` } },
       { middleName: { iLike: `%${searchString}%` } },
       { lastName: { iLike: `%${searchString}%` } },
+      {
+        informants: {
+          or: [
+            { firstName: { iLike: `%${searchString}%` } },
+            { middleName: { iLike: `%${searchString}%` } },
+            { lastName: { iLike: `%${searchString}%` } },
+          ],
+        },
+      },
+      {
+        caseManagers: {
+          or: [
+            { firstName: { iLike: `%${searchString}%` } },
+            { middleName: { iLike: `%${searchString}%` } },
+            { lastName: { iLike: `%${searchString}%` } },
+          ],
+        },
+      },
       { medicalRecordNo: { iLike: `%${searchString}%` } },
     ];
     this.getPatients({ first: 10 });
