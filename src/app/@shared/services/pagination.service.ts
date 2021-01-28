@@ -5,7 +5,7 @@ import { Paging } from '@shared/@types/paging';
   providedIn: 'root',
 })
 export class PaginationService {
-  navigatePages(paging: Paging, direction: string, pageSize: number = 10) {
+  navigatePages(paging: Paging, direction: 'next' | 'previous', pageSize: number = 10) {
     switch (direction) {
       case 'next':
         paging.before = undefined;

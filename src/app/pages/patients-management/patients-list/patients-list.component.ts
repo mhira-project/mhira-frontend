@@ -115,7 +115,7 @@ export class PatientsListComponent implements OnInit, OnChanges {
     );
   }
 
-  navigatePages(direction: string, pageSize: number = 10) {
+  navigatePages(direction: 'next' | 'previous', pageSize: number = 10) {
     this.paging = this.paginationService.navigatePages(this.paging, direction, pageSize);
     this.getPatients(this.paging);
   }
