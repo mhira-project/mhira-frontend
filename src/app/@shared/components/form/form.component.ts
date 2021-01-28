@@ -1,8 +1,9 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, EventEmitter, Output } from '@angular/core';
 import { Field } from './@types/field';
 import { FormGroup } from '@angular/forms';
 import { Form } from './@types/form';
 import { FieldGroup } from './@types/field.group';
+import { FormChanges } from '@shared/components/form/@types/form-changes';
 
 @Component({
   selector: 'app-form',
@@ -37,12 +38,12 @@ export class FormComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['resetForm'] && changes['resetForm'].currentValue) {
+  ngOnChanges(changes: FormChanges) {
+    if (changes.resetForm && changes.resetForm.currentValue) {
       this.parseForm(null);
     }
 
-    if (changes['populateForm'] && changes['populateForm'].currentValue) {
+    if (changes.populateForm && changes.populateForm.currentValue) {
       this.parseForm();
     }
   }
@@ -84,8 +85,8 @@ export class FormComponent implements OnInit, OnChanges {
       if (defaultValue) {
         this.defaultValue = defaultValue;
       }
-      if (this.formData['images']) {
-        this.images = this.formData['images'];
+      if (this.formData.images) {
+        this.images = this.formData.images;
       }
       this.form.groups.map((group) => {
         group.fields.map((field) => {
