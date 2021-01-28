@@ -198,6 +198,12 @@ export class PatientsListComponent implements OnInit, OnChanges {
       (error) => {
         this.isVisible = false;
         this.isOkLoading = false;
+        for (const gqlError of error.graphQLErrors) {
+          this.errors.push(gqlError.message);
+        }
+        this.message.error('An error occurred could not delete patient', {
+          nzDuration: 3000,
+        });
       }
     );
   }
