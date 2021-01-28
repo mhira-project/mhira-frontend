@@ -39,6 +39,8 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() exportData: any[] = [];
   @Input() listOfData: any[] = [];
 
+  /* tslint:disable:no-output-on-prefix */
+  /* TODO: fix lint */
   @Output() onEdit: EventEmitter<any> = new EventEmitter<any>();
   @Output() onFilterButton: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
@@ -53,6 +55,7 @@ export class TableComponent implements OnInit, OnChanges {
   @Output() onParamChange: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDateFilter: EventEmitter<any> = new EventEmitter<any>();
   @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
+  /* tslint:enable:no-output-on-prefix */
 
   checked = false;
   dateRange: any[] = [];
