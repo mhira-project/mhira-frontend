@@ -542,6 +542,6 @@ export class UserFormComponent implements OnInit {
   }
 
   isCurrentUser(): boolean {
-    return this.user.id === this.currentUser.id;
+    return this.user?.id != null && this.currentUser?.id != null && this.user?.id === this.currentUser?.id;
   }
 }

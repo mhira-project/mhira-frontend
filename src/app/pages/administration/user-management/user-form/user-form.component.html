@@ -10,7 +10,7 @@
       (submitForm)="submitForm($event)"
     ></app-form>
   </nz-tab>
-  <nz-tab nzTitle="Security" *ngIf="perms.permissionsOnly(['view own profile'])">
+  <nz-tab nzTitle="Security" *ngIf="perms.permissionsOnly(['view own profile', 'manage users'])">
     <div nz-row nzGutter="16">
       <div *ngIf="roles.length > 0" nz-col>
         <nz-card style="width: 300px" nzTitle="{{ user.firstName }}'s Roles">
@@ -18,7 +18,7 @@
             <div nz-row>
               <div nz-col nzSpan="24" *ngFor="let role of roles">
                 <label
-                  [disabled]="perms.permissionsOnly(['update own profile', 'manage roles'])"
+                  [disabled]="isCurrentUser() || !perms.permissionsOnly(['manage roles'])"
                   nz-checkbox
                   [nzValue]="role.id"
                   [ngModel]="userHasRole(role.id)"
