@@ -5,7 +5,7 @@ import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
 import { PatientsManagementRoutingModule } from './patients-management-routing.module';
 import { PatientsManagementComponent } from './patients-management.component';
-import { PatientsComponent } from './patients/patients.component';
+import { PatientsListComponent } from './patients-list/patients-list.component';
 import { CaseManagersComponent } from './case-managers/case-managers.component';
 import {
   NzAlertModule,
@@ -62,7 +62,7 @@ const antModules = [
   ],
   declarations: [
     PatientsManagementComponent,
-    PatientsComponent,
+    PatientsListComponent,
     CaseManagersComponent,
     InformantsListComponent,
     PatientProfileComponent,
