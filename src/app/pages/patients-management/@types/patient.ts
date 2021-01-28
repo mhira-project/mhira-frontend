@@ -25,7 +25,7 @@ export interface Patient {
   nationality?: string;
   createdAt?: string;
   updatedAt?: string;
-  emergencyContacts: Contact[];
+  emergencyContacts?: Contact[];
   informants?: Informant[];
   caseManagers?: User[];
   country: any;

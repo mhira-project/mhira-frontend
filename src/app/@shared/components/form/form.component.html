@@ -93,7 +93,14 @@
                 </app-password-input>
               </div>
               <div *ngSwitchCase="'array'">
-                <app-array-input [field]="field" [inputMode]="inputMode"></app-array-input>
+                <app-array-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (rowAdded)="handleRowAdded($event)"
+                  (rowRemoved)="handleRowRemoved($event)"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-array-input>
               </div>
             </ng-container>
           </div>

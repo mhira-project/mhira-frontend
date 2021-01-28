@@ -15,15 +15,16 @@ import { NzMessageService, NzTableQueryParams } from 'ng-zorro-antd';
 import { Sorting } from '@shared/@types/sorting';
 import { PatientStatus } from '@app/pages/patients-management/@types/patient-status';
 import { PatientStatusesService } from '@app/pages/patients-management/@services/patient-statuses.service';
+import { PaginationService } from '@shared/services/pagination.service';
 
 const CryptoJS = require('crypto-js');
 
 @Component({
   selector: 'app-patients',
-  templateUrl: './patients.component.html',
-  styleUrls: ['./patients.component.scss'],
+  templateUrl: './patients-list.component.html',
+  styleUrls: ['./patients-list.component.scss'],
 })
-export class PatientsComponent implements OnInit, OnChanges {
+export class PatientsListComponent implements OnInit, OnChanges {
   isLoading = false;
   isVisible = false;
   isOkLoading = false;
@@ -52,11 +53,12 @@ export class PatientsComponent implements OnInit, OnChanges {
     private dateService: DateService,
     private message: NzMessageService,
     private router: Router,
-    public perms: AppPermissionsService
+    public perms: AppPermissionsService,
+    private paginationService: PaginationService
   ) {}
 
   ngOnInit(): void {
-    // this.loadPermissions();
+    this.loadPermissions();
     // to be called from the sort fuction
     // this.getPatients(this.paging);
     this.getPatientStatuses();
@@ -64,11 +66,19 @@ export class PatientsComponent implements OnInit, OnChanges {
 
   loadPermissions() {
     if (!this.perms.permissionsOnly('manage patients')) {
-      this.actions.splice(1, 1);
+      this.actions = [];
     }
   }
 
   ngOnChanges() {}
+
+  closeFilterPanel() {
+    this.showFilterPanel = false;
+  }
+
+  showFilterPanelAction() {
+    this.showFilterPanel = true;
+  }
 
   getPatients(paging: Paging, sorting: Sorting[] = []) {
     this.isLoading = true;
@@ -105,64 +115,9 @@ export class PatientsComponent implements OnInit, OnChanges {
     );
   }
 
-  navigatePages(direction: string, pageSize: number = 10) {
-    switch (direction) {
-      case 'next':
-        this.paging.before = undefined;
-        this.paging.first = pageSize;
-        this.paging.last = undefined;
-        break;
-      case 'previous':
-        this.paging.after = undefined;
-        this.paging.first = undefined;
-        this.paging.last = pageSize;
-        break;
-    }
+  navigatePages(direction: 'next' | 'previous', pageSize: number = 10) {
+    this.paging = this.paginationService.navigatePages(this.paging, direction, pageSize);
     this.getPatients(this.paging);
-  }
-
-  deletePatient() {
-    this.isOkLoading = true;
-    const patient = this.patients[this.currentPatientIndex];
-    this.patientsService.deletePatient(patient).subscribe(
-      async ({ data }) => {
-        const deletedIndex = this.patients.findIndex((_patient) => _patient.id === patient.id);
-        this.patients.splice(deletedIndex, 1);
-        this.patientsTable.rows.splice(deletedIndex, 1);
-        this.isVisible = false;
-        this.isOkLoading = false;
-      },
-      (error) => {
-        this.isVisible = false;
-        this.isOkLoading = false;
-      }
-    );
-  }
-
-  updatePatient(patient: Patient) {
-    this.isOkLoading = true;
-    this.errors = [];
-    patient.statusId = this.statusId;
-    this.patientsService.updatePatient(PatientModel.updateData(patient)).subscribe(
-      async ({ data }) => {
-        patient = PatientModel.fromJson(data.updateOnePatient);
-        this.isVisibleStatusModal = false;
-        this.isOkLoading = false;
-        this.message.success('Patient has successful been updated', {
-          nzDuration: 3000,
-        });
-      },
-      (error) => {
-        for (const gqlError of error.graphQLErrors) {
-          this.errors.push(gqlError.message);
-        }
-        this.isVisible = false;
-        this.isOkLoading = false;
-        this.message.error('An error occurred could not update patient', {
-          nzDuration: 3000,
-        });
-      }
-    );
   }
 
   handleCancel(): void {
@@ -200,6 +155,57 @@ export class PatientsComponent implements OnInit, OnChanges {
         profile: dataString,
       },
     });
+  }
+
+  updatePatient(patient: Patient) {
+    this.isOkLoading = true;
+    this.errors = [];
+    patient.statusId = this.statusId;
+    this.patientsService.updatePatient(PatientModel.updateData(patient)).subscribe(
+      async ({ data }) => {
+        patient = PatientModel.fromJson(data.updateOnePatient);
+        this.patients[this.currentPatientIndex] = patient;
+        this.isVisibleStatusModal = false;
+        this.isOkLoading = false;
+        this.message.success('Patient has successful been updated', {
+          nzDuration: 3000,
+        });
+      },
+      (error) => {
+        for (const gqlError of error.graphQLErrors) {
+          this.errors.push(gqlError.message);
+        }
+        this.isVisible = false;
+        this.isOkLoading = false;
+        this.message.error('An error occurred could not update patient', {
+          nzDuration: 3000,
+        });
+      }
+    );
+  }
+
+  deletePatient() {
+    this.isOkLoading = true;
+    const patient = this.patients[this.currentPatientIndex];
+    this.patientsService.deletePatient(patient).subscribe(
+      async ({ data }) => {
+        const deletedIndex = this.patients.findIndex((_patient) => _patient.id === patient.id);
+        this.patients.splice(deletedIndex, 1);
+        this.patientsTable.rows.splice(deletedIndex, 1);
+        this.isVisible = false;
+        this.isOkLoading = false;
+      },
+      (error) => {
+        this.isVisible = false;
+        this.isOkLoading = false;
+        for (const gqlError of error.graphQLErrors) {
+          this.errors.push(gqlError.message);
+        }
+        this.message.error('An error occurred could not delete patient', {
+          nzDuration: 3000,
+        });
+      }
+    );
   }
 
   searchPatients(searchString: string) {
@@ -259,13 +265,5 @@ export class PatientsComponent implements OnInit, OnChanges {
       this.filter[key] = { iLike: `%${value}%` };
     }
     this.getPatients({ first: 10 });
-  }
-
-  closeFilterPanel() {
-    this.showFilterPanel = false;
-  }
-
-  showFilterPanelAction() {
-    this.showFilterPanel = true;
   }
 }

@@ -8,17 +8,7 @@ export class PatientModel {
     json.formattedBirthDate = json.birthDate ? AppDate.formatDate(json.birthDate) : '';
     let color;
     if (json.status) {
-      switch (json.status.name) {
-        case 'active':
-          color = 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag';
-          break;
-        case 'inactive':
-          color = 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-          break;
-        case 'archived':
-          color = 'ng-trigger ng-trigger-fadeMotion ant-tag-orange ant-tag';
-          break;
-      }
+      color = 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag';
     } else {
       color = 'ng-trigger ng-trigger-fadeMotion ant-tag-orange ant-tag';
     }

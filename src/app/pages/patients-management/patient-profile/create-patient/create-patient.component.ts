@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { PatientsService } from '../../@services/patients.service';
 import { Patient } from '../../@types/patient';
-import * as moment from 'moment';
 import { environment } from '@env/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
@@ -20,6 +19,8 @@ const CryptoJS = require('crypto-js');
 })
 export class CreatePatientComponent implements OnInit {
   isLoading = false;
+  populateForm = false;
+  resetForm = false;
   loadingMessage = '';
   patientForm = PatientForm;
   patient: Patient;
@@ -38,20 +39,13 @@ export class CreatePatientComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.clearForms();
     this.getPatientFromUrl();
-  }
-
-  clearForms() {
-    this.patientForm.groups.map((group) => {
-      group.fields.map((field) => {
-        field.value = null;
-      });
-    });
   }
 
   getPatientFromUrl(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
+      this.resetForm = false;
+      this.populateForm = false;
       if (params.profile) {
         this.inputMode = false;
         this.showCancelButton = true;
@@ -61,19 +55,11 @@ export class CreatePatientComponent implements OnInit {
         if (this.patient.birthDate) {
           this.patient.birthDate = decryptedData.birthDate.slice(0, 10);
         }
-        this.patientForm.groups.map((group) => {
-          group.fields.map((field) => {
-            field.value = decryptedData[field.name];
-          });
-        });
+        this.populateForm = true;
       } else {
         this.inputMode = true;
         this.showCancelButton = false;
-        this.patientForm.groups.map((group) => {
-          group.fields.map((field) => {
-            field.value = null;
-          });
-        });
+        this.resetForm = true;
       }
     });
   }

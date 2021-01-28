@@ -1,8 +1,8 @@
 const actions: any[] = [
-  {
+  /*{
     type: 'Plan Assessment',
     name: 'Plan Assessment',
-  },
+  },*/
   {
     type: 'Change Status',
     name: 'Change Status',
