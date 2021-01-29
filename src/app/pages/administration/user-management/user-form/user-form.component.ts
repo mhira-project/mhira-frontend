@@ -542,8 +542,8 @@ export class UserFormComponent implements OnInit {
   }
 
   isCurrentUser(): boolean {
-    return this.user && this.currentUser
+    return this.user !== undefined && this.currentUser !== undefined && this.user && this.currentUser
       ? this.user?.id != null && this.currentUser?.id != null && this.user?.id === this.currentUser?.id
-      : true;
+      : false;
   }
 }
