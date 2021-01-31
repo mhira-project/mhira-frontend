@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Patient } from '@app/pages/patients-management/@types/patient';
 import { environment } from '@env/environment';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CaseManagerFilter } from '@app/pages/patients-management/@types/case-manager-filter';
 
 const CryptoJS = require('crypto-js');
@@ -20,7 +20,7 @@ export class PatientProfileComponent implements OnInit {
     return [this.patient.medicalRecordNo, name].filter((s) => !!s).join(' - ');
   }
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.getPatient();
