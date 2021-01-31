@@ -15,6 +15,11 @@ export class PatientProfileComponent implements OnInit {
   patient: Patient;
   filter: CaseManagerFilter;
 
+  get patientTitle(): string {
+    const name = [this.patient.firstName, this.patient.middleName, this.patient.lastName].filter((s) => !!s).join(' ');
+    return [this.patient.medicalRecordNo, name].filter((s) => !!s).join(' - ');
+  }
+
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
