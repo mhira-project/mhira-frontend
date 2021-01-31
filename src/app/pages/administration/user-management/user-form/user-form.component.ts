@@ -58,6 +58,11 @@ export class UserFormComponent implements OnInit {
   unselectedDepartments: number[];
   currentUser: User;
 
+  get userTitle(): string {
+    const name = [this.user.firstName, this.user.middleName, this.user.lastName].filter((s) => !!s).join(' ');
+    return [this.user.workID, name].filter((s) => !!s).join(' - ');
+  }
+
   constructor(
     private modalService: NzModalService,
     private activatedRoute: ActivatedRoute,
