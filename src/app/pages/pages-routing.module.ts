@@ -4,7 +4,7 @@ import { extract } from '@app/i18n';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: 'case-management',
     data: {
       breadcrumb: extract('Case Management'),
     },
@@ -45,7 +45,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'case-management',
     pathMatch: 'full',
   },
   {

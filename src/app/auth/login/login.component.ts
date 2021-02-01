@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
         if (data?.login?.user?.passwordChangeRequired) {
           this.router.navigate(['/auth/change-password']);
         } else {
-          this.router.navigate(['/mhira/home/patients']);
+          this.router.navigate(['/']);
         }
       },
       (error) => {

@@ -76,7 +76,7 @@ export class CreatePatientComponent implements OnInit {
         this.isLoading = false;
         this.loadingMessage = '';
         this.message.create('success', `Patient has successfully been created`);
-        this.router.navigate(['/mhira/home/patients']);
+        this.router.navigate(['/mhira/case-management/patients']);
       },
       (error) => {
         this.hasErrors = true;

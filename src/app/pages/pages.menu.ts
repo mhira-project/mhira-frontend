@@ -3,7 +3,7 @@ import { extract } from '@app/i18n';
 
 export const MENU: SideNavInterface[] = [
   {
-    path: 'home',
+    path: 'case-management',
     title: extract('Case Management'),
     iconType: 'nzIcon',
     iconTheme: 'outline',
@@ -11,7 +11,7 @@ export const MENU: SideNavInterface[] = [
     permissions: ['view patients'],
     submenu: [
       {
-        path: 'home/patients',
+        path: 'case-management/patients',
         title: extract('Patient list'),
         iconType: '',
         iconTheme: '',
@@ -19,7 +19,7 @@ export const MENU: SideNavInterface[] = [
         submenu: [],
       },
       {
-        path: 'home/case-managers',
+        path: 'case-management/case-managers',
         title: extract('Case Managers'),
         permissions: ['view patients', 'manage patients'],
         iconType: '',
@@ -27,7 +27,7 @@ export const MENU: SideNavInterface[] = [
         submenu: [],
       },
       {
-        path: 'home/informants',
+        path: 'case-management/informants',
         title: extract('Informants'),
         permissions: ['view patients', 'manage patients'],
         iconType: '',

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Patient } from '../@types/patient';
 import { table } from '../@tables/patients.table';
 import { PatientsService } from '@app/pages/patients-management/@services/patients.service';
@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
 import { Form } from '@shared/components/form/@types/form';
-import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
 import { PatientFilterForm } from '@app/pages/patients-management/@forms/patients-filter.form';
@@ -24,7 +23,7 @@ const CryptoJS = require('crypto-js');
   templateUrl: './patients-list.component.html',
   styleUrls: ['./patients-list.component.scss'],
 })
-export class PatientsListComponent implements OnInit, OnChanges {
+export class PatientsListComponent implements OnInit {
   isLoading = false;
   isVisible = false;
   isOkLoading = false;
@@ -50,7 +49,6 @@ export class PatientsListComponent implements OnInit, OnChanges {
   constructor(
     private patientsService: PatientsService,
     private patientStatusesService: PatientStatusesService,
-    private dateService: DateService,
     private message: NzMessageService,
     private router: Router,
     public perms: AppPermissionsService,
@@ -69,8 +67,6 @@ export class PatientsListComponent implements OnInit, OnChanges {
       this.actions = [];
     }
   }
-
-  ngOnChanges() {}
 
   closeFilterPanel() {
     this.showFilterPanel = false;
@@ -125,7 +121,7 @@ export class PatientsListComponent implements OnInit, OnChanges {
   }
 
   handleCreatePatient(): void {
-    this.router.navigate(['/mhira/home/profile']);
+    this.router.navigate(['/mhira/case-management/profile']);
   }
 
   handleActionClick(event: any): void {
@@ -147,7 +143,7 @@ export class PatientsListComponent implements OnInit, OnChanges {
       JSON.stringify(this.patients[event.index]),
       environment.secretKey
     ).toString();
-    this.router.navigate(['/mhira/home/profile'], {
+    this.router.navigate(['/mhira/case-management/profile'], {
       state: {
         title: `${this.patients[event.index].firstName} ${this.patients[event.index].lastName}`,
       },

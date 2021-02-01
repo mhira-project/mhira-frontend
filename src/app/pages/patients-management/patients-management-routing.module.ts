@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { extract } from '../../i18n/index';
-import { PatientsManagementComponent } from './patients-management.component';
 import { PatientsListComponent } from './patients-list/patients-list.component';
 import { CaseManagersComponent } from './case-managers/case-managers.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
@@ -10,9 +9,8 @@ import { InformantsListComponent } from './informants-list/informants-list.compo
 const routes: Routes = [
   {
     path: '',
-    component: PatientsManagementComponent,
     data: {
-      title: extract('Home'),
+      title: extract('Case Management'),
     },
     children: [
       {
@@ -20,6 +18,7 @@ const routes: Routes = [
         component: PatientsListComponent,
         data: {
           title: extract('Patients'),
+          breadcrumb: extract('Patients'),
         },
       },
       {
@@ -27,6 +26,7 @@ const routes: Routes = [
         component: PatientProfileComponent,
         data: {
           title: extract('Patient Profile'),
+          breadcrumb: extract('Patient Profile'),
         },
       },
       {
@@ -34,6 +34,7 @@ const routes: Routes = [
         component: CaseManagersComponent,
         data: {
           title: extract('Case Managers'),
+          breadcrumb: extract('Case Managers'),
         },
       },
       {
@@ -41,7 +42,13 @@ const routes: Routes = [
         component: InformantsListComponent,
         data: {
           title: extract('Informants'),
+          breadcrumb: extract('Informants'),
         },
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'patients',
       },
     ],
   },
