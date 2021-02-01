@@ -1,23 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { extract } from '../../i18n/index';
-import { AssessmentComponent } from './assessment.component';
 import { PlanAssessmentComponent } from './plan-assessment/plan-assessment.component';
 import { AssessmentsListComponent } from './assessments-list/assessments-list.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AssessmentComponent,
     data: {
       title: extract('Assessments'),
     },
     children: [
       {
-        path: '',
+        path: 'planned-assessments',
         component: AssessmentsListComponent,
         data: {
           title: extract('Planned Assessments'),
+          breadcrumb: extract('Planned Assessments'),
         },
       },
       {
@@ -25,7 +24,13 @@ const routes: Routes = [
         component: PlanAssessmentComponent,
         data: {
           title: extract('Plan Assessments'),
+          breadcrumb: extract('Plan Assessments'),
         },
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'planned-assessments',
       },
     ],
   },
