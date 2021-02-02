@@ -300,10 +300,12 @@ export class UserFormComponent implements OnInit {
     this.loadingMessage = `Creating user ${inputData.firstName} ${inputData.lastName}`;
     this.usersService.createUser(userInput).subscribe(
       async ({ data }) => {
+        this._child.toggleEdit();
         const userData = data.createOneUser;
         userData.updatedAt = userData.updatedAt ? moment(userData.updatedAt).format('DD-MM-YYYY HH:mm') : '';
         userData.birthDate = userData.birthDate ? moment(userData.birthDate).format('DD-MM-YYYY HH:mm') : '';
         this.isLoading = false;
+        this.inputMode = false;
         this.loadingMessage = '';
         this.message.create('success', `User has successfully been created`);
         // close this tab
@@ -332,6 +334,7 @@ export class UserFormComponent implements OnInit {
     this.loadingMessage = `Updating user ${inputData.firstName} ${inputData.lastName}`;
     this.usersService.updateUser(userInput).subscribe(
       async ({ data }) => {
+        this._child.toggleEdit();
         const userData = data.updateOneUser;
         const color = userData.active
           ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
@@ -346,6 +349,7 @@ export class UserFormComponent implements OnInit {
         // const updatedIndex = this.users.findIndex((_user) => _user.id === user.id);
 
         this.isLoading = false;
+
         this.loadingMessage = '';
         this.message.create('success', `User has successfully been updated`);
       },
