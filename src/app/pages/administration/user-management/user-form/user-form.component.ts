@@ -305,7 +305,6 @@ export class UserFormComponent implements OnInit {
         userData.updatedAt = userData.updatedAt ? moment(userData.updatedAt).format('DD-MM-YYYY HH:mm') : '';
         userData.birthDate = userData.birthDate ? moment(userData.birthDate).format('DD-MM-YYYY HH:mm') : '';
         this.isLoading = false;
-        this.inputMode = false;
         this.loadingMessage = '';
         this.message.create('success', `User has successfully been created`);
         // close this tab
