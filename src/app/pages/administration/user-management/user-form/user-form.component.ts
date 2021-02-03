@@ -228,11 +228,6 @@ export class UserFormComponent implements OnInit {
     const departmentsIds: number[] = this.departments.map((department) => department.id);
     this.selectedDepartments = departments;
     this.unselectedDepartments = departmentsIds.filter((id) => !this.selectedDepartments.includes(id));
-    // for (const department of departments) {
-    //   if (this.userHasDepartment(department)) {
-    //     this.selectedDepartments.splice(this.selectedDepartments.indexOf(department), department);
-    //   }
-    // }
     this.submitDepartments();
   }
 
@@ -244,10 +239,7 @@ export class UserFormComponent implements OnInit {
         const bytes = CryptoJS.AES.decrypt(params.user, environment.secretKey);
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.user = decryptedData;
-        console.log(this.user);
-        if (this.user.birthDate) {
-          this.user.birthDate = decryptedData.birthDate.slice(0, 10);
-        }
+        if (this.user.birthDate) this.user.birthDate = decryptedData.birthDate.slice(0, 10);
         this.profileFields = userForms.userProfileEdit;
         // this.onChangeUser();
         this.profileFields.groups.map((group) => {
@@ -295,7 +287,6 @@ export class UserFormComponent implements OnInit {
   }
 
   createUser(formData: any) {
-    console.log(formData);
     if (formData.password !== formData.passwordConfirmation) {
       this.message.create('error', `Password dont match`);
       return;
@@ -347,9 +338,7 @@ export class UserFormComponent implements OnInit {
         const color = userData.active
           ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
           : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-
         const active = userData.active ? 'active' : 'inactive';
-
         userData.updatedAt = userData.updatedAt ? moment(userData.updatedAt).format('DD-MM-YYYY HH:mm') : '';
         userData.birthDate = userData.birthDate ? moment(userData.birthDate).format('DD-MM-YYYY HH:mm') : '';
         userData.active = `<nz-tag class="${color}">${active}</nz-tag>`;
@@ -408,11 +397,11 @@ export class UserFormComponent implements OnInit {
     this.isLoading = true;
     const rolesIds: number[] = role ? [role.id] : this.selectedRoles;
     this.rolesService.addRolesToUser(this.user.id, rolesIds).subscribe(
-      async ({ data }: any) => {
+      async (_: any) => {
         this.isLoading = false;
         this.message.create('success', `the role(s) have been successful assigned to ${this.user.firstName}`);
       },
-      (error: any) => {
+      (_: any) => {
         this.isLoading = false;
         this.message.create('error', `could not assign role(s) to ${this.user.firstName}`);
       }
@@ -423,11 +412,11 @@ export class UserFormComponent implements OnInit {
     this.isLoading = true;
     const rolesIds: number[] = role ? [role.id] : this.unselectedRoles;
     this.rolesService.removeRolesFromUser(this.user.id, rolesIds).subscribe(
-      async ({ data }: any) => {
+      async (_: any) => {
         this.isLoading = false;
         this.message.create('success', `the role(s) have been successful removed from ${this.user.firstName}`);
       },
-      (error: any) => {
+      (_: any) => {
         this.isLoading = false;
         this.message.create('error', `could not remove role(s) to ${this.user.firstName}`);
       }
@@ -446,12 +435,12 @@ export class UserFormComponent implements OnInit {
     this.isLoading = true;
     const departmentsIds: number[] = department ? [department.id] : this.selectedDepartments;
     this.departmentsService.addDepartmentsToUser(this.user.id, departmentsIds).subscribe(
-      async ({ data }: any) => {
+      async (_: any) => {
         this.isLoading = false;
         this.message.create('success', `the department(s) have been successful assigned to ${this.user.firstName}`);
         this.user.departments.push(department);
       },
-      (error: any) => {
+      (_: any) => {
         this.isLoading = false;
         this.message.create('error', `could not assign department(s) to ${this.user.firstName}`);
       }
@@ -462,11 +451,11 @@ export class UserFormComponent implements OnInit {
     this.isLoading = true;
     const departmentsIds: number[] = department ? [department.id] : this.unselectedDepartments;
     this.departmentsService.removeDepartmentsFromUser(this.user.id, departmentsIds).subscribe(
-      async ({ data }: any) => {
+      async (_: any) => {
         this.isLoading = false;
         this.message.create('success', `the department(s) have been successful removed from ${this.user.firstName}`);
       },
-      (error: any) => {
+      (_: any) => {
         this.isLoading = false;
         this.message.create('error', `could not remove department(s) to ${this.user.firstName}`);
       }
@@ -513,7 +502,7 @@ export class UserFormComponent implements OnInit {
         newPasswordConfirmation: form.newPasswordConfirmation,
       };
       this.usersService.updateUserPassword(inputs).subscribe(
-        async ({ data }) => {
+        async (_) => {
           this.isLoading = false;
           this.loadingMessage = '';
           this.showModal = false;
@@ -554,8 +543,6 @@ export class UserFormComponent implements OnInit {
   }
 
   isCurrentUser(): boolean {
-    // this.user?.id && this.currentUser?.id filters out falsy values
-    // this.user.id === this.currentUser.id compares the truthy values
     return this.user?.id && this.currentUser?.id && this.user.id === this.currentUser.id;
   }
 }
