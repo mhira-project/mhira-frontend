@@ -161,6 +161,13 @@ export class UserFormComponent implements OnInit {
       return false;
     }
   }
+  isSuperAdmin(user: User): boolean {
+    return user.roles !== undefined && user.roles
+      ? user.roles.find((role) => role.name === 'Super Admin') !== undefined
+        ? true
+        : false
+      : false;
+  }
 
   handleDeleteAction(user: User) {
     this.modalService.confirm({

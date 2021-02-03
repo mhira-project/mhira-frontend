@@ -1,11 +1,15 @@
-<nz-tabset>
+<nz-tabset *ngIf="user">
   <nz-tab nzTitle="Profile">
     <app-form
       [isLoading]="isLoading"
       [loadingMessage]="loadingMessage"
       [inputMode]="inputMode"
       [showCancelButton]="showCancelButton"
-      [showEditButton]="perms.permissionsOnly(['update own profile', 'manage users'])"
+      [showEditButton]="
+        isSuperAdmin(user)
+          ? perms.permissionsOnly(['update own profile', 'manage users'])
+          : !isCurrentUser() && perms.permissionsOnly(['manage users'])
+      "
       [form]="profileFields"
       (submitForm)="submitForm($event)"
     ></app-form>
