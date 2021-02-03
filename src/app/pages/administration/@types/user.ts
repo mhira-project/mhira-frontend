@@ -5,11 +5,11 @@ import { Department } from './department';
 export interface User {
   id?: number;
   isSuperUser?: boolean;
-  username: string;
+  username?: string;
   active?: boolean;
-  firstName: string;
+  firstName?: string;
   middleName?: string;
-  lastName: string;
+  lastName?: string;
   email?: string;
   phone?: string;
   workID?: string;
@@ -36,12 +36,12 @@ export interface UpdateOneUserInput {
 }
 
 export interface CreateUserInput {
-  username: string;
-  password: string;
+  username?: string;
+  password?: string;
   active?: boolean;
-  firstName: string;
+  firstName?: string;
   middleName?: string;
-  lastName: string;
+  lastName?: string;
   email?: string;
   phone?: string;
   workID?: string;

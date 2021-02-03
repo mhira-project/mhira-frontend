@@ -21,8 +21,6 @@ import { ModalType } from '@app/pages/administration/user-management/modal.type'
 import { FormComponent } from '@shared/components/form/form.component';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { NzModalService } from 'ng-zorro-antd';
-import { Permission } from '@app/pages/administration/@types/permission';
-import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
 import { UserModel } from '@app/pages/administration/@models/user.model';
 
 const CryptoJS = require('crypto-js');
@@ -37,6 +35,8 @@ export class UserFormComponent implements OnInit {
   user: User;
   isLoading = false;
   showModal = false;
+  populateForm = false;
+  resetForm = false;
   modalType: ModalType;
   updatePasswordForm: Form = userForms.updateUserPassword;
   changePasswordModal: ModalType = {
@@ -241,32 +241,14 @@ export class UserFormComponent implements OnInit {
           this.user.birthDate = decryptedData.birthDate.slice(0, 10);
         }
         this.profileFields = userForms.userProfileEdit;
-        this.profileFields.groups.map((group) => {
-          group.fields.map((field) => {
-            field.value = decryptedData[field.name];
-          });
-        });
+        this.populateForm = true;
       } else {
-        this.user = {
-          username: '',
-          address: '',
-          birthDate: '',
-          email: '',
-          firstName: '',
-          gender: '',
-          lastName: '',
-          phone: '',
-          roles: [],
-        };
+        this.user = { firstName: '' };
+        this.resetForm = true;
         this.newMode = true;
         this.inputMode = true;
         this.profileFields = userForms.userProfile;
         this.showCancelButton = false;
-        this.profileFields.groups.map((group) => {
-          group.fields.map((field) => {
-            field.value = null;
-          });
-        });
       }
     });
   }
@@ -321,23 +303,25 @@ export class UserFormComponent implements OnInit {
     );
   }
 
-  updateUser(formData: any) {
-    const inputData: CreateUserInput = Object.assign({}, formData);
+  updateUser(userUpdates: CreateUserInput) {
     const userInput: UpdateOneUserInput = {
       id: this.user.id,
-      update: inputData,
+      update: userUpdates,
     };
     this.isLoading = true;
-    this.loadingMessage = `Updating user ${inputData.firstName} ${inputData.lastName}`;
+    this.populateForm = false;
+    this.loadingMessage = `Updating user ${userUpdates.firstName} ${userUpdates.lastName}`;
     this.usersService.updateUser(userInput).subscribe(
       async ({ data }) => {
-        const user = UserModel.fromJson(data.updateOneUser);
+        this.user = UserModel.fromJson(data.updateOneUser);
         this.isLoading = false;
+        this.populateForm = true;
         this.loadingMessage = '';
         this.message.create('success', `User has successfully been updated`);
       },
       (error) => {
         this.isLoading = false;
+        this.populateForm = true;
         this.loadingMessage = '';
         const graphError = error.graphQLErrors.map((x: any) => x.message);
         this.onError(graphError);
@@ -366,6 +350,8 @@ export class UserFormComponent implements OnInit {
   }
 
   afterCreate() {
+    this.populateForm = false;
+    this.resetForm = false;
     const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.user), environment.secretKey).toString();
     this.router.navigate(['/mhira/administration/user-management/form'], {
       state: {
@@ -376,7 +362,6 @@ export class UserFormComponent implements OnInit {
       },
     });
     this.newMode = false;
-    this.getUserFromUrl();
   }
 
   assignRoles(role?: Role) {
@@ -520,8 +505,7 @@ export class UserFormComponent implements OnInit {
   }
 
   activateUser(user: User) {
-    user.active = !user.active;
-    this.updateUser(user);
+    this.updateUser({ active: !user.active });
   }
 
   isCurrentUser(): boolean {
