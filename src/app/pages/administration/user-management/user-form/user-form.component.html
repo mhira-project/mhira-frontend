@@ -5,11 +5,7 @@
       [loadingMessage]="loadingMessage"
       [inputMode]="inputMode"
       [showCancelButton]="showCancelButton"
-      [showEditButton]="
-        isSuperAdmin(user)
-          ? perms.permissionsOnly(['update own profile', 'manage users'])
-          : !isCurrentUser() && perms.permissionsOnly(['manage users'])
-      "
+      [showEditButton]="!isCurrentUser() && perms.permissionsOnly(['manage users'])"
       [form]="profileFields"
       (submitForm)="submitForm($event)"
     ></app-form>
