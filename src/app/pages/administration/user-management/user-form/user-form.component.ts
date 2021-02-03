@@ -22,6 +22,8 @@ import { FormComponent } from '@shared/components/form/form.component';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { NzModalService } from 'ng-zorro-antd';
 import { Permission } from '@app/pages/administration/@types/permission';
+import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
+import { UserModel } from '@app/pages/administration/@models/user.model';
 
 const CryptoJS = require('crypto-js');
 
@@ -235,12 +237,10 @@ export class UserFormComponent implements OnInit {
         const bytes = CryptoJS.AES.decrypt(params.user, environment.secretKey);
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.user = decryptedData;
-        console.log(this.user);
         if (this.user.birthDate) {
           this.user.birthDate = decryptedData.birthDate.slice(0, 10);
         }
         this.profileFields = userForms.userProfileEdit;
-        // this.onChangeUser();
         this.profileFields.groups.map((group) => {
           group.fields.map((field) => {
             field.value = decryptedData[field.name];
@@ -286,12 +286,11 @@ export class UserFormComponent implements OnInit {
   }
 
   createUser(formData: any) {
-    console.log(formData);
     if (formData.password !== formData.passwordConfirmation) {
-      this.message.create('error', `Password dont match`);
+      this.message.create('error', `Password don't match`);
       return;
     }
-    delete formData.passwordConfirmation;
+    formData.passwordConfirmation = undefined;
     const inputData: CreateUserInput = Object.assign({}, formData);
     const userInput: CreateOneUserInput = {
       user: inputData,
@@ -300,17 +299,17 @@ export class UserFormComponent implements OnInit {
     this.loadingMessage = `Creating user ${inputData.firstName} ${inputData.lastName}`;
     this.usersService.createUser(userInput).subscribe(
       async ({ data }) => {
-        const userData = data.createOneUser;
-        userData.updatedAt = userData.updatedAt ? moment(userData.updatedAt).format('DD-MM-YYYY HH:mm') : '';
-        userData.birthDate = userData.birthDate ? moment(userData.birthDate).format('DD-MM-YYYY HH:mm') : '';
         this.isLoading = false;
         this.loadingMessage = '';
         this.message.create('success', `User has successfully been created`);
-        // close this tab
-        this.user = userData;
-        if (this.selectedRoles.length > 0) this.assignRoles();
-        if (this.selectedDepartments.length > 0) this.assignDepartments();
-        // open another
+
+        this.user = UserModel.fromJson(data.createOneUser);
+        if (this.selectedRoles.length > 0) {
+          this.assignRoles();
+        }
+        if (this.selectedDepartments.length > 0) {
+          this.assignDepartments();
+        }
         this.afterCreate();
       },
       (error) => {
@@ -332,19 +331,7 @@ export class UserFormComponent implements OnInit {
     this.loadingMessage = `Updating user ${inputData.firstName} ${inputData.lastName}`;
     this.usersService.updateUser(userInput).subscribe(
       async ({ data }) => {
-        const userData = data.updateOneUser;
-        const color = userData.active
-          ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
-          : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-
-        const active = userData.active ? 'active' : 'inactive';
-
-        userData.updatedAt = userData.updatedAt ? moment(userData.updatedAt).format('DD-MM-YYYY HH:mm') : '';
-        userData.birthDate = userData.birthDate ? moment(userData.birthDate).format('DD-MM-YYYY HH:mm') : '';
-        userData.active = `<nz-tag class="${color}">${active}</nz-tag>`;
-
-        // const updatedIndex = this.users.findIndex((_user) => _user.id === user.id);
-
+        const user = UserModel.fromJson(data.updateOneUser);
         this.isLoading = false;
         this.loadingMessage = '';
         this.message.create('success', `User has successfully been updated`);
@@ -537,13 +524,7 @@ export class UserFormComponent implements OnInit {
     this.updateUser(user);
   }
 
-  showIfPermissionIs(action: string) {
-    return this.perms.permissionsOnly(action);
-  }
-
   isCurrentUser(): boolean {
-    // this.user?.id && this.currentUser?.id filters out falsy values
-    // this.user.id === this.currentUser.id compares the truthy values
     return this.user?.id && this.currentUser?.id && this.user.id === this.currentUser.id;
   }
 }
