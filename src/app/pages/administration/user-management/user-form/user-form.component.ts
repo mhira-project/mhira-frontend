@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { userForms } from '@app/pages/administration/@forms/user.form';
 import { Form } from '@shared/components/form/@types/form';
@@ -21,7 +21,6 @@ import { ModalType } from '@app/pages/administration/user-management/modal.type'
 import { FormComponent } from '@shared/components/form/form.component';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { NzModalService } from 'ng-zorro-antd';
-import { Permission } from '@app/pages/administration/@types/permission';
 
 const CryptoJS = require('crypto-js');
 
@@ -59,11 +58,15 @@ export class UserFormComponent implements OnInit {
   unselectedDepartments: number[];
   currentUser: User;
 
+  get userTitle(): string {
+    const name = [this.user.firstName, this.user.middleName, this.user.lastName].filter((s) => !!s).join(' ');
+    return [this.user.workID, name].filter((s) => !!s).join(' - ');
+  }
+
   constructor(
     private modalService: NzModalService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private cd: ChangeDetectorRef,
     private tabsDataService: TopTabsDataService,
     private usersService: UsersService,
     private message: NzMessageService,
@@ -120,7 +123,6 @@ export class UserFormComponent implements OnInit {
   }
 
   clickChangePassword() {
-    console.log('change');
     this._child.handleSubmitForm(this.updatePasswordForm);
   }
 
@@ -307,6 +309,7 @@ export class UserFormComponent implements OnInit {
     this.loadingMessage = `Creating user ${inputData.firstName} ${inputData.lastName}`;
     this.usersService.createUser(userInput).subscribe(
       async ({ data }) => {
+        this._child.toggleEdit();
         const userData = data.createOneUser;
         userData.updatedAt = userData.updatedAt ? moment(userData.updatedAt).format('DD-MM-YYYY HH:mm') : '';
         userData.birthDate = userData.birthDate ? moment(userData.birthDate).format('DD-MM-YYYY HH:mm') : '';
@@ -339,6 +342,7 @@ export class UserFormComponent implements OnInit {
     this.loadingMessage = `Updating user ${inputData.firstName} ${inputData.lastName}`;
     this.usersService.updateUser(userInput).subscribe(
       async ({ data }) => {
+        this._child.toggleEdit();
         const userData = data.updateOneUser;
         const color = userData.active
           ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
@@ -353,6 +357,7 @@ export class UserFormComponent implements OnInit {
         // const updatedIndex = this.users.findIndex((_user) => _user.id === user.id);
 
         this.isLoading = false;
+
         this.loadingMessage = '';
         this.message.create('success', `User has successfully been updated`);
       },

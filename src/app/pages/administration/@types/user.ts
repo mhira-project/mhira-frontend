@@ -4,7 +4,7 @@ import { Department } from './department';
 
 export interface User {
   id?: number;
-  workId?: string;
+  workID?: string;
   firstName: string;
   username: string;
   middleName?: string;
