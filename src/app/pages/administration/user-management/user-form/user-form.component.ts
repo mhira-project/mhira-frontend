@@ -162,7 +162,7 @@ export class UserFormComponent implements OnInit {
     }
   }
   isSuperAdmin(user: User): boolean {
-    return user.roles !== undefined && user.roles
+    return user.roles !== undefined && user.roles && user.roles.length > 0
       ? user.roles.find((role) => role.name === 'Super Admin') !== undefined
         ? true
         : false
