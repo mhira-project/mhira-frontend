@@ -221,11 +221,6 @@ export class UserFormComponent implements OnInit {
     const departmentsIds: number[] = this.departments.map((department) => department.id);
     this.selectedDepartments = departments;
     this.unselectedDepartments = departmentsIds.filter((id) => !this.selectedDepartments.includes(id));
-    // for (const department of departments) {
-    //   if (this.userHasDepartment(department)) {
-    //     this.selectedDepartments.splice(this.selectedDepartments.indexOf(department), department);
-    //   }
-    // }
     this.submitDepartments();
   }
 
