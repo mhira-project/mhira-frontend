@@ -243,7 +243,7 @@ export class UserFormComponent implements OnInit {
         this.profileFields = userForms.userProfileEdit;
         this.populateForm = true;
       } else {
-        this.user = { firstName: '' };
+        this.user = {};
         this.resetForm = true;
         this.newMode = true;
         this.inputMode = true;
