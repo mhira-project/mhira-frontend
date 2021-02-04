@@ -26,27 +26,32 @@ definitions:
         script:
           - npm run lint:ts
 
-    - step: &build
-        name: Build
-        caches:
-          - node
-        script:
-          - npm run build
-        artifacts:
-          - dist/**
-
 pipelines:
   pull-requests:
     '**':
       - step: *install
       - step: *lint
-      - step: *build
+      - step:
+          name: Build
+          caches:
+            - node
+          script:
+            - npm run build
+          artifacts:
+            - dist/**
 
   tags:
     release/*:
       - step: *install
       - step: *lint
-      - step: *build
+      - step:
+          name: Build Production
+          caches:
+            - node
+          script:
+            - npm run build:prod
+          artifacts:
+            - dist/**
       - step:
           name: Deploy to S3
           script:
@@ -74,7 +79,14 @@ pipelines:
     master:
       - step: *install
       - step: *lint
-      - step: *build
+      - step:
+          name: Build Staging
+          caches:
+            - node
+          script:
+            - npm run build:staging
+          artifacts:
+            - dist/**
       - step:
           name: Deploy to S3
           script:
@@ -101,7 +113,14 @@ pipelines:
     develop:
       - step: *install
       - step: *lint
-      - step: *build
+      - step:
+          name: Build Development
+          caches:
+            - node
+          script:
+            - npm run build:dev
+          artifacts:
+            - dist/**
       - step:
           name: Deploy to S3
           script:
