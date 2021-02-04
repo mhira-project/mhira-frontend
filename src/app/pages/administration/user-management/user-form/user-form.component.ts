@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { userForms } from '@app/pages/administration/@forms/user.form';
 import { Form } from '@shared/components/form/@types/form';
 import { TopTabsDataService } from '@shared/services/tabs-data.service';
-import * as moment from 'moment';
 import { CreateOneUserInput, CreateUserInput, UpdateOneUserInput, User } from '@app/pages/administration/@types/user';
 import { UsersService } from '@app/pages/administration/@services/users.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -61,11 +60,15 @@ export class UserFormComponent implements OnInit {
   unselectedDepartments: number[];
   currentUser: User;
 
+  get userTitle(): string {
+    const name = [this.user.firstName, this.user.middleName, this.user.lastName].filter((s) => !!s).join(' ');
+    return [this.user.workID, name].filter((s) => !!s).join(' - ');
+  }
+
   constructor(
     private modalService: NzModalService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private cd: ChangeDetectorRef,
     private tabsDataService: TopTabsDataService,
     private usersService: UsersService,
     private message: NzMessageService,
@@ -122,7 +125,6 @@ export class UserFormComponent implements OnInit {
   }
 
   clickChangePassword() {
-    console.log('change');
     this._child.handleSubmitForm(this.updatePasswordForm);
   }
 
@@ -276,6 +278,7 @@ export class UserFormComponent implements OnInit {
     this.loadingMessage = `Creating user ${inputData.firstName} ${inputData.lastName}`;
     this.usersService.createUser(userInput).subscribe(
       async ({ data }) => {
+        this._child.toggleEdit();
         this.isLoading = false;
         this.loadingMessage = '';
         this.message.create('success', `User has successfully been created`);
@@ -311,6 +314,7 @@ export class UserFormComponent implements OnInit {
         this.user = UserModel.fromJson(data.updateOneUser);
         this.isLoading = false;
         this.populateForm = true;
+        this._child.toggleEdit();
         this.loadingMessage = '';
         this.message.create('success', `User has successfully been updated`);
       },
