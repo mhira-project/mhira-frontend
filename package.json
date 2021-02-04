@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "build": "npm run env -s && ng build --aot --prod --extract-css false",
+    "build": "npm run env -s && ng build --prod",
+    "build:dev": "npm run build -- --configuration=dev",
+    "build:staging": "npm run build -- --configuration=staging",
+    "build:prod": "npm run build -- --configuration=production",
     "start": "npm run env -s && ng serve --proxy-config proxy.conf.js",
     "serve:sw": "npm run build -s && npx http-server ./dist -p 4200",
     "lint:ts": "ng lint",
