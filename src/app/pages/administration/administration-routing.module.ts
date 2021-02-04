@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { extract } from '../../i18n/index';
-import { AdministrationComponent } from './administration.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { UserFormComponent } from './user-management/user-form/user-form.component';
@@ -12,7 +11,6 @@ import { DepartmentsComponent } from './departments/departments.component';
 const routes: Routes = [
   {
     path: '',
-    component: AdministrationComponent,
     data: {
       title: extract('Administration'),
     },
@@ -22,6 +20,7 @@ const routes: Routes = [
         component: UserManagementComponent,
         data: {
           title: extract('User Management'),
+          breadcrumb: extract('User Management'),
         },
       },
       {
@@ -29,6 +28,7 @@ const routes: Routes = [
         component: UserFormComponent,
         data: {
           title: extract('Users Edit'),
+          breadcrumb: extract('Users Edit'),
         },
       },
       {
@@ -36,6 +36,7 @@ const routes: Routes = [
         component: RolesAndPermissionsComponent,
         data: {
           title: extract('Roles & Permissions'),
+          breadcrumb: extract('Roles & Permissions'),
         },
       },
       {
@@ -43,12 +44,14 @@ const routes: Routes = [
         component: RolesComponent,
         data: {
           title: extract('Roles'),
+          breadcrumb: extract('Roles'),
         },
       },
       {
         path: 'settings',
         data: {
           title: extract('Settings'),
+          breadcrumb: extract('Settings'),
         },
         loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
       },
@@ -57,6 +60,7 @@ const routes: Routes = [
         component: PermissionsComponent,
         data: {
           title: extract('Permissions'),
+          breadcrumb: extract('Permissions'),
         },
       },
       {
@@ -64,7 +68,13 @@ const routes: Routes = [
         component: DepartmentsComponent,
         data: {
           title: extract('Departments'),
+          breadcrumb: extract('Departments'),
         },
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'roles',
       },
     ],
   },

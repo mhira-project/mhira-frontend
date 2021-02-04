@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
-import { AdministrationComponent } from './administration.component';
 import { AdministrationRoutingModule } from './administration-routing.module';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
@@ -33,7 +31,6 @@ import { PermissionsService } from './@services/permissions.service';
 import { RolesService } from './@services/roles.service';
 import { FormsModule } from '@angular/forms';
 import { DepartmentsComponent } from './departments/departments.component';
-import { SettingsComponent } from './settings/settings.component';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
 
 const antModules = [
@@ -69,14 +66,12 @@ const antModules = [
     NzSwitchModule,
   ],
   declarations: [
-    AdministrationComponent,
     UserManagementComponent,
     RolesAndPermissionsComponent,
     UserFormComponent,
     PermissionsComponent,
     RolesComponent,
     DepartmentsComponent,
-    SettingsComponent,
   ],
   providers: [PermissionsService, RolesService],
 })

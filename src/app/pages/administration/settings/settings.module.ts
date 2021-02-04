@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
 import { FormsModule } from '@angular/forms';
 import { AppFormModule } from '../../../@shared/components/form/app-form.module';

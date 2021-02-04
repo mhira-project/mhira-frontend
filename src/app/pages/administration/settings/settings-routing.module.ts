@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { extract } from '../../../i18n';
-import { SettingsComponent } from './settings.component';
 import { SystemConfigurationComponent } from './system-configuration/system-configuration.component';
 import { PatientStatusesComponent } from './patient-statuses/patient-statuses.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: SettingsComponent,
     data: {
       title: extract('Administration'),
     },
@@ -18,6 +16,7 @@ const routes: Routes = [
         component: SystemConfigurationComponent,
         data: {
           title: extract('System Configuration'),
+          breadcrumb: extract('System Configuration'),
         },
       },
       {
@@ -25,7 +24,13 @@ const routes: Routes = [
         component: PatientStatusesComponent,
         data: {
           title: extract('Patient Statuses'),
+          breadcrumb: extract('Patient Statuses'),
         },
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'system-configuration',
       },
     ],
   },
