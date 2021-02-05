@@ -33,17 +33,17 @@ const columns: any[] = [
   },
   {
     title: 'Roles',
-    name: 'roles',
+    name: 'formattedRoles',
     isFilterable: false,
   },
   {
     title: 'Active',
-    name: 'active',
+    name: 'formattedStatus',
     isFilterable: false,
   },
   {
     title: 'Departments',
-    name: 'departments',
+    name: 'formattedDepartments',
     isFilterable: false,
   },
 ];
