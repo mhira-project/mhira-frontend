@@ -79,11 +79,11 @@ export class UserFormComponent implements OnInit {
     this.init();
   }
 
-  init() {
+  async init() {
     this.getUserFromUrl();
+    this.getUser();
     this.getRoles();
     this.getDepartments();
-    this.getUser();
   }
 
   getDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
@@ -143,13 +143,11 @@ export class UserFormComponent implements OnInit {
           options.push({ label: _role.name, value: _role.id });
         });
         this.userRolesPermissionsFields.groups[0].fields[0].options = options;
-        this.profileFields.groups.map((group) => {
+        this.profileFields.groups.map((group) =>
           group.fields.map((field) => {
-            if (field.name === 'roleId') {
-              field.options = options;
-            }
-          });
-        });
+            if (field.name === 'roleId') field.options = options;
+          })
+        );
       },
       (error: any) => {}
     );
@@ -231,14 +229,15 @@ export class UserFormComponent implements OnInit {
     this.submitDepartments();
   }
 
-  getUserFromUrl(): void {
-    this.routeSub = this.activatedRoute.queryParams.subscribe((params) => {
+  async getUserFromUrl(): Promise<void> {
+    this.routeSub = await this.activatedRoute.queryParams.subscribe((params) => {
       if (params.user) {
         this.inputMode = false;
         this.showCancelButton = true;
         const bytes = CryptoJS.AES.decrypt(params.user, environment.secretKey);
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.user = decryptedData;
+        console.log(this.user);
         if (this.user.birthDate) this.user.birthDate = decryptedData.birthDate.slice(0, 10);
         this.profileFields = userForms.userProfileEdit;
         // this.onChangeUser();
