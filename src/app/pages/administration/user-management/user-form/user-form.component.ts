@@ -157,12 +157,7 @@ export class UserFormComponent implements OnInit {
   }
 
   userHasRole(roleId: number): boolean {
-    if (this.user && this.user.roles) {
-      const userRolesIds: number[] = this.user.roles.map((role) => role.id);
-      return userRolesIds.includes(roleId);
-    } else {
-      return false;
-    }
+    return this.user && this.user.roles && this.user.roles.map((role) => role.id).includes(roleId);
   }
   isSuperAdmin(user: User): boolean {
     return user.roles !== undefined && user.roles && user.roles.length > 0
@@ -185,32 +180,23 @@ export class UserFormComponent implements OnInit {
   deleteUser(user: User) {
     this.isLoading = true;
     this.usersService.deleteUser(user).subscribe(
-      async ({ data }) => {
+      async (_) => {
         this.isLoading = false;
         this.router.navigate(['/mhira/administration/user-management']);
       },
-      (error) => {
+      (_) => {
         this.isLoading = false;
       }
     );
   }
 
   handleCancel() {
-    this.updatePasswordForm.groups.map((group) => {
-      group.fields.map((field) => {
-        field.value = '';
-      });
-    });
+    this.updatePasswordForm.groups.map((group) => group.fields.map((field) => (field.value = '')));
     this.showModal = false;
   }
 
   userHasDepartment(departmentId: number): boolean {
-    if (this.user && this.user.departments) {
-      const userDepartmentsIds: number[] = this.user.departments.map((dept) => dept.id);
-      return userDepartmentsIds.includes(departmentId);
-    } else {
-      return false;
-    }
+    return this.user && this.user.departments && this.user.departments.map((dept) => dept.id).includes(departmentId);
   }
 
   collectRoles(roles: number[]) {
@@ -219,9 +205,7 @@ export class UserFormComponent implements OnInit {
     this.selectedRoles = roles;
     this.unselectedRoles = rolesIds.filter((id) => !this.selectedRoles.includes(id));
     for (const role of roles) {
-      if (this.userHasRole(role)) {
-        this.selectedRoles.splice(this.selectedRoles.indexOf(role), role);
-      }
+      if (this.userHasRole(role)) this.selectedRoles.splice(this.selectedRoles.indexOf(role), role);
     }
   }
 
