@@ -4,17 +4,23 @@ import { Permission } from '@app/pages/administration/@types/permission';
 
 export interface User {
   id?: number;
-  workId?: string;
-  firstName: string;
-  username: string;
-  middleName?: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  address: string;
-  gender: string;
-  birthDate: string;
+  isSuperUser?: boolean;
+  username?: string;
   active?: boolean;
+  firstName?: string;
+  middleName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  workID?: string;
+  address?: string;
+  gender?: string;
+  birthDate?: string;
+  nationality?: string;
+  passwordExpiresAt?: string;
+  passwordChangeRequired?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
   roles?: Role[];
   departments?: Department[];
   permissions?: Permission[];
@@ -30,12 +36,12 @@ export interface UpdateOneUserInput {
 }
 
 export interface CreateUserInput {
-  username: string;
-  password: string;
+  username?: string;
+  password?: string;
   active?: boolean;
-  firstName: string;
+  firstName?: string;
   middleName?: string;
-  lastName: string;
+  lastName?: string;
   email?: string;
   phone?: string;
   workID?: string;

@@ -12,6 +12,8 @@ import { UserUpdatePasswordInput } from '@app/pages/user-management/user-form/us
 import { Paging } from '@shared/@types/paging';
 import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { UserModel } from '@app/pages/administration/@models/user.model';
+import { PaginationService } from '@shared/services/pagination.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -64,7 +66,8 @@ export class UsersListComponent implements OnInit {
     private dateService: DateService,
     private router: Router,
     private usersService: UsersService,
-    public perms: AppPermissionsService
+    public perms: AppPermissionsService,
+    private paginationService: PaginationService
   ) {}
 
   ngOnInit(): void {
@@ -79,29 +82,9 @@ export class UsersListComponent implements OnInit {
       async ({ data }) => {
         const usersData = data.users;
         usersData.edges.map((user: any) => {
-          const row = Object.assign({}, user.node);
-          const settings = JSON.parse(localStorage.getItem('settings'));
-          row.updatedAt = row.updatedAt ? this.dateService.formatDate(row.updatedAt) : '';
-          row.birthDate = row.birthDate ? this.dateService.formatDate(row.birthDate) : '';
-          const color = row.active
-            ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
-            : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-          const active = row.active ? 'ACTIVE' : 'INACTIVE';
-
-          row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
-          row.roles = '';
-          user.node.roles.forEach((role: { name: any }) => {
-            row.roles += `<nz-tag class="ant-tag-blue ant-tag ml-5">${role.name}</nz-tag>`;
-          });
-
-          row.departments = '';
-          user.node.departments.forEach((department: { name: any }) => {
-            row.departments += `<nz-tag class="ant-tag-cyan ant-tag ml-5">${department.name}</nz-tag>`;
-          });
-          rows.push(row);
-          this.users.push(user.node);
+          this.users.push(UserModel.fromJson(user.node));
         });
-        this.usersTable.rows = rows;
+        this.usersTable.rows = this.users;
         this.paging.after = data.users.pageInfo.endCursor;
         this.paging.before = data.users.pageInfo.startCursor;
         this.pageInfo = data.users.pageInfo;
@@ -114,19 +97,8 @@ export class UsersListComponent implements OnInit {
     );
   }
 
-  navigatePages(direction: string, pageSize: number = 10) {
-    switch (direction) {
-      case 'next':
-        this.paging.before = undefined;
-        this.paging.first = pageSize;
-        this.paging.last = undefined;
-        break;
-      case 'previous':
-        this.paging.after = undefined;
-        this.paging.first = undefined;
-        this.paging.last = pageSize;
-        break;
-    }
+  navigatePages(direction: 'next' | 'previous', pageSize: number = 10) {
+    this.paging = this.paginationService.navigatePages(this.paging, direction, pageSize);
     this.getUsers(this.paging);
   }
 
@@ -221,8 +193,6 @@ export class UsersListComponent implements OnInit {
   onCreateUser() {
     this.router.navigate([`/mhira/user-management/user-form`]);
   }
-
-  onFormSubmit($event: any) {}
 
   onError(errors: any) {
     if (errors.length > 0) {
