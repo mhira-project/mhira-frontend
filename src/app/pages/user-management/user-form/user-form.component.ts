@@ -20,7 +20,7 @@ import { ModalType } from '@app/pages/user-management/users-list/modal.type';
 import { FormComponent } from '@shared/components/form/form.component';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { NzModalService } from 'ng-zorro-antd';
-import { UserModel } from '@app/pages/administration/@models/user.model';
+import { UserModel } from '@app/pages/user-management/@models/user.model';
 
 const CryptoJS = require('crypto-js');
 

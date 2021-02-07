@@ -12,7 +12,7 @@ import { UserUpdatePasswordInput } from '@app/pages/user-management/user-form/us
 import { Paging } from '@shared/@types/paging';
 import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
-import { UserModel } from '@app/pages/administration/@models/user.model';
+import { UserModel } from '@app/pages/user-management/@models/user.model';
 import { PaginationService } from '@shared/services/pagination.service';
 
 const CryptoJS = require('crypto-js');
