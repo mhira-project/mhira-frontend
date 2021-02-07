@@ -26,6 +26,13 @@ const routes: Routes = [
     loadChildren: () => import('./reports/reports.module').then((m) => m.ReportsModule),
   },
   {
+    path: 'user-management',
+    data: {
+      breadcrumb: extract('User Management'),
+    },
+    loadChildren: () => import('./user-management/user-management.module').then((m) => m.UserManagementModule),
+  },
+  {
     path: 'administration',
     data: {
       breadcrumb: extract('Administration'),

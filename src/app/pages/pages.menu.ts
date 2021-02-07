@@ -79,15 +79,15 @@ export const MENU: SideNavInterface[] = [
     ],
   },
   {
-    path: 'User Manager',
-    title: extract('Manage Users'),
-    permissions: ['view users', 'manage users', 'manage departments'],
+    path: 'user-management',
+    title: extract('User Management'),
+    permissions: ['view users', 'manage users'],
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'user',
     submenu: [
       {
-        path: 'administration/user-management',
+        path: 'user-management/users',
         title: extract('List users'),
         permissions: ['manage users'],
         iconType: '',
@@ -95,7 +95,7 @@ export const MENU: SideNavInterface[] = [
         submenu: [],
       },
       {
-        path: 'administration/user-management/form',
+        path: 'user-management/user-form',
         title: extract('New user'),
         permissions: ['manage users'],
         iconType: '',

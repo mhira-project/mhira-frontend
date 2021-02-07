@@ -2,12 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/auth/auth.service';
-import {
-  UserChangePasswordInput,
-  UserUpdatePasswordInput,
-} from '@app/pages/administration/user-management/user-form/user-update-password.type';
-import { UsersService } from '@app/pages/administration/@services/users.service';
-import { User } from '@app/pages/administration/@types/user';
+import { UserChangePasswordInput } from '@app/pages/user-management/user-form/user-update-password.type';
+import { UsersService } from '@app/pages/user-management/@services/users.service';
+import { User } from '@app/pages/user-management/@types/user';
 
 @Component({
   selector: 'app-change-password',
