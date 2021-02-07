@@ -14,11 +14,11 @@ const routes: Routes = [
     },
     children: [
       {
-        path: 'roles-and-permissions',
+        path: 'permission-matrix',
         component: RolesAndPermissionsComponent,
         data: {
-          title: extract('Roles & Permissions'),
-          breadcrumb: extract('Roles & Permissions'),
+          title: extract('Permission Matrix'),
+          breadcrumb: extract('Permission Matrix'),
         },
       },
       {

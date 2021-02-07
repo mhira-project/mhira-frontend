@@ -24,7 +24,7 @@ const routes: Routes = [
         component: UserFormComponent,
         data: {
           title: extract('Users Edit'),
-          breadcrumb: extract('Users Edit'),
+          breadcrumb: extract('Edit User'),
         },
       },
       {
