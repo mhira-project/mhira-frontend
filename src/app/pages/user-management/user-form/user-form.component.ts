@@ -79,10 +79,6 @@ export class UserFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.init();
-  }
-
-  async init() {
     this.getUserFromUrl();
     this.getUser();
     this.getRoles();
@@ -158,13 +154,6 @@ export class UserFormComponent implements OnInit {
 
   userHasRole(roleId: number): boolean {
     return this.user && this.user.roles && this.user.roles.map((role) => role.id).includes(roleId);
-  }
-  isSuperAdmin(user: User): boolean {
-    return user.roles !== undefined && user.roles && user.roles.length > 0
-      ? user.roles.find((role) => role.name === 'Super Admin') !== undefined
-        ? true
-        : false
-      : false;
   }
 
   handleDeleteAction(user: User) {
