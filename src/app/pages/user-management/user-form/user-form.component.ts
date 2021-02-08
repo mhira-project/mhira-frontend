@@ -61,8 +61,8 @@ export class UserFormComponent implements OnInit {
   currentUser: User;
 
   get userTitle(): string {
-    const name = [this.user.firstName, this.user.middleName, this.user.lastName].filter((s) => !!s).join(' ');
-    return [this.user.workID, name].filter((s) => !!s).join(' - ');
+    const name = [this.user?.firstName, this.user?.middleName, this.user?.lastName].filter((s) => !!s).join(' ');
+    return [this.user?.workID, name].filter((s) => !!s).join(' - ');
   }
 
   constructor(
