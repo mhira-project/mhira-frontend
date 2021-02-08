@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "build": "npm run env -s && ng build --prod",
+    "build": "npm run env -s && ng build --aot --prod",
     "build:dev": "npm run build -- --configuration=dev",
     "build:staging": "npm run build -- --configuration=staging",
     "build:prod": "npm run build -- --configuration=production",
