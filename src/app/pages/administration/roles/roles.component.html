@@ -1,4 +1,4 @@
-<div *ngIf="perms.permissionsOnly('view roles')" nz-row>
+<div *ngIf="perms.permissionsOnly(PK.VIEW_ROLES)" nz-row>
   <div nz-col nzSpan="24">
     <app-table
       [loading]="isLoading"
@@ -9,7 +9,7 @@
       [listOfCustomActions]="actions"
       [listOfData]="rolesTable.rows"
       [listOfColumn]="rolesTable.columns"
-      [showButton]="perms.permissionsOnly('manage roles')"
+      [showButton]="perms.permissionsOnly(PK.MANAGE_ROLES)"
       [buttonText]="'Create Role'"
       [hasNextPage]="pageInfo?.hasNextPage"
       [hasPreviousPage]="pageInfo?.hasPreviousPage"

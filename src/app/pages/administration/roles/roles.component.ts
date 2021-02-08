@@ -11,6 +11,7 @@ import { RolesService } from '@app/pages/administration/@services/roles.service'
 import { RoleForm } from '@app/pages/administration/@forms/role.form';
 import { Convert } from '@shared/classes/convert';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { PermissionKey } from '@app/@shared/@types/permission';
 
 const CryptoJS = require('crypto-js');
 
@@ -20,6 +21,7 @@ const CryptoJS = require('crypto-js');
   styleUrls: ['./roles.component.scss'],
 })
 export class RolesComponent implements OnInit {
+  PK = PermissionKey;
   isLoading = false;
   modalLoading = false;
   roles: Role[] = [];

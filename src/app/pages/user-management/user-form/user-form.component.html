@@ -11,11 +11,11 @@
       [loadingMessage]="loadingMessage"
       [inputMode]="inputMode"
       [showCancelButton]="showCancelButton"
-      [showEditButton]="perms.permissionsOnly(['update own profile', 'manage users'])"
+      [showEditButton]="perms.permissionsOnly([PK.MANAGE_OWN_PROFILE, PK.MANAGE_USERS])"
       (submitForm)="submitForm($event)"
     ></app-form>
   </nz-tab>
-  <nz-tab nzTitle="Settings" *ngIf="perms.permissionsOnly(['view own profile', 'manage users'])">
+  <nz-tab nzTitle="Settings" *ngIf="perms.permissionsOnly([PK.VIEW_OWN_PROFILE, PK.MANAGE_USERS])">
     <div nz-row nzGutter="16">
       <div *ngIf="roles.length > 0" nz-col>
         <nz-card style="width: 300px" nzTitle="{{ user?.firstName }}'s Roles">
@@ -23,7 +23,7 @@
             <div nz-row>
               <div nz-col nzSpan="24" *ngFor="let role of roles">
                 <label
-                  [disabled]="isCurrentUser() || !perms.permissionsOnly(['manage roles'])"
+                  [disabled]="isCurrentUser() || !perms.permissionsOnly([PK.MANAGE_ROLES])"
                   nz-checkbox
                   [nzValue]="role.id"
                   [ngModel]="userHasRole(role.id)"
@@ -44,7 +44,7 @@
             <div nz-row>
               <div nz-col nzSpan="24" *ngFor="let department of departments">
                 <label
-                  [disabled]="isCurrentUser() || !perms.permissionsOnly(['update own profile', 'manage departments'])"
+                  [disabled]="isCurrentUser() || !perms.permissionsOnly([PK.MANAGE_OWN_PROFILE, PK.MANAGE_DEPARTMENTS])"
                   nz-checkbox
                   [nzValue]="department.id"
                   [ngModel]="userHasDepartment(department.id)"
@@ -60,18 +60,18 @@
         <!--        </ng-template>-->
       </div>
 
-      <div nz-col *ngIf="perms.permissionsOnly(['manage users'])">
+      <div nz-col *ngIf="perms.permissionsOnly([PK.MANAGE_USERS])">
         <nz-card style="width: 300px" nzTitle="Enable or Disable {{ user?.firstName }}">
           <p>To disable and Enable {{ user?.firstName }} toggle the switch below.</p>
           <nz-switch
-            [disabled]="isCurrentUser() || !perms.permissionsOnly(['manage departments'])"
+            [disabled]="isCurrentUser() || !perms.permissionsOnly([PK.MANAGE_DEPARTMENTS])"
             (ngModelChange)="activateUser(user)"
             [(ngModel)]="user.active"
           ></nz-switch>
         </nz-card>
       </div>
       <div
-        *ngIf="!isCurrentUser() && perms.permissionsOnly(['manage departments', 'manage users', 'manage roles'])"
+        *ngIf="!isCurrentUser() && perms.permissionsOnly([PK.MANAGE_DEPARTMENTS, PK.MANAGE_USERS, PK.MANAGE_ROLES])"
         nz-col
       >
         <nz-card style="width: 300px" nzTitle="Change {{ user?.firstName }}'s password">
@@ -80,7 +80,7 @@
         </nz-card>
       </div>
       <div
-        *ngIf="!isCurrentUser() && perms.permissionsOnly(['manage departments', 'manage users', 'manage roles'])"
+        *ngIf="!isCurrentUser() && perms.permissionsOnly([PK.MANAGE_DEPARTMENTS, PK.MANAGE_USERS, PK.MANAGE_ROLES])"
         nz-col
       >
         <nz-card style="width: 300px" nzTitle="Delete User {{ user?.firstName }} ({{ user?.username }})">

@@ -11,6 +11,7 @@ import { Assessment } from '@app/pages/assessment/@types/assessment';
 import { environment } from '@env/environment';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { CaseManagersService } from '@app/pages/patients-management/@services/case-managers.service';
+import { PermissionKey } from '@app/@shared/@types/permission';
 
 const CryptoJS = require('crypto-js');
 
@@ -20,6 +21,7 @@ const CryptoJS = require('crypto-js');
   styleUrls: ['./plan-assessment.component.scss'],
 })
 export class PlanAssessmentComponent implements OnInit, OnDestroy, AfterViewInit {
+  PK = PermissionKey;
   modalIsVisible = false;
   modalIsLoading = false;
   isLoading = false;

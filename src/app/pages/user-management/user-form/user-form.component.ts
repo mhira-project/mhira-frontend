@@ -21,6 +21,7 @@ import { FormComponent } from '@shared/components/form/form.component';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { NzModalService } from 'ng-zorro-antd';
 import { UserModel } from '@app/pages/user-management/@models/user.model';
+import { PermissionKey } from '@app/@shared/@types/permission';
 
 const CryptoJS = require('crypto-js');
 
@@ -31,6 +32,7 @@ const CryptoJS = require('crypto-js');
 })
 export class UserFormComponent implements OnInit {
   @ViewChild(FormComponent) _child: FormComponent;
+  PK = PermissionKey;
   user: User;
   isLoading = false;
   showModal = false;

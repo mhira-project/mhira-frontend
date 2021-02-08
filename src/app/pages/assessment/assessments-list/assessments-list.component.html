@@ -2,7 +2,7 @@
   <div nz-row>
     <div nz-col nzSpan="24">
       <app-table
-        *ngIf="perms.permissionsOnly(['view assessments'])"
+        *ngIf="perms.permissionsOnly([PK.VIEW_ASSESSMENTS])"
         [loading]="isLoading"
         [showPagination]="false"
         [showCustomActions]="true"

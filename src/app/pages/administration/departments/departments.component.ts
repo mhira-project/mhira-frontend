@@ -11,6 +11,7 @@ import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
 import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
+import { PermissionKey } from '@app/@shared/@types/permission';
 
 const CryptoJS = require('crypto-js');
 
@@ -20,6 +21,7 @@ const CryptoJS = require('crypto-js');
   styleUrls: ['./departments.component.scss'],
 })
 export class DepartmentsComponent implements OnInit {
+  PK = PermissionKey;
   isLoading = false;
   modalLoading = false;
   departments: Department[] = [];
