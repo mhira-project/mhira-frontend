@@ -23,3 +23,11 @@ export enum PermissionKey {
   VIEW_OWN_PROFILE = 'view own profile',
   MANAGE_OWN_PROFILE = 'update own profile',
 }
+
+export const isPermissionKey = (key: any): key is PermissionKey => {
+  return Object.values(PermissionKey).includes(key);
+};
+
+export const isPermissionKeyArray = (arr: any): arr is PermissionKey[] => {
+  return typeof arr === 'object' && Object.values(arr).every((key) => isPermissionKey(key));
+};
