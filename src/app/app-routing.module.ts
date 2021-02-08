@@ -4,24 +4,17 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HorizontalLayoutComponent } from '@app/@layout/horizontal/horizontal.layout.component';
 import { AuthLayoutComponent } from '@app/@layout/auth/auth.layout.component';
 import { VerticalLayoutComponent } from '@app/@layout/vertical/vertical.layout.component';
-import { extract } from '@app/i18n';
 import { AuthGuard } from '@app/auth/auth.guard';
 
 const appRoutes: Routes = [
   {
     path: 'assessment',
-    data: {
-      breadcrumb: 'Workspace',
-    },
     component: HorizontalLayoutComponent,
     loadChildren: () => import('./questionnaire/questionnaire.module').then((m) => m.QuestionnaireModule),
   },
   {
     path: 'mhira',
     canActivate: [AuthGuard],
-    data: {
-      breadcrumb: extract('Workspace'),
-    },
     component: VerticalLayoutComponent,
     loadChildren: () => import('./pages/pages.module').then((m) => m.PagesModule),
   },

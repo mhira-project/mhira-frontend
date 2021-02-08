@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedModule } from '@shared';
-import { AdministrationRoutingModule } from './administration-routing.module';
-import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
+import { UserManagementRoutingModule } from './user-management-routing.module';
+import { UsersListComponent } from './users-list/users-list.component';
 import {
   NzAlertModule,
   NzButtonModule,
@@ -23,12 +23,8 @@ import {
   NzTabsModule,
   NzToolTipModule,
 } from 'ng-zorro-antd';
-import { PermissionsComponent } from './permissions/permissions.component';
-import { RolesComponent } from './roles/roles.component';
-import { PermissionsService } from './@services/permissions.service';
-import { RolesService } from './@services/roles.service';
+import { UserFormComponent } from './user-form/user-form.component';
 import { FormsModule } from '@angular/forms';
-import { DepartmentsComponent } from './departments/departments.component';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
 
 const antModules = [
@@ -60,10 +56,9 @@ const antModules = [
     AppFormModule,
     TranslateModule,
     SharedModule,
-    AdministrationRoutingModule,
+    UserManagementRoutingModule,
     NzSwitchModule,
   ],
-  declarations: [RolesAndPermissionsComponent, PermissionsComponent, RolesComponent, DepartmentsComponent],
-  providers: [PermissionsService, RolesService],
+  declarations: [UsersListComponent, UserFormComponent],
 })
-export class AdministrationModule {}
+export class UserManagementModule {}

@@ -1,28 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { userForms } from '@app/pages/administration/@forms/user.form';
+import { userForms } from '@app/pages/user-management/@forms/user.form';
 import { Router } from '@angular/router';
-import { ModalType } from '@app/pages/administration/user-management/modal.type';
+import { ModalType } from '@app/pages/user-management/users-list/modal.type';
 import { Form } from '@shared/components/form/@types/form';
-import { User } from '@app/pages/administration/@types/user';
-import { userTable } from '@app/pages/administration/@tables/users.table';
-import { UsersService } from '@app/pages/administration/@services/users.service';
+import { User } from '@app/pages/user-management/@types/user';
+import { userTable } from '@app/pages/user-management/@tables/users.table';
+import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { environment } from '@env/environment';
-import { UserUpdatePasswordInput } from '@app/pages/administration/user-management/user-form/user-update-password.type';
+import { UserUpdatePasswordInput } from '@app/pages/user-management/user-form/user-update-password.type';
 import { Paging } from '@shared/@types/paging';
 import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
-import { UserModel } from '@app/pages/administration/@models/user.model';
+import { UserModel } from '@app/pages/user-management/@models/user.model';
 import { PaginationService } from '@shared/services/pagination.service';
 
 const CryptoJS = require('crypto-js');
 
 @Component({
-  selector: 'app-user-management',
-  templateUrl: './user-management.component.html',
-  styleUrls: ['./user-management.component.scss'],
+  selector: 'app-users-list',
+  templateUrl: './users-list.component.html',
+  styleUrls: ['./users-list.component.scss'],
 })
-export class UserManagementComponent implements OnInit {
+export class UsersListComponent implements OnInit {
   isLoading = false;
   showModal = false;
   modalType: ModalType;
@@ -142,7 +142,7 @@ export class UserManagementComponent implements OnInit {
 
   handleRowClick(event: any) {
     const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.users[event.index]), environment.secretKey).toString();
-    this.router.navigate(['/mhira/administration/user-management/form'], {
+    this.router.navigate(['/mhira/user-management/user-form'], {
       state: {
         title: `${this.users[event.index].firstName} ${this.users[event.index].lastName}`,
       },
@@ -191,7 +191,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   onCreateUser() {
-    this.router.navigate([`/mhira/administration/user-management/form`]);
+    this.router.navigate([`/mhira/user-management/user-form`]);
   }
 
   onError(errors: any) {

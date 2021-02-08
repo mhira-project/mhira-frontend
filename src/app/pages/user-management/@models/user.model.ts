@@ -2,7 +2,7 @@ import { AppDate } from '@shared/classes/app-date';
 import { User } from '../@types/user';
 import { Role } from '@app/pages/administration/@types/role';
 import { Department } from '@app/pages/administration/@types/department';
-import { FormattedUser } from '@app/pages/administration/@types/formatted-user';
+import { FormattedUser } from '@app/pages/user-management/@types/formatted-user';
 
 export class UserModel {
   public static fromJson(json: FormattedUser): User {

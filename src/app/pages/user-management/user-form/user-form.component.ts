@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { userForms } from '@app/pages/administration/@forms/user.form';
+import { userForms } from '@app/pages/user-management/@forms/user.form';
 import { Form } from '@shared/components/form/@types/form';
 import { TopTabsDataService } from '@shared/services/tabs-data.service';
-import { CreateOneUserInput, CreateUserInput, UpdateOneUserInput, User } from '@app/pages/administration/@types/user';
-import { UsersService } from '@app/pages/administration/@services/users.service';
+import { CreateOneUserInput, CreateUserInput, UpdateOneUserInput, User } from '@app/pages/user-management/@types/user';
+import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { environment } from '@env/environment';
 import { UserUpdatePasswordInput } from './user-update-password.type';
@@ -16,11 +16,11 @@ import { Convert } from '@shared/classes/convert';
 import { Role } from '@app/pages/administration/@types/role';
 import { DepartmentsService } from '@app/pages/administration/@services/departments.service';
 import { Department } from '@app/pages/administration/@types/department';
-import { ModalType } from '@app/pages/administration/user-management/modal.type';
+import { ModalType } from '@app/pages/user-management/users-list/modal.type';
 import { FormComponent } from '@shared/components/form/form.component';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { NzModalService } from 'ng-zorro-antd';
-import { UserModel } from '@app/pages/administration/@models/user.model';
+import { UserModel } from '@app/pages/user-management/@models/user.model';
 
 const CryptoJS = require('crypto-js');
 const moment = require('moment');
@@ -182,7 +182,7 @@ export class UserFormComponent implements OnInit {
     this.usersService.deleteUser(user).subscribe(
       async (_) => {
         this.isLoading = false;
-        this.router.navigate(['/mhira/administration/user-management']);
+        this.router.navigate(['/mhira/user-management/users']);
       },
       (_) => {
         this.isLoading = false;
@@ -352,7 +352,7 @@ export class UserFormComponent implements OnInit {
     this.populateForm = false;
     this.resetForm = false;
     const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.user), environment.secretKey).toString();
-    this.router.navigate(['/mhira/administration/user-management/form'], {
+    this.router.navigate(['/mhira/user-management/user-form'], {
       state: {
         title: `${this.user.firstName} ${this.user.lastName}`,
       },

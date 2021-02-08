@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
 import { PatientsManagementRoutingModule } from './patients-management-routing.module';
-import { PatientsManagementComponent } from './patients-management.component';
 import { PatientsListComponent } from './patients-list/patients-list.component';
 import { CaseManagersComponent } from './case-managers/case-managers.component';
 import {
@@ -61,7 +59,6 @@ const antModules = [
     PatientsManagementRoutingModule,
   ],
   declarations: [
-    PatientsManagementComponent,
     PatientsListComponent,
     CaseManagersComponent,
     InformantsListComponent,

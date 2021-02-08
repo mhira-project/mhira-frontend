@@ -15,7 +15,7 @@
       (submitForm)="submitForm($event)"
     ></app-form>
   </nz-tab>
-  <nz-tab nzTitle="Security" *ngIf="perms.permissionsOnly(['view own profile', 'manage users'])">
+  <nz-tab nzTitle="Settings" *ngIf="perms.permissionsOnly(['view own profile', 'manage users'])">
     <div nz-row nzGutter="16">
       <div *ngIf="roles.length > 0" nz-col>
         <nz-card style="width: 300px" nzTitle="{{ user?.firstName }}'s Roles">
