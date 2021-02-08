@@ -1,6 +1,5 @@
 import { Permission } from '../../pages/administration/@types/permission';
 import { Injectable } from '@angular/core';
-import { Role } from '@app/pages/administration/@types/role';
 import { User } from '@app/pages/user-management/@types/user';
 
 @Injectable({
@@ -9,20 +8,8 @@ import { User } from '@app/pages/user-management/@types/user';
 export class AppPermissionsService {
   constructor() {}
 
-  isSuperUser(): boolean {
-    const user = JSON.parse(localStorage.getItem('user')) as User;
-    if (
-      user && user.roles !== undefined && user.roles && user.roles.length > 0
-        ? user.roles.find((role) => role.isSuperAdmin === true) !== undefined
-          ? true
-          : false
-        : false
-    )
-      return true;
-  }
-
   permissionsOnly(action: any): boolean {
-    if (this.isSuperUser()) return true;
+    if (this.isSuperAdmin()) return true;
 
     let permissions = JSON.parse(localStorage.getItem('permissions'));
     if (permissions) {
@@ -53,5 +40,10 @@ export class AppPermissionsService {
       }
       return false;
     }
+  }
+
+  private isSuperAdmin(): boolean {
+    const user = JSON.parse(localStorage.getItem('user')) as User;
+    return !!user?.roles?.find?.((role) => role.isSuperAdmin);
   }
 }
