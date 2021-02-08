@@ -9,7 +9,7 @@ import { Paging } from '@shared/@types/paging';
 import { Sorting } from '@shared/@types/sorting';
 import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
-import { User } from '@app/pages/administration/@types/user';
+import { User } from '@app/pages/user-management/@types/user';
 import { AssessmentFilter } from '@app/pages/assessment/@types/assessment-filter';
 
 const CryptoJS = require('crypto-js');

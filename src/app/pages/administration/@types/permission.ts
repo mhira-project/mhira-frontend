@@ -1,5 +1,5 @@
 import { Role } from './role';
-import { User } from './user';
+import { User } from '@app/pages/user-management/@types/user';
 
 export interface Permission {
   id: number;

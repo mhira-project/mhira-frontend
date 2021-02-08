@@ -7,7 +7,7 @@ import { CaseManagerModel } from '@app/pages/patients-management/@models/case-ma
 import { CaseManagersFilterForm } from '@app/pages/patients-management/@forms/case-managers-filter.form';
 import { PatientsService } from '@app/pages/patients-management/@services/patients.service';
 import { CaseManagerFilter } from '@app/pages/patients-management/@types/case-manager-filter';
-import { UsersService } from '@app/pages/administration/@services/users.service';
+import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { Patient } from '@app/pages/patients-management/@types/patient';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';

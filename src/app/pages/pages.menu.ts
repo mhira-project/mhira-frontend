@@ -3,7 +3,7 @@ import { extract } from '@app/i18n';
 
 export const MENU: SideNavInterface[] = [
   {
-    path: 'home',
+    path: 'case-management',
     title: extract('Case Management'),
     iconType: 'nzIcon',
     iconTheme: 'outline',
@@ -11,7 +11,7 @@ export const MENU: SideNavInterface[] = [
     permissions: ['view patients'],
     submenu: [
       {
-        path: 'home/patients',
+        path: 'case-management/patients',
         title: extract('Patient list'),
         iconType: '',
         iconTheme: '',
@@ -19,7 +19,7 @@ export const MENU: SideNavInterface[] = [
         submenu: [],
       },
       {
-        path: 'home/case-managers',
+        path: 'case-management/case-managers',
         title: extract('Case Managers'),
         permissions: ['view patients', 'manage patients'],
         iconType: '',
@@ -27,7 +27,7 @@ export const MENU: SideNavInterface[] = [
         submenu: [],
       },
       {
-        path: 'home/informants',
+        path: 'case-management/informants',
         title: extract('Informants'),
         permissions: ['view patients', 'manage patients'],
         iconType: '',
@@ -79,15 +79,15 @@ export const MENU: SideNavInterface[] = [
     ],
   },
   {
-    path: 'User Manager',
-    title: extract('Manage Users'),
-    permissions: ['view users', 'manage users', 'manage departments'],
+    path: 'user-management',
+    title: extract('User Management'),
+    permissions: ['view users', 'manage users'],
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'user',
     submenu: [
       {
-        path: 'administration/user-management',
+        path: 'user-management/users',
         title: extract('List users'),
         permissions: ['manage users'],
         iconType: '',
@@ -95,7 +95,7 @@ export const MENU: SideNavInterface[] = [
         submenu: [],
       },
       {
-        path: 'administration/user-management/form',
+        path: 'user-management/user-form',
         title: extract('New user'),
         permissions: ['manage users'],
         iconType: '',
@@ -113,7 +113,7 @@ export const MENU: SideNavInterface[] = [
     icon: 'setting',
     submenu: [
       {
-        path: 'administration/roles-and-permissions',
+        path: 'administration/permission-matrix',
         title: extract('Permission Matrix'),
         permissions: ['view roles'],
         iconType: '',
@@ -154,7 +154,7 @@ export const MENU: SideNavInterface[] = [
         submenu: [
           {
             path: 'administration/settings/system-configuration',
-            title: extract('-System Configuration'),
+            title: extract('System Configuration'),
             permissions: ['manage settings'],
             iconType: '',
             iconTheme: '',
@@ -162,7 +162,7 @@ export const MENU: SideNavInterface[] = [
           },
           {
             path: 'administration/settings/patient-statuses',
-            title: extract('-Patient Statuses'),
+            title: extract('Patient Statuses'),
             permissions: ['manage settings'],
             iconType: '',
             iconTheme: '',

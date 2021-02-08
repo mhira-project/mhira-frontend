@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
-import { AssessmentComponent } from './assessment.component';
 import { AssessmentRoutingModule } from './assessment-routing.module';
 import { PlanAssessmentComponent } from './plan-assessment/plan-assessment.component';
 import { AssessmentsListComponent } from './assessments-list/assessments-list.component';
@@ -41,7 +39,7 @@ const antModules = [
 
 @NgModule({
   imports: [...antModules, CommonModule, AppFormModule, TranslateModule, SharedModule, AssessmentRoutingModule],
-  declarations: [AssessmentComponent, PlanAssessmentComponent, AssessmentsListComponent],
+  declarations: [PlanAssessmentComponent, AssessmentsListComponent],
   providers: [PatientsService, AssessmentService],
 })
 export class AssessmentModule {}

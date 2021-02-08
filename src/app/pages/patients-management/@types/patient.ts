@@ -1,6 +1,6 @@
 import { Contact } from '@app/pages/patients-management/@types/contact';
 import { Informant } from '@app/pages/patients-management/@types/informant';
-import { User } from '@app/pages/administration/@types/user';
+import { User } from '@app/pages/user-management/@types/user';
 import { PatientStatus } from '@app/pages/patients-management/@types/patient-status';
 
 export interface Patient {

@@ -5,10 +5,7 @@ import { FetchResult } from 'apollo-link';
 import { UsersMutations } from '../../../@graphql/mutations/users';
 import { UsersQueries } from '../../../@graphql/queries/users';
 import { CreateOneUserInput, UpdateOneUserInput, User } from '../@types/user';
-import {
-  UserChangePasswordInput,
-  UserUpdatePasswordInput,
-} from '../user-management/user-form/user-update-password.type';
+import { UserChangePasswordInput, UserUpdatePasswordInput } from '../user-form/user-update-password.type';
 import { Paging } from '@shared/@types/paging';
 
 @Injectable({
