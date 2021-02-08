@@ -13,7 +13,7 @@
 export const EnvironmentBase = {
   production: false,
   secretKey: 'hfsdjfhdufhiuegewurge8365746543785643785638276423874',
-  hmr: true,
+  hmr: false,
   baseURL: 'https://dev-api.mhira.net/graphql',
   defaultLanguage: 'en-US',
   supportedLanguages: ['en-US', 'fr-FR'],
