@@ -18,8 +18,10 @@ export class PatientProfileComponent implements OnInit {
   filter: CaseManagerFilter;
 
   get patientTitle(): string {
-    const name = [this.patient.firstName, this.patient.middleName, this.patient.lastName].filter((s) => !!s).join(' ');
-    return [this.patient.medicalRecordNo, name].filter((s) => !!s).join(' - ');
+    const name = [this.patient?.firstName, this.patient?.middleName, this.patient?.lastName]
+      .filter((s) => !!s)
+      .join(' ');
+    return [this.patient?.medicalRecordNo, name].filter((s) => !!s).join(' - ');
   }
 
   constructor(private activatedRoute: ActivatedRoute) {}
