@@ -1,5 +1,4 @@
 <h1>{{ userTitle }}</h1>
-
 <nz-tabset>
   <nz-tab nzTitle="Profile">
     <app-form
@@ -11,7 +10,8 @@
       [loadingMessage]="loadingMessage"
       [inputMode]="inputMode"
       [showCancelButton]="showCancelButton"
-      [showEditButton]="perms.permissionsOnly(['update own profile', 'manage users'])"
+      [showEditButton]="!isCurrentUser() && perms.permissionsOnly(['manage users'])"
+      [form]="profileFields"
       (submitForm)="submitForm($event)"
     ></app-form>
   </nz-tab>
@@ -55,9 +55,6 @@
             </div>
           </nz-checkbox-wrapper>
         </nz-card>
-        <!--        <ng-template #departmentTemplate>-->
-        <!--          <a *ngIf="departments.length > 0" nz-button nzSize="small" (click)="submitDepartments()">Save</a>-->
-        <!--        </ng-template>-->
       </div>
 
       <div nz-col *ngIf="perms.permissionsOnly(['manage users'])">
@@ -91,18 +88,20 @@
     </div>
   </nz-tab>
 </nz-tabset>
-<nz-modal
-  [(nzVisible)]="showModal"
-  [nzTitle]="modalType?.title"
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="clickChangePassword()"
->
-  <app-form
-    [isLoading]="isLoading"
-    [showSubmitButton]="false"
-    [showCancelButton]="false"
-    [loadingMessage]="loadingMessage"
-    (submitForm)="submitForm($event)"
-    [form]="updatePasswordForm"
-  ></app-form>
-</nz-modal>
+<nz-tabset>
+  <nz-modal
+    [(nzVisible)]="showModal"
+    [nzTitle]="modalType?.title"
+    (nzOnCancel)="handleCancel()"
+    (nzOnOk)="clickChangePassword()"
+  >
+    <app-form
+      [isLoading]="isLoading"
+      [showSubmitButton]="false"
+      [showCancelButton]="false"
+      [loadingMessage]="loadingMessage"
+      (submitForm)="submitForm($event)"
+      [form]="updatePasswordForm"
+    ></app-form>
+  </nz-modal>
+</nz-tabset>

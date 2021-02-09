@@ -13,6 +13,7 @@ const login = gql`
         phone
         email
         address
+        isSuperUser
         passwordChangeRequired
         gender
         birthDate
@@ -22,6 +23,7 @@ const login = gql`
           id
           name
           guard
+          isSuperAdmin
           createdAt
           updatedAt
         }

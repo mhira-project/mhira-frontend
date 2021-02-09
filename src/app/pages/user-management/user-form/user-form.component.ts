@@ -23,6 +23,7 @@ import { NzModalService } from 'ng-zorro-antd';
 import { UserModel } from '@app/pages/user-management/@models/user.model';
 
 const CryptoJS = require('crypto-js');
+const moment = require('moment');
 
 @Component({
   selector: 'app-user-form',
@@ -78,14 +79,10 @@ export class UserFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.init();
-  }
-
-  init() {
     this.getUserFromUrl();
+    this.getUser();
     this.getRoles();
     this.getDepartments();
-    this.getUser();
   }
 
   getDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
@@ -145,25 +142,18 @@ export class UserFormComponent implements OnInit {
           options.push({ label: _role.name, value: _role.id });
         });
         this.userRolesPermissionsFields.groups[0].fields[0].options = options;
-        this.profileFields.groups.map((group) => {
+        this.profileFields.groups.map((group) =>
           group.fields.map((field) => {
-            if (field.name === 'roleId') {
-              field.options = options;
-            }
-          });
-        });
+            if (field.name === 'roleId') field.options = options;
+          })
+        );
       },
       (error: any) => {}
     );
   }
 
   userHasRole(roleId: number): boolean {
-    if (this.user && this.user.roles) {
-      const userRolesIds: number[] = this.user.roles.map((role) => role.id);
-      return userRolesIds.includes(roleId);
-    } else {
-      return false;
-    }
+    return this.user && this.user.roles && this.user.roles.map((role) => role.id).includes(roleId);
   }
 
   handleDeleteAction(user: User) {
@@ -179,32 +169,23 @@ export class UserFormComponent implements OnInit {
   deleteUser(user: User) {
     this.isLoading = true;
     this.usersService.deleteUser(user).subscribe(
-      async ({ data }) => {
+      async (_) => {
         this.isLoading = false;
         this.router.navigate(['/mhira/user-management/users']);
       },
-      (error) => {
+      (_) => {
         this.isLoading = false;
       }
     );
   }
 
   handleCancel() {
-    this.updatePasswordForm.groups.map((group) => {
-      group.fields.map((field) => {
-        field.value = '';
-      });
-    });
+    this.updatePasswordForm.groups.map((group) => group.fields.map((field) => (field.value = '')));
     this.showModal = false;
   }
 
   userHasDepartment(departmentId: number): boolean {
-    if (this.user && this.user.departments) {
-      const userDepartmentsIds: number[] = this.user.departments.map((dept) => dept.id);
-      return userDepartmentsIds.includes(departmentId);
-    } else {
-      return false;
-    }
+    return this.user && this.user.departments && this.user.departments.map((dept) => dept.id).includes(departmentId);
   }
 
   collectRoles(roles: number[]) {
@@ -213,9 +194,7 @@ export class UserFormComponent implements OnInit {
     this.selectedRoles = roles;
     this.unselectedRoles = rolesIds.filter((id) => !this.selectedRoles.includes(id));
     for (const role of roles) {
-      if (this.userHasRole(role)) {
-        this.selectedRoles.splice(this.selectedRoles.indexOf(role), role);
-      }
+      if (this.userHasRole(role)) this.selectedRoles.splice(this.selectedRoles.indexOf(role), role);
     }
   }
 
@@ -226,17 +205,15 @@ export class UserFormComponent implements OnInit {
     this.submitDepartments();
   }
 
-  getUserFromUrl(): void {
-    this.routeSub = this.activatedRoute.queryParams.subscribe((params) => {
+  async getUserFromUrl(): Promise<void> {
+    this.routeSub = await this.activatedRoute.queryParams.subscribe((params) => {
       if (params.user) {
         this.inputMode = false;
         this.showCancelButton = true;
         const bytes = CryptoJS.AES.decrypt(params.user, environment.secretKey);
         const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.user = decryptedData;
-        if (this.user.birthDate) {
-          this.user.birthDate = decryptedData.birthDate.slice(0, 10);
-        }
+        if (this.user.birthDate) this.user.birthDate = decryptedData.birthDate.slice(0, 10);
         this.profileFields = userForms.userProfileEdit;
         this.populateForm = true;
       } else {
@@ -311,6 +288,18 @@ export class UserFormComponent implements OnInit {
     this.loadingMessage = `Updating user ${userUpdates.firstName} ${userUpdates.lastName}`;
     this.usersService.updateUser(userInput).subscribe(
       async ({ data }) => {
+        this._child.toggleEdit();
+        const userData = data.updateOneUser;
+        const color = userData.active
+          ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
+          : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
+        const active = userData.active ? 'active' : 'inactive';
+        userData.updatedAt = userData.updatedAt ? moment(userData.updatedAt).format('DD-MM-YYYY HH:mm') : '';
+        userData.birthDate = userData.birthDate ? moment(userData.birthDate).format('DD-MM-YYYY HH:mm') : '';
+        userData.active = `<nz-tag class="${color}">${active}</nz-tag>`;
+
+        // const updatedIndex = this.users.findIndex((_user) => _user.id === user.id);
+
         this.user = UserModel.fromJson(data.updateOneUser);
         this.isLoading = false;
         this.populateForm = true;
@@ -367,11 +356,11 @@ export class UserFormComponent implements OnInit {
     this.isLoading = true;
     const rolesIds: number[] = role ? [role.id] : this.selectedRoles;
     this.rolesService.addRolesToUser(this.user.id, rolesIds).subscribe(
-      async ({ data }: any) => {
+      async (_: any) => {
         this.isLoading = false;
         this.message.create('success', `the role(s) have been successful assigned to ${this.user.firstName}`);
       },
-      (error: any) => {
+      (_: any) => {
         this.isLoading = false;
         this.message.create('error', `could not assign role(s) to ${this.user.firstName}`);
       }
@@ -382,11 +371,11 @@ export class UserFormComponent implements OnInit {
     this.isLoading = true;
     const rolesIds: number[] = role ? [role.id] : this.unselectedRoles;
     this.rolesService.removeRolesFromUser(this.user.id, rolesIds).subscribe(
-      async ({ data }: any) => {
+      async (_: any) => {
         this.isLoading = false;
         this.message.create('success', `the role(s) have been successful removed from ${this.user.firstName}`);
       },
-      (error: any) => {
+      (_: any) => {
         this.isLoading = false;
         this.message.create('error', `could not remove role(s) to ${this.user.firstName}`);
       }
@@ -405,12 +394,12 @@ export class UserFormComponent implements OnInit {
     this.isLoading = true;
     const departmentsIds: number[] = department ? [department.id] : this.selectedDepartments;
     this.departmentsService.addDepartmentsToUser(this.user.id, departmentsIds).subscribe(
-      async ({ data }: any) => {
+      async (_: any) => {
         this.isLoading = false;
         this.message.create('success', `the department(s) have been successful assigned to ${this.user.firstName}`);
         this.user.departments.push(department);
       },
-      (error: any) => {
+      (_: any) => {
         this.isLoading = false;
         this.message.create('error', `could not assign department(s) to ${this.user.firstName}`);
       }
@@ -421,11 +410,11 @@ export class UserFormComponent implements OnInit {
     this.isLoading = true;
     const departmentsIds: number[] = department ? [department.id] : this.unselectedDepartments;
     this.departmentsService.removeDepartmentsFromUser(this.user.id, departmentsIds).subscribe(
-      async ({ data }: any) => {
+      async (_: any) => {
         this.isLoading = false;
         this.message.create('success', `the department(s) have been successful removed from ${this.user.firstName}`);
       },
-      (error: any) => {
+      (_: any) => {
         this.isLoading = false;
         this.message.create('error', `could not remove department(s) to ${this.user.firstName}`);
       }
@@ -472,7 +461,7 @@ export class UserFormComponent implements OnInit {
         newPasswordConfirmation: form.newPasswordConfirmation,
       };
       this.usersService.updateUserPassword(inputs).subscribe(
-        async ({ data }) => {
+        async (_) => {
           this.isLoading = false;
           this.loadingMessage = '';
           this.showModal = false;
