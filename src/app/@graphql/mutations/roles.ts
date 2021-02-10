@@ -5,6 +5,7 @@ const createOneRole = gql`
     createOneRole(input: $input) {
       id
       name
+      isSuperAdmin
       guard
       createdAt
       updatedAt
@@ -17,6 +18,7 @@ const createManyRoles = gql`
     createManyRoles(input: $input) {
       id
       name
+      isSuperAdmin
       guard
       createdAt
       updatedAt
@@ -29,6 +31,7 @@ const updateOneRole = gql`
     updateOneRole(input: $input) {
       id
       name
+      isSuperAdmin
       guard
       createdAt
       updatedAt
@@ -41,6 +44,7 @@ const updateManyRoles = gql`
     updateManyRoles(input: $input) {
       id
       name
+      isSuperAdmin
       guard
       createdAt
       updatedAt
@@ -53,6 +57,7 @@ const deleteOneRole = gql`
     deleteOneRole(input: $input) {
       id
       name
+      isSuperAdmin
       guard
       createdAt
       updatedAt

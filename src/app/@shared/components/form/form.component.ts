@@ -30,7 +30,6 @@ export class FormComponent implements OnInit, OnChanges {
   @Output() rowAdded: EventEmitter<any> = new EventEmitter<any>();
   @Output() rowRemoved: EventEmitter<any> = new EventEmitter<any>();
   @Output() formUpdate: EventEmitter<any> = new EventEmitter<any>();
-  // @Output() manual: EventEmitter<any> = new EventEmitter<any>();
   formGroup: FormGroup;
   defaultValue: any;
 

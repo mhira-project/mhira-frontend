@@ -36,6 +36,7 @@ const getUsers = gql`
           roles {
             id
             name
+            isSuperAdmin
             guard
             createdAt
             updatedAt

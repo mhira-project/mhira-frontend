@@ -9,6 +9,7 @@ const roles = gql`
           id
           name
           guard
+          isSuperAdmin
           createdAt
           updatedAt
           users {

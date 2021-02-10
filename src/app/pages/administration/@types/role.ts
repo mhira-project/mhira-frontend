@@ -5,6 +5,7 @@ export interface Role {
   id: number;
   name: string;
   guard: string;
+  isSuperAdmin?: boolean;
   createdAt?: number;
   updatedAt?: number;
   users?: User[];
