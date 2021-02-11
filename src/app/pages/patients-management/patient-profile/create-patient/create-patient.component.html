@@ -6,13 +6,13 @@
 <app-form
   class="mt-3"
   [form]="patientForm"
+  [formData]="patient"
   [isLoading]="isLoading"
   [inputMode]="inputMode"
   [resetForm]="resetForm"
   [showEditButton]="perms.permissionsOnly('manage patients')"
   [showCancelButton]="showCancelButton"
   [populateForm]="populateForm"
-  [formData]="patient"
   [loadingMessage]="loadingMessage"
   (submitForm)="submitForm($event)"
 >

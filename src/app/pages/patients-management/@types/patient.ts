@@ -7,10 +7,10 @@ export interface Patient {
   id?: number;
   statusId?: number;
   medicalRecordNo?: string;
-  firstName: string;
+  firstName?: string;
   middleName?: string;
-  lastName: string;
-  phone: string;
+  lastName?: string;
+  phone?: string;
   phone2?: string;
   email?: string;
   addressStreet?: string;
@@ -19,7 +19,7 @@ export interface Patient {
   addressPlace?: string;
   addressPostalCode?: string;
   addressCountryId?: number;
-  gender: string;
+  gender?: string;
   birthDate?: string;
   birthCountryCode?: string;
   nationality?: string;
@@ -28,6 +28,6 @@ export interface Patient {
   emergencyContacts?: Contact[];
   informants?: Informant[];
   caseManagers?: User[];
-  country: any;
-  status: PatientStatus;
+  country?: any;
+  status?: PatientStatus;
 }

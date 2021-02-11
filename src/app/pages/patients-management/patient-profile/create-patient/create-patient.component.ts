@@ -39,6 +39,7 @@ export class CreatePatientComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.patient);
     this.getPatientFromUrl();
   }
 
@@ -75,6 +76,8 @@ export class CreatePatientComponent implements OnInit {
       async ({ data }: any) => {
         this.isLoading = false;
         this.loadingMessage = '';
+        this.populateForm = false;
+        this.resetForm = true;
         this.message.create('success', `Patient has successfully been created`);
         this.router.navigate(['/mhira/case-management/patients']);
       },
@@ -93,6 +96,8 @@ export class CreatePatientComponent implements OnInit {
     this.isLoading = true;
     this.hasErrors = false;
     this.errors = [];
+    this.resetForm = false;
+    this.populateForm = false;
     const emergencyContacts = patient.emergencyContacts;
     patient.emergencyContacts = undefined;
     this.loadingMessage = `Creating patient ${patient.firstName} ${patient.lastName}`;
