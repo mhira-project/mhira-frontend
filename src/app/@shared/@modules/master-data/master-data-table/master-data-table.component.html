@@ -1,0 +1,25 @@
+<nz-table
+  #table
+  [nzData]="data"
+  [nzFrontPagination]="false"
+  [nzTotal]="paging?.total"
+  [nzPageSize]="paging?.pageSize"
+  [nzPageIndex]="paging?.pageIndex"
+  (nzPageIndexChange)="onPageIndexChange($event)"
+>
+  <thead>
+    <tr>
+      <th *ngFor="let column of columns">{{ column.title }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of table.data">
+      <td *ngFor="let column of columns">
+        <ng-container [ngSwitch]="column.render">
+          <span *ngSwitchCase="'html'" [innerHTML]="d[column.name] | noSanitize"></span>
+          <span *ngSwitchDefault>{{ d[column.name] }}</span>
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
