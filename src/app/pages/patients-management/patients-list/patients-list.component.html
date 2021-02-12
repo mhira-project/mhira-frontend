@@ -1,7 +1,6 @@
 <div nz-row>
   <div nz-col nzSpan="24">
     <app-table
-      *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS, PK.VIEW_PATIENTS])"
       [loading]="isLoading"
       [showPagination]="false"
       [showFilterButton]="true"

@@ -11,11 +11,7 @@ const routes: Routes = [
     path: '',
     data: {
       title: extract('User Management'),
-      permissions: {
-        only: [PermissionKey.VIEW_USERS],
-      },
     },
-    canActivate: [PermissionGuard],
     children: [
       {
         path: 'users',
@@ -23,7 +19,11 @@ const routes: Routes = [
         data: {
           title: extract('User Management'),
           breadcrumb: extract('Users'),
+          permissions: {
+            only: [PermissionKey.VIEW_USERS],
+          },
         },
+        canActivate: [PermissionGuard],
       },
       {
         path: 'user-form',
@@ -32,7 +32,7 @@ const routes: Routes = [
           title: extract('Users Edit'),
           breadcrumb: extract('Edit User'),
           permissions: {
-            only: [PermissionKey.MANAGE_USERS],
+            only: [PermissionKey.VIEW_USERS],
           },
         },
         canActivate: [PermissionGuard],

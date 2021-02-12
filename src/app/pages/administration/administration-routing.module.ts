@@ -22,7 +22,7 @@ const routes: Routes = [
           title: extract('Permission Matrix'),
           breadcrumb: extract('Permission Matrix'),
           permissions: {
-            only: [PermissionKey.MANAGE_ROLES],
+            only: [PermissionKey.VIEW_ROLES],
           },
         },
         canActivate: [PermissionGuard],

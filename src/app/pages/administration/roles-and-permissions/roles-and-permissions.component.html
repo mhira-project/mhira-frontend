@@ -1,12 +1,6 @@
 <ng-template #indicatorTemplate><i nz-icon class="loadingSpinner" nzType="loading"></i></ng-template>
 <nz-spin [nzSpinning]="loading" [nzIndicator]="indicatorTemplate">
-  <nz-table
-    *ngIf="perms.permissionsOnly([PK.VIEW_ROLES])"
-    [nzShowPagination]="false"
-    [nzBordered]="true"
-    [nzData]="matrix.permissions"
-    nzSize="middle"
-  >
+  <nz-table [nzShowPagination]="false" [nzBordered]="true" [nzData]="matrix.permissions" nzSize="middle">
     <thead>
       <tr>
         <th rowspan="2">Permissions</th>

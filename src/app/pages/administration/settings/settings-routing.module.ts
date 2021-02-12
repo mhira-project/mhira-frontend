@@ -11,11 +11,7 @@ const routes: Routes = [
     path: '',
     data: {
       title: extract('Administration'),
-      permissions: {
-        only: [PermissionKey.VIEW_SETTINGS],
-      },
     },
-    canActivate: [PermissionGuard],
     children: [
       {
         path: 'system-configuration',
@@ -23,7 +19,11 @@ const routes: Routes = [
         data: {
           title: extract('System Configuration'),
           breadcrumb: extract('System Configuration'),
+          permissions: {
+            only: [PermissionKey.MANAGE_SETTINGS],
+          },
         },
+        canActivate: [PermissionGuard],
       },
       {
         path: 'patient-statuses',
@@ -31,7 +31,11 @@ const routes: Routes = [
         data: {
           title: extract('Patient Statuses'),
           breadcrumb: extract('Patient Statuses'),
+          permissions: {
+            only: [PermissionKey.MANAGE_SETTINGS],
+          },
         },
+        canActivate: [PermissionGuard],
       },
       {
         path: '',

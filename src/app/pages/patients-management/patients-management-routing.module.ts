@@ -13,11 +13,7 @@ const routes: Routes = [
     path: '',
     data: {
       title: extract('Case Management'),
-      permissions: {
-        only: [PermissionKey.VIEW_PATIENTS],
-      },
     },
-    canActivate: [PermissionGuard],
     children: [
       {
         path: 'patients',
@@ -25,6 +21,10 @@ const routes: Routes = [
         data: {
           title: extract('Patients'),
           breadcrumb: extract('Patients'),
+          permissions: {
+            only: [PermissionKey.VIEW_PATIENTS],
+          },
+          canActivate: [PermissionGuard],
         },
       },
       {
@@ -34,7 +34,7 @@ const routes: Routes = [
           title: extract('Patient Profile'),
           breadcrumb: extract('Patient Profile'),
           permissions: {
-            only: [PermissionKey.MANAGE_PATIENTS],
+            only: [PermissionKey.VIEW_PATIENTS],
           },
         },
         canActivate: [PermissionGuard],

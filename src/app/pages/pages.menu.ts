@@ -24,13 +24,13 @@ export const MENU: SideNavInterface[] = [
         title: extract('Patient list'),
         iconType: '',
         iconTheme: '',
-        permissions: [PK.VIEW_PATIENTS, PK.MANAGE_PATIENTS],
+        permissions: [PK.VIEW_PATIENTS],
         submenu: [],
       },
       {
         path: 'case-management/case-managers',
         title: extract('Case Managers'),
-        permissions: [PK.VIEW_PATIENTS, PK.MANAGE_PATIENTS],
+        permissions: [PK.MANAGE_PATIENTS],
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -38,7 +38,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'case-management/informants',
         title: extract('Informants'),
-        permissions: [PK.VIEW_PATIENTS, PK.MANAGE_PATIENTS],
+        permissions: [PK.MANAGE_PATIENTS],
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -82,7 +82,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'user-management/users',
         title: extract('List users'),
-        permissions: [PK.MANAGE_USERS],
+        permissions: [PK.VIEW_USERS],
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -100,7 +100,7 @@ export const MENU: SideNavInterface[] = [
   {
     path: 'administration',
     title: extract('Administration'),
-    permissions: [PK.MANAGE_ROLES, PK.MANAGE_SETTINGS, PK.MANAGE_DEPARTMENTS],
+    permissions: [PK.VIEW_ROLES, PK.MANAGE_SETTINGS, PK.MANAGE_DEPARTMENTS],
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'setting',
@@ -108,7 +108,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'administration/permission-matrix',
         title: extract('Permission Matrix'),
-        permissions: [PK.MANAGE_ROLES],
+        permissions: [PK.VIEW_ROLES],
         iconType: '',
         iconTheme: '',
         submenu: [],

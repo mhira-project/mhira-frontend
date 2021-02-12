@@ -11,11 +11,7 @@ const routes: Routes = [
     path: '',
     data: {
       title: extract('Assessments'),
-      permissions: {
-        only: [PermissionKey.VIEW_ASSESSMENTS],
-      },
     },
-    canActivate: [PermissionGuard],
     children: [
       {
         path: 'planned-assessments',
@@ -23,7 +19,11 @@ const routes: Routes = [
         data: {
           title: extract('Planned Assessments'),
           breadcrumb: extract('Planned Assessments'),
+          permissions: {
+            only: [PermissionKey.VIEW_ASSESSMENTS],
+          },
         },
+        canActivate: [PermissionGuard],
       },
       {
         path: 'plan-assessments',
