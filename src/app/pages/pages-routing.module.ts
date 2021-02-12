@@ -4,6 +4,13 @@ import { extract } from '@app/i18n';
 
 const routes: Routes = [
   {
+    path: 'dashboard',
+    data: {
+      breadcrumb: extract('Dashboard'),
+    },
+    loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+  },
+  {
     path: 'case-management',
     data: {
       breadcrumb: extract('Case Management'),
@@ -52,7 +59,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'case-management',
+    redirectTo: 'dashboard',
     pathMatch: 'full',
   },
   {
