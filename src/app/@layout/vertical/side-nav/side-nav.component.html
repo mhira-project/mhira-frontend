@@ -1,7 +1,7 @@
 <div class="side-nav" sideNav>
   <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
     <ng-container *ngFor="let item of menuItems">
-      <ng-container *ngIf="perms.permissionsOnly(item.permissions)">
+      <ng-container *ngIf="!item.permissions || perms.permissionsOnly(item.permissions)">
         <li *ngIf="item.submenu.length == 0" nz-menu-item nz-tooltip nzTitle="item.title">
           <a [routerLink]="item.path" *ngIf="item.submenu.length === 0">
             <i nz-icon nzType="{{ item.icon }}" nzTheme="{{ item.iconTheme }}"></i>
@@ -15,7 +15,7 @@
           </span>
           <ul>
             <ng-container *ngFor="let submenu of item.submenu">
-              <ng-container *ngIf="perms.permissionsOnly(submenu.permissions)">
+              <ng-container *ngIf="!item.permissions || perms.permissionsOnly(submenu.permissions)">
                 <li *ngIf="submenu.submenu.length === 0" nz-menu-item [routerLink]="submenu.path">
                   <span [translate]="submenu.title"></span>
                 </li>
@@ -26,7 +26,7 @@
                   </span>
                   <ul>
                     <ng-container *ngFor="let subsubmenu of submenu.submenu">
-                      <ng-container *ngIf="perms.permissionsOnly(subsubmenu.permissions)">
+                      <ng-container *ngIf="!item.permissions || perms.permissionsOnly(subsubmenu.permissions)">
                         <li nz-menu-item [routerLink]="subsubmenu.path">
                           <span [translate]="subsubmenu.title"></span>
                         </li>

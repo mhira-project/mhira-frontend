@@ -4,11 +4,19 @@ import { extract } from '@app/i18n';
 
 export const MENU: SideNavInterface[] = [
   {
+    path: 'dashboard',
+    title: extract('Dashboard'),
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'home',
+    submenu: [],
+  },
+  {
     path: 'case-management',
     title: extract('Case Management'),
     iconType: 'nzIcon',
     iconTheme: 'outline',
-    icon: 'home',
+    icon: 'audit',
     permissions: [PK.VIEW_PATIENTS],
     submenu: [
       {
@@ -57,22 +65,6 @@ export const MENU: SideNavInterface[] = [
         path: 'assessments',
         title: extract('Planned Assessments'),
         permissions: [PK.VIEW_ASSESSMENTS],
-        iconType: '',
-        iconTheme: '',
-        submenu: [],
-      },
-    ],
-  },
-  {
-    path: 'reports',
-    title: extract('Reports'),
-    iconType: 'nzIcon',
-    iconTheme: 'outline',
-    icon: 'file-text',
-    submenu: [
-      {
-        path: 'reports',
-        title: extract('All Reports'),
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -172,13 +164,5 @@ export const MENU: SideNavInterface[] = [
         ],
       },
     ],
-  },
-  {
-    path: 'feedback',
-    title: extract('Feedback'),
-    iconType: 'nzIcon',
-    iconTheme: 'outline',
-    icon: 'message',
-    submenu: [],
   },
 ];
