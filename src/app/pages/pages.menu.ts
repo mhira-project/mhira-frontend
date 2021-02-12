@@ -116,7 +116,7 @@ export const MENU: SideNavInterface[] = [
       {
         path: 'administration/permission-matrix',
         title: extract('Permission Matrix'),
-        permissions: [PK.VIEW_ROLES],
+        permissions: [PK.MANAGE_ROLES],
         iconType: '',
         iconTheme: '',
         submenu: [],

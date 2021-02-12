@@ -3,13 +3,19 @@ import { Routes, RouterModule } from '@angular/router';
 import { extract } from '../../i18n/index';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserFormComponent } from './user-form/user-form.component';
+import { PermissionKey } from '@app/@shared/@types/permission';
+import { PermissionGuard } from '../../permission.guard';
 
 const routes: Routes = [
   {
     path: '',
     data: {
       title: extract('User Management'),
+      permissions: {
+        only: [PermissionKey.VIEW_USERS],
+      },
     },
+    canActivate: [PermissionGuard],
     children: [
       {
         path: 'users',
@@ -25,7 +31,11 @@ const routes: Routes = [
         data: {
           title: extract('Users Edit'),
           breadcrumb: extract('Edit User'),
+          permissions: {
+            only: [PermissionKey.MANAGE_USERS],
+          },
         },
+        canActivate: [PermissionGuard],
       },
       {
         path: '',

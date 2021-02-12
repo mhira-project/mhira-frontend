@@ -15,6 +15,7 @@ import { LayoutModule } from '@app/@layout/layout.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GraphQLModule } from '@app/graphql.module';
 import { AuthGuard } from '@app/auth/auth.guard';
+import { PermissionGuard } from './permission.guard';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { AuthGuard } from '@app/auth/auth.guard';
       useValue: en_US,
     },
     AuthGuard,
+    PermissionGuard,
   ],
   bootstrap: [AppComponent],
 })

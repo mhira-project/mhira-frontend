@@ -5,13 +5,19 @@ import { PatientsListComponent } from './patients-list/patients-list.component';
 import { CaseManagersComponent } from './case-managers/case-managers.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { InformantsListComponent } from './informants-list/informants-list.component';
+import { PermissionKey } from '@app/@shared/@types/permission';
+import { PermissionGuard } from '../../permission.guard';
 
 const routes: Routes = [
   {
     path: '',
     data: {
       title: extract('Case Management'),
+      permissions: {
+        only: [PermissionKey.VIEW_PATIENTS],
+      },
     },
+    canActivate: [PermissionGuard],
     children: [
       {
         path: 'patients',
@@ -27,7 +33,11 @@ const routes: Routes = [
         data: {
           title: extract('Patient Profile'),
           breadcrumb: extract('Patient Profile'),
+          permissions: {
+            only: [PermissionKey.MANAGE_PATIENTS],
+          },
         },
+        canActivate: [PermissionGuard],
       },
       {
         path: 'case-managers',
@@ -35,7 +45,11 @@ const routes: Routes = [
         data: {
           title: extract('Case Managers'),
           breadcrumb: extract('Case Managers'),
+          permissions: {
+            only: [PermissionKey.MANAGE_PATIENTS],
+          },
         },
+        canActivate: [PermissionGuard],
       },
       {
         path: 'informants',
@@ -43,7 +57,11 @@ const routes: Routes = [
         data: {
           title: extract('Informants'),
           breadcrumb: extract('Informants'),
+          permissions: {
+            only: [PermissionKey.MANAGE_PATIENTS],
+          },
         },
+        canActivate: [PermissionGuard],
       },
       {
         path: '',
