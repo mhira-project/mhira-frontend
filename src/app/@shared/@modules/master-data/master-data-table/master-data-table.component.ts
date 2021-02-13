@@ -36,8 +36,14 @@ export class MasterDataTableComponent<T> {
   @Input()
   public paging: Paging = {} as Paging;
 
+  @Input()
+  public loading = false;
+
   @Output()
   public pageChange = new EventEmitter<PageChangeEvent>();
+
+  @Output()
+  public rowClick = new EventEmitter<T>();
 
   public onPageIndexChange(nextIndex: number) {
     const pageChangeEvt: PageChangeEvent = { previousIndex: this.paging.pageIndex, nextIndex };

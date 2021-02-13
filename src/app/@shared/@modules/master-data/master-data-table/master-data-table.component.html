@@ -5,6 +5,7 @@
   [nzTotal]="paging?.total"
   [nzPageSize]="paging?.pageSize"
   [nzPageIndex]="paging?.pageIndex"
+  [nzLoading]="loading"
   (nzPageIndexChange)="onPageIndexChange($event)"
 >
   <thead>
@@ -13,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let d of table.data">
+    <tr *ngFor="let d of table.data" (click)="rowClick.emit(d)">
       <td *ngFor="let column of columns">
         <ng-container [ngSwitch]="column.render">
           <span *ngSwitchCase="'html'" [innerHTML]="d[column.name] | noSanitize"></span>

@@ -9,10 +9,17 @@ article {
   height: 100%;
 }
 
-section.action {
+section.actions {
   flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 section.list {
   flex: 1 1 auto;
+}
+
+section + section {
+  margin-top: 2em;
 }

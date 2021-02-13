@@ -1,6 +1,11 @@
 <article>
   <section class="actions">
-    <ng-content select="[actions]"></ng-content>
+    <div>
+      <ng-content select="[actions-left]"></ng-content>
+    </div>
+    <div>
+      <ng-content select="[actions-right]"></ng-content>
+    </div>
   </section>
   <section class="list">
     <ng-content select="[list]"></ng-content>
