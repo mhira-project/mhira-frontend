@@ -17,6 +17,15 @@
       <td *ngFor="let column of columns">
         <ng-container [ngSwitch]="column.render">
           <span *ngSwitchCase="'html'" [innerHTML]="d[column.name] | noSanitize"></span>
+          <span *ngSwitchCase="'date'">{{ d[column.name] | formatDate }}</span>
+          <span *ngSwitchCase="'tag'">
+            <nz-tag *ngFor="let tag of [d[column.name]].flat()" [nzColor]="d[column.name].color">
+              {{ d[column.name].title }}
+            </nz-tag>
+          </span>
+          <span *ngSwitchCase="'avatar'">
+            <nz-avatar *ngFor="let avatar of [d[column.name]].flat()" [nzText]="avatar"></nz-avatar>
+          </span>
           <span *ngSwitchDefault>{{ d[column.name] }}</span>
         </ng-container>
       </td>

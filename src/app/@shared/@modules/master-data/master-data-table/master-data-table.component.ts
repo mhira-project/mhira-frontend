@@ -1,9 +1,8 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-
 export interface TableColumn<T> {
   name: keyof T;
   title: string;
-  render: 'html' | undefined;
+  render?: 'html' | 'date' | 'tag' | 'avatar' | undefined;
 }
 
 export interface Paging {
@@ -15,6 +14,11 @@ export interface Paging {
 export interface PageChangeEvent {
   previousIndex: number;
   nextIndex: number;
+}
+
+export interface TagInfo {
+  color: string;
+  title: string;
 }
 
 @Component({
