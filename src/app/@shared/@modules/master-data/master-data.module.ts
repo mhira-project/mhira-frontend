@@ -3,7 +3,14 @@ import { CommonModule } from '@angular/common';
 import { MasterDataListComponent } from './master-data-list/master-data-list.component';
 import { MasterDataSearchComponent } from './master-data-search/master-data-search.component';
 import { NgxInputSearchModule } from 'ngx-input-search';
-import { NzAvatarModule, NzIconModule, NzInputModule, NzTableModule, NzTagModule } from 'ng-zorro-antd';
+import {
+  NzAvatarModule,
+  NzDropDownModule,
+  NzIconModule,
+  NzInputModule,
+  NzTableModule,
+  NzTagModule,
+} from 'ng-zorro-antd';
 import { MasterDataTableComponent } from './master-data-table/master-data-table.component';
 import { SharedModule } from '@shared';
 
@@ -18,6 +25,7 @@ import { SharedModule } from '@shared';
     NzTableModule,
     NzTagModule,
     NzAvatarModule,
+    NzDropDownModule,
   ],
   exports: [MasterDataListComponent, MasterDataSearchComponent, MasterDataTableComponent],
 })

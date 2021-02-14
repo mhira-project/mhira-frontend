@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let d of table.data" (click)="rowClick.emit(d)">
+    <tr *ngFor="let d of table.data" (click)="rowClick.emit(d)" (contextmenu)="onOpenContextMenu($event, d)">
       <td *ngFor="let column of columns">
         <ng-container [ngSwitch]="column.render">
           <span *ngSwitchCase="'html'" [innerHTML]="d[column.name] | noSanitize"></span>

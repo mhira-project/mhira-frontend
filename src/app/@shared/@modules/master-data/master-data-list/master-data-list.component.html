@@ -8,6 +8,21 @@
     </div>
   </section>
   <section class="list">
-    <ng-content select="[list]"></ng-content>
+    <app-master-data-table
+      [data]="data"
+      [columns]="columns"
+      [paging]="paging"
+      [loading]="loading"
+      [contextMenu]="contextMenu"
+      [(context)]="context"
+      (pageChange)="pageChange.emit($event)"
+      (rowClick)="rowClick.emit($event)"
+    ></app-master-data-table>
   </section>
+
+  <nz-dropdown-menu #contextMenu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item *ngFor="let action of actions" (click)="onSelectAction(action)">{{ action.title }}</li>
+    </ul>
+  </nz-dropdown-menu>
 </article>
