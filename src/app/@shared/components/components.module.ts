@@ -153,6 +153,7 @@ import {
 } from '../pipes';
 import { CustomFilterComponent } from './custom-filter/custom-filter.component';
 import { AppFormModule } from '@shared/components/form/app-form.module';
+import { SelectModalComponent } from './select-modal/select-modal.component';
 
 const PIPES = [
   CapitalizePipe,
@@ -168,7 +169,14 @@ const PIPES = [
 
 @NgModule({
   imports: [...antModules, CommonModule, FormsModule, AppFormModule, NgxInputSearchModule, ReactiveFormsModule],
-  declarations: [...PIPES, LoaderComponent, TableComponent, FormGeneratorComponent, CustomFilterComponent],
+  declarations: [
+    ...PIPES,
+    LoaderComponent,
+    TableComponent,
+    FormGeneratorComponent,
+    CustomFilterComponent,
+    SelectModalComponent,
+  ],
   exports: [...PIPES, LoaderComponent, TableComponent, FormGeneratorComponent, CustomFilterComponent],
   providers: [XlsExportService],
 })
