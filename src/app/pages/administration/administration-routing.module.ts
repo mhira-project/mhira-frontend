@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { extract } from '../../i18n/index';
-import { AdministrationComponent } from './administration.component';
-import { UserManagementComponent } from './user-management/user-management.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
-import { UserFormComponent } from './user-management/user-form/user-form.component';
 import { PermissionsComponent } from './permissions/permissions.component';
 import { RolesComponent } from './roles/roles.component';
 import { DepartmentsComponent } from './departments/departments.component';
@@ -12,30 +9,16 @@ import { DepartmentsComponent } from './departments/departments.component';
 const routes: Routes = [
   {
     path: '',
-    component: AdministrationComponent,
     data: {
       title: extract('Administration'),
     },
     children: [
       {
-        path: 'user-management',
-        component: UserManagementComponent,
-        data: {
-          title: extract('User Management'),
-        },
-      },
-      {
-        path: 'user-management/form',
-        component: UserFormComponent,
-        data: {
-          title: extract('Users Edit'),
-        },
-      },
-      {
-        path: 'roles-and-permissions',
+        path: 'permission-matrix',
         component: RolesAndPermissionsComponent,
         data: {
-          title: extract('Roles & Permissions'),
+          title: extract('Permission Matrix'),
+          breadcrumb: extract('Permission Matrix'),
         },
       },
       {
@@ -43,12 +26,14 @@ const routes: Routes = [
         component: RolesComponent,
         data: {
           title: extract('Roles'),
+          breadcrumb: extract('Roles'),
         },
       },
       {
         path: 'settings',
         data: {
           title: extract('Settings'),
+          breadcrumb: extract('Settings'),
         },
         loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
       },
@@ -57,6 +42,7 @@ const routes: Routes = [
         component: PermissionsComponent,
         data: {
           title: extract('Permissions'),
+          breadcrumb: extract('Permissions'),
         },
       },
       {
@@ -64,7 +50,13 @@ const routes: Routes = [
         component: DepartmentsComponent,
         data: {
           title: extract('Departments'),
+          breadcrumb: extract('Departments'),
         },
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'roles',
       },
     ],
   },

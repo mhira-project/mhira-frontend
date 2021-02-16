@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '@app/auth/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
-import { User } from '@app/pages/administration/@types/user';
+import { User } from '@app/pages/user-management/@types/user';
 import { Form } from '@shared/components/form/@types/form';
-import { userForms } from '@app/pages/administration/@forms/user.form';
-import { UserChangePasswordInput } from '@app/pages/administration/user-management/user-form/user-update-password.type';
+import { userForms } from '@app/pages/user-management/@forms/user.form';
+import { UserChangePasswordInput } from '@app/pages/user-management/user-form/user-update-password.type';
 import { NzMessageService } from 'ng-zorro-antd';
-import { UsersService } from '@app/pages/administration/@services/users.service';
+import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { FormComponent } from '@shared/components/form/form.component';
 import { FieldGroup } from '@shared/components/form/@types/field.group';
 
@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit {
 
   editUserProfile() {
     const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.user), environment.secretKey).toString();
-    this.router.navigate(['/mhira/administration/user-management/form'], {
+    this.router.navigate(['/mhira/user-management/user-form'], {
       state: {
         title: `${this.user.firstName} ${this.user.lastName}`,
       },

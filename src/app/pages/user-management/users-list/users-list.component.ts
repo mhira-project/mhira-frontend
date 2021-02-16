@@ -1,26 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { userForms } from '@app/pages/administration/@forms/user.form';
+import { userForms } from '@app/pages/user-management/@forms/user.form';
 import { Router } from '@angular/router';
-import { ModalType } from '@app/pages/administration/user-management/modal.type';
+import { ModalType } from '@app/pages/user-management/users-list/modal.type';
 import { Form } from '@shared/components/form/@types/form';
-import { User } from '@app/pages/administration/@types/user';
-import { userTable } from '@app/pages/administration/@tables/users.table';
-import { UsersService } from '@app/pages/administration/@services/users.service';
+import { User } from '@app/pages/user-management/@types/user';
+import { userTable } from '@app/pages/user-management/@tables/users.table';
+import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { environment } from '@env/environment';
-import { UserUpdatePasswordInput } from '@app/pages/administration/user-management/user-form/user-update-password.type';
+import { UserUpdatePasswordInput } from '@app/pages/user-management/user-form/user-update-password.type';
 import { Paging } from '@shared/@types/paging';
 import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { UserModel } from '@app/pages/user-management/@models/user.model';
+import { PaginationService } from '@shared/services/pagination.service';
 
 const CryptoJS = require('crypto-js');
 
 @Component({
-  selector: 'app-user-management',
-  templateUrl: './user-management.component.html',
-  styleUrls: ['./user-management.component.scss'],
+  selector: 'app-users-list',
+  templateUrl: './users-list.component.html',
+  styleUrls: ['./users-list.component.scss'],
 })
-export class UserManagementComponent implements OnInit {
+export class UsersListComponent implements OnInit {
   isLoading = false;
   showModal = false;
   modalType: ModalType;
@@ -64,7 +66,8 @@ export class UserManagementComponent implements OnInit {
     private dateService: DateService,
     private router: Router,
     private usersService: UsersService,
-    public perms: AppPermissionsService
+    public perms: AppPermissionsService,
+    private paginationService: PaginationService
   ) {}
 
   ngOnInit(): void {
@@ -79,29 +82,9 @@ export class UserManagementComponent implements OnInit {
       async ({ data }) => {
         const usersData = data.users;
         usersData.edges.map((user: any) => {
-          const row = Object.assign({}, user.node);
-          const settings = JSON.parse(localStorage.getItem('settings'));
-          row.updatedAt = row.updatedAt ? this.dateService.formatDate(row.updatedAt) : '';
-          row.birthDate = row.birthDate ? this.dateService.formatDate(row.birthDate) : '';
-          const color = row.active
-            ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
-            : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-          const active = row.active ? 'ACTIVE' : 'INACTIVE';
-
-          row.active = `<nz-tag class="${color}">${active}</nz-tag>`;
-          row.roles = '';
-          user.node.roles.forEach((role: { name: any }) => {
-            row.roles += `<nz-tag class="ant-tag-blue ant-tag ml-5">${role.name}</nz-tag>`;
-          });
-
-          row.departments = '';
-          user.node.departments.forEach((department: { name: any }) => {
-            row.departments += `<nz-tag class="ant-tag-cyan ant-tag ml-5">${department.name}</nz-tag>`;
-          });
-          rows.push(row);
-          this.users.push(user.node);
+          this.users.push(UserModel.fromJson(user.node));
         });
-        this.usersTable.rows = rows;
+        this.usersTable.rows = this.users;
         this.paging.after = data.users.pageInfo.endCursor;
         this.paging.before = data.users.pageInfo.startCursor;
         this.pageInfo = data.users.pageInfo;
@@ -114,19 +97,8 @@ export class UserManagementComponent implements OnInit {
     );
   }
 
-  navigatePages(direction: string, pageSize: number = 10) {
-    switch (direction) {
-      case 'next':
-        this.paging.before = undefined;
-        this.paging.first = pageSize;
-        this.paging.last = undefined;
-        break;
-      case 'previous':
-        this.paging.after = undefined;
-        this.paging.first = undefined;
-        this.paging.last = pageSize;
-        break;
-    }
+  navigatePages(direction: 'next' | 'previous', pageSize: number = 10) {
+    this.paging = this.paginationService.navigatePages(this.paging, direction, pageSize);
     this.getUsers(this.paging);
   }
 
@@ -170,7 +142,7 @@ export class UserManagementComponent implements OnInit {
 
   handleRowClick(event: any) {
     const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.users[event.index]), environment.secretKey).toString();
-    this.router.navigate(['/mhira/administration/user-management/form'], {
+    this.router.navigate(['/mhira/user-management/user-form'], {
       state: {
         title: `${this.users[event.index].firstName} ${this.users[event.index].lastName}`,
       },
@@ -219,10 +191,8 @@ export class UserManagementComponent implements OnInit {
   }
 
   onCreateUser() {
-    this.router.navigate([`/mhira/administration/user-management/form`]);
+    this.router.navigate([`/mhira/user-management/user-form`]);
   }
-
-  onFormSubmit($event: any) {}
 
   onError(errors: any) {
     if (errors.length > 0) {
