@@ -7,12 +7,10 @@ import { DepartmentsService } from '../@services/departments.service';
 import { DepartmentForm } from '../@forms/department.form';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { Convert } from '@shared/classes/convert';
-import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
 import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
-
-const CryptoJS = require('crypto-js');
+import { PaginationService } from '@shared/services/pagination.service';
 
 @Component({
   selector: 'app-departments',
@@ -22,6 +20,8 @@ const CryptoJS = require('crypto-js');
 export class DepartmentsComponent implements OnInit {
   isLoading = false;
   modalLoading = false;
+  populateForm = false;
+  resetForm = false;
   departments: Department[] = [];
   paging: Paging = {
     first: 10,
@@ -48,7 +48,8 @@ export class DepartmentsComponent implements OnInit {
     private modalService: NzModalService,
     private message: NzMessageService,
     private router: Router,
-    public perms: AppPermissionsService
+    public perms: AppPermissionsService,
+    private paginationService: PaginationService
   ) {}
 
   ngOnInit(): void {
@@ -76,20 +77,9 @@ export class DepartmentsComponent implements OnInit {
     );
   }
 
-  navigatePages(direction: string, pageSize: number = 10) {
-    switch (direction) {
-      case 'next':
-        this.paging.before = undefined;
-        this.paging.first = pageSize;
-        this.paging.last = undefined;
-        break;
-      case 'previous':
-        this.paging.after = undefined;
-        this.paging.first = undefined;
-        this.paging.last = pageSize;
-        break;
-    }
-    this.getDepartments({ paging: this.paging });
+  navigatePages(direction: 'next' | 'previous', pageSize: number = 10) {
+    const paging = this.paginationService.navigatePages(this.paging, direction, pageSize);
+    this.getDepartments({ paging });
   }
 
   deleteDepartment(department: Department) {
@@ -125,21 +115,21 @@ export class DepartmentsComponent implements OnInit {
         break;
       case 'Edit Department':
         this.toggleCreatePanel(false);
-        this.departmentForms.groups.map((group) => {
-          group.fields.map((field) => {
-            field.value = this.department[field.name];
-          });
-        });
-        console.log('view results');
+        this.populateForm = true;
         break;
     }
   }
 
   handleRowClick(event: any) {
-    const dataString = CryptoJS.AES.encrypt(
-      JSON.stringify(this.departments[event.index]),
-      environment.secretKey
-    ).toString();
+    this.department = this.departments[event.index];
+    this.populateForm = true;
+    this.toggleCreatePanel(false);
+  }
+
+  closeCreatePanel() {
+    this.populateForm = false;
+    this.resetForm = false;
+    this.showCreateDepartment = false;
   }
 
   toggleCreatePanel(create: boolean = true) {
@@ -152,6 +142,8 @@ export class DepartmentsComponent implements OnInit {
   createDepartment(department: Department) {
     this.isLoading = true;
     this.hasErrors = false;
+    this.populateForm = false;
+    this.resetForm = false;
     this.errors = [];
     this.loadingMessage = `Creating department ${department.name}`;
     this.departmentsService.createDepartment(department).subscribe(
@@ -160,6 +152,7 @@ export class DepartmentsComponent implements OnInit {
         this.departmentsTable.rows = this.departments;
         this.isLoading = false;
         this.loadingMessage = '';
+        this.resetForm = true;
         this.toggleCreatePanel();
         this.message.create('success', `Department has successfully been created`);
       },
@@ -208,8 +201,11 @@ export class DepartmentsComponent implements OnInit {
         this.departmentsTable.rows = this.departments;
         this.isLoading = false;
         this.loadingMessage = '';
+        this.resetForm = true;
+        this.populateForm = false;
         this.toggleCreatePanel();
         this.message.create('success', `Department has successfully been updated`);
+        this.department = null;
       },
       (error) => {
         this.hasErrors = true;
