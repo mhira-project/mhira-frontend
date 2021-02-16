@@ -149,6 +149,10 @@
             },
             "ci": {
               "progress": false
+            },
+            "dev": {
+              "browserTarget": "ng-x-rocket:build:dev",
+              "hmr": false
             }
           }
         },
