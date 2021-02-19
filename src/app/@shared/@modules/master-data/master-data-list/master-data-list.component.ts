@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TableColumn, Paging, PageChangeEvent } from '../master-data-table/master-data-table.component';
+import { TableColumn } from '../master-data-table/master-data-table.component';
+import { PageInfo, Paging } from '../../../@types/paging';
 
 export interface Action {
   key: string;
@@ -24,7 +25,10 @@ export class MasterDataListComponent<T> {
   public data: T[] = [];
 
   @Input()
-  public paging: Paging = {} as Paging;
+  public pageInfo: PageInfo;
+
+  @Input()
+  public pageSize = 20;
 
   @Input()
   public loading = false;
@@ -33,7 +37,7 @@ export class MasterDataListComponent<T> {
   public actions: Action[];
 
   @Output()
-  public pageChange = new EventEmitter<PageChangeEvent>();
+  public pageChange = new EventEmitter<Paging>();
 
   @Output()
   public rowClick = new EventEmitter<T>();
@@ -45,5 +49,20 @@ export class MasterDataListComponent<T> {
 
   public onSelectAction(action: Action): void {
     this.executeAction.emit({ action, context: this.context });
+  }
+
+  public onPageChange(direction: 'prev' | 'next'): void {
+    const paging: Paging =
+      direction === 'next'
+        ? {
+            after: this.pageInfo?.endCursor,
+            first: this.pageSize,
+          }
+        : {
+            before: this.pageInfo?.startCursor,
+            last: this.pageSize,
+          };
+
+    this.pageChange.emit(paging);
   }
 }

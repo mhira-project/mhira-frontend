@@ -5,6 +5,7 @@ import { MasterDataSearchComponent } from './master-data-search/master-data-sear
 import { NgxInputSearchModule } from 'ngx-input-search';
 import {
   NzAvatarModule,
+  NzButtonModule,
   NzDropDownModule,
   NzIconModule,
   NzInputModule,
@@ -26,6 +27,7 @@ import { SharedModule } from '@shared';
     NzTagModule,
     NzAvatarModule,
     NzDropDownModule,
+    NzButtonModule,
   ],
   exports: [MasterDataListComponent, MasterDataSearchComponent, MasterDataTableComponent],
 })

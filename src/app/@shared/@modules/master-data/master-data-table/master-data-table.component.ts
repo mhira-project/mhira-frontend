@@ -7,17 +7,6 @@ export interface TableColumn<T> {
   render?: 'html' | 'date' | 'tag' | 'avatar' | undefined;
 }
 
-export interface Paging {
-  pageSize: number;
-  pageIndex: number;
-  total?: number;
-}
-
-export interface PageChangeEvent {
-  previousIndex: number;
-  nextIndex: number;
-}
-
 export interface TagInfo {
   color: string;
   title: string;
@@ -36,9 +25,6 @@ export class MasterDataTableComponent<T> {
   public data: T[] = [];
 
   @Input()
-  public paging: Paging = {} as Paging;
-
-  @Input()
   public loading = false;
 
   @Input()
@@ -51,18 +37,9 @@ export class MasterDataTableComponent<T> {
   public contextChange = new EventEmitter<T>();
 
   @Output()
-  public pageChange = new EventEmitter<PageChangeEvent>();
-
-  @Output()
   public rowClick = new EventEmitter<T>();
 
   constructor(private contextMenuService: NzContextMenuService) {}
-
-  public onPageIndexChange(nextIndex: number): void {
-    const pageChangeEvt: PageChangeEvent = { previousIndex: this.paging.pageIndex, nextIndex };
-    this.paging.pageIndex = nextIndex;
-    this.pageChange.emit(pageChangeEvt);
-  }
 
   public onOpenContextMenu(event: MouseEvent, context: T): void {
     this.context = context;

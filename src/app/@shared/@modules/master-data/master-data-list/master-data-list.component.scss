@@ -23,3 +23,8 @@ section.list {
 section + section {
   margin-top: 2em;
 }
+
+.paging {
+  display: flex;
+  justify-content: space-between;
+}

@@ -11,14 +11,33 @@
     <app-master-data-table
       [data]="data"
       [columns]="columns"
-      [paging]="paging"
       [loading]="loading"
       [contextMenu]="contextMenu"
       [(context)]="context"
-      (pageChange)="pageChange.emit($event)"
       (rowClick)="rowClick.emit($event)"
     ></app-master-data-table>
   </section>
+
+  <footer class="paging">
+    <button
+      nzShape="round"
+      [disabled]="!this.pageInfo?.hasPreviousPage"
+      (click)="onPageChange('prev')"
+      nz-button
+      nzType="primary"
+    >
+      Previous
+    </button>
+    <button
+      nzShape="round"
+      [disabled]="!this.pageInfo?.hasNextPage"
+      (click)="onPageChange('next')"
+      nz-button
+      nzType="primary"
+    >
+      Next
+    </button>
+  </footer>
 
   <nz-dropdown-menu #contextMenu="nzDropdownMenu">
     <ul nz-menu>

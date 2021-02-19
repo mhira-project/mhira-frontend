@@ -1,13 +1,4 @@
-<nz-table
-  #table
-  [nzData]="data"
-  [nzFrontPagination]="false"
-  [nzTotal]="paging?.total"
-  [nzPageSize]="paging?.pageSize"
-  [nzPageIndex]="paging?.pageIndex"
-  [nzLoading]="loading"
-  (nzPageIndexChange)="onPageIndexChange($event)"
->
+<nz-table #table [nzData]="data" [nzFrontPagination]="false" [nzLoading]="loading">
   <thead>
     <tr>
       <th *ngFor="let column of columns">{{ column.title }}</th>
