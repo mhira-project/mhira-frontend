@@ -97,12 +97,15 @@
     (nzOnOk)="clickChangePassword()"
   >
     <app-form
+      [form]="updatePasswordForm"
+      [formData]="user"
       [isLoading]="isLoading"
+      [populateForm]="populateForm"
+      [resetForm]="resetForm"
       [showSubmitButton]="false"
       [showCancelButton]="false"
       [loadingMessage]="loadingMessage"
       (submitForm)="submitForm($event)"
-      [form]="updatePasswordForm"
     ></app-form>
   </nz-modal>
 </nz-tabset>

@@ -209,6 +209,8 @@ export class UserFormComponent implements OnInit {
 
   async getUserFromUrl(): Promise<void> {
     this.routeSub = await this.activatedRoute.queryParams.subscribe((params) => {
+      this.populateForm = false;
+      this.resetForm = false;
       if (params.user) {
         this.inputMode = false;
         this.showCancelButton = true;
@@ -244,6 +246,9 @@ export class UserFormComponent implements OnInit {
   }
 
   createUser(formData: any) {
+    this.isLoading = true;
+    this.populateForm = false;
+    this.resetForm = false;
     if (formData.password !== formData.passwordConfirmation) {
       this.message.create('error', `Password don't match`);
       return;
@@ -253,7 +258,6 @@ export class UserFormComponent implements OnInit {
     const userInput: CreateOneUserInput = {
       user: inputData,
     };
-    this.isLoading = true;
     this.loadingMessage = `Creating user ${inputData.firstName} ${inputData.lastName}`;
     this.usersService.createUser(userInput).subscribe(
       async ({ data }) => {
@@ -287,24 +291,12 @@ export class UserFormComponent implements OnInit {
     };
     this.isLoading = true;
     this.populateForm = false;
+    this.resetForm = false;
     this.loadingMessage = `Updating user ${userUpdates.firstName} ${userUpdates.lastName}`;
     this.usersService.updateUser(userInput).subscribe(
       async ({ data }) => {
-        this._child.toggleEdit();
-        const userData = data.updateOneUser;
-        const color = userData.active
-          ? 'ng-trigger ng-trigger-fadeMotion ant-tag-green ant-tag'
-          : 'ng-trigger ng-trigger-fadeMotion ant-tag-red ant-tag';
-        const active = userData.active ? 'active' : 'inactive';
-        userData.updatedAt = userData.updatedAt ? moment(userData.updatedAt).format('DD-MM-YYYY HH:mm') : '';
-        userData.birthDate = userData.birthDate ? moment(userData.birthDate).format('DD-MM-YYYY HH:mm') : '';
-        userData.active = `<nz-tag class="${color}">${active}</nz-tag>`;
-
-        // const updatedIndex = this.users.findIndex((_user) => _user.id === user.id);
-
         this.user = UserModel.fromJson(data.updateOneUser);
         this.isLoading = false;
-        this.populateForm = true;
         this._child.toggleEdit();
         this.loadingMessage = '';
         this.message.create('success', `User has successfully been updated`);

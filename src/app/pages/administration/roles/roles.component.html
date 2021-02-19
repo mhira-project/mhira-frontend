@@ -24,12 +24,13 @@
 </div>
 
 <nz-drawer
-  [nzMask]="false"
+  [nzMask]="true"
   [nzClosable]="true"
+  [nzMaskClosable]="false"
   [nzVisible]="showCreateRole"
   nzPlacement="right"
   [nzTitle]="panelTitle"
-  (nzOnClose)="toggleCreatePanel()"
+  (nzOnClose)="closeCreatePanel()"
 >
   <div class="errors" *ngIf="hasErrors">
     <nz-alert *ngFor="let error of errors" nzType="error" [nzDescription]="error" nzShowIcon></nz-alert>
@@ -37,7 +38,10 @@
   <app-form
     class="mt-3"
     [form]="roleForms"
+    [formData]="role"
     [isLoading]="isLoading"
+    [populateForm]="populateForm"
+    [resetForm]="resetForm"
     [inputMode]="inputMode"
     [showCancelButton]="showCancelButton"
     [loadingMessage]="loadingMessage"

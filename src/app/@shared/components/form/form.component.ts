@@ -1,28 +1,44 @@
-import { Component, OnInit, OnChanges, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Field } from './@types/field';
 import { FormGroup } from '@angular/forms';
 import { Form } from './@types/form';
 import { FieldGroup } from './@types/field.group';
-import { FormChanges } from '@shared/components/form/@types/form-changes';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
 })
-export class FormComponent implements OnInit, OnChanges {
+export class FormComponent implements OnInit {
   @Input() form: Form;
   @Input() formData: any;
   @Input() isLoading = false;
   @Input() loadingMessage = '';
   @Input() inputMode = true;
-  @Input() resetForm = false;
   @Input() showCancelButton = true;
   @Input() showSubmitButton = true;
   @Input() showEditButton = true;
-  @Input() populateForm = false;
   @Input() uploadUrl: string;
   @Input() images: any[];
+
+  @Input()
+  set resetForm(val: boolean) {
+    if (val) {
+      this.parseForm();
+    }
+  }
+
+  get resetForm(): boolean {
+    return this._resetForm;
+  }
+
+  @Input()
+  set populateForm(val: boolean) {
+    if (val) {
+      this.parseForm();
+    }
+  }
+
   @Output() searchOptions: EventEmitter<any> = new EventEmitter<any>();
   @Output() fileUploaded: EventEmitter<any> = new EventEmitter<any>();
   @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
@@ -31,21 +47,11 @@ export class FormComponent implements OnInit, OnChanges {
   @Output() rowRemoved: EventEmitter<any> = new EventEmitter<any>();
   @Output() formUpdate: EventEmitter<any> = new EventEmitter<any>();
   formGroup: FormGroup;
-  defaultValue: any;
+  private _resetForm = false;
 
   constructor() {}
 
   ngOnInit(): void {}
-
-  ngOnChanges(changes: FormChanges) {
-    if (changes.resetForm && changes.resetForm.currentValue) {
-      this.parseForm(null);
-    }
-
-    if (changes.populateForm && changes.populateForm.currentValue) {
-      this.parseForm();
-    }
-  }
 
   toggleEdit() {
     this.inputMode = !this.inputMode;
@@ -79,30 +85,25 @@ export class FormComponent implements OnInit, OnChanges {
     return items;
   }
 
-  parseForm(defaultValue?: any) {
-    if (this.formData) {
-      if (defaultValue) {
-        this.defaultValue = defaultValue;
-      }
-      if (this.formData.images) {
-        this.images = this.formData.images;
-      }
-      this.form.groups.map((group) => {
-        group.fields.map((field) => {
-          if (field.type === 'array') {
-            this.parseArrayDataForEdit(this.formData, field);
-          } else {
-            field.value = this.resetForm ? defaultValue : this.formData[field.name];
-          }
-        });
-      });
+  parseForm() {
+    if (this.formData && this.formData.images) {
+      this.images = this.formData.images;
     }
+    this.form.groups.map((group) => {
+      group.fields.map((field) => {
+        if (field.type === 'array') {
+          this.parseArrayDataForEdit(this.formData, field);
+        } else {
+          field.value = this.resetForm ? null : this.formData ? this.formData[field.name] : null;
+        }
+      });
+    });
   }
 
   parseArrayDataForEdit(objectToBeEdited: any, field: Field, parent?: Field, row: any[] = []) {
     field.rows = [];
     const objectString = JSON.stringify(field);
-    const items = objectToBeEdited[field.name];
+    const items = objectToBeEdited ? objectToBeEdited[field.name] : [];
     items.map((item: any) => {
       const rowItem: any[] = [];
       const object = JSON.parse(objectString);
@@ -114,13 +115,13 @@ export class FormComponent implements OnInit, OnChanges {
             const childRowItem: any[] = [];
             const childObject = JSON.parse(childObjectString);
             childObject.children.map((grandChild: Field) => {
-              grandChild.value = this.resetForm ? this.defaultValue : childItem[grandChild.name];
+              grandChild.value = this.resetForm ? null : childItem ? childItem[grandChild.name] : null;
               childRowItem.push(grandChild);
             });
             child.rows.push(childRowItem);
           });
         } else {
-          child.value = this.resetForm ? this.defaultValue : item[child.name];
+          child.value = this.resetForm ? null : item ? item[child.name] : null;
         }
         rowItem.push(child);
       });

@@ -4,14 +4,13 @@ import { Role, UpdateOneRoleInput } from '@app/pages/administration/@types/role'
 import { RolesTable } from '@app/pages/administration/@tables/roles.table';
 import { Sorting } from '@shared/@types/sorting';
 import { Filter } from '@shared/@types/filter';
-import { environment } from '@env/environment';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { Router } from '@angular/router';
 import { RolesService } from '@app/pages/administration/@services/roles.service';
 import { RoleForm } from '@app/pages/administration/@forms/role.form';
 import { Convert } from '@shared/classes/convert';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { PermissionKey } from '@app/@shared/@types/permission';
+import { PaginationService } from '@shared/services/pagination.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -24,6 +23,8 @@ export class RolesComponent implements OnInit {
   PK = PermissionKey;
   isLoading = false;
   modalLoading = false;
+  populateForm = false;
+  resetForm = false;
   roles: Role[] = [];
   paging: Paging = {
     first: 10,
@@ -50,8 +51,8 @@ export class RolesComponent implements OnInit {
     private rolesService: RolesService,
     private modalService: NzModalService,
     private message: NzMessageService,
-    private router: Router,
-    public perms: AppPermissionsService
+    public perms: AppPermissionsService,
+    private paginationService: PaginationService
   ) {}
 
   ngOnInit(): void {
@@ -79,20 +80,9 @@ export class RolesComponent implements OnInit {
     );
   }
 
-  navigatePages(direction: string, pageSize: number = 10) {
-    switch (direction) {
-      case 'next':
-        this.paging.before = undefined;
-        this.paging.first = pageSize;
-        this.paging.last = undefined;
-        break;
-      case 'previous':
-        this.paging.after = undefined;
-        this.paging.first = undefined;
-        this.paging.last = pageSize;
-        break;
-    }
-    this.getRoles({ paging: this.paging });
+  navigatePages(direction: 'next' | 'previous', pageSize: number = 10) {
+    const paging = this.paginationService.navigatePages(this.paging, direction, pageSize);
+    this.getRoles({ paging });
   }
 
   deleteRole(role: Role) {
@@ -113,6 +103,7 @@ export class RolesComponent implements OnInit {
 
   handleActionClick(event: any): void {
     this.role = this.roles[event.index];
+    this.populateForm = false;
     switch (event.action.name) {
       case 'Delete Role':
         this.modalService.confirm({
@@ -126,23 +117,22 @@ export class RolesComponent implements OnInit {
         });
         break;
       case 'Edit Role':
-        this.roleForms.groups.map((group) => {
-          group.fields.map((field) => {
-            field.value = this.role[field.name];
-          });
-        });
+        this.populateForm = true;
         this.toggleCreatePanel(false);
         break;
     }
   }
 
   handleRowClick(event: any) {
-    this.roleForms.groups.map((group) => {
-      group.fields.map((field) => {
-        field.value = this.role[field.name];
-      });
-    });
+    this.role = this.roles[event.index];
+    this.populateForm = true;
     this.toggleCreatePanel(false);
+  }
+
+  closeCreatePanel() {
+    this.populateForm = false;
+    this.resetForm = false;
+    this.showCreateRole = false;
   }
 
   toggleCreatePanel(create: boolean = true) {
@@ -150,22 +140,16 @@ export class RolesComponent implements OnInit {
     this.isCreateAction = create;
     if (create) {
       this.role = null;
-      this.clearForm();
+      this.resetForm = true;
     }
     this.panelTitle = !this.isCreateAction ? 'Update Role' : 'Create Role';
-  }
-
-  clearForm() {
-    this.roleForms.groups.map((group) => {
-      group.fields.map((field) => {
-        field.value = '';
-      });
-    });
   }
 
   createRole(role: Role) {
     this.isLoading = true;
     this.hasErrors = false;
+    this.populateForm = false;
+    this.resetForm = false;
     this.errors = [];
     this.loadingMessage = `Creating role ${role.name}`;
     this.rolesService.createRole(role).subscribe(
@@ -173,10 +157,11 @@ export class RolesComponent implements OnInit {
         this.roles.push(Convert.toRole(data.createOneRole));
         this.rolesTable.rows = this.roles;
         this.isLoading = false;
+        this.resetForm = true;
+        this.populateForm = false;
         this.loadingMessage = '';
         this.toggleCreatePanel();
         this.message.create('success', `Role has successfully been created`);
-        this.clearForm();
       },
       (error) => {
         this.hasErrors = true;
@@ -221,10 +206,11 @@ export class RolesComponent implements OnInit {
         });
         this.rolesTable.rows = this.roles;
         this.isLoading = false;
+        this.resetForm = true;
+        this.populateForm = false;
         this.loadingMessage = '';
         this.toggleCreatePanel();
         this.message.create('success', `Role has successfully been updated`);
-        this.clearForm();
         this.role = null;
       },
       (error) => {
