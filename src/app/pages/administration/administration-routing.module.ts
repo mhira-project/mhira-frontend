@@ -5,6 +5,8 @@ import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-
 import { PermissionsComponent } from './permissions/permissions.component';
 import { RolesComponent } from './roles/roles.component';
 import { DepartmentsComponent } from './departments/departments.component';
+import { PermissionKey } from '@app/@shared/@types/permission';
+import { PermissionGuard } from '../../permission.guard';
 
 const routes: Routes = [
   {
@@ -19,7 +21,11 @@ const routes: Routes = [
         data: {
           title: extract('Permission Matrix'),
           breadcrumb: extract('Permission Matrix'),
+          permissions: {
+            only: [PermissionKey.VIEW_ROLES],
+          },
         },
+        canActivate: [PermissionGuard],
       },
       {
         path: 'roles',
@@ -27,7 +33,11 @@ const routes: Routes = [
         data: {
           title: extract('Roles'),
           breadcrumb: extract('Roles'),
+          permissions: {
+            only: [PermissionKey.VIEW_ROLES],
+          },
         },
+        canActivate: [PermissionGuard],
       },
       {
         path: 'settings',
@@ -43,7 +53,11 @@ const routes: Routes = [
         data: {
           title: extract('Permissions'),
           breadcrumb: extract('Permissions'),
+          permissions: {
+            only: [PermissionKey.VIEW_ROLES],
+          },
         },
+        canActivate: [PermissionGuard],
       },
       {
         path: 'departments',
@@ -51,7 +65,11 @@ const routes: Routes = [
         data: {
           title: extract('Departments'),
           breadcrumb: extract('Departments'),
+          permissions: {
+            only: [PermissionKey.VIEW_DEPARTMENTS],
+          },
         },
+        canActivate: [PermissionGuard],
       },
       {
         path: '',

@@ -9,6 +9,7 @@ import { RolesService } from '@app/pages/administration/@services/roles.service'
 import { RolePermission } from '@app/pages/administration/@types/role_permissions';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import { PermissionKey } from '@app/@shared/@types/permission';
 
 @Component({
   selector: 'app-roles-and-permissions',
@@ -16,6 +17,7 @@ import { NzMessageService } from 'ng-zorro-antd';
   styleUrls: ['./roles-and-permissions.component.scss'],
 })
 export class RolesAndPermissionsComponent implements OnInit {
+  PK = PermissionKey;
   loading = false;
   rolesPaging: Paging = {
     first: 50,

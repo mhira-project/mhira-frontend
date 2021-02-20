@@ -9,6 +9,7 @@ import { PatientForm } from '@app/pages/patients-management/@forms/patient-form'
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
 import { EmergencyContactsService } from '@app/pages/patients-management/@services/contacts.service';
 import { Contact } from '@app/pages/patients-management/@types/contact';
+import { PermissionKey } from '@app/@shared/@types/permission';
 
 const CryptoJS = require('crypto-js');
 
@@ -18,6 +19,7 @@ const CryptoJS = require('crypto-js');
   styleUrls: ['./create-patient.component.scss'],
 })
 export class CreatePatientComponent implements OnInit {
+  PK = PermissionKey;
   isLoading = false;
   populateForm = false;
   resetForm = false;

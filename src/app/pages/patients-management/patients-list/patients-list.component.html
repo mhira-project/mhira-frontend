@@ -1,7 +1,6 @@
 <div nz-row>
   <div nz-col nzSpan="24">
     <app-table
-      *ngIf="perms.permissionsOnly(['manage patients', 'view patients'])"
       [loading]="isLoading"
       [showPagination]="false"
       [showFilterButton]="true"
@@ -11,7 +10,7 @@
       [listOfCustomActions]="actions"
       [listOfData]="patientsTable.rows"
       [listOfColumn]="patientsTable.columns"
-      [showButton]="perms.permissionsOnly(['manage patients'])"
+      [showButton]="perms.permissionsOnly([PK.MANAGE_PATIENTS])"
       [buttonText]="'Create Patient'"
       [hasNextPage]="pageInfo?.hasNextPage"
       [hasPreviousPage]="pageInfo?.hasPreviousPage"

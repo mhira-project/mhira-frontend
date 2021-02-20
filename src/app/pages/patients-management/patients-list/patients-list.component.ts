@@ -15,6 +15,7 @@ import { Sorting } from '@shared/@types/sorting';
 import { PatientStatus } from '@app/pages/patients-management/@types/patient-status';
 import { PatientStatusesService } from '@app/pages/patients-management/@services/patient-statuses.service';
 import { PaginationService } from '@shared/services/pagination.service';
+import { PermissionKey } from '@app/@shared/@types/permission';
 
 const CryptoJS = require('crypto-js');
 
@@ -24,6 +25,7 @@ const CryptoJS = require('crypto-js');
   styleUrls: ['./patients-list.component.scss'],
 })
 export class PatientsListComponent implements OnInit {
+  PK = PermissionKey;
   isLoading = false;
   isVisible = false;
   isOkLoading = false;
@@ -63,7 +65,7 @@ export class PatientsListComponent implements OnInit {
   }
 
   loadPermissions() {
-    if (!this.perms.permissionsOnly('manage patients')) {
+    if (!this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
       this.actions = [];
     }
   }
