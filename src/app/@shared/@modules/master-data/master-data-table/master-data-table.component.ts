@@ -1,15 +1,21 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd';
+import { NzContextMenuService, NzDropdownMenuComponent, NzTableQueryParams } from 'ng-zorro-antd';
 
 export interface TableColumn<T> {
   name: keyof T;
   title: string;
   render?: 'html' | 'date' | 'tag' | 'avatar' | undefined;
+  sort?: boolean;
 }
 
 export interface TagInfo {
   color: string;
   title: string;
+}
+
+export interface SortField<T> {
+  field: keyof T;
+  direction: 'ASC' | 'DESC';
 }
 
 @Component({
@@ -39,11 +45,22 @@ export class MasterDataTableComponent<T> {
   @Output()
   public rowClick = new EventEmitter<T>();
 
+  @Output()
+  public sort = new EventEmitter<SortField<T>[]>();
+
   constructor(private contextMenuService: NzContextMenuService) {}
 
   public onOpenContextMenu(event: MouseEvent, context: T): void {
     this.context = context;
     this.contextChange.emit(context);
     this.contextMenuService.create(event, this.contextMenu);
+  }
+
+  public onSort({ sort }: NzTableQueryParams) {
+    const values = { ascend: 'ASC', descend: 'DESC' };
+    const sortFields: SortField<T>[] = sort
+      .filter((field) => !!field.value)
+      .map((field) => ({ field: field.key, direction: values[field.value] } as SortField<T>));
+    this.sort.emit(sortFields);
   }
 }
