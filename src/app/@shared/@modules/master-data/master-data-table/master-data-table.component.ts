@@ -6,6 +6,7 @@ export interface TableColumn<T> {
   title: string;
   render?: 'html' | 'date' | 'tag' | 'avatar' | undefined;
   sort?: boolean;
+  altName?: keyof T;
 }
 
 export interface TagInfo {
@@ -59,8 +60,17 @@ export class MasterDataTableComponent<T> {
   public onSort({ sort }: NzTableQueryParams) {
     const values = { ascend: 'ASC', descend: 'DESC' };
     const sortFields: SortField<T>[] = sort
+      // filter unused sorts
       .filter((field) => !!field.value)
-      .map((field) => ({ field: field.key, direction: values[field.value] } as SortField<T>));
+
+      // convert to SortField
+      .map((field) => ({ field: field.key, direction: values[field.value] } as SortField<T>))
+
+      // use altName for sorting if exists
+      .map((sortField) => {
+        const column = this.columns.find((col) => col.name === sortField.field);
+        return column.altName ? { ...sortField, field: column.altName } : sortField;
+      });
     this.sort.emit(sortFields);
   }
 }
