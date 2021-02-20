@@ -3,25 +3,20 @@ import { PatientColumns } from '../@tables/patients.table';
 import { PatientsService } from '@app/pages/patients-management/@services/patients.service';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
-// import { Paging } from '@shared/@types/paging';
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Sorting } from '@shared/@types/sorting';
 import { PatientStatus } from '@app/pages/patients-management/@types/patient-status';
 import { PatientStatusesService } from '@app/pages/patients-management/@services/patient-statuses.service';
-import {
-  TableColumn,
-  SortField,
-} from '../../../@shared/@modules/master-data/master-data-table/master-data-table.component';
 import { FormattedPatient } from '../@types/formatted-patient';
 import { finalize } from 'rxjs/operators';
-import { Action, ActionArgs } from '../../../@shared/@modules/master-data/master-data-list/master-data-list.component';
 import { SelectModalComponent } from '../../../@shared/components/select-modal/select-modal.component';
 import { PageInfo, Paging } from '../../../@shared/@types/paging';
 import { Filter } from '../../../@shared/@types/filter';
 import { User } from '@app/pages/user-management/@types/user';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
+import { TableColumn, SortField, Action, ActionArgs } from '../../../@shared/@modules/master-data/@types/list';
 
 const CryptoJS = require('crypto-js');
 

@@ -1,17 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TableColumn, SortField } from '../master-data-table/master-data-table.component';
+import { TableColumn, SortField, Action, ActionArgs } from '../@types/list';
 import { PageInfo, Paging } from '../../../@types/paging';
 import { Filter } from '../../../@types/filter';
-
-export interface Action {
-  key: string;
-  title: string;
-}
-
-export interface ActionArgs<T> {
-  action: Action;
-  context: T;
-}
 
 @Component({
   selector: 'app-master-data-list',

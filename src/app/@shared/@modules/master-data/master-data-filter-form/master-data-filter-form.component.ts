@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TableColumn } from '../master-data-table/master-data-table.component';
+import { TableColumn } from '../@types/list';
 import { Form } from '../../../components/form/@types/form';
 import { Field } from '../../../components/form/@types/field';
 import { NzDrawerComponent } from 'ng-zorro-antd';
