@@ -20,6 +20,8 @@ import { SelectModalComponent } from '../../../@shared/components/select-modal/s
 import { PageInfo, Paging } from '../../../@shared/@types/paging';
 import { Filter } from '../../../@shared/@types/filter';
 import { User } from '@app/pages/user-management/@types/user';
+import { PermissionKey } from '@app/@shared/@types/permission';
+import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -34,6 +36,8 @@ enum ActionKey {
   styleUrls: ['./patients-list.component.scss'],
 })
 export class PatientsListComponent {
+  PK = PermissionKey;
+
   public columns: TableColumn<Partial<FormattedPatient>>[] = PatientColumns as TableColumn<Partial<FormattedPatient>>[];
 
   public data: Partial<FormattedPatient>[];
@@ -52,10 +56,7 @@ export class PatientsListComponent {
 
   public loading = false;
 
-  public actions: Action[] = [
-    { key: ActionKey.CHANGE_STATUS, title: 'Change Status' },
-    { key: ActionKey.DELETE_PATIENT, title: 'Delete Patient' },
-  ];
+  public actions: Action[] = [];
 
   public patientStates: PatientStatus[] = [];
 
@@ -66,10 +67,18 @@ export class PatientsListComponent {
     private router: Router,
     private modalService: NzModalService,
     private patientStateService: PatientStatusesService,
-    private messageService: NzMessageService
+    private messageService: NzMessageService,
+    public perms: AppPermissionsService
   ) {
     this.getPatients();
     this.getPatientStates();
+
+    if (this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
+      this.actions = [
+        { key: ActionKey.CHANGE_STATUS, title: 'Change Status' },
+        { key: ActionKey.DELETE_PATIENT, title: 'Delete Patient' },
+      ];
+    }
   }
 
   public searchPatients(searchString: string): void {

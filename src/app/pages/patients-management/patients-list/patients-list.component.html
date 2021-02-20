@@ -13,7 +13,9 @@
 >
   <ng-container actions-left>
     <app-master-data-search (search)="searchPatients($event)"></app-master-data-search>
-    <button nz-button nzType="primary" (click)="onMyPatients()">My Patients</button>
+    <button nz-button nzType="primary" (click)="onMyPatients()" *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS])">
+      My Patients
+    </button>
   </ng-container>
   <ng-container actions-right>
     <button nz-button nzType="primary" nzShape="circle" routerLink="/mhira/case-management/profile">

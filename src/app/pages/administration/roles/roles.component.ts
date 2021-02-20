@@ -9,7 +9,10 @@ import { RolesService } from '@app/pages/administration/@services/roles.service'
 import { RoleForm } from '@app/pages/administration/@forms/role.form';
 import { Convert } from '@shared/classes/convert';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { PermissionKey } from '@app/@shared/@types/permission';
 import { PaginationService } from '@shared/services/pagination.service';
+
+const CryptoJS = require('crypto-js');
 
 @Component({
   selector: 'app-roles',
@@ -17,6 +20,7 @@ import { PaginationService } from '@shared/services/pagination.service';
   styleUrls: ['./roles.component.scss'],
 })
 export class RolesComponent implements OnInit {
+  PK = PermissionKey;
   isLoading = false;
   modalLoading = false;
   populateForm = false;

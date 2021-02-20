@@ -11,6 +11,7 @@ import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { User } from '@app/pages/user-management/@types/user';
 import { AssessmentFilter } from '@app/pages/assessment/@types/assessment-filter';
+import { PermissionKey } from '@app/@shared/@types/permission';
 
 const CryptoJS = require('crypto-js');
 
@@ -20,6 +21,7 @@ const CryptoJS = require('crypto-js');
   styleUrls: ['./assessments-list.component.scss'],
 })
 export class AssessmentsListComponent implements OnInit {
+  PK = PermissionKey;
   isLoading = false;
   modalLoading = false;
   assessments: Assessment[] = [];
@@ -49,7 +51,7 @@ export class AssessmentsListComponent implements OnInit {
 
   getAssessments(paging?: Paging, sorting: Sorting[] = []) {
     const user: User = JSON.parse(localStorage.getItem('user'));
-    if (!this.perms.permissionsOnly(['manage assessments'])) {
+    if (!this.perms.permissionsOnly([PermissionKey.MANAGE_ASSESSMENTS])) {
       this.filter = {
         ...this.filter,
         clinicianId: { eq: user.id },

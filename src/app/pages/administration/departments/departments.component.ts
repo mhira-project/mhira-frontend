@@ -10,7 +10,10 @@ import { Convert } from '@shared/classes/convert';
 import { Paging } from '@shared/@types/paging';
 import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
+import { PermissionKey } from '@app/@shared/@types/permission';
 import { PaginationService } from '@shared/services/pagination.service';
+
+const CryptoJS = require('crypto-js');
 
 @Component({
   selector: 'app-departments',
@@ -18,6 +21,7 @@ import { PaginationService } from '@shared/services/pagination.service';
   styleUrls: ['./departments.component.scss'],
 })
 export class DepartmentsComponent implements OnInit {
+  PK = PermissionKey;
   isLoading = false;
   modalLoading = false;
   populateForm = false;

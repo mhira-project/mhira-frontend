@@ -14,6 +14,7 @@ import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { UserModel } from '@app/pages/user-management/@models/user.model';
 import { PaginationService } from '@shared/services/pagination.service';
+import { PermissionKey } from '@app/@shared/@types/permission';
 
 const CryptoJS = require('crypto-js');
 
@@ -23,6 +24,7 @@ const CryptoJS = require('crypto-js');
   styleUrls: ['./users-list.component.scss'],
 })
 export class UsersListComponent implements OnInit {
+  PK = PermissionKey;
   isLoading = false;
   showModal = false;
   modalType: ModalType;
