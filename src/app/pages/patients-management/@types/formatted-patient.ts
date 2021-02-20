@@ -1,11 +1,9 @@
 import { Patient } from './patient';
+import { TagInfo } from '../../../@shared/@modules/master-data/master-data-table/master-data-table.component';
 
 export interface FormattedPatient extends Patient {
-  formattedCreatedAt?: string;
-  formattedUpdatedAt?: string;
-  formattedBirthDate?: string;
-  formattedStatus?: string;
-  formattedInformants?: string;
-  formattedCaseManagers?: string;
+  formattedStatus?: TagInfo;
+  formattedInformants?: string[];
+  formattedCaseManagers?: string[];
   patientTitle?: string;
 }
