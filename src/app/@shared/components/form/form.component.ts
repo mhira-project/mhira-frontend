@@ -30,6 +30,7 @@ export class FormComponent implements OnInit, OnChanges {
   @Output() rowAdded: EventEmitter<any> = new EventEmitter<any>();
   @Output() rowRemoved: EventEmitter<any> = new EventEmitter<any>();
   @Output() formUpdate: EventEmitter<any> = new EventEmitter<any>();
+  @Output() cancel = new EventEmitter<void>();
   formGroup: FormGroup;
   defaultValue: any;
 
@@ -45,6 +46,11 @@ export class FormComponent implements OnInit, OnChanges {
     if (changes.populateForm && changes.populateForm.currentValue) {
       this.parseForm();
     }
+  }
+
+  onCancel() {
+    this.toggleEdit();
+    this.cancel.emit();
   }
 
   toggleEdit() {
