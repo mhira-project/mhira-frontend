@@ -7,6 +7,7 @@ import {
   NzAvatarModule,
   NzButtonModule,
   NzDropDownModule,
+  NzFormModule,
   NzIconModule,
   NzInputModule,
   NzTableModule,
@@ -14,9 +15,16 @@ import {
 } from 'ng-zorro-antd';
 import { MasterDataTableComponent } from './master-data-table/master-data-table.component';
 import { SharedModule } from '@shared';
+import { NzDrawerModule } from 'ng-zorro-antd';
+import { MasterDataFilterFormComponent } from './master-data-filter-form/master-data-filter-form.component';
 
 @NgModule({
-  declarations: [MasterDataListComponent, MasterDataSearchComponent, MasterDataTableComponent],
+  declarations: [
+    MasterDataListComponent,
+    MasterDataSearchComponent,
+    MasterDataTableComponent,
+    MasterDataFilterFormComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,
@@ -28,7 +36,9 @@ import { SharedModule } from '@shared';
     NzAvatarModule,
     NzDropDownModule,
     NzButtonModule,
+    NzDrawerModule,
+    NzFormModule,
   ],
-  exports: [MasterDataListComponent, MasterDataSearchComponent, MasterDataTableComponent],
+  exports: [MasterDataListComponent, MasterDataSearchComponent],
 })
 export class MasterDataModule {}

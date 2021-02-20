@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TableColumn, SortField } from '../master-data-table/master-data-table.component';
 import { PageInfo, Paging } from '../../../@types/paging';
+import { Filter } from '../../../@types/filter';
 
 export interface Action {
   key: string;
@@ -44,6 +45,9 @@ export class MasterDataListComponent<T> {
 
   @Output()
   public sort = new EventEmitter<SortField<T>[]>();
+
+  @Output()
+  public filter = new EventEmitter<Filter>();
 
   @Output()
   public executeAction = new EventEmitter<ActionArgs<any>>();

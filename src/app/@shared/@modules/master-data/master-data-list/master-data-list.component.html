@@ -5,6 +5,9 @@
     </div>
     <div>
       <ng-content select="[actions-right]"></ng-content>
+      <button nz-button nzType="primary" nzShape="circle" (click)="drawer.open()">
+        <i nz-icon nzType="filter"></i>
+      </button>
     </div>
   </section>
   <section class="list">
@@ -45,4 +48,12 @@
       <li nz-menu-item *ngFor="let action of actions" (click)="onSelectAction(action)">{{ action.title }}</li>
     </ul>
   </nz-dropdown-menu>
+
+  <nz-drawer #drawer [nzClosable]="true" nzTitle="Filter" (nzOnClose)="drawer.close()">
+    <app-master-data-filter-form
+      [drawer]="drawer"
+      [columns]="columns"
+      (filter)="filter.emit($event)"
+    ></app-master-data-filter-form>
+  </nz-drawer>
 </article>
