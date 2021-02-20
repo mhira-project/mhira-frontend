@@ -177,7 +177,7 @@ const PIPES = [
     CustomFilterComponent,
     SelectModalComponent,
   ],
-  exports: [...PIPES, LoaderComponent, TableComponent, FormGeneratorComponent, CustomFilterComponent],
+  exports: [...PIPES, LoaderComponent, TableComponent, FormGeneratorComponent, CustomFilterComponent, AppFormModule],
   providers: [XlsExportService],
 })
 export class ComponentsModule {}
