@@ -1,4 +1,11 @@
-<nz-table #table [nzData]="data" [nzFrontPagination]="false" [nzLoading]="loading" (nzQueryParams)="onSort($event)">
+<nz-table
+  #table
+  [nzData]="data"
+  [nzFrontPagination]="false"
+  [nzShowPagination]="false"
+  [nzLoading]="loading"
+  (nzQueryParams)="onSort($event)"
+>
   <thead>
     <tr>
       <th *ngFor="let column of columns" [nzColumnKey]="column.name" [nzSortFn]="column.sort">{{ column.title }}</th>

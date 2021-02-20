@@ -18,6 +18,7 @@ section.actions {
 
 section.list {
   flex: 1 1 auto;
+  overflow-x: auto;
 }
 
 section + section {

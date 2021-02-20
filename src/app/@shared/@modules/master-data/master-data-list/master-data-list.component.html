@@ -22,7 +22,7 @@
     ></app-master-data-table>
   </section>
 
-  <footer class="paging">
+  <section class="paging">
     <button
       nzShape="round"
       [disabled]="!this.pageInfo?.hasPreviousPage"
@@ -41,7 +41,7 @@
     >
       Next
     </button>
-  </footer>
+  </section>
 
   <nz-dropdown-menu #contextMenu="nzDropdownMenu">
     <ul nz-menu>
