@@ -104,44 +104,6 @@ export class UsersListComponent implements OnInit {
     this.getUsers(this.paging);
   }
 
-  deleteUser(index: any) {
-    this.isLoading = true;
-    const user = this.users[index];
-    this.usersService.deleteUser(user).subscribe(
-      async ({ data }) => {
-        const deletedIndex = this.users.findIndex((_user) => _user.id === user.id);
-        this.users.splice(deletedIndex, 1);
-        this.usersTable.rows.splice(deletedIndex, 1);
-        this.isLoading = false;
-        this.getUsers(this.paging);
-      },
-      (error) => {
-        this.isLoading = false;
-      }
-    );
-  }
-
-  onCustomActionEvent(event: any) {
-    this.user = this.usersTable.rows[event.index];
-    this.selectedUserIndex = event.index;
-    switch (event.action.type) {
-      case 'changePassword':
-        this.showModal = true;
-        this.modalType = Object.assign({}, this.changePasswordModal);
-        this.modalType.title = `${this.modalType.title} for ${this.user.username}: ${this.user.firstName} ${this.user.lastName}`;
-        break;
-      case 'delete':
-        this.modalService.confirm({
-          nzTitle: 'Confirm',
-          nzContent: `Are you sure you want to delete ${this.user.firstName} ${this.user.lastName}`,
-          nzOkText: 'Delete',
-          nzOnOk: () => this.deleteUser(event.index),
-          nzCancelText: 'Cancel',
-        });
-        break;
-    }
-  }
-
   handleRowClick(event: any) {
     const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.users[event.index]), environment.secretKey).toString();
     this.router.navigate(['/mhira/user-management/user-form'], {
@@ -164,7 +126,7 @@ export class UsersListComponent implements OnInit {
         newPasswordConfirmation: form.newPasswordConfirmation,
       };
       this.usersService.updateUserPassword(inputs).subscribe(
-        async ({ data }) => {
+        async (_: any) => {
           this.isLoading = false;
           this.loadingMessage = '';
           this.message.create('success', `Password has successfully been changed`);

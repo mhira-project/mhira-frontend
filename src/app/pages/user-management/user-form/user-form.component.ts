@@ -22,6 +22,7 @@ import { AppPermissionsService } from '@shared/services/app-permissions.service'
 import { NzModalService } from 'ng-zorro-antd';
 import { UserModel } from '@app/pages/user-management/@models/user.model';
 import { PermissionKey } from '@app/@shared/@types/permission';
+import { DeleteOneInput } from '../../../@shared/@types/delete-one-input';
 
 const CryptoJS = require('crypto-js');
 const moment = require('moment');
@@ -170,7 +171,8 @@ export class UserFormComponent implements OnInit {
 
   deleteUser(user: User) {
     this.isLoading = true;
-    this.usersService.deleteUser(user).subscribe(
+    const deleteObject: DeleteOneInput = { id: user.id };
+    this.usersService.deleteOneUser(deleteObject).subscribe(
       async (_) => {
         this.isLoading = false;
         this.router.navigate(['/mhira/user-management/users']);
