@@ -1,5 +1,5 @@
 import { Patient } from './patient';
-import { TagInfo } from '../../../@shared/@modules/master-data/master-data-table/master-data-table.component';
+import { TagInfo } from '../../../@shared/@modules/master-data/@types/list';
 
 export interface FormattedPatient extends Patient {
   formattedStatus?: TagInfo;

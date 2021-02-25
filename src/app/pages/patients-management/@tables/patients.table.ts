@@ -1,4 +1,4 @@
-import { TableColumn } from '../../../@shared/@modules/master-data/master-data-table/master-data-table.component';
+import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
 import { FormattedPatient } from '../@types/formatted-patient';
 
 export const PatientColumns: TableColumn<FormattedPatient>[] = [
