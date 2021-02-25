@@ -14,13 +14,6 @@ import { Paging } from '@shared/@types/paging';
 export class UsersService {
   constructor(private apollo: Apollo) {}
 
-  getUserProfile(): Observable<FetchResult<any>> {
-    return this.apollo.query({
-      query: UsersQueries.getUserProfile,
-      fetchPolicy: 'no-cache',
-    });
-  }
-
   getUsers(filter?: any, paging?: Paging): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: UsersQueries.getUsers,
