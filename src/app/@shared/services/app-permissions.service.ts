@@ -12,7 +12,7 @@ export class AppPermissionsService {
   permissionsOnly(action: PermissionKey | PermissionKey[]): boolean {
     if (this.isSuperAdmin()) return true;
 
-    const permissions: Permission[] = JSON.parse(localStorage.getItem('permissions'));
+    const permissions: Permission[] = JSON.parse(sessionStorage.getItem('permissions'));
     const keys = permissions?.map((permission) => permission?.name);
     if (!permissions || !keys) return false;
 
@@ -27,7 +27,7 @@ export class AppPermissionsService {
   }
 
   permissionsExcept(action: PermissionKey | PermissionKey[]): boolean {
-    const permissions: Permission[] = JSON.parse(localStorage.getItem('permissions'));
+    const permissions: Permission[] = JSON.parse(sessionStorage.getItem('permissions'));
     const keys = permissions?.map((permission) => permission?.name);
     if (!permissions || !keys) return false;
 
