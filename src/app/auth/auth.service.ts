@@ -56,7 +56,7 @@ export class AuthService {
     // return !isExpired;
   }
 
-  //refetch permissions and add them to session storage
+  // refetch permissions and add them to session storage
 
   private rePopulatePermissions(): void {
     this.getUserPermissions().subscribe(async ({ data }) => {
