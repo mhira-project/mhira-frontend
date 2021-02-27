@@ -90,7 +90,7 @@ export const PatientColumns: TableColumn<FormattedPatient>[] = [
     render: 'date',
     sort: true,
     filterField: {
-      type: 'date',
+      type: 'dateRange',
       value: undefined,
       title: 'Created Date',
     },

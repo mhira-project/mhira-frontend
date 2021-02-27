@@ -51,7 +51,7 @@ export class MasterDataFilterFormComponent<T> {
     const filters = Object.entries(event)
       .filter(([_, value]) => value !== undefined)
       .map(([key, value]) => {
-        const column = this.columns.find((c) => c.altName ?? c.name === key);
+        const column = this.columns.find((c) => (c.altName ?? c.name) === key);
         return { [key]: this.getFilter(column.filterField.type, value) };
       });
 
@@ -70,6 +70,8 @@ export class MasterDataFilterFormComponent<T> {
         return { eq: value };
       case 'date':
         return { eq: value };
+      case 'dateRange':
+        return { between: { lower: value[0], upper: value[1] } };
       default:
         return { iLike: `%${value}%` };
     }
