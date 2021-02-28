@@ -1,31 +1,18 @@
-:host {
-  display: block;
-  height: 100%;
-}
-
-article {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+section + section {
+  margin-top: 2em;
 }
 
 section.actions {
-  flex: 0 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 section.list {
-  flex: 1 1 auto;
   overflow-x: auto;
 }
 
-section + section {
-  margin-top: 2em;
-}
-
-.paging {
+section.paging {
   display: flex;
   justify-content: space-between;
 }
