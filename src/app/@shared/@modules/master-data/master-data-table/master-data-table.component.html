@@ -20,8 +20,8 @@
             <ng-container *ngIf="d[column.name]">{{ d[column.name] | formatDate }}</ng-container>
           </span>
           <span *ngSwitchCase="'tag'">
-            <nz-tag *ngFor="let tag of [d[column.name]].flat()" [nzColor]="d[column.name].color">
-              {{ d[column.name].title }}
+            <nz-tag *ngFor="let tag of [d[column.name]].flat()" [nzColor]="tag.color">
+              {{ tag.title }}
             </nz-tag>
           </span>
           <span *ngSwitchCase="'avatar'">
