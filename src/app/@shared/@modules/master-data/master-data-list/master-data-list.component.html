@@ -48,7 +48,7 @@
   </section>
 
   <nz-dropdown-menu #contextMenu="nzDropdownMenu">
-    <ul nz-menu>
+    <ul nz-menu *ngIf="actions?.length">
       <li nz-menu-item *ngFor="let action of actions" (click)="onSelectAction(action)">{{ action.title }}</li>
     </ul>
   </nz-dropdown-menu>
