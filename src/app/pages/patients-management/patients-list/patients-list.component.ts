@@ -27,8 +27,8 @@ import {
 const CryptoJS = require('crypto-js');
 
 enum ActionKey {
-  CHANGE_STATUS = 'change-status',
-  DELETE_PATIENT = 'delete-patient',
+  CHANGE_STATUS,
+  DELETE_PATIENT,
 }
 
 @Component({
@@ -55,7 +55,7 @@ export class PatientsListComponent {
 
   public loading = false;
 
-  public actions: Action[] = [];
+  public actions: Action<ActionKey>[] = [];
 
   public patientStates: PatientStatus[] = [];
 
@@ -114,7 +114,7 @@ export class PatientsListComponent {
     });
   }
 
-  public onAction({ action, context: patient }: ActionArgs<FormattedPatient>): void {
+  public onAction({ action, context: patient }: ActionArgs<FormattedPatient, ActionKey>): void {
     switch (action.key) {
       case ActionKey.CHANGE_STATUS:
         this.changePatientStatus(patient);

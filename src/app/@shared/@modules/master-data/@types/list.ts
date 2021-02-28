@@ -19,13 +19,13 @@ export interface SortField<T> {
   direction: 'ASC' | 'DESC';
 }
 
-export interface Action {
-  key: string;
+export interface Action<T = string> {
+  key: T;
   title: string;
 }
 
-export interface ActionArgs<T> {
-  action: Action;
+export interface ActionArgs<T, K = string> {
+  action: Action<K>;
   context: T;
 }
 
