@@ -77,4 +77,8 @@ export class MasterDataListComponent<T> {
 
     this.pageChange.emit(paging);
   }
+
+  public onReset(): void {
+    location.reload();
+  }
 }
