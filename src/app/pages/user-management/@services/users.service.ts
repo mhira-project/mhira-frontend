@@ -7,6 +7,7 @@ import { UsersQueries } from '../../../@graphql/queries/users';
 import { CreateOneUserInput, UpdateOneUserInput, User } from '../@types/user';
 import { UserChangePasswordInput, UserUpdatePasswordInput } from '../user-form/user-update-password.type';
 import { Paging } from '@shared/@types/paging';
+import { DeleteOneInput } from '../../../@shared/@types/delete-one-input';
 
 @Injectable({
   providedIn: 'root',
@@ -54,10 +55,10 @@ export class UsersService {
     });
   }
 
-  deleteUser(user: User): Observable<FetchResult<any>> {
+  deleteOneUser(input: DeleteOneInput): Observable<FetchResult<any>> {
     return this.apollo.mutate({
-      mutation: UsersMutations.deleteUser,
-      variables: { id: user.id },
+      mutation: UsersMutations.deleteOneUser,
+      variables: { input },
       fetchPolicy: 'no-cache',
     });
   }
