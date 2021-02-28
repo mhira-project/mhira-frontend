@@ -32,6 +32,9 @@
     >
       Previous
     </button>
+    <nz-select [(ngModel)]="pageSize" (ngModelChange)="onPageChange()">
+      <nz-option *ngFor="let ps of PAGE_SIZES" [nzValue]="ps" nzLabel="Page size: {{ ps }}"></nz-option>
+    </nz-select>
     <button
       nzShape="round"
       [disabled]="!this.pageInfo?.hasNextPage"

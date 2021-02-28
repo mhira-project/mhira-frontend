@@ -28,3 +28,7 @@ export interface ActionArgs<T> {
   action: Action;
   context: T;
 }
+
+export const PAGE_SIZES = [10, 15, 25, 50] as const;
+export type PageSizeOptions = typeof PAGE_SIZES[number];
+export const DEFAULT_PAGE_SIZE: PageSizeOptions = 15;

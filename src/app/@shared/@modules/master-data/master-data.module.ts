@@ -10,6 +10,7 @@ import {
   NzFormModule,
   NzIconModule,
   NzInputModule,
+  NzSelectModule,
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
@@ -17,6 +18,7 @@ import { MasterDataTableComponent } from './master-data-table/master-data-table.
 import { SharedModule } from '@shared';
 import { NzDrawerModule } from 'ng-zorro-antd';
 import { MasterDataFilterFormComponent } from './master-data-filter-form/master-data-filter-form.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { MasterDataFilterFormComponent } from './master-data-filter-form/master-
     NzButtonModule,
     NzDrawerModule,
     NzFormModule,
+    NzSelectModule,
+    FormsModule,
   ],
   exports: [MasterDataListComponent, MasterDataSearchComponent],
 })

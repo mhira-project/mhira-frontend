@@ -16,7 +16,13 @@ import { Filter } from '../../../@shared/@types/filter';
 import { User } from '@app/pages/user-management/@types/user';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
-import { TableColumn, SortField, Action, ActionArgs } from '../../../@shared/@modules/master-data/@types/list';
+import {
+  TableColumn,
+  SortField,
+  Action,
+  ActionArgs,
+  DEFAULT_PAGE_SIZE,
+} from '../../../@shared/@modules/master-data/@types/list';
 
 const CryptoJS = require('crypto-js');
 
@@ -39,10 +45,8 @@ export class PatientsListComponent {
 
   public pageInfo: PageInfo;
 
-  public pageSize = 10;
-
   public patientRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
-    paging: { first: this.pageSize },
+    paging: { first: DEFAULT_PAGE_SIZE },
     filter: {},
     sorting: [],
   };
