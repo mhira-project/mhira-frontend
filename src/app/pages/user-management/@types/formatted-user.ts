@@ -1,10 +1,8 @@
 import { User } from './user';
+import { TagInfo } from '../../../@shared/@modules/master-data/@types/list';
 
 export interface FormattedUser extends User {
-  formattedCreatedAt?: string;
-  formattedUpdatedAt?: string;
-  formattedBirthDate?: string;
-  formattedRoles?: string;
-  formattedStatus?: string;
-  formattedDepartments?: string;
+  formattedRoles?: TagInfo[];
+  formattedStatus?: TagInfo;
+  formattedDepartments?: TagInfo[];
 }

@@ -26,6 +26,7 @@ import {
 import { UserFormComponent } from './user-form/user-form.component';
 import { FormsModule } from '@angular/forms';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
+import { MasterDataModule } from '../../@shared/@modules/master-data/master-data.module';
 
 const antModules = [
   NzGridModule,
@@ -58,6 +59,7 @@ const antModules = [
     SharedModule,
     UserManagementRoutingModule,
     NzSwitchModule,
+    MasterDataModule,
   ],
   declarations: [UsersListComponent, UserFormComponent],
 })

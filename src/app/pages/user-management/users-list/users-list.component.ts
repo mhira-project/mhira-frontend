@@ -1,184 +1,156 @@
-import { Component, OnInit } from '@angular/core';
+import { finalize } from 'rxjs/operators';
+import { Component } from '@angular/core';
+import { FormattedUser } from '../@types/formatted-user';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { userForms } from '@app/pages/user-management/@forms/user.form';
 import { Router } from '@angular/router';
-import { ModalType } from '@app/pages/user-management/users-list/modal.type';
-import { Form } from '@shared/components/form/@types/form';
-import { User } from '@app/pages/user-management/@types/user';
-import { userTable } from '@app/pages/user-management/@tables/users.table';
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { environment } from '@env/environment';
-import { UserUpdatePasswordInput } from '@app/pages/user-management/user-form/user-update-password.type';
-import { Paging } from '@shared/@types/paging';
-import { DateService } from '@shared/services/date.service';
-import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { PageInfo, Paging } from '@shared/@types/paging';
 import { UserModel } from '@app/pages/user-management/@models/user.model';
-import { PaginationService } from '@shared/services/pagination.service';
+import { Sorting } from '../../../@shared/@types/sorting';
+import {
+  DEFAULT_PAGE_SIZE,
+  TableColumn,
+  SortField,
+  Action,
+  ActionArgs,
+} from '../../../@shared/@modules/master-data/@types/list';
+import { Filter } from '../../../@shared/@types/filter';
+import { UserColumns } from '../@tables/users.table';
+import { AppPermissionsService } from '@app/@shared/services/app-permissions.service';
 import { PermissionKey } from '@app/@shared/@types/permission';
 
 const CryptoJS = require('crypto-js');
+
+enum ActionKey {
+  DELETE_USER,
+}
 
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.scss'],
 })
-export class UsersListComponent implements OnInit {
-  PK = PermissionKey;
-  isLoading = false;
-  showModal = false;
-  modalType: ModalType;
-  changePasswordModal: ModalType = {
-    title: 'Change Password',
-    type: 'changePassword',
+export class UsersListComponent {
+  public data: Partial<FormattedUser>[];
+
+  public columns: TableColumn<FormattedUser>[] = UserColumns;
+
+  public userRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
+    paging: { first: DEFAULT_PAGE_SIZE },
+    filter: {},
+    sorting: [],
   };
-  filter: any = {};
-  paging: Paging = {
-    first: 10,
-  };
-  pageInfo: any;
-  user: User = {
-    username: '',
-    address: '',
-    gender: '',
-    birthDate: '',
-    email: '',
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    phone: '',
-    id: 0,
-  };
-  users: User[] = [];
-  usersTable: { columns: any[]; rows: User[] } = {
-    columns: userTable.columns,
-    rows: [],
-  };
-  actions = userTable.actions;
-  selectedUserIndex = -1;
-  errors: any[] = [];
-  updatePasswordForm: Form = userForms.updateUserPassword;
-  filterForm: Form = userForms.userFilter;
-  loadingMessage: any;
-  showFilterPanel = false;
+
+  public loading = false;
+
+  public pageInfo: PageInfo;
+
+  public actions: Action<ActionKey>[] = [];
 
   constructor(
-    private modalService: NzModalService,
-    private message: NzMessageService,
-    private dateService: DateService,
-    private router: Router,
     private usersService: UsersService,
-    public perms: AppPermissionsService,
-    private paginationService: PaginationService
-  ) {}
+    private router: Router,
+    private perms: AppPermissionsService,
+    private modalService: NzModalService,
+    private messageService: NzMessageService
+  ) {
+    this.getUsers();
 
-  ngOnInit(): void {
-    this.getUsers(this.paging);
+    if (this.perms.permissionsOnly(PermissionKey.MANAGE_USERS)) {
+      this.actions = [{ key: ActionKey.DELETE_USER, title: 'Delete User' }];
+    }
   }
 
-  getUsers(paging?: Paging) {
-    this.isLoading = true;
-    this.users = [];
-    const rows: User[] = [];
-    this.usersService.getUsers(this.filter, paging).subscribe(
-      async ({ data }) => {
-        const usersData = data.users;
-        usersData.edges.map((user: any) => {
-          this.users.push(UserModel.fromJson(user.node));
-        });
-        this.usersTable.rows = this.users;
-        this.paging.after = data.users.pageInfo.endCursor;
-        this.paging.before = data.users.pageInfo.startCursor;
-        this.pageInfo = data.users.pageInfo;
-        this.isLoading = false;
-      },
-      (error) => {
-        this.errors = error.graphQLErrors.map((x: { message: any }) => x.message);
-        this.isLoading = false;
-      }
-    );
+  public onPageChange(paging: Paging): void {
+    this.userRequestOptions.paging = paging;
+    this.getUsers();
   }
 
-  navigatePages(direction: 'next' | 'previous', pageSize: number = 10) {
-    this.paging = this.paginationService.navigatePages(this.paging, direction, pageSize);
-    this.getUsers(this.paging);
+  public onSort(sorting: SortField<FormattedUser>[]): void {
+    this.userRequestOptions.sorting = sorting;
+    this.getUsers();
   }
 
-  handleRowClick(event: any) {
-    const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.users[event.index]), environment.secretKey).toString();
+  public onFilter(filter: Filter): void {
+    this.userRequestOptions.filter = filter;
+    this.getUsers();
+  }
+
+  public onSearch(searchString: string): void {
+    this.userRequestOptions.filter = { or: this.createSearchFilter(searchString) };
+    this.getUsers();
+  }
+
+  public onUserSelect(user: FormattedUser): void {
+    const dataString = CryptoJS.AES.encrypt(JSON.stringify(user), environment.secretKey).toString();
     this.router.navigate(['/mhira/user-management/user-form'], {
-      state: {
-        title: `${this.users[event.index].firstName} ${this.users[event.index].lastName}`,
-      },
       queryParams: {
         user: dataString,
       },
     });
   }
 
-  changePassword(form: any) {
-    if (this.user.id) {
-      this.isLoading = true;
-      this.loadingMessage = `Updating user ${this.user.firstName} ${this.user.lastName}`;
-      const inputs: UserUpdatePasswordInput = {
-        id: this.user.id,
-        newPassword: form.newPassword,
-        newPasswordConfirmation: form.newPasswordConfirmation,
-      };
-      this.usersService.updateUserPassword(inputs).subscribe(
-        async (_: any) => {
-          this.isLoading = false;
-          this.loadingMessage = '';
-          this.message.create('success', `Password has successfully been changed`);
-        },
-        (error) => {
-          this.isLoading = false;
-          this.loadingMessage = '';
-          const graphError = error.graphQLErrors.map((x: any) => x.message);
-          this.onError(graphError);
-        }
-      );
+  public onAction({ action, context: user }: ActionArgs<FormattedUser, ActionKey>): void {
+    switch (action.key) {
+      case ActionKey.DELETE_USER:
+        this.deleteUser(user);
+        return;
     }
   }
 
-  handleCancel() {
-    this.updatePasswordForm.groups.map((group) => {
-      group.fields.map((field) => {
-        field.value = '';
+  private getUsers(): void {
+    this.loading = true;
+    this.usersService
+      .getUsers(this.userRequestOptions)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(({ data }) => {
+        this.data = data.users.edges.map((user: any) => UserModel.fromJson(user.node));
+        this.pageInfo = data.users.pageInfo;
       });
+  }
+
+  private async deleteUser(user: FormattedUser): Promise<void> {
+    const modal = this.modalService.confirm({
+      nzOnOk: () => true,
+      nzTitle: 'Delete User',
+      nzContent: `
+        Are you sure you want to delete ${user.firstName} ${user.lastName}? This action is irreversible
+      `,
     });
-    this.showModal = false;
+
+    const confirmation = await modal.afterClose.toPromise();
+    if (!confirmation) return;
+
+    this.loading = true;
+    this.usersService
+      .deleteOneUser({ id: user.id })
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        () => this.data.splice(this.data.indexOf(user), 1),
+        () => this.messageService.error('An error occurred could not delete patient', { nzDuration: 3000 })
+      );
   }
 
-  handleOk() {
-    this.showModal = false;
-  }
-
-  onCreateUser() {
-    this.router.navigate([`/mhira/user-management/user-form`]);
-  }
-
-  onError(errors: any) {
-    if (errors.length > 0) {
-      for (const error of errors) {
-        this.message.create('error', `${error}`);
-      }
-    } else {
-      this.message.create('error', `${errors.error.message}`);
-    }
-  }
-
-  showFilterPanelAction() {
-    this.showFilterPanel = true;
-  }
-
-  closeFilterPanel() {
-    this.showFilterPanel = false;
-  }
-
-  filterEvent(data: any) {
-    this.paging = { first: 10 };
-    this.filter = data;
-    this.getUsers(this.paging);
+  private createSearchFilter(searchString: string): Array<{ [K in keyof FormattedUser]: {} }> {
+    if (!searchString) return [];
+    return [
+      { firstName: { iLike: `%${searchString}%` } },
+      { middleName: { iLike: `%${searchString}%` } },
+      { lastName: { iLike: `%${searchString}%` } },
+      { workID: { iLike: `%${searchString}%` } },
+      { phone: { iLike: `%${searchString}%` } },
+      { username: { iLike: `%${searchString}%` } },
+      {
+        roles: {
+          or: [{ name: { iLike: `%${searchString}%` } }],
+        },
+      },
+      {
+        departments: {
+          or: [{ name: { iLike: `%${searchString}%` } }],
+        },
+      },
+    ];
   }
 }
