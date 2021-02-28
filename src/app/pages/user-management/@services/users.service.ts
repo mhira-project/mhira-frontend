@@ -8,6 +8,7 @@ import { CreateOneUserInput, UpdateOneUserInput, User } from '../@types/user';
 import { UserChangePasswordInput, UserUpdatePasswordInput } from '../user-form/user-update-password.type';
 import { Paging } from '@shared/@types/paging';
 import { DeleteOneInput } from '../../../@shared/@types/delete-one-input';
+import { Sorting } from '../../../@shared/@types/sorting';
 
 @Injectable({
   providedIn: 'root',
@@ -15,10 +16,10 @@ import { DeleteOneInput } from '../../../@shared/@types/delete-one-input';
 export class UsersService {
   constructor(private apollo: Apollo) {}
 
-  getUsers(filter?: any, paging?: Paging): Observable<FetchResult<any>> {
+  getUsers(options: { filter?: any; paging?: Paging; sorting?: Sorting[] }): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: UsersQueries.getUsers,
-      variables: { filter, paging },
+      variables: options,
       fetchPolicy: 'no-cache',
     });
   }

@@ -194,7 +194,7 @@ export class CaseManagersComponent implements OnInit {
   searchCaseManagers(keyword: string) {
     this.users = [];
     const options: { label: string; value: number }[] = [];
-    this.usersService.getUsers({ firstName: { iLike: keyword } }).subscribe(
+    this.usersService.getUsers({ filter: { firstName: { iLike: keyword } } }).subscribe(
       async ({ data }) => {
         const users: CaseManager[] = [];
         data.users.edges.map((user: any) => {
