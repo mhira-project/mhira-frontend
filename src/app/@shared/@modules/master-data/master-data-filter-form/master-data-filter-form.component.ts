@@ -60,6 +60,7 @@ export class MasterDataFilterFormComponent<T> {
 
   private getFilter(type: Field['type'], value: any): {} {
     if (value === null) return { is: null };
+    if (typeof value === 'boolean') return { is: value };
 
     switch (type) {
       case 'select':
