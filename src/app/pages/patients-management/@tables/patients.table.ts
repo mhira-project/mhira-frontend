@@ -1,5 +1,6 @@
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
 import { FormattedPatient } from '../@types/formatted-patient';
+import { CaseManager } from '../@types/case-manager';
 
 export const PatientColumns: TableColumn<FormattedPatient>[] = [
   {
@@ -82,7 +83,23 @@ export const PatientColumns: TableColumn<FormattedPatient>[] = [
   {
     title: 'Case Manager',
     name: 'formattedCaseManagers',
+    altName: 'caseManagers',
     render: 'avatar',
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+    filterQuery: (q: number) =>
+      q
+        ? {
+            or: [
+              { firstName: { iLike: `%${q}%` } },
+              { middleName: { iLike: `%${q}%` } },
+              { lastName: { iLike: `%${q}%` } },
+              { workID: { iLike: `%${q}%` } },
+            ] as Array<{ [K in keyof CaseManager]: any }>,
+          }
+        : {},
   },
   {
     title: 'Created Date',
