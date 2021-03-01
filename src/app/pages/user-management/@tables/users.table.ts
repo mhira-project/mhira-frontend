@@ -74,11 +74,25 @@ export const UserColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Roles',
     name: 'formattedRoles',
+    altName: 'roles',
     render: 'tag',
+    filterField: {
+      type: 'select',
+      value: undefined,
+      // options will be added dynamically
+    },
+    filterQuery: (q: number) => (q ? { id: { eq: q } } : { id: { is: null } }),
   },
   {
     title: 'Departments',
     name: 'formattedDepartments',
+    altName: 'departments',
     render: 'tag',
+    filterField: {
+      type: 'select',
+      value: undefined,
+      // options will be added dynamically
+    },
+    filterQuery: (q: number) => ({ id: { eq: q } }),
   },
 ];

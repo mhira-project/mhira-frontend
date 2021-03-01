@@ -19,6 +19,10 @@ import { Filter } from '../../../@shared/@types/filter';
 import { UserColumns } from '../@tables/users.table';
 import { AppPermissionsService } from '@app/@shared/services/app-permissions.service';
 import { PermissionKey } from '@app/@shared/@types/permission';
+import { DepartmentsService } from '../../administration/@services/departments.service';
+import { Department } from '@app/pages/administration/@types/department';
+import { RolesService } from '../../administration/@services/roles.service';
+import { Role } from '@app/pages/administration/@types/role';
 
 const CryptoJS = require('crypto-js');
 
@@ -53,9 +57,13 @@ export class UsersListComponent {
     private router: Router,
     private perms: AppPermissionsService,
     private modalService: NzModalService,
-    private messageService: NzMessageService
+    private messageService: NzMessageService,
+    private departmentsService: DepartmentsService,
+    private rolesService: RolesService
   ) {
     this.getUsers();
+    this.getDepartments();
+    this.getRoles();
 
     if (this.perms.permissionsOnly(PermissionKey.MANAGE_USERS)) {
       this.actions = [{ key: ActionKey.DELETE_USER, title: 'Delete User' }];
@@ -130,6 +138,27 @@ export class UsersListComponent {
         () => this.data.splice(this.data.indexOf(user), 1),
         () => this.messageService.error('An error occurred could not delete patient', { nzDuration: 3000 })
       );
+  }
+
+  private getDepartments(): void {
+    this.departmentsService.departments().subscribe(({ data }) => {
+      const departments: Department[] = data.departments.edges.map((e: any) => e.node);
+      const column = this.columns.find((c) => c.name === 'formattedDepartments');
+      column.filterField.options = departments.map((d) => ({ label: d.name, value: d.id }));
+      this.columns = [...this.columns]; // trigger re-render
+    });
+  }
+
+  private getRoles(): void {
+    this.rolesService.roles().subscribe(({ data }) => {
+      const roles: Role[] = data.roles.edges.map((e: any) => e.node);
+      const column = this.columns.find((c) => c.name === 'formattedRoles');
+      column.filterField.options = [
+        ...roles.map((r) => ({ label: r.name, value: r.id })),
+        { label: 'No role', value: null },
+      ];
+      this.columns = [...this.columns]; // trigger re-render
+    });
   }
 
   private createSearchFilter(searchString: string): Array<{ [K in keyof FormattedUser]: {} }> {
