@@ -52,13 +52,14 @@ export class MasterDataFilterFormComponent<T> {
       .filter(([_, value]) => value !== undefined)
       .map(([key, value]) => {
         const column = this.columns.find((c) => (c.altName ?? c.name) === key);
-        return { [key]: this.getFilter(column.filterField.type, value) };
+        return { [key]: this.getFilter(column.filterField.type, value, column.filterQuery) };
       });
 
     this.filter.emit({ and: filters });
   }
 
-  private getFilter(type: Field['type'], value: any): {} {
+  private getFilter(type: Field['type'], value: any, filterQuery?: TableColumn<T>['filterQuery']): {} {
+    if (filterQuery) return filterQuery(value);
     if (value === null) return { is: null };
     if (typeof value === 'boolean') return { is: value };
 

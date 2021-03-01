@@ -7,6 +7,7 @@ export interface TableColumn<T> {
   sort?: boolean;
   altName?: keyof T;
   filterField?: Field;
+  filterQuery?: (q: any) => {} | [];
 }
 
 export interface TagInfo {
