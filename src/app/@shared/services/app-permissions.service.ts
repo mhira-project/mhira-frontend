@@ -49,7 +49,7 @@ export class AppPermissionsService {
 
   hasAccessLevelToRole(role: Role): boolean {
     const user = JSON.parse(localStorage.getItem('user')) as User;
-    return !!user?.roles?.some?.((r) => (r.hierarchy > role.hierarchy ? true : false));
+    return !!user?.roles?.some?.((r) => r.hierarchy < role.hierarchy);
   }
 
   hasAccessLevelToUser(accessingUser: User): boolean {
