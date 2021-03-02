@@ -46,12 +46,18 @@ export class FormComponent implements OnInit {
   @Output() rowAdded: EventEmitter<any> = new EventEmitter<any>();
   @Output() rowRemoved: EventEmitter<any> = new EventEmitter<any>();
   @Output() formUpdate: EventEmitter<any> = new EventEmitter<any>();
+  @Output() cancel = new EventEmitter<void>();
   formGroup: FormGroup;
   private _resetForm = false;
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  public onCancel(): void {
+    this.toggleEdit();
+    this.cancel.emit();
+  }
 
   toggleEdit() {
     this.inputMode = !this.inputMode;

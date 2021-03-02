@@ -1,213 +1,153 @@
-import { Component, OnInit } from '@angular/core';
-import { Patient } from '../@types/patient';
-import { table } from '../@tables/patients.table';
+import { Component } from '@angular/core';
+import { PatientColumns } from '../@tables/patients.table';
 import { PatientsService } from '@app/pages/patients-management/@services/patients.service';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
-import { Paging } from '@shared/@types/paging';
-import { Form } from '@shared/components/form/@types/form';
-import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
-import { PatientFilterForm } from '@app/pages/patients-management/@forms/patients-filter.form';
-import { PatientFilter } from '@app/pages/patients-management/@types/patient-filter';
-import { NzMessageService, NzTableQueryParams } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Sorting } from '@shared/@types/sorting';
 import { PatientStatus } from '@app/pages/patients-management/@types/patient-status';
 import { PatientStatusesService } from '@app/pages/patients-management/@services/patient-statuses.service';
-import { PaginationService } from '@shared/services/pagination.service';
+import { FormattedPatient } from '../@types/formatted-patient';
+import { finalize } from 'rxjs/operators';
+import { SelectModalComponent } from '../../../@shared/components/select-modal/select-modal.component';
+import { PageInfo, Paging } from '../../../@shared/@types/paging';
+import { Filter } from '../../../@shared/@types/filter';
+import { User } from '@app/pages/user-management/@types/user';
 import { PermissionKey } from '@app/@shared/@types/permission';
+import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
+import {
+  TableColumn,
+  SortField,
+  Action,
+  ActionArgs,
+  DEFAULT_PAGE_SIZE,
+} from '../../../@shared/@modules/master-data/@types/list';
 
 const CryptoJS = require('crypto-js');
+
+enum ActionKey {
+  CHANGE_STATUS,
+  DELETE_PATIENT,
+}
 
 @Component({
   selector: 'app-patients',
   templateUrl: './patients-list.component.html',
   styleUrls: ['./patients-list.component.scss'],
 })
-export class PatientsListComponent implements OnInit {
+export class PatientsListComponent {
   PK = PermissionKey;
-  isLoading = false;
-  isVisible = false;
-  isOkLoading = false;
-  isVisibleStatusModal = false;
-  patients: any[] = [];
-  patientStatues: PatientStatus[] = [];
-  filter: PatientFilter = {};
-  paging: Paging = {
-    first: 10,
+
+  public columns: TableColumn<Partial<FormattedPatient>>[] = PatientColumns as TableColumn<Partial<FormattedPatient>>[];
+
+  public data: Partial<FormattedPatient>[];
+
+  public pageInfo: PageInfo;
+
+  public patientRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
+    paging: { first: DEFAULT_PAGE_SIZE },
+    filter: {},
+    sorting: [],
   };
-  pageInfo: any;
-  showFilterPanel = false;
-  patientFilterForm: Form = PatientFilterForm;
-  patientsTable: { columns: any[]; rows: Patient[] } = {
-    columns: table.columns,
-    rows: [],
-  };
-  actions = table.actions;
-  currentPatientIndex: number;
-  statusId: number;
-  errors: string[];
+
+  public end = false;
+
+  public loading = false;
+
+  public actions: Action<ActionKey>[] = [];
+
+  public patientStates: PatientStatus[] = [];
+
+  private onlyMyPatients = false;
 
   constructor(
     private patientsService: PatientsService,
-    private patientStatusesService: PatientStatusesService,
-    private message: NzMessageService,
     private router: Router,
-    public perms: AppPermissionsService,
-    private paginationService: PaginationService
-  ) {}
+    private modalService: NzModalService,
+    private patientStateService: PatientStatusesService,
+    private messageService: NzMessageService,
+    public perms: AppPermissionsService
+  ) {
+    this.getPatients();
+    this.getPatientStates();
 
-  ngOnInit(): void {
-    this.loadPermissions();
-    // to be called from the sort fuction
-    // this.getPatients(this.paging);
-    this.getPatientStatuses();
-  }
-
-  loadPermissions() {
-    if (!this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
-      this.actions = [];
+    if (this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
+      this.actions = [
+        { key: ActionKey.CHANGE_STATUS, title: 'Change Status' },
+        { key: ActionKey.DELETE_PATIENT, title: 'Delete Patient' },
+      ];
     }
   }
 
-  closeFilterPanel() {
-    this.showFilterPanel = false;
+  public searchPatients(searchString: string): void {
+    this.patientRequestOptions.filter = { or: this.createSearchFilter(searchString) };
+    this.getPatients();
   }
 
-  showFilterPanelAction() {
-    this.showFilterPanel = true;
+  public onPageChange(paging: Paging): void {
+    this.patientRequestOptions.paging = paging;
+    this.getPatients();
   }
 
-  getPatients(paging: Paging, sorting: Sorting[] = []) {
-    this.isLoading = true;
-    this.patients = [];
-    this.patientsService.patients({ filter: this.filter, paging, sorting }).subscribe(
-      async ({ data }) => {
-        data.patients.edges.map((patient: any) => {
-          this.patients.push(PatientModel.fromJson(patient.node));
-        });
-        this.patientsTable.rows = this.patients;
-        this.paging.after = data.patients.pageInfo.endCursor;
-        this.paging.before = data.patients.pageInfo.startCursor;
-        this.pageInfo = data.patients.pageInfo;
-        this.isLoading = false;
-        this.closeFilterPanel();
-      },
-      (error) => {
-        this.isLoading = false;
-      }
-    );
+  public onSort(sorting: SortField<FormattedPatient>[]): void {
+    this.patientRequestOptions.sorting = sorting;
+    this.getPatients();
   }
 
-  getPatientStatuses() {
-    this.patientStatues = [];
-    this.patientStatusesService.patientStatuses().subscribe(
-      async ({ data }) => {
-        data.patientStatuses.edges.map((status: any) => {
-          this.patientStatues.push(status.node);
-        });
-      },
-      (error) => {
-        this.isLoading = false;
-      }
-    );
+  public onFilter(filter: Filter): void {
+    this.patientRequestOptions.filter = filter;
+    this.getPatients();
   }
 
-  navigatePages(direction: 'next' | 'previous', pageSize: number = 10) {
-    this.paging = this.paginationService.navigatePages(this.paging, direction, pageSize);
-    this.getPatients(this.paging);
+  public onMyPatients(): void {
+    this.onlyMyPatients = !this.onlyMyPatients;
+    this.getPatients();
   }
 
-  handleCancel(): void {
-    this.isVisible = false;
-  }
-
-  handleCreatePatient(): void {
-    this.router.navigate(['/mhira/case-management/profile']);
-  }
-
-  handleActionClick(event: any): void {
-    this.currentPatientIndex = event.index;
-    switch (event.action.name) {
-      case 'Delete Patient':
-        this.isVisible = true;
-        break;
-
-      case 'Change Status':
-        this.statusId = this.patients[event.index].statusId;
-        this.isVisibleStatusModal = true;
-        break;
-    }
-  }
-
-  handleRowClick(event: any) {
-    const dataString = CryptoJS.AES.encrypt(
-      JSON.stringify(this.patients[event.index]),
-      environment.secretKey
-    ).toString();
+  public onPatientSelect(patient: FormattedPatient): void {
+    const dataString = CryptoJS.AES.encrypt(JSON.stringify(patient), environment.secretKey).toString();
     this.router.navigate(['/mhira/case-management/profile'], {
-      state: {
-        title: `${this.patients[event.index].firstName} ${this.patients[event.index].lastName}`,
-      },
       queryParams: {
         profile: dataString,
       },
     });
   }
 
-  updatePatient(patient: Patient) {
-    this.isOkLoading = true;
-    this.errors = [];
-    patient.statusId = this.statusId;
-    this.patientsService.updatePatient(PatientModel.updateData(patient)).subscribe(
-      async ({ data }) => {
-        patient = PatientModel.fromJson(data.updateOnePatient);
-        this.patients[this.currentPatientIndex] = patient;
-        this.isVisibleStatusModal = false;
-        this.isOkLoading = false;
-        this.message.success('Patient has successful been updated', {
-          nzDuration: 3000,
-        });
-      },
-      (error) => {
-        for (const gqlError of error.graphQLErrors) {
-          this.errors.push(gqlError.message);
-        }
-        this.isVisible = false;
-        this.isOkLoading = false;
-        this.message.error('An error occurred could not update patient', {
-          nzDuration: 3000,
-        });
-      }
-    );
+  public onAction({ action, context: patient }: ActionArgs<FormattedPatient, ActionKey>): void {
+    switch (action.key) {
+      case ActionKey.CHANGE_STATUS:
+        this.changePatientStatus(patient);
+        return;
+      case ActionKey.DELETE_PATIENT:
+        this.deletePatient(patient);
+        return;
+    }
   }
 
-  deletePatient() {
-    this.isOkLoading = true;
-    const patient = this.patients[this.currentPatientIndex];
-    this.patientsService.deletePatient(patient).subscribe(
-      async ({ data }) => {
-        const deletedIndex = this.patients.findIndex((_patient) => _patient.id === patient.id);
-        this.patients.splice(deletedIndex, 1);
-        this.patientsTable.rows.splice(deletedIndex, 1);
-        this.isVisible = false;
-        this.isOkLoading = false;
-      },
-      (error) => {
-        this.isVisible = false;
-        this.isOkLoading = false;
-        for (const gqlError of error.graphQLErrors) {
-          this.errors.push(gqlError.message);
-        }
-        this.message.error('An error occurred could not delete patient', {
-          nzDuration: 3000,
-        });
-      }
-    );
+  private getPatients(): void {
+    this.loading = true;
+    const options = { ...this.patientRequestOptions };
+
+    // apply for only my patients
+    if (this.onlyMyPatients)
+      options.filter = {
+        ...options.filter,
+        and: [{ caseManagers: { id: { eq: this.userId } } }, ...(options.filter.and ?? [])],
+      };
+
+    this.patientsService
+      .patients(options)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe((patients) => {
+        this.data = patients.data.patients.edges.map((e: any) => PatientModel.fromJson(e.node));
+        this.pageInfo = patients.data.patients.pageInfo; // TODO: remove
+      });
   }
 
-  searchPatients(searchString: string) {
-    this.filter.or = [
+  private createSearchFilter(searchString: string) {
+    if (!searchString) return [];
+    return [
       { firstName: { iLike: `%${searchString}%` } },
       { middleName: { iLike: `%${searchString}%` } },
       { lastName: { iLike: `%${searchString}%` } },
@@ -231,37 +171,85 @@ export class PatientsListComponent implements OnInit {
       },
       { medicalRecordNo: { iLike: `%${searchString}%` } },
     ];
-    this.getPatients({ first: 10 });
   }
 
-  sortPatients(params: NzTableQueryParams) {
-    const sorting: Sorting[] = [];
-    params.sort.map((item: { key: string; value: string }) => {
-      sorting.push({
-        field: item.key,
-        direction: item.value === 'ascend' ? 'ASC' : 'DESC',
-      });
+  private getPatientStates() {
+    this.patientStateService.patientStatuses().subscribe((result) => {
+      this.patientStates = result.data.patientStatuses.edges.map((e: any) => e.node);
+
+      // append status options on status filter
+      const statusCol = this.columns.find((c) => c.name === 'formattedStatus');
+      statusCol.filterField.options = [
+        ...this.patientStates.map((ps) => ({ label: ps.name, value: ps.id })),
+        { label: 'not set', value: null },
+      ];
+      this.columns = [...this.columns]; // trigger setter to re-render filter
+    });
+  }
+
+  private async changePatientStatus(patient: FormattedPatient): Promise<void> {
+    // create state modal
+    const modal = this.modalService.create<SelectModalComponent<PatientStatus>>({
+      nzTitle: `Change status of ${patient.firstName} ${patient.lastName}`,
+      nzContent: SelectModalComponent,
+      nzComponentParams: {
+        options: this.patientStates,
+        selected: this.patientStates.find((s) => s.id === patient.statusId),
+        titleField: 'name',
+      },
+      nzOnOk: (m) => m.selected,
     });
 
-    this.getPatients({ first: 10 }, sorting);
+    // wait for modal to successfully complete
+    const state: PatientStatus = await modal.afterClose.toPromise();
+    if (!state) return;
+
+    // update patient
+    patient.statusId = state.id;
+    this.loading = true;
+    this.patientsService
+      .updatePatient(PatientModel.updateData(patient))
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        ({ data }) => {
+          patient = PatientModel.fromJson(data.updateOnePatient);
+          this.data.splice(
+            this.data.findIndex((p) => p.id === patient.id),
+            1,
+            patient
+          );
+        },
+        () => this.messageService.error('An error occurred could not update patient', { nzDuration: 3000 })
+      );
   }
 
-  filterPatients(filter: PatientFilter) {
-    for (const [key, value] of Object.entries(filter)) {
-      if (value === null || value === '') {
-        this.filter[key] = undefined;
-        continue;
-      }
-      if (key === 'active') {
-        this.filter[key] = { is: value };
-        continue;
-      }
-      if (key === 'createdAt') {
-        this.filter[key] = { between: { lower: value[0], upper: value[1] } };
-        continue;
-      }
-      this.filter[key] = { iLike: `%${value}%` };
-    }
-    this.getPatients({ first: 10 });
+  private async deletePatient(patient: FormattedPatient): Promise<void> {
+    // create confirmation modal
+    const modal = this.modalService.confirm({
+      nzOnOk: () => true,
+      nzTitle: 'Delete Patient',
+      nzContent: `
+        Are you sure you want to delete ${patient.firstName} ${patient.lastName}? This action is irreversible
+      `,
+    });
+
+    // wait for modal to successfully complete
+    const confirmation = await modal.afterClose.toPromise();
+    if (!confirmation) return;
+
+    // delete patient
+    this.loading = true;
+    this.patientsService
+      .deletePatient(patient)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        () => this.data.splice(this.data.indexOf(patient), 1),
+        () => this.messageService.error('An error occurred could not delete patient', { nzDuration: 3000 })
+      );
+  }
+
+  private get userId(): number {
+    const user = JSON.parse(localStorage.getItem('user')) as User;
+    return user.id ?? 0;
   }
 }

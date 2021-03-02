@@ -1,0 +1,14 @@
+<nz-input-group [nzSuffix]="suffixIconSearch">
+  <input
+    #field
+    type="text"
+    placeholder="Search"
+    nz-input
+    [debounceTime]="300"
+    (ngxInputSearch)="search.emit(field.value)"
+    (emptyInput)="search.emit(field.value)"
+  />
+</nz-input-group>
+<ng-template #suffixIconSearch>
+  <i nz-icon nzType="search"></i>
+</ng-template>

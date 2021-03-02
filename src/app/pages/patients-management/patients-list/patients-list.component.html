@@ -1,74 +1,24 @@
-<div nz-row>
-  <div nz-col nzSpan="24">
-    <app-table
-      [loading]="isLoading"
-      [showPagination]="false"
-      [showFilterButton]="true"
-      [showCustomActions]="true"
-      [showSearch]="true"
-      [showCheckBoxColumn]="false"
-      [listOfCustomActions]="actions"
-      [listOfData]="patientsTable.rows"
-      [listOfColumn]="patientsTable.columns"
-      [showButton]="perms.permissionsOnly([PK.MANAGE_PATIENTS])"
-      [buttonText]="'Create Patient'"
-      [hasNextPage]="pageInfo?.hasNextPage"
-      [hasPreviousPage]="pageInfo?.hasPreviousPage"
-      (onNext)="navigatePages('next')"
-      (onPrevious)="navigatePages('previous')"
-      (onFilterButton)="showFilterPanelAction()"
-      (onAction)="handleActionClick($event)"
-      (onButton)="handleCreatePatient()"
-      (rowClick)="handleRowClick($event)"
-      (onSearch)="searchPatients($event)"
-      (onParamChange)="sortPatients($event)"
-    >
-    </app-table>
-  </div>
-</div>
-<nz-modal
-  [(nzVisible)]="isVisible"
-  nzTitle="Delete Patient"
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="deletePatient()"
-  [nzOkLoading]="isOkLoading"
+<app-master-data-list
+  [data]="data"
+  [columns]="columns"
+  [loading]="loading"
+  [actions]="actions"
+  [pageInfo]="pageInfo"
+  (pageChange)="onPageChange($event)"
+  (rowClick)="onPatientSelect($event)"
+  (executeAction)="onAction($event)"
+  (sort)="onSort($event)"
+  (filter)="onFilter($event)"
 >
-  <p>
-    Are you sure you want to delete
-    <b>{{ patients[currentPatientIndex]?.firstName }} {{ patients[currentPatientIndex]?.lastName }}</b
-    >? This action is irreversible
-  </p>
-</nz-modal>
-<nz-drawer
-  [nzMask]="false"
-  [nzClosable]="true"
-  [nzVisible]="showFilterPanel"
-  nzPlacement="right"
-  nzTitle="Filter Patients"
-  (nzOnClose)="closeFilterPanel()"
->
-  <app-custom-filter
-    [form]="patientFilterForm"
-    [processFilter]="false"
-    (submitForm)="filterPatients($event)"
-  ></app-custom-filter>
-</nz-drawer>
-
-<!--status modal-->
-<nz-modal
-  *ngIf="currentPatientIndex > -1"
-  [(nzVisible)]="isVisibleStatusModal"
-  nzTitle="Change status for {{ patients[currentPatientIndex].firstName }} {{ patients[currentPatientIndex].lastName }}"
-  (nzOnCancel)="isVisibleStatusModal = false"
-  (nzOnOk)="updatePatient(patients[currentPatientIndex])"
-  [nzOkLoading]="isOkLoading"
->
-  <ng-container>
-    <div class="errors">
-      <nz-alert *ngFor="let error of errors" nzType="error" [nzDescription]="error" nzShowIcon></nz-alert>
-    </div>
-    <nz-select [(ngModel)]="statusId" style="width: 100%">
-      <nz-option *ngFor="let status of patientStatues" [nzValue]="status.id" [nzLabel]="status.name"></nz-option>
-    </nz-select>
+  <ng-container actions-left>
+    <app-master-data-search (search)="searchPatients($event)"></app-master-data-search>
+    <button nz-button nzType="primary" (click)="onMyPatients()" *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS])">
+      My Patients
+    </button>
   </ng-container>
-</nz-modal>
+  <ng-container actions-right>
+    <button nz-button nzType="primary" nzShape="circle" routerLink="/mhira/case-management/profile">
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>

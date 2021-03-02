@@ -30,6 +30,7 @@ import { EmergencyContactsService } from './@services/contacts.service';
 import { InformantsListComponent } from './informants-list/informants-list.component';
 import { PatientStatusesService } from './@services/patient-statuses.service';
 import { FormsModule } from '@angular/forms';
+import { MasterDataModule } from '../../@shared/@modules/master-data/master-data.module';
 
 const antModules = [
   NzGridModule,
@@ -57,6 +58,7 @@ const antModules = [
     TranslateModule,
     SharedModule,
     PatientsManagementRoutingModule,
+    MasterDataModule,
   ],
   declarations: [
     PatientsListComponent,

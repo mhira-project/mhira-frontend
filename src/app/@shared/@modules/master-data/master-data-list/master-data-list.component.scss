@@ -1,0 +1,18 @@
+section + section {
+  margin-top: 2em;
+}
+
+section.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+section.list {
+  overflow-x: auto;
+}
+
+section.paging {
+  display: flex;
+  justify-content: space-between;
+}

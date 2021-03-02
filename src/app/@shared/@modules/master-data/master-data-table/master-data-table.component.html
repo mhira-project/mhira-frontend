@@ -1,0 +1,35 @@
+<nz-table
+  #table
+  [nzData]="data"
+  [nzFrontPagination]="false"
+  [nzShowPagination]="false"
+  [nzLoading]="loading"
+  (nzQueryParams)="onSort($event)"
+>
+  <thead>
+    <tr>
+      <th *ngFor="let column of columns" [nzColumnKey]="column.name" [nzSortFn]="column.sort">{{ column.title }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of table.data" (click)="rowClick.emit(d)" (contextmenu)="onOpenContextMenu($event, d)">
+      <td *ngFor="let column of columns">
+        <ng-container [ngSwitch]="column.render">
+          <span *ngSwitchCase="'html'" [innerHTML]="d[column.name] | noSanitize"></span>
+          <span *ngSwitchCase="'date'">
+            <ng-container *ngIf="d[column.name]">{{ d[column.name] | formatDate }}</ng-container>
+          </span>
+          <span *ngSwitchCase="'tag'">
+            <nz-tag *ngFor="let tag of [d[column.name]].flat()" [nzColor]="tag.color">
+              {{ tag.title }}
+            </nz-tag>
+          </span>
+          <span *ngSwitchCase="'avatar'">
+            <nz-avatar *ngFor="let avatar of [d[column.name]].flat()" [nzText]="avatar"></nz-avatar>
+          </span>
+          <span *ngSwitchDefault>{{ d[column.name] }}</span>
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
