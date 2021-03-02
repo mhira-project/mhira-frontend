@@ -6,6 +6,8 @@ export interface Role {
   name: string;
   guard: string;
   isSuperAdmin?: boolean;
+  hierarchy: number;
+  code: string;
   createdAt?: number;
   updatedAt?: number;
   users?: User[];

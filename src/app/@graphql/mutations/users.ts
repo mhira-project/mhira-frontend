@@ -29,6 +29,9 @@ const createOneUser = gql`
         id
         name
         guard
+        isSuperAdmin
+        hierarchy
+        code
         createdAt
         updatedAt
       }
@@ -72,6 +75,9 @@ const updateOneUser = gql`
         id
         name
         guard
+        isSuperAdmin
+        hierarchy
+        code
         createdAt
         updatedAt
       }

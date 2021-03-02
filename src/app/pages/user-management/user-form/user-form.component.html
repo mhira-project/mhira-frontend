@@ -24,7 +24,12 @@
             <div nz-row>
               <div nz-col nzSpan="24" *ngFor="let role of roles">
                 <label
-                  [disabled]="isCurrentUser() || !perms.permissionsOnly([PK.MANAGE_ROLES])"
+                  [disabled]="
+                    isCurrentUser() ||
+                    !perms.permissionsOnly([PK.MANAGE_ROLES]) ||
+                    !perms.hasAccessLevelToRole(role) ||
+                    !perms.hasAccessLevelToUser(user)
+                  "
                   nz-checkbox
                   [nzValue]="role.id"
                   [ngModel]="userHasRole(role.id)"
@@ -45,7 +50,11 @@
             <div nz-row>
               <div nz-col nzSpan="24" *ngFor="let department of departments">
                 <label
-                  [disabled]="isCurrentUser() || !perms.permissionsOnly([PK.MANAGE_OWN_PROFILE, PK.MANAGE_DEPARTMENTS])"
+                  [disabled]="
+                    isCurrentUser() ||
+                    !perms.permissionsOnly([PK.MANAGE_OWN_PROFILE, PK.MANAGE_DEPARTMENTS]) ||
+                    !perms.hasAccessLevelToUser(user)
+                  "
                   nz-checkbox
                   [nzValue]="department.id"
                   [ngModel]="userHasDepartment(department.id)"
@@ -62,7 +71,9 @@
         <nz-card style="width: 300px" nzTitle="Enable or Disable {{ user?.firstName }}">
           <p>To disable and Enable {{ user?.firstName }} toggle the switch below.</p>
           <nz-switch
-            [disabled]="isCurrentUser() || !perms.permissionsOnly([PK.MANAGE_DEPARTMENTS])"
+            [disabled]="
+              isCurrentUser() || !perms.permissionsOnly([PK.MANAGE_USERS]) || !perms.hasAccessLevelToUser(user)
+            "
             (ngModelChange)="activateUser(user)"
             [(ngModel)]="user.active"
           ></nz-switch>
@@ -74,7 +85,14 @@
       >
         <nz-card style="width: 300px" nzTitle="Change {{ user?.firstName }}'s password">
           <p>To change password for {{ user.firstName }} toggle the button below.</p>
-          <button (click)="showChangePasswordForm()" nz-button nzType="primary">Change Password</button>
+          <button
+            [disabled]="!perms.hasAccessLevelToUser(user)"
+            (click)="showChangePasswordForm()"
+            nz-button
+            nzType="primary"
+          >
+            Change Password
+          </button>
         </nz-card>
       </div>
       <div
@@ -83,7 +101,14 @@
       >
         <nz-card style="width: 300px" nzTitle="Delete User {{ user?.firstName }} ({{ user?.username }})">
           <p>To remove User {{ user?.firstName }} toggle the button below.</p>
-          <button (click)="handleDeleteAction(user)" nz-button nzType="danger">Delete User</button>
+          <button
+            [disabled]="!perms.hasAccessLevelToUser(user)"
+            (click)="handleDeleteAction(user)"
+            nz-button
+            nzType="danger"
+          >
+            Delete User
+          </button>
         </nz-card>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { Permission } from '../../pages/administration/@types/permission';
 import { Injectable } from '@angular/core';
 import { PermissionKey, isPermissionKey, isPermissionKeyArray } from '../@types/permission';
 import { User } from '@app/pages/user-management/@types/user';
+import { Role } from '@app/pages/administration/@types/role';
 
 @Injectable({
   providedIn: 'root',
@@ -44,5 +45,16 @@ export class AppPermissionsService {
   private isSuperAdmin(): boolean {
     const user = JSON.parse(localStorage.getItem('user')) as User;
     return !!user?.roles?.find?.((role) => role.isSuperAdmin);
+  }
+
+  hasAccessLevelToRole(role: Role): boolean {
+    const user = JSON.parse(localStorage.getItem('user')) as User;
+    return !!user?.roles?.some?.((r) => (r.hierarchy > role.hierarchy ? true : false));
+  }
+
+  hasAccessLevelToUser(accessingUser: User): boolean {
+    const user = JSON.parse(localStorage.getItem('user')) as User;
+    const q: boolean = !!user?.roles?.some?.((r) => accessingUser?.roles?.every?.((ar) => r < ar));
+    return q;
   }
 }

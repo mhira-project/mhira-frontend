@@ -32,6 +32,8 @@ const permissions = gql`
             id
             name
             guard
+            hierarchy
+            code
             createdAt
             updatedAt
           }
