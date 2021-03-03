@@ -1,48 +1,21 @@
-<app-table
-  [showSearch]="false"
-  [buttonText]="'Add User '"
-  [showFilterButton]="true"
-  [loading]="isLoading"
-  [showCustomActions]="perms.permissionsOnly([PK.MANAGE_USERS])"
-  [listOfCustomActions]="actions"
-  [listOfData]="usersTable.rows"
-  [listOfColumn]="usersTable.columns"
-  [showPagination]="false"
-  [showCheckBoxColumn]="false"
-  [showButton]="perms.permissionsOnly([PK.MANAGE_USERS])"
-  [hasPreviousPage]="pageInfo?.hasPreviousPage"
-  [hasNextPage]="pageInfo?.hasNextPage"
-  (onNext)="navigatePages('next')"
-  [showActionColumn]="false"
-  (onPrevious)="navigatePages('previous')"
-  (onFilterButton)="showFilterPanelAction()"
-  (onButton)="onCreateUser()"
-  (rowClick)="handleRowClick($event)"
+<app-master-data-list
+  [data]="data"
+  [columns]="columns"
+  [loading]="loading"
+  [pageInfo]="pageInfo"
+  [actions]="actions"
+  (pageChange)="onPageChange($event)"
+  (sort)="onSort($event)"
+  (filter)="onFilter($event)"
+  (rowClick)="onUserSelect($event)"
+  (executeAction)="onAction($event)"
 >
-</app-table>
-<nz-modal
-  *ngIf="modalType"
-  [(nzVisible)]="showModal"
-  [nzTitle]="modalType?.title"
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()"
-  [nzFooter]="null"
->
-  <app-form
-    [isLoading]="isLoading"
-    [loadingMessage]="loadingMessage"
-    (submitForm)="changePassword($event)"
-    [form]="updatePasswordForm"
-  ></app-form>
-</nz-modal>
-
-<nz-drawer
-  [nzMask]="false"
-  [nzClosable]="true"
-  [nzVisible]="showFilterPanel"
-  nzPlacement="right"
-  nzTitle="Filter Users"
-  (nzOnClose)="closeFilterPanel()"
->
-  <app-custom-filter [form]="filterForm" (submitForm)="filterEvent($event)"></app-custom-filter>
-</nz-drawer>
+  <ng-container actions-left>
+    <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
+  </ng-container>
+  <ng-container actions-right>
+    <button nz-button nzType="primary" nzShape="circle" routerLink="/mhira/user-management/user-form">
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>

@@ -1,54 +1,98 @@
-const actions: any[] = [
-  {
-    type: 'delete',
-    name: 'Delete User',
-  },
-];
+import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
+import { FormattedUser } from '../@types/formatted-user';
 
-const columns: any[] = [
+export const UserColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'First name',
     name: 'firstName',
-    isFilterable: true,
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  },
+  {
+    title: 'Middle name',
+    name: 'middleName',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
     title: 'Last name',
     name: 'lastName',
-    isFilterable: true,
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
     title: 'Work ID',
     name: 'workID',
-    isFilterable: true,
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
     title: 'Phone',
     name: 'phone',
-    isFilterable: false,
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
     title: 'Username',
     name: 'username',
-    isFilterable: false,
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  },
+  {
+    title: 'Status',
+    name: 'formattedStatus',
+    altName: 'active',
+    render: 'tag',
+    sort: true,
+    filterField: {
+      type: 'select',
+      value: undefined,
+      options: [
+        { label: 'Inactive', value: false },
+        { label: 'Active', value: true },
+      ],
+    },
   },
   {
     title: 'Roles',
     name: 'formattedRoles',
-    isFilterable: false,
-  },
-  {
-    title: 'Active',
-    name: 'formattedStatus',
-    isFilterable: false,
+    altName: 'roles',
+    render: 'tag',
+    filterField: {
+      type: 'select',
+      value: undefined,
+      // options will be added dynamically
+    },
+    filterQuery: (q: number) => (q ? { id: { eq: q } } : { id: { is: null } }),
   },
   {
     title: 'Departments',
     name: 'formattedDepartments',
-    isFilterable: false,
+    altName: 'departments',
+    render: 'tag',
+    filterField: {
+      type: 'select',
+      value: undefined,
+      // options will be added dynamically
+    },
+    filterQuery: (q: number) => ({ id: { eq: q } }),
   },
 ];
-
-export const userTable = {
-  actions,
-  columns,
-};
