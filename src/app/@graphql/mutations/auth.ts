@@ -24,6 +24,8 @@ const login = gql`
           name
           guard
           isSuperAdmin
+          hierarchy
+          code
           createdAt
           updatedAt
         }

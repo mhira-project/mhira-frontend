@@ -10,6 +10,8 @@ const roles = gql`
           name
           guard
           isSuperAdmin
+          hierarchy
+          code
           createdAt
           updatedAt
           users {

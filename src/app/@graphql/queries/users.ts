@@ -37,6 +37,8 @@ const getUsers = gql`
             id
             name
             isSuperAdmin
+            hierarchy
+            code
             guard
             createdAt
             updatedAt
