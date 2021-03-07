@@ -16,7 +16,7 @@
       (submitForm)="submitForm($event)"
     ></app-form>
   </nz-tab>
-  <nz-tab nzTitle="Settings" *ngIf="perms.permissionsOnly([PK.VIEW_OWN_PROFILE, PK.MANAGE_USERS])">
+  <nz-tab nzTitle="Settings" *ngIf="perms.permissionsOnly([PK.MANAGE_USERS]) && perms.hasAccessLevelToUser(user)">
     <div nz-row nzGutter="16">
       <div *ngIf="roles.length > 0" nz-col>
         <nz-card style="width: 300px" nzTitle="{{ user?.firstName }}'s Roles">
@@ -24,12 +24,7 @@
             <div nz-row>
               <div nz-col nzSpan="24" *ngFor="let role of roles">
                 <label
-                  [disabled]="
-                    isCurrentUser() ||
-                    !perms.permissionsOnly([PK.MANAGE_ROLES]) ||
-                    !perms.hasAccessLevelToRole(role) ||
-                    !perms.hasAccessLevelToUser(user)
-                  "
+                  [disabled]="!perms.hasAccessLevelToRole(role)"
                   nz-checkbox
                   [nzValue]="role.id"
                   [ngModel]="userHasRole(role.id)"
@@ -40,21 +35,13 @@
             </div>
           </nz-checkbox-wrapper>
         </nz-card>
-        <!--<ng-template #rolesTemplate>
-          <a *ngIf="roles.length > 0" nz-button nzSize="small" (click)="submitRoles()">Save</a>
-        </ng-template>-->
       </div>
-      <div *ngIf="departments.length > 0" nz-col>
+      <div nz-col>
         <nz-card style="width: 300px" nzTitle="{{ user?.firstName }}'s Departments">
           <nz-checkbox-wrapper style="width: 100%">
             <div nz-row>
               <div nz-col nzSpan="24" *ngFor="let department of departments">
                 <label
-                  [disabled]="
-                    isCurrentUser() ||
-                    !perms.permissionsOnly([PK.MANAGE_OWN_PROFILE, PK.MANAGE_DEPARTMENTS]) ||
-                    !perms.hasAccessLevelToUser(user)
-                  "
                   nz-checkbox
                   [nzValue]="department.id"
                   [ngModel]="userHasDepartment(department.id)"
@@ -67,42 +54,23 @@
         </nz-card>
       </div>
 
-      <div nz-col *ngIf="perms.permissionsOnly([PK.MANAGE_USERS])">
+      <div nz-col>
         <nz-card style="width: 300px" nzTitle="Enable or Disable {{ user?.firstName }}">
           <p>To disable and Enable {{ user?.firstName }} toggle the switch below.</p>
-          <nz-switch
-            [disabled]="
-              isCurrentUser() || !perms.permissionsOnly([PK.MANAGE_USERS]) || !perms.hasAccessLevelToUser(user)
-            "
-            (ngModelChange)="activateUser(user)"
-            [(ngModel)]="user.active"
-          ></nz-switch>
+          <nz-switch (ngModelChange)="activateUser(user)" [(ngModel)]="user.active"></nz-switch>
         </nz-card>
       </div>
-      <div
-        *ngIf="!isCurrentUser() && perms.permissionsOnly([PK.MANAGE_DEPARTMENTS, PK.MANAGE_USERS, PK.MANAGE_ROLES])"
-        nz-col
-      >
+      <div nz-col>
         <nz-card style="width: 300px" nzTitle="Change {{ user?.firstName }}'s password">
           <p>To change password for {{ user.firstName }} toggle the button below.</p>
-          <button
-            [disabled]="!perms.hasAccessLevelToUser(user)"
-            (click)="showChangePasswordForm()"
-            nz-button
-            nzType="primary"
-          >
-            Change Password
-          </button>
+          <button (click)="showChangePasswordForm()" nz-button nzType="primary">Change Password</button>
         </nz-card>
       </div>
-      <div
-        *ngIf="!isCurrentUser() && perms.permissionsOnly([PK.MANAGE_DEPARTMENTS, PK.MANAGE_USERS, PK.MANAGE_ROLES])"
-        nz-col
-      >
+      <div nz-col>
         <nz-card style="width: 300px" nzTitle="Delete User {{ user?.firstName }} ({{ user?.username }})">
           <p>To remove User {{ user?.firstName }} toggle the button below.</p>
           <button
-            [disabled]="!perms.hasAccessLevelToUser(user)"
+            [disabled]="!perms.permissionsOnly([PK.DELETE_USERS])"
             (click)="handleDeleteAction(user)"
             nz-button
             nzType="danger"
@@ -114,23 +82,22 @@
     </div>
   </nz-tab>
 </nz-tabset>
-<nz-tabset>
-  <nz-modal
-    [(nzVisible)]="showModal"
-    [nzTitle]="modalType?.title"
-    (nzOnCancel)="handleCancel()"
-    (nzOnOk)="clickChangePassword()"
-  >
-    <app-form
-      [form]="updatePasswordForm"
-      [formData]="user"
-      [isLoading]="isLoading"
-      [populateForm]="populateForm"
-      [resetForm]="resetForm"
-      [showSubmitButton]="false"
-      [showCancelButton]="false"
-      [loadingMessage]="loadingMessage"
-      (submitForm)="submitForm($event)"
-    ></app-form>
-  </nz-modal>
-</nz-tabset>
+
+<nz-modal
+  [(nzVisible)]="showModal"
+  [nzTitle]="modalType?.title"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="clickChangePassword()"
+>
+  <app-form
+    [form]="updatePasswordForm"
+    [formData]="user"
+    [isLoading]="isLoading"
+    [populateForm]="populateForm"
+    [resetForm]="resetForm"
+    [showSubmitButton]="false"
+    [showCancelButton]="false"
+    [loadingMessage]="loadingMessage"
+    (submitForm)="submitForm($event)"
+  ></app-form>
+</nz-modal>

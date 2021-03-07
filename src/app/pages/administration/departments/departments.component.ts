@@ -125,6 +125,8 @@ export class DepartmentsComponent implements OnInit {
   }
 
   handleRowClick(event: any) {
+    if (!this.perms.permissionsOnly([PermissionKey.MANAGE_SETTINGS])) return;
+
     this.department = this.departments[event.index];
     this.populateForm = true;
     this.toggleCreatePanel(false);

@@ -20,7 +20,7 @@ const routes: Routes = [
           title: extract('System Configuration'),
           breadcrumb: extract('System Configuration'),
           permissions: {
-            only: [PermissionKey.MANAGE_SETTINGS],
+            only: [PermissionKey.VIEW_SYSCONF],
           },
         },
         canActivate: [PermissionGuard],
@@ -32,7 +32,7 @@ const routes: Routes = [
           title: extract('Patient Statuses'),
           breadcrumb: extract('Patient Statuses'),
           permissions: {
-            only: [PermissionKey.MANAGE_SETTINGS],
+            only: [PermissionKey.VIEW_SETTINGS],
           },
         },
         canActivate: [PermissionGuard],

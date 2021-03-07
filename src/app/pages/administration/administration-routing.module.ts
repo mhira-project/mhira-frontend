@@ -22,7 +22,7 @@ const routes: Routes = [
           title: extract('Permission Matrix'),
           breadcrumb: extract('Permission Matrix'),
           permissions: {
-            only: [PermissionKey.VIEW_ROLES],
+            only: [PermissionKey.VIEW_ROLES_PERMISSIONS],
           },
         },
         canActivate: [PermissionGuard],
@@ -34,7 +34,7 @@ const routes: Routes = [
           title: extract('Roles'),
           breadcrumb: extract('Roles'),
           permissions: {
-            only: [PermissionKey.VIEW_ROLES],
+            only: [PermissionKey.VIEW_ROLES_PERMISSIONS],
           },
         },
         canActivate: [PermissionGuard],
@@ -54,7 +54,7 @@ const routes: Routes = [
           title: extract('Permissions'),
           breadcrumb: extract('Permissions'),
           permissions: {
-            only: [PermissionKey.VIEW_ROLES],
+            only: [PermissionKey.VIEW_ROLES_PERMISSIONS],
           },
         },
         canActivate: [PermissionGuard],
@@ -66,7 +66,7 @@ const routes: Routes = [
           title: extract('Departments'),
           breadcrumb: extract('Departments'),
           permissions: {
-            only: [PermissionKey.VIEW_DEPARTMENTS],
+            only: [PermissionKey.VIEW_SETTINGS],
           },
         },
         canActivate: [PermissionGuard],
