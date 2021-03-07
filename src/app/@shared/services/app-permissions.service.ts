@@ -17,8 +17,7 @@ export class AppPermissionsService {
 
   hasAccessLevelToUser(accessingUser: User): boolean {
     const user = JSON.parse(localStorage.getItem('user')) as User;
-    const q: boolean = !!user?.roles?.some?.((r) => accessingUser?.roles?.every?.((ar) => r < ar));
-    return q;
+    return !!user?.roles?.some?.((r) => accessingUser?.roles?.every?.((ar) => r.hierarchy < ar.hierarchy));
   }
 
   permissionsOnly(action: PermissionKey | PermissionKey[]): boolean {
