@@ -1,27 +1,29 @@
-<div nz-row>
-  <div nz-col nzSpan="24">
-    <app-table
-      [loading]="isLoading"
-      [showPagination]="false"
-      [showCustomActions]="true"
-      [showSearch]="false"
-      [showCheckBoxColumn]="false"
-      [listOfCustomActions]="actions"
-      [listOfData]="departmentsTable.rows"
-      [listOfColumn]="departmentsTable.columns"
-      [showButton]="perms.permissionsOnly(PK.MANAGE_DEPARTMENTS)"
-      [buttonText]="'Create Department'"
-      [hasNextPage]="pageInfo?.hasNextPage"
-      [hasPreviousPage]="pageInfo?.hasPreviousPage"
-      (onNext)="navigatePages('next')"
-      (onPrevious)="navigatePages('previous')"
-      (onAction)="handleActionClick($event)"
-      (rowClick)="handleRowClick($event)"
-      (onButton)="toggleCreatePanel()"
+<app-master-data-list
+  [data]="data"
+  [columns]="columns"
+  [loading]="isLoading"
+  [pageInfo]="pageInfo"
+  [actions]="actions"
+  (pageChange)="onPageChange($event)"
+  (sort)="onSort($event)"
+  (filter)="onFilter($event)"
+  (executeAction)="onAction($event)"
+>
+  <ng-container actions-left>
+    <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
+  </ng-container>
+  <ng-container actions-right>
+    <button
+      nz-button
+      nzType="primary"
+      nzShape="circle"
+      (click)="openCreatePanel()"
+      *ngIf="perms.permissionsOnly(PK.MANAGE_DEPARTMENTS)"
     >
-    </app-table>
-  </div>
-</div>
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>
 
 <nz-drawer
   [nzMask]="true"
@@ -29,7 +31,7 @@
   [nzMaskClosable]="false"
   [nzVisible]="showCreateDepartment"
   nzPlacement="right"
-  [nzTitle]="panelTitle"
+  [nzTitle]="department?.id ? 'Edit Department' : 'Create Department'"
   (nzOnClose)="closeCreatePanel()"
 >
   <app-form
@@ -39,10 +41,9 @@
     [isLoading]="isLoading"
     [populateForm]="populateForm"
     [resetForm]="resetForm"
-    [inputMode]="inputMode"
-    [showCancelButton]="showCancelButton"
-    [loadingMessage]="loadingMessage"
-    (submitForm)="submitForm($event)"
+    [inputMode]="true"
+    [showCancelButton]="false"
+    (submitForm)="onSubmitForm($event)"
   >
   </app-form>
 </nz-drawer>

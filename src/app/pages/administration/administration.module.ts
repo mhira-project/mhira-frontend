@@ -30,6 +30,7 @@ import { RolesService } from './@services/roles.service';
 import { FormsModule } from '@angular/forms';
 import { DepartmentsComponent } from './departments/departments.component';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
+import { MasterDataModule } from '../../@shared/@modules/master-data/master-data.module';
 
 const antModules = [
   NzGridModule,
@@ -62,6 +63,7 @@ const antModules = [
     SharedModule,
     AdministrationRoutingModule,
     NzSwitchModule,
+    MasterDataModule,
   ],
   declarations: [RolesAndPermissionsComponent, PermissionsComponent, RolesComponent, DepartmentsComponent],
   providers: [PermissionsService, RolesService],
