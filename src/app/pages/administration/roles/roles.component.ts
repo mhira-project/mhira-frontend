@@ -129,6 +129,14 @@ export class RolesComponent implements OnInit {
     this.toggleCreatePanel(false);
   }
 
+  disableEnableFields() {
+    this.roleForms.groups.map((group) =>
+      group.fields.map((field) => {
+        field.name === 'hierarchy' && this.perms.isSuperAdmin ? (field.disabled = false) : (field.disabled = true);
+      })
+    );
+  }
+
   closeCreatePanel() {
     this.populateForm = false;
     this.resetForm = false;
@@ -136,6 +144,7 @@ export class RolesComponent implements OnInit {
   }
 
   toggleCreatePanel(create: boolean = true) {
+    this.disableEnableFields();
     this.showCreateRole = !this.showCreateRole;
     this.isCreateAction = create;
     if (create) {
