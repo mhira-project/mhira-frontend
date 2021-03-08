@@ -6,14 +6,12 @@ import { FetchResult } from 'apollo-link';
 import { Router } from '@angular/router';
 import { SettingsQueries } from '@app/@graphql/queries/settings';
 import { PermissionsQueries } from '@app/@graphql/queries/permissions';
-import { UsersService } from '@app/pages/user-management/@services/users.service';
-import { User } from '@app/pages/user-management/@types/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private apollo: Apollo, private router: Router, private usersService: UsersService) {}
+  constructor(private apollo: Apollo) {}
 
   login(credentials: any): Observable<FetchResult<any>> {
     return this.apollo.query({
