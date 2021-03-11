@@ -1,4 +1,4 @@
-import { FieldComparison } from '@shared/@types/field-comparison';
+import { FieldComparison } from '../../../@shared/@types/field-comparison';
 
 export interface AssessmentFilter {
   and?: any[];

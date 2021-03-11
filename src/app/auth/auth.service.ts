@@ -11,7 +11,7 @@ import { PermissionsQueries } from '@app/@graphql/queries/permissions';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private apollo: Apollo, private router: Router) {}
+  constructor(private apollo: Apollo) {}
 
   login(credentials: any): Observable<FetchResult<any>> {
     return this.apollo.query({
@@ -44,6 +44,7 @@ export class AuthService {
   }
 
   isLoggedIn() {
+    this.rePopulatePermissions();
     const token = localStorage.getItem('auth_app_token');
 
     if (token) return true;
@@ -51,5 +52,13 @@ export class AuthService {
     // const isExpired = check if token is expired
 
     // return !isExpired;
+  }
+
+  // refetch permissions and add them to session storage
+
+  private rePopulatePermissions(): void {
+    this.getUserPermissions().subscribe(async ({ data }) => {
+      sessionStorage.setItem('permissions', JSON.stringify(data?.userPermissionGrants));
+    });
   }
 }
