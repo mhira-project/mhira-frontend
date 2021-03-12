@@ -3,6 +3,8 @@ import { Setting } from '../../@types/setting';
 import { Form } from '../../../../@shared/components/form/@types/form';
 import { settingsForms } from '../@forms/form';
 import { SettingsService } from '../../@services/settings.service';
+import { AppPermissionsService } from '../../../../@shared/services/app-permissions.service';
+import { PermissionKey } from '../../../../@shared/@types/permission';
 
 @Component({
   selector: 'app-system-configuration',
@@ -10,12 +12,13 @@ import { SettingsService } from '../../@services/settings.service';
   styleUrls: ['./system-configuration.component.scss'],
 })
 export class SystemConfigurationComponent implements OnInit {
+  PK = PermissionKey;
   settingsForm: Form = settingsForms.general;
   isLoading = false;
   settings: Setting;
   loadingMessage = '';
 
-  constructor(private settingsService: SettingsService) {}
+  constructor(private settingsService: SettingsService, public perms: AppPermissionsService) {}
 
   ngOnInit(): void {
     this.getFormat();

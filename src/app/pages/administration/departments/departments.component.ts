@@ -66,7 +66,7 @@ export class DepartmentsComponent implements OnInit {
   public ngOnInit(): void {
     this.getDepartments();
 
-    if (this.perms.permissionsOnly(PermissionKey.MANAGE_DEPARTMENTS)) {
+    if (this.perms.permissionsOnly(PermissionKey.MANAGE_SETTINGS)) {
       this.actions = [
         { key: ActionKey.EDIT_DEPARTMENT, title: 'Edit Department' },
         { key: ActionKey.DELETE_DEPARTMENT, title: 'Delete Department' },

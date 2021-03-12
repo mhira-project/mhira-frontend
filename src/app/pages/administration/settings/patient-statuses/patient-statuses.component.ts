@@ -9,6 +9,7 @@ import { AppPermissionsService } from '@shared/services/app-permissions.service'
 import { PatientStatusModel } from '@app/pages/administration/settings/@models/patient-status.model';
 import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
+import { PermissionKey } from '../../../../@shared/@types/permission';
 
 @Component({
   selector: 'app-patient-statuses',
@@ -16,6 +17,7 @@ import { Sorting } from '@shared/@types/sorting';
   styleUrls: ['./patient-statuses.component.scss'],
 })
 export class PatientStatusesComponent implements OnInit {
+  PK = PermissionKey;
   isLoading = false;
   modalLoading = false;
   patientStatuses: PatientStatus[] = [];

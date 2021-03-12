@@ -71,13 +71,7 @@ export class PatientsListComponent {
   ) {
     this.getPatients();
     this.getPatientStates();
-
-    if (this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
-      this.actions = [
-        { key: ActionKey.CHANGE_STATUS, title: 'Change Status' },
-        { key: ActionKey.DELETE_PATIENT, title: 'Delete Patient' },
-      ];
-    }
+    this.setActions();
   }
 
   public searchPatients(searchString: string): void {
@@ -251,5 +245,15 @@ export class PatientsListComponent {
   private get userId(): number {
     const user = JSON.parse(localStorage.getItem('user')) as User;
     return user.id ?? 0;
+  }
+
+  private setActions(): void {
+    if (this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
+      this.actions = [...this.actions, { key: ActionKey.CHANGE_STATUS, title: 'Change Status' }];
+    }
+
+    if (this.perms.permissionsOnly(PermissionKey.DELETE_PATIENTS)) {
+      this.actions = [...this.actions, { key: ActionKey.DELETE_PATIENT, title: 'Delete Patient' }];
+    }
   }
 }

@@ -17,7 +17,13 @@
     </button>
   </ng-container>
   <ng-container actions-right>
-    <button nz-button nzType="primary" nzShape="circle" routerLink="/mhira/case-management/profile">
+    <button
+      nz-button
+      nzType="primary"
+      nzShape="circle"
+      routerLink="/mhira/case-management/profile"
+      *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS])"
+    >
       <i nz-icon nzType="plus"></i>
     </button>
   </ng-container>

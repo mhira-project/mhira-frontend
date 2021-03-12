@@ -36,6 +36,8 @@ enum ActionKey {
   styleUrls: ['./users-list.component.scss'],
 })
 export class UsersListComponent {
+  public PK = PermissionKey;
+
   public data: Partial<FormattedUser>[];
 
   public columns: TableColumn<FormattedUser>[] = UserColumns;
@@ -55,7 +57,7 @@ export class UsersListComponent {
   constructor(
     private usersService: UsersService,
     private router: Router,
-    private perms: AppPermissionsService,
+    public perms: AppPermissionsService,
     private modalService: NzModalService,
     private messageService: NzMessageService,
     private departmentsService: DepartmentsService,
@@ -65,7 +67,7 @@ export class UsersListComponent {
     this.getDepartments();
     this.getRoles();
 
-    if (this.perms.permissionsOnly(PermissionKey.MANAGE_USERS)) {
+    if (this.perms.permissionsOnly(PermissionKey.DELETE_USERS)) {
       this.actions = [{ key: ActionKey.DELETE_USER, title: 'Delete User' }];
     }
   }
