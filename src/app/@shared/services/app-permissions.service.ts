@@ -17,14 +17,13 @@ export class AppPermissionsService {
 
   hasAccessLevelToUser(accessingUser: User): boolean {
     const user = JSON.parse(localStorage.getItem('user')) as User;
-    const q: boolean = !!user?.roles?.some?.((r) => accessingUser?.roles?.every?.((ar) => r < ar));
-    return q;
+    return !!user?.roles?.some?.((r) => accessingUser?.roles?.every?.((ar) => r.hierarchy < ar.hierarchy));
   }
 
   permissionsOnly(action: PermissionKey | PermissionKey[]): boolean {
     if (this.isSuperAdmin()) return true;
 
-    const permissions: Permission[] = JSON.parse(localStorage.getItem('permissions'));
+    const permissions: Permission[] = JSON.parse(sessionStorage.getItem('permissions'));
     const keys = permissions?.map((permission) => permission?.name);
     if (!permissions || !keys) return false;
 
@@ -39,7 +38,7 @@ export class AppPermissionsService {
   }
 
   permissionsExcept(action: PermissionKey | PermissionKey[]): boolean {
-    const permissions: Permission[] = JSON.parse(localStorage.getItem('permissions'));
+    const permissions: Permission[] = JSON.parse(sessionStorage.getItem('permissions'));
     const keys = permissions?.map((permission) => permission?.name);
     if (!permissions || !keys) return false;
 
@@ -53,7 +52,7 @@ export class AppPermissionsService {
     return false;
   }
 
-  private isSuperAdmin(): boolean {
+  isSuperAdmin(): boolean {
     const user = JSON.parse(localStorage.getItem('user')) as User;
     return !!user?.roles?.find?.((role) => role.isSuperAdmin);
   }

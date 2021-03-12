@@ -5,10 +5,8 @@ import { PermissionsTable } from '@app/pages/administration/@tables/permissions.
 import { environment } from '@env/environment';
 import { Sorting } from '@shared/@types/sorting';
 import { Filter } from '@shared/@types/filter';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { PermissionsService } from '@app/pages/administration/@services/permissions.service';
-import { DateService } from '@shared/services/date.service';
 import { Convert } from '@shared/classes/convert';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 
@@ -35,9 +33,6 @@ export class PermissionsComponent implements OnInit {
 
   constructor(
     private permissionsService: PermissionsService,
-    private modalService: NzModalService,
-    private message: NzMessageService,
-    private dateService: DateService,
     private router: Router,
     public perms: AppPermissionsService
   ) {}
@@ -61,7 +56,7 @@ export class PermissionsComponent implements OnInit {
         this.pageInfo = data.permissions.pageInfo;
         this.isLoading = false;
       },
-      (error) => {
+      () => {
         this.isLoading = false;
       }
     );

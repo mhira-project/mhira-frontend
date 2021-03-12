@@ -16,7 +16,7 @@ import { RolesMutations } from '@app/@graphql/mutations/roles';
 export class DepartmentsService {
   constructor(private apollo: Apollo) {}
 
-  departments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }): Observable<FetchResult<any>> {
+  departments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting[] }): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: DepartmentsQueries.departments,
       variables: {

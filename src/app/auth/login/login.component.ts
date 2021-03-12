@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
   getUserPermissions() {
     this.authService.getUserPermissions().subscribe(
       ({ data }) => {
-        localStorage.setItem('permissions', JSON.stringify(data.userPermissionGrants));
+        sessionStorage.setItem('permissions', JSON.stringify(data.userPermissionGrants));
       },
       (error) => {
         console.log(error);
