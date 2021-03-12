@@ -1,4 +1,4 @@
-import { Form } from '@shared/components/form/@types/form';
+import { Form } from '../../../@shared/components/form/@types/form';
 
 export const PermissionForm: Form = {
   submitButtonText: 'Create Permission',

@@ -52,7 +52,7 @@ export class AppPermissionsService {
     return false;
   }
 
-  private isSuperAdmin(): boolean {
+  isSuperAdmin(): boolean {
     const user = JSON.parse(localStorage.getItem('user')) as User;
     return !!user?.roles?.find?.((role) => role.isSuperAdmin);
   }

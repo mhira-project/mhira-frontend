@@ -16,8 +16,8 @@ const columns: any[] = [
     isFilterable: false,
   },
   {
-    title: 'Guard Name',
-    name: 'guard',
+    title: 'Role Hierarchy',
+    name: 'hierarchy',
     isFilterable: false,
   },
   {
