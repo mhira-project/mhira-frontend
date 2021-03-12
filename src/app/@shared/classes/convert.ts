@@ -2,6 +2,7 @@ import * as moment from 'moment';
 import { Permission } from '@app/pages/administration/@types/permission';
 import { Role } from '@app/pages/administration/@types/role';
 import { Department } from '@app/pages/administration/@types/department';
+import { FormattedDepartment } from '../../pages/administration/@types/department';
 
 export class Convert {
   // Permission
@@ -25,8 +26,11 @@ export class Convert {
   }
 
   // Department
-  public static toDepartment(json: any): Department {
-    json.createdAt = json.createdAt ? moment(json.createdAt).format('DD-MM-YYYY HH:mm') : '';
+  public static toDepartment(json: any): FormattedDepartment {
+    json.formattedStatus = {
+      color: json.active ? 'green' : 'orange',
+      title: json.active ? 'ACTIVE' : 'INACTIVE',
+    };
     return json;
   }
 

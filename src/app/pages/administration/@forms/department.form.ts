@@ -43,7 +43,7 @@ export const DepartmentForm: Form = {
           span: 24,
           options: [
             { label: 'Active', value: true },
-            { label: 'InActive', value: false },
+            { label: 'Inactive', value: false },
           ],
         },
       ],

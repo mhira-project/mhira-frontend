@@ -88,7 +88,7 @@ export class UserFormComponent implements OnInit {
     this.getDepartments();
   }
 
-  getDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
+  getDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting[] }) {
     this.isLoading = true;
     this.departmentsService.departments(params).subscribe(
       async ({ data }: any) => {

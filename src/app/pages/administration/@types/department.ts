@@ -1,3 +1,5 @@
+import { TagInfo } from '../../../@shared/@modules/master-data/@types/list';
+
 export interface Department {
   id: number;
   name: string;
@@ -5,6 +7,10 @@ export interface Department {
   active: boolean;
   createdAt?: number;
   updatedAt?: number;
+}
+
+export interface FormattedDepartment extends Department {
+  formattedStatus: TagInfo;
 }
 
 export interface UpdateOneDepartmentInput {

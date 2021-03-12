@@ -1,33 +1,48 @@
-const actions: any[] = [
-  {
-    type: 'Edit Department',
-    name: 'Edit Department',
-  },
-  {
-    type: 'Delete Department',
-    name: 'Delete Department',
-  },
-];
+import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
+import { FormattedDepartment } from '../@types/department';
 
-const columns: any[] = [
+export const DepartmentColumns: TableColumn<Partial<FormattedDepartment>>[] = [
   {
     title: 'Department Name',
     name: 'name',
-    isFilterable: false,
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  },
+  {
+    title: 'Description',
+    name: 'description',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
     title: 'Status',
-    name: 'active',
-    isFilterable: false,
+    name: 'formattedStatus',
+    altName: 'active',
+    sort: true,
+    render: 'tag',
+    filterField: {
+      type: 'select',
+      value: undefined,
+      options: [
+        { label: 'Active', value: true },
+        { label: 'Inactive', value: false },
+      ],
+    },
   },
   {
     title: 'Created At',
     name: 'createdAt',
-    isFilterable: false,
+    sort: true,
+    render: 'date',
+    filterField: {
+      type: 'dateRange',
+      value: undefined,
+    },
   },
 ];
-
-export const DepartmentsTable = {
-  actions,
-  columns,
-};
