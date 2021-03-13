@@ -1,3 +1,5 @@
+import { TagInfo } from '../../../@shared/@modules/master-data/@types/list';
+
 export enum QuestionnaireStatus {
   DRAFT = 'DRAFT',
   PUBLISHED = 'PUBLISHED',
@@ -23,4 +25,9 @@ export interface QuestionnaireVersion {
   website: string;
   license: string;
   timeToComplete: number;
+}
+
+export interface FormattedQuestionnaireVersion extends QuestionnaireVersion {
+  formattedStatus: TagInfo;
+  formattedKeywords: TagInfo[];
 }

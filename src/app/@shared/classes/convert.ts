@@ -3,6 +3,18 @@ import { Permission } from '@app/pages/administration/@types/permission';
 import { Role } from '@app/pages/administration/@types/role';
 import { Department } from '@app/pages/administration/@types/department';
 import { FormattedDepartment } from '../../pages/administration/@types/department';
+import {
+  QuestionnaireVersion,
+  FormattedQuestionnaireVersion,
+  QuestionnaireStatus,
+} from '../../pages/questionnaire-management/@types/questionnaire';
+
+const STATUS_COLOR = {
+  [QuestionnaireStatus.DRAFT]: 'blue',
+  [QuestionnaireStatus.PRIVATE]: 'orange',
+  [QuestionnaireStatus.PUBLISHED]: 'green',
+  [QuestionnaireStatus.ARCHIVED]: 'red',
+};
 
 export class Convert {
   // Permission
@@ -36,5 +48,22 @@ export class Convert {
 
   public static departmentToJson(value: Department): string {
     return JSON.stringify(value);
+  }
+
+  public static toFormattedQuestionnaireVersion(json: QuestionnaireVersion): FormattedQuestionnaireVersion {
+    const questionnaire: FormattedQuestionnaireVersion = json as FormattedQuestionnaireVersion;
+
+    questionnaire.formattedStatus = {
+      color: STATUS_COLOR[questionnaire.status],
+      title: questionnaire.status,
+    };
+
+    questionnaire.formattedKeywords =
+      questionnaire?.keywords?.map((k) => ({
+        color: 'blue',
+        title: k,
+      })) ?? [];
+
+    return questionnaire;
   }
 }
