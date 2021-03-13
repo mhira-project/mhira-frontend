@@ -54,6 +54,32 @@ export const MENU: SideNavInterface[] = [
     ],
   },
   {
+    path: 'questionnaire-management',
+    title: extract('Questionnaires'),
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'file',
+    permissions: [PK.VIEW_QUESTIONNAIRES, PK.MANAGE_QUESTIONNAIRES],
+    submenu: [
+      {
+        path: 'questionnaire-management/questionnaire-list',
+        title: extract('Questionnaires list'),
+        permissions: [PK.VIEW_QUESTIONNAIRES],
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+      {
+        path: 'questionnaire-management/questionnaire-form',
+        title: extract('Upload questionnaire'),
+        permissions: [PK.MANAGE_QUESTIONNAIRES],
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+    ],
+  },
+  {
     path: 'assessments',
     title: extract('Assessments'),
     permissions: [PK.VIEW_ASSESSMENTS, PK.MANAGE_ASSESSMENTS],

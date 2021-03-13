@@ -1,0 +1,4 @@
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <input type="file" name="xlsForm" ngModel (change)="onFileSelect($event)" required />
+  <button>Submit</button>
+</form>
