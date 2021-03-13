@@ -15,6 +15,16 @@ export interface ListQuestionnaireInput {
   status?: QuestionnaireStatus;
 }
 
+export interface CreateQuestionnaireInput {
+  language: string;
+  timeToComplete: number;
+  license?: string;
+  copyright: string;
+  website?: string;
+  status?: QuestionnaireStatus;
+  excelFile: File;
+}
+
 export interface QuestionnaireVersion {
   _id: string;
   name: string;

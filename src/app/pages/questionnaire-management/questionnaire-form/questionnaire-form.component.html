@@ -1,4 +1,7 @@
 <form #form="ngForm" (ngSubmit)="onSubmit(form)">
-  <input type="file" name="xlsForm" ngModel (change)="onFileSelect($event)" required />
+  <input type="text" name="language" placeholder="Language" ngModel required /><br />
+  <input type="number" name="timeToComplete" placeholder="Time to complete" ngModel required /><br />
+  <input type="text" name="copyright" placeholder="Copyright" ngModel required /><br />
+  <input type="file" name="excelFile" ngModel (change)="onFileSelect($event)" required /><br />
   <button>Submit</button>
 </form>

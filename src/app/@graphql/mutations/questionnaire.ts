@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const uploadQuestionnaire = gql`
-  mutation($xlsForm: Upload!) {
+  mutation($xlsForm: CreateQuestionnaireInput!) {
     createQuestionnaire(xlsForm: $xlsForm) {
       _id
       name

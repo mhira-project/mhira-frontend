@@ -4,7 +4,7 @@ import { FetchResult } from 'apollo-link';
 import { Apollo } from 'apollo-angular';
 import { QuestionnaireMutations } from '../../../@graphql/mutations/questionnaire';
 import { QuestionnaireQueries } from '../../../@graphql/queries/questionnaire';
-import { QuestionnaireVersion, ListQuestionnaireInput } from '../@types/questionnaire';
+import { QuestionnaireVersion, ListQuestionnaireInput, CreateQuestionnaireInput } from '../@types/questionnaire';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 export class QuestionnaireManagementService {
   constructor(private apollo: Apollo) {}
 
-  public uploadQuestionnaire(xlsForm: File): Observable<FetchResult<any>> {
+  public uploadQuestionnaire(xlsForm: CreateQuestionnaireInput): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: QuestionnaireMutations.uploadQuestionnaire,
       variables: { xlsForm },
