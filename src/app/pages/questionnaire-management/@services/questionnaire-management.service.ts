@@ -5,6 +5,7 @@ import { Apollo } from 'apollo-angular';
 import { QuestionnaireMutations } from '../../../@graphql/mutations/questionnaire';
 import { QuestionnaireQueries } from '../../../@graphql/queries/questionnaire';
 import { QuestionnaireVersion, ListQuestionnaireInput } from '../@types/questionnaire';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -23,13 +24,13 @@ export class QuestionnaireManagementService {
     });
   }
 
-  public getQuestionnaires(
-    filters: ListQuestionnaireInput = {}
-  ): Observable<FetchResult<{ questionnaires: QuestionnaireVersion[] }>> {
-    return this.apollo.query({
-      query: QuestionnaireQueries.getQuestionnaires,
-      variables: { filters },
-      fetchPolicy: 'no-cache',
-    });
+  public getQuestionnaires(filters: ListQuestionnaireInput = {}): Observable<QuestionnaireVersion[]> {
+    return this.apollo
+      .query<{ questionnaires: QuestionnaireVersion[] }>({
+        query: QuestionnaireQueries.getQuestionnaires,
+        variables: { filters },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map((result) => result.data.questionnaires));
   }
 }

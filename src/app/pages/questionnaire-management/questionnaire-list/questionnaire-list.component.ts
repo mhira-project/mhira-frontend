@@ -68,17 +68,9 @@ export class QuestionnaireListComponent {
     this.getQuestionnaires();
   }
 
-  public onFileSelect(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    const file = target.files.item(0);
-
-    if (!file) return;
-    this.qmService.uploadQuestionnaire(file).subscribe((x) => console.log(x));
-  }
-
   private getQuestionnaires(): void {
-    this.qmService.getQuestionnaires({ status: null }).subscribe(({ data }) => {
-      this.data = data.questionnaires.map((q) => ({
+    this.qmService.getQuestionnaires({ status: null }).subscribe((questionnaires) => {
+      this.data = questionnaires.map((q) => ({
         ...q,
         formattedStatus: {
           color: statusColor[q.status],
