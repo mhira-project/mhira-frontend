@@ -199,7 +199,7 @@ export class RolesComponent implements OnInit {
       id: role.id,
       update: {
         name: role.name,
-        guard: role.guard,
+        hierarchy: role.hierarchy,
       },
     };
     this.isLoading = true;

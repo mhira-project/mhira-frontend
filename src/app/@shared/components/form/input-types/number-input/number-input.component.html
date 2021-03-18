@@ -7,7 +7,8 @@
     [nzSuffix]="suffix"
     [ngClass]="{ 'has-error': inputIsValid() === false, 'has-success': inputIsValid() === true }"
   >
-    <input
+    <nz-input-number
+      style="width: 100%"
       [attr.type]="field.type"
       [(ngModel)]="field.value"
       [attr.autocomplete]="autoFill"
@@ -15,7 +16,7 @@
       nz-input
       [attr.placeholder]="field.description"
       [formControlName]="field.name"
-    />
+    ></nz-input-number>
   </nz-input-group>
 </ng-container>
 <div class="field-value" *ngIf="!inputMode">

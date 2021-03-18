@@ -6,6 +6,7 @@ const createOneRole = gql`
       id
       name
       isSuperAdmin
+      hierarchy
       guard
       createdAt
       updatedAt
@@ -19,6 +20,7 @@ const createManyRoles = gql`
       id
       name
       isSuperAdmin
+      hierarchy
       guard
       createdAt
       updatedAt
@@ -32,6 +34,7 @@ const updateOneRole = gql`
       id
       name
       isSuperAdmin
+      hierarchy
       guard
       createdAt
       updatedAt
@@ -45,6 +48,7 @@ const updateManyRoles = gql`
       id
       name
       isSuperAdmin
+      hierarchy
       guard
       createdAt
       updatedAt
@@ -58,6 +62,7 @@ const deleteOneRole = gql`
       id
       name
       isSuperAdmin
+      hierarchy
       guard
       createdAt
       updatedAt
@@ -101,6 +106,7 @@ const removeUsersFromRole = gql`
       id
       name
       guard
+      hierarchy
       createdAt
       updatedAt
       users {
@@ -130,6 +136,7 @@ const removePermissionsFromRole = gql`
       id
       name
       guard
+      hierarchy
       createdAt
       updatedAt
       users {
@@ -159,6 +166,7 @@ const setUsersOnRole = gql`
       id
       name
       guard
+      hierarchy
       createdAt
       updatedAt
       users {
@@ -188,6 +196,7 @@ const addPermissionsToRole = gql`
       id
       name
       guard
+      hierarchy
       createdAt
       updatedAt
       users {
@@ -217,6 +226,7 @@ const addUsersToRole = gql`
       id
       name
       guard
+      hierarchy
       createdAt
       updatedAt
       users {
