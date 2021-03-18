@@ -18,6 +18,6 @@ export interface UpdateOneRoleInput {
   id: number;
   update: {
     name: string;
-    guard: string;
+    hierarchy: number;
   };
 }
