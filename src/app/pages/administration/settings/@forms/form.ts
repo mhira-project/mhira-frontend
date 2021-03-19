@@ -1,6 +1,7 @@
 import { Form } from '../../../../@shared/components/form/@types/form';
+import { Setting } from '../../@types/setting';
 
-const general: Form = {
+const general: Form & { groups: { fields: { name: keyof Setting }[] }[] } = {
   submitButtonText: 'Save',
   groups: [
     {
@@ -74,6 +75,17 @@ const general: Form = {
           validationMessage: '',
           span: 8,
           value: '',
+        },
+        {
+          title: 'Max login attempts',
+          name: 'maxLoginAttempts',
+          label: 'Max login attempts',
+          type: 'number',
+          isRequired: false,
+          description: 'Set the number of max login attempts',
+          validationMessage: '',
+          span: 8,
+          value: undefined,
         },
       ],
     },
