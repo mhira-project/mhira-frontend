@@ -8,6 +8,7 @@ const settings = gql`
       dateFormat
       timeFormat
       dateTimeFormat
+      maxLoginAttempts
     }
   }
 `;

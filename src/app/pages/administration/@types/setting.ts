@@ -4,6 +4,7 @@ export interface Setting {
   dateFormat: string;
   timeFormat: string;
   dateTimeFormat: string;
+  maxLoginAttempts: number;
   passwordLifeTimeInDays: number;
   passwordReUseCutoffInDays: number;
 }
