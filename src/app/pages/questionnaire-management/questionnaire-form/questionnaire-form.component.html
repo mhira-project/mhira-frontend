@@ -1,4 +1,4 @@
-<h1>Create Questionnaire</h1>
+<h1>{{ isExisting ? 'Edit Questionnaire - ' + formData.name : 'Create Questionnaire' }}</h1>
 
 <app-form
   class="mt-3"
@@ -7,7 +7,8 @@
   [isLoading]="loading"
   [populateForm]="populateForm"
   [resetForm]="resetForm"
-  [inputMode]="true"
+  [inputMode]="inputMode"
   [showCancelButton]="false"
+  [showEditButton]="perms.permissionsOnly(PK.MANAGE_QUESTIONNAIRES)"
   (submitForm)="onSubmit($event)"
 ></app-form>
