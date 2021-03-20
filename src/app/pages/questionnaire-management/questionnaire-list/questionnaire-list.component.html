@@ -1,4 +1,4 @@
-<app-master-data-list [data]="data" [columns]="columns">
+<app-master-data-list [data]="data" [columns]="columns" (rowClick)="onSelect($event)">
   <ng-container actions-right>
     <button
       nz-button
