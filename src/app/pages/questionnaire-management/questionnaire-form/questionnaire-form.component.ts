@@ -1,7 +1,10 @@
+import { finalize } from 'rxjs/operators';
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { QuestionnaireManagementService } from '../@services/questionnaire-management.service';
 import { CreateQuestionnaireInput } from '../@types/questionnaire';
+import { QuestionnaireForm } from '../@forms/questionnaire.form';
+import { QuestionnaireVersion } from './../@types/questionnaire';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-questionnaire-form',
@@ -9,19 +12,30 @@ import { CreateQuestionnaireInput } from '../@types/questionnaire';
   styleUrls: ['./questionnaire-form.component.scss'],
 })
 export class QuestionnaireFormComponent {
-  public excelFile: File;
+  public form = QuestionnaireForm;
+  public formData: QuestionnaireVersion;
+  public populateForm = false;
+  public resetForm = false;
+  public loading = false;
 
-  constructor(private qmService: QuestionnaireManagementService) {}
+  constructor(private qmService: QuestionnaireManagementService, private messageService: NzMessageService) {}
 
-  public onFileSelect(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    this.excelFile = target.files.item(0);
-  }
+  public onSubmit(form: { [K in keyof CreateQuestionnaireInput]: any }): void {
+    const input: CreateQuestionnaireInput = {
+      ...form,
+      excelFile: (form.excelFile as FileList).item(0),
+    };
 
-  public onSubmit(form: NgForm): void {
-    if (form.invalid) return;
-    const input: CreateQuestionnaireInput = form.value;
-    input.excelFile = this.excelFile;
-    this.qmService.uploadQuestionnaire(input).subscribe(() => {});
+    this.loading = true;
+    this.qmService
+      .uploadQuestionnaire(input)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        () => {
+          this.resetForm = true;
+          this.messageService.success('Questionnaire created successfully', { nzDuration: 3000 });
+        },
+        () => this.messageService.error('Questionnaire creation failed', { nzDuration: 3000 })
+      );
   }
 }

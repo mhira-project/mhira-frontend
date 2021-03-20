@@ -1,7 +1,13 @@
-<form #form="ngForm" (ngSubmit)="onSubmit(form)">
-  <input type="text" name="language" placeholder="Language" ngModel required /><br />
-  <input type="number" name="timeToComplete" placeholder="Time to complete" ngModel required /><br />
-  <input type="text" name="copyright" placeholder="Copyright" ngModel required /><br />
-  <input type="file" name="excelFile" ngModel (change)="onFileSelect($event)" required /><br />
-  <button>Submit</button>
-</form>
+<h1>Create Questionnaire</h1>
+
+<app-form
+  class="mt-3"
+  [form]="form"
+  [formData]="formData"
+  [isLoading]="loading"
+  [populateForm]="populateForm"
+  [resetForm]="resetForm"
+  [inputMode]="true"
+  [showCancelButton]="false"
+  (submitForm)="onSubmit($event)"
+></app-form>

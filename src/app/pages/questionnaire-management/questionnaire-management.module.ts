@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { QuestionnaireListComponent } from './questionnaire-list/questionnaire-list.component';
 import { MasterDataModule } from '../../@shared/@modules/master-data/master-data.module';
 import { NzButtonModule, NzIconModule } from 'ng-zorro-antd';
+import { AppFormModule } from '../../@shared/components/form/app-form.module';
 
 @NgModule({
   declarations: [QuestionnaireFormComponent, QuestionnaireListComponent],
@@ -16,6 +17,7 @@ import { NzButtonModule, NzIconModule } from 'ng-zorro-antd';
     MasterDataModule,
     NzButtonModule,
     NzIconModule,
+    AppFormModule,
   ],
 })
 export class QuestionnaireManagementModule {}
