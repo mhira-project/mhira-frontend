@@ -12,7 +12,7 @@
       readonly
       onfocus="this.removeAttribute('readonly')"
       autocomplete="off"
-      [value]="field.value"
+      [files]="field.value"
       [disabled]="field.disabled ? field.disabled : false"
       [attr.autocomplete]="autoFill"
       (change)="handleValueChange($event)"
