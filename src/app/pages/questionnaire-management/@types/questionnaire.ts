@@ -38,9 +38,15 @@ export interface QuestionnaireVersion {
   website: string;
   license: string;
   timeToComplete: number;
+  questionnaire: {
+    language: string;
+    abbreviation: string;
+  };
 }
 
 export interface FormattedQuestionnaireVersion extends QuestionnaireVersion {
   formattedStatus: TagInfo;
   formattedKeywords: TagInfo[];
+  language: string;
+  abbreviation: string;
 }

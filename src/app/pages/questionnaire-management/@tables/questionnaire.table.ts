@@ -13,6 +13,14 @@ export const QuestionnaireColumns: TableColumn<FormattedQuestionnaireVersion>[] 
     render: 'tag',
   },
   {
+    title: 'Language',
+    name: 'language',
+  },
+  {
+    title: 'Abbreviation',
+    name: 'abbreviation',
+  },
+  {
     title: 'Keywords',
     name: 'formattedKeywords',
     altName: 'keywords',

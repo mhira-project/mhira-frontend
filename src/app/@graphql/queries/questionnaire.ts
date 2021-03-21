@@ -12,6 +12,10 @@ const getQuestionnaires = gql`
       website
       license
       timeToComplete
+      questionnaire {
+        language
+        abbreviation
+      }
     }
   }
 `;

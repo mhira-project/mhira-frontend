@@ -64,6 +64,9 @@ export class Convert {
         title: k,
       })) ?? [];
 
+    questionnaire.language = json.questionnaire.language;
+    questionnaire.abbreviation = json.questionnaire.abbreviation;
+
     return questionnaire;
   }
 }
