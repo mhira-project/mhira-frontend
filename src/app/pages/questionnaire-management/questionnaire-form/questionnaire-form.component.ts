@@ -20,7 +20,7 @@ const CryptoJS = require('crypto-js');
 export class QuestionnaireFormComponent {
   public PK = PermissionKey;
   public form = QuestionnaireForm;
-  public formData: Partial<CreateQuestionnaireInput & QuestionnaireVersion>;
+  public formData: Partial<Omit<CreateQuestionnaireInput & QuestionnaireVersion, 'keywords'> & { keywords: string }>;
   public populateForm = false;
   public resetForm = false;
   public loading = false;
@@ -46,6 +46,14 @@ export class QuestionnaireFormComponent {
 
     if (!this.isExisting) {
       input.excelFile = (form.excelFile as FileList).item(0);
+    }
+
+    if (form.keywords) {
+      input.keywords = (form.keywords as string)
+        .trim()
+        .split(' ')
+        .map((word) => word.trim())
+        .filter((word) => word !== '');
     }
 
     const action = this.isExisting
@@ -80,7 +88,7 @@ export class QuestionnaireFormComponent {
   private setExistingMode(questionnaire: QuestionnaireVersion): void {
     this.form = QuestionnaireUpdateForm;
     this.existingId = questionnaire._id;
-    this.formData = questionnaire;
+    this.formData = { ...questionnaire, keywords: (questionnaire.keywords ?? []).join(' ') };
     this.populateForm = true;
     this.inputMode = false;
   }

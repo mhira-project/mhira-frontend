@@ -75,16 +75,15 @@ export const QuestionnaireForm: Form & { groups: { fields: { name: keyof CreateQ
           type: 'text',
           span: 12,
         },
-        // TODO: add keywords
-        // {
-        //   value: '',
-        //   name: 'keywords',
-        //   title: 'Keywords (space separated)',
-        //   description: 'Keywords (space separated)',
-        //   type: 'text',
-        //   span: 24,
-        //   validationMessage: 'Please enter space separated keywords'
-        // },
+        {
+          value: '',
+          name: 'keywords',
+          title: 'Keywords (space separated)',
+          description: 'Keywords (space separated)',
+          type: 'text',
+          span: 24,
+          validationMessage: 'Please enter space separated keywords',
+        },
       ],
     },
   ],
@@ -154,16 +153,15 @@ export const QuestionnaireUpdateForm: Form & { groups: { fields: { name: keyof U
           type: 'text',
           span: 12,
         },
-        // TODO: add keywords
-        // {
-        //   value: '',
-        //   name: 'keywords',
-        //   title: 'Keywords (space separated)',
-        //   description: 'Keywords (space separated)',
-        //   type: 'text',
-        //   span: 24,
-        //   validationMessage: 'Please enter space separated keywords'
-        // },
+        {
+          value: '',
+          name: 'keywords',
+          title: 'Keywords (space separated)',
+          description: 'Keywords (space separated)',
+          type: 'text',
+          span: 24,
+          validationMessage: 'Please enter space separated keywords',
+        },
       ],
     },
   ],

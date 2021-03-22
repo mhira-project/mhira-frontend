@@ -22,6 +22,7 @@ export interface UpdateQuestionnaireInput {
   copyright: string;
   website?: string;
   status?: QuestionnaireStatus;
+  keywords?: string[];
 }
 
 export interface CreateQuestionnaireInput extends UpdateQuestionnaireInput {
