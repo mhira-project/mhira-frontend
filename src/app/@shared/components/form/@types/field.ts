@@ -22,6 +22,8 @@ export interface Field {
   pattern?: string;
   minLength?: number;
   maxLength?: number;
+  min?: number;
+  max?: number;
   validationMessage?: string;
   isRequired?: boolean;
   disabled?: boolean;

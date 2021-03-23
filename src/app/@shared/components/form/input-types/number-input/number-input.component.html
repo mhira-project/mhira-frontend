@@ -11,6 +11,8 @@
       style="width: 100%"
       [attr.type]="field.type"
       [(ngModel)]="field.value"
+      [nzMin]="field.min"
+      [nzMax]="field.max"
       [attr.autocomplete]="autoFill"
       (change)="handleValueChange($event)"
       nz-input
