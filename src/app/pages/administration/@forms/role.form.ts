@@ -26,6 +26,8 @@ export const RoleForm: Form = {
           label: 'Role hierarchy',
           description: 'Enter Role hierarchy',
           type: 'number',
+          min: 0,
+          max: 1000,
           validationMessage: 'please Enter Role hierarchy',
           isRequired: true,
           disabled: true,
