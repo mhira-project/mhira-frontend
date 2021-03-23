@@ -35,22 +35,6 @@ export const MENU: SideNavInterface[] = [
         permissions: [PK.MANAGE_PATIENTS],
         submenu: [],
       },
-      {
-        path: 'case-management/case-managers',
-        title: extract('Case Managers'),
-        permissions: [PK.MANAGE_PATIENTS],
-        iconType: '',
-        iconTheme: '',
-        submenu: [],
-      },
-      {
-        path: 'case-management/informants',
-        title: extract('Informants'),
-        permissions: [PK.MANAGE_PATIENTS],
-        iconType: '',
-        iconTheme: '',
-        submenu: [],
-      },
     ],
   },
   {
