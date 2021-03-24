@@ -12,6 +12,8 @@ import { Patient } from '@app/pages/patients-management/@types/patient';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { PermissionKey } from '@app/@shared/@types/permission';
+import { Permission } from '@app/pages/administration/@types/permission';
 
 @Component({
   selector: 'app-case-managers',
@@ -19,6 +21,7 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
   styleUrls: ['./case-managers.component.scss'],
 })
 export class CaseManagersComponent implements OnInit {
+  public PK = PermissionKey;
   @Input() managerType = 'caseManager';
   @Input() filter: CaseManagerFilter = {};
   @Input() patient: Patient;
@@ -65,6 +68,10 @@ export class CaseManagersComponent implements OnInit {
     this.getCaseManagers();
     this.drawerTitle = this.managerType === 'caseManager' ? 'Filter Case Managers' : 'Filter Informants';
     this.caseManagerNiceName = this.managerType === 'caseManager' ? 'Case Manager' : 'Informant';
+  }
+
+  checkIfManagerHasPermission(permissions: Permission[]): boolean {
+    return permissions.some((p: Permission) => p.name === this.PK.MANAGE_PATIENTS);
   }
 
   setCaseManagerServicePropertyName(action: string): string {
