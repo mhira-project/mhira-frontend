@@ -14,7 +14,7 @@
   <tbody>
     <tr *ngFor="let d of table.data" (click)="rowClick.emit(d)" (contextmenu)="onOpenContextMenu($event, d)">
       <td *ngFor="let column of columns">
-        <ng-container [ngSwitch]="column.render">
+        <ng-container [ngSwitch]="column.render" *ngIf="d[column.name] !== undefined">
           <span *ngSwitchCase="'html'" [innerHTML]="d[column.name] | noSanitize"></span>
           <span *ngSwitchCase="'date'">
             <ng-container *ngIf="d[column.name]">{{ d[column.name] | formatDate }}</ng-container>

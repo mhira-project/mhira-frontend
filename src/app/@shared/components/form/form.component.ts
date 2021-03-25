@@ -139,7 +139,7 @@ export class FormComponent implements OnInit {
     }
   }
 
-  handleInputChange(field: Field, value: boolean | number | string | number[] | string[]) {
+  handleInputChange(field: Field, value: boolean | number | string | number[] | string[] | FileList) {
     this.inputChange.emit({ name: field.name, value });
   }
 

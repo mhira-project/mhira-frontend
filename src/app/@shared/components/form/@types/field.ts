@@ -15,7 +15,8 @@ export interface Field {
     | 'select'
     | 'date'
     | 'dateRange'
-    | 'array';
+    | 'array'
+    | 'file';
   children?: Field[];
   rows?: any;
   iconName?: string;
