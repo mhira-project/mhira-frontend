@@ -1,4 +1,5 @@
 import { Form } from '@shared/components/form/@types/form';
+import { getNames } from 'i18n-iso-countries';
 
 export const PatientForm: Form = {
   submitButtonText: 'Save Patient',
@@ -153,7 +154,7 @@ export const PatientForm: Form = {
           validationMessage: 'please select country',
           isRequired: false,
           span: 8,
-          options: [{ value: 1, label: 'Tanzania' }],
+          options: Object.entries(getNames('en', { select: 'official' })).map(([value, label]) => ({ label, value })),
         },
       ],
     },
