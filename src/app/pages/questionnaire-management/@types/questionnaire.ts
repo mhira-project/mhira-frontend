@@ -47,7 +47,6 @@ export interface QuestionnaireVersion {
 
 export interface FormattedQuestionnaireVersion extends QuestionnaireVersion {
   formattedStatus: TagInfo;
-  formattedKeywords: TagInfo[];
   language: string;
   abbreviation: string;
 }

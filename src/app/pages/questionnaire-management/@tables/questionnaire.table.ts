@@ -22,9 +22,8 @@ export const QuestionnaireColumns: TableColumn<FormattedQuestionnaireVersion>[] 
   },
   {
     title: 'Keywords',
-    name: 'formattedKeywords',
-    altName: 'keywords',
-    render: 'tag',
+    name: 'keywords',
+    render: 'array',
   },
   {
     title: 'Time to complete',
