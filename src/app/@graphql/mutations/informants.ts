@@ -36,7 +36,7 @@ const createOneInformant = gql`
         addressApartment
         addressPlace
         addressPostalCode
-        addressCountryId
+        addressCountryCode
         gender
         birthDate
         birthCountryCode
@@ -82,7 +82,7 @@ const createManyInformants = gql`
         addressApartment
         addressPlace
         addressPostalCode
-        addressCountryId
+        addressCountryCode
         gender
         birthDate
         birthCountryCode
@@ -128,7 +128,7 @@ const updateOneInformant = gql`
         addressApartment
         addressPlace
         addressPostalCode
-        addressCountryId
+        addressCountryCode
         gender
         birthDate
         birthCountryCode
@@ -174,7 +174,7 @@ const updateManyInformants = gql`
         addressApartment
         addressPlace
         addressPostalCode
-        addressCountryId
+        addressCountryCode
         gender
         birthDate
         birthCountryCode

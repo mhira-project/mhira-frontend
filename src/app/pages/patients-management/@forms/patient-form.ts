@@ -146,7 +146,7 @@ export const PatientForm: Form = {
         },
         {
           value: '',
-          name: 'addressCountryId',
+          name: 'addressCountryCode',
           title: 'Country',
           label: 'Country',
           description: 'Select Country',

@@ -25,7 +25,7 @@ const getPatients = gql`
           addressApartment
           addressPlace
           addressPostalCode
-          addressCountryId
+          addressCountryCode
           gender
           birthDate
           birthCountryCode
@@ -70,13 +70,6 @@ const getPatients = gql`
             createdAt
             updatedAt
             deletedAt
-          }
-          country {
-            id
-            name
-            code
-            createdAt
-            updatedAt
           }
           status {
             id
