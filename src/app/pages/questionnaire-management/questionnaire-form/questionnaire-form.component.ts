@@ -48,13 +48,7 @@ export class QuestionnaireFormComponent {
       input.excelFile = (form.excelFile as FileList).item(0);
     }
 
-    if (form.keywords) {
-      input.keywords = (form.keywords as string)
-        .trim()
-        .split(' ')
-        .map((word) => word.trim())
-        .filter((word) => word !== '');
-    }
+    input.keywords = this.prepareKeywords(form.keywords);
 
     const action = this.isExisting
       ? this.qmService.updateQuestionnaire(this.existingId, input)
@@ -91,5 +85,14 @@ export class QuestionnaireFormComponent {
     this.formData = { ...questionnaire, keywords: (questionnaire.keywords ?? []).join(' ') };
     this.populateForm = true;
     this.inputMode = false;
+  }
+
+  private prepareKeywords(keywords: string = ''): string[] {
+    if (!keywords || keywords === '') return [];
+    return keywords
+      .trim()
+      .split(' ')
+      .map((word) => word.trim())
+      .filter((word) => word !== '');
   }
 }
