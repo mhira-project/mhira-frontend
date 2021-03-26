@@ -110,7 +110,7 @@ const removeEmergencyContactsFromPatient = gql`
       addressApartment
       addressPlace
       addressPostalCode
-      addressCountryId
+      addressCountryCode
       gender
       birthDate
       birthCountryCode
@@ -155,13 +155,6 @@ const removeEmergencyContactsFromPatient = gql`
         createdAt
         updatedAt
         deletedAt
-      }
-      country {
-        id
-        name
-        code
-        createdAt
-        updatedAt
       }
       status {
         id
@@ -191,7 +184,7 @@ const addEmergencyContactsToPatient = gql`
       addressApartment
       addressPlace
       addressPostalCode
-      addressCountryId
+      addressCountryCode
       gender
       birthDate
       birthCountryCode
@@ -236,13 +229,6 @@ const addEmergencyContactsToPatient = gql`
         createdAt
         updatedAt
         deletedAt
-      }
-      country {
-        id
-        name
-        code
-        createdAt
-        updatedAt
       }
       status {
         id

@@ -154,6 +154,7 @@ import {
 import { CustomFilterComponent } from './custom-filter/custom-filter.component';
 import { AppFormModule } from '@shared/components/form/app-form.module';
 import { SelectModalComponent } from './select-modal/select-modal.component';
+import { CountryPipe } from '../pipes/country.pipe';
 
 const PIPES = [
   CapitalizePipe,
@@ -165,6 +166,7 @@ const PIPES = [
   SearchPipe,
   TimingPipe,
   DatePipe,
+  CountryPipe,
 ];
 
 @NgModule({
