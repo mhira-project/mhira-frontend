@@ -46,14 +46,12 @@ const getPatientCaseManagers = gql`
           roles {
             id
             name
-            guard
             createdAt
             updatedAt
           }
           permissions {
             id
             name
-            guard
             createdAt
             updatedAt
           }
@@ -99,14 +97,12 @@ const getPatientInformants = gql`
           roles {
             id
             name
-            guard
             createdAt
             updatedAt
           }
           permissions {
             id
             name
-            guard
             createdAt
             updatedAt
           }

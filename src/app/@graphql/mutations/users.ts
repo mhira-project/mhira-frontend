@@ -28,7 +28,6 @@ const createOneUser = gql`
       roles {
         id
         name
-        guard
         isSuperAdmin
         hierarchy
         code
@@ -38,7 +37,6 @@ const createOneUser = gql`
       permissions {
         id
         name
-        guard
         createdAt
         updatedAt
       }
@@ -74,7 +72,6 @@ const updateOneUser = gql`
       roles {
         id
         name
-        guard
         isSuperAdmin
         hierarchy
         code
@@ -84,7 +81,6 @@ const updateOneUser = gql`
       permissions {
         id
         name
-        guard
         createdAt
         updatedAt
       }

@@ -22,7 +22,6 @@ const login = gql`
         roles {
           id
           name
-          guard
           isSuperAdmin
           hierarchy
           code
@@ -32,7 +31,6 @@ const login = gql`
         permissions {
           id
           name
-          guard
           createdAt
           updatedAt
         }
