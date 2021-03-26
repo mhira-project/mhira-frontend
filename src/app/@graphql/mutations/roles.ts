@@ -7,7 +7,6 @@ const createOneRole = gql`
       name
       isSuperAdmin
       hierarchy
-      guard
       createdAt
       updatedAt
     }
@@ -21,7 +20,6 @@ const createManyRoles = gql`
       name
       isSuperAdmin
       hierarchy
-      guard
       createdAt
       updatedAt
     }
@@ -35,7 +33,6 @@ const updateOneRole = gql`
       name
       isSuperAdmin
       hierarchy
-      guard
       createdAt
       updatedAt
     }
@@ -49,7 +46,6 @@ const updateManyRoles = gql`
       name
       isSuperAdmin
       hierarchy
-      guard
       createdAt
       updatedAt
     }
@@ -63,7 +59,6 @@ const deleteOneRole = gql`
       name
       isSuperAdmin
       hierarchy
-      guard
       createdAt
       updatedAt
     }
@@ -105,7 +100,6 @@ const removeUsersFromRole = gql`
     removeUsersFromRole(input: $input) {
       id
       name
-      guard
       hierarchy
       createdAt
       updatedAt
@@ -135,7 +129,6 @@ const removePermissionsFromRole = gql`
     removePermissionsFromRole(input: $input) {
       id
       name
-      guard
       hierarchy
       createdAt
       updatedAt
@@ -165,7 +158,6 @@ const setUsersOnRole = gql`
     setUsersOnRole(input: $input) {
       id
       name
-      guard
       hierarchy
       createdAt
       updatedAt
@@ -195,7 +187,6 @@ const addPermissionsToRole = gql`
     addPermissionsToRole(input: $input) {
       id
       name
-      guard
       hierarchy
       createdAt
       updatedAt
@@ -225,7 +216,6 @@ const addUsersToRole = gql`
     addUsersToRole(input: $input) {
       id
       name
-      guard
       hierarchy
       createdAt
       updatedAt

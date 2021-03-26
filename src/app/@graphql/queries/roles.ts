@@ -8,7 +8,6 @@ const roles = gql`
         node {
           id
           name
-          guard
           isSuperAdmin
           hierarchy
           code
@@ -34,7 +33,6 @@ const roles = gql`
           permissions {
             id
             name
-            guard
             createdAt
             updatedAt
           }

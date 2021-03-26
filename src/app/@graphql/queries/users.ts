@@ -39,14 +39,12 @@ const getUsers = gql`
             isSuperAdmin
             hierarchy
             code
-            guard
             createdAt
             updatedAt
           }
           permissions {
             id
             name
-            guard
             createdAt
             updatedAt
           }

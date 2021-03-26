@@ -4,7 +4,6 @@ import { User } from '@app/pages/user-management/@types/user';
 export interface Role {
   id: number;
   name: string;
-  guard: string;
   isSuperAdmin?: boolean;
   hierarchy: number;
   code: string;
