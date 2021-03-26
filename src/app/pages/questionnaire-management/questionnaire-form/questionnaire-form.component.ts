@@ -82,7 +82,11 @@ export class QuestionnaireFormComponent {
   private setExistingMode(questionnaire: QuestionnaireVersion): void {
     this.form = QuestionnaireUpdateForm;
     this.existingId = questionnaire._id;
-    this.formData = { ...questionnaire, keywords: (questionnaire.keywords ?? []).join(' ') };
+    this.formData = {
+      ...questionnaire,
+      keywords: (questionnaire.keywords ?? []).join(' '),
+      language: questionnaire.questionnaire?.language,
+    };
     this.populateForm = true;
     this.inputMode = false;
   }
