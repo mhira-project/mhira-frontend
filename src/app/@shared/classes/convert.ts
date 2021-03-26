@@ -58,12 +58,6 @@ export class Convert {
       title: questionnaire.status,
     };
 
-    questionnaire.formattedKeywords =
-      questionnaire?.keywords?.map((k) => ({
-        color: 'blue',
-        title: k,
-      })) ?? [];
-
     questionnaire.language = json.questionnaire.language;
     questionnaire.abbreviation = json.questionnaire.abbreviation;
 
