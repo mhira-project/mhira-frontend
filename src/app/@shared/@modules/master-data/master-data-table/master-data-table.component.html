@@ -28,6 +28,7 @@
             <nz-avatar *ngFor="let avatar of [d[column.name]].flat()" [nzText]="avatar"></nz-avatar>
           </span>
           <span *ngSwitchCase="'array'">{{ d[column.name].join(', ') }}</span>
+          <span *ngSwitchCase="'country'">{{ d[column.name] | country }}</span>
           <span *ngSwitchDefault>{{ d[column.name] }}</span>
         </ng-container>
       </td>

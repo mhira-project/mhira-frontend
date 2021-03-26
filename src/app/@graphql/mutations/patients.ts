@@ -17,7 +17,7 @@ const createPatient = gql`
       addressApartment
       addressPlace
       addressPostalCode
-      addressCountryId
+      addressCountryCode
       gender
       birthDate
       birthCountryCode
@@ -62,13 +62,6 @@ const createPatient = gql`
         createdAt
         updatedAt
         deletedAt
-      }
-      country {
-        id
-        name
-        code
-        createdAt
-        updatedAt
       }
       status {
         id
@@ -98,7 +91,7 @@ const updatePatient = gql`
       addressApartment
       addressPlace
       addressPostalCode
-      addressCountryId
+      addressCountryCode
       gender
       birthDate
       birthCountryCode
@@ -143,13 +136,6 @@ const updatePatient = gql`
         createdAt
         updatedAt
         deletedAt
-      }
-      country {
-        id
-        name
-        code
-        createdAt
-        updatedAt
       }
       status {
         id
@@ -179,7 +165,7 @@ const deletePatient = gql`
       addressApartment
       addressPlace
       addressPostalCode
-      addressCountryId
+      addressCountryCode
       gender
       birthDate
       birthCountryCode
@@ -207,7 +193,7 @@ const addInformantsToPatient = gql`
       addressApartment
       addressPlace
       addressPostalCode
-      addressCountryId
+      addressCountryCode
       gender
       birthDate
       birthCountryCode
@@ -235,7 +221,7 @@ const removeStatusFromPatient = gql`
       addressApartment
       addressPlace
       addressPostalCode
-      addressCountryId
+      addressCountryCode
       gender
       birthDate
       birthCountryCode
@@ -280,13 +266,6 @@ const removeStatusFromPatient = gql`
         createdAt
         updatedAt
         deletedAt
-      }
-      country {
-        id
-        name
-        code
-        createdAt
-        updatedAt
       }
       status {
         id
