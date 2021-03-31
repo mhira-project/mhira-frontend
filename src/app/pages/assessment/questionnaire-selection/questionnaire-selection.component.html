@@ -1,0 +1,52 @@
+<article>
+  <section>
+    <app-master-data-search (search)="onQuestionnaireSearch($event)"></app-master-data-search>
+  </section>
+  <section>
+    <nz-list nzBordered nzHeader="Found Questionnaires">
+      <nz-list-item *ngIf="!foundQuestionnaires?.length">No results</nz-list-item>
+      <nz-list-item *ngFor="let questionnaire of foundQuestionnaires">
+        {{ questionnaire.name }}
+        <button
+          nz-button
+          [nzType]="isSelected(questionnaire) ? 'danger' : 'primary'"
+          nzShape="circle"
+          (click)="onToggleQuestionnaire(questionnaire)"
+        >
+          <i nz-icon [nzType]="isSelected(questionnaire) ? 'minus' : 'plus'"></i>
+        </button>
+      </nz-list-item>
+    </nz-list>
+  </section>
+  <section>
+    <nz-list nzBordered nzHeader="Selected Questionnaires">
+      <nz-list-item *ngIf="!selectedQuestionnaires?.length">
+        Search and select questionnaires to add to the assessment
+      </nz-list-item>
+      <nz-list-item *ngFor="let questionnaire of selectedQuestionnaires">
+        {{ questionnaire.name }}
+        <div>
+          <button
+            nz-button
+            nzShape="circle"
+            [disabled]="!canMove('down', questionnaire)"
+            (click)="move('down', questionnaire)"
+          >
+            <i nz-icon nzType="down"></i>
+          </button>
+          <button
+            nz-button
+            nzShape="circle"
+            [disabled]="!canMove('up', questionnaire)"
+            (click)="move('up', questionnaire)"
+          >
+            <i nz-icon nzType="up"></i>
+          </button>
+          <button nz-button nzType="danger" nzShape="circle" (click)="onToggleQuestionnaire(questionnaire)">
+            <i nz-icon nzType="minus"></i>
+          </button>
+        </div>
+      </nz-list-item>
+    </nz-list>
+  </section>
+</article>
