@@ -123,7 +123,7 @@ export class UsersListComponent {
   private async deleteUser(user: FormattedUser): Promise<void> {
     // check if you're allowed to delete the user
     if (!this.perms.hasAccessLevelToUser(user)) {
-      this.messageService.error("You don't have sufficient permission to delete this user", { nzDuration: 3000 });
+      this.messageService.error(`You don't have sufficient permission to delete this user`, { nzDuration: 3000 });
       return;
     }
 
