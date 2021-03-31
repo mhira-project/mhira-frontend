@@ -1,0 +1,12 @@
+<nz-select
+  nzShowSearch
+  nzServerSearch
+  nzAllowClear
+  nzPlaceHolder="Search..."
+  [nzShowArrow]="false"
+  [(ngModel)]="selectedUser"
+  [compareWith]="compareUsers"
+>
+  <nz-option *ngFor="let user of users" [nzValue]="user" [nzLabel]="user.firstName + ' ' + user.lastName"></nz-option>
+</nz-select>
+<button nz-button nzType="link" type="button" (click)="onAssignSelf()" *ngIf="assignSelfOption">Assign self</button>
