@@ -1,0 +1,15 @@
+<nz-select
+  nzShowSearch
+  nzServerSearch
+  nzAllowClear
+  nzPlaceHolder="Search..."
+  [nzShowArrow]="false"
+  [(ngModel)]="selectedPatient"
+  [compareWith]="comparePatients"
+>
+  <nz-option
+    *ngFor="let patient of patients"
+    [nzValue]="patient"
+    [nzLabel]="patient.firstName + ' ' + patient.lastName"
+  ></nz-option>
+</nz-select>

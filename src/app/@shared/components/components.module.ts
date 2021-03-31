@@ -156,6 +156,7 @@ import { AppFormModule } from '@shared/components/form/app-form.module';
 import { SelectModalComponent } from './select-modal/select-modal.component';
 import { CountryPipe } from '../pipes/country.pipe';
 import { UserPickerComponent } from './user-picker/user-picker.component';
+import { PatientPickerComponent } from './patient-picker/patient-picker.component';
 
 const PIPES = [
   CapitalizePipe,
@@ -180,6 +181,7 @@ const PIPES = [
     CustomFilterComponent,
     SelectModalComponent,
     UserPickerComponent,
+    PatientPickerComponent,
   ],
   exports: [
     ...PIPES,
@@ -189,6 +191,7 @@ const PIPES = [
     CustomFilterComponent,
     AppFormModule,
     UserPickerComponent,
+    PatientPickerComponent,
   ],
   providers: [XlsExportService],
 })
