@@ -55,6 +55,51 @@ const getUsers = gql`
   }
 `;
 
+const getUserProfile = gql`
+  query {
+    user {
+      id
+      username
+      active
+      firstName
+      middleName
+      lastName
+      email
+      phone
+      workID
+      address
+      gender
+      birthDate
+      nationality
+      createdAt
+      updatedAt
+      deletedAt
+      departments {
+        id
+        name
+        description
+        active
+      }
+      roles {
+        id
+        name
+        isSuperAdmin
+        hierarchy
+        code
+        createdAt
+        updatedAt
+      }
+      permissions {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 export const UsersQueries = {
   getUsers,
+  getUserProfile,
 };
