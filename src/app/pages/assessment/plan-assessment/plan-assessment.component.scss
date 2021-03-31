@@ -1,23 +1,38 @@
-.added-questionnaire-card {
-  margin-bottom: 15px;
-  button {
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-    i {
-      font-size: 23px;
-    }
+form {
+  nz-form-label,
+  nz-form-control {
+    width: 100%;
   }
-  button:first-child {
-    color: #89d080;
+
+  nz-form-label {
+    font-weight: bold;
   }
-  button:last-child {
-    color: #f1b0b0;
+
+  nz-form-item + nz-form-item {
+    margin-top: 1em;
   }
 }
 
-::ng-deep {
-  .full-width {
-    width: 100%;
-  }
-}
+// .added-questionnaire-card {
+//   margin-bottom: 15px;
+//   button {
+//     cursor: pointer;
+//     border: none;
+//     background-color: transparent;
+//     i {
+//       font-size: 23px;
+//     }
+//   }
+//   button:first-child {
+//     color: #89d080;
+//   }
+//   button:last-child {
+//     color: #f1b0b0;
+//   }
+// }
+
+// ::ng-deep {
+//   .full-width {
+//     width: 100%;
+//   }
+// }

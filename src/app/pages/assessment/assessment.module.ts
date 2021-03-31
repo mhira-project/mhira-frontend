@@ -24,6 +24,8 @@ import { PatientsService } from '../patients-management/@services/patients.servi
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
 import { MasterDataModule } from '../../@shared/@modules/master-data/master-data.module';
 import { QuestionnaireSelectionComponent } from './questionnaire-selection/questionnaire-selection.component';
+import { ComponentsModule } from '../../@shared/components/components.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const antModules = [
   NzGridModule,
@@ -48,6 +50,8 @@ const antModules = [
     SharedModule,
     AssessmentRoutingModule,
     MasterDataModule,
+    ComponentsModule,
+    ReactiveFormsModule,
   ],
   declarations: [PlanAssessmentComponent, AssessmentsListComponent, QuestionnaireSelectionComponent],
   providers: [PatientsService, AssessmentService],
