@@ -80,7 +80,7 @@ export class PlanAssessmentComponent implements OnInit {
 
   public onQuestionnaireSelected(questionnaires: QuestionnaireVersion[]): void {
     this.selectedQuestionnaires = questionnaires;
-    this.assessmentForm.patchValue({ questionnaires: questionnaires });
+    this.assessmentForm.patchValue({ questionnaires });
   }
 
   public onUserSelect(user: User) {
@@ -108,6 +108,7 @@ export class PlanAssessmentComponent implements OnInit {
         informant: assessment.informant,
         patientId: assessment.patientId,
         clinicianId: assessment.clinicianId,
+        questionnaires: assessment.questionnaireAssessment?.questionnaires,
       });
 
       this.selectedQuestionnaires = assessment.questionnaireAssessment?.questionnaires;

@@ -131,6 +131,17 @@ const getMongoAssessment = gql`
         questionnaires(populate: true) {
           _id
           name
+          status
+          createdAt
+          keywords
+          copyright
+          website
+          license
+          timeToComplete
+          questionnaire {
+            language
+            abbreviation
+          }
         }
       }
       clinician {
