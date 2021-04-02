@@ -18,6 +18,7 @@ import {
   NzMessageModule,
   NzModalModule,
   NzTabsModule,
+  NzTagModule,
   NzToolTipModule,
 } from 'ng-zorro-antd';
 import { PatientsService } from '../patients-management/@services/patients.service';
@@ -39,6 +40,7 @@ const antModules = [
   NzInputModule,
   NzIconModule,
   NzToolTipModule,
+  NzTagModule,
 ];
 
 @NgModule({

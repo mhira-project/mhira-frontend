@@ -1,4 +1,4 @@
-import { ListQuestionnaireInput } from './../../questionnaire-management/@types/questionnaire';
+import { ListQuestionnaireInput, QuestionnaireStatus } from './../../questionnaire-management/@types/questionnaire';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { QuestionnaireVersion } from '../../questionnaire-management/@types/questionnaire';
 import { QuestionnaireManagementService } from '../../questionnaire-management/@services/questionnaire-management.service';
@@ -68,6 +68,19 @@ export class QuestionnaireSelectionComponent {
     }
 
     this.selectionChange.emit(this.selectedQuestionnaires);
+  }
+
+  public isDisabled(questionnaire: QuestionnaireVersion) {
+    return ![QuestionnaireStatus.PRIVATE, QuestionnaireStatus.PUBLISHED].includes(questionnaire.status);
+  }
+
+  public tagColor(status: QuestionnaireStatus): string {
+    return {
+      [QuestionnaireStatus.DRAFT]: 'blue',
+      [QuestionnaireStatus.PRIVATE]: 'orange',
+      [QuestionnaireStatus.PUBLISHED]: 'green',
+      [QuestionnaireStatus.ARCHIVED]: 'red',
+    }[status];
   }
 
   private moveArrayItem(from: number, to: number): void {

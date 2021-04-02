@@ -1,3 +1,11 @@
+<ng-template #questionnaireItem let-questionnaire>
+  <div>
+    <span class="questionnaire-title">{{ questionnaire.name }}</span>
+    <nz-tag nzColor="blue">{{ questionnaire.questionnaire.language }}</nz-tag>
+    <nz-tag [nzColor]="tagColor(questionnaire.status)">{{ questionnaire.status }}</nz-tag>
+  </div>
+</ng-template>
+
 <article>
   <section>
     <app-master-data-search (search)="onQuestionnaireSearch($event)"></app-master-data-search>
@@ -6,11 +14,15 @@
     <nz-list nzBordered nzHeader="Found Questionnaires">
       <nz-list-item *ngIf="!foundQuestionnaires?.length">No results</nz-list-item>
       <nz-list-item *ngFor="let questionnaire of foundQuestionnaires">
-        {{ questionnaire.name }}
+        <ng-container
+          [ngTemplateOutlet]="questionnaireItem"
+          [ngTemplateOutletContext]="{ $implicit: questionnaire }"
+        ></ng-container>
         <button
           nz-button
           [nzType]="isSelected(questionnaire) ? 'danger' : 'primary'"
           nzShape="circle"
+          [disabled]="isDisabled(questionnaire)"
           (click)="onToggleQuestionnaire(questionnaire)"
         >
           <i nz-icon [nzType]="isSelected(questionnaire) ? 'minus' : 'plus'"></i>
@@ -24,7 +36,10 @@
         Search and select questionnaires to add to the assessment
       </nz-list-item>
       <nz-list-item *ngFor="let questionnaire of selectedQuestionnaires">
-        {{ questionnaire.name }}
+        <ng-container
+          [ngTemplateOutlet]="questionnaireItem"
+          [ngTemplateOutletContext]="{ $implicit: questionnaire }"
+        ></ng-container>
         <div>
           <button
             nz-button
