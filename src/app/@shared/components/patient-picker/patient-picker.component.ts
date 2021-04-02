@@ -1,5 +1,5 @@
 import { debounceTime, map } from 'rxjs/operators';
-import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, Input } from '@angular/core';
 import { Patient } from '@app/pages/patients-management/@types/patient';
 import { NzSelectComponent } from 'ng-zorro-antd';
 import { PatientsService } from '../../../pages/patients-management/@services/patients.service';
@@ -17,15 +17,17 @@ export class PatientPickerComponent implements OnInit {
   @ViewChild(NzSelectComponent, { static: true })
   public selectComponent: NzSelectComponent;
 
-  public patients: Patient[] = [];
-
+  @Input()
   public set selectedPatient(patient: Patient) {
+    if (patient && !this.patients.find((p) => this.comparePatients(p, patient))) this.patients.push(patient);
     this._selectedPatient = patient;
     this.selectPatient.emit(patient);
   }
   public get selectedPatient(): Patient {
     return this._selectedPatient;
   }
+
+  public patients: Patient[] = [];
 
   private _selectedPatient: Patient;
 

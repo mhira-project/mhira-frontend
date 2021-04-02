@@ -17,18 +17,20 @@ export class UserPickerComponent implements OnInit {
   @Output()
   public selectUser = new EventEmitter<User>();
 
-  @ViewChild(NzSelectComponent, { static: true })
-  public selectComponent: NzSelectComponent;
-
-  public users: User[] = [];
-
+  @Input()
   public set selectedUser(user: User) {
+    if (user && !this.users.find((p) => this.compareUsers(p, user))) this.users.push(user);
     this._selectedUser = user;
     this.selectUser.emit(user);
   }
   public get selectedUser(): User {
     return this._selectedUser;
   }
+
+  @ViewChild(NzSelectComponent, { static: true })
+  public selectComponent: NzSelectComponent;
+
+  public users: User[] = [];
 
   private _selectedUser: User;
 

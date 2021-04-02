@@ -11,28 +11,11 @@ const assessments = gql`
           name
           patientId
           clinicianId
-          informantId
           status
           createdAt
           updatedAt
           deletedAt
-          informant {
-            id
-            username
-            active
-            firstName
-            middleName
-            lastName
-            email
-            phone
-            workID
-            address
-            gender
-            birthDate
-            nationality
-            createdAt
-            updatedAt
-          }
+          informant
           clinician {
             id
             username
@@ -128,7 +111,68 @@ const c = `questionnaires {
             updatedAt
           }`;
 
+const getMongoAssessment = gql`
+  query($id: Int!) {
+    getMongoAssessment(id: $id) {
+      id
+      date
+      name
+      status
+      createdAt
+      updatedAt
+      deletedAt
+      informant
+      patientId
+      clinicianId
+      questionnaireAssessmentId
+      questionnaireAssessment {
+        _id
+        status
+        questionnaires(populate: true) {
+          _id
+          name
+        }
+      }
+      clinician {
+        id
+        username
+        active
+        firstName
+        middleName
+        lastName
+        email
+        phone
+        workID
+        address
+        gender
+        birthDate
+        nationality
+        createdAt
+        updatedAt
+      }
+      patient {
+        id
+        active
+        medicalRecordNo
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        address
+        gender
+        birthDate
+        birthCountryCode
+        nationality
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 export const AssessmentsQueries = {
   assessments,
   questionnaires,
+  getMongoAssessment,
 };

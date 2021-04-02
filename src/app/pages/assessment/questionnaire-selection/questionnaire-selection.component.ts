@@ -1,5 +1,5 @@
 import { ListQuestionnaireInput } from './../../questionnaire-management/@types/questionnaire';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { QuestionnaireVersion } from '../../questionnaire-management/@types/questionnaire';
 import { QuestionnaireManagementService } from '../../questionnaire-management/@services/questionnaire-management.service';
 
@@ -12,8 +12,10 @@ export class QuestionnaireSelectionComponent {
   @Output()
   public selectionChange = new EventEmitter<QuestionnaireVersion[]>();
 
-  public foundQuestionnaires: QuestionnaireVersion[] = [];
+  @Input()
   public selectedQuestionnaires: QuestionnaireVersion[] = [];
+
+  public foundQuestionnaires: QuestionnaireVersion[] = [];
 
   constructor(private questionnaireService: QuestionnaireManagementService) {}
 

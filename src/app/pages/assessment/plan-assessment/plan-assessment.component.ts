@@ -7,9 +7,9 @@ import { NzMessageService } from 'ng-zorro-antd';
 // import { AssessmentService } from '@app/pages/assessment/@services/assessment.service';
 // import { Questionnaire } from '@app/pages/assessment/@types/questionnaire';
 // import { PatientsService } from '@app/pages/patients-management/@services/patients.service';
-// import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 // import { Assessment } from '@app/pages/assessment/@types/assessment';
-// import { environment } from '@env/environment';
+import { environment } from '@env/environment';
 // import { AppPermissionsService } from '@shared/services/app-permissions.service';
 // import { CaseManagersService } from '@app/pages/patients-management/@services/case-managers.service';
 // import { PermissionKey } from '@app/@shared/@types/permission';
@@ -18,7 +18,7 @@ import { User } from '@app/pages/user-management/@types/user';
 import { Patient } from '@app/pages/patients-management/@types/patient';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-// const CryptoJS = require('crypto-js');
+const CryptoJS = require('crypto-js');
 
 @Component({
   selector: 'app-plan-assessment',
@@ -27,13 +27,17 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class PlanAssessmentComponent implements OnInit {
   public selectedQuestionnaires: QuestionnaireVersion[] = [];
+  public selectedPatient: Patient;
+  public selectedClinician: User;
+  public fullAssessment: any;
 
   public asessmentForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private assessmentService: AssessmentService,
-    private nzMessage: NzMessageService
+    private nzMessage: NzMessageService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   public ngOnInit(): void {
@@ -43,34 +47,68 @@ export class PlanAssessmentComponent implements OnInit {
       patientId: [null, Validators.required],
       clinicianId: [null, Validators.required],
     });
+
+    this.initAssessment();
   }
 
   public onSubmitAssessment() {
     if (this.asessmentForm.invalid) return;
 
-    this.assessmentService
-      .createMongoAssessment({
-        ...this.asessmentForm.value,
-        questionnaires: this.selectedQuestionnaires.map((q) => q._id),
-      })
-      .subscribe(
-        () => {
-          this.nzMessage.success('Assessment created', { nzDuration: 3000 });
-          this.asessmentForm.reset();
-        },
-        (err) => {
-          this.nzMessage.error(`Unable to create assessment - ${err.message}`, { nzDuration: 5000 });
-          console.error(err);
-        }
-      );
+    const action = this.fullAssessment?.id
+      ? this.assessmentService.updateMongoAssessment({
+          ...this.asessmentForm.value,
+          questionnaires: this.selectedQuestionnaires.map((q) => q._id),
+          assessmentId: this.fullAssessment.id,
+        })
+      : this.assessmentService.createMongoAssessment({
+          ...this.asessmentForm.value,
+          questionnaires: this.selectedQuestionnaires.map((q) => q._id),
+        });
+
+    action.subscribe(
+      () => {
+        this.nzMessage.success('Assessment created', { nzDuration: 3000 });
+        this.asessmentForm.reset();
+      },
+      (err) => {
+        this.nzMessage.error(`Unable to create assessment - ${err.message}`, { nzDuration: 5000 });
+        console.error(err);
+      }
+    );
   }
 
   public onUserSelect(user: User) {
-    this.asessmentForm.patchValue({ clinicianId: user.id });
+    this.asessmentForm.patchValue({ clinicianId: user?.id });
   }
 
   public onPatientSelect(patient: Patient) {
-    this.asessmentForm.patchValue({ patientId: patient.id });
+    this.asessmentForm.patchValue({ patientId: patient?.id });
+  }
+
+  private initAssessment() {
+    let assessment;
+
+    try {
+      const raw = this.activatedRoute.snapshot.queryParamMap.get('assessment');
+      const bytes = CryptoJS.AES.decrypt(raw, environment.secretKey);
+      assessment = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    } catch {
+      return;
+    }
+
+    this.assessmentService.getAssessment(assessment.id).subscribe((assessment) => {
+      this.asessmentForm.setValue({
+        name: assessment.name,
+        informant: assessment.informant,
+        patientId: assessment.patientId,
+        clinicianId: assessment.clinicianId,
+      });
+
+      this.selectedQuestionnaires = assessment.questionnaireAssessment?.questionnaires;
+      this.selectedPatient = assessment.patient;
+      this.selectedClinician = assessment.clinician;
+      this.fullAssessment = assessment;
+    });
   }
 
   // PK = PermissionKey;

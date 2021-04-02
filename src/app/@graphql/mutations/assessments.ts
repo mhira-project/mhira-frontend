@@ -182,9 +182,18 @@ const createOneMongoAssessment = gql`
   }
 `;
 
+const updateOneMongoAssessment = gql`
+  mutation($assessment: UpdateQuestionnaireAssessmentInput!) {
+    updateAssessment(assessment: $assessment) {
+      id
+    }
+  }
+`;
+
 export const AssessmentsMutations = {
   createOneAssessment,
   updateOneAssessment,
   deleteOneAssessment,
   createOneMongoAssessment,
+  updateOneMongoAssessment,
 };

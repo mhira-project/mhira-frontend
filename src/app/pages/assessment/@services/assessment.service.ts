@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FetchResult } from 'apollo-link';
 import { AssessmentsQueries } from '../../../@graphql/queries/assessments';
 import { Assessment } from '@app/pages/assessment/@types/assessment';
@@ -9,7 +9,7 @@ import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
 import { Paging } from '@shared/@types/paging';
 import { AssessmentFilter } from '@app/pages/assessment/@types/assessment-filter';
-import { QuestionnaireVersion } from '../../questionnaire-management/@types/questionnaire';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -75,5 +75,23 @@ export class AssessmentService {
       variables: { assessment },
       fetchPolicy: 'no-cache',
     });
+  }
+
+  updateMongoAssessment(assessment: any) {
+    return this.apollo.mutate({
+      mutation: AssessmentsMutations.updateOneMongoAssessment,
+      variables: { assessment },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
+  getAssessment(assessmentId: number) {
+    return this.apollo
+      .query({
+        query: AssessmentsQueries.getMongoAssessment,
+        variables: { id: assessmentId },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map((result: any) => result?.data?.getMongoAssessment));
   }
 }

@@ -10,6 +10,6 @@
   <nz-option
     *ngFor="let patient of patients"
     [nzValue]="patient"
-    [nzLabel]="patient.firstName + ' ' + patient.lastName"
+    [nzLabel]="patient?.firstName + ' ' + patient?.lastName"
   ></nz-option>
 </nz-select>

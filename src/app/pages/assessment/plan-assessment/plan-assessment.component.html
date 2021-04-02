@@ -1,6 +1,9 @@
 <article nz-row [nzGutter]="20">
   <section nz-col nzSpan="12" class="questionnaires">
-    <app-questionnaire-selection (selectionChange)="selectedQuestionnaires = $event"></app-questionnaire-selection>
+    <app-questionnaire-selection
+      [selectedQuestionnaires]="selectedQuestionnaires"
+      (selectionChange)="selectedQuestionnaires = $event"
+    ></app-questionnaire-selection>
   </section>
   <section nz-col nzSpan="12">
     <form nz-form [formGroup]="asessmentForm" (submit)="onSubmitAssessment()">
@@ -13,13 +16,20 @@
       <nz-form-item>
         <nz-form-label nzFor="patient">Patient</nz-form-label>
         <nz-form-control>
-          <app-patient-picker (selectPatient)="onPatientSelect($event)"></app-patient-picker>
+          <app-patient-picker
+            [selectedPatient]="selectedPatient"
+            (selectPatient)="onPatientSelect($event)"
+          ></app-patient-picker>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzFor="clinician">Clinician</nz-form-label>
         <nz-form-control>
-          <app-user-picker [assignSelfOption]="true" (selectUser)="onUserSelect($event)"></app-user-picker>
+          <app-user-picker
+            [assignSelfOption]="true"
+            [selectedUser]="selectedClinician"
+            (selectUser)="onUserSelect($event)"
+          ></app-user-picker>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
