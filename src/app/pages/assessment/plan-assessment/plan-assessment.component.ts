@@ -31,7 +31,7 @@ export class PlanAssessmentComponent implements OnInit {
   public selectedClinician: User;
   public fullAssessment: any;
 
-  public asessmentForm: FormGroup;
+  public assessmentForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,34 +41,35 @@ export class PlanAssessmentComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.asessmentForm = this.formBuilder.group({
+    this.assessmentForm = this.formBuilder.group({
       name: [null, Validators.required],
       informant: [null, Validators.required],
       patientId: [null, Validators.required],
       clinicianId: [null, Validators.required],
+      questionnaires: [null, Validators.required],
     });
 
     this.initAssessment();
   }
 
   public onSubmitAssessment() {
-    if (this.asessmentForm.invalid) return;
+    if (this.assessmentForm.invalid) return;
 
     const action = this.fullAssessment?.id
       ? this.assessmentService.updateMongoAssessment({
-          ...this.asessmentForm.value,
+          ...this.assessmentForm.value,
           questionnaires: this.selectedQuestionnaires.map((q) => q._id),
           assessmentId: this.fullAssessment.id,
         })
       : this.assessmentService.createMongoAssessment({
-          ...this.asessmentForm.value,
+          ...this.assessmentForm.value,
           questionnaires: this.selectedQuestionnaires.map((q) => q._id),
         });
 
     action.subscribe(
       () => {
         this.nzMessage.success('Assessment created', { nzDuration: 3000 });
-        this.asessmentForm.reset();
+        this.assessmentForm.reset();
       },
       (err) => {
         this.nzMessage.error(`Unable to create assessment - ${err.message}`, { nzDuration: 5000 });
@@ -77,12 +78,17 @@ export class PlanAssessmentComponent implements OnInit {
     );
   }
 
+  public onQuestionnaireSelected(questionnaires: QuestionnaireVersion[]): void {
+    this.selectedQuestionnaires = questionnaires;
+    this.assessmentForm.patchValue({ questionnaires: questionnaires });
+  }
+
   public onUserSelect(user: User) {
-    this.asessmentForm.patchValue({ clinicianId: user?.id });
+    this.assessmentForm.patchValue({ clinicianId: user?.id });
   }
 
   public onPatientSelect(patient: Patient) {
-    this.asessmentForm.patchValue({ patientId: patient?.id });
+    this.assessmentForm.patchValue({ patientId: patient?.id });
   }
 
   private initAssessment() {
@@ -97,7 +103,7 @@ export class PlanAssessmentComponent implements OnInit {
     }
 
     this.assessmentService.getAssessment(assessment.id).subscribe((assessment) => {
-      this.asessmentForm.setValue({
+      this.assessmentForm.setValue({
         name: assessment.name,
         informant: assessment.informant,
         patientId: assessment.patientId,

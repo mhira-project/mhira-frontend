@@ -2,11 +2,11 @@
   <section nz-col nzSpan="12" class="questionnaires">
     <app-questionnaire-selection
       [selectedQuestionnaires]="selectedQuestionnaires"
-      (selectionChange)="selectedQuestionnaires = $event"
+      (selectionChange)="onQuestionnaireSelected($event)"
     ></app-questionnaire-selection>
   </section>
   <section nz-col nzSpan="12">
-    <form nz-form [formGroup]="asessmentForm" (submit)="onSubmitAssessment()">
+    <form nz-form [formGroup]="assessmentForm" (submit)="onSubmitAssessment()">
       <nz-form-item>
         <nz-form-label>Assessment name</nz-form-label>
         <nz-form-control>
@@ -40,7 +40,7 @@
       </nz-form-item>
       <nz-form-item>
         <nz-form-control>
-          <button nz-button nzType="primary">Submit</button>
+          <button nz-button nzType="primary" [disabled]="!assessmentForm.valid">Submit</button>
         </nz-form-control>
       </nz-form-item>
     </form>
