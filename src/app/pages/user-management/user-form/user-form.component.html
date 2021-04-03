@@ -11,7 +11,7 @@
       [loadingMessage]="loadingMessage"
       [inputMode]="inputMode"
       [showCancelButton]="showCancelButton"
-      [showEditButton]="!isCurrentUser() && perms.permissionsOnly([PK.MANAGE_USERS])"
+      [showEditButton]="perms.permissionsOnly([PK.MANAGE_USERS]) && perms.hasAccessLevelToUser(user)"
       [form]="profileFields"
       (submitForm)="submitForm($event)"
     ></app-form>
