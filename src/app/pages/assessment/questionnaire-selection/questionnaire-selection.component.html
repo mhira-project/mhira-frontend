@@ -7,29 +7,31 @@
 </ng-template>
 
 <article>
-  <section>
-    <app-master-data-search (search)="onQuestionnaireSearch($event)"></app-master-data-search>
-  </section>
-  <section>
-    <nz-list nzBordered nzHeader="Found Questionnaires">
-      <nz-list-item *ngIf="!foundQuestionnaires?.length">No results</nz-list-item>
-      <nz-list-item *ngFor="let questionnaire of foundQuestionnaires">
-        <ng-container
-          [ngTemplateOutlet]="questionnaireItem"
-          [ngTemplateOutletContext]="{ $implicit: questionnaire }"
-        ></ng-container>
-        <button
-          nz-button
-          [nzType]="isSelected(questionnaire) ? 'danger' : 'primary'"
-          nzShape="circle"
-          [disabled]="isDisabled(questionnaire)"
-          (click)="onToggleQuestionnaire(questionnaire)"
-        >
-          <i nz-icon [nzType]="isSelected(questionnaire) ? 'minus' : 'plus'"></i>
-        </button>
-      </nz-list-item>
-    </nz-list>
-  </section>
+  <ng-container *ngIf="!readonly">
+    <section>
+      <app-master-data-search (search)="onQuestionnaireSearch($event)"></app-master-data-search>
+    </section>
+    <section>
+      <nz-list nzBordered nzHeader="Found Questionnaires">
+        <nz-list-item *ngIf="!foundQuestionnaires?.length">No results</nz-list-item>
+        <nz-list-item *ngFor="let questionnaire of foundQuestionnaires">
+          <ng-container
+            [ngTemplateOutlet]="questionnaireItem"
+            [ngTemplateOutletContext]="{ $implicit: questionnaire }"
+          ></ng-container>
+          <button
+            nz-button
+            [nzType]="isSelected(questionnaire) ? 'danger' : 'primary'"
+            nzShape="circle"
+            [disabled]="isDisabled(questionnaire)"
+            (click)="onToggleQuestionnaire(questionnaire)"
+          >
+            <i nz-icon [nzType]="isSelected(questionnaire) ? 'minus' : 'plus'"></i>
+          </button>
+        </nz-list-item>
+      </nz-list>
+    </section>
+  </ng-container>
   <section>
     <nz-list nzBordered nzHeader="Selected Questionnaires">
       <nz-list-item *ngIf="!selectedQuestionnaires?.length">
@@ -40,7 +42,7 @@
           [ngTemplateOutlet]="questionnaireItem"
           [ngTemplateOutletContext]="{ $implicit: questionnaire }"
         ></ng-container>
-        <div>
+        <div *ngIf="!readonly">
           <button
             nz-button
             nzShape="circle"

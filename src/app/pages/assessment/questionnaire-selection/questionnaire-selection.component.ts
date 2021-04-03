@@ -15,6 +15,9 @@ export class QuestionnaireSelectionComponent {
   @Input()
   public selectedQuestionnaires: QuestionnaireVersion[] = [];
 
+  @Input()
+  public readonly = false;
+
   public foundQuestionnaires: QuestionnaireVersion[] = [];
 
   constructor(private questionnaireService: QuestionnaireManagementService) {}
