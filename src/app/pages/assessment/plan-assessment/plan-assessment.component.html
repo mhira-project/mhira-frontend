@@ -1,6 +1,7 @@
 <article nz-row [nzGutter]="20">
   <section nz-col nzSpan="12" class="questionnaires">
     <app-questionnaire-selection
+      [readonly]="!editMode"
       [selectedQuestionnaires]="selectedQuestionnaires"
       (selectionChange)="onQuestionnaireSelected($event)"
     ></app-questionnaire-selection>
@@ -10,7 +11,7 @@
       <nz-form-item>
         <nz-form-label>Assessment name</nz-form-label>
         <nz-form-control>
-          <input nz-input type="string" formControlName="name" />
+          <input nz-input type="string" formControlName="name" [readonly]="!editMode" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -18,6 +19,7 @@
         <nz-form-control>
           <app-patient-picker
             [selectedPatient]="selectedPatient"
+            [readonly]="!editMode"
             (selectPatient)="onPatientSelect($event)"
           ></app-patient-picker>
         </nz-form-control>
@@ -27,6 +29,7 @@
         <nz-form-control>
           <app-user-picker
             [assignSelfOption]="true"
+            [readonly]="!editMode"
             [selectedUser]="selectedClinician"
             (selectUser)="onUserSelect($event)"
           ></app-user-picker>
@@ -35,12 +38,18 @@
       <nz-form-item>
         <nz-form-label>Informant</nz-form-label>
         <nz-form-control>
-          <input nz-input type="string" formControlName="informant" />
+          <input nz-input type="string" formControlName="informant" [readonly]="!editMode" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-control>
-          <button nz-button nzType="primary" [disabled]="!assessmentForm.valid">Submit</button>
+          <ng-container *ngIf="editMode">
+            <button nz-button nzType="primary" [disabled]="!assessmentForm.valid">Submit</button>
+            <button nz-button type="button" (click)="editMode = !editMode">Cancel</button>
+          </ng-container>
+          <button nz-button nzType="primary" type="button" *ngIf="!editMode" (click)="editMode = !editMode">
+            Edit
+          </button>
         </nz-form-control>
       </nz-form-item>
     </form>

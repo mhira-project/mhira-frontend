@@ -30,8 +30,8 @@ export class PlanAssessmentComponent implements OnInit {
   public selectedPatient: Patient;
   public selectedClinician: User;
   public fullAssessment: any;
-
   public assessmentForm: FormGroup;
+  public editMode = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -69,7 +69,7 @@ export class PlanAssessmentComponent implements OnInit {
     action.subscribe(
       () => {
         this.nzMessage.success('Assessment created', { nzDuration: 3000 });
-        this.assessmentForm.reset();
+        this.editMode = false;
       },
       (err) => {
         this.nzMessage.error(`Unable to create assessment - ${err.message}`, { nzDuration: 5000 });
@@ -115,6 +115,7 @@ export class PlanAssessmentComponent implements OnInit {
       this.selectedPatient = assessment.patient;
       this.selectedClinician = assessment.clinician;
       this.fullAssessment = assessment;
+      this.editMode = false;
     });
   }
 
