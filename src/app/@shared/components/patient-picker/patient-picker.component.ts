@@ -1,21 +1,30 @@
 import { debounceTime, map } from 'rxjs/operators';
-import { Component, OnInit, Output, EventEmitter, ViewChild, Input } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, Input } from '@angular/core';
 import { Patient } from '@app/pages/patients-management/@types/patient';
 import { NzSelectComponent } from 'ng-zorro-antd';
 import { PatientsService } from '../../../pages/patients-management/@services/patients.service';
 import { PatientModel } from '../../../pages/patients-management/@models/patient.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-patient-picker',
   templateUrl: './patient-picker.component.html',
   styleUrls: ['./patient-picker.component.scss'],
 })
-export class PatientPickerComponent implements OnInit {
+export class PatientPickerComponent {
   @Output()
   public selectPatient = new EventEmitter<Patient>();
 
-  @ViewChild(NzSelectComponent, { static: true })
-  public selectComponent: NzSelectComponent;
+  @ViewChild(NzSelectComponent, { static: false })
+  public set selectComponent(component: NzSelectComponent) {
+    if (component) {
+      this.selectComponentSubscription = component.nzOnSearch
+        .pipe(debounceTime(300))
+        .subscribe((q) => this.onSearch(q));
+    } else if (this.selectComponentSubscription) {
+      this.selectComponentSubscription.unsubscribe();
+    }
+  }
 
   @Input()
   public readonly = false;
@@ -34,11 +43,9 @@ export class PatientPickerComponent implements OnInit {
 
   private _selectedPatient: Patient;
 
-  constructor(private patientsService: PatientsService) {}
+  private selectComponentSubscription: Subscription;
 
-  public ngOnInit(): void {
-    this.selectComponent.nzOnSearch.pipe(debounceTime(300)).subscribe((q) => this.onSearch(q));
-  }
+  constructor(private patientsService: PatientsService) {}
 
   public onSearch(q: string) {
     if (!q) {

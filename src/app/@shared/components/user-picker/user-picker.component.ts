@@ -1,16 +1,17 @@
 import { debounceTime, map } from 'rxjs/operators';
-import { Component, Output, EventEmitter, ViewChild, OnInit, Input } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, Input } from '@angular/core';
 import { User } from '@app/pages/user-management/@types/user';
 import { NzSelectComponent } from 'ng-zorro-antd';
 import { UsersService } from '../../../pages/user-management/@services/users.service';
 import { UserModel } from '../../../pages/user-management/@models/user.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-picker',
   templateUrl: './user-picker.component.html',
   styleUrls: ['./user-picker.component.scss'],
 })
-export class UserPickerComponent implements OnInit {
+export class UserPickerComponent {
   @Input()
   public assignSelfOption = false;
 
@@ -30,18 +31,24 @@ export class UserPickerComponent implements OnInit {
     return this._selectedUser;
   }
 
-  @ViewChild(NzSelectComponent, { static: true })
-  public selectComponent: NzSelectComponent;
+  @ViewChild(NzSelectComponent, { static: false })
+  public set selectComponent(component: NzSelectComponent) {
+    if (component) {
+      this.selectComponentSubscription = component.nzOnSearch
+        .pipe(debounceTime(300))
+        .subscribe((q) => this.onSearch(q));
+    } else if (this.selectComponentSubscription) {
+      this.selectComponentSubscription.unsubscribe();
+    }
+  }
 
   public users: User[] = [];
 
   private _selectedUser: User;
 
-  constructor(private usersService: UsersService) {}
+  private selectComponentSubscription: Subscription;
 
-  public ngOnInit(): void {
-    this.selectComponent.nzOnSearch.pipe(debounceTime(300)).subscribe((q) => this.onSearch(q));
-  }
+  constructor(private usersService: UsersService) {}
 
   public onAssignSelf(): void {
     const user = JSON.parse(localStorage.getItem('user')) as User;
