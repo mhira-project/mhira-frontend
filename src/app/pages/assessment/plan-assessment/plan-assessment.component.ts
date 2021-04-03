@@ -83,17 +83,17 @@ export class PlanAssessmentComponent implements OnInit {
   }
 
   private initAssessment() {
-    let assessment: Assessment;
+    let assessmentId: number;
 
     try {
       const raw = this.activatedRoute.snapshot.queryParamMap.get('assessment');
       const bytes = CryptoJS.AES.decrypt(raw, environment.secretKey);
-      assessment = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      assessmentId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).id;
     } catch {
       return;
     }
 
-    this.assessmentService.getAssessment(assessment.id).subscribe((assessment) => {
+    this.assessmentService.getAssessment(assessmentId).subscribe((assessment) => {
       this.assessmentForm.setValue({
         name: assessment.name,
         informant: assessment.informant,
