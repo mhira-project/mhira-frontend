@@ -6,6 +6,7 @@
   [nzShowArrow]="false"
   [(ngModel)]="selectedPatient"
   [compareWith]="comparePatients"
+  *ngIf="!readonly; else plainText"
 >
   <nz-option
     *ngFor="let patient of patients"
@@ -13,3 +14,7 @@
     [nzLabel]="patient?.firstName + ' ' + patient?.lastName"
   ></nz-option>
 </nz-select>
+
+<ng-template #plainText>
+  {{ selectedPatient?.firstName + ' ' + selectedPatient?.lastName }}
+</ng-template>

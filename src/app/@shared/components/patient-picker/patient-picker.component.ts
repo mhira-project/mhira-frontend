@@ -18,6 +18,9 @@ export class PatientPickerComponent implements OnInit {
   public selectComponent: NzSelectComponent;
 
   @Input()
+  public readonly = false;
+
+  @Input()
   public set selectedPatient(patient: Patient) {
     if (patient && !this.patients.find((p) => this.comparePatients(p, patient))) this.patients.push(patient);
     this._selectedPatient = patient;

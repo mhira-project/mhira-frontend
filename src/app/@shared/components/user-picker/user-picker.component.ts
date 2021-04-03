@@ -18,6 +18,9 @@ export class UserPickerComponent implements OnInit {
   public selectUser = new EventEmitter<User>();
 
   @Input()
+  public readonly = false;
+
+  @Input()
   public set selectedUser(user: User) {
     if (user && !this.users.find((p) => this.compareUsers(p, user))) this.users.push(user);
     this._selectedUser = user;
