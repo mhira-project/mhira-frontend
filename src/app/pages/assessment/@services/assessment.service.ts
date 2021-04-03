@@ -10,6 +10,7 @@ import { Sorting } from '@shared/@types/sorting';
 import { Paging } from '@shared/@types/paging';
 import { AssessmentFilter } from '@app/pages/assessment/@types/assessment-filter';
 import { map } from 'rxjs/operators';
+import { FullAssessment } from '../@types/assessment';
 
 @Injectable({
   providedIn: 'root',
@@ -85,7 +86,7 @@ export class AssessmentService {
     });
   }
 
-  getAssessment(assessmentId: number) {
+  getAssessment(assessmentId: number): Observable<FullAssessment> {
     return this.apollo
       .query({
         query: AssessmentsQueries.getMongoAssessment,
