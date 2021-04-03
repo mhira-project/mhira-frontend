@@ -32,7 +32,7 @@ const routes: Routes = [
           title: extract('Plan Assessments'),
           breadcrumb: extract('Plan Assessments'),
           permissions: {
-            only: [PermissionKey.MANAGE_ASSESSMENTS],
+            only: [PermissionKey.VIEW_ASSESSMENTS, PermissionKey.MANAGE_ASSESSMENTS],
           },
         },
         canActivate: [PermissionGuard],

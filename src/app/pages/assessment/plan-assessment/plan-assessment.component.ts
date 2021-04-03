@@ -8,6 +8,8 @@ import { User } from '@app/pages/user-management/@types/user';
 import { Patient } from '@app/pages/patients-management/@types/patient';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FullAssessment } from '../@types/assessment';
+import { PermissionKey } from '../../../@shared/@types/permission';
+import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -17,6 +19,7 @@ const CryptoJS = require('crypto-js');
   styleUrls: ['./plan-assessment.component.scss'],
 })
 export class PlanAssessmentComponent implements OnInit {
+  public PK = PermissionKey;
   public selectedQuestionnaires: QuestionnaireVersion[] = [];
   public selectedPatient: Patient;
   public selectedClinician: User;
@@ -28,7 +31,8 @@ export class PlanAssessmentComponent implements OnInit {
     private formBuilder: FormBuilder,
     private assessmentService: AssessmentService,
     private nzMessage: NzMessageService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public perms: AppPermissionsService
   ) {}
 
   public ngOnInit(): void {

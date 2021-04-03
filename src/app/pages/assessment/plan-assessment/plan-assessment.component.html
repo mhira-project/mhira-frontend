@@ -47,7 +47,13 @@
             <button nz-button nzType="primary" [disabled]="!assessmentForm.valid">Submit</button>
             <button nz-button type="button" (click)="editMode = !editMode" *ngIf="fullAssessment">Cancel</button>
           </ng-container>
-          <button nz-button nzType="primary" type="button" *ngIf="!editMode" (click)="editMode = !editMode">
+          <button
+            nz-button
+            nzType="primary"
+            type="button"
+            *ngIf="!editMode && perms.permissionsOnly(PK.MANAGE_ASSESSMENTS)"
+            (click)="editMode = !editMode"
+          >
             Edit
           </button>
         </nz-form-control>
