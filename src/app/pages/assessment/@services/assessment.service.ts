@@ -8,9 +8,9 @@ import { AssessmentsMutations } from '@app/@graphql/mutations/assessments';
 import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
 import { Paging } from '@shared/@types/paging';
-import { AssessmentFilter } from '@app/pages/assessment/@types/assessment-filter';
 import { map } from 'rxjs/operators';
 import { FullAssessment } from '../@types/assessment';
+import { PageInfo } from '../../../@shared/@types/paging';
 
 @Injectable({
   providedIn: 'root',
@@ -20,18 +20,20 @@ export class AssessmentService {
 
   getAssessments(params?: {
     paging?: Paging;
-    filter?: AssessmentFilter;
+    filter?: Filter;
     sorting?: Sorting[];
-  }): Observable<FetchResult<any>> {
-    return this.apollo.query({
-      query: AssessmentsQueries.assessments,
-      variables: {
-        paging: params && params.paging ? params.paging : undefined,
-        filter: params && params.filter ? params.filter : undefined,
-        sorting: params && params.sorting ? params.sorting : undefined,
-      },
-      fetchPolicy: 'no-cache',
-    });
+  }): Observable<{ edges: any; pageInfo: PageInfo }> {
+    return this.apollo
+      .query({
+        query: AssessmentsQueries.assessments,
+        variables: {
+          paging: params && params.paging ? params.paging : undefined,
+          filter: params && params.filter ? params.filter : undefined,
+          sorting: params && params.sorting ? params.sorting : undefined,
+        },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map((result: any) => result.data.assessments));
   }
 
   getQuestionnaires(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }): Observable<FetchResult<any>> {

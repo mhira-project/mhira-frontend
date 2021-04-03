@@ -161,15 +161,6 @@ const deleteOneAssessment = gql`
   mutation($id: ID!) {
     deleteOneAssessment(input: { id: $id }) {
       id
-      date
-      name
-      patientId
-      clinicianId
-      informantId
-      status
-      createdAt
-      updatedAt
-      deletedAt
     }
   }
 `;
