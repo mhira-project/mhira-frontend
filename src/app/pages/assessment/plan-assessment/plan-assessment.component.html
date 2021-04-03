@@ -45,7 +45,7 @@
         <nz-form-control>
           <ng-container *ngIf="editMode">
             <button nz-button nzType="primary" [disabled]="!assessmentForm.valid">Submit</button>
-            <button nz-button type="button" (click)="editMode = !editMode">Cancel</button>
+            <button nz-button type="button" (click)="editMode = !editMode" *ngIf="fullAssessment">Cancel</button>
           </ng-container>
           <button nz-button nzType="primary" type="button" *ngIf="!editMode" (click)="editMode = !editMode">
             Edit

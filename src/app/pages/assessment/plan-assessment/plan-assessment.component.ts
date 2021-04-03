@@ -7,7 +7,7 @@ import { QuestionnaireVersion } from '../../questionnaire-management/@types/ques
 import { User } from '@app/pages/user-management/@types/user';
 import { Patient } from '@app/pages/patients-management/@types/patient';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FullAssessment, Assessment } from '../@types/assessment';
+import { FullAssessment } from '../@types/assessment';
 
 const CryptoJS = require('crypto-js');
 
