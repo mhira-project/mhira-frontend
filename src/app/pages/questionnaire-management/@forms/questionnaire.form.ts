@@ -33,22 +33,19 @@ export const QuestionnaireForm: Form & { groups: { fields: { name: keyof CreateQ
           ],
         },
         {
-          value: undefined,
-          name: 'timeToComplete',
-          title: 'Time to complete (minutes)',
-          description: 'Time to complete (minutes)',
-          type: 'number',
-          span: 12,
-          isRequired: true,
-        },
-        {
           value: '',
           name: 'language',
           title: 'Language',
           description: 'Language',
-          type: 'text',
+          type: 'select',
           span: 12,
           isRequired: true,
+          options: [
+            // TODO: get these from somewhere central
+            { value: 'de', label: 'DE - German' },
+            { value: 'en', label: 'EN - English' },
+            { value: 'sw', label: 'SW - Swahili' },
+          ],
         },
         {
           value: '',
@@ -58,6 +55,14 @@ export const QuestionnaireForm: Form & { groups: { fields: { name: keyof CreateQ
           type: 'text',
           span: 12,
           isRequired: true,
+        },
+        {
+          value: undefined,
+          name: 'timeToComplete',
+          title: 'Time to complete (minutes)',
+          description: 'Time to complete (minutes)',
+          type: 'number',
+          span: 12,
         },
         {
           value: '',
@@ -111,22 +116,19 @@ export const QuestionnaireUpdateForm: Form & { groups: { fields: { name: keyof U
           ],
         },
         {
-          value: undefined,
-          name: 'timeToComplete',
-          title: 'Time to complete (minutes)',
-          description: 'Time to complete (minutes)',
-          type: 'number',
-          span: 12,
-          isRequired: true,
-        },
-        {
           value: '',
           name: 'language',
           title: 'Language',
           description: 'Language',
-          type: 'text',
+          type: 'select',
           span: 12,
           isRequired: true,
+          options: [
+            // TODO: get these from somewhere central
+            { value: 'de', label: 'DE - German' },
+            { value: 'en', label: 'EN - English' },
+            { value: 'sw', label: 'SW - Swahili' },
+          ],
         },
         {
           value: '',
@@ -136,6 +138,14 @@ export const QuestionnaireUpdateForm: Form & { groups: { fields: { name: keyof U
           type: 'text',
           span: 12,
           isRequired: true,
+        },
+        {
+          value: undefined,
+          name: 'timeToComplete',
+          title: 'Time to complete (minutes)',
+          description: 'Time to complete (minutes)',
+          type: 'number',
+          span: 12,
         },
         {
           value: '',
