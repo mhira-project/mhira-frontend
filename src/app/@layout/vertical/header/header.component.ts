@@ -44,9 +44,10 @@ export class HeaderComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('user'));
     this.authService.getUserProfile().subscribe(
       async ({ data }) => {
-        console.log(data);
+        this.user = data.getUserProfile;
+        localStorage.setItem('user', JSON.stringify(data.getUserProfile));
       },
-      (error) => {}
+      (_) => {}
     );
   }
 

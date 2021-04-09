@@ -57,29 +57,20 @@ const getUsers = gql`
 
 const getUserProfile = gql`
   query {
-    user {
+    getUserProfile {
       id
-      username
-      active
-      firstName
-      middleName
-      lastName
-      email
-      phone
       workID
+      firstName
+      lastName
+      phone
+      email
       address
+      isSuperUser
+      passwordChangeRequired
       gender
       birthDate
-      nationality
-      createdAt
       updatedAt
-      deletedAt
-      departments {
-        id
-        name
-        description
-        active
-      }
+      createdAt
       roles {
         id
         name
@@ -92,6 +83,14 @@ const getUserProfile = gql`
       permissions {
         id
         name
+        createdAt
+        updatedAt
+      }
+      departments {
+        id
+        name
+        description
+        active
         createdAt
         updatedAt
       }
