@@ -115,7 +115,7 @@ export class AssessmentsListComponent {
       });
   }
 
-  private async deleteAssessment(assessment: FormattedAssessment, archive = true): Promise<void> {
+  private async deleteAssessment(assessment: FormattedAssessment, archive: boolean = true): Promise<void> {
     // create confirmation modal
     const modal = this.modalService.confirm({
       nzOnOk: () => true,

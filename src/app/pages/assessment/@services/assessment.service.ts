@@ -64,7 +64,7 @@ export class AssessmentService {
     });
   }
 
-  deleteAssessment(assessment: Assessment, archive = true): Observable<boolean> {
+  deleteAssessment(assessment: Assessment, archive: boolean = true): Observable<boolean> {
     return this.apollo
       .mutate({
         mutation: AssessmentsMutations.deleteAssessment,
