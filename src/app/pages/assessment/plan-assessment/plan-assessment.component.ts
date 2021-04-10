@@ -97,7 +97,7 @@ export class PlanAssessmentComponent implements OnInit {
       return;
     }
 
-    this.assessmentService.getAssessment(assessmentId).subscribe((assessment) => {
+    this.assessmentService.getFullAssessment(assessmentId).subscribe((assessment) => {
       this.assessmentForm.setValue({
         name: assessment.name,
         informant: assessment.informant,

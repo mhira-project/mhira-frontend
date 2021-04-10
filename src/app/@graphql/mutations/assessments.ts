@@ -157,16 +157,14 @@ const updateOneAssessment = gql`
   }
 `;
 
-const deleteOneAssessment = gql`
-  mutation($id: ID!) {
-    deleteOneAssessment(input: { id: $id }) {
-      id
-    }
+const deleteAssessment = gql`
+  mutation($id: Float!, $archive: Boolean) {
+    deleteAssessment(id: $id, archive: $archive)
   }
 `;
 
 const createOneMongoAssessment = gql`
-  mutation($assessment: CreateQuestionnaireAssessmentInput!) {
+  mutation($assessment: CreateFullAssessmentInput!) {
     createNewAssessment(assessment: $assessment) {
       id
     }
@@ -174,7 +172,7 @@ const createOneMongoAssessment = gql`
 `;
 
 const updateOneMongoAssessment = gql`
-  mutation($assessment: UpdateQuestionnaireAssessmentInput!) {
+  mutation($assessment: UpdateFullAssessmentInput!) {
     updateAssessment(assessment: $assessment) {
       id
     }
@@ -184,7 +182,7 @@ const updateOneMongoAssessment = gql`
 export const AssessmentsMutations = {
   createOneAssessment,
   updateOneAssessment,
-  deleteOneAssessment,
+  deleteAssessment,
   createOneMongoAssessment,
   updateOneMongoAssessment,
 };

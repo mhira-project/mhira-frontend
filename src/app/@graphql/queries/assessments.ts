@@ -111,9 +111,9 @@ const c = `questionnaires {
             updatedAt
           }`;
 
-const getMongoAssessment = gql`
+const getFullAssessment = gql`
   query($id: Int!) {
-    getMongoAssessment(id: $id) {
+    getFullAssessment(id: $id) {
       id
       date
       name
@@ -185,5 +185,5 @@ const getMongoAssessment = gql`
 export const AssessmentsQueries = {
   assessments,
   questionnaires,
-  getMongoAssessment,
+  getFullAssessment,
 };

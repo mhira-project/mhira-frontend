@@ -24,6 +24,7 @@ import { Filter } from '../../../@shared/@types/filter';
 const CryptoJS = require('crypto-js');
 
 enum ActionKey {
+  ARCHIVE_ASSESSMENT,
   DELETE_ASSESSMENT,
 }
 
@@ -55,8 +56,11 @@ export class AssessmentsListComponent {
   ) {
     this.getAssessments();
 
+    if (this.perms.permissionsOnly(PermissionKey.MANAGE_ASSESSMENTS)) {
+      this.actions.push({ key: ActionKey.ARCHIVE_ASSESSMENT, title: 'Archive Assessment' });
+    }
     if (this.perms.permissionsOnly(PermissionKey.DELETE_ASSESSMENTS)) {
-      this.actions = [{ key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Assessment' }];
+      this.actions.push({ key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Assessment' });
     }
   }
 
@@ -82,8 +86,11 @@ export class AssessmentsListComponent {
 
   public onAction({ action, context: assessment }: ActionArgs<FormattedAssessment, ActionKey>): void {
     switch (action.key) {
-      case ActionKey.DELETE_ASSESSMENT:
+      case ActionKey.ARCHIVE_ASSESSMENT:
         this.deleteAssessment(assessment);
+        return;
+      case ActionKey.DELETE_ASSESSMENT:
+        this.deleteAssessment(assessment, false);
         return;
     }
   }
@@ -108,7 +115,7 @@ export class AssessmentsListComponent {
       });
   }
 
-  private async deleteAssessment(assessment: FormattedAssessment): Promise<void> {
+  private async deleteAssessment(assessment: FormattedAssessment, archive = true): Promise<void> {
     // create confirmation modal
     const modal = this.modalService.confirm({
       nzOnOk: () => true,
@@ -124,10 +131,12 @@ export class AssessmentsListComponent {
 
     this.loading = true;
     this.assessmentService
-      .deleteAssessment(assessment)
+      .deleteAssessment(assessment, archive)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        () => this.data.splice(this.data.indexOf(assessment), 1),
+        (archived) => {
+          if (!archived) this.data.splice(this.data.indexOf(assessment), 1);
+        },
         () => this.messageService.error('An error occurred could not delete assessment', { nzDuration: 3000 })
       );
   }

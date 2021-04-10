@@ -64,12 +64,14 @@ export class AssessmentService {
     });
   }
 
-  deleteAssessment(assessment: Assessment): Observable<FetchResult<any>> {
-    return this.apollo.mutate({
-      mutation: AssessmentsMutations.deleteOneAssessment,
-      variables: { id: assessment.id },
-      fetchPolicy: 'no-cache',
-    });
+  deleteAssessment(assessment: Assessment, archive = true): Observable<boolean> {
+    return this.apollo
+      .mutate({
+        mutation: AssessmentsMutations.deleteAssessment,
+        variables: { id: assessment.id, archive },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map((result: any) => result?.data?.deleteAssessment));
   }
 
   createMongoAssessment(assessment: {}) {
@@ -88,13 +90,13 @@ export class AssessmentService {
     });
   }
 
-  getAssessment(assessmentId: number): Observable<FullAssessment> {
+  getFullAssessment(assessmentId: number): Observable<FullAssessment> {
     return this.apollo
       .query({
-        query: AssessmentsQueries.getMongoAssessment,
+        query: AssessmentsQueries.getFullAssessment,
         variables: { id: assessmentId },
         fetchPolicy: 'no-cache',
       })
-      .pipe(map((result: any) => result?.data?.getMongoAssessment));
+      .pipe(map((result: any) => result?.data?.getFullAssessment));
   }
 }
