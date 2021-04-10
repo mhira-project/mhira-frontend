@@ -10,7 +10,7 @@ const appRoutes: Routes = [
   {
     path: 'assessment',
     component: AssessmentLayoutComponent,
-    loadChildren: () => import('./questionnaire/questionnaire.module').then((m) => m.QuestionnaireModule),
+    loadChildren: () => import('./assessment-form/assessment-form.module').then((m) => m.AssessmentFormModule),
   },
   {
     path: 'mhira',

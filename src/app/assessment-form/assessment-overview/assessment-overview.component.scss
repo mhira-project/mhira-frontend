@@ -1,0 +1,39 @@
+$blue: #2c8aa7;
+$orange: #f3b013;
+
+article section + section {
+  margin-top: 1em;
+}
+
+.patient {
+  span {
+    display: block;
+    font-weight: 500;
+    font-size: 1.3em;
+  }
+
+  span.code {
+    color: $orange;
+  }
+
+  span.name {
+    color: $blue;
+  }
+}
+
+.questionnaires {
+  display: grid;
+  grid-gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.questionnaire {
+  span {
+    display: block;
+  }
+
+  .tooltip-icon {
+    font-size: 1.5em;
+    color: $blue;
+  }
+}

@@ -14,3 +14,7 @@
 @import "./assets/scss/app.scss";
 // Theme customization
 @import "theme/theme";
+
+.questionnaire-tooltip span {
+  display: block;
+}

@@ -1,0 +1,37 @@
+<article *ngIf="assessment$ | async as assessment">
+  <h1>{{ assessment.name }}</h1>
+  <section class="patient">
+    <span class="name">{{ assessment.patient.firstName }} {{ assessment.patient.lastName }}</span>
+    <span class="code">ID: {{ assessment.patient.medicalRecordNo }}</span>
+  </section>
+  <section class="questionnaires">
+    <nz-card
+      class="questionnaire"
+      *ngFor="let questionnaire of assessment.questionnaireAssessment.questionnaires"
+      [nzTitle]="questionnaire.name"
+      [nzExtra]="questionnaireInfo"
+    >
+      <ng-template #questionnaireInfo>
+        <app-questionnaire-info [website]="questionnaire.website">
+          <i
+            class="tooltip-icon"
+            nz-icon
+            nzType="exclamation-circle"
+            nzTheme="outline"
+            nz-tooltip
+            [nzTooltipTitle]="tooltipContent"
+            nzTooltipOverlayClassName="questionnaire-tooltip"
+          ></i>
+        </app-questionnaire-info>
+        <ng-template #tooltipContent>
+          <div class="tooltip">
+            <span *ngIf="questionnaire.license">License: {{ questionnaire.license }}</span>
+            <span *ngIf="questionnaire.copyright">&copy; {{ questionnaire.copyright }}</span>
+          </div>
+        </ng-template>
+      </ng-template>
+
+      <span *ngIf="questionnaire.timeToComplete">Filling time: {{ questionnaire.timeToComplete }}min</span>
+    </nz-card>
+  </section>
+</article>
