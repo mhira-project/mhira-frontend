@@ -17,3 +17,8 @@ export interface FullAssessment extends Assessment {
     questionnaires: QuestionnaireVersion[];
   };
 }
+
+export interface FormattedAssessment extends Assessment {
+  formattedPatient: string;
+  formattedClinician: string;
+}

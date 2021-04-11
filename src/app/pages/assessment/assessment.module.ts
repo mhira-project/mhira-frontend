@@ -54,6 +54,7 @@ const antModules = [
     MasterDataModule,
     ComponentsModule,
     ReactiveFormsModule,
+    MasterDataModule,
   ],
   declarations: [PlanAssessmentComponent, AssessmentsListComponent, QuestionnaireSelectionComponent],
   providers: [PatientsService, AssessmentService],
