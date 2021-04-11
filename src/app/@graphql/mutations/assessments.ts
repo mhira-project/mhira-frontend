@@ -158,7 +158,7 @@ const updateOneAssessment = gql`
 `;
 
 const deleteAssessment = gql`
-  mutation($id: Float!, $archive: Boolean) {
+  mutation($id: Int!, $archive: Boolean) {
     deleteAssessment(id: $id, archive: $archive)
   }
 `;
