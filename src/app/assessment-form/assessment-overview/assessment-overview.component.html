@@ -31,6 +31,11 @@
         </ng-template>
       </ng-template>
 
+      <span
+        >Progress: {{ countAnswersOfQuestionnaire(questionnaire, assessment) }}/{{
+          countQuestions(questionnaire)
+        }}</span
+      >
       <span *ngIf="questionnaire.timeToComplete">Filling time: {{ questionnaire.timeToComplete }}min</span>
     </nz-card>
   </section>

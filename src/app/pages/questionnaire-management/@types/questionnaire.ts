@@ -1,4 +1,5 @@
 import { TagInfo } from '../../../@shared/@modules/master-data/@types/list';
+import { Question } from '../../../assessment-form/@types/question';
 
 export enum QuestionnaireStatus {
   DRAFT = 'DRAFT',
@@ -43,6 +44,9 @@ export interface QuestionnaireVersion {
     language: string;
     abbreviation: string;
   };
+  questionGroups: Array<{
+    questions: Question[];
+  }>;
 }
 
 export interface FormattedQuestionnaireVersion extends QuestionnaireVersion {
