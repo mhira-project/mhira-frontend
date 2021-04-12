@@ -1,9 +1,7 @@
 import { FullAssessment } from './../../pages/assessment/@types/assessment';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { map, filter, first } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { QuestionnaireVersion } from '../../pages/questionnaire-management/@types/questionnaire';
+import { AssessmentFormService } from '../assessment-form.service';
 
 @Component({
   selector: 'app-assessment-overview',
@@ -11,15 +9,7 @@ import { QuestionnaireVersion } from '../../pages/questionnaire-management/@type
   styleUrls: ['./assessment-overview.component.scss'],
 })
 export class AssessmentOverviewComponent {
-  public assessment$: Observable<FullAssessment>;
-
-  constructor(private activatedRoute: ActivatedRoute) {
-    this.assessment$ = this.activatedRoute.data.pipe(
-      map((data) => data.assessment),
-      filter((assessment) => !!assessment),
-      first()
-    );
-  }
+  constructor(public assessmentFormService: AssessmentFormService) {}
 
   public countQuestions(questionnaire: QuestionnaireVersion) {
     return questionnaire.questionGroups.reduce((sum, group) => (sum += group.questions.length), 0);
@@ -31,5 +21,16 @@ export class AssessmentOverviewComponent {
       (sum: number, answer) => (sum += questions.includes(answer.question) ? 1 : 0),
       0
     );
+  }
+
+  public isQuestionnaireDone(questionnaire: QuestionnaireVersion, assessment: FullAssessment): boolean {
+    if (!questionnaire) return false;
+    return this.countQuestions(questionnaire) === this.countAnswersOfQuestionnaire(questionnaire, assessment);
+  }
+
+  public canAccessQuestionnaire(index: number, assessment: FullAssessment): boolean {
+    if (index === 0) return true;
+    const questionnaire = assessment.questionnaireAssessment.questionnaires?.[index - 1];
+    return this.isQuestionnaireDone(questionnaire, assessment);
   }
 }

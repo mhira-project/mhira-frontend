@@ -1,27 +1,7 @@
-$blue: #2c8aa7;
-$orange: #f3b013;
+$warning: #f3b013;
+$success: #89d180;
 
-article section + section {
-  margin-top: 1em;
-}
-
-.patient {
-  span {
-    display: block;
-    font-weight: 500;
-    font-size: 1.3em;
-  }
-
-  span.code {
-    color: $orange;
-  }
-
-  span.name {
-    color: $blue;
-  }
-}
-
-.questionnaires {
+:host {
   display: grid;
   grid-gap: 1em;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -32,8 +12,12 @@ article section + section {
     display: block;
   }
 
-  .tooltip-icon {
+  .progress {
     font-size: 1.5em;
-    color: $blue;
+    color: $warning;
+
+    &.done {
+      color: $success;
+    }
   }
 }
