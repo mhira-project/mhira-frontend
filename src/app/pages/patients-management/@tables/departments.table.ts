@@ -1,7 +1,7 @@
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
-import { FormattedDepartment } from '../@types/department';
+import { Department } from '../@types/department';
 
-export const DepartmentColumns: TableColumn<Partial<FormattedDepartment>>[] = [
+export const DepartmentsColumns: TableColumn<Department>[] = [
   {
     title: 'Name',
     name: 'name',
@@ -21,28 +21,14 @@ export const DepartmentColumns: TableColumn<Partial<FormattedDepartment>>[] = [
     },
   },
   {
-    title: 'Status',
-    name: 'active',
-    altName: 'active',
-    sort: true,
-    render: 'tag',
-    filterField: {
-      type: 'select',
-      value: undefined,
-      options: [
-        { label: 'Active', value: true },
-        { label: 'Inactive', value: false },
-      ],
-    },
-  },
-  {
-    title: 'Created At',
+    title: 'Created Date',
     name: 'createdAt',
-    sort: true,
     render: 'date',
+    sort: true,
     filterField: {
       type: 'dateRange',
       value: undefined,
+      title: 'Created Date',
     },
   },
 ];
