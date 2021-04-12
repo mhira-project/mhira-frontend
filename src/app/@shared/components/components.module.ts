@@ -154,6 +154,9 @@ import {
 import { CustomFilterComponent } from './custom-filter/custom-filter.component';
 import { AppFormModule } from '@shared/components/form/app-form.module';
 import { SelectModalComponent } from './select-modal/select-modal.component';
+import { CountryPipe } from '../pipes/country.pipe';
+import { UserPickerComponent } from './user-picker/user-picker.component';
+import { PatientPickerComponent } from './patient-picker/patient-picker.component';
 
 const PIPES = [
   CapitalizePipe,
@@ -165,6 +168,7 @@ const PIPES = [
   SearchPipe,
   TimingPipe,
   DatePipe,
+  CountryPipe,
 ];
 
 @NgModule({
@@ -176,8 +180,19 @@ const PIPES = [
     FormGeneratorComponent,
     CustomFilterComponent,
     SelectModalComponent,
+    UserPickerComponent,
+    PatientPickerComponent,
   ],
-  exports: [...PIPES, LoaderComponent, TableComponent, FormGeneratorComponent, CustomFilterComponent, AppFormModule],
+  exports: [
+    ...PIPES,
+    LoaderComponent,
+    TableComponent,
+    FormGeneratorComponent,
+    CustomFilterComponent,
+    AppFormModule,
+    UserPickerComponent,
+    PatientPickerComponent,
+  ],
   providers: [XlsExportService],
 })
 export class ComponentsModule {}

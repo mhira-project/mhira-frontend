@@ -16,6 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GraphQLModule } from '@app/graphql.module';
 import { AuthGuard } from '@app/auth/auth.guard';
 import { PermissionGuard } from './permission.guard';
+import { registerLocale } from 'i18n-iso-countries';
+import countries_en from 'i18n-iso-countries/langs/en.json';
 
 @NgModule({
   imports: [
@@ -43,4 +45,8 @@ import { PermissionGuard } from './permission.guard';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    registerLocale(countries_en);
+  }
+}

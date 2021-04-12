@@ -11,12 +11,12 @@
       [loadingMessage]="loadingMessage"
       [inputMode]="inputMode"
       [showCancelButton]="showCancelButton"
-      [showEditButton]="!isCurrentUser() && perms.permissionsOnly([PK.MANAGE_USERS])"
+      [showEditButton]="perms.permissionsOnly([PK.MANAGE_USERS]) && perms.hasAccessLevelToUser(user)"
       [form]="profileFields"
       (submitForm)="submitForm($event)"
     ></app-form>
   </nz-tab>
-  <nz-tab nzTitle="Settings" *ngIf="perms.permissionsOnly([PK.MANAGE_USERS]) && perms.hasAccessLevelToUser(user)">
+  <nz-tab nzTitle="Settings">
     <div nz-row nzGutter="16">
       <div *ngIf="roles.length > 0" nz-col>
         <nz-card style="width: 300px" nzTitle="{{ user?.firstName }}'s Roles">
@@ -24,7 +24,11 @@
             <div nz-row>
               <div nz-col nzSpan="24" *ngFor="let role of roles">
                 <label
-                  [disabled]="!perms.hasAccessLevelToRole(role)"
+                  [disabled]="
+                    !perms.permissionsOnly([PK.MANAGE_USERS]) ||
+                    !perms.hasAccessLevelToUser(user) ||
+                    !perms.hasAccessLevelToRole(role)
+                  "
                   nz-checkbox
                   [nzValue]="role.id"
                   [ngModel]="userHasRole(role.id)"
@@ -43,6 +47,7 @@
               <div nz-col nzSpan="24" *ngFor="let department of departments">
                 <label
                   nz-checkbox
+                  [disabled]="!perms.permissionsOnly([PK.MANAGE_USERS]) || !perms.hasAccessLevelToUser(user)"
                   [nzValue]="department.id"
                   [ngModel]="userHasDepartment(department.id)"
                   (ngModelChange)="assignDepartmentToUser(department, $event)"
@@ -57,13 +62,24 @@
       <div nz-col>
         <nz-card style="width: 300px" nzTitle="Enable or Disable {{ user?.firstName }}">
           <p>To disable and Enable {{ user?.firstName }} toggle the switch below.</p>
-          <nz-switch (ngModelChange)="activateUser(user)" [(ngModel)]="user.active"></nz-switch>
+          <nz-switch
+            [disabled]="!perms.permissionsOnly([PK.MANAGE_USERS]) || !perms.hasAccessLevelToUser(user)"
+            (ngModelChange)="activateUser(user)"
+            [(ngModel)]="user.active"
+          ></nz-switch>
         </nz-card>
       </div>
       <div nz-col>
         <nz-card style="width: 300px" nzTitle="Change {{ user?.firstName }}'s password">
           <p>To change password for {{ user.firstName }} toggle the button below.</p>
-          <button (click)="showChangePasswordForm()" nz-button nzType="primary">Change Password</button>
+          <button
+            [disabled]="!perms.permissionsOnly([PK.MANAGE_USERS]) || !perms.hasAccessLevelToUser(user)"
+            (click)="showChangePasswordForm()"
+            nz-button
+            nzType="primary"
+          >
+            Change Password
+          </button>
         </nz-card>
       </div>
       <div nz-col>

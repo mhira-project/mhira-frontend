@@ -8,7 +8,6 @@ const permissions = gql`
         node {
           id
           name
-          guard
           createdAt
           updatedAt
           users {
@@ -31,7 +30,6 @@ const permissions = gql`
           roles {
             id
             name
-            guard
             hierarchy
             code
             createdAt
@@ -54,7 +52,6 @@ const userPermissionGrants = gql`
     userPermissionGrants {
       id
       name
-      guard
       createdAt
       updatedAt
     }

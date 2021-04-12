@@ -1,0 +1,19 @@
+<nz-select
+  nzShowSearch
+  nzServerSearch
+  nzAllowClear
+  nzPlaceHolder="Search..."
+  [nzShowArrow]="false"
+  [(ngModel)]="selectedUser"
+  [compareWith]="compareUsers"
+  *ngIf="!readonly; else plainText"
+>
+  <nz-option *ngFor="let user of users" [nzValue]="user" [nzLabel]="user.firstName + ' ' + user.lastName"></nz-option>
+</nz-select>
+<button nz-button nzType="link" type="button" (click)="onAssignSelf()" *ngIf="assignSelfOption && !readonly">
+  Assign self
+</button>
+
+<ng-template #plainText>
+  {{ selectedUser?.firstName + ' ' + selectedUser?.lastName }}
+</ng-template>

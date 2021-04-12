@@ -1,0 +1,13 @@
+<app-master-data-list [data]="data" [columns]="columns" (rowClick)="onSelect($event)">
+  <ng-container actions-right>
+    <button
+      nz-button
+      nzType="primary"
+      nzShape="circle"
+      routerLink="/mhira/questionnaire-management/questionnaire-form"
+      *ngIf="perms.permissionsOnly([PK.MANAGE_QUESTIONNAIRES])"
+    >
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>

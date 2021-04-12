@@ -102,6 +102,14 @@
                 >
                 </app-array-input>
               </div>
+              <div *ngSwitchCase="'file'">
+                <app-file-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-file-input>
+              </div>
             </ng-container>
           </div>
         </ng-container>

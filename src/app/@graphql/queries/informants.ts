@@ -44,7 +44,7 @@ const informants = gql`
             addressApartment
             addressPlace
             addressPostalCode
-            addressCountryId
+            addressCountryCode
             gender
             birthDate
             birthCountryCode

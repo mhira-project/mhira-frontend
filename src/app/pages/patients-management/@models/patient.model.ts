@@ -30,7 +30,6 @@ export class PatientModel {
       'informants',
       'updatedAt',
       'createdAt',
-      'country',
       'status',
       'emergencyContacts',
       'formattedCaseManagers',

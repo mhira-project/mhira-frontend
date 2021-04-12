@@ -7,11 +7,6 @@ const columns: any[] = [
     isFilterable: false,
   },
   {
-    title: 'Guard Name',
-    name: 'guard',
-    isFilterable: false,
-  },
-  {
     title: 'Created At',
     name: 'createdAt',
     isFilterable: false,

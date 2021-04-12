@@ -1,70 +1,66 @@
-const actions: any[] = [
-  {
-    type: 'Edit Assessment',
-    name: 'Edit Assessment',
-  },
-  {
-    type: 'Delete Assessment',
-    name: 'Delete Assessment',
-  },
-  {
-    type: 'View Results',
-    name: 'View Results',
-  },
-  {
-    type: 'Do Assessment',
-    name: 'Do Assessment',
-  },
-  {
-    type: 'Go to Report',
-    name: 'Go to Report',
-  },
-];
+import { User } from './../../user-management/@types/user';
+import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
+import { FormattedAssessment } from '../@types/assessment';
 
-const columns: any[] = [
+export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
-    title: 'Assessment Name',
     name: 'name',
-    isFilterable: false,
+    title: 'Name',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
-    title: 'First Name',
-    name: 'firstName',
-    isFilterable: false,
+    name: 'formattedPatient',
+    altName: 'patient',
+    title: 'Patient',
+    render: 'avatar',
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+    filterQuery: (q: number) =>
+      q
+        ? {
+            or: [
+              { firstName: { iLike: `%${q}%` } },
+              { middleName: { iLike: `%${q}%` } },
+              { lastName: { iLike: `%${q}%` } },
+              { medicalRecordNo: { iLike: `%${q}%` } },
+            ] as Array<{ [K in keyof User]: any }>,
+          }
+        : {},
   },
   {
-    title: 'Last Name',
-    name: 'lastName',
-    isFilterable: false,
+    name: 'formattedClinician',
+    altName: 'clinician',
+    title: 'Clinician',
+    render: 'avatar',
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+    filterQuery: (q: number) =>
+      q
+        ? {
+            or: [
+              { firstName: { iLike: `%${q}%` } },
+              { middleName: { iLike: `%${q}%` } },
+              { lastName: { iLike: `%${q}%` } },
+              { workID: { iLike: `%${q}%` } },
+            ] as Array<{ [K in keyof User]: any }>,
+          }
+        : {},
   },
   {
-    title: 'Medical ID',
-    name: 'medicalRecordNo',
-    isFilterable: false,
-  },
-  {
-    title: 'Responsible Clinician',
-    name: 'clinician',
-    isFilterable: false,
-  },
-  {
-    title: 'Planned Date',
-    name: 'plannedDate',
-    isFilterable: false,
-  },
-  {
-    title: 'Status',
-    name: 'active',
-    isFilterable: false,
-  },
-  {
-    title: 'First Visit',
-    name: 'firstVisit',
-    isFilterable: false,
+    name: 'informant',
+    title: 'Informant',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
 ];
-
-export const assessmentTable = {
-  actions,
-  columns,
-};

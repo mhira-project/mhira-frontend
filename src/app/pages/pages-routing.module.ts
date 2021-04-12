@@ -19,6 +19,14 @@ const routes: Routes = [
       import('./patients-management/patients-management.module').then((m) => m.PatientsManagementModule),
   },
   {
+    path: 'questionnaire-management',
+    data: {
+      breadcrumb: extract('Questionnaire'),
+    },
+    loadChildren: () =>
+      import('./questionnaire-management/questionnaire-management.module').then((m) => m.QuestionnaireManagementModule),
+  },
+  {
     path: 'assessments',
     data: {
       breadcrumb: extract('Assessments'),

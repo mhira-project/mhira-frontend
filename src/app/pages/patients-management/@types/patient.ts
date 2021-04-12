@@ -18,7 +18,7 @@ export interface Patient {
   addressApartment?: string;
   addressPlace?: string;
   addressPostalCode?: string;
-  addressCountryId?: number;
+  addressCountryCode?: string;
   gender?: string;
   birthDate?: string;
   birthCountryCode?: string;
@@ -28,6 +28,5 @@ export interface Patient {
   emergencyContacts?: Contact[];
   informants?: Informant[];
   caseManagers?: User[];
-  country?: any;
   status?: PatientStatus;
 }

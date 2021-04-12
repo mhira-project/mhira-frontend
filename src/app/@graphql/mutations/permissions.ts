@@ -49,7 +49,6 @@ const removeUsersFromPermission = gql`
     removeUsersFromPermission(input: $input) {
       id
       name
-      guard
       createdAt
       updatedAt
       users {
@@ -78,7 +77,6 @@ const removeRolesFromPermission = gql`
     removeRolesFromPermission(input: $input) {
       id
       name
-      guard
       createdAt
       updatedAt
       users {
@@ -107,7 +105,6 @@ const setUsersOnPermission = gql`
     setUsersOnPermission(input: $input) {
       id
       name
-      guard
       createdAt
       updatedAt
       users {
@@ -136,7 +133,6 @@ const setRolesOnPermission = gql`
     setRolesOnPermission(input: $input) {
       id
       name
-      guard
       createdAt
       updatedAt
       users {

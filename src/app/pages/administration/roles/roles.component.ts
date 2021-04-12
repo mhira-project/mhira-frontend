@@ -109,7 +109,11 @@ export class RolesComponent implements OnInit {
         this.modalService.confirm({
           nzTitle: 'Confirm',
           nzContent: `Are you sure you want to delete role for
-               <b>${this.roles[event.index].name}</b>`,
+               <b>${this.roles[event.index].name}</b>. ${
+            this.role.users.length > 0
+              ? 'There are users assigned to this role if you delete it they will have no role.'
+              : 'This role have no users assigned to it.'
+          }`,
           nzOkText: 'Delete',
           nzOnOk: () => this.deleteRole(this.roles[event.index]),
           nzOkDisabled: this.modalLoading,
