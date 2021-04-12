@@ -3,7 +3,7 @@ import { FormattedDepartment } from '../@types/department';
 
 export const DepartmentColumns: TableColumn<Partial<FormattedDepartment>>[] = [
   {
-    title: 'Name',
+    title: 'Department Name',
     name: 'name',
     sort: true,
     filterField: {
@@ -22,7 +22,7 @@ export const DepartmentColumns: TableColumn<Partial<FormattedDepartment>>[] = [
   },
   {
     title: 'Status',
-    name: 'active',
+    name: 'formattedStatus',
     altName: 'active',
     sort: true,
     render: 'tag',
