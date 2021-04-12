@@ -4,7 +4,9 @@ import { AssessmentFormService } from '../assessment-form.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-questionnaire-form',
   templateUrl: './questionnaire-form.component.html',
@@ -20,8 +22,10 @@ export class QuestionnaireFormComponent {
         filter((idx) => !isNaN(idx))
       ),
       this.assessmentFormService.assessment$.pipe(filter((assessment) => !!assessment)),
-    ]).subscribe(
-      ([idx, assessment]) => (this.questionnaire = assessment?.questionnaireAssessment?.questionnaires?.[idx])
-    );
+    ])
+      .pipe(untilDestroyed(this))
+      .subscribe(
+        ([idx, assessment]) => (this.questionnaire = assessment?.questionnaireAssessment?.questionnaires?.[idx])
+      );
   }
 }
