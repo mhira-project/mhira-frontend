@@ -23,6 +23,7 @@ export interface CaseManager {
   formattedCreatedAt?: string;
   roles?: Role[];
   formattedRoles?: string;
+  permissionGrants?: Permission[];
   permissions?: Permission[];
   formattedPermissions?: string;
   departments?: Department[];

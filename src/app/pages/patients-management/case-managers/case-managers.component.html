@@ -68,7 +68,7 @@
         <div nz-col nzSpan="12">{{ manager?.email }}</div>
         <div nz-col nzSpan="4">
           <button
-            [disabled]="!checkIfManagerHasPermission(manager?.permissions)"
+            [disabled]="!checkIfManagerHasPermission(manager?.permissionGrants)"
             class="assign-button"
             nz-button
             nzType="primary"
