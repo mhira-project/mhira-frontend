@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { environment } from '@env/environment';
@@ -18,6 +18,7 @@ import { AuthGuard } from '@app/auth/auth.guard';
 import { PermissionGuard } from './permission.guard';
 import { registerLocale } from 'i18n-iso-countries';
 import countries_en from 'i18n-iso-countries/langs/en.json';
+import { TypescriptTranslationLoader } from './@core/typescript-translation-loader';
 
 @NgModule({
   imports: [
@@ -26,7 +27,13 @@ import countries_en from 'i18n-iso-countries/langs/en.json';
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
     FormsModule,
     HttpClientModule,
-    TranslateModule.forRoot(),
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useClass: TypescriptTranslationLoader,
+      },
+    }),
     NgbModule,
     LayoutModule,
     CoreModule,
@@ -46,7 +53,8 @@ import countries_en from 'i18n-iso-countries/langs/en.json';
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor() {
+  constructor(translateService: TranslateService) {
     registerLocale(countries_en);
+    translateService.use('de');
   }
 }
