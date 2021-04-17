@@ -16,6 +16,8 @@ export interface ListQuestionnaireInput {
 }
 
 export interface UpdateQuestionnaireInput {
+  name?: string;
+  abbreviation?: string;
   language: string;
   timeToComplete: number;
   license?: string;

@@ -10,6 +10,14 @@ export const QuestionnaireForm: Form & { groups: { fields: { name: keyof CreateQ
     {
       fields: [
         {
+          value: '',
+          name: 'name',
+          title: 'Name',
+          description: 'Name',
+          type: 'text',
+          span: 12,
+        },
+        {
           value: undefined,
           name: 'excelFile',
           title: 'XSL Form',
@@ -99,6 +107,24 @@ export const QuestionnaireUpdateForm: Form & { groups: { fields: { name: keyof U
   groups: [
     {
       fields: [
+        {
+          value: '',
+          name: 'name',
+          title: 'Name',
+          description: 'Name',
+          type: 'text',
+          span: 12,
+          isRequired: true,
+        },
+        {
+          value: '',
+          name: 'abbreviation',
+          title: 'Abbreviation',
+          description: 'Abbreviation',
+          type: 'text',
+          span: 12,
+          isRequired: true,
+        },
         {
           value: QuestionnaireStatus.DRAFT,
           name: 'status',
