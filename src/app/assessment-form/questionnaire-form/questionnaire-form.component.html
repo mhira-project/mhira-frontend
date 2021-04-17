@@ -1,5 +1,8 @@
 <article *ngIf="questionnaire">
-  <h2>{{ questionnaire.name }}</h2>
+  <div class="head-row">
+    <h2>{{ questionnaire.name }}</h2>
+    <a nz-button nzType="primary" routerLink="../../overview" queryParamsHandling="merge">Back</a>
+  </div>
 
   <section *ngFor="let group of questionnaire.questionGroups">
     <ng-container *ngFor="let question of group.questions">

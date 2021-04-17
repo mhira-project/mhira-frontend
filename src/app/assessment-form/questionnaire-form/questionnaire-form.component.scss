@@ -1,4 +1,9 @@
 article {
+  .head-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
   section + section {
     margin-top: 2em;
   }
