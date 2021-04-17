@@ -1,4 +1,4 @@
-export const enum QuestionType {
+export enum QuestionType {
   BEGIN_GROUP = 'begin_group',
   END_GROUP = 'end_group',
   INTEGER = 'integer',

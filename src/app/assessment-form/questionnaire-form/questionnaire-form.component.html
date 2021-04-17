@@ -1,3 +1,9 @@
 <article *ngIf="questionnaire">
   <h2>{{ questionnaire.name }}</h2>
+
+  <section *ngFor="let group of questionnaire.questionGroups">
+    <ng-container *ngFor="let question of group.questions">
+      <app-question class="question" [question]="question"></app-question>
+    </ng-container>
+  </section>
 </article>

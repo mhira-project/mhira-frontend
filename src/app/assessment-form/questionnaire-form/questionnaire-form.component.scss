@@ -1,0 +1,13 @@
+article {
+  section + section {
+    margin-top: 2em;
+  }
+
+  section .question:first-child {
+    margin-top: 1em;
+  }
+
+  .question {
+    margin: 2em 0;
+  }
+}

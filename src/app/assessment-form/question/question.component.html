@@ -1,0 +1,8 @@
+<label class="question-label">{{ question.label }}</label>
+<ng-container [ngSwitch]="question.type">
+  <ng-container *ngSwitchCase="QuestionType.SELECT_ONE">
+    <nz-radio-group>
+      <label nz-radio *ngFor="let choice of question.choices" [nzValue]="choice.name">{{ choice.label }}</label>
+    </nz-radio-group>
+  </ng-container>
+</ng-container>

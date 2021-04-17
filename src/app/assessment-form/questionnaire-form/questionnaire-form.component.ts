@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Answer } from '../@types/answer';
 
 @UntilDestroy()
 @Component({
@@ -14,6 +15,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class QuestionnaireFormComponent {
   public questionnaire: QuestionnaireVersion;
+  public answers: Answer[];
 
   constructor(private activtedRoute: ActivatedRoute, private assessmentFormService: AssessmentFormService) {
     combineLatest([
@@ -24,8 +26,9 @@ export class QuestionnaireFormComponent {
       this.assessmentFormService.assessment$.pipe(filter((assessment) => !!assessment)),
     ])
       .pipe(untilDestroyed(this))
-      .subscribe(
-        ([idx, assessment]) => (this.questionnaire = assessment?.questionnaireAssessment?.questionnaires?.[idx])
-      );
+      .subscribe(([idx, assessment]) => {
+        this.questionnaire = assessment?.questionnaireAssessment?.questionnaires?.[idx];
+        this.answers = assessment?.questionnaireAssessment?.answers;
+      });
   }
 }
