@@ -11,13 +11,16 @@ export interface Assessment {
   patient: Patient;
   clinician?: User;
   informant: string;
+  questionnaireAssessmentId?: string;
+}
+
+export interface QuestionnaireAssessment {
+  questionnaires: QuestionnaireVersion[];
+  answers: Answer[];
 }
 
 export interface FullAssessment extends Assessment {
-  questionnaireAssessment: {
-    questionnaires: QuestionnaireVersion[];
-    answers: Answer[];
-  };
+  questionnaireAssessment: QuestionnaireAssessment;
 }
 
 export interface FormattedAssessment extends Assessment {

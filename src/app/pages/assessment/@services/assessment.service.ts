@@ -11,6 +11,8 @@ import { Paging } from '@shared/@types/paging';
 import { map } from 'rxjs/operators';
 import { FullAssessment } from '../@types/assessment';
 import { PageInfo } from '../../../@shared/@types/paging';
+import { AnswerAssessmentInput } from '@app/assessment-form/@types/answer';
+import { Answer } from '../../../assessment-form/@types/answer';
 
 @Injectable({
   providedIn: 'root',
@@ -98,5 +100,15 @@ export class AssessmentService {
         fetchPolicy: 'no-cache',
       })
       .pipe(map((result: any) => result?.data?.getFullAssessment));
+  }
+
+  sendAnswer(assessment: AnswerAssessmentInput): Observable<Answer[]> {
+    return this.apollo
+      .mutate({
+        mutation: AssessmentsMutations.sendAnswer,
+        variables: { assessment },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map((result: any) => result.data.addAnswer.answers));
   }
 }

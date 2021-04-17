@@ -179,10 +179,27 @@ const updateOneMongoAssessment = gql`
   }
 `;
 
+const sendAnswer = gql`
+  mutation($assessment: AnswerAssessmentInput!) {
+    addAnswer(assessment: $assessment) {
+      _id
+      answers {
+        question
+        textValue
+        multipleChoiceValue
+        numberValue
+        dateValue
+        booleanValue
+      }
+    }
+  }
+`;
+
 export const AssessmentsMutations = {
   createOneAssessment,
   updateOneAssessment,
   deleteAssessment,
   createOneMongoAssessment,
   updateOneMongoAssessment,
+  sendAnswer,
 };

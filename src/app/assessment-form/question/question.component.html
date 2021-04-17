@@ -1,7 +1,7 @@
 <label class="question-label">{{ question.label }}</label>
-<ng-container [ngSwitch]="question.type">
+<ng-container [ngSwitch]="question.type" *ngIf="question && answer?.question">
   <ng-container *ngSwitchCase="QuestionType.SELECT_ONE">
-    <nz-radio-group>
+    <nz-radio-group [(ngModel)]="answer.textValue" (ngModelChange)="sendAnswer()">
       <label nz-radio *ngFor="let choice of question.choices" [nzValue]="choice.name">{{ choice.label }}</label>
     </nz-radio-group>
   </ng-container>

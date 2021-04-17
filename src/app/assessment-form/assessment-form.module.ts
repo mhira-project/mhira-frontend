@@ -8,6 +8,7 @@ import { QuestionnaireFormComponent } from './questionnaire-form/questionnaire-f
 import { AssessmentFormService } from './assessment-form.service';
 import { AssessmentFormComponent } from './assessment-form.component';
 import { QuestionComponent } from './question/question.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { QuestionComponent } from './question/question.component';
   imports: [
     CommonModule,
     AssessmentFormRoutingModule,
+    FormsModule,
     NzCardModule,
     NzToolTipModule,
     NzIconModule,

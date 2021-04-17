@@ -29,6 +29,7 @@ export class QuestionnaireFormComponent {
       .subscribe(([idx, assessment]) => {
         this.questionnaire = assessment?.questionnaireAssessment?.questionnaires?.[idx];
         this.answers = assessment?.questionnaireAssessment?.answers;
+        this.assessmentFormService.setQuestionnaire(this.questionnaire);
       });
   }
 }
