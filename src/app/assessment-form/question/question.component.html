@@ -1,11 +1,26 @@
 <nz-card [nzTitle]="question.label" [nzExtra]="hint" class="multiline-header">
   <ng-container [ngSwitch]="question.type" *ngIf="question && answer?.question">
+    <ng-container *ngSwitchCase="QuestionType.TEXT">
+      <input
+        #textInput
+        nz-input
+        [value]="answer.textValue"
+        (change)="answer.textValue = textInput.value; sendAnswer(answer)"
+      />
+    </ng-container>
     <ng-container *ngSwitchCase="QuestionType.SELECT_ONE">
       <app-select-question
         [question]="question"
         [answer]="answer"
         (answerChange)="sendAnswer($event)"
       ></app-select-question>
+    </ng-container>
+    <ng-container *ngSwitchCase="QuestionType.SELECT_MULTIPLE">
+      <app-multiselect-question
+        [question]="question"
+        [answer]="answer"
+        (answerChange)="sendAnswer($event)"
+      ></app-multiselect-question>
     </ng-container>
   </ng-container>
 </nz-card>

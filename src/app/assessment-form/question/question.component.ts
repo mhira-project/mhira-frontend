@@ -48,11 +48,11 @@ export class QuestionComponent {
     const answers = this.assessmentFormService.assessmentSnapshot?.questionnaireAssessment?.answers ?? [];
     this.answer = answers.find((a) => a.question === question._id) ?? {
       question: question._id,
-      textValue: undefined,
+      textValue: '',
       booleanValue: undefined,
       numberValue: undefined,
       dateValue: undefined,
-      multipleChoiceValue: undefined,
+      multipleChoiceValue: [],
     };
   }
 }
