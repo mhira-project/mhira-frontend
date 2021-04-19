@@ -8,6 +8,23 @@
         (change)="answer.textValue = textInput.value; sendAnswer(answer)"
       />
     </ng-container>
+    <ng-container *ngSwitchCase="QuestionType.DECIMAL">
+      <nz-input-number
+        [nzStep]="0.1"
+        [(ngModel)]="answer.numberValue"
+        (ngModelChange)="sendAnswer(answer)"
+      ></nz-input-number>
+    </ng-container>
+    <ng-container *ngSwitchCase="QuestionType.INTEGER">
+      <nz-input-number
+        [nzStep]="1"
+        [(ngModel)]="answer.numberValue"
+        (ngModelChange)="sendAnswer(answer)"
+      ></nz-input-number>
+    </ng-container>
+    <ng-container *ngSwitchCase="QuestionType.CHECKBOX">
+      <label nz-checkbox [(ngModel)]="answer.booleanValue" (ngModelChange)="sendAnswer(answer)"></label>
+    </ng-container>
     <ng-container *ngSwitchCase="QuestionType.SELECT_ONE">
       <app-select-question
         [question]="question"

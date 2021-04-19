@@ -9,6 +9,8 @@ import {
   NzButtonModule,
   NzRadioModule,
   NzInputModule,
+  NzCheckboxModule,
+  NzInputNumberModule,
 } from 'ng-zorro-antd';
 import { QuestionnaireInfoComponent } from './questionnaire-info/questionnaire-info.component';
 import { QuestionnaireFormComponent } from './questionnaire-form/questionnaire-form.component';
@@ -41,6 +43,8 @@ import { MultiselectQuestionComponent } from './question/question-type/multisele
     NzButtonModule,
     NzRadioModule,
     NzInputModule,
+    NzCheckboxModule,
+    NzInputNumberModule,
   ],
   providers: [AssessmentFormService],
 })
