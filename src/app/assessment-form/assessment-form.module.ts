@@ -11,6 +11,7 @@ import {
   NzInputModule,
   NzCheckboxModule,
   NzInputNumberModule,
+  NzTagModule,
   NzDatePickerModule,
   NzTimePickerModule,
 } from 'ng-zorro-antd';
@@ -47,9 +48,10 @@ import { MultiselectQuestionComponent } from './question/question-type/multisele
     NzInputModule,
     NzCheckboxModule,
     NzInputNumberModule,
+    NzTagModule,
     NzDatePickerModule,
     NzTimePickerModule,
   ],
   providers: [AssessmentFormService],
 })
-export class AssessmentFormModule { }
+export class AssessmentFormModule {}

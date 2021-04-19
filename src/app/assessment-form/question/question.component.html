@@ -71,6 +71,12 @@
         (answerChange)="sendAnswer($event)"
       ></app-multiselect-question>
     </ng-container>
+    <ng-container *ngSwitchDefault>
+      <nz-tag nzColor="warning">
+        <i nz-icon nzType="exclamation-circle"></i>
+        <span>unsupported question-type "{{ question.type }}"</span>
+      </nz-tag>
+    </ng-container>
   </ng-container>
 </nz-card>
 

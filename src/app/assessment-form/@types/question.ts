@@ -2,8 +2,6 @@ import { Input, Output, EventEmitter, Component } from '@angular/core';
 import { Answer } from './answer';
 
 export enum QuestionType {
-  BEGIN_GROUP = 'begin_group',
-  END_GROUP = 'end_group',
   INTEGER = 'integer',
   DECIMAL = 'decimal',
   CHECKBOX = 'checkbox',
@@ -14,7 +12,6 @@ export enum QuestionType {
   TIME = 'time',
   DATETIME = 'date_time',
   NOTE = 'note',
-  VISUAL_ANALOG_SCALES = 'visual_analog_scales',
 }
 
 export interface Choice {
