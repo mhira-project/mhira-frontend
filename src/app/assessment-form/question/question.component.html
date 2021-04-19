@@ -1,4 +1,4 @@
-<nz-card [nzTitle]="question.label">
+<nz-card [nzTitle]="question.label" [nzExtra]="hint" class="multiline-header">
   <ng-container [ngSwitch]="question.type" *ngIf="question && answer?.question">
     <ng-container *ngSwitchCase="QuestionType.SELECT_ONE">
       <app-select-question
@@ -9,3 +9,17 @@
     </ng-container>
   </ng-container>
 </nz-card>
+
+<ng-template #hint>
+  <button
+    *ngIf="question.hint"
+    nz-button
+    nzShape="circle"
+    nzSize="small"
+    nz-tooltip
+    [nzTooltipTitle]="question.hint"
+    class="hint"
+  >
+    <i nz-icon nzType="question"></i>
+  </button>
+</ng-template>

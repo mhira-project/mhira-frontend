@@ -18,3 +18,9 @@
 .questionnaire-tooltip span {
   display: block;
 }
+
+nz-card.multiline-header .ant-card-head-title {
+  overflow: auto;
+  white-space: normal;
+  text-overflow: initial;
+}
