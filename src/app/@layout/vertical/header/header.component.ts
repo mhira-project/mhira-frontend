@@ -10,6 +10,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { FormComponent } from '@shared/components/form/form.component';
 import { FieldGroup } from '@shared/components/form/@types/field.group';
+import { TranslationItem } from '@shared/@types/translation';
+import { TranslateService } from '@ngx-translate/core';
 
 const CryptoJS = require('crypto-js');
 
@@ -22,7 +24,10 @@ export class HeaderComponent implements OnInit {
   @ViewChild(FormComponent) child: FormComponent;
   isOkLoading = false;
   user: User;
-  notificationList: any = [];
+  translationList: TranslationItem[] = [
+    { name: 'English', code: 'en' },
+    { name: 'Germany', code: 'de' },
+  ];
   changePasswordModal = false;
   loadingMessage = '';
   changePasswordForm: Form = userForms.changeUserPassword;
@@ -32,19 +37,33 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private usersService: UsersService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private translationService: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.getUser();
+    console.log(this.translationService.getLangs());
   }
 
   getUser() {
     this.user = JSON.parse(localStorage.getItem('user'));
   }
 
+  getStoredLang() {
+    var lang = localStorage.getItem('currentLang');
+
+    if (lang) {
+      this.translationService.use(lang);
+    }
+  }
+
   clickChangePassword() {
     this.child.handleSubmitForm();
+  }
+  onChangeTranslation(item: TranslationItem) {
+    localStorage.setItem('currentLang', item.code);
+    this.translationService.use(item.code);
   }
 
   editUserProfile() {
