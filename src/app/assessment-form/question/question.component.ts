@@ -21,11 +21,18 @@ export class QuestionComponent {
 
   public QuestionType = QuestionType;
 
+  public dateFormat: string;
+
   public answer: Answer;
 
   private _question: Question;
 
-  constructor(private assessmentFormService: AssessmentFormService, private messageService: NzMessageService) {}
+  constructor(private assessmentFormService: AssessmentFormService, private messageService: NzMessageService) {
+    // get date format and convert to ng-zorro datepicker readable type
+    this.dateFormat = JSON.parse(localStorage.getItem('settings'))?.dateFormat;
+    this.dateFormat = this.dateFormat.replace(/[D]/g, 'd');
+    this.dateFormat = this.dateFormat.replace(/[Y]/g, 'y');
+  }
 
   public sendAnswer(answer: Answer): void {
     this.assessmentFormService

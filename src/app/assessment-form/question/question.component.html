@@ -25,6 +25,38 @@
     <ng-container *ngSwitchCase="QuestionType.CHECKBOX">
       <label nz-checkbox [(ngModel)]="answer.booleanValue" (ngModelChange)="sendAnswer(answer)"></label>
     </ng-container>
+    <ng-container *ngSwitchCase="QuestionType.DATE">
+      <nz-date-picker
+        [nzFormat]="this.dateFormat"
+        [(ngModel)]="answer.dateValue"
+        (ngModelChange)="sendAnswer(answer)"
+      ></nz-date-picker>
+    </ng-container>
+    <ng-container *ngSwitchCase="QuestionType.TIME">
+      <input
+        #timeInput
+        type="time"
+        nz-input
+        [value]="answer.textValue"
+        (change)="answer.textValue = timeInput.value; sendAnswer(answer)"
+      />
+    </ng-container>
+    <ng-container *ngSwitchCase="QuestionType.DATETIME">
+      <div class="row">
+        <nz-date-picker
+          [nzFormat]="this.dateFormat"
+          [(ngModel)]="answer.dateValue"
+          (ngModelChange)="sendAnswer(answer)"
+        ></nz-date-picker>
+        <input
+          #timeInput
+          type="time"
+          nz-input
+          [value]="answer.textValue"
+          (change)="answer.textValue = timeInput.value; sendAnswer(answer)"
+        />
+      </div>
+    </ng-container>
     <ng-container *ngSwitchCase="QuestionType.SELECT_ONE">
       <app-select-question
         [question]="question"
