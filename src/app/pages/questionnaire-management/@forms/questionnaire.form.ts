@@ -117,15 +117,6 @@ export const QuestionnaireUpdateForm: Form & { groups: { fields: { name: keyof U
           isRequired: true,
         },
         {
-          value: '',
-          name: 'abbreviation',
-          title: 'Abbreviation',
-          description: 'Abbreviation',
-          type: 'text',
-          span: 12,
-          isRequired: true,
-        },
-        {
           value: QuestionnaireStatus.DRAFT,
           name: 'status',
           title: 'Status',

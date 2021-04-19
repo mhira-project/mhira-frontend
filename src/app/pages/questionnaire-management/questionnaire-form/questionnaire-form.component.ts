@@ -86,7 +86,6 @@ export class QuestionnaireFormComponent {
       ...questionnaire,
       keywords: (questionnaire.keywords ?? []).join(' '),
       language: questionnaire.questionnaire?.language,
-      abbreviation: questionnaire.questionnaire?.abbreviation,
     };
     this.populateForm = true;
     this.inputMode = false;
