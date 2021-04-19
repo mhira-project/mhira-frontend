@@ -9,6 +9,8 @@ import { AssessmentFormService } from './assessment-form.service';
 import { AssessmentFormComponent } from './assessment-form.component';
 import { QuestionComponent } from './question/question.component';
 import { FormsModule } from '@angular/forms';
+import { SelectQuestionComponent } from './question/question-type/select-question/select-question.component';
+import { QuestionBase } from './@types/question';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { FormsModule } from '@angular/forms';
     QuestionnaireFormComponent,
     AssessmentFormComponent,
     QuestionComponent,
+    QuestionBase,
+    SelectQuestionComponent,
   ],
   imports: [
     CommonModule,

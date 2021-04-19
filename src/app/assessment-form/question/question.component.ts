@@ -27,12 +27,16 @@ export class QuestionComponent {
 
   constructor(private assessmentFormService: AssessmentFormService, private messageService: NzMessageService) {}
 
-  public sendAnswer(): void {
+  public sendAnswer(answer: Answer): void {
     this.assessmentFormService
       .sendAnswer({
-        question: this.question._id,
+        question: answer.question,
         finishedAssessment: false,
-        textValue: this.answer.textValue,
+        textValue: answer.textValue,
+        multipleChoiceValue: answer.multipleChoiceValue,
+        numberValue: answer.numberValue,
+        dateValue: answer.dateValue,
+        booleanValue: answer.booleanValue,
       })
       .subscribe(
         (answers) => (this.answer._id = answers.find((a) => a.question === this.question._id)?._id),

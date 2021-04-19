@@ -1,3 +1,6 @@
+import { Input, Output, EventEmitter, Component } from '@angular/core';
+import { Answer } from './answer';
+
 export enum QuestionType {
   BEGIN_GROUP = 'begin_group',
   END_GROUP = 'end_group',
@@ -39,4 +42,13 @@ export interface Question {
   appearance?: string;
   default?: string;
   choices?: Choice[];
+}
+
+@Component({
+  template: '',
+})
+export class QuestionBase {
+  @Input() public answer: Answer;
+  @Input() public question: Question;
+  @Output() public answerChange = new EventEmitter<Answer>();
 }

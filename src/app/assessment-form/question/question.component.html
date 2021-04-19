@@ -1,16 +1,11 @@
 <nz-card [nzTitle]="question.label">
   <ng-container [ngSwitch]="question.type" *ngIf="question && answer?.question">
     <ng-container *ngSwitchCase="QuestionType.SELECT_ONE">
-      <nz-radio-group
-        class="option-group"
-        nzButtonStyle="solid"
-        [(ngModel)]="answer.textValue"
-        (ngModelChange)="sendAnswer()"
-      >
-        <label class="option" nz-radio-button *ngFor="let choice of question.choices" [nzValue]="choice.name">
-          {{ choice.label }}
-        </label>
-      </nz-radio-group>
+      <app-select-question
+        [question]="question"
+        [answer]="answer"
+        (answerChange)="sendAnswer($event)"
+      ></app-select-question>
     </ng-container>
   </ng-container>
 </nz-card>
