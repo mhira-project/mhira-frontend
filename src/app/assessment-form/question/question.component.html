@@ -1,4 +1,9 @@
-<nz-card [nzTitle]="question.label" [nzExtra]="hint" class="multiline-header">
+<nz-card
+  [nzTitle]="question.label"
+  [nzExtra]="hint"
+  class="multiline-header"
+  *ngIf="question.type !== QuestionType.NOTE; else note"
+>
   <ng-container [ngSwitch]="question.type" *ngIf="question && answer?.question">
     <ng-container *ngSwitchCase="QuestionType.TEXT">
       <input
@@ -92,4 +97,13 @@
   >
     <i nz-icon nzType="question"></i>
   </button>
+</ng-template>
+
+<ng-template #note>
+  <nz-card>
+    <div class="note">
+      <i nz-icon nzType="exclamation-circle" nzSize="big"></i>
+      <p>{{ question.label }}</p>
+    </div>
+  </nz-card>
 </ng-template>
