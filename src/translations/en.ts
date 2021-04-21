@@ -3,4 +3,5 @@ export default {
   foo: {
     bar: 'hello',
   },
+  sideMenu: {},
 };
