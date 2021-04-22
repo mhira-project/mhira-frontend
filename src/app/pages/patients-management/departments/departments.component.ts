@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Sorting } from '@shared/@types/sorting';
 import { finalize } from 'rxjs/operators';
@@ -33,11 +33,13 @@ export class DepartmentsComponent implements OnInit {
 
   @Input() public patient: FormattedPatient;
 
+  @Input() public departments: Department[] = [];
+
+  @Output() patientDepartmentsUpdated: EventEmitter<any> = new EventEmitter<any>();
+
   public columns: TableColumn<Partial<Department>>[] = DepartmentsColumns as TableColumn<Partial<Department>>[];
 
   public data: Partial<Department>[];
-
-  public departments: Department[] = [];
 
   public pageInfo: PageInfo;
 
@@ -66,7 +68,9 @@ export class DepartmentsComponent implements OnInit {
 
   ngOnInit() {
     this.getDepartments();
-    this.getDepartments(true);
+    if (this.departments.length === 0) {
+      this.getDepartments(true);
+    }
     this.setActions();
   }
 
@@ -178,6 +182,10 @@ export class DepartmentsComponent implements OnInit {
             1
           );
         }
+        this.patientDepartmentsUpdated.emit({
+          action,
+          departments: this.data,
+        });
       },
       () => this.messageService.error('An error occurred could not update patient', { nzDuration: 3000 })
     );
