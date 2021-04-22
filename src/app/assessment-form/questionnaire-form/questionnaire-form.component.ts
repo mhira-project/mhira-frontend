@@ -16,6 +16,7 @@ import { Answer } from '../@types/answer';
 export class QuestionnaireFormComponent {
   public questionnaire: QuestionnaireVersion;
   public answers: Answer[];
+  public currentGroupIdx = 0;
 
   constructor(private activtedRoute: ActivatedRoute, private assessmentFormService: AssessmentFormService) {
     combineLatest([

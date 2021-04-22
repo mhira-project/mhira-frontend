@@ -17,3 +17,13 @@ article {
     margin: 4em 0;
   }
 }
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .nav-pills {
+    margin: 0 1em;
+  }
+}
