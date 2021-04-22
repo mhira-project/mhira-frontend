@@ -8,4 +8,7 @@
     <app-case-managers [managerType]="'caseManager'" [patient]="patient" [showAssignButton]="true" [filter]="filter">
     </app-case-managers>
   </nz-tab>
+  <nz-tab nzTitle="Departments">
+    <app-patient-departments [patient]="patient"></app-patient-departments>
+  </nz-tab>
 </nz-tabset>
