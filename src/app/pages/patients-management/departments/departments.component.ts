@@ -95,7 +95,7 @@ export class DepartmentsComponent implements OnInit {
   public onAction({ action, context: department }: ActionArgs<Department, ActionKey>): void {
     switch (action.key) {
       case ActionKey.REMOVE_DEPARTMENT:
-        this.managePatientDepartments('removeDepartmentsFromPatient', department.id, department);
+        this.managePatientDepartments('removeDepartmentsFromPatient', department);
         return;
     }
   }
@@ -159,22 +159,22 @@ export class DepartmentsComponent implements OnInit {
     const department = selectedDepartment
       ? selectedDepartment
       : this.departments[this.departments.findIndex((p) => p.id === departmentId)];
-    this.managePatientDepartments(action, department.id, department);
+    this.managePatientDepartments(action, department);
   }
 
-  private managePatientDepartments(action: string, departmentId: number, department?: Department) {
+  private managePatientDepartments(action: string, department: Department) {
     this.loading = true;
     const executedAction =
       action === 'addDepartmentsToPatient'
-        ? this.departmentsService.addDepartmentsToPatient(this.patient.id, departmentId)
-        : this.departmentsService.removeDepartmentsFromPatient(this.patient.id, departmentId);
+        ? this.departmentsService.addDepartmentsToPatient(this.patient.id, department.id)
+        : this.departmentsService.removeDepartmentsFromPatient(this.patient.id, department.id);
     executedAction.pipe(finalize(() => (this.loading = false))).subscribe(
       () => {
         if (action === 'addDepartmentsToPatient') {
           this.data.unshift(department);
         } else {
           this.data.splice(
-            this.data.findIndex((p) => p.id === departmentId),
+            this.data.findIndex((p) => p.id === department.id),
             1
           );
         }
