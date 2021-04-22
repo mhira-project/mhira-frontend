@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Sorting } from '@shared/@types/sorting';
 import { finalize } from 'rxjs/operators';
@@ -28,7 +28,7 @@ enum ActionKey {
   templateUrl: './departments.component.html',
   styleUrls: ['./departments.component.scss'],
 })
-export class DepartmentsComponent {
+export class DepartmentsComponent implements OnInit {
   PK = PermissionKey;
 
   @Input() public patient: FormattedPatient;
@@ -62,7 +62,9 @@ export class DepartmentsComponent {
     private modalService: NzModalService,
     private messageService: NzMessageService,
     public perms: AppPermissionsService
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.getDepartments();
     this.getDepartments(true);
     this.setActions();
@@ -93,7 +95,7 @@ export class DepartmentsComponent {
   public onAction({ action, context: department }: ActionArgs<Department, ActionKey>): void {
     switch (action.key) {
       case ActionKey.REMOVE_DEPARTMENT:
-        this.managePatientDepartments('removePatientFromDepartment', department.id, department);
+        this.managePatientDepartments('removeDepartmentsFromPatient', department.id, department);
         return;
     }
   }
@@ -140,8 +142,7 @@ export class DepartmentsComponent {
     ];
   }
 
-  public async updatePatientDepartment(action: string, department?: Department): Promise<void> {
-    // create state modal
+  public async updatePatientDepartment(action: string, selectedDepartment?: Department): Promise<void> {
     const modal = this.modalService.create<SelectModalComponent<Department>>({
       nzTitle: `Add ${this.patient.firstName} ${this.patient.lastName} to department`,
       nzContent: SelectModalComponent,
@@ -152,33 +153,34 @@ export class DepartmentsComponent {
       nzOnOk: (m) => m.selected,
     });
 
-    // wait for modal to successfully complete
     const state: Department = await modal.afterClose.toPromise();
-    if (!state) return;
 
-    const departmentId = department ? department.id : state.id;
-    this.managePatientDepartments(action, departmentId, department);
+    const departmentId = selectedDepartment ? selectedDepartment.id : state.id;
+    const department = selectedDepartment
+      ? selectedDepartment
+      : this.departments[this.departments.findIndex((p) => p.id === departmentId)];
+    this.managePatientDepartments(action, department.id, department);
   }
 
   private managePatientDepartments(action: string, departmentId: number, department?: Department) {
     this.loading = true;
-    this.departmentsService[action](this.patient.id, departmentId)
-      .pipe(finalize(() => (this.loading = false)))
-      .subscribe(
-        ({ data }: any) => {
-          const updatedDepartment = data[action];
-          if (action === 'addPatientToDepartment') {
-            this.data.unshift(updatedDepartment);
-          } else {
-            this.data.splice(
-              this.data.findIndex((p) => p.id === this.patient.id),
-              1,
-              department
-            );
-          }
-        },
-        () => this.messageService.error('An error occurred could not update patient', { nzDuration: 3000 })
-      );
+    const executedAction =
+      action === 'addDepartmentsToPatient'
+        ? this.departmentsService.addDepartmentsToPatient(this.patient.id, departmentId)
+        : this.departmentsService.removeDepartmentsFromPatient(this.patient.id, departmentId);
+    executedAction.pipe(finalize(() => (this.loading = false))).subscribe(
+      () => {
+        if (action === 'addDepartmentsToPatient') {
+          this.data.unshift(department);
+        } else {
+          this.data.splice(
+            this.data.findIndex((p) => p.id === departmentId),
+            1
+          );
+        }
+      },
+      () => this.messageService.error('An error occurred could not update patient', { nzDuration: 3000 })
+    );
   }
 
   private setActions(): void {
