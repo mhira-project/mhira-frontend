@@ -27,6 +27,7 @@ export class HeaderComponent implements OnInit {
   translationList: TranslationItem[] = [
     { name: 'English', code: 'en' },
     { name: 'Germany', code: 'de' },
+    { name: 'Swahili', code: 'sw' },
   ];
   changePasswordModal = false;
   loadingMessage = '';
@@ -43,7 +44,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUser();
-    console.log(this.translationService.getLangs());
+    this.translationService.setDefaultLang('en');
+    this.getStoredLang();
   }
 
   getUser() {
