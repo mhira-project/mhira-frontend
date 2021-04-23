@@ -1,7 +1,7 @@
 <article *ngIf="questionnaire">
   <div class="head-row">
     <h2>{{ questionnaire.name }}</h2>
-    <a nz-button nzType="primary" routerLink="../../overview" queryParamsHandling="merge">Back</a>
+    <a nz-button nzType="primary" routerLink="../../overview" queryParamsHandling="merge">Overview</a>
   </div>
 
   <section *ngFor="let group of questionnaire.questionGroups; let index = index">
