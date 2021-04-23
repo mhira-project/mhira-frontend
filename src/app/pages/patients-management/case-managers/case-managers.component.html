@@ -72,7 +72,7 @@
             class="assign-button"
             nz-button
             nzType="primary"
-            (click)="assignCaseManager(manager)"
+            (click)="departmentCheck(manager)"
             nzSize="small"
             nzShape="round"
           >
@@ -82,4 +82,16 @@
       </div>
     </li>
   </ul>
+</nz-modal>
+
+<nz-modal
+  *ngIf="manager"
+  [nzWidth]="600"
+  [(nzVisible)]="showAssignDepartmentModal"
+  nzTitle="Assign one of these departments to {{ patient?.firstName }} {{ patient?.lastName }}"
+  (nzOnCancel)="toggleAssignDetapartmentModal()"
+  (nzOnOk)="toggleAssignDetapartmentModal()"
+  [nzOkLoading]="isLoading"
+>
+  <app-patient-departments [departments]="manager?.departments" [patient]="patient"></app-patient-departments>
 </nz-modal>

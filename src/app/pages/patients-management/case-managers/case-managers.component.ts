@@ -10,10 +10,13 @@ import { CaseManagerFilter } from '@app/pages/patients-management/@types/case-ma
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { Patient } from '@app/pages/patients-management/@types/patient';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { Permission } from '@app/pages/administration/@types/permission';
+import { Department } from '../../administration/@types/department';
+import { SelectModalComponent } from '@app/@shared/components/select-modal/select-modal.component';
+import { DepartmentsService } from '../@services/departments.service';
 
 @Component({
   selector: 'app-case-managers',
@@ -42,18 +45,22 @@ export class CaseManagersComponent implements OnInit {
   isLoading = false;
   showFilter = false;
   showAssignModal = false;
+  showAssignDepartmentModal = false;
   drawerTitle = '';
   caseManagerNiceName = '';
 
   public searchKeyword = new Subject<string>();
   private searchKeywordSearchSubscription: Subscription;
+  manager: CaseManager;
 
   constructor(
     private caseManagersService: CaseManagersService,
     private patientService: PatientsService,
     private message: NzMessageService,
     private modalService: NzModalService,
-    private usersService: UsersService
+
+    private usersService: UsersService,
+    private departmentsService: DepartmentsService
   ) {
     this.searchKeywordSearchSubscription = this.searchKeyword
       .pipe(debounceTime(1000), distinctUntilChanged())
@@ -126,6 +133,44 @@ export class CaseManagersComponent implements OnInit {
       (error: any) => {
         this.isLoading = false;
       }
+    );
+  }
+
+  departmentCheck(manager: CaseManager) {
+    this.manager = manager;
+    if (this.checkPationHasDepartment(manager.departments)) {
+    } else {
+      this.updatePatientDepartment(manager);
+    }
+  }
+
+  public async updatePatientDepartment(manager: CaseManager): Promise<void> {
+    const modal = this.modalService.create<SelectModalComponent<Department>>({
+      nzTitle: `Add ${this.patient.firstName} ${this.patient.lastName} to department`,
+      nzContent: SelectModalComponent,
+      nzComponentParams: {
+        options: this.manager.departments,
+        titleField: 'name',
+      },
+      nzOnOk: (m) => m.selected,
+    });
+
+    const state: Department = await modal.afterClose.toPromise();
+
+    const departmentId = state.id;
+    const department = this.manager.departments[this.manager.departments.findIndex((p) => p.id === departmentId)];
+    this.managePatientDepartments(manager, department);
+  }
+
+  private managePatientDepartments(manager: CaseManager, department: Department) {
+    this.isLoading = true;
+    const executedAction = this.departmentsService.addDepartmentsToPatient(this.patient.id, department.id);
+    executedAction.pipe(finalize(() => (this.isLoading = false))).subscribe(
+      () => {
+        this.patient.departments.push(department);
+        this.assignCaseManager(manager);
+      },
+      () => this.message.error('An error occurred could not update patient', { nzDuration: 3000 })
     );
   }
 
@@ -219,6 +264,9 @@ export class CaseManagersComponent implements OnInit {
       }
     );
   }
+  checkPationHasDepartment(departments: Department[]): boolean {
+    return false;
+  }
 
   navigatePages(direction: string, pageSize: number = 10) {
     switch (direction) {
@@ -242,6 +290,10 @@ export class CaseManagersComponent implements OnInit {
 
   toggleAssignModal(): void {
     this.showAssignModal = !this.showAssignModal;
+  }
+
+  toggleAssignDetapartmentModal(): void {
+    this.showAssignDepartmentModal = !this.showAssignDepartmentModal;
   }
 
   handleSearchOptions(search: any) {
