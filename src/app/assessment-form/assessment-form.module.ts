@@ -22,7 +22,7 @@ import { AssessmentFormComponent } from './assessment-form.component';
 import { QuestionComponent } from './question/question.component';
 import { FormsModule } from '@angular/forms';
 import { SelectQuestionComponent } from './question/question-type/select-question/select-question.component';
-import { QuestionBase } from './@types/question';
+import { QuestionBaseComponent } from './@types/question';
 import { MultiselectQuestionComponent } from './question/question-type/multiselect-question/multiselect-question.component';
 
 @NgModule({
@@ -32,7 +32,7 @@ import { MultiselectQuestionComponent } from './question/question-type/multisele
     QuestionnaireFormComponent,
     AssessmentFormComponent,
     QuestionComponent,
-    QuestionBase,
+    QuestionBaseComponent,
     SelectQuestionComponent,
     MultiselectQuestionComponent,
   ],

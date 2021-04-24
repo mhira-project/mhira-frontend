@@ -44,7 +44,7 @@ export interface Question {
 @Component({
   template: '',
 })
-export class QuestionBase {
+export class QuestionBaseComponent {
   @Input() public answer: Answer;
   @Input() public question: Question;
   @Output() public answerChange = new EventEmitter<Answer>();

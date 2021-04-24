@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { QuestionBase } from '../../../@types/question';
+import { QuestionBaseComponent } from '../../../@types/question';
 
 @Component({
   selector: 'app-select-question',
   templateUrl: './select-question.component.html',
   styleUrls: ['./select-question.component.scss'],
 })
-export class SelectQuestionComponent extends QuestionBase {
+export class SelectQuestionComponent extends QuestionBaseComponent {
   public onChange(value: string): void {
     // stop redundant calls by change detection
     if (value === this.answer.textValue) return;

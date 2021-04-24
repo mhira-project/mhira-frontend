@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { QuestionBase, Choice } from '../../../@types/question';
+import { QuestionBaseComponent, Choice } from '../../../@types/question';
 
 @Component({
   selector: 'app-multiselect-question',
   templateUrl: './multiselect-question.component.html',
   styleUrls: ['./multiselect-question.component.scss'],
 })
-export class MultiselectQuestionComponent extends QuestionBase {
+export class MultiselectQuestionComponent extends QuestionBaseComponent {
   public toggle(choice: Choice): void {
     const idx = this.answer.multipleChoiceValue.indexOf(choice.name);
 
