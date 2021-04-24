@@ -53,13 +53,17 @@ export class QuestionComponent {
 
   private initAnswer(question: Question): void {
     const answers = this.assessmentFormService.assessmentSnapshot?.questionnaireAssessment?.answers ?? [];
-    this.answer = answers.find((a) => a.question === question._id) ?? {
-      question: question._id,
-      textValue: '',
-      booleanValue: undefined,
-      numberValue: undefined,
-      dateValue: undefined,
-      multipleChoiceValue: [],
+    this.answer = answers.find((a) => a.question === question._id) ?? this.createBlankAnswer(question);
+  }
+
+  private createBlankAnswer(question: Question): Answer {
+    const answer: Answer = {
+      question: question._id
     };
+
+    if (question.type === QuestionType.TEXT) answer.textValue = '';
+    if (question.type === QuestionType.SELECT_MULTIPLE) answer.multipleChoiceValue = [];
+
+    return answer;
   }
 }
