@@ -1,8 +1,10 @@
-import { FullAssessment } from './../../pages/assessment/@types/assessment';
+import { AssessmentStatus, FullAssessment } from './../../pages/assessment/@types/assessment';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AssessmentFormService } from '../assessment-form.service';
 import { Question } from '../@types/question';
 import { Answer } from '../@types/answer';
+import { AssessmentService } from '../../pages/assessment/@services/assessment.service';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-assessment-overview',
@@ -31,7 +33,12 @@ export class AssessmentOverviewComponent implements OnInit {
     return (numAnswers / this.requiredQuestions.length) * 100;
   }
 
-  constructor(public assessmentFormService: AssessmentFormService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    public assessmentFormService: AssessmentFormService,
+    private cdr: ChangeDetectorRef,
+    private assessmentService: AssessmentService,
+    private messageService: NzMessageService
+  ) {}
 
   public ngOnInit(): void {
     this.assessmentFormService.assessment$.subscribe((assessment) => {
@@ -70,5 +77,16 @@ export class AssessmentOverviewComponent implements OnInit {
     if (questionnaireIdx === 0) return true;
     const previousQuestionnaireId = this.assessment.questionnaireAssessment.questionnaires[questionnaireIdx - 1]._id;
     return this.isQuestionnaireDone(previousQuestionnaireId);
+  }
+
+  public completeAssessment(): void {
+    const id = this.assessment.questionnaireAssessment._id;
+    this.assessmentService.changeAssessmentStatus(id, AssessmentStatus.COMPLETED).subscribe(
+      () =>
+        this.messageService.success('Thank you for completing this assessment! You can close this page now.', {
+          nzDuration: 5000,
+        }),
+      (err) => this.messageService.error(`Unable to delete assessment with ID "${id}" - ${err}`)
+    );
   }
 }

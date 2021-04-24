@@ -3,6 +3,14 @@ import { QuestionnaireVersion } from '@app/pages/questionnaire-management/@types
 import { User } from '@app/pages/user-management/@types/user';
 import { Answer } from '../../../assessment-form/@types/answer';
 
+export enum AssessmentStatus {
+  COMPLETED = 'COMPLETED',
+  PENDING = 'PENDING',
+  PARTIALLY_COMPLETED = 'PARTIALLY_COMPLETED',
+  EXPIRED = 'EXPIRED',
+  ARCHIVED = 'ARCHIVED',
+}
+
 export interface Assessment {
   id?: number;
   name: string;
@@ -15,8 +23,10 @@ export interface Assessment {
 }
 
 export interface QuestionnaireAssessment {
+  _id: string;
   questionnaires: QuestionnaireVersion[];
   answers: Answer[];
+  status: AssessmentStatus;
 }
 
 export interface FullAssessment extends Assessment {

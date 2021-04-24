@@ -195,6 +195,15 @@ const sendAnswer = gql`
   }
 `;
 
+const changeAssessmentStatus = gql`
+  mutation($statusInput: ChangeAssessmentStatusInput!) {
+    changeAssessmentStatus(statusInput: $statusInput) {
+      _id
+      status
+    }
+  }
+`;
+
 export const AssessmentsMutations = {
   createOneAssessment,
   updateOneAssessment,
@@ -202,4 +211,5 @@ export const AssessmentsMutations = {
   createOneMongoAssessment,
   updateOneMongoAssessment,
   sendAnswer,
+  changeAssessmentStatus,
 };

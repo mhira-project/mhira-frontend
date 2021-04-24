@@ -47,7 +47,7 @@
 </section>
 
 <section>
-  <button nz-button nzType="primary" [disabled]="percentageCompleted < 100">
+  <button nz-button nzType="primary" [disabled]="percentageCompleted < 100" (click)="completeAssessment()">
     Complete assessment ({{ percentageCompleted | number: '1.1-1' }}% completed)
   </button>
 </section>

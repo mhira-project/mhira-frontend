@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { FetchResult } from 'apollo-link';
 import { AssessmentsQueries } from '../../../@graphql/queries/assessments';
-import { Assessment } from '@app/pages/assessment/@types/assessment';
+import { Assessment, AssessmentStatus } from '@app/pages/assessment/@types/assessment';
 import { AssessmentsMutations } from '@app/@graphql/mutations/assessments';
 import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
@@ -110,5 +110,13 @@ export class AssessmentService {
         fetchPolicy: 'no-cache',
       })
       .pipe(map((result: any) => result.data.addAnswer.answers));
+  }
+
+  changeAssessmentStatus(assessmentId: string, status: AssessmentStatus) {
+    return this.apollo.mutate({
+      mutation: AssessmentsMutations.changeAssessmentStatus,
+      variables: { statusInput: { assessmentId, status } },
+      fetchPolicy: 'no-cache',
+    });
   }
 }
