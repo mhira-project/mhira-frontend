@@ -1,6 +1,7 @@
 import { CreateQuestionnaireInput, QuestionnaireStatus } from './../@types/questionnaire';
 import { Form } from '../../../@shared/components/form/@types/form';
 import { UpdateQuestionnaireInput } from '../@types/questionnaire';
+import { getNames } from '@cospired/i18n-iso-languages';
 
 export const QuestionnaireForm: Form & { groups: { fields: { name: keyof CreateQuestionnaireInput }[] }[] } = {
   submitButtonText: 'Upload Questionnaire',
@@ -8,6 +9,14 @@ export const QuestionnaireForm: Form & { groups: { fields: { name: keyof CreateQ
   groups: [
     {
       fields: [
+        {
+          value: '',
+          name: 'name',
+          title: 'Name',
+          description: 'Name',
+          type: 'text',
+          span: 12,
+        },
         {
           value: undefined,
           name: 'excelFile',
@@ -40,12 +49,10 @@ export const QuestionnaireForm: Form & { groups: { fields: { name: keyof CreateQ
           type: 'select',
           span: 12,
           isRequired: true,
-          options: [
-            // TODO: get these from somewhere central
-            { value: 'de', label: 'DE - German' },
-            { value: 'en', label: 'EN - English' },
-            { value: 'sw', label: 'SW - Swahili' },
-          ],
+          // TODO: get from correct language
+          options: Object.entries(getNames('en'))
+            .map(([value, label]) => ({ label, value }))
+            .sort((prev, next) => prev.label.localeCompare(next.label)),
         },
         {
           value: '',
@@ -101,6 +108,15 @@ export const QuestionnaireUpdateForm: Form & { groups: { fields: { name: keyof U
     {
       fields: [
         {
+          value: '',
+          name: 'name',
+          title: 'Name',
+          description: 'Name',
+          type: 'text',
+          span: 12,
+          isRequired: true,
+        },
+        {
           value: QuestionnaireStatus.DRAFT,
           name: 'status',
           title: 'Status',
@@ -123,12 +139,10 @@ export const QuestionnaireUpdateForm: Form & { groups: { fields: { name: keyof U
           type: 'select',
           span: 12,
           isRequired: true,
-          options: [
-            // TODO: get these from somewhere central
-            { value: 'de', label: 'DE - German' },
-            { value: 'en', label: 'EN - English' },
-            { value: 'sw', label: 'SW - Swahili' },
-          ],
+          // TODO: get from correct language
+          options: Object.entries(getNames('en'))
+            .map(([value, label]) => ({ label, value }))
+            .sort((prev, next) => prev.label.localeCompare(next.label)),
         },
         {
           value: '',

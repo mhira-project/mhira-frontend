@@ -53,7 +53,7 @@ const updateManyRoles = gql`
 `;
 
 const deleteOneRole = gql`
-  mutation($input: DeleteOneInput!) {
+  mutation($input: DeleteOneRoleInput!) {
     deleteOneRole(input: $input) {
       id
       name

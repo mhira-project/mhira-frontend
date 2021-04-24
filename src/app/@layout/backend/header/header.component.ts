@@ -10,6 +10,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { FormComponent } from '@shared/components/form/form.component';
 import { FieldGroup } from '@shared/components/form/@types/field.group';
+import { UserModel } from '../../../pages/user-management/@models/user.model';
 
 const CryptoJS = require('crypto-js');
 
@@ -41,6 +42,13 @@ export class HeaderComponent implements OnInit {
 
   getUser() {
     this.user = JSON.parse(localStorage.getItem('user'));
+    this.authService.getUserProfile().subscribe(
+      async ({ data }) => {
+        this.user = data.getUserProfile;
+        localStorage.setItem('user', JSON.stringify(data.getUserProfile));
+      },
+      (_) => {}
+    );
   }
 
   clickChangePassword() {
