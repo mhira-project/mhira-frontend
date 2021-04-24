@@ -46,7 +46,7 @@ export class QuestionComponent {
         booleanValue: answer.booleanValue,
       })
       .subscribe(
-        (answers) => (this.answer._id = answers.find((a) => a.question === this.question._id)?._id),
+        (answers) => (this.answer = answers.find((a) => a.question === this.question._id)),
         (err) => this.messageService.error('Unable to answer question - ' + err)
       );
   }
@@ -58,7 +58,7 @@ export class QuestionComponent {
 
   private createBlankAnswer(question: Question): Answer {
     const answer: Answer = {
-      question: question._id
+      question: question._id,
     };
 
     if (question.type === QuestionType.TEXT) answer.textValue = '';

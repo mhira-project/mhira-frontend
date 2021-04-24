@@ -1,5 +1,5 @@
 import { FullAssessment } from './../../pages/assessment/@types/assessment';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AssessmentFormService } from '../assessment-form.service';
 import { Question } from '../@types/question';
 import { Answer } from '../@types/answer';
@@ -8,8 +8,9 @@ import { Answer } from '../@types/answer';
   selector: 'app-assessment-overview',
   templateUrl: './assessment-overview.component.html',
   styleUrls: ['./assessment-overview.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AssessmentOverviewComponent {
+export class AssessmentOverviewComponent implements OnInit {
   public assessment: FullAssessment;
   public questions: Question[];
   public questionnaireQuestions: { [K in string]: Question[] };
@@ -30,7 +31,9 @@ export class AssessmentOverviewComponent {
     return (numAnswers / this.requiredQuestions.length) * 100;
   }
 
-  constructor(public assessmentFormService: AssessmentFormService) {
+  constructor(public assessmentFormService: AssessmentFormService, private cdr: ChangeDetectorRef) {}
+
+  public ngOnInit(): void {
     this.assessmentFormService.assessment$.subscribe((assessment) => {
       this.assessment = assessment;
       this.questionnaireQuestions = {};
@@ -42,6 +45,8 @@ export class AssessmentOverviewComponent {
         this.questionnaireQuestions[questionnaire._id] = questionnaireQuestions;
         return [...questions, ...questionnaireQuestions];
       }, []);
+
+      this.cdr.detectChanges();
     });
   }
 

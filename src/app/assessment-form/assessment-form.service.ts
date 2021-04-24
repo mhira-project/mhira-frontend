@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AnswerAssessmentInput, Answer } from './@types/answer';
 import { AssessmentService } from '../pages/assessment/@services/assessment.service';
 import { QuestionnaireVersion } from '@app/pages/questionnaire-management/@types/questionnaire';
-import { switchMap } from 'rxjs/operators';
+import { first, switchMap, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AssessmentFormService {
@@ -45,13 +45,15 @@ export class AssessmentFormService {
 
   public sendAnswer(answerInput: Omit<AnswerAssessmentInput, 'assessmentId' | 'questionnaireVersionId'>) {
     return this.questionnaire$.pipe(
+      first(),
       switchMap((questionnaire) =>
         this.assessmentService.sendAnswer({
           ...answerInput,
           assessmentId: this._assessment.value.questionnaireAssessmentId,
           questionnaireVersionId: questionnaire._id,
         })
-      )
+      ),
+      tap((answers) => this.setAnswers(answers))
     );
   }
 }
