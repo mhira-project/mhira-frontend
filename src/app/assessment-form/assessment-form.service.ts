@@ -43,11 +43,11 @@ export class AssessmentFormService {
     });
   }
 
-  public sendAnswer(answerInput: Omit<AnswerAssessmentInput, 'assessmentId' | 'questionnaireVersionId'>) {
+  public addAnswer(answerInput: Omit<AnswerAssessmentInput, 'assessmentId' | 'questionnaireVersionId'>) {
     return this.questionnaire$.pipe(
       first(),
       switchMap((questionnaire) =>
-        this.assessmentService.sendAnswer({
+        this.assessmentService.addAnswer({
           ...answerInput,
           assessmentId: this._assessment.value.questionnaireAssessmentId,
           questionnaireVersionId: questionnaire._id,

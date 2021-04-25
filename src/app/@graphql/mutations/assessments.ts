@@ -179,7 +179,7 @@ const updateOneMongoAssessment = gql`
   }
 `;
 
-const sendAnswer = gql`
+const addAnswer = gql`
   mutation($assessment: AnswerAssessmentInput!) {
     addAnswer(assessment: $assessment) {
       _id
@@ -210,6 +210,6 @@ export const AssessmentsMutations = {
   deleteAssessment,
   createOneMongoAssessment,
   updateOneMongoAssessment,
-  sendAnswer,
+  addAnswer,
   changeAssessmentStatus,
 };

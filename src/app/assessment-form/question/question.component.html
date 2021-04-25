@@ -11,31 +11,31 @@
         nz-input
         [debounceTime]="500"
         [value]="answer.textValue"
-        (ngxInputSearch)="answer.textValue = textInput.value; sendAnswer(answer)"
+        (ngxInputSearch)="answer.textValue = textInput.value; addAnswer(answer)"
       />
     </ng-container>
     <ng-container *ngSwitchCase="QuestionType.DECIMAL">
       <nz-input-number
         [nzStep]="0.1"
         [(ngModel)]="answer.numberValue"
-        (ngModelChange)="sendAnswer(answer)"
+        (ngModelChange)="addAnswer(answer)"
       ></nz-input-number>
     </ng-container>
     <ng-container *ngSwitchCase="QuestionType.INTEGER">
       <nz-input-number
         [nzStep]="1"
         [(ngModel)]="answer.numberValue"
-        (ngModelChange)="sendAnswer(answer)"
+        (ngModelChange)="addAnswer(answer)"
       ></nz-input-number>
     </ng-container>
     <ng-container *ngSwitchCase="QuestionType.CHECKBOX">
-      <label nz-checkbox [(ngModel)]="answer.booleanValue" (ngModelChange)="sendAnswer(answer)"></label>
+      <label nz-checkbox [(ngModel)]="answer.booleanValue" (ngModelChange)="addAnswer(answer)"></label>
     </ng-container>
     <ng-container *ngSwitchCase="QuestionType.DATE">
       <nz-date-picker
         [nzFormat]="this.dateFormat"
         [(ngModel)]="answer.dateValue"
-        (ngModelChange)="sendAnswer(answer)"
+        (ngModelChange)="addAnswer(answer)"
       ></nz-date-picker>
     </ng-container>
     <ng-container *ngSwitchCase="QuestionType.TIME">
@@ -44,7 +44,7 @@
         type="time"
         nz-input
         [value]="answer.textValue"
-        (change)="answer.textValue = timeInput.value; sendAnswer(answer)"
+        (change)="answer.textValue = timeInput.value; addAnswer(answer)"
       />
     </ng-container>
     <ng-container *ngSwitchCase="QuestionType.DATETIME">
@@ -52,14 +52,14 @@
         <nz-date-picker
           [nzFormat]="this.dateFormat"
           [(ngModel)]="answer.dateValue"
-          (ngModelChange)="sendAnswer(answer)"
+          (ngModelChange)="addAnswer(answer)"
         ></nz-date-picker>
         <input
           #timeInput
           type="time"
           nz-input
           [value]="answer.textValue"
-          (change)="answer.textValue = timeInput.value; sendAnswer(answer)"
+          (change)="answer.textValue = timeInput.value; addAnswer(answer)"
         />
       </div>
     </ng-container>
@@ -67,14 +67,14 @@
       <app-select-question
         [question]="question"
         [answer]="answer"
-        (answerChange)="sendAnswer($event)"
+        (answerChange)="addAnswer($event)"
       ></app-select-question>
     </ng-container>
     <ng-container *ngSwitchCase="QuestionType.SELECT_MULTIPLE">
       <app-multiselect-question
         [question]="question"
         [answer]="answer"
-        (answerChange)="sendAnswer($event)"
+        (answerChange)="addAnswer($event)"
       ></app-multiselect-question>
     </ng-container>
     <ng-container *ngSwitchDefault>

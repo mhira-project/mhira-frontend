@@ -34,9 +34,9 @@ export class QuestionComponent {
     this.dateFormat = this.dateFormat.replace(/[Y]/g, 'y');
   }
 
-  public sendAnswer(answer: Answer): void {
+  public addAnswer(answer: Answer): void {
     this.assessmentFormService
-      .sendAnswer({
+      .addAnswer({
         question: answer.question,
         finishedAssessment: false,
         textValue: answer.textValue,

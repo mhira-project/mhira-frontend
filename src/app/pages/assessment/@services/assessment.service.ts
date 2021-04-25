@@ -102,10 +102,10 @@ export class AssessmentService {
       .pipe(map((result: any) => result?.data?.getFullAssessment));
   }
 
-  sendAnswer(assessment: AnswerAssessmentInput): Observable<Answer[]> {
+  addAnswer(assessment: AnswerAssessmentInput): Observable<Answer[]> {
     return this.apollo
       .mutate({
-        mutation: AssessmentsMutations.sendAnswer,
+        mutation: AssessmentsMutations.addAnswer,
         variables: { assessment },
         fetchPolicy: 'no-cache',
       })
