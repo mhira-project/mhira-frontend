@@ -9,8 +9,9 @@
       <input
         #textInput
         nz-input
+        [debounceTime]="500"
         [value]="answer.textValue"
-        (change)="answer.textValue = textInput.value; sendAnswer(answer)"
+        (ngxInputSearch)="answer.textValue = textInput.value; sendAnswer(answer)"
       />
     </ng-container>
     <ng-container *ngSwitchCase="QuestionType.DECIMAL">

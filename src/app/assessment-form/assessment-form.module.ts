@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms';
 import { SelectQuestionComponent } from './question/question-type/select-question/select-question.component';
 import { QuestionBaseComponent } from './@types/question';
 import { MultiselectQuestionComponent } from './question/question-type/multiselect-question/multiselect-question.component';
+import { NgxInputSearchModule } from 'ngx-input-search';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { MultiselectQuestionComponent } from './question/question-type/multisele
     NzTagModule,
     NzDatePickerModule,
     NzTimePickerModule,
+    NgxInputSearchModule,
   ],
   providers: [AssessmentFormService],
 })
