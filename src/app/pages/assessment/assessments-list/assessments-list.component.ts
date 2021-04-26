@@ -24,6 +24,7 @@ import { Filter } from '../../../@shared/@types/filter';
 const CryptoJS = require('crypto-js');
 
 enum ActionKey {
+  SHOW_ASSESSMENT,
   ARCHIVE_ASSESSMENT,
   DELETE_ASSESSMENT,
 }
@@ -39,7 +40,7 @@ export class AssessmentsListComponent {
   public data: FormattedAssessment[];
   public pageInfo: PageInfo;
   public loading = false;
-  public actions: Action<ActionKey>[] = [];
+  public actions: Action<ActionKey>[] = [{ key: ActionKey.SHOW_ASSESSMENT, title: 'Show Assessment' }];
 
   public assessmentRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
@@ -86,6 +87,9 @@ export class AssessmentsListComponent {
 
   public onAction({ action, context: assessment }: ActionArgs<FormattedAssessment, ActionKey>): void {
     switch (action.key) {
+      case ActionKey.SHOW_ASSESSMENT:
+        this.showAssessment(assessment);
+        return;
       case ActionKey.ARCHIVE_ASSESSMENT:
         this.deleteAssessment(assessment);
         return;
@@ -167,5 +171,11 @@ export class AssessmentsListComponent {
         },
       },
     ];
+  }
+
+  private async showAssessment(assessment: FormattedAssessment): Promise<void> {
+    const cryptoId = CryptoJS.AES.encrypt(JSON.stringify(assessment.id), environment.secretKey).toString();
+    const tree = this.router.createUrlTree(['/assessment/overview'], { queryParams: { assessment: cryptoId } });
+    window.open('#' + tree.toString());
   }
 }

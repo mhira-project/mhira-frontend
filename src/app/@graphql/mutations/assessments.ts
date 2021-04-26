@@ -179,10 +179,37 @@ const updateOneMongoAssessment = gql`
   }
 `;
 
+const addAnswer = gql`
+  mutation($assessment: AnswerAssessmentInput!) {
+    addAnswer(assessment: $assessment) {
+      _id
+      answers {
+        question
+        textValue
+        multipleChoiceValue
+        numberValue
+        dateValue
+        booleanValue
+      }
+    }
+  }
+`;
+
+const changeAssessmentStatus = gql`
+  mutation($statusInput: ChangeAssessmentStatusInput!) {
+    changeAssessmentStatus(statusInput: $statusInput) {
+      _id
+      status
+    }
+  }
+`;
+
 export const AssessmentsMutations = {
   createOneAssessment,
   updateOneAssessment,
   deleteAssessment,
   createOneMongoAssessment,
   updateOneMongoAssessment,
+  addAnswer,
+  changeAssessmentStatus,
 };
