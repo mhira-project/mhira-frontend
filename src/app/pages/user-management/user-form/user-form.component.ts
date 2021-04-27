@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { userForms } from '@app/pages/user-management/@forms/user.form';
 import { Form } from '@shared/components/form/@types/form';
-import { TopTabsDataService } from '@shared/services/tabs-data.service';
 import { CreateOneUserInput, CreateUserInput, UpdateOneUserInput, User } from '@app/pages/user-management/@types/user';
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -73,7 +72,6 @@ export class UserFormComponent implements OnInit {
     private modalService: NzModalService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private tabsDataService: TopTabsDataService,
     private usersService: UsersService,
     private message: NzMessageService,
     private rolesService: RolesService,
@@ -229,20 +227,6 @@ export class UserFormComponent implements OnInit {
         this.inputMode = true;
         this.profileFields = userForms.userProfile;
         this.showCancelButton = false;
-      }
-    });
-  }
-
-  onChangeUser() {
-    this.tabIndexSub = this.tabsDataService.selectedIndex.subscribe((index) => {
-      if (index !== -1) {
-        this.tabSub = this.tabsDataService.tabs.subscribe((tabs) => {
-          if (this.user) {
-            tabs[index].title = `${this.user.firstName} ${this.user.lastName}`;
-          } else {
-            tabs[index].title = 'New User';
-          }
-        });
       }
     });
   }

@@ -1,0 +1,50 @@
+<article *ngIf="questionnaire">
+  <div class="head-row">
+    <h2>{{ questionnaire.name }}</h2>
+    <a nz-button nzType="primary" routerLink="../../overview" queryParamsHandling="merge">Overview</a>
+  </div>
+
+  <section *ngFor="let group of questionnaire.questionGroups; let index = index">
+    <ng-container *ngIf="currentGroupIdx === index">
+      <ng-container *ngFor="let question of group.questions">
+        <app-question class="question" [question]="question"></app-question>
+      </ng-container>
+    </ng-container>
+  </section>
+
+  <section class="controls">
+    <button
+      nz-button
+      nzType="primary"
+      [disabled]="currentGroupIdx <= 0"
+      (click)="currentGroupIdx = currentGroupIdx - 1"
+    >
+      Prev
+    </button>
+    <div class="nav-pills">
+      <ng-container *ngFor="let group of questionnaire.questionGroups; let index = index">
+        <button
+          *ngIf="index === currentGroupIdx; else otherPages"
+          nz-button
+          nzType="primary"
+          nzShape="circle"
+          nzSize="small"
+          (click)="currentGroupIdx = index"
+        >
+          &nbsp;
+        </button>
+        <ng-template #otherPages>
+          <button nz-button nzShape="circle" nzSize="small" (click)="currentGroupIdx = index">&nbsp;</button>
+        </ng-template>
+      </ng-container>
+    </div>
+    <button
+      nz-button
+      nzType="primary"
+      [disabled]="currentGroupIdx >= questionnaire.questionGroups.length - 1"
+      (click)="currentGroupIdx = currentGroupIdx + 1"
+    >
+      Next
+    </button>
+  </section>
+</article>
