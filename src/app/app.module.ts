@@ -16,8 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GraphQLModule } from '@app/graphql.module';
 import { AuthGuard } from '@app/auth/auth.guard';
 import { PermissionGuard } from './permission.guard';
-import { registerLocale } from 'i18n-iso-countries';
-import countries_en from 'i18n-iso-countries/langs/en.json';
+import { registerLocale as registerLocalCountry } from 'i18n-iso-countries';
+import { registerLocale as registerLocaleLanguage } from '@cospired/i18n-iso-languages';
 
 @NgModule({
   imports: [
@@ -47,6 +47,7 @@ import countries_en from 'i18n-iso-countries/langs/en.json';
 })
 export class AppModule {
   constructor() {
-    registerLocale(countries_en);
+    registerLocalCountry(require('i18n-iso-countries/langs/en.json'));
+    registerLocaleLanguage(require('@cospired/i18n-iso-languages/langs/en.json'));
   }
 }

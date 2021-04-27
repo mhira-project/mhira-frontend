@@ -5,9 +5,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18nModule } from '@app/i18n';
 import { AuthLayoutComponent } from './auth/auth.layout.component';
-import { VerticalLayoutComponent } from './vertical/vertical.layout.component';
-import { HorizontalLayoutComponent } from './horizontal/horizontal.layout.component';
-import { SideNavComponent } from './vertical/side-nav/side-nav.component';
+import { BackendLayoutComponent } from './backend/backend-layout.component';
+import { AssessmentLayoutComponent } from './assessment/assessment-layout.component';
+import { SideNavComponent } from './backend/side-nav/side-nav.component';
 import {
   NzBreadCrumbModule,
   NzLayoutModule,
@@ -23,8 +23,7 @@ import {
 } from 'ng-zorro-antd';
 import { ThemeConstantService } from '@shared/services/theme-constant.service';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { HeaderComponent } from './vertical/header/header.component';
-import { TabsComponent } from './vertical/header/tabs/tabs.component';
+import { HeaderComponent } from './backend/header/header.component';
 import { AuthModule } from '@app/auth/auth.module';
 import { UpdateService } from '@shared/services/update.service';
 import { ComponentsModule } from '@shared/components/components.module';
@@ -59,13 +58,12 @@ const antdModule = [
   ],
   declarations: [
     AuthLayoutComponent,
-    VerticalLayoutComponent,
-    HorizontalLayoutComponent,
+    BackendLayoutComponent,
+    AssessmentLayoutComponent,
     SideNavComponent,
     HeaderComponent,
-    TabsComponent,
   ],
-  exports: [AuthLayoutComponent, VerticalLayoutComponent, HorizontalLayoutComponent],
+  exports: [AuthLayoutComponent, BackendLayoutComponent, AssessmentLayoutComponent],
   providers: [ThemeConstantService, UpdateService],
 })
 export class LayoutModule {}
