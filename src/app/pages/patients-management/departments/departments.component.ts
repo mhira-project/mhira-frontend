@@ -71,6 +71,7 @@ export class DepartmentsComponent implements OnInit {
     if (this.departments.length === 0) {
       this.getDepartments(true);
     }
+    this.getDepartments();
     this.setActions();
   }
 
@@ -104,16 +105,33 @@ export class DepartmentsComponent implements OnInit {
     }
   }
 
-  private getDepartments(getAllDepartments = false): void {
+  public async updatePatientDepartment(action: string, selectedDepartment?: Department): Promise<void> {
+    const modal = this.modalService.create<SelectModalComponent<Department>>({
+      nzTitle: `Add ${this.patient.firstName} ${this.patient.lastName} to department`,
+      nzContent: SelectModalComponent,
+      nzComponentParams: {
+        options: this.departments,
+        titleField: 'name',
+      },
+      nzOnOk: (m) => m.selected,
+    });
+
+    const state: Department = await modal.afterClose.toPromise();
+
+    const departmentId = selectedDepartment ? selectedDepartment.id : state.id;
+    const department = selectedDepartment
+      ? selectedDepartment
+      : this.departments[this.departments.findIndex((p) => p.id === departmentId)];
+    this.managePatientDepartments(action, department);
+  }
+
+  private getDepartments(getAllDepartments: boolean = false): void {
     this.loading = true;
     const options = { ...this.departmentRequestOptions };
 
     options.filter = {
       ...options.filter,
-      and: [
-        // getAllDepartments ? {} : { patients: { id: { eq: this.patient.id } } },
-        ...(options.filter.and ?? []),
-      ],
+      and: [getAllDepartments ? {} : { patients: { id: { eq: this.patient.id } } }, ...(options.filter.and ?? [])],
     };
 
     this.departmentsService
@@ -134,36 +152,16 @@ export class DepartmentsComponent implements OnInit {
     return [
       { name: { iLike: `%${searchString}%` } },
       { description: { iLike: `%${searchString}%` } },
-      // {
-      //   patients: {
-      //     or: [
-      //       { firstName: { iLike: `%${searchString}%` } },
-      //       { middleName: { iLike: `%${searchString}%` } },
-      //       { lastName: { iLike: `%${searchString}%` } },
-      //     ],
-      //   },
-      // },
-    ];
-  }
-
-  public async updatePatientDepartment(action: string, selectedDepartment?: Department): Promise<void> {
-    const modal = this.modalService.create<SelectModalComponent<Department>>({
-      nzTitle: `Add ${this.patient.firstName} ${this.patient.lastName} to department`,
-      nzContent: SelectModalComponent,
-      nzComponentParams: {
-        options: this.departments,
-        titleField: 'name',
+      {
+        patients: {
+          or: [
+            { firstName: { iLike: `%${searchString}%` } },
+            { middleName: { iLike: `%${searchString}%` } },
+            { lastName: { iLike: `%${searchString}%` } },
+          ],
+        },
       },
-      nzOnOk: (m) => m.selected,
-    });
-
-    const state: Department = await modal.afterClose.toPromise();
-
-    const departmentId = selectedDepartment ? selectedDepartment.id : state.id;
-    const department = selectedDepartment
-      ? selectedDepartment
-      : this.departments[this.departments.findIndex((p) => p.id === departmentId)];
-    this.managePatientDepartments(action, department);
+    ];
   }
 
   private managePatientDepartments(action: string, department: Department) {
