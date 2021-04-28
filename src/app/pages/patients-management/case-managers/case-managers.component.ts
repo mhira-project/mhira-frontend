@@ -17,6 +17,9 @@ import { Permission } from '@app/pages/administration/@types/permission';
 import { Department } from '../../administration/@types/department';
 import { SelectModalComponent } from '@app/@shared/components/select-modal/select-modal.component';
 import { DepartmentsService } from '../@services/departments.service';
+import { Filter } from '@app/@shared/@types/filter';
+import { Sorting } from '@app/@shared/@types/sorting';
+import { DEFAULT_PAGE_SIZE } from '@app/@shared/@modules/master-data/@types/list';
 
 @Component({
   selector: 'app-case-managers',
@@ -28,6 +31,7 @@ export class CaseManagersComponent implements OnInit {
   @Input() managerType = 'caseManager';
   @Input() filter: CaseManagerFilter = {};
   @Input() patient: Patient;
+  @Input() patientDepartments: Department[];
   @Input() showAssignButton = false;
   paging: Paging = {
     first: 10,
@@ -48,6 +52,15 @@ export class CaseManagersComponent implements OnInit {
   showAssignDepartmentModal = false;
   drawerTitle = '';
   caseManagerNiceName = '';
+  public departmentRequestOptions: {
+    paging: Paging;
+    filter: Filter;
+    sorting: Sorting[];
+  } = {
+    paging: { first: DEFAULT_PAGE_SIZE },
+    filter: {},
+    sorting: [],
+  };
 
   public searchKeyword = new Subject<string>();
   private searchKeywordSearchSubscription: Subscription;
@@ -75,6 +88,7 @@ export class CaseManagersComponent implements OnInit {
     this.getCaseManagers();
     this.drawerTitle = this.managerType === 'caseManager' ? 'Filter Case Managers' : 'Filter Informants';
     this.caseManagerNiceName = this.managerType === 'caseManager' ? 'Case Manager' : 'Informant';
+    this.getDepartments(false);
   }
 
   checkIfManagerHasPermission(permissions: Permission[]): boolean {
@@ -136,12 +150,30 @@ export class CaseManagersComponent implements OnInit {
     );
   }
 
+  private getDepartments(getAllDepartments: boolean = false): void {
+    this.isLoading = true;
+    const options = { ...this.departmentRequestOptions };
+
+    options.filter = {
+      and: [getAllDepartments ? {} : { patients: { id: { eq: this.patient.id } } }, ...(options.filter.and ?? [])],
+    };
+
+    this.departmentsService
+      .departments(options)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe((response) => {
+        if (getAllDepartments) {
+          this.patient.departments = response.data.departments.edges.map((e: any) => e.node);
+        } else {
+          this.patient.departments = response.data.departments.edges.map((e: any) => e.node);
+        }
+        this.pageInfo = response.data.departments.pageInfo; // TODO: remove
+      });
+  }
+
   departmentCheck(manager: CaseManager) {
     this.manager = manager;
-    if (this.checkPationHasDepartment(manager.departments)) {
-    } else {
-      this.updatePatientDepartment(manager);
-    }
+    this.updatePatientDepartment(manager);
   }
 
   public async updatePatientDepartment(manager: CaseManager): Promise<void> {
@@ -159,7 +191,12 @@ export class CaseManagersComponent implements OnInit {
 
     const departmentId = state.id;
     const department = this.manager.departments[this.manager.departments.findIndex((p) => p.id === departmentId)];
-    this.managePatientDepartments(manager, department);
+
+    if (this.checkPationHasDepartment(department)) {
+      this.assignCaseManager(manager);
+    } else {
+      this.managePatientDepartments(manager, department);
+    }
   }
 
   private managePatientDepartments(manager: CaseManager, department: Department) {
@@ -264,8 +301,8 @@ export class CaseManagersComponent implements OnInit {
       }
     );
   }
-  checkPationHasDepartment(departments: Department[]): boolean {
-    return false;
+  checkPationHasDepartment(department: Department): boolean {
+    return this.patient?.departments.some((r) => r.id === department.id);
   }
 
   navigatePages(direction: string, pageSize: number = 10) {
