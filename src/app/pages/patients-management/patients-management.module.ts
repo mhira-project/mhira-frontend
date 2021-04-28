@@ -31,6 +31,8 @@ import { InformantsListComponent } from './informants-list/informants-list.compo
 import { PatientStatusesService } from './@services/patient-statuses.service';
 import { FormsModule } from '@angular/forms';
 import { MasterDataModule } from '../../@shared/@modules/master-data/master-data.module';
+import { DepartmentsComponent } from './departments/departments.component';
+import { DepartmentsService } from './@services/departments.service';
 
 const antModules = [
   NzGridModule,
@@ -66,7 +68,14 @@ const antModules = [
     InformantsListComponent,
     PatientProfileComponent,
     CreatePatientComponent,
+    DepartmentsComponent,
   ],
-  providers: [PatientsService, CaseManagersService, EmergencyContactsService, PatientStatusesService],
+  providers: [
+    PatientsService,
+    CaseManagersService,
+    EmergencyContactsService,
+    DepartmentsService,
+    PatientStatusesService,
+  ],
 })
 export class PatientsManagementModule {}
