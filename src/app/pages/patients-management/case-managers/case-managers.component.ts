@@ -70,7 +70,6 @@ export class CaseManagersComponent implements OnInit {
     private patientService: PatientsService,
     private message: NzMessageService,
     private modalService: NzModalService,
-
     private usersService: UsersService,
     private departmentsService: DepartmentsService
   ) {}
@@ -141,32 +140,6 @@ export class CaseManagersComponent implements OnInit {
     );
   }
 
-  public departmentCheck(manager: CaseManager) {
-    this.manager = manager;
-    this.updatePatientDepartment(manager);
-  }
-
-  private getDepartments(getAllDepartments: boolean = false): void {
-    this.isLoading = true;
-    const options = { ...this.departmentRequestOptions };
-
-    options.filter = {
-      and: [getAllDepartments ? {} : { patients: { id: { eq: this.patient.id } } }, ...(options.filter.and ?? [])],
-    };
-
-    this.departmentsService
-      .departments(options)
-      .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe((response) => {
-        if (getAllDepartments) {
-          this.patient.departments = response.data.departments.edges.map((e: any) => e.node);
-        } else {
-          this.patient.departments = response.data.departments.edges.map((e: any) => e.node);
-        }
-        this.pageInfo = response.data.departments.pageInfo; // TODO: remove
-      });
-  }
-
   public async updatePatientDepartment(manager: CaseManager): Promise<void> {
     const modal = this.modalService.create<SelectModalComponent<Department>>({
       nzTitle: `Add ${this.patient.firstName} ${this.patient.lastName} to department`,
@@ -188,6 +161,106 @@ export class CaseManagersComponent implements OnInit {
     } else {
       this.managePatientDepartments(manager, department);
     }
+  }
+
+  public departmentCheck(manager: CaseManager) {
+    this.manager = manager;
+    this.updatePatientDepartment(manager);
+  }
+
+  public navigatePages(direction: string, pageSize: number = 10) {
+    switch (direction) {
+      case 'next':
+        this.paging.before = undefined;
+        this.paging.first = pageSize;
+        this.paging.last = undefined;
+        break;
+      case 'previous':
+        this.paging.after = undefined;
+        this.paging.first = undefined;
+        this.paging.last = pageSize;
+        break;
+    }
+    this.getCaseManagers();
+  }
+
+  public toggleFilterDrawer() {
+    this.showFilter = !this.showFilter;
+  }
+
+  public toggleAssignModal(): void {
+    this.showAssignModal = !this.showAssignModal;
+  }
+
+  public toggleAssignDetapartmentModal(): void {
+    this.showAssignDepartmentModal = !this.showAssignDepartmentModal;
+  }
+
+  public handleSearchOptions(search: any) {
+    switch (search.field.name) {
+      case 'patientId':
+        this.searchPatients(search.keyword);
+        break;
+      case 'caseManagerId':
+        this.searchCaseManagers(search.keyword);
+        break;
+    }
+  }
+
+  public handleActionClick(event: any): void {
+    this.selectedIndex = event.index;
+    switch (event.action.name) {
+      case 'Remove':
+        this.modalService.confirm({
+          nzTitle: 'Confirm',
+          nzContent: `Are you sure you want to remove ${this.caseManagers[this.selectedIndex].firstName} ${
+            this.caseManagers[this.selectedIndex].lastName
+          }`,
+          nzOkText: 'Remove',
+          nzOnOk: () => this.unAssignCaseManager(this.caseManagers[this.selectedIndex]),
+          // nzVisible: this.isOkLoading,
+          nzOkDisabled: this.isLoading,
+          nzCancelText: 'Cancel',
+        });
+        break;
+    }
+  }
+
+  public searchManagers(searchString: string) {
+    console.log(searchString);
+    this.filter.or = [
+      { firstName: { iLike: `%${searchString}%` } },
+      { middleName: { iLike: `%${searchString}%` } },
+      { lastName: { iLike: `%${searchString}%` } },
+      { medicalRecordNo: { iLike: `%${searchString}%` } },
+    ];
+    this.getCaseManagers();
+  }
+
+  public filterCaseManagers(filter: any) {
+    this.filter = filter;
+    this.getCaseManagers();
+  }
+
+  private getDepartments(getAllDepartments: boolean = false): void {
+    this.isLoading = true;
+    const options = { ...this.departmentRequestOptions };
+
+    options.filter = {
+      and: [getAllDepartments ? {} : { patients: { id: { eq: this.patient.id } } }, ...(options.filter.and ?? [])],
+    };
+
+    this.departmentsService
+      .departments(options)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe((response) => {
+        if (getAllDepartments) {
+          this.patient.departments = response.data.departments.edges.map((e: any) => e.node);
+        } else {
+          this.patient.departments = response.data.departments.edges.map((e: any) => e.node);
+        }
+        this.pageInfo = response.data.departments.pageInfo; // TODO: remove
+      });
   }
 
   private managePatientDepartments(manager: CaseManager, department: Department) {
@@ -294,79 +367,5 @@ export class CaseManagersComponent implements OnInit {
   }
   private checkPationHasDepartment(department: Department): boolean {
     return this.patient?.departments.some((r) => r.id === department.id);
-  }
-
-  public navigatePages(direction: string, pageSize: number = 10) {
-    switch (direction) {
-      case 'next':
-        this.paging.before = undefined;
-        this.paging.first = pageSize;
-        this.paging.last = undefined;
-        break;
-      case 'previous':
-        this.paging.after = undefined;
-        this.paging.first = undefined;
-        this.paging.last = pageSize;
-        break;
-    }
-    this.getCaseManagers();
-  }
-
-  public toggleFilterDrawer() {
-    this.showFilter = !this.showFilter;
-  }
-
-  public toggleAssignModal(): void {
-    this.showAssignModal = !this.showAssignModal;
-  }
-
-  public toggleAssignDetapartmentModal(): void {
-    this.showAssignDepartmentModal = !this.showAssignDepartmentModal;
-  }
-
-  public handleSearchOptions(search: any) {
-    switch (search.field.name) {
-      case 'patientId':
-        this.searchPatients(search.keyword);
-        break;
-      case 'caseManagerId':
-        this.searchCaseManagers(search.keyword);
-        break;
-    }
-  }
-
-  public handleActionClick(event: any): void {
-    this.selectedIndex = event.index;
-    switch (event.action.name) {
-      case 'Remove':
-        this.modalService.confirm({
-          nzTitle: 'Confirm',
-          nzContent: `Are you sure you want to remove ${this.caseManagers[this.selectedIndex].firstName} ${
-            this.caseManagers[this.selectedIndex].lastName
-          }`,
-          nzOkText: 'Remove',
-          nzOnOk: () => this.unAssignCaseManager(this.caseManagers[this.selectedIndex]),
-          // nzVisible: this.isOkLoading,
-          nzOkDisabled: this.isLoading,
-          nzCancelText: 'Cancel',
-        });
-        break;
-    }
-  }
-
-  public searchManagers(searchString: string) {
-    console.log(searchString);
-    this.filter.or = [
-      { firstName: { iLike: `%${searchString}%` } },
-      { middleName: { iLike: `%${searchString}%` } },
-      { lastName: { iLike: `%${searchString}%` } },
-      { medicalRecordNo: { iLike: `%${searchString}%` } },
-    ];
-    this.getCaseManagers();
-  }
-
-  public filterCaseManagers(filter: any) {
-    this.filter = filter;
-    this.getCaseManagers();
   }
 }
