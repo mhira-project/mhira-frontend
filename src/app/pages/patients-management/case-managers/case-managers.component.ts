@@ -82,11 +82,11 @@ export class CaseManagersComponent implements OnInit {
     this.getDepartments(false);
   }
 
-  checkIfManagerHasPermission(permissions: Permission[]): boolean {
+  public checkIfManagerHasPermission(permissions: Permission[]): boolean {
     return permissions.some((p: Permission) => p.name === this.PK.MANAGE_PATIENTS);
   }
 
-  setCaseManagerServicePropertyName(action: string): string {
+  public setCaseManagerServicePropertyName(action: string): string {
     let property =
       action === 'get'
         ? 'getPatientCaseManagers'
@@ -115,11 +115,11 @@ export class CaseManagersComponent implements OnInit {
     return property;
   }
 
-  getCaseManagerServiceProperty(property: any, params?: any) {
+  public getCaseManagerServiceProperty(property: any, params?: any) {
     return this.caseManagersService[property](params);
   }
 
-  getCaseManagers() {
+  public getCaseManagers() {
     this.isLoading = true;
     this.caseManagers = [];
     this.caseManagersTable.rows = [];
@@ -141,6 +141,11 @@ export class CaseManagersComponent implements OnInit {
     );
   }
 
+  public departmentCheck(manager: CaseManager) {
+    this.manager = manager;
+    this.updatePatientDepartment(manager);
+  }
+
   private getDepartments(getAllDepartments: boolean = false): void {
     this.isLoading = true;
     const options = { ...this.departmentRequestOptions };
@@ -160,11 +165,6 @@ export class CaseManagersComponent implements OnInit {
         }
         this.pageInfo = response.data.departments.pageInfo; // TODO: remove
       });
-  }
-
-  departmentCheck(manager: CaseManager) {
-    this.manager = manager;
-    this.updatePatientDepartment(manager);
   }
 
   public async updatePatientDepartment(manager: CaseManager): Promise<void> {
@@ -202,7 +202,7 @@ export class CaseManagersComponent implements OnInit {
     );
   }
 
-  assignCaseManager(manager: CaseManager) {
+  private assignCaseManager(manager: CaseManager) {
     this.isLoading = true;
     const query = this.setCaseManagerServicePropertyName('assign');
     this.getCaseManagerServiceProperty(query, { userId: manager.id, patientId: this.patient.id }).subscribe(
@@ -228,7 +228,7 @@ export class CaseManagersComponent implements OnInit {
     );
   }
 
-  unAssignCaseManager(manager: CaseManager) {
+  private unAssignCaseManager(manager: CaseManager) {
     this.isLoading = true;
     const query = this.setCaseManagerServicePropertyName('remove');
     this.getCaseManagerServiceProperty(query, { userId: manager.id, patientId: this.patient.id }).subscribe(
@@ -253,7 +253,7 @@ export class CaseManagersComponent implements OnInit {
     );
   }
 
-  searchPatients(keyword: string) {
+  private searchPatients(keyword: string) {
     const options: { label: string; value: number }[] = [];
     this.patientService.patients({ filter: { firstName: { iLike: keyword } } }).subscribe(
       async ({ data }) => {
@@ -271,7 +271,7 @@ export class CaseManagersComponent implements OnInit {
     );
   }
 
-  searchCaseManagers(keyword: string) {
+  private searchCaseManagers(keyword: string) {
     this.users = [];
     const options: { label: string; value: number }[] = [];
     this.usersService.getUsers({ filter: { firstName: { iLike: keyword } } }).subscribe(
@@ -292,11 +292,11 @@ export class CaseManagersComponent implements OnInit {
       }
     );
   }
-  checkPationHasDepartment(department: Department): boolean {
+  private checkPationHasDepartment(department: Department): boolean {
     return this.patient?.departments.some((r) => r.id === department.id);
   }
 
-  navigatePages(direction: string, pageSize: number = 10) {
+  public navigatePages(direction: string, pageSize: number = 10) {
     switch (direction) {
       case 'next':
         this.paging.before = undefined;
@@ -312,19 +312,19 @@ export class CaseManagersComponent implements OnInit {
     this.getCaseManagers();
   }
 
-  toggleFilterDrawer() {
+  public toggleFilterDrawer() {
     this.showFilter = !this.showFilter;
   }
 
-  toggleAssignModal(): void {
+  public toggleAssignModal(): void {
     this.showAssignModal = !this.showAssignModal;
   }
 
-  toggleAssignDetapartmentModal(): void {
+  public toggleAssignDetapartmentModal(): void {
     this.showAssignDepartmentModal = !this.showAssignDepartmentModal;
   }
 
-  handleSearchOptions(search: any) {
+  public handleSearchOptions(search: any) {
     switch (search.field.name) {
       case 'patientId':
         this.searchPatients(search.keyword);
@@ -335,7 +335,7 @@ export class CaseManagersComponent implements OnInit {
     }
   }
 
-  handleActionClick(event: any): void {
+  public handleActionClick(event: any): void {
     this.selectedIndex = event.index;
     switch (event.action.name) {
       case 'Remove':
@@ -354,7 +354,7 @@ export class CaseManagersComponent implements OnInit {
     }
   }
 
-  searchManagers(searchString: string) {
+  public searchManagers(searchString: string) {
     console.log(searchString);
     this.filter.or = [
       { firstName: { iLike: `%${searchString}%` } },
@@ -365,7 +365,7 @@ export class CaseManagersComponent implements OnInit {
     this.getCaseManagers();
   }
 
-  filterCaseManagers(filter: any) {
+  public filterCaseManagers(filter: any) {
     this.filter = filter;
     this.getCaseManagers();
   }
