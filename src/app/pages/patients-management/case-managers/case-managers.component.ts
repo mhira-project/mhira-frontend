@@ -52,6 +52,7 @@ export class CaseManagersComponent implements OnInit {
   showAssignDepartmentModal = false;
   drawerTitle = '';
   caseManagerNiceName = '';
+  manager: CaseManager = null;
   public departmentRequestOptions: {
     paging: Paging;
     filter: Filter;
@@ -63,8 +64,6 @@ export class CaseManagersComponent implements OnInit {
   };
 
   public searchKeyword = new Subject<string>();
-  private searchKeywordSearchSubscription: Subscription;
-  manager: CaseManager;
 
   constructor(
     private caseManagersService: CaseManagersService,
@@ -74,15 +73,7 @@ export class CaseManagersComponent implements OnInit {
 
     private usersService: UsersService,
     private departmentsService: DepartmentsService
-  ) {
-    this.searchKeywordSearchSubscription = this.searchKeyword
-      .pipe(debounceTime(1000), distinctUntilChanged())
-      .subscribe((event: any) => {
-        if (event && event.target.value !== '') {
-          this.searchCaseManagers(event.target.value);
-        }
-      });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getCaseManagers();
@@ -144,7 +135,7 @@ export class CaseManagersComponent implements OnInit {
         this.pageInfo = data[query].pageInfo;
         this.isLoading = false;
       },
-      (error: any) => {
+      () => {
         this.isLoading = false;
       }
     );
@@ -230,7 +221,7 @@ export class CaseManagersComponent implements OnInit {
           this.message.create('error', `${manager.firstName} could not be assigned to ${this.patient.firstName}`);
         }
       },
-      (error: any) => {
+      () => {
         this.isLoading = false;
         this.message.create('error', `${manager.firstName} could not be assigned to ${this.patient.firstName}`);
       }
@@ -255,7 +246,7 @@ export class CaseManagersComponent implements OnInit {
           this.message.create('error', `${manager.firstName} could not be removed from ${this.patient.firstName}`);
         }
       },
-      (error: any) => {
+      () => {
         this.isLoading = false;
         this.message.create('error', `${this.managerType} could not be assigned to ${this.patient.firstName}`);
       }
@@ -274,7 +265,7 @@ export class CaseManagersComponent implements OnInit {
         });
         this.caseManagersFilterForm.groups[0].fields[1].options = options;
       },
-      (error) => {
+      () => {
         this.isLoading = false;
       }
     );
@@ -296,7 +287,7 @@ export class CaseManagersComponent implements OnInit {
         this.users = users;
         this.caseManagersFilterForm.groups[0].fields[2].options = options;
       },
-      (error) => {
+      () => {
         this.isLoading = false;
       }
     );
