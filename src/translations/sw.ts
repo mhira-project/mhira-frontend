@@ -19,7 +19,7 @@ export default {
     roles: 'Majukumu',
     departments: 'Idara',
     settings: 'Mipangilio',
-    systmeConfiguration: 'Usanidi wa Mfumo',
+    systemConfiguration: 'Usanidi wa Mfumo',
     patientStatuses: 'Hadhi za Mgonjwa',
   },
 };

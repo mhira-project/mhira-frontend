@@ -22,7 +22,7 @@ export default {
     roles: 'Roles',
     departments: 'Departments',
     settings: 'Settings',
-    systmeConfiguration: 'System Configuration',
+    systemConfiguration: 'System Configuration',
     patientStatuses: 'Patient Statuses',
   },
 };
