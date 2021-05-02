@@ -1,7 +1,6 @@
 export default {
-  appName: 'MHIRA (EN)',
-  foo: {
-    bar: 'hello',
+  dashboard: {
+    welcome: 'Welcome to MHIRA',
   },
   menu: {
     dashboard: 'Dashboard',

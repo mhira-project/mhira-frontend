@@ -1,8 +1,4 @@
 export default {
-  appName: 'MHIRA (SW)',
-  foo: {
-    bar: 'hello',
-  },
   menu: {
     dashboard: 'Dashibodi',
     caseManagement: 'Usimamizi Wa Kesi',
