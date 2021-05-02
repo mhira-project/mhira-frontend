@@ -16,9 +16,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GraphQLModule } from '@app/graphql.module';
 import { AuthGuard } from '@app/auth/auth.guard';
 import { PermissionGuard } from './permission.guard';
-import { registerLocale } from 'i18n-iso-countries';
-import countries_en from 'i18n-iso-countries/langs/en.json';
 import { TypescriptTranslationLoader } from './@core/typescript-translation-loader';
+import { registerLocale as registerLocalCountry } from 'i18n-iso-countries';
+import { registerLocale as registerLocaleLanguage } from '@cospired/i18n-iso-languages';
 
 @NgModule({
   imports: [
@@ -54,7 +54,8 @@ import { TypescriptTranslationLoader } from './@core/typescript-translation-load
 })
 export class AppModule {
   constructor(translateService: TranslateService) {
-    registerLocale(countries_en);
     translateService.use('de');
+    registerLocalCountry(require('i18n-iso-countries/langs/en.json'));
+    registerLocaleLanguage(require('@cospired/i18n-iso-languages/langs/en.json'));
   }
 }

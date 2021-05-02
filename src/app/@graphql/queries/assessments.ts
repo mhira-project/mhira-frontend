@@ -128,6 +128,14 @@ const getFullAssessment = gql`
       questionnaireAssessment {
         _id
         status
+        answers {
+          question
+          textValue
+          multipleChoiceValue
+          numberValue
+          dateValue
+          booleanValue
+        }
         questionnaires(populate: true) {
           _id
           name
@@ -141,6 +149,31 @@ const getFullAssessment = gql`
           questionnaire {
             language
             abbreviation
+          }
+          questionGroups {
+            questions {
+              _id
+              name
+              label
+              type
+              hint
+              relevant
+              calculation
+              constraint
+              constraintMessage
+              min
+              max
+              required
+              requiredMessage
+              image
+              appearance
+              default
+              choices {
+                name
+                label
+                image
+              }
+            }
           }
         }
       }

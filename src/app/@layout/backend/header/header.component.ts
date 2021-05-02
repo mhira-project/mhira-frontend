@@ -50,6 +50,13 @@ export class HeaderComponent implements OnInit {
 
   getUser() {
     this.user = JSON.parse(localStorage.getItem('user'));
+    this.authService.getUserProfile().subscribe(
+      async ({ data }) => {
+        this.user = data.getUserProfile;
+        localStorage.setItem('user', JSON.stringify(data.getUserProfile));
+      },
+      (_) => {}
+    );
   }
 
   getStoredLang() {
@@ -61,7 +68,7 @@ export class HeaderComponent implements OnInit {
   }
 
   clickChangePassword() {
-    this.child.handleSubmitForm();
+    this.child.handleSubmitForm(this.changePasswordForm);
   }
   onChangeTranslation(item: TranslationItem) {
     localStorage.setItem('currentLang', item.code);
@@ -85,7 +92,7 @@ export class HeaderComponent implements OnInit {
       this.isLoading = true;
       this.loadingMessage = `Updating user ${this.user.firstName} ${this.user.lastName}`;
       const inputs: UserChangePasswordInput = {
-        currentPassword: form.newPassword,
+        currentPassword: form.currentPassword,
         newPassword: form.newPassword,
         newPasswordConfirmation: form.newPasswordConfirmation,
       };
@@ -94,6 +101,7 @@ export class HeaderComponent implements OnInit {
           this.isLoading = false;
           this.loadingMessage = '';
           this.message.create('success', `Password has successfully been changed`);
+          this.handleCancel();
         },
         (error) => {
           this.isLoading = false;

@@ -1,0 +1,11 @@
+<article *ngIf="assessmentFormService.assessment$ | async as assessment">
+  <h1>{{ assessment.name }}</h1>
+  <section class="patient">
+    <span class="name">{{ assessment.patient.firstName }} {{ assessment.patient.lastName }}</span>
+    <span class="code">ID: {{ assessment.patient.medicalRecordNo }}</span>
+  </section>
+
+  <section>
+    <router-outlet></router-outlet>
+  </section>
+</article>

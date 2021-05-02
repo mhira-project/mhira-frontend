@@ -7,11 +7,12 @@ import { ComponentsModule } from '@shared/components/components.module';
 import { DateService } from '@shared/services/date.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { PaginationService } from '@shared/services/pagination.service';
+import { NestJsQueriesService } from '@shared/services/nestjs-queries.service';
 
 @NgModule({
   imports: [CommonModule, FormsModule, NgxInputSearchModule, ReactiveFormsModule, ComponentsModule],
   declarations: [],
   exports: [ComponentsModule],
-  providers: [XlsExportService, DateService, AppPermissionsService, PaginationService],
+  providers: [XlsExportService, DateService, AppPermissionsService, NestJsQueriesService, PaginationService],
 })
 export class SharedModule {}

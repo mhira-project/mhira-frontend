@@ -1,4 +1,4 @@
-import { SideNavInterface } from '@app/@layout/vertical/side-nav.type';
+import { SideNavInterface } from '@app/@layout/backend/side-nav.type';
 import { PermissionKey as PK } from '@app/@shared/@types/permission';
 
 export const MENU: SideNavInterface[] = [
