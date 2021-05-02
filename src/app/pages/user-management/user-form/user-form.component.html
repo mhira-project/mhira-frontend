@@ -86,7 +86,7 @@
         <nz-card style="width: 300px" nzTitle="Delete User {{ user?.firstName }} ({{ user?.username }})">
           <p>To remove User {{ user?.firstName }} toggle the button below.</p>
           <button
-            [disabled]="!perms.permissionsOnly([PK.DELETE_USERS])"
+            [disabled]="!perms.permissionsOnly([PK.DELETE_USERS]) || !perms.hasAccessLevelToUser(user)"
             (click)="handleDeleteAction(user)"
             nz-button
             nzType="danger"
