@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService, MissingTranslationHandler } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { environment } from '@env/environment';
@@ -19,6 +19,7 @@ import { PermissionGuard } from './permission.guard';
 import { TypescriptTranslationLoader } from './@core/typescript-translation-loader';
 import { registerLocale as registerLocalCountry } from 'i18n-iso-countries';
 import { registerLocale as registerLocaleLanguage } from '@cospired/i18n-iso-languages';
+import { MhiraMissingTranslationHandler } from './@core/mhira-missing-translation-handler';
 
 @NgModule({
   imports: [
@@ -29,9 +30,14 @@ import { registerLocale as registerLocaleLanguage } from '@cospired/i18n-iso-lan
     HttpClientModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
+      useDefaultLang: environment.production, // DEV: show key and warn in console, PROD: show default lang translation
       loader: {
         provide: TranslateLoader,
         useClass: TypescriptTranslationLoader,
+      },
+      missingTranslationHandler: {
+        provide: MissingTranslationHandler,
+        useClass: MhiraMissingTranslationHandler,
       },
     }),
     NgbModule,
