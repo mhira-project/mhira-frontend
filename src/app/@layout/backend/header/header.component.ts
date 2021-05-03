@@ -60,7 +60,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getStoredLang() {
-    var lang = localStorage.getItem('currentLang');
+    const lang = localStorage.getItem('currentLang');
 
     if (lang) {
       this.translationService.use(lang);
