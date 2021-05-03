@@ -85,12 +85,11 @@ export class RolesComponent implements OnInit {
     this.getRoles({ paging });
   }
 
-  deleteRole(role: Role) {
+  deleteRole(role: Role, index: number) {
     this.modalLoading = true;
     this.rolesService.deleteRole(role).subscribe(
       async ({ data }: any) => {
-        const deletedIndex = this.roles.findIndex((_role) => _role.id === role.id);
-        this.rolesTable.rows.splice(deletedIndex, 1);
+        this.rolesTable.rows.splice(index, 1);
         this.modalLoading = false;
         this.message.create('success', `role has been successfully deleted`);
       },
@@ -110,12 +109,12 @@ export class RolesComponent implements OnInit {
           nzTitle: 'Confirm',
           nzContent: `Are you sure you want to delete role for
                <b>${this.roles[event.index].name}</b>. ${
-            this.role.users.length > 0
+            this.role.users && this.role.users.length > 0
               ? 'There are users assigned to this role if you delete it they will have default role.'
-              : 'This role have no users assigned to it.'
+              : 'This role has no users assigned to it.'
           }`,
           nzOkText: 'Delete',
-          nzOnOk: () => this.deleteRole(this.roles[event.index]),
+          nzOnOk: () => this.deleteRole(this.roles[event.index], event.index),
           nzOkDisabled: this.modalLoading,
           nzCancelText: 'Cancel',
         });
@@ -169,7 +168,7 @@ export class RolesComponent implements OnInit {
     this.loadingMessage = `Creating role ${role.name}`;
     this.rolesService.createRole(role).subscribe(
       async ({ data }) => {
-        this.roles.push(Convert.toRole(data.createOneRole));
+        this.roles.unshift(Convert.toRole(data.createOneRole));
         this.rolesTable.rows = this.roles;
         this.isLoading = false;
         this.resetForm = true;
