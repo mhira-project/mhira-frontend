@@ -6,10 +6,10 @@ import { Sorting } from '@shared/@types/sorting';
 import { Paging } from '@shared/@types/paging';
 import { Filter } from '@shared/@types/filter';
 import { RolesService } from '@app/pages/administration/@services/roles.service';
-import { RolePermission } from '@app/pages/administration/@types/role_permissions';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
-import { NzMessageService } from 'ng-zorro-antd';
 import { PermissionKey } from '@app/@shared/@types/permission';
+import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-roles-and-permissions',
@@ -35,7 +35,7 @@ export class RolesAndPermissionsComponent implements OnInit {
   constructor(
     private rolesService: RolesService,
     private permissionService: PermissionsService,
-    private message: NzMessageService,
+    private errorService: ErrorHandlerService,
     public perms: AppPermissionsService
   ) {}
 
@@ -47,42 +47,41 @@ export class RolesAndPermissionsComponent implements OnInit {
   getPermissions(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
     this.loading = true;
     const permissions: Permission[] = [];
-    this.permissionService.permissions(params).subscribe(
-      async ({ data }) => {
-        data.permissions.edges.map((permission: any) => {
-          permissions.push(permission.node);
-        });
-        this.matrix.permissions = permissions;
-        this.permissionsPaging.after = data.permissions.pageInfo.endCursor;
-        this.permissionsPaging.before = data.permissions.pageInfo.startCursor;
-        this.permissionsPageInfo = data.permissions.pageInfo;
-        this.loading = false;
-      },
-      (error) => {
-        this.message.create('error', `${error.message}`);
-        this.loading = false;
-      }
-    );
+    this.permissionService
+      .permissions(params)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        ({ data }) => {
+          data.permissions.edges.map((permission: any) => {
+            permissions.push(permission.node);
+          });
+          this.matrix.permissions = permissions;
+          this.permissionsPaging.after = data.permissions.pageInfo.endCursor;
+          this.permissionsPaging.before = data.permissions.pageInfo.startCursor;
+          this.permissionsPageInfo = data.permissions.pageInfo;
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to load permissions' })
+      );
   }
 
   getRoles(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }) {
     this.loading = true;
     const roles: Role[] = [];
-    this.rolesService.roles(params).subscribe(
-      async ({ data }: any) => {
-        data.roles.edges.map((role: any) => {
-          roles.push(role.node);
-        });
-        this.matrix.roles = roles;
-        this.rolesPaging.after = data.roles.pageInfo.endCursor;
-        this.rolesPaging.before = data.roles.pageInfo.startCursor;
-        this.rolesPageInfo = data.roles.pageInfo;
-        this.loading = false;
-      },
-      (error: any) => {
-        this.loading = false;
-      }
-    );
+    this.rolesService
+      .roles(params)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        ({ data }: any) => {
+          data.roles.edges.map((role: any) => {
+            roles.push(role.node);
+          });
+          this.matrix.roles = roles;
+          this.rolesPaging.after = data.roles.pageInfo.endCursor;
+          this.rolesPaging.before = data.roles.pageInfo.startCursor;
+          this.rolesPageInfo = data.roles.pageInfo;
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to load roles' })
+      );
   }
 
   permissionInRole(permission: Permission, role: Role): boolean {
@@ -93,25 +92,27 @@ export class RolesAndPermissionsComponent implements OnInit {
   assignPermissionToRole(permission: Permission, role: Role, checked: boolean) {
     this.loading = true;
     if (checked) {
-      this.rolesService.addPermissionsToRole(role.id, [permission.id]).subscribe(
-        async ({ data }: any) => {
-          this.loading = false;
-        },
-        (error: any) => {
-          this.message.create('error', `${error.message}`);
-          this.loading = false;
-        }
-      );
+      this.rolesService
+        .addPermissionsToRole(role.id, [permission.id])
+        .pipe(finalize(() => (this.loading = false)))
+        .subscribe(
+          () => {},
+          (error: any) =>
+            this.errorService.handleError(error, {
+              prefix: `Unable to assign permission "${permission.name}" to role "${role.name}"`,
+            })
+        );
     } else {
-      this.rolesService.removePermissionsFromRole(role.id, [permission.id]).subscribe(
-        async ({ data }: any) => {
-          this.loading = false;
-        },
-        (error: any) => {
-          this.message.create('error', `${error.message}`);
-          this.loading = false;
-        }
-      );
+      this.rolesService
+        .removePermissionsFromRole(role.id, [permission.id])
+        .pipe(finalize(() => (this.loading = false)))
+        .subscribe(
+          () => {},
+          (error: any) =>
+            this.errorService.handleError(error, {
+              prefix: `Unable to remove permission "${permission.name}" from role "${role.name}"`,
+            })
+        );
     }
   }
 }

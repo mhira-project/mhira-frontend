@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { PatientsService } from '../../@services/patients.service';
 import { Patient } from '../../@types/patient';
@@ -10,6 +10,8 @@ import { PatientModel } from '@app/pages/patients-management/@models/patient.mod
 import { EmergencyContactsService } from '@app/pages/patients-management/@services/contacts.service';
 import { Contact } from '@app/pages/patients-management/@types/contact';
 import { PermissionKey } from '@app/@shared/@types/permission';
+import { ErrorHandlerService } from '../../../../@shared/services/error-handler.service';
+import { finalize } from 'rxjs/operators';
 
 const CryptoJS = require('crypto-js');
 
@@ -26,8 +28,6 @@ export class CreatePatientComponent implements OnInit {
   loadingMessage = '';
   patientForm = PatientForm;
   patient: Patient;
-  hasErrors = false;
-  errors: string[] = [];
   inputMode = true;
   showCancelButton = false;
 
@@ -35,6 +35,7 @@ export class CreatePatientComponent implements OnInit {
     private patientsService: PatientsService,
     private emergencyContactsService: EmergencyContactsService,
     private message: NzMessageService,
+    private errorService: ErrorHandlerService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     public perms: AppPermissionsService
@@ -69,83 +70,77 @@ export class CreatePatientComponent implements OnInit {
 
   createEmergencyContacts(patientId: number, contacts: Contact[]) {
     this.isLoading = true;
-    this.hasErrors = false;
-    this.errors = [];
     contacts.map((contact: Contact) => {
       contact.patientId = patientId;
     });
-    this.emergencyContactsService.createManyEmergencyContacts(contacts).subscribe(
-      async ({ data }: any) => {
-        this.isLoading = false;
-        this.loadingMessage = '';
-        this.populateForm = false;
-        this.resetForm = true;
-        this.message.create('success', `Patient has successfully been created`);
-        this.router.navigate(['/mhira/case-management/patients']);
-      },
-      (error) => {
-        this.hasErrors = true;
-        error.graphQLErrors.map((_error: any) => {
-          this.errors.push(_error.message);
-        });
-        this.isLoading = false;
-        this.loadingMessage = '';
-      }
-    );
+    this.emergencyContactsService
+      .createManyEmergencyContacts(contacts)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+        })
+      )
+      .subscribe(
+        () => {
+          this.populateForm = false;
+          this.resetForm = true;
+          this.message.success('Emergency contacts have successfully been created');
+          this.router.navigate(['/mhira/case-management/patients']);
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to create emergency contacts' })
+      );
   }
 
   createPatient(patient: Patient) {
     this.isLoading = true;
-    this.hasErrors = false;
-    this.errors = [];
     this.resetForm = false;
     this.populateForm = false;
     const emergencyContacts = patient.emergencyContacts;
     patient.emergencyContacts = undefined;
     this.loadingMessage = `Creating patient ${patient.firstName} ${patient.lastName}`;
-    this.patientsService.createPatient(patient).subscribe(
-      async ({ data }: any) => {
-        const patientData = data.createOnePatient;
-        patient.emergencyContacts = emergencyContacts;
-        this.isLoading = false;
-        this.loadingMessage = '';
-        this.createEmergencyContacts(patientData.id, emergencyContacts);
-      },
-      (error) => {
-        this.hasErrors = true;
-        error.graphQLErrors.map((_error: any) => {
-          this.errors.push(_error.message);
-        });
-        this.isLoading = false;
-        this.loadingMessage = '';
-      }
-    );
+    this.patientsService
+      .createPatient(patient)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+        })
+      )
+      .subscribe(
+        async ({ data }: any) => {
+          const patientData = data.createOnePatient;
+          patient.emergencyContacts = emergencyContacts;
+          this.createEmergencyContacts(patientData.id, emergencyContacts);
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to create patient' })
+      );
   }
 
   updatePatient(patient: Patient) {
     this.isLoading = true;
-    this.hasErrors = false;
-    this.errors = [];
     this.loadingMessage = `Updating patient ${patient.firstName} ${patient.lastName}`;
     const emergencyContacts = patient.emergencyContacts;
     patient.emergencyContacts = undefined;
-    this.patientsService.updatePatient(patient).subscribe(
-      async ({ data }) => {
-        const patientData = data.updateOnePatient;
-        PatientModel.fromJson(patientData);
-        this.isLoading = false;
-        this.loadingMessage = '';
-        this.message.create('success', `Patient has successfully been updated`);
-      },
-      (error) => {
-        this.hasErrors = true;
-        error.graphQLErrors.map((_error: any) => {
-          this.errors.push(_error.message);
-        });
-        this.isLoading = false;
-        this.loadingMessage = '';
-      }
-    );
+    this.patientsService
+      .updatePatient(patient)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+        })
+      )
+      .subscribe(
+        async ({ data }) => {
+          const patientData = data.updateOnePatient;
+          PatientModel.fromJson(patientData);
+          this.message.create('success', `Patient has successfully been updated`);
+        },
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: `Unable to update patient "${patient.firstName} ${patient.lastName}"`,
+          })
+      );
   }
 
   submitForm(patientData: any): void {

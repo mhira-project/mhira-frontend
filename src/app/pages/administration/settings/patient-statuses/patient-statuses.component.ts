@@ -10,6 +10,8 @@ import { PatientStatusModel } from '@app/pages/administration/settings/@models/p
 import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
 import { PermissionKey } from '../../../../@shared/@types/permission';
+import { ErrorHandlerService } from '../../../../@shared/services/error-handler.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-patient-statuses',
@@ -46,6 +48,7 @@ export class PatientStatusesComponent implements OnInit {
     private patientStatusesService: PatientStatusesService,
     private modalService: NzModalService,
     private message: NzMessageService,
+    private errorService: ErrorHandlerService,
     public perms: AppPermissionsService
   ) {}
 
@@ -57,21 +60,21 @@ export class PatientStatusesComponent implements OnInit {
     this.isLoading = true;
     this.patientStatuses = [];
     this.patientStatusesTable.rows = [];
-    this.patientStatusesService.patientStatuses(params).subscribe(
-      async ({ data }: any) => {
-        data.patientStatuses.edges.map((patientStatus: any) => {
-          this.patientStatuses.push(PatientStatusModel.fromJson(patientStatus.node));
-        });
-        this.patientStatusesTable.rows = this.patientStatuses;
-        this.paging.after = data.patientStatuses.pageInfo.endCursor;
-        this.paging.before = data.patientStatuses.pageInfo.startCursor;
-        this.pageInfo = data.patientStatuses.pageInfo;
-        this.isLoading = false;
-      },
-      (error: any) => {
-        this.isLoading = false;
-      }
-    );
+    this.patientStatusesService
+      .patientStatuses(params)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }: any) => {
+          data.patientStatuses.edges.map((patientStatus: any) => {
+            this.patientStatuses.push(PatientStatusModel.fromJson(patientStatus.node));
+          });
+          this.patientStatusesTable.rows = this.patientStatuses;
+          this.paging.after = data.patientStatuses.pageInfo.endCursor;
+          this.paging.before = data.patientStatuses.pageInfo.startCursor;
+          this.pageInfo = data.patientStatuses.pageInfo;
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to get patient statuses' })
+      );
   }
 
   navigatePages(direction: string, pageSize: number = 10) {
@@ -138,57 +141,58 @@ export class PatientStatusesComponent implements OnInit {
     this.hasErrors = false;
     this.errors = [];
     this.loadingMessage = `Creating patientStatus ${patientStatus.name}`;
-    this.patientStatusesService.createPatientStatus(patientStatus).subscribe(
-      async ({ data }) => {
-        this.patientStatuses.unshift(PatientStatusModel.fromJson(data.createOnePatientStatus));
-        this.patientStatusesTable.rows = this.patientStatuses;
-        this.isLoading = false;
-        this.loadingMessage = '';
-        this.toggleCreatePanel();
-        this.message.create('success', `PatientStatus has successfully been created`);
-      },
-      (error) => {
-        this.hasErrors = true;
-        // this.errors = error.graphQLErrors.map(x => x.message);
-        this.isLoading = false;
-        this.loadingMessage = '';
-      }
-    );
+    this.patientStatusesService
+      .createPatientStatus(patientStatus)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+        })
+      )
+      .subscribe(
+        ({ data }) => {
+          this.patientStatuses.unshift(PatientStatusModel.fromJson(data.createOnePatientStatus));
+          this.patientStatusesTable.rows = this.patientStatuses;
+          this.toggleCreatePanel();
+          this.message.create('success', `PatientStatus has successfully been created`);
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to create patient status' })
+      );
   }
 
   updatePatientStatus(patientStatus: PatientStatus) {
     this.isLoading = true;
 
-    this.patientStatusesService.updatePatientStatus(patientStatus).subscribe(
-      ({ data }) => {
-        const newPatientStatus = data.updateOnePatientStatus;
-        this.patientStatuses[this.selectedIndex] = PatientStatusModel.fromJson(newPatientStatus);
-        this.isLoading = false;
-        this.toggleCreatePanel();
-        this.message.success('PatientStatus has been successfully edited', {
-          nzDuration: 3000,
-        });
-      },
-      (error) => {
-        // this.errors = error.graphQLErrors.map(x => x.message);
-        this.isLoading = false;
-      }
-    );
+    this.patientStatusesService
+      .updatePatientStatus(patientStatus)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }) => {
+          const newPatientStatus = data.updateOnePatientStatus;
+          this.patientStatuses[this.selectedIndex] = PatientStatusModel.fromJson(newPatientStatus);
+          this.toggleCreatePanel();
+          this.message.success('Patient status has been successfully edited', {
+            nzDuration: 3000,
+          });
+        },
+        (error) =>
+          this.errorService.handleError(error, { prefix: `Unable to update patient status "${patientStatus.name}"` })
+      );
   }
 
   deletePatientStatus(patientStatus: PatientStatus) {
     this.modalLoading = true;
-    this.patientStatusesService.deletePatientStatus(patientStatus).subscribe(
-      async ({ data }: any) => {
-        this.patientStatuses.splice(this.selectedIndex, 1);
-        this.modalLoading = false;
-        this.message.create('success', `patientStatus has been successfully deleted`);
-      },
-      (error: any) => {
-        this.modalLoading = false;
-        this.message.create('error', `could not remove patientStatus for ${patientStatus.name}`);
-      }
-    );
+    this.patientStatusesService
+      .deletePatientStatus(patientStatus)
+      .pipe(finalize(() => (this.modalLoading = false)))
+      .subscribe(
+        () => {
+          this.patientStatuses.splice(this.selectedIndex, 1);
+          this.message.create('success', `patientStatus has been successfully deleted`);
+        },
+        (error: any) =>
+          this.errorService.handleError(error, { prefix: `Unable to remove patient status "${patientStatus.name}"` })
+      );
   }
 
   submitForm(patientStatus: PatientStatus) {

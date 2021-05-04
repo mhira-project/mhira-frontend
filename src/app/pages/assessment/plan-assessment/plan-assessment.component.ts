@@ -10,6 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FullAssessment } from '../@types/assessment';
 import { PermissionKey } from '../../../@shared/@types/permission';
 import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
+import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -31,6 +32,7 @@ export class PlanAssessmentComponent implements OnInit {
     private formBuilder: FormBuilder,
     private assessmentService: AssessmentService,
     private nzMessage: NzMessageService,
+    private errorService: ErrorHandlerService,
     private activatedRoute: ActivatedRoute,
     public perms: AppPermissionsService
   ) {}
@@ -66,10 +68,7 @@ export class PlanAssessmentComponent implements OnInit {
         this.nzMessage.success('Assessment created', { nzDuration: 3000 });
         this.editMode = false;
       },
-      (err) => {
-        this.nzMessage.error(`Unable to create assessment - ${err.message}`, { nzDuration: 5000 });
-        console.error(err);
-      }
+      (err) => this.errorService.handleError(err, { prefix: 'Unable to create assessment ' })
     );
   }
 
@@ -97,20 +96,24 @@ export class PlanAssessmentComponent implements OnInit {
       return;
     }
 
-    this.assessmentService.getFullAssessment(assessmentId).subscribe((assessment) => {
-      this.assessmentForm.setValue({
-        name: assessment.name,
-        informant: assessment.informant,
-        patientId: assessment.patientId,
-        clinicianId: assessment.clinicianId,
-        questionnaires: assessment.questionnaireAssessment?.questionnaires,
-      });
+    this.assessmentService.getFullAssessment(assessmentId).subscribe(
+      (assessment) => {
+        this.assessmentForm.setValue({
+          name: assessment.name,
+          informant: assessment.informant,
+          patientId: assessment.patientId,
+          clinicianId: assessment.clinicianId,
+          questionnaires: assessment.questionnaireAssessment?.questionnaires,
+        });
 
-      this.selectedQuestionnaires = assessment.questionnaireAssessment?.questionnaires;
-      this.selectedPatient = assessment.patient;
-      this.selectedClinician = assessment.clinician;
-      this.fullAssessment = assessment;
-      this.editMode = false;
-    });
+        this.selectedQuestionnaires = assessment.questionnaireAssessment?.questionnaires;
+        this.selectedPatient = assessment.patient;
+        this.selectedClinician = assessment.clinician;
+        this.fullAssessment = assessment;
+        this.editMode = false;
+      },
+      (error) =>
+        this.errorService.handleError(error, { prefix: `Unable to load the assessment with ID "${assessmentId}"` })
+    );
   }
 }

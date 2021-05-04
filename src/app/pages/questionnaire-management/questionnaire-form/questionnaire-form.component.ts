@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from '@env/environment';
 import { PermissionKey } from '../../../@shared/@types/permission';
 import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
+import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -34,6 +35,7 @@ export class QuestionnaireFormComponent {
   constructor(
     private qmService: QuestionnaireManagementService,
     private messageService: NzMessageService,
+    private errorService: ErrorHandlerService,
     private activatedRoute: ActivatedRoute,
     public perms: AppPermissionsService
   ) {
@@ -63,9 +65,9 @@ export class QuestionnaireFormComponent {
           { nzDuration: 3000 }
         );
       },
-      () =>
-        this.messageService.error(this.isExisting ? 'Questionnaire update failed' : 'Questionnaire creation failed', {
-          nzDuration: 3000,
+      (error) =>
+        this.errorService.handleError(error, {
+          prefix: this.isExisting ? 'Unable to update questionnaire' : 'Unable to create questionnaire',
         })
     );
   }

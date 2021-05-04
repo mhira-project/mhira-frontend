@@ -32,9 +32,6 @@
   [nzTitle]="panelTitle"
   (nzOnClose)="closeCreatePanel()"
 >
-  <div class="errors" *ngIf="hasErrors">
-    <nz-alert *ngFor="let error of errors" nzType="error" [nzDescription]="error" nzShowIcon></nz-alert>
-  </div>
   <app-form
     class="mt-3"
     [form]="roleForms"

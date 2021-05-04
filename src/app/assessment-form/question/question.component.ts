@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Question, QuestionType } from '@app/assessment-form/@types/question';
 import { Answer } from '../@types/answer';
 import { AssessmentFormService } from '../assessment-form.service';
-import { NzMessageService } from 'ng-zorro-antd';
+import { ErrorHandlerService } from '../../@shared/services/error-handler.service';
 
 @Component({
   selector: 'app-question',
@@ -27,7 +27,7 @@ export class QuestionComponent {
 
   private _question: Question;
 
-  constructor(private assessmentFormService: AssessmentFormService, private messageService: NzMessageService) {
+  constructor(private assessmentFormService: AssessmentFormService, private errorService: ErrorHandlerService) {
     // get date format and convert to ng-zorro datepicker readable type
     this.dateFormat = JSON.parse(localStorage.getItem('settings'))?.dateFormat;
     this.dateFormat = this.dateFormat.replace(/[D]/g, 'd');
@@ -47,7 +47,7 @@ export class QuestionComponent {
       })
       .subscribe(
         (answers) => (this.answer = answers.find((a) => a.question === this.question._id)),
-        (err) => this.messageService.error('Unable to answer question - ' + err)
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to answer question' })
       );
   }
 

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd';
 import { Sorting } from '@shared/@types/sorting';
 import { finalize } from 'rxjs/operators';
 import { SelectModalComponent } from '../../../@shared/components/select-modal/select-modal.component';
@@ -18,6 +18,7 @@ import { Department } from '../@types/department';
 import { DepartmentsColumns } from '../@tables/departments.table';
 import { DepartmentsService } from '../@services/departments.service';
 import { FormattedPatient } from '../@types/formatted-patient';
+import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 
 enum ActionKey {
   REMOVE_DEPARTMENT,
@@ -62,7 +63,7 @@ export class DepartmentsComponent implements OnInit {
   constructor(
     private departmentsService: DepartmentsService,
     private modalService: NzModalService,
-    private messageService: NzMessageService,
+    private errorService: ErrorHandlerService,
     public perms: AppPermissionsService
   ) {}
 
@@ -185,7 +186,7 @@ export class DepartmentsComponent implements OnInit {
           departments: this.data,
         });
       },
-      () => this.messageService.error('An error occurred could not update patient', { nzDuration: 3000 })
+      (error) => this.errorService.handleError(error, { prefix: 'Unable to update department on patient' })
     );
   }
 

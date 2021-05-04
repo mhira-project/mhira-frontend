@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AssessmentService } from '@app/pages/assessment/@services/assessment.service';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
@@ -20,6 +20,7 @@ import { Convert } from '../../../@shared/classes/convert';
 import { PageInfo } from '../../../@shared/@types/paging';
 import { finalize } from 'rxjs/operators';
 import { Filter } from '../../../@shared/@types/filter';
+import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -52,7 +53,7 @@ export class AssessmentsListComponent {
     private assessmentService: AssessmentService,
     private router: Router,
     private modalService: NzModalService,
-    private messageService: NzMessageService,
+    private errorService: ErrorHandlerService,
     public perms: AppPermissionsService
   ) {
     this.getAssessments();
@@ -113,10 +114,13 @@ export class AssessmentsListComponent {
     this.assessmentService
       .getAssessments(this.assessmentRequestOptions)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(({ edges, pageInfo }) => {
-        this.data = edges.map((e: any) => Convert.toFormattedAssessment(e.node));
-        this.pageInfo = pageInfo;
-      });
+      .subscribe(
+        ({ edges, pageInfo }) => {
+          this.data = edges.map((e: any) => Convert.toFormattedAssessment(e.node));
+          this.pageInfo = pageInfo;
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to load assessments' })
+      );
   }
 
   private async deleteAssessment(assessment: FormattedAssessment, archive: boolean = true): Promise<void> {
@@ -141,7 +145,7 @@ export class AssessmentsListComponent {
         (archived) => {
           if (!archived) this.data.splice(this.data.indexOf(assessment), 1);
         },
-        () => this.messageService.error('An error occurred could not delete assessment', { nzDuration: 3000 })
+        (error) => this.errorService.handleError(error, { prefix: `Unable to delete assessment "${assessment.name}"` })
       );
   }
 

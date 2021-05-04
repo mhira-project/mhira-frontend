@@ -5,6 +5,7 @@ import { Question } from '../@types/question';
 import { Answer } from '../@types/answer';
 import { AssessmentService } from '../../pages/assessment/@services/assessment.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import { ErrorHandlerService } from '../../@shared/services/error-handler.service';
 
 @Component({
   selector: 'app-assessment-overview',
@@ -37,7 +38,8 @@ export class AssessmentOverviewComponent implements OnInit {
     public assessmentFormService: AssessmentFormService,
     private cdr: ChangeDetectorRef,
     private assessmentService: AssessmentService,
-    private messageService: NzMessageService
+    private messageService: NzMessageService,
+    private errorService: ErrorHandlerService
   ) {}
 
   public ngOnInit(): void {
@@ -86,7 +88,7 @@ export class AssessmentOverviewComponent implements OnInit {
         this.messageService.success('Thank you for completing this assessment! You can close this page now.', {
           nzDuration: 5000,
         }),
-      (err) => this.messageService.error(`Unable to delete assessment with ID "${id}" - ${err}`)
+      (err) => this.errorService.handleError(err, { prefix: `Unable to delete assessment with ID "${id}"` })
     );
   }
 }

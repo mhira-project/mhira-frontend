@@ -1,7 +1,7 @@
 import { finalize } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { FormattedUser } from '../@types/formatted-user';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { environment } from '@env/environment';
@@ -23,6 +23,7 @@ import { DepartmentsService } from '../../administration/@services/departments.s
 import { Department } from '@app/pages/administration/@types/department';
 import { RolesService } from '../../administration/@services/roles.service';
 import { Role } from '@app/pages/administration/@types/role';
+import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -59,7 +60,7 @@ export class UsersListComponent {
     private router: Router,
     public perms: AppPermissionsService,
     private modalService: NzModalService,
-    private messageService: NzMessageService,
+    private errorService: ErrorHandlerService,
     private departmentsService: DepartmentsService,
     private rolesService: RolesService
   ) {
@@ -114,16 +115,19 @@ export class UsersListComponent {
     this.usersService
       .getUsers(this.userRequestOptions)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(({ data }) => {
-        this.data = data.users.edges.map((user: any) => UserModel.fromJson(user.node));
-        this.pageInfo = data.users.pageInfo;
-      });
+      .subscribe(
+        ({ data }) => {
+          this.data = data.users.edges.map((user: any) => UserModel.fromJson(user.node));
+          this.pageInfo = data.users.pageInfo;
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to load users' })
+      );
   }
 
   private async deleteUser(user: FormattedUser): Promise<void> {
     // check if you're allowed to delete the user
     if (!this.perms.hasAccessLevelToUser(user)) {
-      this.messageService.error(`You don't have sufficient permission to delete this user`, { nzDuration: 3000 });
+      this.errorService.handleError(new Error(`You don't have sufficient permission to delete this user`));
       return;
     }
 
@@ -144,7 +148,7 @@ export class UsersListComponent {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () => this.data.splice(this.data.indexOf(user), 1),
-        () => this.messageService.error('An error occurred could not delete patient', { nzDuration: 3000 })
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to delete patient' })
       );
   }
 
