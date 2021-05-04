@@ -15,15 +15,20 @@ export class ErrorHandlerService {
   constructor(private messageService: NzMessageService) {}
 
   public handleError(error: AnyError, options: ErrorHandlerOptions = {}): void {
-    // show error to user
     if (isApolloError(error)) {
       for (const e of error.graphQLErrors) {
-        const msg = options.forcePrefix ? `${options.prefix} - ${e.message}` : e.message;
-        this.messageService.error(msg, { nzDuration: options.duration ?? 5000 });
+        const msg = options.prefix && options.forcePrefix ? `${options.prefix} - ${e.message}` : e.message;
+        this.dispatchError(msg, e, options, 5000);
       }
     } else {
-      this.messageService.error(`${options.prefix} - ${error}`, { nzDuration: options.duration ?? 3000 });
+      const msg = options.prefix ? `${options.prefix} - ${error}` : error.toString();
+      this.dispatchError(msg, error, options);
     }
+  }
+
+  private dispatchError(msg: string, error: AnyError, options: ErrorHandlerOptions, duration: number = 3000): void {
+    // show error to user
+    this.messageService.error(msg, { nzDuration: options.duration ?? duration });
 
     // log error to console
     console.error(error);
