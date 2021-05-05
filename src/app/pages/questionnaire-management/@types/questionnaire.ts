@@ -46,6 +46,7 @@ export interface QuestionnaireVersion {
     abbreviation: string;
   };
   questionGroups: Array<{
+    label: string;
     questions: Question[];
   }>;
 }

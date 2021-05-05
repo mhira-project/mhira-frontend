@@ -1,15 +1,12 @@
 <article *ngIf="questionnaire">
-  <div class="head-row">
+  <section class="head-row">
     <h2>{{ questionnaire.name }}</h2>
     <a nz-button nzType="primary" routerLink="../../overview" queryParamsHandling="merge">Overview</a>
-  </div>
+  </section>
 
-  <section *ngFor="let group of questionnaire.questionGroups; let index = index">
-    <ng-container *ngIf="currentGroupIdx === index">
-      <ng-container *ngFor="let question of group.questions">
-        <app-question class="question" [question]="question"></app-question>
-      </ng-container>
-    </ng-container>
+  <section *ngIf="questionnaire.questionGroups[currentGroupIdx] as group">
+    <h3 class="group-title" *ngIf="group.label">{{ group.label }}</h3>
+    <app-question *ngFor="let question of group.questions" class="question" [question]="question"></app-question>
   </section>
 
   <section class="controls">
