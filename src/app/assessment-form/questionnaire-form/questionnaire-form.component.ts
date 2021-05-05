@@ -16,10 +16,19 @@ import { SkipLogic } from '../skip-logic';
   styleUrls: ['./questionnaire-form.component.scss'],
 })
 export class QuestionnaireFormComponent {
+  private _currentGroupIdx = 0;
+
   public questionnaire: QuestionnaireVersion;
   public answers: Answer[];
-  public currentGroupIdx = 0;
   public skipLogic: Array<{ questionId: string; visible: boolean }> = [];
+
+  public set currentGroupIdx(idx: number) {
+    this._currentGroupIdx = idx;
+    this.readSkipLogic();
+  }
+  public get currentGroupIdx() {
+    return this._currentGroupIdx;
+  }
 
   constructor(private activtedRoute: ActivatedRoute, private assessmentFormService: AssessmentFormService) {
     combineLatest([
@@ -34,14 +43,7 @@ export class QuestionnaireFormComponent {
         this.questionnaire = assessment?.questionnaireAssessment?.questionnaires?.[idx];
         this.answers = assessment?.questionnaireAssessment?.answers;
         this.assessmentFormService.setQuestionnaire(this.questionnaire);
-
-        this.readSkipLogic(
-          this.questionnaire.questionGroups[this.currentGroupIdx].questions,
-          assessment.questionnaireAssessment.questionnaires
-            .map((q) => q.questionGroups.map((g) => g.questions).flat())
-            .flat(),
-          this.answers
-        );
+        this.readSkipLogic();
       });
   }
 
@@ -50,9 +52,15 @@ export class QuestionnaireFormComponent {
     return this.skipLogic.find((logic) => logic.questionId === question._id)?.visible ?? true;
   }
 
-  private readSkipLogic(currentQuestions: Question[], questions: Question[], answers: Answer[]) {
+  private readSkipLogic() {
+    const assessment = this.assessmentFormService.assessmentSnapshot;
+    const currentQuestions = this.questionnaire.questionGroups[this.currentGroupIdx].questions;
+    const questions = assessment.questionnaireAssessment.questionnaires
+      .map((q) => q.questionGroups.map((g) => g.questions).flat())
+      .flat();
+
     this.skipLogic = currentQuestions
       .filter((q) => q.relevant)
-      .map((q) => ({ questionId: q._id, visible: SkipLogic.create(q, questions, answers) }));
+      .map((q) => ({ questionId: q._id, visible: SkipLogic.create(q, questions, this.answers) }));
   }
 }

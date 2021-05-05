@@ -36,6 +36,12 @@ export class SkipLogic {
       answer: answers.find((a) => a.question === q._id),
     }));
 
+    if (!relevantQuestions.every((rq) => rq.answer)) {
+      // one of the questions required for the skip logic is not answered
+      console.log('required answer not available');
+      return false;
+    }
+
     console.log('relevant', relevantQuestions);
 
     let solvedParts = logicParts.map((part) => {
@@ -90,6 +96,14 @@ export class SkipLogic {
           SkipLogic.extractValue(p1, relevantQuestions),
           SkipLogic.extractValue(p2, relevantQuestions)
         );
+
+      case 'selected':
+        const inner = condition.condition.match(/^selected\(([^)]+)\)$/)?.[1];
+        const [q, v] = inner.split(',').map((part) => part.trim());
+        console.log('selected q/v', q, v);
+        const qValues: any[] = SkipLogic.extractValue(q, relevantQuestions);
+        console.log('qvalues', qValues);
+        return qValues.includes(SkipLogic.extractValue(v, relevantQuestions));
     }
   }
 
