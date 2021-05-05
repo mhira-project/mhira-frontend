@@ -6,7 +6,9 @@
 
   <section *ngIf="questionnaire.questionGroups[currentGroupIdx] as group">
     <h3 class="group-title" *ngIf="group.label">{{ group.label }}</h3>
-    <app-question *ngFor="let question of group.questions" class="question" [question]="question"></app-question>
+    <ng-container *ngFor="let question of group.questions">
+      <app-question *ngIf="isVisible(question)" class="question" [question]="question"></app-question>
+    </ng-container>
   </section>
 
   <section class="controls">

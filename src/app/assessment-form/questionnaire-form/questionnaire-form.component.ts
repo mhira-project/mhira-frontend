@@ -7,7 +7,6 @@ import { combineLatest } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Answer } from '../@types/answer';
 import { Question } from '../@types/question';
-import { questions } from '../../questionnaire/do-assessment/data';
 import { SkipLogic } from '../skip-logic';
 
 @UntilDestroy()
@@ -20,6 +19,7 @@ export class QuestionnaireFormComponent {
   public questionnaire: QuestionnaireVersion;
   public answers: Answer[];
   public currentGroupIdx = 0;
+  public skipLogic: Array<{ questionId: string; visible: boolean }> = [];
 
   constructor(private activtedRoute: ActivatedRoute, private assessmentFormService: AssessmentFormService) {
     combineLatest([
@@ -45,13 +45,14 @@ export class QuestionnaireFormComponent {
       });
   }
 
-  private readSkipLogic(currentQuestions: Question[], questions: Question[], answers: Answer[]) {
-    console.log('cur', currentQuestions);
-    console.log('all', questions);
-    console.log('ans', answers);
+  public isVisible(question: Question) {
+    if (!question.relevant) return true;
+    return this.skipLogic.find((logic) => logic.questionId === question._id)?.visible ?? true;
+  }
 
-    for (const question of currentQuestions.filter((q) => q.relevant)) {
-      SkipLogic.create(question, questions, answers);
-    }
+  private readSkipLogic(currentQuestions: Question[], questions: Question[], answers: Answer[]) {
+    this.skipLogic = currentQuestions
+      .filter((q) => q.relevant)
+      .map((q) => ({ questionId: q._id, visible: SkipLogic.create(q, questions, answers) }));
   }
 }

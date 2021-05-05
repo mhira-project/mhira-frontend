@@ -1,7 +1,7 @@
 import { Answer } from './@types/answer';
 import { Question, QuestionType } from './@types/question';
 
-const CONDITIONALS = ['=', 'OR', 'AND', 'selected'] as const;
+const CONDITIONALS = ['=', 'or', 'and', 'selected'] as const;
 
 type ElementType<T extends ReadonlyArray<unknown>> = T extends ReadonlyArray<infer ElementType> ? ElementType : never;
 
@@ -24,9 +24,12 @@ interface ConditionInfo {
 
 export class SkipLogic {
   public static create(question: Question, questions: Question[], answers: Answer[]) {
-    let logic = question.relevant;
-
+    const logic = question.relevant;
     console.log('create skiplogic for', question.name, logic);
+
+    const [logicParts, conditionalParts] = SkipLogic.prepareLogicParts(logic);
+    console.log('logicparts', logicParts);
+    console.log('condparts', conditionalParts);
 
     const relevantQuestions: AnsweredQuestion[] = SkipLogic.extractQuestions(logic, questions).map((q) => ({
       question: q,
@@ -35,9 +38,47 @@ export class SkipLogic {
 
     console.log('relevant', relevantQuestions);
 
-    const firstCondition = SkipLogic.extractFirstCondition(logic);
-    const state = SkipLogic.solveCondition(firstCondition, relevantQuestions);
-    console.log('first solve', state, firstCondition);
+    let solvedParts = logicParts.map((part) => {
+      const condition = SkipLogic.extractFirstCondition(part);
+      return SkipLogic.solveCondition(condition, relevantQuestions);
+    });
+
+    console.log('solve', solvedParts);
+
+    while (solvedParts.length > 1) {
+      solvedParts.splice(
+        0,
+        2,
+        conditionalParts[0] === 'or' ? solvedParts[0] || solvedParts[1] : solvedParts[0] && solvedParts[1]
+      );
+    }
+
+    console.log('final solve', solvedParts);
+
+    return solvedParts[0];
+  }
+
+  private static prepareLogicParts(logic: string): [string[], Array<Extract<Conditional, 'or' | 'and'>>] {
+    const logicParts = [];
+    const conditionalParts: Array<Extract<Conditional, 'or' | 'and'>> = [];
+
+    while (logic.toLowerCase().includes('or') || logic.toLowerCase().includes('and')) {
+      const orIdx = logic.toLowerCase().indexOf('or');
+      const andIdx = logic.toLowerCase().indexOf('and');
+
+      if (orIdx >= 0) {
+        logicParts.push(logic.substr(0, orIdx).trim());
+        logic = logic.substr(orIdx + 2).trim();
+        conditionalParts.push('or');
+      } else if (andIdx) {
+        logicParts.push(logic.substr(0, andIdx).trim());
+        logic = logic.substr(andIdx + 3).trim();
+        conditionalParts.push('and');
+      }
+    }
+
+    logicParts.push(logic);
+    return [logicParts, conditionalParts];
   }
 
   private static solveCondition(condition: ConditionInfo, relevantQuestions: AnsweredQuestion[]): boolean {
@@ -54,6 +95,7 @@ export class SkipLogic {
 
   private static compareValues(p1: any, p2: any): boolean {
     console.log('found values', p1, p2);
+    // TODO: improve this
     return p1 == p2;
   }
 
@@ -99,6 +141,7 @@ export class SkipLogic {
   }
 
   private static extractFirstCondition(logic: string): ConditionInfo | null {
+    console.log('extract condition for', logic);
     const firstConditional = SkipLogic.findFirstConditional(logic);
 
     if (!firstConditional) {
@@ -110,11 +153,12 @@ export class SkipLogic {
     const nextConditionalIdx = this.findFirstConditional(
       logic.substr(firstConditional.index + firstConditional.conditional.length)
     );
-    nextConditionalIdx.index += firstConditional.index + firstConditional.conditional.length;
 
     console.log('next', nextConditionalIdx);
 
-    const condition = nextConditionalIdx ? logic.substr(0, nextConditionalIdx.index) : logic;
+    const condition = nextConditionalIdx
+      ? logic.substr(0, nextConditionalIdx.index + firstConditional.index + firstConditional.conditional.length)
+      : logic;
 
     console.log('condition', condition);
 
