@@ -6,6 +6,9 @@ import { map, filter } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Answer } from '../@types/answer';
+import { Question } from '../@types/question';
+import { questions } from '../../questionnaire/do-assessment/data';
+import { SkipLogic } from '../skip-logic';
 
 @UntilDestroy()
 @Component({
@@ -31,6 +34,24 @@ export class QuestionnaireFormComponent {
         this.questionnaire = assessment?.questionnaireAssessment?.questionnaires?.[idx];
         this.answers = assessment?.questionnaireAssessment?.answers;
         this.assessmentFormService.setQuestionnaire(this.questionnaire);
+
+        this.readSkipLogic(
+          this.questionnaire.questionGroups[this.currentGroupIdx].questions,
+          assessment.questionnaireAssessment.questionnaires
+            .map((q) => q.questionGroups.map((g) => g.questions).flat())
+            .flat(),
+          this.answers
+        );
       });
+  }
+
+  private readSkipLogic(currentQuestions: Question[], questions: Question[], answers: Answer[]) {
+    console.log('cur', currentQuestions);
+    console.log('all', questions);
+    console.log('ans', answers);
+
+    for (const question of currentQuestions.filter((q) => q.relevant)) {
+      SkipLogic.create(question, questions, answers);
+    }
   }
 }
