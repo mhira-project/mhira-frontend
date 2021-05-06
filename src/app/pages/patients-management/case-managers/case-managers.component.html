@@ -50,14 +50,11 @@
   (nzOnOk)="toggleAssignModal()"
   [nzOkLoading]="isLoading"
 >
-  <nz-input-group class="rounded-input" [nzSuffix]="suffixTemplate">
-    <input
-      type="text"
-      (keyup)="searchKeyword.next($event)"
-      nz-input
-      placeholder="search {{ caseManagerNiceName }} name"
-    />
-  </nz-input-group>
+  <app-master-data-search
+    style="width: 100%"
+    placeholder="Search {{ caseManagerNiceName }} name"
+    (search)="searchCaseManagers($event)"
+  ></app-master-data-search>
   <ng-template #suffixTemplate>
     <i nz-icon nzType="search" nzTheme="outline"></i>
   </ng-template>

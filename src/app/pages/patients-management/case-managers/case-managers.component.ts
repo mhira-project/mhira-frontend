@@ -20,6 +20,8 @@ import { DepartmentsService } from '../@services/departments.service';
 import { Filter } from '@app/@shared/@types/filter';
 import { Sorting } from '@app/@shared/@types/sorting';
 import { DEFAULT_PAGE_SIZE } from '@app/@shared/@modules/master-data/@types/list';
+import { UserModel } from '@app/pages/user-management/@models/user.model';
+import { FormattedUser } from '@app/pages/user-management/@types/formatted-user';
 
 @Component({
   selector: 'app-case-managers',
@@ -55,9 +57,21 @@ export class CaseManagersComponent implements OnInit {
   manager: CaseManager = null;
   public departmentRequestOptions: {
     paging: Paging;
-    filter: Filter;
+    filter: CaseManagerFilter;
     sorting: Sorting[];
   } = {
+    paging: { first: DEFAULT_PAGE_SIZE },
+    filter: {},
+    sorting: [],
+  };
+
+  public caseManagersRequestOptions: { paging: Paging; filter: CaseManagerFilter; sorting: Sorting[] } = {
+    paging: { first: DEFAULT_PAGE_SIZE },
+    filter: {},
+    sorting: [],
+  };
+
+  public userRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
     filter: {},
     sorting: [],
@@ -75,6 +89,7 @@ export class CaseManagersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.caseManagersRequestOptions.filter = this.filter;
     this.getCaseManagers();
     this.drawerTitle = this.managerType === 'caseManager' ? 'Filter Case Managers' : 'Filter Informants';
     this.caseManagerNiceName = this.managerType === 'caseManager' ? 'Case Manager' : 'Informant';
@@ -118,26 +133,19 @@ export class CaseManagersComponent implements OnInit {
     return this.caseManagersService[property](params);
   }
 
-  public getCaseManagers() {
+  private getCaseManagers(): void {
     this.isLoading = true;
-    this.caseManagers = [];
-    this.caseManagersTable.rows = [];
-    const query = this.setCaseManagerServicePropertyName('get');
-    this.getCaseManagerServiceProperty(query, this.filter).subscribe(
-      async ({ data }: any) => {
-        data[query].edges.map((caseManager: any) => {
-          this.caseManagers.push(CaseManagerModel.fromJson(caseManager.node));
-        });
+    this.caseManagersService
+      .getPatientCaseManagers(this.caseManagersRequestOptions)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(({ data }) => {
+        console.log(data);
+        this.caseManagers = data.getPatientCaseManagers.edges.map((caseManager: any) =>
+          CaseManagerModel.fromJson(caseManager.node)
+        );
+        this.pageInfo = data.getPatientCaseManagers.pageInfo;
         this.caseManagersTable.rows = this.caseManagers;
-        this.paging.after = data[query].pageInfo.endCursor;
-        this.paging.before = data[query].pageInfo.startCursor;
-        this.pageInfo = data[query].pageInfo;
-        this.isLoading = false;
-      },
-      () => {
-        this.isLoading = false;
-      }
-    );
+      });
   }
 
   public async updatePatientDepartment(manager: CaseManager): Promise<void> {
@@ -344,27 +352,47 @@ export class CaseManagersComponent implements OnInit {
     );
   }
 
-  private searchCaseManagers(keyword: string) {
-    this.users = [];
-    const options: { label: string; value: number }[] = [];
-    this.usersService.getUsers({ filter: { firstName: { iLike: keyword } } }).subscribe(
-      async ({ data }) => {
-        const users: CaseManager[] = [];
-        data.users.edges.map((user: any) => {
-          users.push(CaseManagerModel.fromJson(user.node));
-          const option = { value: user.node.id, label: `${user.node.firstName} ${user.node.lastName}` };
-          if (options.indexOf(option) === -1) {
-            options.push(option);
-          }
-        });
-        this.users = users;
-        this.caseManagersFilterForm.groups[0].fields[2].options = options;
-      },
-      () => {
-        this.isLoading = false;
-      }
-    );
+  public searchCaseManagers(searchString: string): void {
+    this.userRequestOptions.filter = { or: this.createSearchFilter(searchString) };
+    this.getSearchedCaseManagers();
   }
+
+  private createSearchFilter(searchString: string): Array<{ [K in keyof FormattedUser]: {} }> {
+    if (!searchString) return [];
+    return [
+      { firstName: { iLike: `%${searchString}%` } },
+      { middleName: { iLike: `%${searchString}%` } },
+      { lastName: { iLike: `%${searchString}%` } },
+      { workID: { iLike: `%${searchString}%` } },
+      { phone: { iLike: `%${searchString}%` } },
+      { username: { iLike: `%${searchString}%` } },
+      {
+        roles: {
+          or: [{ name: { iLike: `%${searchString}%` } }],
+        },
+      },
+      {
+        departments: {
+          or: [{ name: { iLike: `%${searchString}%` } }],
+        },
+      },
+    ];
+  }
+
+  private getSearchedCaseManagers(): void {
+    this.isLoading = true;
+    this.usersService
+      .getUsers(this.userRequestOptions)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(({ data }) => {
+        console.log(data);
+        this.users = data.users.edges.map((caseManager: any) => CaseManagerModel.fromJson(caseManager.node));
+        this.caseManagersFilterForm.groups[0].fields[2].options = this.users.map((user) => {
+          return { value: user.id, label: `${user.firstName} ${user.lastName}` };
+        });
+      });
+  }
+
   private checkPationHasDepartment(department: Department): boolean {
     return this.patient?.departments.some((r) => r.id === department.id);
   }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-master-data-search',
@@ -6,6 +6,9 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./master-data-search.component.scss'],
 })
 export class MasterDataSearchComponent {
+  @Input()
+  public placeholder: String;
+
   @Output()
   public search = new EventEmitter<Event>();
 }
