@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class MasterDataSearchComponent {
   @Input()
-  public placeholder: String;
+  public placeholder: string;
 
   @Output()
   public search = new EventEmitter<Event>();
