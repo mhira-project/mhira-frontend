@@ -133,21 +133,6 @@ export class CaseManagersComponent implements OnInit {
     return this.caseManagersService[property](params);
   }
 
-  private getCaseManagers(): void {
-    this.isLoading = true;
-    this.caseManagersService
-      .getPatientCaseManagers(this.caseManagersRequestOptions)
-      .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe(({ data }) => {
-        console.log(data);
-        this.caseManagers = data.getPatientCaseManagers.edges.map((caseManager: any) =>
-          CaseManagerModel.fromJson(caseManager.node)
-        );
-        this.pageInfo = data.getPatientCaseManagers.pageInfo;
-        this.caseManagersTable.rows = this.caseManagers;
-      });
-  }
-
   public async updatePatientDepartment(manager: CaseManager): Promise<void> {
     const modal = this.modalService.create<SelectModalComponent<Department>>({
       nzTitle: `Add ${this.patient.firstName} ${this.patient.lastName} to department`,
@@ -248,6 +233,47 @@ export class CaseManagersComponent implements OnInit {
   public filterCaseManagers(filter: any) {
     this.filter = filter;
     this.getCaseManagers();
+  }
+  public searchCaseManagers(searchString: string): void {
+    this.userRequestOptions.filter = { or: this.createSearchFilter(searchString) };
+    this.getSearchedCaseManagers();
+  }
+
+  private createSearchFilter(searchString: string): Array<{ [K in keyof FormattedUser]: {} }> {
+    if (!searchString) return [];
+    return [
+      { firstName: { iLike: `%${searchString}%` } },
+      { middleName: { iLike: `%${searchString}%` } },
+      { lastName: { iLike: `%${searchString}%` } },
+      { workID: { iLike: `%${searchString}%` } },
+      { phone: { iLike: `%${searchString}%` } },
+      { username: { iLike: `%${searchString}%` } },
+      {
+        roles: {
+          or: [{ name: { iLike: `%${searchString}%` } }],
+        },
+      },
+      {
+        departments: {
+          or: [{ name: { iLike: `%${searchString}%` } }],
+        },
+      },
+    ];
+  }
+
+  private getCaseManagers(): void {
+    this.isLoading = true;
+    this.caseManagersService
+      .getPatientCaseManagers(this.caseManagersRequestOptions)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(({ data }) => {
+        console.log(data);
+        this.caseManagers = data.getPatientCaseManagers.edges.map((caseManager: any) =>
+          CaseManagerModel.fromJson(caseManager.node)
+        );
+        this.pageInfo = data.getPatientCaseManagers.pageInfo;
+        this.caseManagersTable.rows = this.caseManagers;
+      });
   }
 
   private getDepartments(getAllDepartments: boolean = false): void {
@@ -350,33 +376,6 @@ export class CaseManagersComponent implements OnInit {
         this.isLoading = false;
       }
     );
-  }
-
-  public searchCaseManagers(searchString: string): void {
-    this.userRequestOptions.filter = { or: this.createSearchFilter(searchString) };
-    this.getSearchedCaseManagers();
-  }
-
-  private createSearchFilter(searchString: string): Array<{ [K in keyof FormattedUser]: {} }> {
-    if (!searchString) return [];
-    return [
-      { firstName: { iLike: `%${searchString}%` } },
-      { middleName: { iLike: `%${searchString}%` } },
-      { lastName: { iLike: `%${searchString}%` } },
-      { workID: { iLike: `%${searchString}%` } },
-      { phone: { iLike: `%${searchString}%` } },
-      { username: { iLike: `%${searchString}%` } },
-      {
-        roles: {
-          or: [{ name: { iLike: `%${searchString}%` } }],
-        },
-      },
-      {
-        departments: {
-          or: [{ name: { iLike: `%${searchString}%` } }],
-        },
-      },
-    ];
   }
 
   private getSearchedCaseManagers(): void {
