@@ -22,9 +22,10 @@ import { NzModalService } from 'ng-zorro-antd';
 import { UserModel } from '@app/pages/user-management/@models/user.model';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { DeleteOneInput } from '../../../@shared/@types/delete-one-input';
+import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
+import { finalize } from 'rxjs/operators';
 
 const CryptoJS = require('crypto-js');
-const moment = require('moment');
 
 @Component({
   selector: 'app-user-form',
@@ -74,6 +75,7 @@ export class UserFormComponent implements OnInit {
     private router: Router,
     private usersService: UsersService,
     private message: NzMessageService,
+    private errorService: ErrorHandlerService,
     private rolesService: RolesService,
     public perms: AppPermissionsService,
     private departmentsService: DepartmentsService
@@ -88,34 +90,34 @@ export class UserFormComponent implements OnInit {
 
   getDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting[] }) {
     this.isLoading = true;
-    this.departmentsService.departments(params).subscribe(
-      async ({ data }: any) => {
-        const page = data.departments;
-        page.edges.map((departmentData: any) => {
-          const _department = Convert.toDepartment(departmentData.node);
-          this.departments.push(_department);
-        });
-
-        this.profileFields.groups.map((group) => {
-          group.fields.map((field) => {
-            if (field.name === 'departmentId') {
-              field.options = page.edges.map((departmentData: any) => {
-                const department: Department = departmentData.node;
-                this.departments.push(department);
-                return {
-                  value: department.id,
-                  label: `${department.name}`,
-                };
-              });
-            }
+    this.departmentsService
+      .departments(params)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }: any) => {
+          const page = data.departments;
+          page.edges.map((departmentData: any) => {
+            const _department = Convert.toDepartment(departmentData.node);
+            this.departments.push(_department);
           });
-        });
-        this.isLoading = false;
-      },
-      (error: any) => {
-        this.isLoading = false;
-      }
-    );
+
+          this.profileFields.groups.map((group) => {
+            group.fields.map((field) => {
+              if (field.name === 'departmentId') {
+                field.options = page.edges.map((departmentData: any) => {
+                  const department: Department = departmentData.node;
+                  this.departments.push(department);
+                  return {
+                    value: department.id,
+                    label: `${department.name}`,
+                  };
+                });
+              }
+            });
+          });
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to load departments' })
+      );
   }
 
   getUser() {
@@ -136,7 +138,7 @@ export class UserFormComponent implements OnInit {
     const options: any = [];
     this.roles = [];
     this.rolesService.roles(params).subscribe(
-      async ({ data }: any) => {
+      ({ data }: any) => {
         data.roles.edges.map((role: any) => {
           const _role = Convert.toRole(role.node);
           this.roles.push(_role);
@@ -149,7 +151,7 @@ export class UserFormComponent implements OnInit {
           })
         );
       },
-      (error: any) => {}
+      (error) => this.errorService.handleError(error, { prefix: 'Unable to load roles' })
     );
   }
 
@@ -170,15 +172,14 @@ export class UserFormComponent implements OnInit {
   deleteUser(user: User) {
     this.isLoading = true;
     const deleteObject: DeleteOneInput = { id: user.id };
-    this.usersService.deleteOneUser(deleteObject).subscribe(
-      async (_) => {
-        this.isLoading = false;
-        this.router.navigate(['/mhira/user-management/users']);
-      },
-      (_) => {
-        this.isLoading = false;
-      }
-    );
+    this.usersService
+      .deleteOneUser(deleteObject)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        () => this.router.navigate(['/mhira/user-management/users']),
+        (error) =>
+          this.errorService.handleError(error, { prefix: `Unable to delete user "${user.firstName} ${user.lastName}"` })
+      );
   }
 
   handleCancel() {
@@ -236,7 +237,7 @@ export class UserFormComponent implements OnInit {
     this.populateForm = false;
     this.resetForm = false;
     if (formData.password !== formData.passwordConfirmation) {
-      this.message.create('error', `Password don't match`);
+      this.errorService.handleError(new Error(`Passwords don't match`));
       return;
     }
     formData.passwordConfirmation = undefined;
@@ -245,29 +246,30 @@ export class UserFormComponent implements OnInit {
       user: inputData,
     };
     this.loadingMessage = `Creating user ${inputData.firstName} ${inputData.lastName}`;
-    this.usersService.createUser(userInput).subscribe(
-      async ({ data }) => {
-        this._child.toggleEdit();
-        this.isLoading = false;
-        this.loadingMessage = '';
-        this.message.create('success', `User has successfully been created`);
+    this.usersService
+      .createUser(userInput)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+        })
+      )
+      .subscribe(
+        ({ data }) => {
+          this._child.toggleEdit();
+          this.message.create('success', `User has successfully been created`);
 
-        this.user = UserModel.fromJson(data.createOneUser);
-        if (this.selectedRoles.length > 0) {
-          this.assignRoles();
-        }
-        if (this.selectedDepartments.length > 0) {
-          this.assignDepartments();
-        }
-        this.afterCreate();
-      },
-      (error) => {
-        this.isLoading = false;
-        this.loadingMessage = '';
-        const graphError = error.graphQLErrors.map((x: any) => x.message);
-        this.onError(graphError);
-      }
-    );
+          this.user = UserModel.fromJson(data.createOneUser);
+          if (this.selectedRoles.length > 0) {
+            this.assignRoles();
+          }
+          if (this.selectedDepartments.length > 0) {
+            this.assignDepartments();
+          }
+          this.afterCreate();
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to create user' })
+      );
   }
 
   updateUser(userUpdates: CreateUserInput) {
@@ -279,22 +281,27 @@ export class UserFormComponent implements OnInit {
     this.populateForm = false;
     this.resetForm = false;
     this.loadingMessage = `Updating user ${userUpdates.firstName} ${userUpdates.lastName}`;
-    this.usersService.updateUser(userInput).subscribe(
-      async ({ data }) => {
-        this.user = UserModel.fromJson(data.updateOneUser);
-        this.isLoading = false;
-        this._child.toggleEdit();
-        this.loadingMessage = '';
-        this.message.create('success', `User has successfully been updated`);
-      },
-      (error) => {
-        this.isLoading = false;
-        this.populateForm = true;
-        this.loadingMessage = '';
-        const graphError = error.graphQLErrors.map((x: any) => x.message);
-        this.onError(graphError);
-      }
-    );
+    this.usersService
+      .updateUser(userInput)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+        })
+      )
+      .subscribe(
+        async ({ data }) => {
+          this.user = UserModel.fromJson(data.updateOneUser);
+          this._child.toggleEdit();
+          this.message.create('success', `User has successfully been updated`);
+        },
+        (error) => {
+          this.populateForm = true;
+          this.errorService.handleError(error, {
+            prefix: `Unable to update user "${userUpdates.firstName} ${userUpdates.lastName}"`,
+          });
+        }
+      );
   }
 
   submitRoles() {
@@ -335,31 +342,27 @@ export class UserFormComponent implements OnInit {
   assignRoles(role?: Role) {
     this.isLoading = true;
     const rolesIds: number[] = role ? [role.id] : this.selectedRoles;
-    this.rolesService.addRolesToUser(this.user.id, rolesIds).subscribe(
-      async (_: any) => {
-        this.isLoading = false;
-        this.message.create('success', `the role(s) have been successful assigned to ${this.user.firstName}`);
-      },
-      (_: any) => {
-        this.isLoading = false;
-        this.message.create('error', `could not assign role(s) to ${this.user.firstName}`);
-      }
-    );
+    this.rolesService
+      .addRolesToUser(this.user.id, rolesIds)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        () => this.message.create('success', `the role(s) have been successful assigned to ${this.user.firstName}`),
+        (error) =>
+          this.errorService.handleError(error, { prefix: `Unable to assign role(s) to ${this.user.firstName}` })
+      );
   }
 
   unassignRoles(role?: Role) {
     this.isLoading = true;
     const rolesIds: number[] = role ? [role.id] : this.unselectedRoles;
-    this.rolesService.removeRolesFromUser(this.user.id, rolesIds).subscribe(
-      async (_: any) => {
-        this.isLoading = false;
-        this.message.create('success', `the role(s) have been successful removed from ${this.user.firstName}`);
-      },
-      (_: any) => {
-        this.isLoading = false;
-        this.message.create('error', `could not remove role(s) to ${this.user.firstName}`);
-      }
-    );
+    this.rolesService
+      .removeRolesFromUser(this.user.id, rolesIds)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        () => this.message.create('success', `the role(s) have been successful removed from ${this.user.firstName}`),
+        (error) =>
+          this.errorService.handleError(error, { prefix: `Unable to remove role(s) to ${this.user.firstName}` })
+      );
   }
 
   assignRoleToUser(role: Role, checked: boolean) {
@@ -373,32 +376,30 @@ export class UserFormComponent implements OnInit {
   assignDepartments(department?: Department) {
     this.isLoading = true;
     const departmentsIds: number[] = department ? [department.id] : this.selectedDepartments;
-    this.departmentsService.addDepartmentsToUser(this.user.id, departmentsIds).subscribe(
-      async (_: any) => {
-        this.isLoading = false;
-        this.message.create('success', `the department(s) have been successful assigned to ${this.user.firstName}`);
-        this.user.departments.push(department);
-      },
-      (_: any) => {
-        this.isLoading = false;
-        this.message.create('error', `could not assign department(s) to ${this.user.firstName}`);
-      }
-    );
+    this.departmentsService
+      .addDepartmentsToUser(this.user.id, departmentsIds)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        () => {
+          this.message.create('success', `the department(s) have been successful assigned to ${this.user.firstName}`);
+          this.user.departments.push(department);
+        },
+        (error) =>
+          this.errorService.handleError(error, { prefix: `Unable to assign department(s) to ${this.user.firstName}` })
+      );
   }
 
   unassignDepartment(department?: Department) {
     this.isLoading = true;
     const departmentsIds: number[] = department ? [department.id] : this.unselectedDepartments;
-    this.departmentsService.removeDepartmentsFromUser(this.user.id, departmentsIds).subscribe(
-      async (_: any) => {
-        this.isLoading = false;
-        this.message.create('success', `the department(s) have been successful removed from ${this.user.firstName}`);
-      },
-      (_: any) => {
-        this.isLoading = false;
-        this.message.create('error', `could not remove department(s) to ${this.user.firstName}`);
-      }
-    );
+    this.departmentsService
+      .removeDepartmentsFromUser(this.user.id, departmentsIds)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        () => this.message.success(`the department(s) have been successful removed from ${this.user.firstName}`),
+        (error) =>
+          this.errorService.handleError(error, { prefix: `Unable to remove department(s) from ${this.user.firstName}` })
+      );
   }
 
   assignDepartmentToUser(department: Department, checked: boolean) {
@@ -417,7 +418,7 @@ export class UserFormComponent implements OnInit {
         this.updateUser(form);
       } else {
         if (form.password !== form.passwordConfirmation) {
-          this.message.create('error', `Password does not match`);
+          this.errorService.handleError(new Error(`Passwords don't match`));
         } else {
           if (form.roleId) {
             this.selectedRoles.push(form.roleId);
@@ -440,35 +441,26 @@ export class UserFormComponent implements OnInit {
         newPassword: form.newPassword,
         newPasswordConfirmation: form.newPasswordConfirmation,
       };
-      this.usersService.updateUserPassword(inputs).subscribe(
-        async (_) => {
-          this.isLoading = false;
-          this.loadingMessage = '';
-          this.showModal = false;
-          this.message.create('success', `Password has successfully been changed`);
-          this.updatePasswordForm.groups.map((group) => {
-            group.fields.map((field) => {
-              field.value = '';
+      this.usersService
+        .updateUserPassword(inputs)
+        .pipe(
+          finalize(() => {
+            this.isLoading = false;
+            this.loadingMessage = '';
+          })
+        )
+        .subscribe(
+          (_) => {
+            this.showModal = false;
+            this.message.create('success', `Password has successfully been changed`);
+            this.updatePasswordForm.groups.map((group) => {
+              group.fields.map((field) => {
+                field.value = '';
+              });
             });
-          });
-        },
-        (error) => {
-          this.isLoading = false;
-          this.loadingMessage = '';
-          const graphError = error.graphQLErrors.map((x: any) => x.message);
-          this.onError(graphError);
-        }
-      );
-    }
-  }
-
-  onError(errors: any) {
-    if (errors.length > 0) {
-      for (const error of errors) {
-        this.message.create('error', `${error}`);
-      }
-    } else {
-      this.message.create('error', `${errors.error.message}`);
+          },
+          (error) => this.errorService.handleError(error, { prefix: 'Unable to change password' })
+        );
     }
   }
 

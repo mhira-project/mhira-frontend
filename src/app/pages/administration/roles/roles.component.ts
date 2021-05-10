@@ -11,8 +11,8 @@ import { Convert } from '@shared/classes/convert';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { PaginationService } from '@shared/services/pagination.service';
-
-const CryptoJS = require('crypto-js');
+import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-roles',
@@ -40,8 +40,6 @@ export class RolesComponent implements OnInit {
   panelTitle = 'Create Role';
   loadingMessage = '';
   roleForms = RoleForm;
-  hasErrors = false;
-  errors: string[] = [];
   inputMode = true;
   showCancelButton = false;
   isCreateAction = false;
@@ -51,6 +49,7 @@ export class RolesComponent implements OnInit {
     private rolesService: RolesService,
     private modalService: NzModalService,
     private message: NzMessageService,
+    private errorService: ErrorHandlerService,
     public perms: AppPermissionsService,
     private paginationService: PaginationService
   ) {}
@@ -63,21 +62,21 @@ export class RolesComponent implements OnInit {
     this.isLoading = true;
     this.roles = [];
     this.rolesTable.rows = [];
-    this.rolesService.roles(params).subscribe(
-      async ({ data }: any) => {
-        data.roles.edges.map((role: any) => {
-          this.roles.push(Convert.toRole(role.node));
-        });
-        this.rolesTable.rows = this.roles;
-        this.paging.after = data.roles.pageInfo.endCursor;
-        this.paging.before = data.roles.pageInfo.startCursor;
-        this.pageInfo = data.roles.pageInfo;
-        this.isLoading = false;
-      },
-      (error: any) => {
-        this.isLoading = false;
-      }
-    );
+    this.rolesService
+      .roles(params)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }: any) => {
+          data.roles.edges.map((role: any) => {
+            this.roles.push(Convert.toRole(role.node));
+          });
+          this.rolesTable.rows = this.roles;
+          this.paging.after = data.roles.pageInfo.endCursor;
+          this.paging.before = data.roles.pageInfo.startCursor;
+          this.pageInfo = data.roles.pageInfo;
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to get roles' })
+      );
   }
 
   navigatePages(direction: 'next' | 'previous', pageSize: number = 10) {
@@ -87,17 +86,16 @@ export class RolesComponent implements OnInit {
 
   deleteRole(role: Role, index: number) {
     this.modalLoading = true;
-    this.rolesService.deleteRole(role).subscribe(
-      async ({ data }: any) => {
-        this.rolesTable.rows.splice(index, 1);
-        this.modalLoading = false;
-        this.message.create('success', `role has been successfully deleted`);
-      },
-      (error: any) => {
-        this.modalLoading = false;
-        this.message.create('error', `could not remove role for ${role.name}`);
-      }
-    );
+    this.rolesService
+      .deleteRole(role)
+      .pipe(finalize(() => (this.modalLoading = false)))
+      .subscribe(
+        () => {
+          this.rolesTable.rows.splice(index, 1);
+          this.message.success('Role has been successfully deleted');
+        },
+        (error) => this.errorService.handleError(error, { prefix: `Could not remove role for ${role.name}` })
+      );
   }
 
   handleActionClick(event: any): void {
@@ -161,31 +159,28 @@ export class RolesComponent implements OnInit {
 
   createRole(role: Role) {
     this.isLoading = true;
-    this.hasErrors = false;
     this.populateForm = false;
     this.resetForm = false;
-    this.errors = [];
     this.loadingMessage = `Creating role ${role.name}`;
-    this.rolesService.createRole(role).subscribe(
-      async ({ data }) => {
-        this.roles.unshift(Convert.toRole(data.createOneRole));
-        this.rolesTable.rows = this.roles;
-        this.isLoading = false;
-        this.resetForm = true;
-        this.populateForm = false;
-        this.loadingMessage = '';
-        this.toggleCreatePanel();
-        this.message.create('success', `Role has successfully been created`);
-      },
-      (error) => {
-        this.hasErrors = true;
-        error.graphQLErrors.map((_error: any) => {
-          this.errors.push(_error.message);
-        });
-        this.isLoading = false;
-        this.loadingMessage = '';
-      }
-    );
+    this.rolesService
+      .createRole(role)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+        })
+      )
+      .subscribe(
+        ({ data }) => {
+          this.roles.unshift(Convert.toRole(data.createOneRole));
+          this.rolesTable.rows = this.roles;
+          this.resetForm = true;
+          this.populateForm = false;
+          this.toggleCreatePanel();
+          this.message.success('Role has successfully been created');
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to create role' })
+      );
   }
 
   submitForm(roleData: any) {
@@ -206,35 +201,32 @@ export class RolesComponent implements OnInit {
       },
     };
     this.isLoading = true;
-    this.hasErrors = false;
-    this.errors = [];
     this.loadingMessage = `Updating role ${role.name}`;
-    this.rolesService.updateRole(updateOneRoleInput).subscribe(
-      async ({ data }) => {
-        const updatedRole: Role = Convert.toRole(data.updateOneRole);
-        this.roles = this.roles.map((dep: Role) => {
-          if (dep.id === updatedRole.id) {
-            dep = updatedRole;
-          }
-          return dep;
-        });
-        this.rolesTable.rows = this.roles;
-        this.isLoading = false;
-        this.resetForm = true;
-        this.populateForm = false;
-        this.loadingMessage = '';
-        this.toggleCreatePanel();
-        this.message.create('success', `Role has successfully been updated`);
-        this.role = null;
-      },
-      (error) => {
-        this.hasErrors = true;
-        error.graphQLErrors.map((_error: any) => {
-          this.errors.push(_error.message);
-        });
-        this.isLoading = false;
-        this.loadingMessage = '';
-      }
-    );
+    this.rolesService
+      .updateRole(updateOneRoleInput)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+          this.loadingMessage = '';
+        })
+      )
+      .subscribe(
+        ({ data }) => {
+          const updatedRole: Role = Convert.toRole(data.updateOneRole);
+          this.roles = this.roles.map((dep: Role) => {
+            if (dep.id === updatedRole.id) {
+              dep = updatedRole;
+            }
+            return dep;
+          });
+          this.rolesTable.rows = this.roles;
+          this.resetForm = true;
+          this.populateForm = false;
+          this.toggleCreatePanel();
+          this.message.success('Role has successfully been updated');
+          this.role = null;
+        },
+        (error) => this.errorService.handleError(error, { prefix: `Unable to delete role "${role.name}"` })
+      );
   }
 }

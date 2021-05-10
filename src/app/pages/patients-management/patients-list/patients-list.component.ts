@@ -4,7 +4,7 @@ import { PatientsService } from '@app/pages/patients-management/@services/patien
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd';
 import { Sorting } from '@shared/@types/sorting';
 import { PatientStatus } from '@app/pages/patients-management/@types/patient-status';
 import { PatientStatusesService } from '@app/pages/patients-management/@services/patient-statuses.service';
@@ -16,6 +16,7 @@ import { Filter } from '../../../@shared/@types/filter';
 import { User } from '@app/pages/user-management/@types/user';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
+import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 import {
   TableColumn,
   SortField,
@@ -66,7 +67,7 @@ export class PatientsListComponent {
     private router: Router,
     private modalService: NzModalService,
     private patientStateService: PatientStatusesService,
-    private messageService: NzMessageService,
+    private errorService: ErrorHandlerService,
     public perms: AppPermissionsService
   ) {
     this.getPatients();
@@ -133,10 +134,13 @@ export class PatientsListComponent {
     this.patientsService
       .patients(options)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe((patients) => {
-        this.data = patients.data.patients.edges.map((e: any) => PatientModel.fromJson(e.node));
-        this.pageInfo = patients.data.patients.pageInfo; // TODO: remove
-      });
+      .subscribe(
+        (patients) => {
+          this.data = patients.data.patients.edges.map((e: any) => PatientModel.fromJson(e.node));
+          this.pageInfo = patients.data.patients.pageInfo; // TODO: remove
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to load patients' })
+      );
   }
 
   private createSearchFilter(searchString: string) {
@@ -168,17 +172,20 @@ export class PatientsListComponent {
   }
 
   private getPatientStates() {
-    this.patientStateService.patientStatuses().subscribe((result) => {
-      this.patientStates = result.data.patientStatuses.edges.map((e: any) => e.node);
+    this.patientStateService.patientStatuses().subscribe(
+      (result) => {
+        this.patientStates = result.data.patientStatuses.edges.map((e: any) => e.node);
 
-      // append status options on status filter
-      const statusCol = this.columns.find((c) => c.name === 'formattedStatus');
-      statusCol.filterField.options = [
-        ...this.patientStates.map((ps) => ({ label: ps.name, value: ps.id })),
-        { label: 'not set', value: null },
-      ];
-      this.columns = [...this.columns]; // trigger setter to re-render filter
-    });
+        // append status options on status filter
+        const statusCol = this.columns.find((c) => c.name === 'formattedStatus');
+        statusCol.filterField.options = [
+          ...this.patientStates.map((ps) => ({ label: ps.name, value: ps.id })),
+          { label: 'not set', value: null },
+        ];
+        this.columns = [...this.columns]; // trigger setter to re-render filter
+      },
+      (error) => this.errorService.handleError(error, { prefix: 'Unable to load patient statuses' })
+    );
   }
 
   private async changePatientStatus(patient: FormattedPatient): Promise<void> {
@@ -213,7 +220,10 @@ export class PatientsListComponent {
             patient
           );
         },
-        () => this.messageService.error('An error occurred could not update patient', { nzDuration: 3000 })
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: `Unable to change patient status of "${patient.firstName} ${patient.lastName}"`,
+          })
       );
   }
 
@@ -238,7 +248,10 @@ export class PatientsListComponent {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () => this.data.splice(this.data.indexOf(patient), 1),
-        () => this.messageService.error('An error occurred could not delete patient', { nzDuration: 3000 })
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: `Unable to delete patient "${patient.firstName} ${patient.lastName}"`,
+          })
       );
   }
 

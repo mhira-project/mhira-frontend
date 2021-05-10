@@ -12,6 +12,7 @@ import { FormComponent } from '@shared/components/form/form.component';
 import { FieldGroup } from '@shared/components/form/@types/field.group';
 import { TranslationItem } from '@shared/@types/translation';
 import { TranslateService } from '@ngx-translate/core';
+import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -39,6 +40,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private usersService: UsersService,
     private message: NzMessageService,
+    private errorService: ErrorHandlerService,
     private translationService: TranslateService
   ) {}
 
@@ -51,11 +53,11 @@ export class HeaderComponent implements OnInit {
   getUser() {
     this.user = JSON.parse(localStorage.getItem('user'));
     this.authService.getUserProfile().subscribe(
-      async ({ data }) => {
+      ({ data }) => {
         this.user = data.getUserProfile;
         localStorage.setItem('user', JSON.stringify(data.getUserProfile));
       },
-      (_) => {}
+      (err) => this.errorService.handleError(err, { prefix: 'Unable to get user profile' })
     );
   }
 
@@ -97,17 +99,16 @@ export class HeaderComponent implements OnInit {
         newPasswordConfirmation: form.newPasswordConfirmation,
       };
       this.usersService.changeUserPassword(inputs).subscribe(
-        async ({ data }) => {
+        () => {
           this.isLoading = false;
           this.loadingMessage = '';
-          this.message.create('success', `Password has successfully been changed`);
+          this.message.success('Password has successfully been changed');
           this.handleCancel();
         },
         (error) => {
           this.isLoading = false;
           this.loadingMessage = '';
-          const graphError = error.graphQLErrors.map((x: any) => x.message);
-          this.onError(graphError);
+          this.errorService.handleError(error, { prefix: 'Unable to change password' });
         }
       );
     }
@@ -140,15 +141,5 @@ export class HeaderComponent implements OnInit {
 
   showChangePasswordModal() {
     this.changePasswordModal = true;
-  }
-
-  onError(errors: any) {
-    if (errors.length > 0) {
-      for (const error of errors) {
-        this.message.create('error', `${error}`);
-      }
-    } else {
-      this.message.create('error', `${errors.error.message}`);
-    }
   }
 }
