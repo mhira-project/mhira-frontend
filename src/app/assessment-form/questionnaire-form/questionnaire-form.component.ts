@@ -8,6 +8,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Answer } from '../@types/answer';
 import { Question } from '../@types/question';
 import { SkipLogic } from '../skip-logic';
+import { ErrorHandlerService } from '../../@shared/services/error-handler.service';
 
 @UntilDestroy()
 @Component({
@@ -16,8 +17,6 @@ import { SkipLogic } from '../skip-logic';
   styleUrls: ['./questionnaire-form.component.scss'],
 })
 export class QuestionnaireFormComponent {
-  private _currentGroupIdx = 0;
-
   public questionnaire: QuestionnaireVersion;
   public answers: Answer[];
   public skipLogic: Array<{ questionId: string; visible: boolean }> = [];
@@ -30,7 +29,13 @@ export class QuestionnaireFormComponent {
     return this._currentGroupIdx;
   }
 
-  constructor(private activtedRoute: ActivatedRoute, private assessmentFormService: AssessmentFormService) {
+  private _currentGroupIdx = 0;
+
+  constructor(
+    private activtedRoute: ActivatedRoute,
+    private assessmentFormService: AssessmentFormService,
+    private errorService: ErrorHandlerService
+  ) {
     combineLatest([
       this.activtedRoute.params.pipe(
         map((params) => +params?.questionnaireIndex),
@@ -61,6 +66,16 @@ export class QuestionnaireFormComponent {
 
     this.skipLogic = currentQuestions
       .filter((q) => q.relevant)
-      .map((q) => ({ questionId: q._id, visible: SkipLogic.create(q, questions, this.answers) }));
+      .map((q) => {
+        let visible = true;
+        try {
+          visible = SkipLogic.create(q, questions, this.answers);
+        } catch (err) {
+          const e = new Error(`Unable to create skip logic for "${q.name}"`);
+          e.stack = err.stack;
+          this.errorService.handleError(e);
+        }
+        return { questionId: q._id, visible };
+      });
   }
 }
