@@ -22,6 +22,14 @@ interface ConditionInfo {
   conditional: Conditional;
 }
 
+export class SkipLogicError extends Error {
+  public isSkipLogicError = true;
+
+  constructor(msg: string) {
+    super('SkipLogic Error: ' + msg);
+  }
+}
+
 export class SkipLogic {
   public static create(question: Question, questions: Question[], answers: Answer[]) {
     const logic = question.relevant;

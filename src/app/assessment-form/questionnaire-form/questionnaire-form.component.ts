@@ -71,9 +71,9 @@ export class QuestionnaireFormComponent {
         try {
           visible = SkipLogic.create(q, questions, this.answers);
         } catch (err) {
-          const e = new Error(`Unable to create skip logic for "${q.name}"`);
-          e.stack = err.stack;
-          this.errorService.handleError(e);
+          this.errorService.handleError(err, {
+            prefix: `Unable to create skip logic of "${q.relevant}" for "${q.name}"`,
+          });
         }
         return { questionId: q._id, visible };
       });
