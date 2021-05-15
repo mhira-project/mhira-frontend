@@ -1,7 +1,7 @@
 import { Answer } from './@types/answer';
 import { Question, QuestionType } from './@types/question';
 
-const CONDITIONALS = ['=', 'or', 'and', 'selected'] as const;
+const CONDITIONALS = ['=', 'selected'] as const;
 
 type ElementType<T extends ReadonlyArray<unknown>> = T extends ReadonlyArray<infer ElementType> ? ElementType : never;
 
@@ -10,11 +10,6 @@ type Conditional = ElementType<typeof CONDITIONALS>;
 interface AnsweredQuestion {
   question: Question;
   answer: Answer;
-}
-
-interface ConditionalInfo {
-  conditional: Conditional;
-  index: number;
 }
 
 interface ConditionInfo {
@@ -74,9 +69,9 @@ export class SkipLogic {
     return solvedParts[0];
   }
 
-  private static prepareLogicParts(logic: string): [string[], Array<Extract<Conditional, 'or' | 'and'>>] {
+  private static prepareLogicParts(logic: string): [string[], Array<'or' | 'and'>] {
     const logicParts: string[] = [];
-    const conditionalParts: Array<Extract<Conditional, 'or' | 'and'>> = [];
+    const conditionalParts: Array<'or' | 'and'> = [];
 
     // find all logic parts and split them up at and/or
     while (logic.toLowerCase().includes('or') || logic.toLowerCase().includes('and')) {
