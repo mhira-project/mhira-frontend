@@ -1,7 +1,7 @@
 <article *ngIf="questionnaire">
   <section class="head-row">
     <h2>{{ questionnaire.name }}</h2>
-    <a nz-button nzType="primary" routerLink="../../overview" queryParamsHandling="merge">Overview</a>
+    <ng-container *ngTemplateOutlet="overviewBtn"></ng-container>
   </section>
 
   <section *ngIf="questionnaire.questionGroups[currentGroupIdx] as group">
@@ -38,12 +38,16 @@
       </ng-container>
     </div>
     <button
+      *ngIf="currentGroupIdx < questionnaire.questionGroups.length - 1; else overviewBtn"
       nz-button
       nzType="primary"
-      [disabled]="currentGroupIdx >= questionnaire.questionGroups.length - 1"
       (click)="currentGroupIdx = currentGroupIdx + 1"
     >
       Next
     </button>
   </section>
 </article>
+
+<ng-template #overviewBtn>
+  <a nz-button nzType="primary" routerLink="../../overview" queryParamsHandling="merge">Overview</a>
+</ng-template>
