@@ -63,4 +63,15 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
       value: undefined,
     },
   },
+  {
+    name: 'createdAt',
+    title: 'Created at',
+    render: 'date',
+    sort: true,
+    filterField: {
+      type: 'dateRange',
+      value: undefined,
+      title: 'Created at',
+    },
+  },
 ];
