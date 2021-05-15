@@ -32,33 +32,36 @@ export class SkipLogicError extends Error {
 
 export class SkipLogic {
   public static create(question: Question, questions: Question[], answers: Answer[]) {
+    // check for question
+    if (!question) throw new SkipLogicError('question not provided');
+
+    // get skip logic, set visible if it has no skip logic
     const logic = question.relevant;
-    console.log('create skiplogic for', question.name, logic);
+    if (!logic) return true;
 
+    // prepare logic parts
     const [logicParts, conditionalParts] = SkipLogic.prepareLogicParts(logic);
-    console.log('logicparts', logicParts);
-    console.log('condparts', conditionalParts);
 
+    // find relevant questions
     const relevantQuestions: AnsweredQuestion[] = SkipLogic.extractQuestions(logic, questions).map((q) => ({
       question: q,
       answer: answers.find((a) => a.question === q._id),
     }));
 
-    if (!relevantQuestions.every((rq) => rq.answer)) {
-      // one of the questions required for the skip logic is not answered
-      console.log('required answer not available');
-      return false;
-    }
+    // set invisible if not all relevant questions are answered
+    if (!relevantQuestions.every((rq) => rq.answer)) return false;
 
-    console.log('relevant', relevantQuestions);
+    // solve all parts
+    const solvedParts = logicParts.map((part) => {
+      // find conditional
+      const conditional = SkipLogic.findConditional(part);
+      if (!conditional) throw new SkipLogicError(`no supported conditional found in logic "${part}"`);
 
-    let solvedParts = logicParts.map((part) => {
-      const condition = SkipLogic.extractFirstCondition(part);
-      return SkipLogic.solveCondition(condition, relevantQuestions);
+      // solve condition
+      return SkipLogic.solveCondition({ condition: part, conditional }, relevantQuestions);
     });
 
-    console.log('solve', solvedParts);
-
+    // combine solved parts via and/or ltr
     while (solvedParts.length > 1) {
       solvedParts.splice(
         0,
@@ -67,15 +70,15 @@ export class SkipLogic {
       );
     }
 
-    console.log('final solve', solvedParts);
-
+    // final result
     return solvedParts[0];
   }
 
   private static prepareLogicParts(logic: string): [string[], Array<Extract<Conditional, 'or' | 'and'>>] {
-    const logicParts = [];
+    const logicParts: string[] = [];
     const conditionalParts: Array<Extract<Conditional, 'or' | 'and'>> = [];
 
+    // find all logic parts and split them up at and/or
     while (logic.toLowerCase().includes('or') || logic.toLowerCase().includes('and')) {
       const orIdx = logic.toLowerCase().indexOf('or');
       const andIdx = logic.toLowerCase().indexOf('and');
@@ -95,43 +98,59 @@ export class SkipLogic {
     return [logicParts, conditionalParts];
   }
 
-  private static solveCondition(condition: ConditionInfo, relevantQuestions: AnsweredQuestion[]): boolean {
-    switch (condition.conditional) {
+  private static solveCondition(
+    { condition, conditional }: ConditionInfo,
+    relevantQuestions: AnsweredQuestion[]
+  ): boolean {
+    switch (conditional) {
       case '=':
-        const [p1, p2] = condition.condition.split(condition.conditional).map((p) => p.trim());
-        console.log('found parts', p1, p2);
-        return SkipLogic.compareValues(
-          SkipLogic.extractValue(p1, relevantQuestions),
-          SkipLogic.extractValue(p2, relevantQuestions)
-        );
+        // get parts and compare
+        const [left, right] = condition.split(conditional).map((p) => p.trim());
+        return SkipLogic.extractValue(left, relevantQuestions) === SkipLogic.extractValue(right, relevantQuestions);
 
       case 'selected':
-        const inner = condition.condition.match(/^selected\(([^)]+)\)$/)?.[1];
-        const [q, v] = inner.split(',').map((part) => part.trim());
-        console.log('selected q/v', q, v);
-        const qValues: any[] = SkipLogic.extractValue(q, relevantQuestions);
-        console.log('qvalues', qValues);
-        return qValues.includes(SkipLogic.extractValue(v, relevantQuestions));
+        // get question and targetValue
+        const inner = condition.match(/^selected\(([^)]+)\)$/)?.[1];
+        const [question, targetValue] = inner.split(',').map((part) => part.trim());
+
+        // find values and compare to target
+        const values = SkipLogic.extractValue<any[]>(question, relevantQuestions);
+        return values.includes(SkipLogic.extractValue(targetValue, relevantQuestions));
     }
   }
 
-  private static compareValues(p1: any, p2: any): boolean {
-    console.log('found values', p1, p2);
-    // TODO: improve this
-    return p1 == p2;
-  }
+  private static extractValue<T>(item: string, relevantQuestions: AnsweredQuestion[]): T {
+    // assign default value
+    let value: any = item;
 
-  private static extractValue(item: string, relevantQuestions: AnsweredQuestion[]): any {
-    // is question
+    // extract value from question, if question name is found
     const questionName = item.match(/\$\{([^}]+)\}/)?.[1];
     if (questionName) {
-      const rq = relevantQuestions.find((rq) => rq.question.name === questionName);
-      return SkipLogic.extractAnswerFromType(rq.question.type, rq.answer);
+      const relevantQuestion = relevantQuestions.find((rq) => rq.question.name === questionName);
+      value = SkipLogic.extractAnswerFromType(relevantQuestion.question.type, relevantQuestion.answer);
+      if (value === null) throw new SkipLogicError(`answer not found for question "${relevantQuestion.question.name}"`);
     }
 
-    // is value
-    // TODO: improve this
-    return item.substr(1, item.length - 2);
+    // return prepared value
+    return SkipLogic.prepareValue(value);
+  }
+
+  private static prepareValue(value: any): any {
+    if (Array.isArray(value)) {
+      return value.map((v) => SkipLogic.prepareValue(v));
+    }
+
+    // remove parentheses
+    if (typeof value === 'string' && value.match(/^['"]{1}.+['"]{1}$/)) {
+      value = value.substr(1, value.length - 2);
+    }
+
+    // convert to number if possible
+    if (!Number.isNaN(value)) {
+      return Number(value);
+    }
+
+    return value;
   }
 
   private static extractAnswerFromType(type: QuestionType, answer: Answer) {
@@ -162,34 +181,9 @@ export class SkipLogic {
     );
   }
 
-  private static extractFirstCondition(logic: string): ConditionInfo | null {
-    console.log('extract condition for', logic);
-    const firstConditional = SkipLogic.findFirstConditional(logic);
-
-    if (!firstConditional) {
-      console.log('NOT FOUND ANY CONDITION FOR', logic);
-      return null;
-    }
-
-    console.log('first condition', firstConditional);
-    const nextConditionalIdx = this.findFirstConditional(
-      logic.substr(firstConditional.index + firstConditional.conditional.length)
-    );
-
-    console.log('next', nextConditionalIdx);
-
-    const condition = nextConditionalIdx
-      ? logic.substr(0, nextConditionalIdx.index + firstConditional.index + firstConditional.conditional.length)
-      : logic;
-
-    console.log('condition', condition);
-
-    return { condition, conditional: firstConditional.conditional };
-  }
-
-  private static findFirstConditional(logic: string): ConditionalInfo {
+  private static findConditional(logic: string): Conditional {
     return CONDITIONALS.map((c) => ({ conditional: c, index: logic.toLowerCase().indexOf(c.toLowerCase()) }))
       .filter((info) => info.index >= 0)
-      .sort((prev, next) => prev.index - next.index)?.[0];
+      .sort((prev, next) => prev.index - next.index)?.[0]?.conditional;
   }
 }
