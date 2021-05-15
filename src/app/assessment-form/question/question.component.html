@@ -2,6 +2,7 @@
   [nzTitle]="question.label"
   [nzExtra]="hint"
   class="multiline-header"
+  [class.required-question]="question.required"
   *ngIf="question.type !== QuestionType.NOTE; else note"
 >
   <ng-container [ngSwitch]="question.type" *ngIf="question && answer?.question">
