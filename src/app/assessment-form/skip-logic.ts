@@ -3,6 +3,7 @@ import { Question, QuestionType } from './@types/question';
 
 const CONDITIONALS = ['=', 'selected'] as const;
 
+// tslint:disable-next-line:no-shadowed-variable
 type ElementType<T extends ReadonlyArray<unknown>> = T extends ReadonlyArray<infer ElementType> ? ElementType : never;
 
 type Conditional = ElementType<typeof CONDITIONALS>;
