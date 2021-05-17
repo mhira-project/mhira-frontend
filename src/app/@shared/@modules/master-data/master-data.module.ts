@@ -19,6 +19,7 @@ import { SharedModule } from '@shared';
 import { NzDrawerModule } from 'ng-zorro-antd';
 import { MasterDataFilterFormComponent } from './master-data-filter-form/master-data-filter-form.component';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { FormsModule } from '@angular/forms';
     NzFormModule,
     NzSelectModule,
     FormsModule,
+    TranslateModule,
   ],
   exports: [MasterDataListComponent, MasterDataSearchComponent],
 })

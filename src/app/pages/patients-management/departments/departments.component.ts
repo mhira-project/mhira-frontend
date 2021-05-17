@@ -132,7 +132,7 @@ export class DepartmentsComponent implements OnInit {
 
     options.filter = {
       ...options.filter,
-      and: [getAllDepartments ? {} : { patients: { id: { eq: this.patient.id } } }, ...(options.filter.and ?? [])],
+      and: [getAllDepartments ? {} : { patients: { id: { eq: this.patient?.id } } }, ...(options.filter.and ?? [])],
     };
 
     this.departmentsService

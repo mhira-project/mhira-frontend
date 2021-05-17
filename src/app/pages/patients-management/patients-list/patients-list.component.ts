@@ -24,7 +24,6 @@ import {
   ActionArgs,
   DEFAULT_PAGE_SIZE,
 } from '../../../@shared/@modules/master-data/@types/list';
-import { TranslateService } from '@ngx-translate/core';
 
 const CryptoJS = require('crypto-js');
 
@@ -75,18 +74,8 @@ export class PatientsListComponent {
     private modalService: NzModalService,
     private patientStateService: PatientStatusesService,
     private errorService: ErrorHandlerService,
-    private translate: TranslateService,
     public perms: AppPermissionsService
   ) {
-    this.columns.map((column) => {
-      this.translatedColumns.push({
-        ...column,
-        title: this.translate.instant(column.name, {
-          value: `patients.tale.${column.name}`,
-        }),
-      });
-    });
-    console.log(this.translatedColumns);
     this.getPatients();
     this.getPatientStates();
     this.setActions();

@@ -157,6 +157,7 @@ import { SelectModalComponent } from './select-modal/select-modal.component';
 import { CountryPipe } from '../pipes/country.pipe';
 import { UserPickerComponent } from './user-picker/user-picker.component';
 import { PatientPickerComponent } from './patient-picker/patient-picker.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const PIPES = [
   CapitalizePipe,
@@ -172,7 +173,15 @@ const PIPES = [
 ];
 
 @NgModule({
-  imports: [...antModules, CommonModule, FormsModule, AppFormModule, NgxInputSearchModule, ReactiveFormsModule],
+  imports: [
+    ...antModules,
+    CommonModule,
+    FormsModule,
+    AppFormModule,
+    NgxInputSearchModule,
+    ReactiveFormsModule,
+    TranslateModule,
+  ],
   declarations: [
     ...PIPES,
     LoaderComponent,
