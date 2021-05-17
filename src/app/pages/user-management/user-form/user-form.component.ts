@@ -209,7 +209,7 @@ export class UserFormComponent implements OnInit {
   }
 
   async getUserFromUrl(): Promise<void> {
-    this.routeSub = await this.activatedRoute.queryParams.subscribe((params) => {
+    this.routeSub = this.activatedRoute.queryParams.subscribe((params) => {
       this.populateForm = false;
       this.resetForm = false;
       if (params.user) {
@@ -236,6 +236,7 @@ export class UserFormComponent implements OnInit {
     this.isLoading = true;
     this.populateForm = false;
     this.resetForm = false;
+    formData.userName = formData.userName.toLowerCase();
     if (formData.password !== formData.passwordConfirmation) {
       this.errorService.handleError(new Error(`Passwords don't match`));
       return;
