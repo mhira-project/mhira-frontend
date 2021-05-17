@@ -22,4 +22,18 @@ export default {
     systemConfiguration: 'Usanidi wa Mfumo',
     patientStatuses: 'Hadhi za Mgonjwa',
   },
+  patients: {
+    table: {
+      firstName: 'First Name',
+      middleName: 'Middle Name',
+      lastName: 'Last Name',
+      hospitalId: 'Hospital ID',
+      gender: 'Gender',
+      dob: 'Date of Birth',
+      status: 'Status',
+      informants: 'Informants',
+      caseManager: 'Case Manager',
+      createdAt: 'Created At',
+    },
+  },
 };

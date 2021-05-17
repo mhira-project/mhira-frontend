@@ -25,4 +25,18 @@ export default {
     systemConfiguration: 'System Configuration',
     patientStatuses: 'Patient Statuses',
   },
+  patients: {
+    table: {
+      firstName: 'First Name',
+      middleName: 'Middle Name',
+      lastName: 'Last Name',
+      hospitalId: 'Hospital ID',
+      gender: 'Gender',
+      dob: 'Date of Birth',
+      status: 'Status',
+      informants: 'Informants',
+      caseManager: 'Case Manager',
+      createdAt: 'Created At',
+    },
+  },
 };

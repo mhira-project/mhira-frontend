@@ -8,7 +8,9 @@
 >
   <thead>
     <tr>
-      <th *ngFor="let column of columns" [nzColumnKey]="column.name" [nzSortFn]="column.sort">{{ column.title }}</th>
+      <th *ngFor="let column of columns" [nzColumnKey]="column.name" [nzSortFn]="column.sort">
+        {{ column.title }}
+      </th>
     </tr>
   </thead>
   <tbody>

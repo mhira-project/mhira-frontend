@@ -24,6 +24,7 @@ import {
   ActionArgs,
   DEFAULT_PAGE_SIZE,
 } from '../../../@shared/@modules/master-data/@types/list';
+import { TranslateService } from '@ngx-translate/core';
 
 const CryptoJS = require('crypto-js');
 
@@ -42,11 +43,17 @@ export class PatientsListComponent {
 
   public columns: TableColumn<Partial<FormattedPatient>>[] = PatientColumns as TableColumn<Partial<FormattedPatient>>[];
 
+  public translatedColumns: TableColumn<Partial<FormattedPatient>>[] = [];
+
   public data: Partial<FormattedPatient>[];
 
   public pageInfo: PageInfo;
 
-  public patientRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
+  public patientRequestOptions: {
+    paging: Paging;
+    filter: Filter;
+    sorting: Sorting[];
+  } = {
     paging: { first: DEFAULT_PAGE_SIZE },
     filter: {},
     sorting: [],
@@ -68,15 +75,27 @@ export class PatientsListComponent {
     private modalService: NzModalService,
     private patientStateService: PatientStatusesService,
     private errorService: ErrorHandlerService,
+    private translate: TranslateService,
     public perms: AppPermissionsService
   ) {
+    this.columns.map((column) => {
+      this.translatedColumns.push({
+        ...column,
+        title: this.translate.instant(column.name, {
+          value: `patients.tale.${column.name}`,
+        }),
+      });
+    });
+    console.log(this.translatedColumns);
     this.getPatients();
     this.getPatientStates();
     this.setActions();
   }
 
   public searchPatients(searchString: string): void {
-    this.patientRequestOptions.filter = { or: this.createSearchFilter(searchString) };
+    this.patientRequestOptions.filter = {
+      or: this.createSearchFilter(searchString),
+    };
     this.getPatients();
   }
 
@@ -139,7 +158,10 @@ export class PatientsListComponent {
           this.data = patients.data.patients.edges.map((e: any) => PatientModel.fromJson(e.node));
           this.pageInfo = patients.data.patients.pageInfo; // TODO: remove
         },
-        (error) => this.errorService.handleError(error, { prefix: 'Unable to load patients' })
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: 'Unable to load patients',
+          })
       );
   }
 
@@ -184,7 +206,10 @@ export class PatientsListComponent {
         ];
         this.columns = [...this.columns]; // trigger setter to re-render filter
       },
-      (error) => this.errorService.handleError(error, { prefix: 'Unable to load patient statuses' })
+      (error) =>
+        this.errorService.handleError(error, {
+          prefix: 'Unable to load patient statuses',
+        })
     );
   }
 
