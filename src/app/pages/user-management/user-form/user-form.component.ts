@@ -116,7 +116,10 @@ export class UserFormComponent implements OnInit {
             });
           });
         },
-        (error) => this.errorService.handleError(error, { prefix: 'Unable to load departments' })
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: 'Unable to load departments',
+          })
       );
   }
 
@@ -178,7 +181,9 @@ export class UserFormComponent implements OnInit {
       .subscribe(
         () => this.router.navigate(['/mhira/user-management/users']),
         (error) =>
-          this.errorService.handleError(error, { prefix: `Unable to delete user "${user.firstName} ${user.lastName}"` })
+          this.errorService.handleError(error, {
+            prefix: `Unable to delete user "${user.firstName} ${user.lastName}"`,
+          })
       );
   }
 
@@ -269,7 +274,10 @@ export class UserFormComponent implements OnInit {
           }
           this.afterCreate();
         },
-        (error) => this.errorService.handleError(error, { prefix: 'Unable to create user' })
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: 'Unable to create user',
+          })
       );
   }
 
@@ -349,7 +357,9 @@ export class UserFormComponent implements OnInit {
       .subscribe(
         () => this.message.create('success', `the role(s) have been successful assigned to ${this.user.firstName}`),
         (error) =>
-          this.errorService.handleError(error, { prefix: `Unable to assign role(s) to ${this.user.firstName}` })
+          this.errorService.handleError(error, {
+            prefix: `Unable to assign role(s) to ${this.user.firstName}`,
+          })
       );
   }
 
@@ -362,7 +372,9 @@ export class UserFormComponent implements OnInit {
       .subscribe(
         () => this.message.create('success', `the role(s) have been successful removed from ${this.user.firstName}`),
         (error) =>
-          this.errorService.handleError(error, { prefix: `Unable to remove role(s) to ${this.user.firstName}` })
+          this.errorService.handleError(error, {
+            prefix: `Unable to remove role(s) to ${this.user.firstName}`,
+          })
       );
   }
 
@@ -386,7 +398,9 @@ export class UserFormComponent implements OnInit {
           this.user.departments.push(department);
         },
         (error) =>
-          this.errorService.handleError(error, { prefix: `Unable to assign department(s) to ${this.user.firstName}` })
+          this.errorService.handleError(error, {
+            prefix: `Unable to assign department(s) to ${this.user.firstName}`,
+          })
       );
   }
 
@@ -399,7 +413,9 @@ export class UserFormComponent implements OnInit {
       .subscribe(
         () => this.message.success(`the department(s) have been successful removed from ${this.user.firstName}`),
         (error) =>
-          this.errorService.handleError(error, { prefix: `Unable to remove department(s) from ${this.user.firstName}` })
+          this.errorService.handleError(error, {
+            prefix: `Unable to remove department(s) from ${this.user.firstName}`,
+          })
       );
   }
 
@@ -460,7 +476,10 @@ export class UserFormComponent implements OnInit {
               });
             });
           },
-          (error) => this.errorService.handleError(error, { prefix: 'Unable to change password' })
+          (error) =>
+            this.errorService.handleError(error, {
+              prefix: 'Unable to change password',
+            })
         );
     }
   }
