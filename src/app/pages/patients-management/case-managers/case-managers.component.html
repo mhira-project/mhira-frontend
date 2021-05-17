@@ -1,6 +1,6 @@
 <div nz-row>
   <div nz-col nzSpan="24">
-    <app-table
+    <!-- <app-table
       [loading]="isLoading"
       [showPagination]="false"
       [showCustomActions]="true"
@@ -21,7 +21,27 @@
       (onFilterButton)="toggleFilterDrawer()"
       (onSearch)="searchManagers($event)"
     >
-    </app-table>
+    </app-table> -->
+    <app-master-data-list
+      [data]="data"
+      [columns]="columns"
+      [loading]="loading"
+      [pageInfo]="pageInfo"
+      [actions]="actions"
+      (pageChange)="onPageChange($event)"
+      (sort)="onSort($event)"
+      (filter)="onFilter($event)"
+      (executeAction)="onAction($event)"
+    >
+      <ng-container actions-left>
+        <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
+      </ng-container>
+      <ng-container actions-right>
+        <button nz-button nzType="primary" nzShape="circle" (click)="toggleAssignModal()">
+          <i nz-icon nzType="plus"></i>
+        </button>
+      </ng-container>
+    </app-master-data-list>
   </div>
 </div>
 

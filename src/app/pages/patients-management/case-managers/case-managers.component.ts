@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CaseManagersTable } from '../@tables/case-managers.table';
 import { CaseManager } from '@app/pages/patients-management/@types/case-manager';
 import { CaseManagersService } from '@app/pages/patients-management/@services/case-managers.service';
-import { Paging } from '@shared/@types/paging';
+import { PageInfo, Paging } from '@shared/@types/paging';
 import { CaseManagerModel } from '@app/pages/patients-management/@models/case-manager.model';
 import { CaseManagersFilterForm } from '@app/pages/patients-management/@forms/case-managers-filter.form';
 import { PatientsService } from '@app/pages/patients-management/@services/patients.service';
@@ -11,7 +11,7 @@ import { UsersService } from '@app/pages/user-management/@services/users.service
 import { Patient } from '@app/pages/patients-management/@types/patient';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { environment, NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { Permission } from '@app/pages/administration/@types/permission';
 import { Department } from '../../administration/@types/department';
@@ -19,10 +19,20 @@ import { SelectModalComponent } from '@app/@shared/components/select-modal/selec
 import { DepartmentsService } from '../@services/departments.service';
 import { Filter } from '@app/@shared/@types/filter';
 import { Sorting } from '@app/@shared/@types/sorting';
-import { DEFAULT_PAGE_SIZE } from '@app/@shared/@modules/master-data/@types/list';
+import {
+  Action,
+  ActionArgs,
+  DEFAULT_PAGE_SIZE,
+  SortField,
+  TableColumn,
+} from '@app/@shared/@modules/master-data/@types/list';
 import { UserModel } from '@app/pages/user-management/@models/user.model';
 import { FormattedUser } from '@app/pages/user-management/@types/formatted-user';
-
+import { UserColumns } from '@app/pages/user-management/@tables/users.table';
+import { AppPermissionsService } from '@app/@shared/services/app-permissions.service';
+enum ActionKey {
+  DELETE_USER,
+}
 @Component({
   selector: 'app-case-managers',
   templateUrl: './case-managers.component.html',
@@ -30,6 +40,22 @@ import { FormattedUser } from '@app/pages/user-management/@types/formatted-user'
 })
 export class CaseManagersComponent implements OnInit {
   public PK = PermissionKey;
+
+  public data: Partial<FormattedUser>[];
+
+  public columns: TableColumn<FormattedUser>[] = UserColumns;
+
+  public caseManagersRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
+    paging: { first: DEFAULT_PAGE_SIZE },
+    filter: {},
+    sorting: [],
+  };
+
+  public loading = false;
+
+  public pageInfo: PageInfo;
+
+  public actions: Action<ActionKey>[] = [];
   @Input() managerType = 'caseManager';
   @Input() filter: CaseManagerFilter = {};
   @Input() patient: Patient;
@@ -38,7 +64,6 @@ export class CaseManagersComponent implements OnInit {
   paging: Paging = {
     first: 10,
   };
-  pageInfo: any;
   caseManagers: CaseManager[] = [];
   users: CaseManager[] = [];
   caseManagersTable: { columns: any[]; rows: CaseManager[] } = {
@@ -46,7 +71,6 @@ export class CaseManagersComponent implements OnInit {
     rows: [],
   };
   caseManagersFilterForm = CaseManagersFilterForm;
-  actions = CaseManagersTable.actions;
   selectedIndex = -1;
   isLoading = false;
   showFilter = false;
@@ -65,12 +89,6 @@ export class CaseManagersComponent implements OnInit {
     sorting: [],
   };
 
-  public caseManagersRequestOptions: { paging: Paging; filter: CaseManagerFilter; sorting: Sorting[] } = {
-    paging: { first: DEFAULT_PAGE_SIZE },
-    filter: {},
-    sorting: [],
-  };
-
   public userRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
     filter: {},
@@ -82,6 +100,7 @@ export class CaseManagersComponent implements OnInit {
   constructor(
     private caseManagersService: CaseManagersService,
     private patientService: PatientsService,
+    public perms: AppPermissionsService,
     private message: NzMessageService,
     private modalService: NzModalService,
     private usersService: UsersService,
@@ -94,6 +113,34 @@ export class CaseManagersComponent implements OnInit {
     this.drawerTitle = this.managerType === 'caseManager' ? 'Filter Case Managers' : 'Filter Informants';
     this.caseManagerNiceName = this.managerType === 'caseManager' ? 'Case Manager' : 'Informant';
     this.getDepartments(false);
+  }
+
+  public onPageChange(paging: Paging): void {
+    this.caseManagersRequestOptions.paging = paging;
+    this.getCaseManagers();
+  }
+
+  public onSort(sorting: SortField<FormattedUser>[]): void {
+    this.caseManagersRequestOptions.sorting = sorting;
+    this.getCaseManagers();
+  }
+
+  public onFilter(filter: Filter): void {
+    this.caseManagersRequestOptions.filter = filter;
+    this.getCaseManagers();
+  }
+
+  public onSearch(searchString: string): void {
+    this.caseManagersRequestOptions.filter = { or: this.createSearchFilter(searchString) };
+    this.getCaseManagers();
+  }
+
+  public onAction({ action, context: user }: ActionArgs<FormattedUser, ActionKey>): void {
+    switch (action.key) {
+      case ActionKey.DELETE_USER:
+        // this.deleteUser(user);
+        return;
+    }
   }
 
   public checkIfManagerHasPermission(permissions: Permission[]): boolean {
@@ -263,16 +310,20 @@ export class CaseManagersComponent implements OnInit {
 
   private getCaseManagers(): void {
     this.isLoading = true;
+    const options = { ...this.caseManagersRequestOptions };
+
+    options.filter = {
+      and: [{ patients: { id: { eq: this.patient.id } } }, ...(options.filter.and ?? [])],
+    };
     this.caseManagersService
-      .getPatientCaseManagers(this.caseManagersRequestOptions)
+      .getPatientCaseManagers(options)
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(({ data }) => {
         console.log(data);
-        this.caseManagers = data.getPatientCaseManagers.edges.map((caseManager: any) =>
+        this.data = data.getPatientCaseManagers.edges.map((caseManager: any) =>
           CaseManagerModel.fromJson(caseManager.node)
         );
         this.pageInfo = data.getPatientCaseManagers.pageInfo;
-        this.caseManagersTable.rows = this.caseManagers;
       });
   }
 
