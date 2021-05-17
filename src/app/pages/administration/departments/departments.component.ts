@@ -2,7 +2,7 @@ import { finalize } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { Department, FormattedDepartment, UpdateOneDepartmentInput } from '../@types/department';
 import { DepartmentColumns } from '../@tables/departments.table';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd';
 import { DepartmentsService } from '../@services/departments.service';
 import { DepartmentForm } from '../@forms/department.form';
 import { Convert } from '@shared/classes/convert';
@@ -19,6 +19,7 @@ import {
 import { PageInfo } from '../../../@shared/@types/paging';
 import { AppPermissionsService } from '@app/@shared/services/app-permissions.service';
 import { PermissionKey } from '@app/@shared/@types/permission';
+import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 
 enum ActionKey {
   EDIT_DEPARTMENT,
@@ -59,7 +60,7 @@ export class DepartmentsComponent implements OnInit {
   constructor(
     private departmentsService: DepartmentsService,
     private modalService: NzModalService,
-    private messageService: NzMessageService,
+    private errorService: ErrorHandlerService,
     public perms: AppPermissionsService
   ) {}
 
@@ -134,10 +135,13 @@ export class DepartmentsComponent implements OnInit {
     this.departmentsService
       .departments(this.departmentsRequestOptions)
       .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe(({ data }: any) => {
-        this.data = data.departments.edges.map((department: any) => Convert.toDepartment(department.node));
-        this.pageInfo = data.departments.pageInfo;
-      });
+      .subscribe(
+        ({ data }: any) => {
+          this.data = data.departments.edges.map((department: any) => Convert.toDepartment(department.node));
+          this.pageInfo = data.departments.pageInfo;
+        },
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to load departments' })
+      );
   }
 
   private createSearchFilter(searchString: string): Array<{ [K in keyof Partial<FormattedDepartment>]: {} }> {
@@ -154,8 +158,7 @@ export class DepartmentsComponent implements OnInit {
       `,
     });
 
-    const confirmation = await modal.afterClose.toPromise();
-    if (!confirmation) return;
+    if (!(await modal.afterClose.toPromise())) return;
 
     this.isLoading = true;
     this.departmentsService
@@ -163,7 +166,7 @@ export class DepartmentsComponent implements OnInit {
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         () => this.data.splice(this.data.indexOf(department), 1),
-        () => this.messageService.error('An error occurred could not delete department', { nzDuration: 3000 })
+        (err) => this.errorService.handleError(err, { prefix: `Unable to delete department "${department.name}"` })
       );
   }
 
@@ -179,7 +182,7 @@ export class DepartmentsComponent implements OnInit {
           this.data.push(Convert.toDepartment(data.createOneDepartment));
           this.closeCreatePanel();
         },
-        () => this.messageService.error('An error occured, could not create department', { nzDuration: 3000 })
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to create department' })
       );
   }
 
@@ -203,7 +206,7 @@ export class DepartmentsComponent implements OnInit {
           this.data.splice(idx, 1, updatedDepartment);
           this.closeCreatePanel();
         },
-        () => this.messageService.error('An error occured, could not update department', { nzDuration: 3000 })
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to update department' })
       );
   }
 }

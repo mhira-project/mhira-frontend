@@ -11,7 +11,7 @@
       [loadingMessage]="loadingMessage"
       [inputMode]="inputMode"
       [showCancelButton]="showCancelButton"
-      [showEditButton]="!isCurrentUser() && perms.permissionsOnly([PK.MANAGE_USERS])"
+      [showEditButton]="perms.permissionsOnly([PK.MANAGE_USERS]) && perms.hasAccessLevelToUser(user)"
       [form]="profileFields"
       (submitForm)="submitForm($event)"
     ></app-form>
@@ -86,7 +86,7 @@
         <nz-card style="width: 300px" nzTitle="Delete User {{ user?.firstName }} ({{ user?.username }})">
           <p>To remove User {{ user?.firstName }} toggle the button below.</p>
           <button
-            [disabled]="!perms.permissionsOnly([PK.DELETE_USERS])"
+            [disabled]="!perms.permissionsOnly([PK.DELETE_USERS]) || !perms.hasAccessLevelToUser(user)"
             (click)="handleDeleteAction(user)"
             nz-button
             nzType="danger"

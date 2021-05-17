@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { HorizontalLayoutComponent } from '@app/@layout/horizontal/horizontal.layout.component';
+import { AssessmentLayoutComponent } from '@app/@layout/assessment/assessment-layout.component';
 import { AuthLayoutComponent } from '@app/@layout/auth/auth.layout.component';
-import { VerticalLayoutComponent } from '@app/@layout/vertical/vertical.layout.component';
+import { BackendLayoutComponent } from '@app/@layout/backend/backend-layout.component';
 import { AuthGuard } from '@app/auth/auth.guard';
 
 const appRoutes: Routes = [
   {
     path: 'assessment',
-    component: HorizontalLayoutComponent,
-    loadChildren: () => import('./questionnaire/questionnaire.module').then((m) => m.QuestionnaireModule),
+    component: AssessmentLayoutComponent,
+    loadChildren: () => import('./assessment-form/assessment-form.module').then((m) => m.AssessmentFormModule),
   },
   {
     path: 'mhira',
     canActivate: [AuthGuard],
-    component: VerticalLayoutComponent,
+    component: BackendLayoutComponent,
     loadChildren: () => import('./pages/pages.module').then((m) => m.PagesModule),
   },
   {

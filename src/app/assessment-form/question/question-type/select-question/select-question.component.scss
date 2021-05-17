@@ -1,0 +1,10 @@
+.radio-group {
+  &,
+  .radio {
+    display: block;
+  }
+
+  .radio {
+    margin: 0.6em 0;
+  }
+}

@@ -1,0 +1,10 @@
+<nz-radio-group
+  class="radio-group"
+  nzButtonStyle="solid"
+  [ngModel]="answer.textValue"
+  (ngModelChange)="onChange($event)"
+>
+  <label class="radio" nz-radio-button *ngFor="let choice of question.choices" [nzValue]="choice.name">
+    {{ choice.label }}
+  </label>
+</nz-radio-group>

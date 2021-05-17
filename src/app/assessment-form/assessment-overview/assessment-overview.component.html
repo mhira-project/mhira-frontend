@@ -1,0 +1,53 @@
+<section class="overview" *ngIf="assessment">
+  <nz-card
+    class="questionnaire"
+    *ngFor="let questionnaire of assessment.questionnaireAssessment.questionnaires; index as idx"
+    [nzTitle]="questionnaire.name"
+    [nzExtra]="questionnaireInfo"
+  >
+    <ng-template #questionnaireInfo>
+      <button
+        nz-button
+        nzType="primary"
+        nzShape="circle"
+        class="header-icon"
+        nzSize="small"
+        [disabled]="!canAccessQuestionnaire(idx)"
+        routerLink="../questionnaire/{{ idx }}"
+        queryParamsHandling="merge"
+      >
+        <i nz-icon nzType="caret-right"></i>
+      </button>
+      <app-questionnaire-info [website]="questionnaire.website">
+        <button
+          nz-button
+          nzShape="circle"
+          nzSize="small"
+          nz-tooltip
+          nzTooltipOverlayClassName="questionnaire-tooltip"
+          [nzTooltipTitle]="tooltipContent"
+        >
+          <i class="tooltip-icon header-icon" nz-icon nzType="exclamation"></i>
+        </button>
+      </app-questionnaire-info>
+      <ng-template #tooltipContent>
+        <div class="tooltip">
+          <span *ngIf="questionnaire.license">License: {{ questionnaire.license }}</span>
+          <span *ngIf="questionnaire.copyright">&copy; {{ questionnaire.copyright }}</span>
+        </div>
+      </ng-template>
+    </ng-template>
+
+    <span class="progress" [class.done]="isQuestionnaireDone(questionnaire._id)">
+      {{ getAnsweredQuestions(questionnaire._id) }}/{{ getMaxQuestions(questionnaire._id) }}
+      answered
+    </span>
+    <span *ngIf="questionnaire.timeToComplete">Filling time: {{ questionnaire.timeToComplete }}min</span>
+  </nz-card>
+</section>
+
+<section>
+  <button nz-button nzType="primary" [disabled]="percentageCompleted < 100" (click)="completeAssessment()">
+    Complete assessment ({{ percentageCompleted | number: '1.1-1' }}% completed)
+  </button>
+</section>

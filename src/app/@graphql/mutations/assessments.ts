@@ -157,19 +157,49 @@ const updateOneAssessment = gql`
   }
 `;
 
-const deleteOneAssessment = gql`
-  mutation($id: ID!) {
-    deleteOneAssessment(input: { id: $id }) {
+const deleteAssessment = gql`
+  mutation($id: Int!, $archive: Boolean) {
+    deleteAssessment(id: $id, archive: $archive)
+  }
+`;
+
+const createOneMongoAssessment = gql`
+  mutation($assessment: CreateFullAssessmentInput!) {
+    createNewAssessment(assessment: $assessment) {
       id
-      date
-      name
-      patientId
-      clinicianId
-      informantId
+    }
+  }
+`;
+
+const updateOneMongoAssessment = gql`
+  mutation($assessment: UpdateFullAssessmentInput!) {
+    updateAssessment(assessment: $assessment) {
+      id
+    }
+  }
+`;
+
+const addAnswer = gql`
+  mutation($assessment: AnswerAssessmentInput!) {
+    addAnswer(assessment: $assessment) {
+      _id
+      answers {
+        question
+        textValue
+        multipleChoiceValue
+        numberValue
+        dateValue
+        booleanValue
+      }
+    }
+  }
+`;
+
+const changeAssessmentStatus = gql`
+  mutation($statusInput: ChangeAssessmentStatusInput!) {
+    changeAssessmentStatus(statusInput: $statusInput) {
+      _id
       status
-      createdAt
-      updatedAt
-      deletedAt
     }
   }
 `;
@@ -177,5 +207,9 @@ const deleteOneAssessment = gql`
 export const AssessmentsMutations = {
   createOneAssessment,
   updateOneAssessment,
-  deleteOneAssessment,
+  deleteAssessment,
+  createOneMongoAssessment,
+  updateOneMongoAssessment,
+  addAnswer,
+  changeAssessmentStatus,
 };

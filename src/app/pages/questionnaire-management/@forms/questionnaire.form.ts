@@ -1,6 +1,7 @@
 import { CreateQuestionnaireInput, QuestionnaireStatus } from './../@types/questionnaire';
 import { Form } from '../../../@shared/components/form/@types/form';
 import { UpdateQuestionnaireInput } from '../@types/questionnaire';
+import { getNames } from '@cospired/i18n-iso-languages';
 
 export const QuestionnaireForm: Form & { groups: { fields: { name: keyof CreateQuestionnaireInput }[] }[] } = {
   submitButtonText: 'Upload Questionnaire',
@@ -8,6 +9,14 @@ export const QuestionnaireForm: Form & { groups: { fields: { name: keyof CreateQ
   groups: [
     {
       fields: [
+        {
+          value: '',
+          name: 'name',
+          title: 'Name',
+          description: 'Name',
+          type: 'text',
+          span: 12,
+        },
         {
           value: undefined,
           name: 'excelFile',
@@ -33,22 +42,17 @@ export const QuestionnaireForm: Form & { groups: { fields: { name: keyof CreateQ
           ],
         },
         {
-          value: undefined,
-          name: 'timeToComplete',
-          title: 'Time to complete (minutes)',
-          description: 'Time to complete (minutes)',
-          type: 'number',
-          span: 12,
-          isRequired: true,
-        },
-        {
           value: '',
           name: 'language',
           title: 'Language',
           description: 'Language',
-          type: 'text',
+          type: 'select',
           span: 12,
           isRequired: true,
+          // TODO: get from correct language
+          options: Object.entries(getNames('en'))
+            .map(([value, label]) => ({ label, value }))
+            .sort((prev, next) => prev.label.localeCompare(next.label)),
         },
         {
           value: '',
@@ -58,6 +62,14 @@ export const QuestionnaireForm: Form & { groups: { fields: { name: keyof CreateQ
           type: 'text',
           span: 12,
           isRequired: true,
+        },
+        {
+          value: undefined,
+          name: 'timeToComplete',
+          title: 'Time to complete (minutes)',
+          description: 'Time to complete (minutes)',
+          type: 'number',
+          span: 12,
         },
         {
           value: '',
@@ -96,6 +108,15 @@ export const QuestionnaireUpdateForm: Form & { groups: { fields: { name: keyof U
     {
       fields: [
         {
+          value: '',
+          name: 'name',
+          title: 'Name',
+          description: 'Name',
+          type: 'text',
+          span: 12,
+          isRequired: true,
+        },
+        {
           value: QuestionnaireStatus.DRAFT,
           name: 'status',
           title: 'Status',
@@ -111,22 +132,17 @@ export const QuestionnaireUpdateForm: Form & { groups: { fields: { name: keyof U
           ],
         },
         {
-          value: undefined,
-          name: 'timeToComplete',
-          title: 'Time to complete (minutes)',
-          description: 'Time to complete (minutes)',
-          type: 'number',
-          span: 12,
-          isRequired: true,
-        },
-        {
           value: '',
           name: 'language',
           title: 'Language',
           description: 'Language',
-          type: 'text',
+          type: 'select',
           span: 12,
           isRequired: true,
+          // TODO: get from correct language
+          options: Object.entries(getNames('en'))
+            .map(([value, label]) => ({ label, value }))
+            .sort((prev, next) => prev.label.localeCompare(next.label)),
         },
         {
           value: '',
@@ -136,6 +152,14 @@ export const QuestionnaireUpdateForm: Form & { groups: { fields: { name: keyof U
           type: 'text',
           span: 12,
           isRequired: true,
+        },
+        {
+          value: undefined,
+          name: 'timeToComplete',
+          title: 'Time to complete (minutes)',
+          description: 'Time to complete (minutes)',
+          type: 'number',
+          span: 12,
         },
         {
           value: '',

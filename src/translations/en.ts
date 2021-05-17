@@ -1,0 +1,28 @@
+export default {
+  dashboard: {
+    welcome: 'Welcome to MHIRA',
+  },
+  menu: {
+    dashboard: 'Dashboard',
+    caseManagement: 'Case Managment',
+    patientList: 'Patients List',
+    createPatient: 'Create Patient',
+    questionnaires: 'Questionnaires',
+    questionnairesList: 'Questionnaires List',
+    uploadQuestionnaire: 'Upload Questionnaire',
+    assessments: 'Assessments',
+    planAssessment: 'Plan Assessments',
+    plannedAssessments: 'Planned Assessments',
+    userManagement: 'User Management',
+    listUsers: 'List Users',
+    newUser: 'New User',
+    administration: 'Administration',
+    permissionMatrix: 'Permission Matrix',
+    permissions: 'Permissions',
+    roles: 'Roles',
+    departments: 'Departments',
+    settings: 'Settings',
+    systemConfiguration: 'System Configuration',
+    patientStatuses: 'Patient Statuses',
+  },
+};
