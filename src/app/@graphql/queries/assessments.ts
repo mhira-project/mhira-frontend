@@ -151,6 +151,7 @@ const getFullAssessment = gql`
             abbreviation
           }
           questionGroups {
+            label
             questions {
               _id
               name

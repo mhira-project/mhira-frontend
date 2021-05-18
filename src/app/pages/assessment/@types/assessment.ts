@@ -20,6 +20,7 @@ export interface Assessment {
   clinician?: User;
   informant: string;
   questionnaireAssessmentId?: string;
+  createdAt?: Date;
 }
 
 export interface QuestionnaireAssessment {
