@@ -72,7 +72,6 @@ export class CaseManagersComponent implements OnInit {
   };
   caseManagersFilterForm = CaseManagersFilterForm;
   selectedIndex = -1;
-  isLoading = false;
   showFilter = false;
   showAssignModal = false;
   showAssignDepartmentModal = false;
@@ -112,7 +111,7 @@ export class CaseManagersComponent implements OnInit {
     this.getCaseManagers();
     this.drawerTitle = this.managerType === 'caseManager' ? 'Filter Case Managers' : 'Filter Informants';
     this.caseManagerNiceName = this.managerType === 'caseManager' ? 'Case Manager' : 'Informant';
-    this.getDepartments(false);
+    this.getDepartments();
   }
 
   public onPageChange(paging: Paging): void {
@@ -259,7 +258,7 @@ export class CaseManagersComponent implements OnInit {
           nzOkText: 'Remove',
           nzOnOk: () => this.unAssignCaseManager(this.caseManagers[this.selectedIndex]),
           // nzVisible: this.isOkLoading,
-          nzOkDisabled: this.isLoading,
+          nzOkDisabled: this.loading,
           nzCancelText: 'Cancel',
         });
         break;
@@ -309,7 +308,7 @@ export class CaseManagersComponent implements OnInit {
   }
 
   private getCaseManagers(): void {
-    this.isLoading = true;
+    this.loading = true;
     const options = { ...this.caseManagersRequestOptions };
 
     options.filter = {
@@ -317,7 +316,7 @@ export class CaseManagersComponent implements OnInit {
     };
     this.caseManagersService
       .getPatientCaseManagers(options)
-      .pipe(finalize(() => (this.isLoading = false)))
+      .pipe(finalize(() => (this.loading = false)))
       .subscribe(({ data }) => {
         console.log(data);
         this.data = data.getPatientCaseManagers.edges.map((caseManager: any) =>
@@ -327,31 +326,24 @@ export class CaseManagersComponent implements OnInit {
       });
   }
 
-  private getDepartments(getAllDepartments: boolean = false): void {
-    this.isLoading = true;
+  private getDepartments(): void {
+    this.loading = true;
     const options = { ...this.departmentRequestOptions };
-
     options.filter = {
-      and: [getAllDepartments ? {} : { patients: { id: { eq: this.patient.id } } }, ...(options.filter.and ?? [])],
+      and: [{ patients: { id: { eq: this.patient.id } } }, ...(options.filter.and ?? [])],
     };
-
     this.departmentsService
       .departments(options)
-      .pipe(finalize(() => (this.isLoading = false)))
+      .pipe(finalize(() => (this.loading = false)))
       .subscribe((response) => {
-        if (getAllDepartments) {
-          this.patient.departments = response.data.departments.edges.map((e: any) => e.node);
-        } else {
-          this.patient.departments = response.data.departments.edges.map((e: any) => e.node);
-        }
-        this.pageInfo = response.data.departments.pageInfo; // TODO: remove
+        this.patient.departments = response.data.departments.edges.map((e: any) => e.node);
       });
   }
 
   private managePatientDepartments(manager: CaseManager, department: Department) {
-    this.isLoading = true;
+    this.loading = true;
     const executedAction = this.departmentsService.addDepartmentsToPatient(this.patient.id, department.id);
-    executedAction.pipe(finalize(() => (this.isLoading = false))).subscribe(
+    executedAction.pipe(finalize(() => (this.loading = false))).subscribe(
       () => {
         this.patient.departments.push(department);
         this.assignCaseManager(manager);
@@ -361,11 +353,11 @@ export class CaseManagersComponent implements OnInit {
   }
 
   private assignCaseManager(manager: CaseManager) {
-    this.isLoading = true;
+    this.loading = true;
     const query = this.setCaseManagerServicePropertyName('assign');
     this.getCaseManagerServiceProperty(query, { userId: manager.id, patientId: this.patient.id }).subscribe(
       async ({ data }: any) => {
-        this.isLoading = false;
+        this.loading = false;
         this.showAssignModal = false;
         if (data) {
           this.caseManagersTable.rows = [];
@@ -380,18 +372,18 @@ export class CaseManagersComponent implements OnInit {
         }
       },
       () => {
-        this.isLoading = false;
+        this.loading = false;
         this.message.create('error', `${manager.firstName} could not be assigned to ${this.patient.firstName}`);
       }
     );
   }
 
   private unAssignCaseManager(manager: CaseManager) {
-    this.isLoading = true;
+    this.loading = true;
     const query = this.setCaseManagerServicePropertyName('remove');
     this.getCaseManagerServiceProperty(query, { userId: manager.id, patientId: this.patient.id }).subscribe(
       async ({ data }: any) => {
-        this.isLoading = false;
+        this.loading = false;
         if (data) {
           const deletedIndex = this.caseManagers.findIndex((_manager) => _manager.id === manager.id);
           this.caseManagers.splice(deletedIndex, 1);
@@ -405,7 +397,7 @@ export class CaseManagersComponent implements OnInit {
         }
       },
       () => {
-        this.isLoading = false;
+        this.loading = false;
         this.message.create('error', `${this.managerType} could not be assigned to ${this.patient.firstName}`);
       }
     );
@@ -424,16 +416,16 @@ export class CaseManagersComponent implements OnInit {
         this.caseManagersFilterForm.groups[0].fields[1].options = options;
       },
       () => {
-        this.isLoading = false;
+        this.loading = false;
       }
     );
   }
 
   private getSearchedCaseManagers(): void {
-    this.isLoading = true;
+    this.loading = true;
     this.usersService
       .getUsers(this.userRequestOptions)
-      .pipe(finalize(() => (this.isLoading = false)))
+      .pipe(finalize(() => (this.loading = false)))
       .subscribe(({ data }) => {
         console.log(data);
         this.users = data.users.edges.map((caseManager: any) => CaseManagerModel.fromJson(caseManager.node));

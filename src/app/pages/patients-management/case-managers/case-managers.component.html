@@ -1,27 +1,5 @@
 <div nz-row>
   <div nz-col nzSpan="24">
-    <!-- <app-table
-      [loading]="isLoading"
-      [showPagination]="false"
-      [showCustomActions]="true"
-      [showSearch]="true"
-      [showFilterButton]="true"
-      [showCheckBoxColumn]="false"
-      [listOfCustomActions]="actions"
-      [listOfData]="caseManagersTable.rows"
-      [listOfColumn]="caseManagersTable.columns"
-      [showButton]="showAssignButton"
-      [buttonText]="'Add ' + caseManagerNiceName"
-      [hasNextPage]="pageInfo?.hasNextPage"
-      [hasPreviousPage]="pageInfo?.hasPreviousPage"
-      (onNext)="navigatePages('next')"
-      (onPrevious)="navigatePages('previous')"
-      (onAction)="handleActionClick($event)"
-      (onButton)="toggleAssignModal()"
-      (onFilterButton)="toggleFilterDrawer()"
-      (onSearch)="searchManagers($event)"
-    >
-    </app-table> -->
     <app-master-data-list
       [data]="data"
       [columns]="columns"
@@ -68,7 +46,7 @@
   nzTitle="Assign {{ caseManagerNiceName }} to {{ patient?.firstName }} {{ patient?.lastName }}"
   (nzOnCancel)="toggleAssignModal()"
   (nzOnOk)="toggleAssignModal()"
-  [nzOkLoading]="isLoading"
+  [nzOkLoading]="loading"
 >
   <app-master-data-search
     style="width: 100%"
@@ -85,7 +63,7 @@
         <div nz-col nzSpan="12">{{ manager?.email }}</div>
         <div nz-col nzSpan="4">
           <button
-            [disabled]="!checkIfManagerHasPermission(manager?.permissionGrants)"
+            [disabled]="!(manager.departments.length > 0) || !checkIfManagerHasPermission(manager?.permissionGrants)"
             class="assign-button"
             nz-button
             nzType="primary"
@@ -108,7 +86,7 @@
   nzTitle="Assign one of these departments to {{ patient?.firstName }} {{ patient?.lastName }}"
   (nzOnCancel)="toggleAssignDetapartmentModal()"
   (nzOnOk)="toggleAssignDetapartmentModal()"
-  [nzOkLoading]="isLoading"
+  [nzOkLoading]="loading"
 >
   <app-patient-departments [departments]="manager?.departments" [patient]="patient"></app-patient-departments>
 </nz-modal>
