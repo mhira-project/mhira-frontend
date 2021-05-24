@@ -148,7 +148,7 @@ export class UsersListComponent {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () => this.data.splice(this.data.indexOf(user), 1),
-        (error) => this.errorService.handleError(error, { prefix: 'Unable to delete patient' })
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to delete user' })
       );
   }
 
