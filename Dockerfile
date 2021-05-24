@@ -3,11 +3,9 @@ FROM node:latest as builder
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY . .
 
 RUN npm ci
-
-COPY . .
 
 RUN npm run build:prod
 
