@@ -10,6 +10,10 @@
 # -----
 image: node:latest
 
+# enable Docker for your repository
+options:
+  docker: true
+
 definitions:
   steps:
     - step: &install
