@@ -96,8 +96,6 @@ pipelines:
   branches:
     
     feature/docker-build:
-      - step: *install
-      - step: *lint
       - step: *build-docker 
         
     master:
