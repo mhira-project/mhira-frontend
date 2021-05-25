@@ -103,6 +103,14 @@ pipelines:
   branches:
     
     feature/docker-build:
+      - step:
+          name: Build Production
+          caches:
+            - node
+          script:
+            - npm run build:prod
+          artifacts:
+            - dist/**
       - step: *build-docker 
         
     master:

@@ -1,13 +1,13 @@
-### Development container build #####################################
-FROM node:latest as builder
+# ### Development container build #####################################
+# FROM node:latest as builder
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY . .
+# COPY . .
 
-RUN npm ci
+# RUN npm ci
 
-RUN npm run build:dev
+# RUN npm run build:dev
 
 
 ### Production container build #####################################
@@ -20,7 +20,7 @@ COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy artifacts from the Stage 2
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY ./dist /usr/share/nginx/html
 
 EXPOSE 80 80
 
