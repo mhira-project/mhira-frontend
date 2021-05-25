@@ -16,10 +16,6 @@ options:
 
 definitions:
 
-  services:
-    docker:
-      memory: 2048
-
   steps:
     - step: &install
         name: Installation
@@ -48,8 +44,6 @@ definitions:
           - docker push ${AWS_REGISTRY_URL}:$BUILD_ID
           - docker tag ${AWS_REGISTRY_URL}:$BUILD_ID ${AWS_REGISTRY_URL}:development
           - docker push ${AWS_REGISTRY_URL}:development
-        services:
-          - docker
 
 pipelines:
   pull-requests:
