@@ -7,7 +7,7 @@ COPY . .
 
 RUN npm ci
 
-RUN npm run build
+RUN npm run build:dev
 
 
 ### Production container build #####################################
