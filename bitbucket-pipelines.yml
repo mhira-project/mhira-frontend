@@ -104,11 +104,11 @@ pipelines:
     
     feature/docker-build:
       - step:
-          name: Build Production
+          name: Build Development
           caches:
             - node
           script:
-            - npm run build:prod
+            - npm run build:dev
           artifacts:
             - dist/**
       - step: *build-docker 
