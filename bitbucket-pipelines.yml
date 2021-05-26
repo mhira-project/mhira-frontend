@@ -36,10 +36,11 @@ definitions:
         caches:
           - docker
         #python image with aws-cli installed
-        image: tstrohmeier/awscli:3.8.3
+        image: amazon/aws-cli
         script:
           # aws login
-          - eval $(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)
+          - if ! [[ $AWS_REGISTRY_URL == public.ecr.aws* ]]; then aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_REGISTRY_URL}; fi
+          - if [[ $AWS_REGISTRY_URL == public.ecr.aws* ]]; then aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws; fi
           # docker
           - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
           - docker build -t ${AWS_REGISTRY_URL}:$BUILD_ID .
