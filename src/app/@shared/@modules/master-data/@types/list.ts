@@ -6,6 +6,7 @@ export interface TableColumn<T> {
   render?: 'html' | 'date' | 'tag' | 'avatar' | 'country' | 'array' | undefined;
   sort?: boolean;
   altName?: keyof T;
+  translationPath?: string;
   filterField?: Field;
   filterQuery?: (q: any) => {} | [];
 }

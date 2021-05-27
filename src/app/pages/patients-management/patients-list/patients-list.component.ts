@@ -42,11 +42,17 @@ export class PatientsListComponent {
 
   public columns: TableColumn<Partial<FormattedPatient>>[] = PatientColumns as TableColumn<Partial<FormattedPatient>>[];
 
+  public translatedColumns: TableColumn<Partial<FormattedPatient>>[] = [];
+
   public data: Partial<FormattedPatient>[];
 
   public pageInfo: PageInfo;
 
-  public patientRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
+  public patientRequestOptions: {
+    paging: Paging;
+    filter: Filter;
+    sorting: Sorting[];
+  } = {
     paging: { first: DEFAULT_PAGE_SIZE },
     filter: {},
     sorting: [],
@@ -76,7 +82,9 @@ export class PatientsListComponent {
   }
 
   public searchPatients(searchString: string): void {
-    this.patientRequestOptions.filter = { or: this.createSearchFilter(searchString) };
+    this.patientRequestOptions.filter = {
+      or: this.createSearchFilter(searchString),
+    };
     this.getPatients();
   }
 
@@ -139,7 +147,10 @@ export class PatientsListComponent {
           this.data = patients.data.patients.edges.map((e: any) => PatientModel.fromJson(e.node));
           this.pageInfo = patients.data.patients.pageInfo; // TODO: remove
         },
-        (error) => this.errorService.handleError(error, { prefix: 'Unable to load patients' })
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: 'Unable to load patients',
+          })
       );
   }
 
@@ -184,7 +195,10 @@ export class PatientsListComponent {
         ];
         this.columns = [...this.columns]; // trigger setter to re-render filter
       },
-      (error) => this.errorService.handleError(error, { prefix: 'Unable to load patient statuses' })
+      (error) =>
+        this.errorService.handleError(error, {
+          prefix: 'Unable to load patient statuses',
+        })
     );
   }
 

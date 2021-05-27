@@ -1,4 +1,7 @@
 export default {
+  dashboard: {
+    welcome: 'Karibu  MHIRA',
+  },
   menu: {
     dashboard: 'Dashibodi',
     caseManagement: 'Usimamizi Wa Kesi',
@@ -21,5 +24,42 @@ export default {
     settings: 'Mipangilio',
     systemConfiguration: 'Usanidi wa Mfumo',
     patientStatuses: 'Hadhi za Mgonjwa',
+  },
+  tables: {
+    patients: {
+      firstName: 'Jina la Kwanza',
+      middleName: 'Jina la Kati',
+      lastName: 'Jina la Mwisho',
+      medicalRecordNo: 'Namba ya Hospitali',
+      gender: 'Jinsia',
+      birthDate: 'Tarehe ya Kuzaliwa',
+      status: 'Status',
+      informants: 'Mtoa Taarifa',
+      caseManager: 'Muhudumu',
+      createdAt: 'Imetengenezwa',
+    },
+  },
+  forms: {
+    patients: {
+      patientInformation: 'Taarifa za Mgonjwa',
+      firstName: 'Jina la Kwanza',
+      middleName: 'Jina la kati',
+      lastName: 'Jina la Mwisho',
+      id: 'Namba',
+      birthDate: 'Tarehe ya Kuzaliwa',
+      gender: 'Jinsia',
+      patientAddress: 'Taarifa za Makazi',
+      street: 'Jina la Mtaa',
+      addressNumber: 'Namba ya Mtaa',
+      addressApartment: 'Namba ya Nyumba',
+      addressPlace: 'Mahali',
+      addressPostalCode: 'Sanduku la Posta',
+      addressCountryCode: 'Nchi',
+      patientContact: 'Mawasiliano ya mhonjwa',
+      email: 'Barua pepe',
+      phone: 'Namba ya simu',
+      phone2: 'Namba ya ziada',
+      emergencyContacts: 'Mawasiliano ya dharula',
+    },
   },
 };
