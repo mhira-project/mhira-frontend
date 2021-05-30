@@ -297,7 +297,6 @@ export class CaseManagersComponent implements OnInit {
       .getPatientCaseManagers(options)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(({ data }) => {
-        console.log(data);
         this.data = data.getPatientCaseManagers.edges.map((caseManager: any) =>
           CaseManagerModel.fromJson(caseManager.node)
         );
@@ -406,7 +405,6 @@ export class CaseManagersComponent implements OnInit {
       .getUsers(this.userRequestOptions)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(({ data }) => {
-        console.log(data);
         this.users = data.users.edges.map((caseManager: any) => CaseManagerModel.fromJson(caseManager.node));
         this.caseManagersFilterForm.groups[0].fields[2].options = this.users.map((user) => {
           return { value: user.id, label: `${user.firstName} ${user.lastName}` };
