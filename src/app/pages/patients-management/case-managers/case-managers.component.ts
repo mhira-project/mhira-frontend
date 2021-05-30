@@ -191,36 +191,16 @@ export class CaseManagersComponent implements OnInit {
     });
 
     const state: Department = await modal.afterClose.toPromise();
-
     const departmentId = state.id;
     const department = this.manager.departments[this.manager.departments.findIndex((p) => p.id === departmentId)];
-
-    if (this.checkPationHasDepartment(department)) {
-      this.assignCaseManager(manager);
-    } else {
-      this.managePatientDepartments(manager, department);
-    }
+    this.checkPationHasDepartment(department)
+      ? this.assignCaseManager(manager)
+      : this.managePatientDepartments(manager, department);
   }
 
   public departmentCheck(manager: CaseManager) {
     this.manager = manager;
     this.updatePatientDepartment(manager);
-  }
-
-  public navigatePages(direction: string, pageSize: number = 10) {
-    switch (direction) {
-      case 'next':
-        this.paging.before = undefined;
-        this.paging.first = pageSize;
-        this.paging.last = undefined;
-        break;
-      case 'previous':
-        this.paging.after = undefined;
-        this.paging.first = undefined;
-        this.paging.last = pageSize;
-        break;
-    }
-    this.getCaseManagers();
   }
 
   public toggleFilterDrawer() {
@@ -266,7 +246,6 @@ export class CaseManagersComponent implements OnInit {
   }
 
   public searchManagers(searchString: string) {
-    console.log(searchString);
     this.filter.or = [
       { firstName: { iLike: `%${searchString}%` } },
       { middleName: { iLike: `%${searchString}%` } },
