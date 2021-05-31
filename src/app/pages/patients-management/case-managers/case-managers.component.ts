@@ -9,9 +9,9 @@ import { PatientsService } from '@app/pages/patients-management/@services/patien
 import { CaseManagerFilter } from '@app/pages/patients-management/@types/case-manager-filter';
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { Patient } from '@app/pages/patients-management/@types/patient';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
-import { environment, NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { Subject } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { Permission } from '@app/pages/administration/@types/permission';
 import { Department } from '../../administration/@types/department';
@@ -19,14 +19,7 @@ import { SelectModalComponent } from '@app/@shared/components/select-modal/selec
 import { DepartmentsService } from '../@services/departments.service';
 import { Filter } from '@app/@shared/@types/filter';
 import { Sorting } from '@app/@shared/@types/sorting';
-import {
-  Action,
-  ActionArgs,
-  DEFAULT_PAGE_SIZE,
-  SortField,
-  TableColumn,
-} from '@app/@shared/@modules/master-data/@types/list';
-import { UserModel } from '@app/pages/user-management/@models/user.model';
+import { Action, DEFAULT_PAGE_SIZE, SortField, TableColumn } from '@app/@shared/@modules/master-data/@types/list';
 import { FormattedUser } from '@app/pages/user-management/@types/formatted-user';
 import { UserColumns } from '@app/pages/user-management/@tables/users.table';
 import { AppPermissionsService } from '@app/@shared/services/app-permissions.service';
