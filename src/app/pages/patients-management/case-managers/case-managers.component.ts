@@ -134,14 +134,6 @@ export class CaseManagersComponent implements OnInit {
     this.getCaseManagers();
   }
 
-  public onAction({ action, context: user }: ActionArgs<FormattedUser, ActionKey>): void {
-    switch (action.key) {
-      case ActionKey.DELETE_USER:
-        // this.deleteUser(user);
-        return;
-    }
-  }
-
   public checkIfManagerHasPermission(permissions: Permission[]): boolean {
     return permissions.some((p: Permission) => p.name === this.PK.MANAGE_PATIENTS);
   }
@@ -226,7 +218,7 @@ export class CaseManagersComponent implements OnInit {
     }
   }
 
-  public handleActionClick(event: any): void {
+  public handleActionClick(event: { index: number; action: { name: string } }): void {
     this.selectedIndex = event.index;
     switch (event.action.name) {
       case 'Remove':
@@ -237,7 +229,6 @@ export class CaseManagersComponent implements OnInit {
           }`,
           nzOkText: 'Remove',
           nzOnOk: () => this.unAssignCaseManager(this.caseManagers[this.selectedIndex]),
-          // nzVisible: this.isOkLoading,
           nzOkDisabled: this.loading,
           nzCancelText: 'Cancel',
         });
@@ -255,7 +246,7 @@ export class CaseManagersComponent implements OnInit {
     this.getCaseManagers();
   }
 
-  public filterCaseManagers(filter: any) {
+  public filterCaseManagers(filter: CaseManagerFilter) {
     this.filter = filter;
     this.getCaseManagers();
   }
