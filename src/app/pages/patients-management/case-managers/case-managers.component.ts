@@ -180,7 +180,7 @@ export class CaseManagersComponent implements OnInit {
     this.showAssignDepartmentModal = !this.showAssignDepartmentModal;
   }
 
-  public handleSearchOptions(search: any) {
+  public handleSearchOptions(search: { field: { name: string }; keyword: string }) {
     switch (search.field.name) {
       case 'patientId':
         this.searchPatients(search.keyword);
