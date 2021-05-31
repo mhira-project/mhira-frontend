@@ -210,12 +210,7 @@ export class CaseManagersComponent implements OnInit {
   }
 
   public searchManagers(searchString: string) {
-    this.filter.or = [
-      { firstName: { iLike: `%${searchString}%` } },
-      { middleName: { iLike: `%${searchString}%` } },
-      { lastName: { iLike: `%${searchString}%` } },
-      { medicalRecordNo: { iLike: `%${searchString}%` } },
-    ];
+    this.filter.or = this.createSearchFilter(searchString);
     this.getCaseManagers();
   }
 
