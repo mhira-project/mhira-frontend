@@ -138,35 +138,6 @@ export class CaseManagersComponent implements OnInit {
     return permissions.some((p: Permission) => p.name === this.PK.MANAGE_PATIENTS);
   }
 
-  public setCaseManagerServicePropertyName(action: string): string {
-    let property =
-      action === 'get'
-        ? 'getPatientCaseManagers'
-        : action === 'assign'
-        ? 'assignPatientCaseManager'
-        : 'unassignPatientCaseManager';
-
-    switch (this.managerType) {
-      case 'caseManager':
-        property =
-          action === 'get'
-            ? 'getPatientCaseManagers'
-            : action === 'assign'
-            ? 'assignPatientCaseManager'
-            : 'unassignPatientCaseManager';
-        break;
-      case 'informant':
-        property =
-          action === 'get'
-            ? 'getPatientInformants'
-            : action === 'assign'
-            ? 'assignPatientInformant'
-            : 'unassignPatientInformant';
-        break;
-    }
-    return property;
-  }
-
   public getCaseManagerServiceProperty(property: any, params?: any) {
     return this.caseManagersService[property](params);
   }
@@ -323,8 +294,7 @@ export class CaseManagersComponent implements OnInit {
 
   private assignCaseManager(manager: CaseManager) {
     this.loading = true;
-    const query = this.setCaseManagerServicePropertyName('assign');
-    this.getCaseManagerServiceProperty(query, { userId: manager.id, patientId: this.patient.id }).subscribe(
+    this.caseManagersService.assignPatientCaseManager({ userId: manager.id, patientId: this.patient.id }).subscribe(
       async ({ data }: any) => {
         this.loading = false;
         this.showAssignModal = false;
@@ -349,8 +319,7 @@ export class CaseManagersComponent implements OnInit {
 
   private unAssignCaseManager(manager: CaseManager) {
     this.loading = true;
-    const query = this.setCaseManagerServicePropertyName('remove');
-    this.getCaseManagerServiceProperty(query, { userId: manager.id, patientId: this.patient.id }).subscribe(
+    this.caseManagersService.unassignPatientCaseManager({ userId: manager.id, patientId: this.patient.id }).subscribe(
       async ({ data }: any) => {
         this.loading = false;
         if (data) {
