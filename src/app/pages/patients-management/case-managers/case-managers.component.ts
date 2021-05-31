@@ -154,11 +154,13 @@ export class CaseManagersComponent implements OnInit {
     });
 
     const state: Department = await modal.afterClose.toPromise();
-    const departmentId = state.id;
-    const department = this.manager.departments[this.manager.departments.findIndex((p) => p.id === departmentId)];
-    this.checkPationHasDepartment(department)
-      ? this.assignCaseManager(manager)
-      : this.managePatientDepartments(manager, department);
+    if (state) {
+      const departmentId = state.id;
+      const department = this.manager.departments[this.manager.departments.findIndex((p) => p.id === departmentId)];
+      this.checkPationHasDepartment(department)
+        ? this.assignCaseManager(manager)
+        : this.managePatientDepartments(manager, department);
+    }
   }
 
   public departmentCheck(manager: CaseManager) {
