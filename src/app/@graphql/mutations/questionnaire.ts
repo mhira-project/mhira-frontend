@@ -40,7 +40,16 @@ const updateQuestionnaire = gql`
   }
 `;
 
+const deleteQuestionnaire = gql`
+  mutation($_id: String!, $softDelete: Boolean) {
+    deleteQuestionnaire(_id: $_id, softDelete: $softDelete) {
+      _id
+    }
+  }
+`;
+
 export const QuestionnaireMutations = {
   createQuestionnaire,
   updateQuestionnaire,
+  deleteQuestionnaire,
 };

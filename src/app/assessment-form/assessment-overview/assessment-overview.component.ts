@@ -22,18 +22,6 @@ export class AssessmentOverviewComponent implements OnInit {
     return this.assessment.questionnaireAssessment.answers;
   }
 
-  public get requiredQuestions(): Question[] {
-    return this.questions.filter((q) => q.required);
-  }
-
-  public get percentageCompleted(): number {
-    const numAnswers = this.requiredQuestions.reduce(
-      (sum, question) => (this.answers.find((a) => a.question === question._id) ? (sum += 1) : sum),
-      0
-    );
-    return (numAnswers / this.requiredQuestions.length) * 100;
-  }
-
   constructor(
     public assessmentFormService: AssessmentFormService,
     private cdr: ChangeDetectorRef,

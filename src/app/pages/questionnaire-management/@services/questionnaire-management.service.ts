@@ -50,4 +50,12 @@ export class QuestionnaireManagementService {
       })
       .pipe(map((result) => result.data.questionnaires));
   }
+
+  public deleteQuestionnaire(_id: string, softDelete: boolean = true) {
+    return this.apollo.mutate({
+      mutation: QuestionnaireMutations.deleteQuestionnaire,
+      variables: { _id, softDelete },
+      fetchPolicy: 'no-cache',
+    });
+  }
 }
