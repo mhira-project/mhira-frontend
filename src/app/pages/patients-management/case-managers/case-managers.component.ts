@@ -23,9 +23,7 @@ import { Action, DEFAULT_PAGE_SIZE, SortField, TableColumn } from '@app/@shared/
 import { FormattedUser } from '@app/pages/user-management/@types/formatted-user';
 import { UserColumns } from '@app/pages/user-management/@tables/users.table';
 import { AppPermissionsService } from '@app/@shared/services/app-permissions.service';
-enum ActionKey {
-  DELETE_USER,
-}
+
 @Component({
   selector: 'app-case-managers',
   templateUrl: './case-managers.component.html',
@@ -48,7 +46,6 @@ export class CaseManagersComponent implements OnInit {
 
   public pageInfo: PageInfo;
 
-  public actions: Action<ActionKey>[] = [];
   @Input() managerType = 'caseManager';
   @Input() filter: CaseManagerFilter = {};
   @Input() patient: Patient;
