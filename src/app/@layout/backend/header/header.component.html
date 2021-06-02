@@ -1,6 +1,6 @@
 <div nz-row>
   <div nz-col nz-row nzFlex="auto" nzAlign="middle">
-    <nz-breadcrumb nz-col [nzAutoGenerate]="true"></nz-breadcrumb>
+    <nz-breadcrumb [nzRouteLabel]="'breadcrumb'" nz-col [nzAutoGenerate]="true"></nz-breadcrumb>
   </div>
   <div class="usermenu" nz-col nzFlex="200px">
     <ul nz-menu nzMode="horizontal" class="header-menu align-right" style="float: right">
@@ -21,7 +21,7 @@
             <perfect-scrollbar class="overflow-y-auto" style="max-height: 300px">
               <nz-list
                 class="ant-list-item-links"
-                [nzDataSource]="translationList"
+                [nzDataSource]="translations"
                 [nzRenderItem]="item"
                 [nzItemLayout]="'horizontal'"
               >

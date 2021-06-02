@@ -15,6 +15,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 
 const CryptoJS = require('crypto-js');
+import { translationList } from '../../../../translations/translation-list';
+import { TranslationCode } from '@app/@shared/@types/translation';
 
 @Component({
   selector: 'app-header',
@@ -25,11 +27,7 @@ export class HeaderComponent implements OnInit {
   @ViewChild(FormComponent) child: FormComponent;
   isOkLoading = false;
   user: User;
-  translationList: TranslationItem[] = [
-    { name: 'English', code: 'en' },
-    { name: 'Germany', code: 'de' },
-    { name: 'Swahili', code: 'sw' },
-  ];
+  translations = translationList;
   changePasswordModal = false;
   loadingMessage = '';
   changePasswordForm: Form = userForms.changeUserPassword;
@@ -45,8 +43,8 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getUser();
     this.translationService.setDefaultLang('en');
+    this.getUser();
     this.getStoredLang();
   }
 
@@ -63,9 +61,15 @@ export class HeaderComponent implements OnInit {
 
   getStoredLang() {
     const lang = localStorage.getItem('currentLang');
-
+    const browserLang = this.translationService.getBrowserLang();
     if (lang) {
       this.translationService.use(lang);
+    } else {
+      if (this.translations.some((trans) => trans.code === browserLang)) {
+        this.translationService.use(browserLang);
+      } else {
+        this.translationService.use(TranslationCode.EN);
+      }
     }
   }
 

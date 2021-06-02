@@ -7,6 +7,7 @@ const routes: Routes = [
     path: 'dashboard',
     data: {
       breadcrumb: extract('Dashboard'),
+      breadcrumbI18nKey: 'menu.dashboard',
     },
     loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
