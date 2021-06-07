@@ -13,10 +13,14 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     },
   },
   {
+    name: 'formattedStatus',
+    title: 'Status',
+    render: 'tag',
+  },
+  {
     name: 'formattedPatient',
     altName: 'patient',
     title: 'Patient',
-    render: 'avatar',
     filterField: {
       type: 'text',
       value: undefined,
@@ -37,7 +41,6 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     name: 'formattedClinician',
     altName: 'clinician',
     title: 'Clinician',
-    render: 'avatar',
     filterField: {
       type: 'text',
       value: undefined,
