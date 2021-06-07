@@ -22,7 +22,7 @@ const graphqlString = `
 export class DepartmentsService {
   constructor(private apollo: Apollo, private nestJsQueriesService: NestJsQueriesService) {}
 
-  departments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting[] }): Observable<FetchResult<any>> {
+  departments(params?: { paging?: Paging; filter?: any; sorting?: Sorting[] }): Observable<FetchResult<any>> {
     if (params?.sorting?.length === 0) {
       params.sorting = [{ field: 'id', direction: 'DESC' }];
     }
