@@ -11,7 +11,8 @@ import { UsersService } from '@app/pages/user-management/@services/users.service
 import { Patient } from '@app/pages/patients-management/@types/patient';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-case-managers',

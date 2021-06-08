@@ -1,5 +1,6 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { NzContextMenuService, NzDropdownMenuComponent, NzTableQueryParams } from 'ng-zorro-antd';
+import { NzDropdownMenuComponent, NzContextMenuService } from 'ng-zorro-antd/dropdown';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { TableColumn, SortField } from '../@types/list';
 
 @Component({

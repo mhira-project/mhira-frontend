@@ -4,7 +4,6 @@ import { Role, UpdateOneRoleInput } from '@app/pages/administration/@types/role'
 import { RolesTable } from '@app/pages/administration/@tables/roles.table';
 import { Sorting } from '@shared/@types/sorting';
 import { Filter } from '@shared/@types/filter';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { RolesService } from '@app/pages/administration/@services/roles.service';
 import { RoleForm } from '@app/pages/administration/@forms/role.form';
 import { Convert } from '@shared/classes/convert';
@@ -13,6 +12,8 @@ import { PermissionKey } from '@app/@shared/@types/permission';
 import { PaginationService } from '@shared/services/pagination.service';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 import { finalize } from 'rxjs/operators';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-roles',

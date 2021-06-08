@@ -6,7 +6,6 @@ import { User } from '@app/pages/user-management/@types/user';
 import { Form } from '@shared/components/form/@types/form';
 import { userForms } from '@app/pages/user-management/@forms/user.form';
 import { UserChangePasswordInput } from '@app/pages/user-management/user-form/user-update-password.type';
-import { NzMessageService } from 'ng-zorro-antd';
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { FormComponent } from '@shared/components/form/form.component';
 import { FieldGroup } from '@shared/components/form/@types/field.group';
@@ -17,6 +16,7 @@ import { ErrorHandlerService } from '../../../@shared/services/error-handler.ser
 const CryptoJS = require('crypto-js');
 import { translationList } from '../../../../translations/translation-list';
 import { TranslationCode } from '@app/@shared/@types/translation';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-header',

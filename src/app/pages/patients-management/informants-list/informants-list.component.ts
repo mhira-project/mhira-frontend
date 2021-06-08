@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { InformantModel } from '../@models/informant-model';
 import { Informant } from '../@types/informant';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { InformantsTable } from '../@tables/informants.table';
 import { InformantForm } from '../@forms/informant.form';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
@@ -11,6 +10,8 @@ import { Paging } from '@shared/@types/paging';
 import { Sorting } from '@shared/@types/sorting';
 import { PatientsService } from '@app/pages/patients-management/@services/patients.service';
 import { Patient } from '@app/pages/patients-management/@types/patient';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-informants-list',
