@@ -6,6 +6,7 @@ import { XlsExportService } from '@shared/services/xls-export.service';
 import { LoaderComponent } from './loader/loader.component';
 import { TableComponent } from './table/table.component';
 import { FormGeneratorComponent } from './form-generator/form-generator.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import {
   CapitalizePipe,
   DatePipe,
@@ -191,6 +192,7 @@ const PIPES = [
     SelectModalComponent,
     UserPickerComponent,
     PatientPickerComponent,
+    BreadcrumbComponent,
   ],
   exports: [
     ...PIPES,
@@ -201,6 +203,7 @@ const PIPES = [
     AppFormModule,
     UserPickerComponent,
     PatientPickerComponent,
+    BreadcrumbComponent,
   ],
   providers: [XlsExportService],
 })

@@ -21,6 +21,7 @@ const routes: Routes = [
         data: {
           title: extract('Patients'),
           breadcrumb: extract('Patients'),
+          breadcrumbI18nKey: 'menu.patientList',
           permissions: {
             only: [PermissionKey.VIEW_PATIENTS],
           },
@@ -33,6 +34,7 @@ const routes: Routes = [
         data: {
           title: extract('Patient Profile'),
           breadcrumb: extract('Patient Profile'),
+          breadcrumbI18nKey: 'menu.createPatient',
           permissions: {
             only: [PermissionKey.VIEW_PATIENTS],
           },
@@ -45,6 +47,7 @@ const routes: Routes = [
         data: {
           title: extract('Case Managers'),
           breadcrumb: extract('Case Managers'),
+          breadcrumbI18nKey: 'menu.caseManagers',
           permissions: {
             only: [PermissionKey.MANAGE_PATIENTS],
           },
@@ -57,6 +60,7 @@ const routes: Routes = [
         data: {
           title: extract('Informants'),
           breadcrumb: extract('Informants'),
+          breadcrumbI18nKey: 'menu.informants',
           permissions: {
             only: [PermissionKey.MANAGE_PATIENTS],
           },

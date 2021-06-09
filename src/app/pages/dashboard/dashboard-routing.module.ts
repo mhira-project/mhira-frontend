@@ -9,6 +9,7 @@ const routes: Routes = [
     component: DashboardComponent,
     data: {
       title: extract('Dashboard'),
+      breadcrumbI18nKey: 'menu.dashboard',
     },
   },
 ];

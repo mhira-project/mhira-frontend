@@ -13,6 +13,7 @@ const routes: Routes = [
     data: {
       title: extract('Questionnaire list'),
       breadcrumb: extract('Questionnaire list'),
+      breadcrumbI18nKey: 'menu.questionnairesList',
       permissions: {
         only: [PermissionKey.VIEW_QUESTIONNAIRES],
       },
@@ -25,6 +26,7 @@ const routes: Routes = [
     data: {
       title: extract('Questionnaire Form'),
       breadcrumb: extract('Questionnaire Form'),
+      breadcrumbI18nKey: 'menu.uploadQuestionnaire',
       permissions: {
         only: [PermissionKey.MANAGE_QUESTIONNAIRES],
       },

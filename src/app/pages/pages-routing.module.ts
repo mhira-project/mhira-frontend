@@ -15,6 +15,7 @@ const routes: Routes = [
     path: 'case-management',
     data: {
       breadcrumb: extract('Case Management'),
+      breadcrumbI18nKey: 'menu.caseManagement',
     },
     loadChildren: () =>
       import('./patients-management/patients-management.module').then((m) => m.PatientsManagementModule),
@@ -23,6 +24,7 @@ const routes: Routes = [
     path: 'questionnaire-management',
     data: {
       breadcrumb: extract('Questionnaire'),
+      breadcrumbI18nKey: 'menu.questionnaires',
     },
     loadChildren: () =>
       import('./questionnaire-management/questionnaire-management.module').then((m) => m.QuestionnaireManagementModule),
@@ -31,6 +33,7 @@ const routes: Routes = [
     path: 'assessments',
     data: {
       breadcrumb: extract('Assessments'),
+      breadcrumbI18nKey: 'menu.assessments',
     },
     loadChildren: () => import('./assessment/assessment.module').then((m) => m.AssessmentModule),
   },
@@ -38,6 +41,7 @@ const routes: Routes = [
     path: 'reports',
     data: {
       breadcrumb: extract('Reports'),
+      breadcrumbI18nKey: 'menu.reports',
     },
     loadChildren: () => import('./reports/reports.module').then((m) => m.ReportsModule),
   },
@@ -52,6 +56,7 @@ const routes: Routes = [
     path: 'administration',
     data: {
       breadcrumb: extract('Administration'),
+      breadcrumbI18nKey: 'menu.administration',
     },
     loadChildren: () => import('./administration/administration.module').then((m) => m.AdministrationModule),
   },
@@ -59,6 +64,7 @@ const routes: Routes = [
     path: 'feedback',
     data: {
       breadcrumb: extract('Feedback'),
+      breadcrumbI18nKey: 'menu.feedback',
     },
     loadChildren: () => import('./feedback/feedback.module').then((m) => m.FeedbackModule),
   },

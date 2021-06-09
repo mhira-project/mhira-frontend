@@ -21,6 +21,7 @@ const routes: Routes = [
         data: {
           title: extract('Permission Matrix'),
           breadcrumb: extract('Permission Matrix'),
+          breadcrumbI18nKey: 'menu.permissionMatrix',
           permissions: {
             only: [PermissionKey.VIEW_ROLES_PERMISSIONS],
           },
@@ -33,6 +34,7 @@ const routes: Routes = [
         data: {
           title: extract('Roles'),
           breadcrumb: extract('Roles'),
+          breadcrumbI18nKey: 'menu.roles',
           permissions: {
             only: [PermissionKey.VIEW_ROLES_PERMISSIONS],
           },
@@ -43,6 +45,7 @@ const routes: Routes = [
         path: 'settings',
         data: {
           title: extract('Settings'),
+          breadcrumbI18nKey: 'menu.settings',
           breadcrumb: extract('Settings'),
         },
         loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
@@ -52,6 +55,7 @@ const routes: Routes = [
         component: PermissionsComponent,
         data: {
           title: extract('Permissions'),
+          breadcrumbI18nKey: 'menu.permissions',
           breadcrumb: extract('Permissions'),
           permissions: {
             only: [PermissionKey.VIEW_ROLES_PERMISSIONS],
@@ -65,6 +69,7 @@ const routes: Routes = [
         data: {
           title: extract('Departments'),
           breadcrumb: extract('Departments'),
+          breadcrumbI18nKey: 'menu.departments',
           permissions: {
             only: [PermissionKey.VIEW_SETTINGS],
           },

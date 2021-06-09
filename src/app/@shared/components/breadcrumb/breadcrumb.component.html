@@ -1,0 +1,5 @@
+<nz-breadcrumb *ngIf="breadcrumbs.length">
+  <nz-breadcrumb-item *ngFor="let breadcrumb of breadcrumbs">
+    <a [attr.href]="breadcrumb.url" (click)="navigate(breadcrumb.url, $event)">{{ breadcrumb.label | translate }}</a>
+  </nz-breadcrumb-item>
+</nz-breadcrumb>

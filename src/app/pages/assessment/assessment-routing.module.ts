@@ -19,6 +19,7 @@ const routes: Routes = [
         data: {
           title: extract('Planned Assessments'),
           breadcrumb: extract('Planned Assessments'),
+          breadcrumbI18nKey: 'menu.plannedAssessments',
           permissions: {
             only: [PermissionKey.VIEW_ASSESSMENTS],
           },
@@ -31,6 +32,7 @@ const routes: Routes = [
         data: {
           title: extract('Plan Assessments'),
           breadcrumb: extract('Plan Assessments'),
+          breadcrumbI18nKey: 'menu.planAssessment',
           permissions: {
             only: [PermissionKey.VIEW_ASSESSMENTS, PermissionKey.MANAGE_ASSESSMENTS],
           },

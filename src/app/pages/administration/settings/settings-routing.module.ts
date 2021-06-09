@@ -18,6 +18,7 @@ const routes: Routes = [
         component: SystemConfigurationComponent,
         data: {
           title: extract('System Configuration'),
+          breadcrumbI18nKey: 'menu.systemConfiguration',
           breadcrumb: extract('System Configuration'),
           permissions: {
             only: [PermissionKey.VIEW_SYSCONF],
@@ -30,6 +31,7 @@ const routes: Routes = [
         component: PatientStatusesComponent,
         data: {
           title: extract('Patient Statuses'),
+          breadcrumbI18nKey: 'menu.patientStatuses',
           breadcrumb: extract('Patient Statuses'),
           permissions: {
             only: [PermissionKey.VIEW_SETTINGS],

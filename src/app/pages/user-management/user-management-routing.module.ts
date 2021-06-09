@@ -18,6 +18,7 @@ const routes: Routes = [
         component: UsersListComponent,
         data: {
           title: extract('User Management'),
+          breadcrumbI18nKey: 'menu.userManagement',
           breadcrumb: extract('Users'),
           permissions: {
             only: [PermissionKey.VIEW_USERS],
@@ -31,6 +32,7 @@ const routes: Routes = [
         data: {
           title: extract('Users Edit'),
           breadcrumb: extract('Edit User'),
+          breadcrumbI18nKey: 'menu.newUser',
           permissions: {
             only: [PermissionKey.VIEW_USERS],
           },
