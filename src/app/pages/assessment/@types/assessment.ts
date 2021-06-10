@@ -39,4 +39,6 @@ export interface FormattedAssessment extends Assessment {
   formattedPatient: string;
   formattedClinician: string;
   formattedStatus: TagInfo;
+  patientMedicalRecordNo: string;
+  clinicianWorkId: string;
 }

@@ -92,6 +92,9 @@ export class Convert {
       };
     }
 
+    assessment.patientMedicalRecordNo = assessment.patient.medicalRecordNo;
+    assessment.clinicianWorkId = assessment.clinician.workID;
+
     return assessment;
   }
 }
