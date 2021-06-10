@@ -44,12 +44,11 @@ export class CreatePatientComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.patient);
     this.getPatientFromUrl();
     this.getDepartments();
   }
 
-  public submitForm(patientData: any): void {
+  public submitForm(patientData: Patient): void {
     if (this.patient) {
       patientData.id = this.patient.id;
       this.updatePatient(patientData);
@@ -138,7 +137,6 @@ export class CreatePatientComponent implements OnInit {
   private updatePatient(patient: Patient) {
     this.isLoading = true;
     this.loadingMessage = `Updating patient ${patient.firstName} ${patient.lastName}`;
-    const emergencyContacts = patient.emergencyContacts;
     patient.emergencyContacts = undefined;
     this.patientsService
       .updatePatient(patient)
@@ -169,16 +167,11 @@ export class CreatePatientComponent implements OnInit {
         },
       },
     };
-    this.departmentsService
-      .departments({ filter })
-      .pipe(finalize(() => {}))
-      .subscribe((response) => {
-        this.patientForm.groups[0].fields[6].options = response.data.departments.edges.map((e: any) => {
-          return {
-            label: e.node.name,
-            value: e.node.id,
-          };
-        });
-      });
+    this.departmentsService.departments({ filter }).subscribe((response) => {
+      this.patientForm.groups[0].fields[6].options = response.data.departments.edges.map((e: any) => ({
+        label: e.node.name,
+        value: e.node.id,
+      }));
+    });
   }
 }

@@ -19,10 +19,11 @@ import { SelectModalComponent } from '@app/@shared/components/select-modal/selec
 import { DepartmentsService } from '../@services/departments.service';
 import { Filter } from '@app/@shared/@types/filter';
 import { Sorting } from '@app/@shared/@types/sorting';
-import { Action, DEFAULT_PAGE_SIZE, SortField, TableColumn } from '@app/@shared/@modules/master-data/@types/list';
+import { DEFAULT_PAGE_SIZE, SortField, TableColumn } from '@app/@shared/@modules/master-data/@types/list';
 import { FormattedUser } from '@app/pages/user-management/@types/formatted-user';
 import { UserColumns } from '@app/pages/user-management/@tables/users.table';
 import { AppPermissionsService } from '@app/@shared/services/app-permissions.service';
+import { ErrorHandlerService } from '@app/@shared/services/error-handler.service';
 
 @Component({
   selector: 'app-case-managers',
@@ -101,6 +102,7 @@ export class CaseManagersComponent implements OnInit {
     private message: NzMessageService,
     private modalService: NzModalService,
     private usersService: UsersService,
+    private errorService: ErrorHandlerService,
     private departmentsService: DepartmentsService
   ) {}
 
@@ -251,10 +253,7 @@ export class CaseManagersComponent implements OnInit {
     this.loading = true;
     const options = { ...this.caseManagersRequestOptions };
     const patientFilter = this.patient ? { patients: { id: { eq: this.patient.id } } } : undefined;
-    let previousAndFilters = [];
-    if (options.filter) {
-      previousAndFilters = options.filter.and ?? [];
-    }
+    const previousAndFilters = options.filter.and ?? [];
     options.filter = {
       ...options.filter,
       and: [patientFilter, ...previousAndFilters],
@@ -294,9 +293,9 @@ export class CaseManagersComponent implements OnInit {
         this.patient.departments.push(department);
         this.assignCaseManager(manager);
       },
-      () =>
-        this.message.error('An error occurred could not update patient', {
-          nzDuration: 3000,
+      (error) =>
+        this.errorService.handleError(error, {
+          prefix: 'An error occurred could not update patient',
         })
     );
   }
@@ -309,7 +308,7 @@ export class CaseManagersComponent implements OnInit {
         patientId: this.patient.id,
       })
       .subscribe(
-        async ({ data }: any) => {
+        ({ data }: any) => {
           this.loading = false;
           this.showAssignModal = false;
           if (data) {
@@ -324,9 +323,11 @@ export class CaseManagersComponent implements OnInit {
             this.message.create('error', `${manager.firstName} could not be assigned to ${this.patient.firstName}`);
           }
         },
-        () => {
+        (error) => {
           this.loading = false;
-          this.message.create('error', `${manager.firstName} could not be assigned to ${this.patient.firstName}`);
+          this.errorService.handleError(error, {
+            prefix: `${manager.firstName} could not be assigned to ${this.patient.firstName}`,
+          });
         }
       );
   }
@@ -339,7 +340,7 @@ export class CaseManagersComponent implements OnInit {
         patientId: this.patient.id,
       })
       .subscribe(
-        async ({ data }: any) => {
+        ({ data }: any) => {
           this.loading = false;
           if (data) {
             const deletedIndex = this.caseManagers.findIndex((_manager) => _manager.id === manager.id);
@@ -353,9 +354,11 @@ export class CaseManagersComponent implements OnInit {
             this.message.create('error', `${manager.firstName} could not be removed from ${this.patient.firstName}`);
           }
         },
-        () => {
+        (error) => {
           this.loading = false;
-          this.message.create('error', `${this.managerType} could not be assigned to ${this.patient.firstName}`);
+          this.errorService.handleError(error, {
+            prefix: `${this.managerType} could not be assigned to ${this.patient.firstName}`,
+          });
         }
       );
   }
