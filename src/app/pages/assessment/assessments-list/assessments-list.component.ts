@@ -21,6 +21,7 @@ import { PageInfo } from '../../../@shared/@types/paging';
 import { finalize } from 'rxjs/operators';
 import { Filter } from '../../../@shared/@types/filter';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
+import { User } from '@app/pages/user-management/@types/user';
 
 const CryptoJS = require('crypto-js');
 
@@ -42,6 +43,7 @@ export class AssessmentsListComponent {
   public pageInfo: PageInfo;
   public loading = false;
   public actions: Action<ActionKey>[] = [{ key: ActionKey.SHOW_ASSESSMENT, title: 'Show Assessment' }];
+  public onlyMyAssessments = false;
 
   public assessmentRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
@@ -109,10 +111,25 @@ export class AssessmentsListComponent {
     });
   }
 
+  public onMyAssessments(): void {
+    this.onlyMyAssessments = !this.onlyMyAssessments;
+    this.getAssessments();
+  }
+
   private getAssessments(): void {
+    // copy to not modify original options
+    const options = { ...this.assessmentRequestOptions };
+
+    // apply for only my patients
+    if (this.onlyMyAssessments)
+      options.filter = {
+        ...options.filter,
+        and: [{ clinician: { id: { eq: this.userId } } }, ...(options.filter.and ?? [])],
+      };
+
     this.loading = true;
     this.assessmentService
-      .getAssessments(this.assessmentRequestOptions)
+      .getAssessments(options)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         ({ edges, pageInfo }) => {
@@ -181,5 +198,10 @@ export class AssessmentsListComponent {
     const cryptoId = CryptoJS.AES.encrypt(JSON.stringify(assessment.id), environment.secretKey).toString();
     const tree = this.router.createUrlTree(['/assessment/overview'], { queryParams: { assessment: cryptoId } });
     window.open('#' + tree.toString());
+  }
+
+  private get userId(): number {
+    const user = JSON.parse(localStorage.getItem('user')) as User;
+    return user.id ?? 0;
   }
 }
