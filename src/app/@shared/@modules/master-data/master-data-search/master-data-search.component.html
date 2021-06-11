@@ -1,8 +1,9 @@
-<nz-input-group [nzSuffix]="suffixIconSearch">
+<nz-input-group style="width: 100%" [nzSuffix]="suffixIconSearch">
   <input
+    style="width: 100%"
     #field
     type="text"
-    placeholder="Search"
+    [placeholder]="placeholder ? placeholder : 'Search'"
     nz-input
     [debounceTime]="300"
     (ngxInputSearch)="search.emit(field.value)"

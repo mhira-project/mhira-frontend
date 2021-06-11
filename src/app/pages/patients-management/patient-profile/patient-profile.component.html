@@ -4,11 +4,9 @@
   <nz-tab nzTitle="Profile">
     <app-create-patient></app-create-patient>
   </nz-tab>
-  <nz-tab nzTitle="Clinicians/Informants">
+  <nz-tab nzTitle="Case managers">
     <app-case-managers [managerType]="'caseManager'" [patient]="patient" [showAssignButton]="true" [filter]="filter">
     </app-case-managers>
-    <div class="separator"></div>
-    <app-informants-list [patient]="patient"></app-informants-list>
   </nz-tab>
   <nz-tab nzTitle="Departments">
     <app-patient-departments [patient]="patient"></app-patient-departments>

@@ -1,27 +1,23 @@
 <div nz-row>
   <div nz-col nzSpan="24">
-    <app-table
-      [loading]="isLoading"
-      [showPagination]="false"
-      [showCustomActions]="true"
-      [showSearch]="true"
-      [showFilterButton]="true"
-      [showCheckBoxColumn]="false"
-      [listOfCustomActions]="actions"
-      [listOfData]="caseManagersTable.rows"
-      [listOfColumn]="caseManagersTable.columns"
-      [showButton]="showAssignButton"
-      [buttonText]="'Add ' + caseManagerNiceName"
-      [hasNextPage]="pageInfo?.hasNextPage"
-      [hasPreviousPage]="pageInfo?.hasPreviousPage"
-      (onNext)="navigatePages('next')"
-      (onPrevious)="navigatePages('previous')"
-      (onAction)="handleActionClick($event)"
-      (onButton)="toggleAssignModal()"
-      (onFilterButton)="toggleFilterDrawer()"
-      (onSearch)="searchManagers($event)"
+    <app-master-data-list
+      [data]="data"
+      [columns]="columns"
+      [loading]="loading"
+      [pageInfo]="pageInfo"
+      (pageChange)="onPageChange($event)"
+      (sort)="onSort($event)"
+      (filter)="onFilter($event)"
     >
-    </app-table>
+      <ng-container actions-left>
+        <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
+      </ng-container>
+      <ng-container actions-right>
+        <button nz-button nzType="primary" nzShape="circle" (click)="toggleAssignModal()">
+          <i nz-icon nzType="plus"></i>
+        </button>
+      </ng-container>
+    </app-master-data-list>
   </div>
 </div>
 
@@ -48,16 +44,13 @@
   nzTitle="Assign {{ caseManagerNiceName }} to {{ patient?.firstName }} {{ patient?.lastName }}"
   (nzOnCancel)="toggleAssignModal()"
   (nzOnOk)="toggleAssignModal()"
-  [nzOkLoading]="isLoading"
+  [nzOkLoading]="loading"
 >
-  <nz-input-group class="rounded-input" [nzSuffix]="suffixTemplate">
-    <input
-      type="text"
-      (keyup)="searchKeyword.next($event)"
-      nz-input
-      placeholder="search {{ caseManagerNiceName }} name"
-    />
-  </nz-input-group>
+  <app-master-data-search
+    style="width: 100%"
+    placeholder="Search {{ caseManagerNiceName }} name"
+    (search)="searchCaseManagers($event)"
+  ></app-master-data-search>
   <ng-template #suffixTemplate>
     <i nz-icon nzType="search" nzTheme="outline"></i>
   </ng-template>
@@ -68,10 +61,11 @@
         <div nz-col nzSpan="12">{{ manager?.email }}</div>
         <div nz-col nzSpan="4">
           <button
+            [disabled]="!(manager.departments.length > 0) || !checkIfManagerHasPermission(manager?.permissionGrants)"
             class="assign-button"
             nz-button
             nzType="primary"
-            (click)="assignCaseManager(manager)"
+            (click)="departmentCheck(manager)"
             nzSize="small"
             nzShape="round"
           >
@@ -81,4 +75,16 @@
       </div>
     </li>
   </ul>
+</nz-modal>
+
+<nz-modal
+  *ngIf="manager"
+  [nzWidth]="600"
+  [(nzVisible)]="showAssignDepartmentModal"
+  nzTitle="Assign one of these departments to {{ patient?.firstName }} {{ patient?.lastName }}"
+  (nzOnCancel)="toggleAssignDetapartmentModal()"
+  (nzOnOk)="toggleAssignDetapartmentModal()"
+  [nzOkLoading]="loading"
+>
+  <app-patient-departments [departments]="manager?.departments" [patient]="patient"></app-patient-departments>
 </nz-modal>

@@ -2,6 +2,7 @@ import { Contact } from '@app/pages/patients-management/@types/contact';
 import { Informant } from '@app/pages/patients-management/@types/informant';
 import { User } from '@app/pages/user-management/@types/user';
 import { PatientStatus } from '@app/pages/patients-management/@types/patient-status';
+import { Department } from '../../administration/@types/department';
 
 export interface Patient {
   id?: number;
@@ -27,6 +28,7 @@ export interface Patient {
   updatedAt?: string;
   emergencyContacts?: Contact[];
   informants?: Informant[];
+  departments?: Department[];
   caseManagers?: User[];
   status?: PatientStatus;
 }
