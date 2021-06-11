@@ -11,21 +11,21 @@ import { PREFIX } from 'ng-zorro-antd/core/logger';
   styleUrls: ['./breadcrumb.component.scss'],
 })
 export class BreadcrumbComponent implements OnInit {
-  @Input() label: string;
+  @Input()
+  public label: string;
   breadcrumbs: BreadcrumbOption[] = [];
+  private destroy$ = new Subject<void>();
   constructor(private injector: Injector, private cdr: ChangeDetectorRef, private ngZone: NgZone) {}
 
   ngOnInit() {
     this.registerRouterChange();
   }
 
-  navigate(url: string, e: MouseEvent): void {
+  public navigate(url: string, e: MouseEvent): void {
     e.preventDefault();
 
     this.ngZone.run(() => this.injector.get(Router).navigateByUrl(url).then()).then();
   }
-
-  private destroy$ = new Subject<void>();
 
   private registerRouterChange(): void {
     try {
