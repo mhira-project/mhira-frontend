@@ -320,7 +320,9 @@ export class CaseManagersComponent implements OnInit {
               `${manager.firstName} has been successfully assigned to ${this.patient.firstName}`
             );
           } else {
-            this.message.create('error', `${manager.firstName} could not be assigned to ${this.patient.firstName}`);
+            this.errorService.handleError(new Error(), {
+              prefix: `${manager.firstName} could not be assigned to ${this.patient.firstName}`,
+            });
           }
         },
         (error) => {
@@ -351,7 +353,9 @@ export class CaseManagersComponent implements OnInit {
               `${manager.firstName} has been successfully removed from patient ${this.patient.firstName}`
             );
           } else {
-            this.message.create('error', `${manager.firstName} could not be removed from ${this.patient.firstName}`);
+            this.errorService.handleError(new Error(), {
+              prefix: `${manager.firstName} could not be removed from ${this.patient.firstName}`,
+            });
           }
         },
         (error) => {
