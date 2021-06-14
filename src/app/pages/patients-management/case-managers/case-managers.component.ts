@@ -320,7 +320,7 @@ export class CaseManagersComponent implements OnInit {
               `${manager.firstName} has been successfully assigned to ${this.patient.firstName}`
             );
           } else {
-            this.errorService.handleError(new Error(), {
+            this.errorService.handleError(new Error('Could not Assign'), {
               prefix: `${manager.firstName} could not be assigned to ${this.patient.firstName}`,
             });
           }
@@ -353,7 +353,7 @@ export class CaseManagersComponent implements OnInit {
               `${manager.firstName} has been successfully removed from patient ${this.patient.firstName}`
             );
           } else {
-            this.errorService.handleError(new Error(), {
+            this.errorService.handleError(new Error('Could not remove'), {
               prefix: `${manager.firstName} could not be removed from ${this.patient.firstName}`,
             });
           }
