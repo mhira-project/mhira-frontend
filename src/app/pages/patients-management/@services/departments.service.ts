@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { FetchResult } from 'apollo-link';
-import { Filter } from '../../../@shared/@types/filter';
 import { Sorting } from '../../../@shared/@types/sorting';
 import { Paging } from '../../../@shared/@types/paging';
 import { NestJsQueriesService } from '../../../@shared/services/nestjs-queries.service';
