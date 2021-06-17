@@ -15,7 +15,6 @@ import { ErrorHandlerService } from '../../../@shared/services/error-handler.ser
 
 const CryptoJS = require('crypto-js');
 import { translationList } from '../../../../translations/translation-list';
-import { TranslationCode } from '@app/@shared/@types/translation';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -43,9 +42,7 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.translationService.setDefaultLang('en');
     this.getUser();
-    this.getStoredLang();
   }
 
   getUser() {
@@ -57,20 +54,6 @@ export class HeaderComponent implements OnInit {
       },
       (err) => this.errorService.handleError(err, { prefix: 'Unable to get user profile' })
     );
-  }
-
-  getStoredLang() {
-    const lang = localStorage.getItem('currentLang');
-    const browserLang = this.translationService.getBrowserLang();
-    if (lang) {
-      this.translationService.use(lang);
-    } else {
-      if (this.translations.some((trans) => trans.code === browserLang)) {
-        this.translationService.use(browserLang);
-      } else {
-        this.translationService.use(TranslationCode.EN);
-      }
-    }
   }
 
   clickChangePassword() {
