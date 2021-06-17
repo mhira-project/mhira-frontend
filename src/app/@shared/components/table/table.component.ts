@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { NzTableQueryParams } from 'ng-zorro-antd';
 import { ExportChoiceType } from './export-choice.type';
 import { XlsExportService } from '@shared/services/xls-export.service';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
 
 @Component({
   selector: 'app-table',

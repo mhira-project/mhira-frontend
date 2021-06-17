@@ -12,6 +12,7 @@ import { Contact } from '@app/pages/patients-management/@types/contact';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { ErrorHandlerService } from '../../../../@shared/services/error-handler.service';
 import { finalize } from 'rxjs/operators';
+import { DepartmentsService } from '../../@services/departments.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -37,16 +38,26 @@ export class CreatePatientComponent implements OnInit {
     private message: NzMessageService,
     private errorService: ErrorHandlerService,
     private activatedRoute: ActivatedRoute,
+    private departmentsService: DepartmentsService,
     private router: Router,
     public perms: AppPermissionsService
   ) {}
 
   ngOnInit(): void {
-    console.log(this.patient);
     this.getPatientFromUrl();
+    this.getDepartments();
   }
 
-  getPatientFromUrl(): void {
+  public submitForm(patientData: Patient): void {
+    if (this.patient) {
+      patientData.id = this.patient.id;
+      this.updatePatient(patientData);
+    } else {
+      this.createPatient(patientData);
+    }
+  }
+
+  private getPatientFromUrl(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.resetForm = false;
       this.populateForm = false;
@@ -68,7 +79,7 @@ export class CreatePatientComponent implements OnInit {
     });
   }
 
-  createEmergencyContacts(patientId: number, contacts: Contact[]) {
+  private createEmergencyContacts(patientId: number, contacts: Contact[]) {
     this.isLoading = true;
     contacts.map((contact: Contact) => {
       contact.patientId = patientId;
@@ -88,11 +99,14 @@ export class CreatePatientComponent implements OnInit {
           this.message.success('Emergency contacts have successfully been created');
           this.router.navigate(['/mhira/case-management/patients']);
         },
-        (error) => this.errorService.handleError(error, { prefix: 'Unable to create emergency contacts' })
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: 'Unable to create emergency contacts',
+          })
       );
   }
 
-  createPatient(patient: Patient) {
+  private createPatient(patient: Patient) {
     this.isLoading = true;
     this.resetForm = false;
     this.populateForm = false;
@@ -113,14 +127,16 @@ export class CreatePatientComponent implements OnInit {
           patient.emergencyContacts = emergencyContacts;
           this.createEmergencyContacts(patientData.id, emergencyContacts);
         },
-        (error) => this.errorService.handleError(error, { prefix: 'Unable to create patient' })
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: 'Unable to create patient',
+          })
       );
   }
 
-  updatePatient(patient: Patient) {
+  private updatePatient(patient: Patient) {
     this.isLoading = true;
     this.loadingMessage = `Updating patient ${patient.firstName} ${patient.lastName}`;
-    const emergencyContacts = patient.emergencyContacts;
     patient.emergencyContacts = undefined;
     this.patientsService
       .updatePatient(patient)
@@ -143,12 +159,19 @@ export class CreatePatientComponent implements OnInit {
       );
   }
 
-  submitForm(patientData: any): void {
-    if (this.patient) {
-      patientData.id = this.patient.id;
-      this.updatePatient(patientData);
-    } else {
-      this.createPatient(patientData);
-    }
+  private getDepartments(): void {
+    const filter = {
+      users: {
+        id: {
+          eq: JSON.parse(localStorage.getItem('user')).id,
+        },
+      },
+    };
+    this.departmentsService.departments({ filter }).subscribe((response) => {
+      this.patientForm.groups[0].fields[6].options = response.data.departments.edges.map((e: any) => ({
+        label: e.node.name,
+        value: e.node.id,
+      }));
+    });
   }
 }

@@ -2,7 +2,6 @@ import { finalize } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { Department, FormattedDepartment, UpdateOneDepartmentInput } from '../@types/department';
 import { DepartmentColumns } from '../@tables/departments.table';
-import { NzModalService } from 'ng-zorro-antd';
 import { DepartmentsService } from '../@services/departments.service';
 import { DepartmentForm } from '../@forms/department.form';
 import { Convert } from '@shared/classes/convert';
@@ -20,6 +19,7 @@ import { PageInfo } from '../../../@shared/@types/paging';
 import { AppPermissionsService } from '@app/@shared/services/app-permissions.service';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 enum ActionKey {
   EDIT_DEPARTMENT,

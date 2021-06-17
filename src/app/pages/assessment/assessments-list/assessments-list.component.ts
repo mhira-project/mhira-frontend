@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AssessmentService } from '@app/pages/assessment/@services/assessment.service';
-import { NzModalService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { Paging } from '@shared/@types/paging';
@@ -22,6 +21,7 @@ import { finalize } from 'rxjs/operators';
 import { Filter } from '../../../@shared/@types/filter';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 import { User } from '@app/pages/user-management/@types/user';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 const CryptoJS = require('crypto-js');
 

@@ -1,7 +1,7 @@
 import { debounceTime, map } from 'rxjs/operators';
 import { Component, Output, EventEmitter, ViewChild, Input } from '@angular/core';
 import { Patient } from '@app/pages/patients-management/@types/patient';
-import { NzSelectComponent } from 'ng-zorro-antd';
+import { NzSelectComponent } from 'ng-zorro-antd/select';
 import { PatientsService } from '../../../pages/patients-management/@services/patients.service';
 import { PatientModel } from '../../../pages/patients-management/@models/patient.model';
 import { Subscription } from 'rxjs';

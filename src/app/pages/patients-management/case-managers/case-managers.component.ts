@@ -9,9 +9,10 @@ import { PatientsService } from '@app/pages/patients-management/@services/patien
 import { CaseManagerFilter } from '@app/pages/patients-management/@types/case-manager-filter';
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { Patient } from '@app/pages/patients-management/@types/patient';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { Permission } from '@app/pages/administration/@types/permission';
 import { Department } from '../../administration/@types/department';
@@ -19,10 +20,11 @@ import { SelectModalComponent } from '@app/@shared/components/select-modal/selec
 import { DepartmentsService } from '../@services/departments.service';
 import { Filter } from '@app/@shared/@types/filter';
 import { Sorting } from '@app/@shared/@types/sorting';
-import { Action, DEFAULT_PAGE_SIZE, SortField, TableColumn } from '@app/@shared/@modules/master-data/@types/list';
+import { DEFAULT_PAGE_SIZE, SortField, TableColumn } from '@app/@shared/@modules/master-data/@types/list';
 import { FormattedUser } from '@app/pages/user-management/@types/formatted-user';
 import { UserColumns } from '@app/pages/user-management/@tables/users.table';
 import { AppPermissionsService } from '@app/@shared/services/app-permissions.service';
+import { ErrorHandlerService } from '@app/@shared/services/error-handler.service';
 
 @Component({
   selector: 'app-case-managers',
@@ -36,7 +38,11 @@ export class CaseManagersComponent implements OnInit {
 
   public columns: TableColumn<FormattedUser>[] = UserColumns;
 
-  public caseManagersRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
+  public caseManagersRequestOptions: {
+    paging: Paging;
+    filter: Filter;
+    sorting: Sorting[];
+  } = {
     paging: { first: DEFAULT_PAGE_SIZE },
     filter: {},
     sorting: [],
@@ -78,7 +84,11 @@ export class CaseManagersComponent implements OnInit {
     sorting: [],
   };
 
-  public userRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
+  public userRequestOptions: {
+    paging: Paging;
+    filter: Filter;
+    sorting: Sorting[];
+  } = {
     paging: { first: DEFAULT_PAGE_SIZE },
     filter: {},
     sorting: [],
@@ -93,6 +103,7 @@ export class CaseManagersComponent implements OnInit {
     private message: NzMessageService,
     private modalService: NzModalService,
     private usersService: UsersService,
+    private errorService: ErrorHandlerService,
     private departmentsService: DepartmentsService
   ) {}
 
@@ -120,7 +131,9 @@ export class CaseManagersComponent implements OnInit {
   }
 
   public onSearch(searchString: string): void {
-    this.caseManagersRequestOptions.filter = { or: this.createSearchFilter(searchString) };
+    this.caseManagersRequestOptions.filter = {
+      or: this.createSearchFilter(searchString),
+    };
     this.getCaseManagers();
   }
 
@@ -209,7 +222,9 @@ export class CaseManagersComponent implements OnInit {
     this.getCaseManagers();
   }
   public searchCaseManagers(searchString: string): void {
-    this.userRequestOptions.filter = { or: this.createSearchFilter(searchString) };
+    this.userRequestOptions.filter = {
+      or: this.createSearchFilter(searchString),
+    };
     this.getSearchedCaseManagers();
   }
 
@@ -238,9 +253,11 @@ export class CaseManagersComponent implements OnInit {
   private getCaseManagers(): void {
     this.loading = true;
     const options = { ...this.caseManagersRequestOptions };
-
+    const patientFilter = this.patient ? { patients: { id: { eq: this.patient.id } } } : undefined;
+    const previousAndFilters = options.filter.and ?? [];
     options.filter = {
-      and: [{ patients: { id: { eq: this.patient.id } } }, ...(options.filter.and ?? [])],
+      ...options.filter,
+      and: [patientFilter, ...previousAndFilters],
     };
     this.caseManagersService
       .getPatientCaseManagers(options)
@@ -257,13 +274,15 @@ export class CaseManagersComponent implements OnInit {
     this.loading = true;
     const options = { ...this.departmentRequestOptions };
     options.filter = {
-      and: [{ patients: { id: { eq: this.patient.id } } }, ...(options.filter.and ?? [])],
+      and: [{ patients: { id: { eq: this.patient?.id } } }, ...(options.filter.and ?? [])],
     };
     this.departmentsService
       .departments(options)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe((response) => {
-        this.patient.departments = response.data.departments.edges.map((e: any) => e.node);
+        if (this.patient) {
+          this.patient.departments = response.data.departments.edges.map((e: any) => e.node);
+        }
       });
   }
 
@@ -275,57 +294,78 @@ export class CaseManagersComponent implements OnInit {
         this.patient.departments.push(department);
         this.assignCaseManager(manager);
       },
-      () => this.message.error('An error occurred could not update patient', { nzDuration: 3000 })
+      (error) =>
+        this.errorService.handleError(error, {
+          prefix: 'An error occurred could not update patient',
+        })
     );
   }
 
   private assignCaseManager(manager: CaseManager) {
     this.loading = true;
-    this.caseManagersService.assignPatientCaseManager({ userId: manager.id, patientId: this.patient.id }).subscribe(
-      async ({ data }: any) => {
-        this.loading = false;
-        this.showAssignModal = false;
-        if (data) {
-          this.caseManagersTable.rows = [];
-          this.caseManagers.unshift(CaseManagerModel.fromJson(manager));
-          this.caseManagersTable.rows = this.caseManagers;
-          this.message.create(
-            'success',
-            `${manager.firstName} has been successfully assigned to ${this.patient.firstName}`
-          );
-        } else {
-          this.message.create('error', `${manager.firstName} could not be assigned to ${this.patient.firstName}`);
+    this.caseManagersService
+      .assignPatientCaseManager({
+        userId: manager.id,
+        patientId: this.patient.id,
+      })
+      .subscribe(
+        ({ data }: any) => {
+          this.loading = false;
+          this.showAssignModal = false;
+          if (data) {
+            this.caseManagersTable.rows = [];
+            this.caseManagers.unshift(CaseManagerModel.fromJson(manager));
+            this.caseManagersTable.rows = this.caseManagers;
+            this.message.create(
+              'success',
+              `${manager.firstName} has been successfully assigned to ${this.patient.firstName}`
+            );
+          } else {
+            this.errorService.handleError(new Error('Could not Assign'), {
+              prefix: `${manager.firstName} could not be assigned to ${this.patient.firstName}`,
+            });
+          }
+        },
+        (error) => {
+          this.loading = false;
+          this.errorService.handleError(error, {
+            prefix: `${manager.firstName} could not be assigned to ${this.patient.firstName}`,
+          });
         }
-      },
-      () => {
-        this.loading = false;
-        this.message.create('error', `${manager.firstName} could not be assigned to ${this.patient.firstName}`);
-      }
-    );
+      );
   }
 
   private unAssignCaseManager(manager: CaseManager) {
     this.loading = true;
-    this.caseManagersService.unassignPatientCaseManager({ userId: manager.id, patientId: this.patient.id }).subscribe(
-      async ({ data }: any) => {
-        this.loading = false;
-        if (data) {
-          const deletedIndex = this.caseManagers.findIndex((_manager) => _manager.id === manager.id);
-          this.caseManagers.splice(deletedIndex, 1);
-          this.caseManagersTable.rows = this.caseManagers;
-          this.message.create(
-            'success',
-            `${manager.firstName} has been successfully removed from patient ${this.patient.firstName}`
-          );
-        } else {
-          this.message.create('error', `${manager.firstName} could not be removed from ${this.patient.firstName}`);
+    this.caseManagersService
+      .unassignPatientCaseManager({
+        userId: manager.id,
+        patientId: this.patient.id,
+      })
+      .subscribe(
+        ({ data }: any) => {
+          this.loading = false;
+          if (data) {
+            const deletedIndex = this.caseManagers.findIndex((_manager) => _manager.id === manager.id);
+            this.caseManagers.splice(deletedIndex, 1);
+            this.caseManagersTable.rows = this.caseManagers;
+            this.message.create(
+              'success',
+              `${manager.firstName} has been successfully removed from patient ${this.patient.firstName}`
+            );
+          } else {
+            this.errorService.handleError(new Error('Could not remove'), {
+              prefix: `${manager.firstName} could not be removed from ${this.patient.firstName}`,
+            });
+          }
+        },
+        (error) => {
+          this.loading = false;
+          this.errorService.handleError(error, {
+            prefix: `${this.managerType} could not be assigned to ${this.patient.firstName}`,
+          });
         }
-      },
-      () => {
-        this.loading = false;
-        this.message.create('error', `${this.managerType} could not be assigned to ${this.patient.firstName}`);
-      }
-    );
+      );
   }
 
   private searchPatients(keyword: string) {
@@ -333,7 +373,10 @@ export class CaseManagersComponent implements OnInit {
     this.patientService.patients({ filter: { firstName: { iLike: keyword } } }).subscribe(
       async ({ data }) => {
         data.patients.edges.map((patient: any) => {
-          const option = { value: patient.node.id, label: `${patient.node.firstName} ${patient.node.lastName}` };
+          const option = {
+            value: patient.node.id,
+            label: `${patient.node.firstName} ${patient.node.lastName}`,
+          };
           if (options.indexOf(option) === -1) {
             options.push(option);
           }
@@ -354,7 +397,10 @@ export class CaseManagersComponent implements OnInit {
       .subscribe(({ data }) => {
         this.users = data.users.edges.map((caseManager: any) => CaseManagerModel.fromJson(caseManager.node));
         this.caseManagersFilterForm.groups[0].fields[2].options = this.users.map((user) => {
-          return { value: user.id, label: `${user.firstName} ${user.lastName}` };
+          return {
+            value: user.id,
+            label: `${user.firstName} ${user.lastName}`,
+          };
         });
       });
   }
