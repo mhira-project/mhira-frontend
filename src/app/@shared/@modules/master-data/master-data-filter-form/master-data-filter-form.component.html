@@ -1,4 +1,5 @@
 <app-form
+  *ngIf="form"
   #formComponent
   [form]="form"
   (submitForm)="onFilter($event)"

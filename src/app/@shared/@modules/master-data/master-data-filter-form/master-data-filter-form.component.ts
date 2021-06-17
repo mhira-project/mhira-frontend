@@ -16,6 +16,7 @@ export class MasterDataFilterFormComponent<T> {
 
   @Input()
   public set columns(columns: TableColumn<T>[]) {
+    if (!columns) return;
     this._columns = columns;
     this.form = {
       submitButtonText: 'Apply',
