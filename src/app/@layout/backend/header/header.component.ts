@@ -17,7 +17,6 @@ const CryptoJS = require('crypto-js');
 import { translationList } from '../../../../translations/translation-list';
 import { TranslationCode } from '@app/@shared/@types/translation';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-header',
@@ -33,7 +32,6 @@ export class HeaderComponent implements OnInit {
   loadingMessage = '';
   changePasswordForm: Form = userForms.changeUserPassword;
   isLoading = false;
-  t: string;
 
   constructor(
     private authService: AuthService,
@@ -48,25 +46,6 @@ export class HeaderComponent implements OnInit {
     this.translationService.setDefaultLang('en');
     this.getUser();
     this.getStoredLang();
-  }
-
-  async f(key: string) {
-    this.translationService.get(key).subscribe((res: string) => {
-      this.t = res;
-    });
-  }
-
-  translateFn = async (key: string) => {
-    let t;
-    if (key) {
-      t = await this.translationService.instant(key);
-      return t;
-    } else {
-      return key;
-    }
-  };
-  getTranslation(key: string) {
-    return this.translationService.get(key).toPromise();
   }
 
   getUser() {
