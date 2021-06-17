@@ -24,6 +24,8 @@ export default {
     settings: 'Settings',
     systemConfiguration: 'System Configuration',
     patientStatuses: 'Patient Statuses',
+    notFound: 'Not Found',
+    noTabs: 'No Tabs',
   },
   tables: {
     patients: {
