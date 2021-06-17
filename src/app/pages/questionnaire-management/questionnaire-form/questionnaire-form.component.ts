@@ -4,7 +4,7 @@ import { QuestionnaireManagementService } from '../@services/questionnaire-manag
 import { CreateQuestionnaireInput } from '../@types/questionnaire';
 import { QuestionnaireForm, QuestionnaireUpdateForm } from '../@forms/questionnaire.form';
 import { QuestionnaireVersion } from './../@types/questionnaire';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '@env/environment';
 import { PermissionKey } from '../../../@shared/@types/permission';

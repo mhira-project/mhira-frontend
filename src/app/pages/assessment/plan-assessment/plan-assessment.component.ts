@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../@services/assessment.service';
-import { NzMessageService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '@env/environment';
 import { QuestionnaireVersion } from '../../questionnaire-management/@types/questionnaire';
@@ -11,6 +10,7 @@ import { FullAssessment } from '../@types/assessment';
 import { PermissionKey } from '../../../@shared/@types/permission';
 import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 const CryptoJS = require('crypto-js');
 

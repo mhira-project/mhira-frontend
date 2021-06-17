@@ -9,9 +9,10 @@ import { PatientsService } from '@app/pages/patients-management/@services/patien
 import { CaseManagerFilter } from '@app/pages/patients-management/@types/case-manager-filter';
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { Patient } from '@app/pages/patients-management/@types/patient';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { Permission } from '@app/pages/administration/@types/permission';
 import { Department } from '../../administration/@types/department';
