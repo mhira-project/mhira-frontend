@@ -94,7 +94,7 @@ const deleteManyEmergencyContacts = gql`
 `;
 
 const removeEmergencyContactsFromPatient = gql`
-  mutation($input: RelationsInput!) {
+  mutation($input: RemoveEmergencyContactsFromPatientInput!) {
     removeEmergencyContactsFromPatient(input: $input) {
       id
       statusId
@@ -168,7 +168,7 @@ const removeEmergencyContactsFromPatient = gql`
 `;
 
 const addEmergencyContactsToPatient = gql`
-  mutation($input: RelationsInput!) {
+  mutation($input: AddEmergencyContactsToPatientInput!) {
     addEmergencyContactsToPatient(input: $input) {
       id
       statusId

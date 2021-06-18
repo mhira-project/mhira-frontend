@@ -88,9 +88,9 @@ export class NestJsQueriesService {
     }`;
   }
 
-  relationalCommandMutation(command: string, graphQlString: string) {
+  relationalCommandMutation(command: string, relationsInputType: string, graphQlString: string) {
     return gql`
-        mutation($input: RelationsInput!) {
+        mutation($input: ${relationsInputType}!) {
         ${command}(input: $input) {
             ${graphQlString}
         }
