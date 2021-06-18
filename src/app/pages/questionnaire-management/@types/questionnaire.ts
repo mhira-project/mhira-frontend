@@ -8,14 +8,6 @@ export enum QuestionnaireStatus {
   PRIVATE = 'PRIVATE',
 }
 
-export interface ListQuestionnaireInput {
-  language?: string;
-  abbreviation?: string;
-  license?: string;
-  timeToComplete?: number;
-  status?: QuestionnaireStatus;
-}
-
 export interface UpdateQuestionnaireInput {
   name?: string;
   language: string;

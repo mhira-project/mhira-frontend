@@ -1,8 +1,15 @@
+import { Filter } from './../../../@shared/@types/filter';
 import { Convert } from '@shared/classes/convert';
 import { Component } from '@angular/core';
 import { QuestionnaireManagementService } from '../@services/questionnaire-management.service';
 import { FormattedQuestionnaireVersion, QuestionnaireStatus } from '../@types/questionnaire';
-import { TableColumn, Action, ActionArgs } from '../../../@shared/@modules/master-data/@types/list';
+import {
+  TableColumn,
+  Action,
+  ActionArgs,
+  DEFAULT_PAGE_SIZE,
+  SortField,
+} from '../../../@shared/@modules/master-data/@types/list';
 import { PermissionKey } from '../../../@shared/@types/permission';
 import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
 import { QuestionnaireColumns } from '../@tables/questionnaire.table';
@@ -11,6 +18,9 @@ import { environment } from '@env/environment';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { finalize } from 'rxjs/operators';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
+import { PageInfo, Paging } from '../../../@shared/@types/paging';
+import { Sorting } from '../../../@shared/@types/sorting';
+import { QuestionnaireVersion } from '@app/pages/questionnaire-management/@types/questionnaire';
 
 const CryptoJS = require('crypto-js');
 
@@ -18,6 +28,20 @@ enum ActionKey {
   ARCHIVE_QUESTIONNAIRE,
   DELETE_QUESTIONNAIRE,
 }
+
+// TODO: implement keyword search
+// https://github.com/doug-martin/nestjs-query/issues/1015
+export const createSearchFilter = (searchString: string): Array<{ [K in keyof Partial<QuestionnaireVersion>]: {} }> => {
+  if (!searchString) return [];
+  return [
+    { name: { iLike: `%${searchString}%` } },
+    {
+      questionnaire: {
+        or: [{ abbreviation: { iLike: `%${searchString}%` } }, { language: { iLike: `%${searchString}%` } }],
+      },
+    },
+  ];
+};
 
 @Component({
   selector: 'app-questionnaire-list',
@@ -34,6 +58,14 @@ export class QuestionnaireListComponent {
   public actions: Action<ActionKey>[] = [];
 
   public loading = false;
+
+  public pageInfo: PageInfo;
+
+  public questionnaireRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
+    paging: { first: DEFAULT_PAGE_SIZE },
+    filter: {},
+    sorting: [],
+  };
 
   constructor(
     private qmService: QuestionnaireManagementService,
@@ -72,13 +104,34 @@ export class QuestionnaireListComponent {
     }
   }
 
+  public onPageChange(paging: Paging): void {
+    this.questionnaireRequestOptions.paging = paging;
+    this.getQuestionnaires();
+  }
+
+  public onSort(sorting: SortField<FormattedQuestionnaireVersion>[]): void {
+    this.questionnaireRequestOptions.sorting = sorting;
+    this.getQuestionnaires();
+  }
+
+  public onFilter(filter: Filter): void {
+    this.questionnaireRequestOptions.filter = filter;
+    this.getQuestionnaires();
+  }
+
+  public onSearch(searchString: string): void {
+    this.questionnaireRequestOptions.filter = { or: createSearchFilter(searchString) };
+    this.getQuestionnaires();
+  }
+
   private getQuestionnaires(): void {
     this.loading = true;
     this.qmService
-      .getQuestionnaires({ status: null })
+      .getQuestionnaires(this.questionnaireRequestOptions)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe((questionnaires) => {
-        this.data = questionnaires.map((q) => Convert.toFormattedQuestionnaireVersion(q));
+      .subscribe(({ edges, pageInfo }) => {
+        this.pageInfo = pageInfo;
+        this.data = edges.map((e) => Convert.toFormattedQuestionnaireVersion(e.node));
       });
   }
 
