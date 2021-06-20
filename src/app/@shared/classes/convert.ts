@@ -4,7 +4,7 @@ import { Permission } from '@app/pages/administration/@types/permission';
 import { Role } from '@app/pages/administration/@types/role';
 import { Department } from '@app/pages/administration/@types/department';
 import { FormattedDepartment } from '../../pages/administration/@types/department';
-import { FormattedAssessment } from '../../pages/assessment/@types/assessment';
+import { FormattedAssessment, FullAssessment, AssessmentStatus } from '../../pages/assessment/@types/assessment';
 import {
   QuestionnaireVersion,
   FormattedQuestionnaireVersion,
@@ -16,6 +16,14 @@ const STATUS_COLOR = {
   [QuestionnaireStatus.PRIVATE]: 'orange',
   [QuestionnaireStatus.PUBLISHED]: 'green',
   [QuestionnaireStatus.ARCHIVED]: 'red',
+};
+
+const ASSESSMENT_STATUS_COLOR = {
+  [AssessmentStatus.PENDING]: 'blue',
+  [AssessmentStatus.PARTIALLY_COMPLETED]: 'blue',
+  [AssessmentStatus.COMPLETED]: 'green',
+  [AssessmentStatus.ARCHIVED]: 'red',
+  [AssessmentStatus.EXPIRED]: 'red',
 };
 
 export class Convert {
@@ -66,25 +74,30 @@ export class Convert {
     return questionnaire;
   }
 
-  public static toFormattedAssessment(json: Assessment): FormattedAssessment {
+  public static toFormattedAssessment(json: Assessment | FullAssessment): FormattedAssessment {
     const assessment: FormattedAssessment = json as FormattedAssessment;
 
-    assessment.formattedPatient = [
-      json.patient?.firstName?.charAt(0),
-      json.patient?.middleName?.charAt(0),
-      json.patient?.lastName?.charAt(0),
-    ]
+    assessment.formattedPatient = [json.patient?.firstName, json.patient?.middleName, json.patient?.lastName]
       .filter((s) => !!s)
-      .join('');
+      .join(' ');
 
-    assessment.formattedClinician = [
-      json.clinician?.firstName?.charAt(0),
-      json.clinician?.middleName?.charAt(0),
-      json.clinician?.lastName?.charAt(0),
-    ]
+    assessment.formattedClinician = [json.clinician?.firstName, json.clinician?.middleName, json.clinician?.lastName]
       .filter((s) => !!s)
-      .join('');
+      .join(' ');
+
+    if (isFullAssessment(json)) {
+      assessment.formattedStatus = {
+        color: ASSESSMENT_STATUS_COLOR[json.questionnaireAssessment.status],
+        title: json.questionnaireAssessment.status,
+      };
+    }
+
+    assessment.patientMedicalRecordNo = assessment.patient.medicalRecordNo;
+    assessment.clinicianWorkId = assessment.clinician.workID;
 
     return assessment;
   }
 }
+
+const isFullAssessment = (json: Assessment | FullAssessment): json is FullAssessment =>
+  !!(json as FullAssessment).questionnaireAssessment;

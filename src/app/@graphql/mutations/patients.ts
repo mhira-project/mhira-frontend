@@ -177,7 +177,7 @@ const deletePatient = gql`
 `;
 
 const addInformantsToPatient = gql`
-  mutation($input: RelationInput!) {
+  mutation($input: AddInformantsToPatientInput!) {
     addInformantsToPatient(input: $input) {
       id
       statusId
@@ -205,7 +205,7 @@ const addInformantsToPatient = gql`
 `;
 
 const removeStatusFromPatient = gql`
-  mutation($input: RelationInput!) {
+  mutation($input: RemoveStatusFromPatientInput!) {
     removeStatusFromPatient(input: $input) {
       id
       statusId

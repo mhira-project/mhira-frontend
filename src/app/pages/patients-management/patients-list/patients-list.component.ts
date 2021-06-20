@@ -4,7 +4,7 @@ import { PatientsService } from '@app/pages/patients-management/@services/patien
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Sorting } from '@shared/@types/sorting';
 import { PatientStatus } from '@app/pages/patients-management/@types/patient-status';
 import { PatientStatusesService } from '@app/pages/patients-management/@services/patient-statuses.service';

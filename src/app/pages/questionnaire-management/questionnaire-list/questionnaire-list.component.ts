@@ -8,7 +8,7 @@ import { AppPermissionsService } from '../../../@shared/services/app-permissions
 import { QuestionnaireColumns } from '../@tables/questionnaire.table';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { finalize } from 'rxjs/operators';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 

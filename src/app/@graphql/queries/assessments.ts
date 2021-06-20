@@ -50,6 +50,9 @@ const assessments = gql`
             createdAt
             updatedAt
           }
+          questionnaireAssessment {
+            status
+          }
         }
       }
       pageInfo {
