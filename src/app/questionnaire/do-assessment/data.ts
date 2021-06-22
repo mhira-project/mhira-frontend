@@ -3,8 +3,7 @@ export const questions = [
     id: 0,
     type: 'checkbox',
     text: 'sit ut excepteur commodo id est commodo in occaecat qui ad mollit nulla dolor cupidatat eu ipsum eu ad do',
-    help:
-      'culpa nulla ut aliqua exercitation officia laboris do sunt velit dolore exercitation do tempor tempor in incididunt aliqua excepteur quis',
+    help: 'culpa nulla ut aliqua exercitation officia laboris do sunt velit dolore exercitation do tempor tempor in incididunt aliqua excepteur quis',
     isOptional: true,
     value: '',
     options: [
@@ -53,10 +52,8 @@ export const questions = [
   {
     id: 1,
     type: 'time',
-    text:
-      'nostrud consequat labore cupidatat occaecat exercitation qui esse tempor veniam ea dolor tempor Lorem aute amet minim occaecat labore velit',
-    help:
-      'laborum sint adipisicing eu dolor nisi consequat adipisicing veniam consequat duis non cillum Lorem adipisicing quis proident esse dolor non',
+    text: 'nostrud consequat labore cupidatat occaecat exercitation qui esse tempor veniam ea dolor tempor Lorem aute amet minim occaecat labore velit',
+    help: 'laborum sint adipisicing eu dolor nisi consequat adipisicing veniam consequat duis non cillum Lorem adipisicing quis proident esse dolor non',
     isOptional: false,
     isPersonalInformation: true,
     value: '',
@@ -83,10 +80,8 @@ export const questions = [
   {
     id: 2,
     type: 'number',
-    text:
-      'sit mollit aliquip ex consequat reprehenderit elit dolore ut deserunt incididunt ex laborum et sint quis aliqua proident ea magna',
-    help:
-      'commodo ullamco id fugiat eiusmod laboris est voluptate eu laborum dolor magna commodo exercitation non mollit reprehenderit excepteur non nisi',
+    text: 'sit mollit aliquip ex consequat reprehenderit elit dolore ut deserunt incididunt ex laborum et sint quis aliqua proident ea magna',
+    help: 'commodo ullamco id fugiat eiusmod laboris est voluptate eu laborum dolor magna commodo exercitation non mollit reprehenderit excepteur non nisi',
     isOptional: false,
     isPersonalInformation: true,
     value: '',
@@ -113,10 +108,8 @@ export const questions = [
   {
     id: 3,
     type: 'date',
-    text:
-      'tempor qui id minim do Lorem do excepteur anim excepteur do ipsum occaecat enim eiusmod anim Lorem non dolor laborum',
-    help:
-      'proident do mollit sit enim et eiusmod aliqua eu est laborum consequat nisi qui veniam dolor do incididunt a culpa',
+    text: 'tempor qui id minim do Lorem do excepteur anim excepteur do ipsum occaecat enim eiusmod anim Lorem non dolor laborum',
+    help: 'proident do mollit sit enim et eiusmod aliqua eu est laborum consequat nisi qui veniam dolor do incididunt a culpa',
     isOptional: false,
     isPersonalInformation: false,
     value: '',
@@ -143,10 +136,8 @@ export const questions = [
   {
     id: 6,
     type: 'choice',
-    text:
-      'adipisicing esse voluptate do voluptate occaecat ex culpa laborum est id cillum aliquip ex nisi laboris aute ex aliqua nostrud',
-    help:
-      'cupidatat magna laboris commodo fugiat et aute do elit incididunt nostrud nostrud deserunt esse pariatur adipisicing occaecat consequat velit pariatur',
+    text: 'adipisicing esse voluptate do voluptate occaecat ex culpa laborum est id cillum aliquip ex nisi laboris aute ex aliqua nostrud',
+    help: 'cupidatat magna laboris commodo fugiat et aute do elit incididunt nostrud nostrud deserunt esse pariatur adipisicing occaecat consequat velit pariatur',
     isOptional: true,
     options: [
       {
@@ -194,10 +185,8 @@ export const questions = [
   {
     id: 7,
     type: 'text',
-    text:
-      'aute a aute reprehenderit consectetur ullamco culpa incididunt sunt nisi sit laboris ipsum minim aute est consequat eiusmod aliqua esse',
-    help:
-      'consectetur voluptate dolor ea nostrud minim occaecat amet fugiat culpa reprehenderit culpa amet in minim eu ipsum minim officia adipisicing',
+    text: 'aute a aute reprehenderit consectetur ullamco culpa incididunt sunt nisi sit laboris ipsum minim aute est consequat eiusmod aliqua esse',
+    help: 'consectetur voluptate dolor ea nostrud minim occaecat amet fugiat culpa reprehenderit culpa amet in minim eu ipsum minim officia adipisicing',
     isOptional: true,
     isPersonalInformation: false,
     value: '',

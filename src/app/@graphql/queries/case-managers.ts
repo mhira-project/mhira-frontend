@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getPatientCaseManagers = gql`
-  query(
+  query (
     $first: Int
     $after: String
     $last: Int
@@ -68,7 +68,7 @@ const getPatientCaseManagers = gql`
 `;
 
 const getPatientInformants = gql`
-  query($first: Int, $after: String, $last: Int, $before: String, $patientId: Int!) {
+  query ($first: Int, $after: String, $last: Int, $before: String, $patientId: Int!) {
     getPatientInformants(first: $first, after: $after, last: $last, before: $before, patientId: $patientId) {
       edges {
         cursor

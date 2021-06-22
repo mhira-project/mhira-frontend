@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getQuestionnaires = gql`
-  query($filters: ListQuestionnaireInput!) {
+  query ($filters: ListQuestionnaireInput!) {
     questionnaires(filters: $filters) {
       _id
       name
