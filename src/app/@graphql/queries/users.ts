@@ -42,6 +42,10 @@ const getUsers = gql`
             createdAt
             updatedAt
           }
+          permissionGrants {
+            id
+            name
+          }
           permissions {
             id
             name

@@ -50,6 +50,9 @@ const assessments = gql`
             createdAt
             updatedAt
           }
+          questionnaireAssessment {
+            status
+          }
         }
       }
       pageInfo {
@@ -151,6 +154,7 @@ const getFullAssessment = gql`
             abbreviation
           }
           questionGroups {
+            label
             questions {
               _id
               name

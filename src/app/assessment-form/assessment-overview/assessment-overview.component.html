@@ -8,7 +8,7 @@
     <ng-template #questionnaireInfo>
       <button
         nz-button
-        nzType="primary"
+        [nzType]="isQuestionnaireDone(questionnaire._id) ? 'default' : 'primary'"
         nzShape="circle"
         class="header-icon"
         nzSize="small"
@@ -16,7 +16,7 @@
         routerLink="../questionnaire/{{ idx }}"
         queryParamsHandling="merge"
       >
-        <i nz-icon nzType="caret-right"></i>
+        <i nz-icon [nzType]="isQuestionnaireDone(questionnaire._id) ? 'check' : 'caret-right'"></i>
       </button>
       <app-questionnaire-info [website]="questionnaire.website">
         <button
@@ -47,7 +47,12 @@
 </section>
 
 <section>
-  <button nz-button nzType="primary" [disabled]="percentageCompleted < 100" (click)="completeAssessment()">
-    Complete assessment ({{ percentageCompleted | number: '1.1-1' }}% completed)
+  <button
+    nz-button
+    nzType="primary"
+    [disabled]="assessmentFormService.percentageCompleted < 100"
+    (click)="completeAssessment()"
+  >
+    Complete assessment
   </button>
 </section>

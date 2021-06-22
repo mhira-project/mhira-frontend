@@ -42,10 +42,12 @@ export interface QuestionnaireVersion {
   license: string;
   timeToComplete: number;
   questionnaire: {
+    _id: string;
     language: string;
     abbreviation: string;
   };
   questionGroups: Array<{
+    label: string;
     questions: Question[];
   }>;
 }

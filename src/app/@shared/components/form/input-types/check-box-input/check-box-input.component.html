@@ -1,5 +1,9 @@
-<label translate>
-  <b>{{ field?.title }}<span style="color: red" *ngIf="field?.isRequired && inputMode"> *</span></b>
+<label>
+  <b>
+    <span *ngIf="field.translationPath; else plainTitle" [translate]="field.translationPath"></span>
+    <ng-template #plainTitle> {{ field?.title }} </ng-template>
+    <span style="color: red" *ngIf="field?.isRequired && inputMode"> *</span>
+  </b>
 </label>
 <ng-container *ngIf="inputMode" [formGroup]="inputGroup">
   <nz-checkbox-group

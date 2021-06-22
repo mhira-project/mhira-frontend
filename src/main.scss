@@ -24,3 +24,10 @@ nz-card.multiline-header .ant-card-head-title {
   white-space: normal;
   text-overflow: initial;
 }
+
+nz-card.required-question .ant-card-head-title::after {
+  content: "*";
+  color: $red;
+  font-weight: bold;
+  padding-left: 0.4em;
+}

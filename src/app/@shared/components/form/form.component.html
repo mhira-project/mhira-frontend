@@ -6,7 +6,8 @@
     <ng-container *ngIf="!group.hidden">
       <div>
         <h2 *ngIf="group.title">
-          <span [translate]="group.title"></span>
+          <span *ngIf="group.translationPath; else plainTitle" [translate]="group.translationPath"></span>
+          <ng-template #plainTitle> {{ group.title }} </ng-template>
         </h2>
       </div>
       <div nz-row nzGutter="16">

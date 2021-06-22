@@ -102,7 +102,7 @@ const updateUserPassword = gql`
   }
 `;
 const deleteOneUser = gql`
-  mutation($input: DeleteOneInput!) {
+  mutation($input: DeleteOneUserInput!) {
     deleteOneUser(input: $input) {
       id
     }

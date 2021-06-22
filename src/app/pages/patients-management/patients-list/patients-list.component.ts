@@ -4,7 +4,7 @@ import { PatientsService } from '@app/pages/patients-management/@services/patien
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Sorting } from '@shared/@types/sorting';
 import { PatientStatus } from '@app/pages/patients-management/@types/patient-status';
 import { PatientStatusesService } from '@app/pages/patients-management/@services/patient-statuses.service';
@@ -24,7 +24,6 @@ import {
   ActionArgs,
   DEFAULT_PAGE_SIZE,
 } from '../../../@shared/@modules/master-data/@types/list';
-import { TranslateService } from '@ngx-translate/core';
 
 const CryptoJS = require('crypto-js');
 
@@ -75,18 +74,8 @@ export class PatientsListComponent {
     private modalService: NzModalService,
     private patientStateService: PatientStatusesService,
     private errorService: ErrorHandlerService,
-    private translate: TranslateService,
     public perms: AppPermissionsService
   ) {
-    this.columns.map((column) => {
-      this.translatedColumns.push({
-        ...column,
-        title: this.translate.instant(column.name, {
-          value: `patients.tale.${column.name}`,
-        }),
-      });
-    });
-    console.log(this.translatedColumns);
     this.getPatients();
     this.getPatientStates();
     this.setActions();

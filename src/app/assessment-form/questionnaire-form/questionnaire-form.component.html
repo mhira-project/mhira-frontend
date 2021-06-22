@@ -1,14 +1,13 @@
 <article *ngIf="questionnaire">
-  <div class="head-row">
+  <section class="head-row">
     <h2>{{ questionnaire.name }}</h2>
-    <a nz-button nzType="primary" routerLink="../../overview" queryParamsHandling="merge">Overview</a>
-  </div>
+    <ng-container *ngTemplateOutlet="overviewBtn"></ng-container>
+  </section>
 
-  <section *ngFor="let group of questionnaire.questionGroups; let index = index">
-    <ng-container *ngIf="currentGroupIdx === index">
-      <ng-container *ngFor="let question of group.questions">
-        <app-question class="question" [question]="question"></app-question>
-      </ng-container>
+  <section *ngIf="questionnaire.questionGroups[currentGroupIdx] as group">
+    <h3 class="group-title" *ngIf="group.label">{{ group.label }}</h3>
+    <ng-container *ngFor="let question of group.questions">
+      <app-question *ngIf="isVisible(question)" class="question" [question]="question"></app-question>
     </ng-container>
   </section>
 
@@ -39,12 +38,16 @@
       </ng-container>
     </div>
     <button
+      *ngIf="currentGroupIdx < questionnaire.questionGroups.length - 1; else overviewBtn"
       nz-button
       nzType="primary"
-      [disabled]="currentGroupIdx >= questionnaire.questionGroups.length - 1"
       (click)="currentGroupIdx = currentGroupIdx + 1"
     >
       Next
     </button>
   </section>
 </article>
+
+<ng-template #overviewBtn>
+  <a nz-button nzType="primary" routerLink="../../overview" queryParamsHandling="merge">Overview</a>
+</ng-template>

@@ -18,12 +18,12 @@ import { Department } from '@app/pages/administration/@types/department';
 import { ModalType } from '@app/pages/user-management/users-list/modal.type';
 import { FormComponent } from '@shared/components/form/form.component';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
-import { NzModalService } from 'ng-zorro-antd';
 import { UserModel } from '@app/pages/user-management/@models/user.model';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { DeleteOneInput } from '../../../@shared/@types/delete-one-input';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 import { finalize } from 'rxjs/operators';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 const CryptoJS = require('crypto-js');
 

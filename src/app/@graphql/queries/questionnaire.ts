@@ -13,6 +13,7 @@ const getQuestionnaires = gql`
       license
       timeToComplete
       questionnaire {
+        _id
         language
         abbreviation
       }

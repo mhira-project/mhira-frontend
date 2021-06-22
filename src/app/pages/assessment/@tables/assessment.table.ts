@@ -1,6 +1,7 @@
 import { User } from './../../user-management/@types/user';
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
 import { FormattedAssessment } from '../@types/assessment';
+import { Patient } from '@app/pages/patients-management/@types/patient';
 
 export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
@@ -13,10 +14,18 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     },
   },
   {
+    name: 'formattedStatus',
+    title: 'Status',
+    render: 'tag',
+  },
+  {
+    name: 'patientMedicalRecordNo',
+    title: 'Patient Hospital ID',
+  },
+  {
     name: 'formattedPatient',
     altName: 'patient',
     title: 'Patient',
-    render: 'avatar',
     filterField: {
       type: 'text',
       value: undefined,
@@ -29,15 +38,18 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
               { middleName: { iLike: `%${q}%` } },
               { lastName: { iLike: `%${q}%` } },
               { medicalRecordNo: { iLike: `%${q}%` } },
-            ] as Array<{ [K in keyof User]: any }>,
+            ] as Array<{ [K in keyof Patient]: any }>,
           }
         : {},
+  },
+  {
+    name: 'clinicianWorkId',
+    title: 'Clinician Work ID',
   },
   {
     name: 'formattedClinician',
     altName: 'clinician',
     title: 'Clinician',
-    render: 'avatar',
     filterField: {
       type: 'text',
       value: undefined,
@@ -61,6 +73,17 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     filterField: {
       type: 'text',
       value: undefined,
+    },
+  },
+  {
+    name: 'createdAt',
+    title: 'Created at',
+    render: 'date',
+    sort: true,
+    filterField: {
+      type: 'dateRange',
+      value: undefined,
+      title: 'Created at',
     },
   },
 ];

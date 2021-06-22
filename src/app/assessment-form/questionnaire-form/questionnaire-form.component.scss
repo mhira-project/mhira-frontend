@@ -4,17 +4,14 @@ article {
     justify-content: space-between;
   }
 
-  section + section {
-    margin-top: 2em;
-  }
-
-  section .question:first-child {
-    margin-top: 2em;
+  section,
+  .group-title {
+    margin: 2rem 0;
   }
 
   .question {
     display: block;
-    margin: 4em 0;
+    margin: 4rem 0;
   }
 }
 

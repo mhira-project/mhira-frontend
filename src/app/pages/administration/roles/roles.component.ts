@@ -4,7 +4,6 @@ import { Role, UpdateOneRoleInput } from '@app/pages/administration/@types/role'
 import { RolesTable } from '@app/pages/administration/@tables/roles.table';
 import { Sorting } from '@shared/@types/sorting';
 import { Filter } from '@shared/@types/filter';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { RolesService } from '@app/pages/administration/@services/roles.service';
 import { RoleForm } from '@app/pages/administration/@forms/role.form';
 import { Convert } from '@shared/classes/convert';
@@ -13,6 +12,8 @@ import { PermissionKey } from '@app/@shared/@types/permission';
 import { PaginationService } from '@shared/services/pagination.service';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 import { finalize } from 'rxjs/operators';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-roles',
@@ -105,11 +106,11 @@ export class RolesComponent implements OnInit {
       case 'Delete Role':
         this.modalService.confirm({
           nzTitle: 'Confirm',
-          nzContent: `Are you sure you want to delete role for
+          nzContent: `Are you sure you want to delete the role
                <b>${this.roles[event.index].name}</b>. ${
             this.role.users && this.role.users.length > 0
-              ? 'There are users assigned to this role if you delete it they will have default role.'
-              : 'This role has no users assigned to it.'
+              ? 'There are users assigned to this role.  If you delete it, these users will have no role and lose all permissions'
+              : 'This role have no users assigned to it.'
           }`,
           nzOkText: 'Delete',
           nzOnOk: () => this.deleteRole(this.roles[event.index], event.index),

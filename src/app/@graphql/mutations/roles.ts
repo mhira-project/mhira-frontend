@@ -74,7 +74,7 @@ const deleteManyRoles = gql`
 `;
 
 const setRolesOnUser = gql`
-  mutation($input: RelationInput!) {
+  mutation($input: SetRolesOnUserInput!) {
     setRolesOnUser(input: $input) {
       id
       username
@@ -96,7 +96,7 @@ const setRolesOnUser = gql`
 `;
 
 const removeUsersFromRole = gql`
-  mutation($input: RelationInput!) {
+  mutation($input: RemoveUsersFromRoleInput!) {
     removeUsersFromRole(input: $input) {
       id
       name
@@ -125,7 +125,7 @@ const removeUsersFromRole = gql`
 `;
 
 const removePermissionsFromRole = gql`
-  mutation($input: RelationsInput!) {
+  mutation($input: RemovePermissionsFromRoleInput!) {
     removePermissionsFromRole(input: $input) {
       id
       name
@@ -154,7 +154,7 @@ const removePermissionsFromRole = gql`
 `;
 
 const setUsersOnRole = gql`
-  mutation($input: RelationInput!) {
+  mutation($input: SetUsersOnRoleInput!) {
     setUsersOnRole(input: $input) {
       id
       name
@@ -183,7 +183,7 @@ const setUsersOnRole = gql`
 `;
 
 const addPermissionsToRole = gql`
-  mutation($input: RelationsInput!) {
+  mutation($input: AddPermissionsToRoleInput!) {
     addPermissionsToRole(input: $input) {
       id
       name
@@ -212,7 +212,7 @@ const addPermissionsToRole = gql`
 `;
 
 const addUsersToRole = gql`
-  mutation($input: RelationsInput!) {
+  mutation($input: AddUsersToRoleInput!) {
     addUsersToRole(input: $input) {
       id
       name
@@ -241,7 +241,7 @@ const addUsersToRole = gql`
 `;
 
 const addRolesToUser = gql`
-  mutation($input: RelationsInput!) {
+  mutation($input: AddRolesToUserInput!) {
     addRolesToUser(input: $input) {
       id
       username
@@ -263,7 +263,7 @@ const addRolesToUser = gql`
 `;
 
 const removeRolesFromUser = gql`
-  mutation($input: RelationsInput!) {
+  mutation($input: RemoveRolesFromUserInput!) {
     removeRolesFromUser(input: $input) {
       id
       username
@@ -285,7 +285,7 @@ const removeRolesFromUser = gql`
 `;
 
 const addDepartmentsToUser = gql`
-  mutation($input: RelationsInput!) {
+  mutation($input: AddDepartmentsToUserInput!) {
     addDepartmentsToUser(input: $input) {
       id
       username
@@ -307,7 +307,7 @@ const addDepartmentsToUser = gql`
 `;
 
 const removeDepartmentsFromUser = gql`
-  mutation($input: RelationsInput!) {
+  mutation($input: RemoveDepartmentsFromUserInput!) {
     removeDepartmentsFromUser(input: $input) {
       id
       username
