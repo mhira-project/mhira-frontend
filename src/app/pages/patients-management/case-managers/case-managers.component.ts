@@ -254,7 +254,7 @@ export class CaseManagersComponent implements OnInit {
     this.loading = true;
     const options = { ...this.caseManagersRequestOptions };
     const patientFilter = this.patient ? { patients: { id: { eq: this.patient.id } } } : undefined;
-    const previousAndFilters = options.filter.and ?? [];
+    const previousAndFilters = options.filter ? options.filter.and ?? [] : [];
     options.filter = {
       ...options.filter,
       and: [patientFilter, ...previousAndFilters],

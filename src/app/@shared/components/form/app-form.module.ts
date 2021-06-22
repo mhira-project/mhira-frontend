@@ -79,6 +79,7 @@ import { NzTreeModule } from 'ng-zorro-antd/tree';
 import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { TranslateModule } from '@ngx-translate/core';
 
 const antModules = [
   NzAffixModule,
@@ -148,7 +149,7 @@ const antModules = [
 ];
 
 @NgModule({
-  imports: [...antModules, CommonModule, FormsModule, NgxInputSearchModule, ReactiveFormsModule],
+  imports: [...antModules, CommonModule, FormsModule, NgxInputSearchModule, ReactiveFormsModule, TranslateModule],
   declarations: [
     FormComponent,
     TextInputComponent,

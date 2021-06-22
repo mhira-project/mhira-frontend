@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createPatient = gql`
-  mutation($input: CreateOnePatientInput!) {
+  mutation ($input: CreateOnePatientInput!) {
     createOnePatient(input: $input) {
       id
       statusId
@@ -75,7 +75,7 @@ const createPatient = gql`
 `;
 
 const updatePatient = gql`
-  mutation($input: UpdateOnePatientInput!) {
+  mutation ($input: UpdateOnePatientInput!) {
     updateOnePatient(input: $input) {
       id
       statusId
@@ -149,7 +149,7 @@ const updatePatient = gql`
 `;
 
 const deletePatient = gql`
-  mutation($input: DeleteOneInput!) {
+  mutation ($input: DeleteOneInput!) {
     deleteOnePatient(input: $input) {
       id
       statusId
@@ -177,7 +177,7 @@ const deletePatient = gql`
 `;
 
 const addInformantsToPatient = gql`
-  mutation($input: AddInformantsToPatientInput!) {
+  mutation ($input: AddInformantsToPatientInput!) {
     addInformantsToPatient(input: $input) {
       id
       statusId
@@ -205,7 +205,7 @@ const addInformantsToPatient = gql`
 `;
 
 const removeStatusFromPatient = gql`
-  mutation($input: RemoveStatusFromPatientInput!) {
+  mutation ($input: RemoveStatusFromPatientInput!) {
     removeStatusFromPatient(input: $input) {
       id
       statusId

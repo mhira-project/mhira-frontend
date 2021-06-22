@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createOneRole = gql`
-  mutation($input: CreateOneRoleInput!) {
+  mutation ($input: CreateOneRoleInput!) {
     createOneRole(input: $input) {
       id
       name
@@ -14,7 +14,7 @@ const createOneRole = gql`
 `;
 
 const createManyRoles = gql`
-  mutation($input: CreateManyRolesInput!) {
+  mutation ($input: CreateManyRolesInput!) {
     createManyRoles(input: $input) {
       id
       name
@@ -27,7 +27,7 @@ const createManyRoles = gql`
 `;
 
 const updateOneRole = gql`
-  mutation($input: UpdateOneRoleInput!) {
+  mutation ($input: UpdateOneRoleInput!) {
     updateOneRole(input: $input) {
       id
       name
@@ -40,7 +40,7 @@ const updateOneRole = gql`
 `;
 
 const updateManyRoles = gql`
-  mutation($input: UpdateManyRolesInput!) {
+  mutation ($input: UpdateManyRolesInput!) {
     updateManyRoles(input: $input) {
       id
       name
@@ -53,7 +53,7 @@ const updateManyRoles = gql`
 `;
 
 const deleteOneRole = gql`
-  mutation($input: DeleteOneRoleInput!) {
+  mutation ($input: DeleteOneRoleInput!) {
     deleteOneRole(input: $input) {
       id
       name
@@ -66,7 +66,7 @@ const deleteOneRole = gql`
 `;
 
 const deleteManyRoles = gql`
-  mutation($input: DeleteManyRolesInput!) {
+  mutation ($input: DeleteManyRolesInput!) {
     deleteManyRoles(input: $input) {
       deletedCount
     }
@@ -74,7 +74,7 @@ const deleteManyRoles = gql`
 `;
 
 const setRolesOnUser = gql`
-  mutation($input: SetRolesOnUserInput!) {
+  mutation ($input: SetRolesOnUserInput!) {
     setRolesOnUser(input: $input) {
       id
       username
@@ -96,7 +96,7 @@ const setRolesOnUser = gql`
 `;
 
 const removeUsersFromRole = gql`
-  mutation($input: RemoveUsersFromRoleInput!) {
+  mutation ($input: RemoveUsersFromRoleInput!) {
     removeUsersFromRole(input: $input) {
       id
       name
@@ -125,7 +125,7 @@ const removeUsersFromRole = gql`
 `;
 
 const removePermissionsFromRole = gql`
-  mutation($input: RemovePermissionsFromRoleInput!) {
+  mutation ($input: RemovePermissionsFromRoleInput!) {
     removePermissionsFromRole(input: $input) {
       id
       name
@@ -154,7 +154,7 @@ const removePermissionsFromRole = gql`
 `;
 
 const setUsersOnRole = gql`
-  mutation($input: SetUsersOnRoleInput!) {
+  mutation ($input: SetUsersOnRoleInput!) {
     setUsersOnRole(input: $input) {
       id
       name
@@ -183,7 +183,7 @@ const setUsersOnRole = gql`
 `;
 
 const addPermissionsToRole = gql`
-  mutation($input: AddPermissionsToRoleInput!) {
+  mutation ($input: AddPermissionsToRoleInput!) {
     addPermissionsToRole(input: $input) {
       id
       name
@@ -212,7 +212,7 @@ const addPermissionsToRole = gql`
 `;
 
 const addUsersToRole = gql`
-  mutation($input: AddUsersToRoleInput!) {
+  mutation ($input: AddUsersToRoleInput!) {
     addUsersToRole(input: $input) {
       id
       name
@@ -241,7 +241,7 @@ const addUsersToRole = gql`
 `;
 
 const addRolesToUser = gql`
-  mutation($input: AddRolesToUserInput!) {
+  mutation ($input: AddRolesToUserInput!) {
     addRolesToUser(input: $input) {
       id
       username
@@ -263,7 +263,7 @@ const addRolesToUser = gql`
 `;
 
 const removeRolesFromUser = gql`
-  mutation($input: RemoveRolesFromUserInput!) {
+  mutation ($input: RemoveRolesFromUserInput!) {
     removeRolesFromUser(input: $input) {
       id
       username
@@ -285,7 +285,7 @@ const removeRolesFromUser = gql`
 `;
 
 const addDepartmentsToUser = gql`
-  mutation($input: AddDepartmentsToUserInput!) {
+  mutation ($input: AddDepartmentsToUserInput!) {
     addDepartmentsToUser(input: $input) {
       id
       username
@@ -307,7 +307,7 @@ const addDepartmentsToUser = gql`
 `;
 
 const removeDepartmentsFromUser = gql`
-  mutation($input: RemoveDepartmentsFromUserInput!) {
+  mutation ($input: RemoveDepartmentsFromUserInput!) {
     removeDepartmentsFromUser(input: $input) {
       id
       username

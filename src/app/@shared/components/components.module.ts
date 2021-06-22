@@ -24,7 +24,6 @@ import { SelectModalComponent } from './select-modal/select-modal.component';
 import { CountryPipe } from '../pipes/country.pipe';
 import { UserPickerComponent } from './user-picker/user-picker.component';
 import { PatientPickerComponent } from './patient-picker/patient-picker.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
@@ -92,6 +91,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
+import { TranslateModule } from '@ngx-translate/core';
 
 const antModules = [
   NzSkeletonModule,
