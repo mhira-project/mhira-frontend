@@ -15,7 +15,6 @@ export class CaseManagersService {
   constructor(private apollo: Apollo) {}
 
   getPatientCaseManagers(filter?: CaseManagerFilter): Observable<FetchResult<any>> {
-    console.log(filter);
     return this.apollo.query({
       query: CaseManagersQueries.getPatientCaseManagers,
       variables: filter,
