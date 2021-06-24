@@ -72,6 +72,7 @@ export class CaseManagersComponent implements OnInit {
   };
   caseManagers: CaseManager[] = [];
   users: CaseManager[] = [];
+  caseManagerFilter: CaseManagerFilter;
   caseManagersFilterForm = CaseManagersFilterForm;
   selectedIndex = -1;
   showFilter = false;
@@ -261,15 +262,8 @@ export class CaseManagersComponent implements OnInit {
 
   private getCaseManagers(): void {
     this.loading = true;
-    const options = { ...this.caseManagersRequestOptions };
-    const patientFilter = this.patient ? { patients: { id: { eq: this.patient.id } } } : undefined;
-    const previousAndFilters = options.filter.and ?? [];
-    options.filter = {
-      ...options.filter,
-      and: [patientFilter, ...previousAndFilters],
-    };
     this.caseManagersService
-      .getPatientCaseManagers(options)
+      .getPatientCaseManagers({ patientId: this.patient ? this.patient?.id : -1 })
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(({ data }) => {
         this.data = data.getPatientCaseManagers.edges.map((caseManager: any) =>
@@ -325,7 +319,7 @@ export class CaseManagersComponent implements OnInit {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () => {
-          this.caseManagers.unshift(CaseManagerModel.fromJson(manager));
+          this.data.unshift(CaseManagerModel.fromJson(manager));
           this.message.create(
             'success',
             `${manager.firstName} has been successfully assigned to ${this.patient.firstName}`
@@ -355,7 +349,7 @@ export class CaseManagersComponent implements OnInit {
       .unassignPatientCaseManager({ userId: manager.id, patientId: this.patient.id })
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        () => this.caseManagers.splice(this.caseManagers.indexOf(manager), 1),
+        () => this.data.splice(this.caseManagers.indexOf(manager), 1),
         (error) => this.errorService.handleError(error, { prefix: 'Unable to delete user' })
       );
   }

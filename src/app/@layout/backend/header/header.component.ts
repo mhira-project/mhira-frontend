@@ -9,7 +9,7 @@ import { UserChangePasswordInput } from '@app/pages/user-management/user-form/us
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { FormComponent } from '@shared/components/form/form.component';
 import { FieldGroup } from '@shared/components/form/@types/field.group';
-import { TranslationItem } from '@shared/@types/translation';
+import { TranslationCode, TranslationItem } from '@shared/@types/translation';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 
@@ -42,7 +42,23 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.translationService.setDefaultLang('en');
     this.getUser();
+    this.getStoredLang();
+  }
+
+  getStoredLang() {
+    const lang = localStorage.getItem('currentLang');
+    const browserLang = this.translationService.getBrowserLang();
+    if (lang) {
+      this.translationService.use(lang);
+    } else {
+      if (this.translations.some((trans) => trans.code === browserLang)) {
+        this.translationService.use(browserLang);
+      } else {
+        this.translationService.use(TranslationCode.EN);
+      }
+    }
   }
 
   getUser() {
@@ -60,6 +76,7 @@ export class HeaderComponent implements OnInit {
     this.child.handleSubmitForm(this.changePasswordForm);
   }
   onChangeTranslation(item: TranslationItem) {
+    console.log(item);
     localStorage.setItem('currentLang', item.code);
     this.translationService.use(item.code);
   }
