@@ -203,7 +203,6 @@ export class CaseManagersComponent implements OnInit {
         break;
     }
   }
-
   public onAction({ action, context: casemanager }: ActionArgs<CaseManager, ActionKey>): void {
     switch (action.key) {
       case ActionKey.UNASSIGN_CASEMANAGER:

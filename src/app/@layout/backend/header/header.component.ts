@@ -44,21 +44,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.translationService.setDefaultLang('en');
     this.getUser();
-    this.getStoredLang();
-  }
-
-  getStoredLang() {
-    const lang = localStorage.getItem('currentLang');
-    const browserLang = this.translationService.getBrowserLang();
-    if (lang) {
-      this.translationService.use(lang);
-    } else {
-      if (this.translations.some((trans) => trans.code === browserLang)) {
-        this.translationService.use(browserLang);
-      } else {
-        this.translationService.use(TranslationCode.EN);
-      }
-    }
   }
 
   getUser() {
@@ -76,7 +61,6 @@ export class HeaderComponent implements OnInit {
     this.child.handleSubmitForm(this.changePasswordForm);
   }
   onChangeTranslation(item: TranslationItem) {
-    console.log(item);
     localStorage.setItem('currentLang', item.code);
     this.translationService.use(item.code);
   }
