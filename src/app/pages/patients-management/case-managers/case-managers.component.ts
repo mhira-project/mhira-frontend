@@ -204,6 +204,14 @@ export class CaseManagersComponent implements OnInit {
     }
   }
 
+  public onAction({ action, context: casemanager }: ActionArgs<CaseManager, ActionKey>): void {
+    switch (action.key) {
+      case ActionKey.UNASSIGN_CASEMANAGER:
+        this.unAssignCaseManager(casemanager);
+        return;
+    }
+  }
+
   public handleActionClick(event: { index: number; action: { name: string } }): void {
     this.selectedIndex = event.index;
     switch (event.action.name) {
@@ -271,14 +279,6 @@ export class CaseManagersComponent implements OnInit {
         );
         this.pageInfo = data.getPatientCaseManagers.pageInfo;
       });
-  }
-
-  public onAction({ action, context: casemanager }: ActionArgs<CaseManager, ActionKey>): void {
-    switch (action.key) {
-      case ActionKey.UNASSIGN_CASEMANAGER:
-        this.unAssignCaseManager(casemanager);
-        return;
-    }
   }
 
   private getDepartments(): void {
