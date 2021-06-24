@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Sorting } from '@shared/@types/sorting';
 import { finalize } from 'rxjs/operators';
 import { SelectModalComponent } from '../../../@shared/components/select-modal/select-modal.component';

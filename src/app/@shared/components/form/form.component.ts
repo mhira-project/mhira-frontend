@@ -140,6 +140,9 @@ export class FormComponent implements OnInit {
   }
 
   handleInputChange(field: Field, value: boolean | number | string | number[] | string[] | FileList) {
+    if (field.type === 'checkBox') {
+      field.value = [...(value as any[])];
+    }
     this.inputChange.emit({ name: field.name, value });
   }
 

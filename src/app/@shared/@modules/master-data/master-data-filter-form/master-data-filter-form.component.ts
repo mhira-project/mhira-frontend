@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TableColumn } from '../@types/list';
 import { Form } from '../../../components/form/@types/form';
 import { Field } from '../../../components/form/@types/field';
-import { NzDrawerComponent } from 'ng-zorro-antd';
+import { NzDrawerComponent } from 'ng-zorro-antd/drawer';
 import { Filter } from '../../../@types/filter';
 
 @Component({
@@ -16,6 +16,7 @@ export class MasterDataFilterFormComponent<T> {
 
   @Input()
   public set columns(columns: TableColumn<T>[]) {
+    if (!columns) return;
     this._columns = columns;
     this.form = {
       submitButtonText: 'Apply',

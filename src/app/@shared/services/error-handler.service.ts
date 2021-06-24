@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApolloError, isApolloError } from 'apollo-client';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { SkipLogicError } from '../../assessment-form/skip-logic';
 
 type AnyError = ApolloError | SkipLogicError | Error;

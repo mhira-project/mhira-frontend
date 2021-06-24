@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const removePermissionsFromUser = gql`
-  mutation($input: RelationInput!) {
+  mutation($input: RemovePermissionsFromUserInput!) {
     removePermissionsFromUser(input: $input) {
       id
       username
@@ -23,7 +23,7 @@ const removePermissionsFromUser = gql`
 `;
 
 const setPermissionsOnUser = gql`
-  mutation($input: RelationInput!) {
+  mutation($input: SetPermissionsOnUserInput!) {
     setPermissionsOnUser(input: $input) {
       id
       username
@@ -44,123 +44,7 @@ const setPermissionsOnUser = gql`
   }
 `;
 
-const removeUsersFromPermission = gql`
-  mutation($input: RelationInput!) {
-    removeUsersFromPermission(input: $input) {
-      id
-      name
-      createdAt
-      updatedAt
-      users {
-        id
-        username
-        active
-        firstName
-        middleName
-        lastName
-        email
-        phone
-        workID
-        address
-        gender
-        birthDate
-        nationality
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
-
-const removeRolesFromPermission = gql`
-  mutation($input: RelationInput!) {
-    removeRolesFromPermission(input: $input) {
-      id
-      name
-      createdAt
-      updatedAt
-      users {
-        id
-        username
-        active
-        firstName
-        middleName
-        lastName
-        email
-        phone
-        workID
-        address
-        gender
-        birthDate
-        nationality
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
-
-const setUsersOnPermission = gql`
-  mutation($input: RelationInput!) {
-    setUsersOnPermission(input: $input) {
-      id
-      name
-      createdAt
-      updatedAt
-      users {
-        id
-        username
-        active
-        firstName
-        middleName
-        lastName
-        email
-        phone
-        workID
-        address
-        gender
-        birthDate
-        nationality
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
-
-const setRolesOnPermission = gql`
-  mutation($input: RelationInput!) {
-    setRolesOnPermission(input: $input) {
-      id
-      name
-      createdAt
-      updatedAt
-      users {
-        id
-        username
-        active
-        firstName
-        middleName
-        lastName
-        email
-        phone
-        workID
-        address
-        gender
-        birthDate
-        nationality
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
-
 export const PermissionsMutations = {
   removePermissionsFromUser,
   setPermissionsOnUser,
-  removeUsersFromPermission,
-  removeRolesFromPermission,
-  setUsersOnPermission,
-  setRolesOnPermission,
 };

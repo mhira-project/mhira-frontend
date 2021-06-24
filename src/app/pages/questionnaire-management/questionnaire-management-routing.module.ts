@@ -2,7 +2,6 @@ import { PermissionGuard } from './../../permission.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { QuestionnaireFormComponent } from './questionnaire-form/questionnaire-form.component';
-import { extract } from '../../i18n/i18n.service';
 import { PermissionKey } from '../../@shared/@types/permission';
 import { QuestionnaireListComponent } from './questionnaire-list/questionnaire-list.component';
 
@@ -11,8 +10,7 @@ const routes: Routes = [
     path: 'questionnaire-list',
     component: QuestionnaireListComponent,
     data: {
-      title: extract('Questionnaire list'),
-      breadcrumb: extract('Questionnaire list'),
+      breadcrumbI18nKey: 'menu.questionnairesList',
       permissions: {
         only: [PermissionKey.VIEW_QUESTIONNAIRES],
       },
@@ -23,8 +21,7 @@ const routes: Routes = [
     path: 'questionnaire-form',
     component: QuestionnaireFormComponent,
     data: {
-      title: extract('Questionnaire Form'),
-      breadcrumb: extract('Questionnaire Form'),
+      breadcrumbI18nKey: 'menu.uploadQuestionnaire',
       permissions: {
         only: [PermissionKey.MANAGE_QUESTIONNAIRES],
       },

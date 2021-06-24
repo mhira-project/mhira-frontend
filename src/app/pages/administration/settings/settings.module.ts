@@ -8,7 +8,8 @@ import { PatientStatusesComponent } from './patient-statuses/patient-statuses.co
 import { SystemConfigurationComponent } from './system-configuration/system-configuration.component';
 import { PatientStatusesService } from '../../patients-management/@services/patient-statuses.service';
 import { SettingsRoutingModule } from './settings-routing.module';
-import { NzAlertModule, NzDrawerModule } from 'ng-zorro-antd';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 
 const antModules = [NzAlertModule, NzDrawerModule];
 

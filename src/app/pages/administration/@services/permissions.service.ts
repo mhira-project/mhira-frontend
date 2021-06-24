@@ -6,8 +6,6 @@ import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
 import { Paging } from '@shared/@types/paging';
 import { PermissionsQueries } from '../../../@graphql/queries/permissions';
-import { PermissionsMutations } from '@app/@graphql/mutations/permissions';
-import { RolesMutations } from '@app/@graphql/mutations/roles';
 
 @Injectable({
   providedIn: 'root',
@@ -22,17 +20,6 @@ export class PermissionsService {
         paging: params && params.paging ? params.paging : undefined,
         filter: params && params.filter ? params.filter : undefined,
         sorting: params && params.sorting ? params.sorting : undefined,
-      },
-      fetchPolicy: 'no-cache',
-    });
-  }
-
-  setRolesOnPermission(permissionId: number, roleId: number): Observable<FetchResult<any>> {
-    return this.apollo.mutate({
-      mutation: PermissionsMutations.setRolesOnPermission,
-      variables: {
-        id: permissionId,
-        relationId: roleId,
       },
       fetchPolicy: 'no-cache',
     });

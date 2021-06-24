@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CustomFilterComponent } from './custom-filter.component';
 
@@ -6,11 +6,13 @@ describe('CustomFilterComponent', () => {
   let component: CustomFilterComponent;
   let fixture: ComponentFixture<CustomFilterComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [CustomFilterComponent],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [CustomFilterComponent],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CustomFilterComponent);

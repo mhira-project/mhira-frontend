@@ -1,16 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MasterDataFilterFormComponent } from './master-data-filter-form.component';
 
 describe('MasterDataFilterFormComponent', () => {
-  let component: MasterDataFilterFormComponent;
-  let fixture: ComponentFixture<MasterDataFilterFormComponent>;
+  let component: MasterDataFilterFormComponent<any>;
+  let fixture: ComponentFixture<MasterDataFilterFormComponent<any>>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [MasterDataFilterFormComponent],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [MasterDataFilterFormComponent],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MasterDataFilterFormComponent);

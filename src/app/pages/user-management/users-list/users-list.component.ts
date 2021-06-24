@@ -1,7 +1,7 @@
 import { finalize } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { FormattedUser } from '../@types/formatted-user';
-import { NzModalService } from 'ng-zorro-antd';
+
 import { Router } from '@angular/router';
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { environment } from '@env/environment';
@@ -24,6 +24,7 @@ import { Department } from '@app/pages/administration/@types/department';
 import { RolesService } from '../../administration/@services/roles.service';
 import { Role } from '@app/pages/administration/@types/role';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 const CryptoJS = require('crypto-js');
 
