@@ -349,7 +349,7 @@ export class CaseManagersComponent implements OnInit {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () => this.data.splice(this.caseManagers.indexOf(manager), 1),
-        (error) => this.errorService.handleError(error, { prefix: 'Unable to delete user' })
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to remove case manager' })
       );
   }
 
