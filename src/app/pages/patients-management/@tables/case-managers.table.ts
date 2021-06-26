@@ -1,54 +1,71 @@
-const actions: any[] = [
-  {
-    type: 'Remove',
-    name: 'Remove',
-  },
-];
+import { FormattedUser } from '@app/pages/user-management/@types/formatted-user';
+import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
 
-const columns: any[] = [
+export const CaseManagerColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'First name',
     name: 'firstName',
-    isFilterable: true,
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  },
+  {
+    title: 'Middle name',
+    name: 'middleName',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
     title: 'Last name',
     name: 'lastName',
-    isFilterable: true,
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
     title: 'Work ID',
     name: 'workID',
-    isFilterable: true,
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
     title: 'Phone',
     name: 'phone',
-    isFilterable: false,
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
     title: 'Username',
     name: 'username',
-    isFilterable: false,
-  },
-  {
-    title: 'Roles',
-    name: 'formattedRoles',
-    isFilterable: false,
-  },
-  {
-    title: 'Active',
-    name: 'formattedActive',
-    isFilterable: false,
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
     title: 'Departments',
     name: 'formattedDepartments',
-    isFilterable: false,
+    altName: 'departments',
+    render: 'tag',
+    filterField: {
+      type: 'select',
+      value: undefined,
+      // options will be added dynamically
+    },
+    filterQuery: (q: number) => ({ id: { eq: q } }),
   },
 ];
-
-export const CaseManagersTable = {
-  actions,
-  columns,
-};
