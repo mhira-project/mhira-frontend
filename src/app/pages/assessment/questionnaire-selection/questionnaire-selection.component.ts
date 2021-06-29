@@ -1,7 +1,8 @@
-import { ListQuestionnaireInput, QuestionnaireStatus } from './../../questionnaire-management/@types/questionnaire';
+import { QuestionnaireStatus } from './../../questionnaire-management/@types/questionnaire';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { QuestionnaireVersion } from '../../questionnaire-management/@types/questionnaire';
 import { QuestionnaireManagementService } from '../../questionnaire-management/@services/questionnaire-management.service';
+import { createSearchFilter } from '../../questionnaire-management/questionnaire-list/questionnaire-list.component';
 
 @Component({
   selector: 'app-questionnaire-selection',
@@ -28,14 +29,11 @@ export class QuestionnaireSelectionComponent {
       return;
     }
 
-    // TODO: filter name/keywords aswell
-    const filter: ListQuestionnaireInput = {
-      abbreviation: `${q}`,
-    };
+    const filter = { or: createSearchFilter(q) };
 
     this.questionnaireService
-      .getQuestionnaires(filter)
-      .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires));
+      .getQuestionnaires({ filter })
+      .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node)));
   }
 
   public onToggleQuestionnaire(questionnaire: QuestionnaireVersion): void {

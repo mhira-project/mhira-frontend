@@ -1,16 +1,32 @@
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
-import { FormattedQuestionnaireVersion } from '../@types/questionnaire';
+import { FormattedQuestionnaireVersion, QuestionnaireStatus } from '../@types/questionnaire';
 
 export const QuestionnaireColumns: TableColumn<FormattedQuestionnaireVersion>[] = [
   {
     title: 'Name',
     name: 'name',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
     title: 'Status',
     name: 'formattedStatus',
     altName: 'status',
     render: 'tag',
+    sort: true,
+    filterField: {
+      type: 'select',
+      value: undefined,
+      options: [
+        { label: QuestionnaireStatus.DRAFT, value: QuestionnaireStatus.DRAFT },
+        { label: QuestionnaireStatus.PRIVATE, value: QuestionnaireStatus.PRIVATE },
+        { label: QuestionnaireStatus.PUBLISHED, value: QuestionnaireStatus.PUBLISHED },
+        { label: QuestionnaireStatus.ARCHIVED, value: QuestionnaireStatus.ARCHIVED },
+      ],
+    },
   },
   {
     title: 'Language',
@@ -45,5 +61,6 @@ export const QuestionnaireColumns: TableColumn<FormattedQuestionnaireVersion>[] 
     title: 'Created at',
     name: 'createdAt',
     render: 'date',
+    sort: true,
   },
 ];
