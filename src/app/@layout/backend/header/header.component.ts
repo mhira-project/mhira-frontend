@@ -9,7 +9,7 @@ import { UserChangePasswordInput } from '@app/pages/user-management/user-form/us
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { FormComponent } from '@shared/components/form/form.component';
 import { FieldGroup } from '@shared/components/form/@types/field.group';
-import { TranslationItem } from '@shared/@types/translation';
+import { TranslationCode, TranslationItem } from '@shared/@types/translation';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 

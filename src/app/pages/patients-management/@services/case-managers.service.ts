@@ -14,18 +14,10 @@ import { Sorting } from '@app/@shared/@types/sorting';
 export class CaseManagersService {
   constructor(private apollo: Apollo) {}
 
-  getPatientCaseManagers(params?: {
-    paging?: Paging;
-    filter?: CaseManagerFilter;
-    sorting?: Sorting[];
-  }): Observable<FetchResult<any>> {
+  getPatientCaseManagers(filter?: CaseManagerFilter): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: CaseManagersQueries.getPatientCaseManagers,
-      variables: {
-        paging: params && params.paging ? params.paging : undefined,
-        filter: params && params.filter ? params.filter : undefined,
-        sorting: params && params.sorting ? params.sorting : undefined,
-      },
+      variables: filter,
       fetchPolicy: 'no-cache',
     });
   }
