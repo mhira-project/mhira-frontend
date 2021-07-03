@@ -5,86 +5,92 @@
   [class.required-question]="question.required"
   *ngIf="question.type !== QuestionType.NOTE; else note"
 >
-  <ng-container [ngSwitch]="question.type" *ngIf="question && answer?.question">
-    <ng-container *ngSwitchCase="QuestionType.TEXT">
-      <input
-        #textInput
-        nz-input
-        [debounceTime]="500"
-        [value]="answer.textValue"
-        (ngxInputSearch)="answer.textValue = textInput.value; addAnswer(answer)"
-      />
-    </ng-container>
-    <ng-container *ngSwitchCase="QuestionType.DECIMAL">
-      <nz-input-number
-        [nzStep]="0.1"
-        [(ngModel)]="answer.numberValue"
-        (ngModelChange)="addAnswer(answer)"
-      ></nz-input-number>
-    </ng-container>
-    <ng-container *ngSwitchCase="QuestionType.INTEGER">
-      <nz-input-number
-        [nzStep]="1"
-        [(ngModel)]="answer.numberValue"
-        (ngModelChange)="addAnswer(answer)"
-      ></nz-input-number>
-    </ng-container>
-    <ng-container *ngSwitchCase="QuestionType.CHECKBOX">
-      <label nz-checkbox [(ngModel)]="answer.booleanValue" (ngModelChange)="addAnswer(answer)"></label>
-    </ng-container>
-    <ng-container *ngSwitchCase="QuestionType.DATE">
-      <nz-date-picker
-        [nzFormat]="this.dateFormat"
-        [(ngModel)]="answer.dateValue"
-        (ngModelChange)="addAnswer(answer)"
-      ></nz-date-picker>
-    </ng-container>
-    <ng-container *ngSwitchCase="QuestionType.TIME">
-      <input
-        #timeInput
-        type="time"
-        nz-input
-        [value]="answer.textValue"
-        (change)="answer.textValue = timeInput.value; addAnswer(answer)"
-      />
-    </ng-container>
-    <ng-container *ngSwitchCase="QuestionType.DATETIME">
-      <div class="row">
-        <nz-date-picker
-          [nzFormat]="this.dateFormat"
-          [(ngModel)]="answer.dateValue"
-          (ngModelChange)="addAnswer(answer)"
-        ></nz-date-picker>
-        <input
-          #timeInput
-          type="time"
-          nz-input
-          [value]="answer.textValue"
-          (change)="answer.textValue = timeInput.value; addAnswer(answer)"
-        />
-      </div>
-    </ng-container>
-    <ng-container *ngSwitchCase="QuestionType.SELECT_ONE">
-      <app-select-question
-        [question]="question"
-        [answer]="answer"
-        (answerChange)="addAnswer($event)"
-      ></app-select-question>
-    </ng-container>
-    <ng-container *ngSwitchCase="QuestionType.SELECT_MULTIPLE">
-      <app-multiselect-question
-        [question]="question"
-        [answer]="answer"
-        (answerChange)="addAnswer($event)"
-      ></app-multiselect-question>
-    </ng-container>
-    <ng-container *ngSwitchDefault>
-      <nz-tag nzColor="warning">
-        <i nz-icon nzType="exclamation-circle"></i>
-        <span>unsupported question-type "{{ question.type }}"</span>
-      </nz-tag>
-    </ng-container>
-  </ng-container>
+  <nz-form-item>
+    <nz-form-control>
+      <ng-container [ngSwitch]="question.type" *ngIf="question && answer?.question">
+        <ng-container *ngSwitchCase="QuestionType.TEXT">
+          <textarea
+            #textInput
+            nz-input
+            [required]="question.required"
+            [(ngModel)]="answer.textValue"
+            (ngModelChange)="answerGiven.next(answer)"
+          ></textarea>
+        </ng-container>
+        <ng-container *ngSwitchCase="QuestionType.DECIMAL">
+          <nz-input-number
+            [nzStep]="0.1"
+            [required]="question.required"
+            [(ngModel)]="answer.numberValue"
+            (ngModelChange)="answerGiven.next(answer)"
+          ></nz-input-number>
+        </ng-container>
+        <ng-container *ngSwitchCase="QuestionType.INTEGER">
+          <nz-input-number
+            [nzStep]="1"
+            [required]="question.required"
+            [(ngModel)]="answer.numberValue"
+            (ngModelChange)="answerGiven.next(answer)"
+          ></nz-input-number>
+        </ng-container>
+        <ng-container *ngSwitchCase="QuestionType.CHECKBOX">
+          <label nz-checkbox [(ngModel)]="answer.booleanValue" (ngModelChange)="addAnswer(answer)"></label>
+        </ng-container>
+        <ng-container *ngSwitchCase="QuestionType.DATE">
+          <nz-date-picker
+            [nzFormat]="this.dateFormat"
+            [(ngModel)]="answer.dateValue"
+            (ngModelChange)="addAnswer(answer)"
+          ></nz-date-picker>
+        </ng-container>
+        <ng-container *ngSwitchCase="QuestionType.TIME">
+          <input
+            #timeInput
+            type="time"
+            nz-input
+            [value]="answer.textValue"
+            (change)="answer.textValue = timeInput.value; addAnswer(answer)"
+          />
+        </ng-container>
+        <ng-container *ngSwitchCase="QuestionType.DATETIME">
+          <div class="row">
+            <nz-date-picker
+              [nzFormat]="this.dateFormat"
+              [(ngModel)]="answer.dateValue"
+              (ngModelChange)="addAnswer(answer)"
+            ></nz-date-picker>
+            <input
+              #timeInput
+              type="time"
+              nz-input
+              [value]="answer.textValue"
+              (change)="answer.textValue = timeInput.value; addAnswer(answer)"
+            />
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="QuestionType.SELECT_ONE">
+          <app-select-question
+            [question]="question"
+            [answer]="answer"
+            (answerChange)="addAnswer($event)"
+          ></app-select-question>
+        </ng-container>
+        <ng-container *ngSwitchCase="QuestionType.SELECT_MULTIPLE">
+          <app-multiselect-question
+            [question]="question"
+            [answer]="answer"
+            (answerChange)="addAnswer($event)"
+          ></app-multiselect-question>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <nz-tag nzColor="warning">
+            <i nz-icon nzType="exclamation-circle"></i>
+            <span>unsupported question-type "{{ question.type }}"</span>
+          </nz-tag>
+        </ng-container>
+      </ng-container>
+    </nz-form-control>
+  </nz-form-item>
 </nz-card>
 
 <ng-template #hint>

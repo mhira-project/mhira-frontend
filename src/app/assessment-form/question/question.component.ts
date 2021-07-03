@@ -3,6 +3,8 @@ import { Question, QuestionType } from '@app/assessment-form/@types/question';
 import { Answer } from '../@types/answer';
 import { AssessmentFormService } from '../assessment-form.service';
 import { ErrorHandlerService } from '../../@shared/services/error-handler.service';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-question',
@@ -25,6 +27,8 @@ export class QuestionComponent {
 
   public answer: Answer;
 
+  public answerGiven = new Subject<Answer>();
+
   private _question: Question;
 
   constructor(private assessmentFormService: AssessmentFormService, private errorService: ErrorHandlerService) {
@@ -32,6 +36,9 @@ export class QuestionComponent {
     this.dateFormat = JSON.parse(localStorage.getItem('settings'))?.dateFormat;
     this.dateFormat = this.dateFormat.replace(/[D]/g, 'd');
     this.dateFormat = this.dateFormat.replace(/[Y]/g, 'y');
+
+    // debounce answer
+    this.answerGiven.pipe(debounceTime(500)).subscribe(answer => this.addAnswer(answer));
   }
 
   public addAnswer(answer: Answer): void {
