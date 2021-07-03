@@ -38,7 +38,7 @@ export class QuestionComponent {
     this.dateFormat = this.dateFormat.replace(/[Y]/g, 'y');
 
     // debounce answer
-    this.answerGiven.pipe(debounceTime(500)).subscribe(answer => this.addAnswer(answer));
+    this.answerGiven.pipe(debounceTime(500)).subscribe((answer) => this.addAnswer(answer));
   }
 
   public addAnswer(answer: Answer): void {
@@ -48,7 +48,7 @@ export class QuestionComponent {
         finishedAssessment: false,
         textValue: answer.textValue,
         multipleChoiceValue: answer.multipleChoiceValue,
-        numberValue: answer.numberValue,
+        numberValue: (answer.numberValue as any) === '' ? null : answer.numberValue, // nz number input gives "" when clearing field
         dateValue: answer.dateValue,
         booleanValue: answer.booleanValue,
       })
