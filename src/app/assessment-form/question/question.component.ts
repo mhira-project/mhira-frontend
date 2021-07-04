@@ -45,7 +45,6 @@ export class QuestionComponent {
     this.assessmentFormService
       .addAnswer({
         question: answer.question,
-        finishedAssessment: false,
         textValue: answer.textValue,
         multipleChoiceValue: answer.multipleChoiceValue,
         numberValue: (answer.numberValue as any) === '' ? null : answer.numberValue, // nz number input gives "" when clearing field
