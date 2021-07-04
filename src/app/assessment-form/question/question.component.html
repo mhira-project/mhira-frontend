@@ -38,9 +38,9 @@
         </ng-container>
         <ng-container *ngSwitchCase="QuestionType.DATE">
           <nz-date-picker
-            [nzFormat]="this.dateFormat"
+            [nzFormat]="dateFormat"
             [(ngModel)]="answer.dateValue"
-            (ngModelChange)="addAnswer(answer)"
+            (ngModelChange)="answerGiven.next(answer)"
           ></nz-date-picker>
         </ng-container>
         <ng-container *ngSwitchCase="QuestionType.TIME">
@@ -49,7 +49,7 @@
             type="time"
             nz-input
             [value]="answer.textValue"
-            (change)="answer.textValue = timeInput.value; addAnswer(answer)"
+            (change)="answer.textValue = timeInput.value; answerGiven.next(answer)"
           />
         </ng-container>
         <ng-container *ngSwitchCase="QuestionType.DATETIME">
@@ -57,14 +57,14 @@
             <nz-date-picker
               [nzFormat]="this.dateFormat"
               [(ngModel)]="answer.dateValue"
-              (ngModelChange)="addAnswer(answer)"
+              (ngModelChange)="answerGiven.next(answer)"
             ></nz-date-picker>
             <input
               #timeInput
               type="time"
               nz-input
               [value]="answer.textValue"
-              (change)="answer.textValue = timeInput.value; addAnswer(answer)"
+              (change)="answer.textValue = timeInput.value; answerGiven.next(answer)"
             />
           </div>
         </ng-container>
