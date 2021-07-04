@@ -39,8 +39,10 @@
     </ng-template>
 
     <span class="progress" [class.done]="isQuestionnaireDone(questionnaire._id)">
-      {{ getAnsweredQuestions(questionnaire._id) }}/{{ getMaxQuestions(questionnaire._id) }}
-      answered
+      {{ getAnsweredRequiredQuestions(questionnaire._id) }}/{{ getMaxRequiredQuestions(questionnaire._id) }} answered
+    </span>
+    <span class="progress-optional" *ngIf="getAnsweredOptionalQuestions(questionnaire._id)">
+      +{{ getAnsweredOptionalQuestions(questionnaire._id) }} optional
     </span>
     <span *ngIf="questionnaire.timeToComplete">Filling time: {{ questionnaire.timeToComplete }}min</span>
   </nz-card>

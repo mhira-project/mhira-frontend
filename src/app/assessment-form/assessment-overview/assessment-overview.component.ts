@@ -47,8 +47,8 @@ export class AssessmentOverviewComponent implements OnInit {
     });
   }
 
-  public getMaxQuestions(questionnaireId: string): number {
-    return this.questionnaireQuestions[questionnaireId].length;
+  public getMaxRequiredQuestions(questionnaireId: string): number {
+    return this.questionnaireQuestions[questionnaireId].filter((q) => q.required).length;
   }
 
   public getAnsweredQuestions(questionnaireId: string): number {
@@ -56,6 +56,17 @@ export class AssessmentOverviewComponent implements OnInit {
       (sum, q) => (this.answers.find((a) => a.question === q._id)?.valid ? (sum += 1) : sum),
       0
     );
+  }
+
+  public getAnsweredRequiredQuestions(questionnaireId: string): number {
+    return this.questionnaireQuestions[questionnaireId].reduce(
+      (sum, q) => (q.required && this.answers.find((a) => a.question === q._id)?.valid ? (sum += 1) : sum),
+      0
+    );
+  }
+
+  public getAnsweredOptionalQuestions(questionnaireId: string): number {
+    return this.getAnsweredQuestions(questionnaireId) - this.getAnsweredRequiredQuestions(questionnaireId);
   }
 
   public isQuestionnaireDone(questionnaireId: string): boolean {
