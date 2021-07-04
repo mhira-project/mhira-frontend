@@ -185,6 +185,7 @@ const addAnswer = gql`
       _id
       answers {
         question
+        valid
         textValue
         multipleChoiceValue
         numberValue

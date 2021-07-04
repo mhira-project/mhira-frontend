@@ -53,14 +53,14 @@ export class AssessmentOverviewComponent implements OnInit {
 
   public getAnsweredQuestions(questionnaireId: string): number {
     return this.questionnaireQuestions[questionnaireId].reduce(
-      (sum, q) => (this.answers.find((a) => a.question === q._id) ? (sum += 1) : sum),
+      (sum, q) => (this.answers.find((a) => a.question === q._id)?.valid ? (sum += 1) : sum),
       0
     );
   }
 
   public isQuestionnaireDone(questionnaireId: string): boolean {
     const requiredQuestions = this.questionnaireQuestions[questionnaireId].filter((q) => q.required);
-    return requiredQuestions.every((q) => this.answers.find((a) => a.question === q._id));
+    return requiredQuestions.every((q) => this.answers.find((a) => a.question === q._id)?.valid);
   }
 
   public canAccessQuestionnaire(questionnaireIdx: number): boolean {

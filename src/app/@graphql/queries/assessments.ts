@@ -133,6 +133,7 @@ const getFullAssessment = gql`
         status
         answers {
           question
+          valid
           textValue
           multipleChoiceValue
           numberValue

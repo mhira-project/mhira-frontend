@@ -1,6 +1,7 @@
 export interface Answer {
   _id?: string;
   question: string;
+  valid?: boolean;
   textValue?: string;
   multipleChoiceValue?: string[];
   numberValue?: number;
