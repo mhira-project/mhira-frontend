@@ -47,7 +47,10 @@ export class QuestionComponent {
         question: answer.question,
         textValue: answer.textValue,
         multipleChoiceValue: answer.multipleChoiceValue,
-        numberValue: (answer.numberValue as any) === '' ? null : answer.numberValue, // nz number input gives "" when clearing field
+
+        // nz number input gives "" when clearing field
+        numberValue: (answer.numberValue as any) === '' ? null : answer.numberValue,
+
         dateValue: answer.dateValue,
         booleanValue: answer.booleanValue,
       })
