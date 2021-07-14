@@ -124,6 +124,11 @@ export class CreatePatientComponent implements OnInit {
       .subscribe(
         async ({ data }: any) => {
           const patientData = data.createOnePatient;
+          if (emergencyContacts.length === 0 || emergencyContacts[0].firstName === '') {
+            this.message.success('Patient has successfully been created');
+            this.router.navigate(['/mhira/case-management/patients']);
+            return;
+          }
           patient.emergencyContacts = emergencyContacts;
           this.createEmergencyContacts(patientData.id, emergencyContacts);
         },
