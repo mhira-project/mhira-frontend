@@ -269,8 +269,17 @@ export class CaseManagersComponent implements OnInit {
 
   private getCaseManagers(): void {
     this.loading = true;
+    const options = { ...this.caseManagersRequestOptions };
+    const patientFilter = this.patient ? { patients: { id: { eq: this.patient.id } } } : undefined;
+    const previousAndFilters = options.filter ? options.filter.and ?? [] : [];
+    options.filter = {
+      ...options.filter,
+      and: [patientFilter, ...previousAndFilters],
+    };
     this.caseManagersService
-      .getPatientCaseManagers({ patientId: this.patient ? this.patient?.id : -1 })
+      .getPatientCaseManagers({
+        patientId: this.patient ? this.patient?.id : -1,
+      })
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(({ data }) => {
         this.data = data.getPatientCaseManagers.edges.map((caseManager: any) =>
@@ -314,7 +323,10 @@ export class CaseManagersComponent implements OnInit {
   private assignCaseManager(manager: CaseManager) {
     this.loading = true;
     this.caseManagersService
-      .assignPatientCaseManager({ userId: manager.id, patientId: this.patient.id })
+      .assignPatientCaseManager({
+        userId: manager.id,
+        patientId: this.patient.id,
+      })
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () => {
@@ -345,11 +357,17 @@ export class CaseManagersComponent implements OnInit {
 
     this.loading = true;
     this.caseManagersService
-      .unassignPatientCaseManager({ userId: manager.id, patientId: this.patient.id })
+      .unassignPatientCaseManager({
+        userId: manager.id,
+        patientId: this.patient.id,
+      })
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () => this.data.splice(this.caseManagers.indexOf(manager), 1),
-        (error) => this.errorService.handleError(error, { prefix: 'Unable to remove case manager' })
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: 'Unable to remove case manager',
+          })
       );
   }
 

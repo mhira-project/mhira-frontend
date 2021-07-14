@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getQuestionnaires = gql`
-  query($paging: CursorPaging, $filter: QuestionnaireVersionFilter, $sorting: [QuestionnaireVersionSort!]) {
+  query ($paging: CursorPaging, $filter: QuestionnaireVersionFilter, $sorting: [QuestionnaireVersionSort!]) {
     questionnaires(paging: $paging, filter: $filter, sorting: $sorting) {
       pageInfo {
         hasNextPage
