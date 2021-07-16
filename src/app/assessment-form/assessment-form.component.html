@@ -1,4 +1,6 @@
 <article *ngIf="assessmentFormService.assessment$ | async as assessment">
+  <div class="progress"><div [style.width]="assessmentFormService.percentageCompleted + '%'"></div></div>
+
   <h1>{{ assessment.name }}</h1>
   <section class="patient">
     <span class="name">{{ assessment.patient.firstName }} {{ assessment.patient.lastName }}</span>

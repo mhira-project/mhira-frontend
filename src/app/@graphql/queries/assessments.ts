@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const assessments = gql`
-  query($paging: CursorPaging, $filter: AssessmentFilter, $sorting: [AssessmentSort!]) {
+  query ($paging: CursorPaging, $filter: AssessmentFilter, $sorting: [AssessmentSort!]) {
     assessments(paging: $paging, filter: $filter, sorting: $sorting) {
       edges {
         cursor
@@ -50,6 +50,9 @@ const assessments = gql`
             createdAt
             updatedAt
           }
+          questionnaireAssessment {
+            status
+          }
         }
       }
       pageInfo {
@@ -63,7 +66,7 @@ const assessments = gql`
 `;
 
 const questionnaires = gql`
-  query($paging: CursorPaging, $filter: AssessmentFilter, $sorting: [AssessmentSort!]) {
+  query ($paging: CursorPaging, $filter: AssessmentFilter, $sorting: [AssessmentSort!]) {
     questionnaires(paging: $paging, filter: $filter, sorting: $sorting) {
       edges {
         cursor
@@ -112,7 +115,7 @@ const c = `questionnaires {
           }`;
 
 const getFullAssessment = gql`
-  query($id: Int!) {
+  query ($id: Int!) {
     getFullAssessment(id: $id) {
       id
       date

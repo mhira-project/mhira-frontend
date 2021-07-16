@@ -4,7 +4,6 @@ import { Paging } from '@shared/@types/paging';
 import { PatientStatusesTable } from '@app/pages/administration/settings/@tables/patient-statuses.table';
 import { PatientStatusForm } from '@app/pages/administration/settings/@forms/patient-status.form';
 import { PatientStatusesService } from '@app/pages/patients-management/@services/patient-statuses.service';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { PatientStatusModel } from '@app/pages/administration/settings/@models/patient-status.model';
 import { Filter } from '@shared/@types/filter';
@@ -12,6 +11,8 @@ import { Sorting } from '@shared/@types/sorting';
 import { PermissionKey } from '../../../../@shared/@types/permission';
 import { ErrorHandlerService } from '../../../../@shared/services/error-handler.service';
 import { finalize } from 'rxjs/operators';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-patient-statuses',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApolloError, isApolloError } from 'apollo-client';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { SkipLogicError } from '../../assessment-form/skip-logic';
 
 type AnyError = ApolloError | SkipLogicError | Error;
@@ -19,6 +19,13 @@ export class ErrorHandlerService {
 
   public handleError(error: AnyError, options: ErrorHandlerOptions = {}): void {
     if (isApolloError(error)) {
+      // show error directly if it has no graphQL Errors
+      if (!error?.graphQLErrors?.length) {
+        const msg = options.prefix && options.forcePrefix ? `${options.prefix} - ${error.message}` : error.message;
+        this.dispatchError(msg, error, options, 5000);
+      }
+
+      // show graphQL Errors
       for (const e of error.graphQLErrors) {
         const msg = options.prefix && options.forcePrefix ? `${options.prefix} - ${e.message}` : e.message;
         this.dispatchError(msg, e, options, 5000);

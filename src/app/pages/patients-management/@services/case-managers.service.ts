@@ -5,6 +5,8 @@ import { FetchResult } from 'apollo-link';
 import { CaseManagersQueries } from '@app/@graphql/queries/case-managers';
 import { CaseManagerFilter } from '@app/pages/patients-management/@types/case-manager-filter';
 import { CaseManagersMutations } from '@app/@graphql/mutations/case-managers';
+import { Paging } from '@app/@shared/@types/paging';
+import { Sorting } from '@app/@shared/@types/sorting';
 
 @Injectable({
   providedIn: 'root',

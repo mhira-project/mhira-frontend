@@ -5,6 +5,6 @@
     [class.ant-radio-button-wrapper-checked]="isChecked(choice)"
   >
     <input type="checkbox" (change)="toggle(choice)" />
-    <span class="ant-radio-button" [class.ant-radio-button-checked]="isChecked(choice)">{{ choice.label }}</span>
+    <span [class.ant-radio-button-checked]="isChecked(choice)">{{ choice.label }}</span>
   </label>
 </div>

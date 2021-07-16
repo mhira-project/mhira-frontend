@@ -3,13 +3,11 @@ import { Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
 import { QuestionnaireMutations } from '../../../@graphql/mutations/questionnaire';
 import { QuestionnaireQueries } from '../../../@graphql/queries/questionnaire';
-import {
-  QuestionnaireVersion,
-  ListQuestionnaireInput,
-  CreateQuestionnaireInput,
-  UpdateQuestionnaireInput,
-} from '../@types/questionnaire';
+import { QuestionnaireVersion, CreateQuestionnaireInput, UpdateQuestionnaireInput } from '../@types/questionnaire';
 import { map } from 'rxjs/operators';
+import { Paging } from '../../../@shared/@types/paging';
+import { Sorting } from '../../../@shared/@types/sorting';
+import { ConnectionResult } from '../../../@shared/@types/connection-cursor';
 
 @Injectable({
   providedIn: 'root',
@@ -41,13 +39,23 @@ export class QuestionnaireManagementService {
       .pipe(map((result) => result.data.updateQuestionnaire));
   }
 
-  public getQuestionnaires(filters: ListQuestionnaireInput = {}): Observable<QuestionnaireVersion[]> {
+  public getQuestionnaires(
+    options: { paging?: Paging; filter?: any; sorting?: Sorting[] } = {}
+  ): Observable<ConnectionResult<QuestionnaireVersion>> {
     return this.apollo
-      .query<{ questionnaires: QuestionnaireVersion[] }>({
+      .query<{ questionnaires: ConnectionResult<QuestionnaireVersion> }>({
         query: QuestionnaireQueries.getQuestionnaires,
-        variables: { filters },
+        variables: { ...options },
         fetchPolicy: 'no-cache',
       })
-      .pipe(map((result) => result.data.questionnaires));
+      .pipe(map(({ data }) => data.questionnaires));
+  }
+
+  public deleteQuestionnaire(_id: string, softDelete: boolean = true) {
+    return this.apollo.mutate({
+      mutation: QuestionnaireMutations.deleteQuestionnaire,
+      variables: { _id, softDelete },
+      fetchPolicy: 'no-cache',
+    });
   }
 }

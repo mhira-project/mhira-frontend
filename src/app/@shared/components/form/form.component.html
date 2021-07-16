@@ -5,7 +5,10 @@
   <ng-container *ngFor="let group of form.groups">
     <ng-container *ngIf="!group.hidden">
       <div>
-        <h2 *ngIf="group.title">{{ group.title }}</h2>
+        <h2 *ngIf="group.title">
+          <span *ngIf="group.translationPath; else plainTitle" [translate]="group.translationPath"></span>
+          <ng-template #plainTitle> {{ group.title }} </ng-template>
+        </h2>
       </div>
       <div nz-row nzGutter="16">
         <ng-container *ngFor="let field of group.fields; let i = index">

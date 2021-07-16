@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { TranslateLoader, TranslateModule, TranslateService, MissingTranslationHandler } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, MissingTranslationHandler } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { environment } from '@env/environment';
@@ -20,6 +20,7 @@ import { TypescriptTranslationLoader } from './@core/typescript-translation-load
 import { registerLocale as registerLocalCountry } from 'i18n-iso-countries';
 import { registerLocale as registerLocaleLanguage } from '@cospired/i18n-iso-languages';
 import { MhiraMissingTranslationHandler } from './@core/mhira-missing-translation-handler';
+import { TranslationCode } from './@shared/@types/translation';
 
 @NgModule({
   imports: [
@@ -29,7 +30,7 @@ import { MhiraMissingTranslationHandler } from './@core/mhira-missing-translatio
     FormsModule,
     HttpClientModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'en',
+      defaultLanguage: TranslationCode.EN,
       useDefaultLang: environment.production, // DEV: show key and warn in console, PROD: show default lang translation
       loader: {
         provide: TranslateLoader,
@@ -59,8 +60,7 @@ import { MhiraMissingTranslationHandler } from './@core/mhira-missing-translatio
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(translateService: TranslateService) {
-    translateService.use('de');
+  constructor() {
     registerLocalCountry(require('i18n-iso-countries/langs/en.json'));
     registerLocaleLanguage(require('@cospired/i18n-iso-languages/langs/en.json'));
   }

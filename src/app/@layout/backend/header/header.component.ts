@@ -6,15 +6,16 @@ import { User } from '@app/pages/user-management/@types/user';
 import { Form } from '@shared/components/form/@types/form';
 import { userForms } from '@app/pages/user-management/@forms/user.form';
 import { UserChangePasswordInput } from '@app/pages/user-management/user-form/user-update-password.type';
-import { NzMessageService } from 'ng-zorro-antd';
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { FormComponent } from '@shared/components/form/form.component';
 import { FieldGroup } from '@shared/components/form/@types/field.group';
-import { TranslationItem } from '@shared/@types/translation';
+import { TranslationCode, TranslationItem } from '@shared/@types/translation';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 
 const CryptoJS = require('crypto-js');
+import { translationList } from '../../../../translations/translation-list';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-header',
@@ -25,11 +26,7 @@ export class HeaderComponent implements OnInit {
   @ViewChild(FormComponent) child: FormComponent;
   isOkLoading = false;
   user: User;
-  translationList: TranslationItem[] = [
-    { name: 'English', code: 'en' },
-    { name: 'Germany', code: 'de' },
-    { name: 'Swahili', code: 'sw' },
-  ];
+  translations = translationList;
   changePasswordModal = false;
   loadingMessage = '';
   changePasswordForm: Form = userForms.changeUserPassword;
@@ -46,8 +43,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUser();
-    this.translationService.setDefaultLang('en');
-    this.getStoredLang();
   }
 
   getUser() {
@@ -59,14 +54,6 @@ export class HeaderComponent implements OnInit {
       },
       (err) => this.errorService.handleError(err, { prefix: 'Unable to get user profile' })
     );
-  }
-
-  getStoredLang() {
-    const lang = localStorage.getItem('currentLang');
-
-    if (lang) {
-      this.translationService.use(lang);
-    }
   }
 
   clickChangePassword() {

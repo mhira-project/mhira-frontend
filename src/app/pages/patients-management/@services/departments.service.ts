@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { FetchResult } from 'apollo-link';
-import { Filter } from '../../../@shared/@types/filter';
 import { Sorting } from '../../../@shared/@types/sorting';
 import { Paging } from '../../../@shared/@types/paging';
 import { NestJsQueriesService } from '../../../@shared/services/nestjs-queries.service';
@@ -22,7 +21,7 @@ const graphqlString = `
 export class DepartmentsService {
   constructor(private apollo: Apollo, private nestJsQueriesService: NestJsQueriesService) {}
 
-  departments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting[] }): Observable<FetchResult<any>> {
+  departments(params?: { paging?: Paging; filter?: any; sorting?: Sorting[] }): Observable<FetchResult<any>> {
     if (params?.sorting?.length === 0) {
       params.sorting = [{ field: 'id', direction: 'DESC' }];
     }
@@ -39,7 +38,11 @@ export class DepartmentsService {
 
   addDepartmentsToPatient(patientId: number, departmentId: number): Observable<FetchResult<any>> {
     return this.apollo.mutate({
-      mutation: this.nestJsQueriesService.relationalCommandMutation('addDepartmentsToPatient', `id`),
+      mutation: this.nestJsQueriesService.relationalCommandMutation(
+        'addDepartmentsToPatient',
+        'AddDepartmentsToPatientInput',
+        `id`
+      ),
       variables: {
         input: {
           id: patientId,
@@ -51,7 +54,11 @@ export class DepartmentsService {
 
   removeDepartmentsFromPatient(patientId: number, departmentId: number): Observable<FetchResult<any>> {
     return this.apollo.mutate({
-      mutation: this.nestJsQueriesService.relationalCommandMutation('removeDepartmentsFromPatient', `id`),
+      mutation: this.nestJsQueriesService.relationalCommandMutation(
+        'removeDepartmentsFromPatient',
+        'RemoveDepartmentsFromPatientInput',
+        `id`
+      ),
       variables: {
         input: {
           id: patientId,
