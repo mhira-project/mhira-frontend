@@ -38,7 +38,11 @@ export class DepartmentsService {
 
   addDepartmentsToPatient(patientId: number, departmentId: number): Observable<FetchResult<any>> {
     return this.apollo.mutate({
-      mutation: this.nestJsQueriesService.relationalCommandMutation('addDepartmentsToPatient', `id`),
+      mutation: this.nestJsQueriesService.relationalCommandMutation(
+        'addDepartmentsToPatient',
+        'AddDepartmentsToPatientInput',
+        `id`
+      ),
       variables: {
         input: {
           id: patientId,
@@ -50,7 +54,11 @@ export class DepartmentsService {
 
   removeDepartmentsFromPatient(patientId: number, departmentId: number): Observable<FetchResult<any>> {
     return this.apollo.mutate({
-      mutation: this.nestJsQueriesService.relationalCommandMutation('removeDepartmentsFromPatient', `id`),
+      mutation: this.nestJsQueriesService.relationalCommandMutation(
+        'removeDepartmentsFromPatient',
+        'RemoveDepartmentsFromPatientInput',
+        `id`
+      ),
       variables: {
         input: {
           id: patientId,

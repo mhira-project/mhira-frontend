@@ -5,6 +5,7 @@ export const UserColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'First name',
     name: 'firstName',
+    translationPath: 'tables.users.firstName',
     sort: true,
     filterField: {
       type: 'text',
@@ -14,6 +15,7 @@ export const UserColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Middle name',
     name: 'middleName',
+    translationPath: 'tables.users.middleName',
     sort: true,
     filterField: {
       type: 'text',
@@ -23,6 +25,7 @@ export const UserColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Last name',
     name: 'lastName',
+    translationPath: 'tables.users.lastName',
     sort: true,
     filterField: {
       type: 'text',
@@ -32,6 +35,7 @@ export const UserColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Work ID',
     name: 'workID',
+    translationPath: 'tables.users.workID',
     sort: true,
     filterField: {
       type: 'text',
@@ -41,6 +45,7 @@ export const UserColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Phone',
     name: 'phone',
+    translationPath: 'tables.users.phone',
     sort: true,
     filterField: {
       type: 'text',
@@ -50,6 +55,7 @@ export const UserColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Username',
     name: 'username',
+    translationPath: 'tables.users.username',
     sort: true,
     filterField: {
       type: 'text',
@@ -59,6 +65,7 @@ export const UserColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Status',
     name: 'formattedStatus',
+    translationPath: 'tables.users.formattedStatus',
     altName: 'active',
     render: 'tag',
     sort: true,
@@ -74,6 +81,7 @@ export const UserColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Roles',
     name: 'formattedRoles',
+    translationPath: 'tables.users.formattedRoles',
     altName: 'roles',
     render: 'tag',
     filterField: {
@@ -86,6 +94,7 @@ export const UserColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Departments',
     name: 'formattedDepartments',
+    translationPath: 'tables.users.formattedDepartments',
     altName: 'departments',
     render: 'tag',
     filterField: {

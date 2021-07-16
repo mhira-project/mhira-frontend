@@ -1,1 +1,7 @@
 @import "../../form.component";
+
+::ng-host {
+  .ant-checkbox {
+    top: 0;
+  }
+}
