@@ -22,11 +22,15 @@ import { Filter } from '../../../@shared/@types/filter';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 import { User } from '@app/pages/user-management/@types/user';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { ClipboardService } from 'ngx-clipboard';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { LocationStrategy } from '@angular/common';
 
 const CryptoJS = require('crypto-js');
 
 enum ActionKey {
   SHOW_ASSESSMENT,
+  COPY_ASSESSMENT_LINK,
   ARCHIVE_ASSESSMENT,
   DELETE_ASSESSMENT,
 }
@@ -42,7 +46,10 @@ export class AssessmentsListComponent {
   public data: FormattedAssessment[];
   public pageInfo: PageInfo;
   public loading = false;
-  public actions: Action<ActionKey>[] = [{ key: ActionKey.SHOW_ASSESSMENT, title: 'Show Assessment' }];
+  public actions: Action<ActionKey>[] = [
+    { key: ActionKey.SHOW_ASSESSMENT, title: 'Show Assessment' },
+    { key: ActionKey.COPY_ASSESSMENT_LINK, title: 'Copy Assessment Link' },
+  ];
   public onlyMyAssessments = false;
 
   public assessmentRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
@@ -56,6 +63,9 @@ export class AssessmentsListComponent {
     private router: Router,
     private modalService: NzModalService,
     private errorService: ErrorHandlerService,
+    private clipboardService: ClipboardService,
+    private messageService: NzMessageService,
+    private locationStrategy: LocationStrategy,
     public perms: AppPermissionsService
   ) {
     this.getAssessments();
@@ -92,6 +102,9 @@ export class AssessmentsListComponent {
     switch (action.key) {
       case ActionKey.SHOW_ASSESSMENT:
         this.showAssessment(assessment);
+        return;
+      case ActionKey.COPY_ASSESSMENT_LINK:
+        this.copyAssessmentLink(assessment);
         return;
       case ActionKey.ARCHIVE_ASSESSMENT:
         this.deleteAssessment(assessment);
@@ -194,10 +207,20 @@ export class AssessmentsListComponent {
     ];
   }
 
-  private async showAssessment(assessment: FormattedAssessment): Promise<void> {
-    const cryptoId = CryptoJS.AES.encrypt(JSON.stringify(assessment.id), environment.secretKey).toString();
+  private showAssessment({ id }: FormattedAssessment): void {
+    window.open(this.generateAssessmentURL(id));
+  }
+
+  private copyAssessmentLink({ id }: FormattedAssessment): void {
+    const url = new URL(this.generateAssessmentURL(id), window.location.origin);
+    this.clipboardService.copy(url.toString());
+    this.messageService.create('success', 'Assessment link copied to clipboard');
+  }
+
+  private generateAssessmentURL(assessmentId: number): string {
+    const cryptoId = CryptoJS.AES.encrypt(JSON.stringify(assessmentId), environment.secretKey).toString();
     const tree = this.router.createUrlTree(['/assessment/overview'], { queryParams: { assessment: cryptoId } });
-    window.open('#' + tree.toString());
+    return this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(tree));
   }
 
   private get userId(): number {

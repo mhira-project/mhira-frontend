@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const informants = gql`
-  query ($paging: CursorPaging, $filter: InformantFilter) {
+  query($paging: CursorPaging, $filter: InformantFilter) {
     informants(paging: $paging, filter: $filter) {
       pageInfo {
         hasNextPage

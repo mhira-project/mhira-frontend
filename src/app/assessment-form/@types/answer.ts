@@ -1,6 +1,7 @@
 export interface Answer {
   _id?: string;
   question: string;
+  valid?: boolean;
   textValue?: string;
   multipleChoiceValue?: string[];
   numberValue?: number;
@@ -11,7 +12,6 @@ export interface Answer {
 export class AnswerAssessmentInput {
   assessmentId: string;
   questionnaireVersionId: string;
-  finishedAssessment: boolean;
   question: string;
   textValue?: string;
   dateValue?: Date;

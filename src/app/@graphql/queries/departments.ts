@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const departments = gql`
-  query ($paging: CursorPaging, $filter: DepartmentFilter, $sorting: [DepartmentSort!]) {
+  query($paging: CursorPaging, $filter: DepartmentFilter, $sorting: [DepartmentSort!]) {
     departments(paging: $paging, filter: $filter, sorting: $sorting) {
       edges {
         cursor

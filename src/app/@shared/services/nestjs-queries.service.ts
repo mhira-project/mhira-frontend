@@ -99,7 +99,7 @@ export class NestJsQueriesService {
 
   updateUserPassword() {
     return gql`
-      mutation ($input: UserUpdatePasswordInput!, $id: Int!) {
+      mutation($input: UserUpdatePasswordInput!, $id: Int!) {
         updateUserPassword(input: $input, id: $id)
       }
     `;

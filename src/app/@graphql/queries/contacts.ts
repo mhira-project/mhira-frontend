@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const emergencyContacts = gql`
-  query ($paging: CursorPaging, $filter: EmergencyContactFilter, $sorting: [EmergencyContactSort!]) {
+  query($paging: CursorPaging, $filter: EmergencyContactFilter, $sorting: [EmergencyContactSort!]) {
     emergencyContacts(paging: $paging, filter: $filter, sorting: $sorting) {
       edges {
         cursor

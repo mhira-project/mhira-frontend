@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createOneEmergencyContact = gql`
-  mutation ($input: CreateOneEmergencyContactInput!) {
+  mutation($input: CreateOneEmergencyContactInput!) {
     createOneEmergencyContact(input: $input) {
       id
       patientId
@@ -18,7 +18,7 @@ const createOneEmergencyContact = gql`
 `;
 
 const createManyEmergencyContacts = gql`
-  mutation ($input: CreateManyEmergencyContactsInput!) {
+  mutation($input: CreateManyEmergencyContactsInput!) {
     createManyEmergencyContacts(input: $input) {
       id
       patientId
@@ -35,7 +35,7 @@ const createManyEmergencyContacts = gql`
 `;
 
 const updateOneEmergencyContact = gql`
-  mutation ($input: UpdateOneEmergencyContactInput!) {
+  mutation($input: UpdateOneEmergencyContactInput!) {
     updateOneEmergencyContact(input: $input) {
       id
       patientId
@@ -52,7 +52,7 @@ const updateOneEmergencyContact = gql`
 `;
 
 const updateManyEmergencyContacts = gql`
-  mutation ($input: UpdateManyEmergencyContactsInput!) {
+  mutation($input: UpdateManyEmergencyContactsInput!) {
     updateManyEmergencyContacts(input: $input) {
       id
       patientId
@@ -69,7 +69,7 @@ const updateManyEmergencyContacts = gql`
 `;
 
 const deleteOneEmergencyContact = gql`
-  mutation ($input: DeleteOneInput!) {
+  mutation($input: DeleteOneInput!) {
     deleteOneEmergencyContact(input: $input) {
       id
       patientId
@@ -86,7 +86,7 @@ const deleteOneEmergencyContact = gql`
 `;
 
 const deleteManyEmergencyContacts = gql`
-  mutation ($input: DeleteManyEmergencyContactsInput!) {
+  mutation($input: DeleteManyEmergencyContactsInput!) {
     deleteManyEmergencyContacts(input: $input) {
       deletedCount
     }
@@ -94,7 +94,7 @@ const deleteManyEmergencyContacts = gql`
 `;
 
 const removeEmergencyContactsFromPatient = gql`
-  mutation ($input: RemoveEmergencyContactsFromPatientInput!) {
+  mutation($input: RemoveEmergencyContactsFromPatientInput!) {
     removeEmergencyContactsFromPatient(input: $input) {
       id
       statusId
@@ -168,7 +168,7 @@ const removeEmergencyContactsFromPatient = gql`
 `;
 
 const addEmergencyContactsToPatient = gql`
-  mutation ($input: AddEmergencyContactsToPatientInput!) {
+  mutation($input: AddEmergencyContactsToPatientInput!) {
     addEmergencyContactsToPatient(input: $input) {
       id
       statusId

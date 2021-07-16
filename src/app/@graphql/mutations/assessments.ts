@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createOneAssessment = gql`
-  mutation ($patientId: Int!, $date: DateTime, $name: String, $clinicianId: Int!, $informantId: Int!) {
+  mutation($patientId: Int!, $date: DateTime, $name: String, $clinicianId: Int!, $informantId: Int!) {
     createOneAssessment(
       input: {
         assessment: {
@@ -79,7 +79,7 @@ const createOneAssessment = gql`
 `;
 
 const updateOneAssessment = gql`
-  mutation ($id: ID!, $patientId: Int!, $date: DateTime, $name: String, $clinicianId: Int!, $informantId: Int!) {
+  mutation($id: ID!, $patientId: Int!, $date: DateTime, $name: String, $clinicianId: Int!, $informantId: Int!) {
     updateOneAssessment(
       input: {
         id: $id
@@ -158,13 +158,13 @@ const updateOneAssessment = gql`
 `;
 
 const deleteAssessment = gql`
-  mutation ($id: Int!, $archive: Boolean) {
+  mutation($id: Int!, $archive: Boolean) {
     deleteAssessment(id: $id, archive: $archive)
   }
 `;
 
 const createOneMongoAssessment = gql`
-  mutation ($assessment: CreateFullAssessmentInput!) {
+  mutation($assessment: CreateFullAssessmentInput!) {
     createNewAssessment(assessment: $assessment) {
       id
     }
@@ -172,7 +172,7 @@ const createOneMongoAssessment = gql`
 `;
 
 const updateOneMongoAssessment = gql`
-  mutation ($assessment: UpdateFullAssessmentInput!) {
+  mutation($assessment: UpdateFullAssessmentInput!) {
     updateAssessment(assessment: $assessment) {
       id
     }
@@ -180,11 +180,12 @@ const updateOneMongoAssessment = gql`
 `;
 
 const addAnswer = gql`
-  mutation ($assessment: AnswerAssessmentInput!) {
+  mutation($assessment: AnswerAssessmentInput!) {
     addAnswer(assessment: $assessment) {
       _id
       answers {
         question
+        valid
         textValue
         multipleChoiceValue
         numberValue
@@ -196,7 +197,7 @@ const addAnswer = gql`
 `;
 
 const changeAssessmentStatus = gql`
-  mutation ($statusInput: ChangeAssessmentStatusInput!) {
+  mutation($statusInput: ChangeAssessmentStatusInput!) {
     changeAssessmentStatus(statusInput: $statusInput) {
       _id
       status
