@@ -134,4 +134,16 @@ export default {
       emergencyContacts: 'Emergency Contacts',
     },
   },
+  assessmentForm: {
+    license: 'License: {{license}}',
+    questionsAnswered: '{{actual}}/{{total}} answered',
+    optionalAnswered: '+{{actual}} optional',
+    fillingTime: 'Filling time: {{time}}min',
+    completeAssessment: 'Complete assessment',
+    alreadyCompleted: 'Assessment is completed',
+    overview: 'Overview',
+    next: 'Next',
+    prev: 'Previous',
+    complete: 'Thank you for completing this assessment! You can close this page now.',
+  },
 };

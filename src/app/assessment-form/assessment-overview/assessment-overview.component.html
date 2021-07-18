@@ -32,19 +32,33 @@
       </app-questionnaire-info>
       <ng-template #tooltipContent>
         <div class="tooltip">
-          <span *ngIf="questionnaire.license">License: {{ questionnaire.license }}</span>
+          <span *ngIf="questionnaire.license">
+            {{ translations.assessmentForm.license | translate: { license: questionnaire.license } }}
+          </span>
           <span *ngIf="questionnaire.copyright">&copy; {{ questionnaire.copyright }}</span>
         </div>
       </ng-template>
     </ng-template>
 
     <span class="progress" [class.done]="isQuestionnaireDone(questionnaire._id)">
-      {{ getAnsweredRequiredQuestions(questionnaire._id) }}/{{ getMaxRequiredQuestions(questionnaire._id) }} answered
+      {{
+        translations.assessmentForm.questionsAnswered
+          | translate
+            : {
+                actual: getAnsweredRequiredQuestions(questionnaire._id),
+                total: getMaxRequiredQuestions(questionnaire._id)
+              }
+      }}
     </span>
     <span class="progress-optional" *ngIf="getAnsweredOptionalQuestions(questionnaire._id)">
-      +{{ getAnsweredOptionalQuestions(questionnaire._id) }} optional
+      {{
+        translations.assessmentForm.optionalAnswered
+          | translate: { actual: getAnsweredOptionalQuestions(questionnaire._id) }
+      }}
     </span>
-    <span *ngIf="questionnaire.timeToComplete">Filling time: {{ questionnaire.timeToComplete }}min</span>
+    <span *ngIf="questionnaire.timeToComplete">
+      {{ translations.assessmentForm.fillingTime | translate: { time: questionnaire.timeToComplete } }}
+    </span>
   </nz-card>
 </section>
 
@@ -52,9 +66,17 @@
   <button
     nz-button
     nzType="primary"
-    [disabled]="assessmentFormService.percentageCompleted < 100"
+    [disabled]="
+      assessmentFormService.percentageCompleted < 100 ||
+      assessment.questionnaireAssessment.status === AssessmentStatus.COMPLETED
+    "
     (click)="completeAssessment()"
   >
-    Complete assessment
+    {{
+      (assessment.questionnaireAssessment.status === AssessmentStatus.COMPLETED
+        ? translations.assessmentForm.alreadyCompleted
+        : translations.assessmentForm.completeAssessment
+      ) | translate
+    }}
   </button>
 </section>

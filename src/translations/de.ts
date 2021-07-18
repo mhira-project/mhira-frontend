@@ -62,4 +62,16 @@ export default {
       emergencyContacts: 'Emergency Contacts',
     },
   },
+  assessmentForm: {
+    license: 'Lizenz: {{license}}',
+    questionsAnswered: '{{actual}}/{{total}} beantwortet',
+    optionalAnswered: '+{{actual}} optional',
+    fillingTime: 'Dauer: {{time}}min',
+    completeAssessment: 'Einschätzung abschliessen',
+    alreadyCompleted: 'Einschätzung ist abgeschlossen',
+    overview: 'Übersicht',
+    next: 'Weiter',
+    prev: 'Zurück',
+    complete: 'Danke für das Ausfüllen der Einschätzung. Die Seite kann jetzt geschlossen werden.',
+  },
 };
