@@ -83,12 +83,6 @@ export default {
     userRolesPermissions: {
       roleId: 'User Role',
     },
-    userFilter: {
-      firstName: 'First name',
-      lastName: 'Last name',
-      gender: 'Gender',
-      createdAt: 'Date Registered',
-    },
     patients: {
       patientInformation: 'Taarifa za Mgonjwa',
       firstName: 'Jina la Kwanza',

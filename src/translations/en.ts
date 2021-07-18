@@ -85,12 +85,6 @@ export default {
     userRolesPermissions: {
       roleId: 'User Role',
     },
-    userFilter: {
-      firstName: 'First name',
-      lastName: 'Last name',
-      gender: 'Gender',
-      createdAt: 'Date Registered',
-    },
     patients: {
       patientInformation: 'Patient Information',
       firstName: 'First Name',
