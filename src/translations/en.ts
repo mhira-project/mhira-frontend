@@ -99,6 +99,7 @@ export default {
       id: 'Id',
       birthDate: 'Date of Birth',
       gender: 'Gender',
+      department: 'Department',
       patientAddress: 'Patient Address',
       street: 'Street',
       addressNumber: 'Number',

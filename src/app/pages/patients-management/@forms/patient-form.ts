@@ -86,7 +86,7 @@ const departmentsField: Field = {
   name: 'departmentIds',
   title: 'Department',
   label: 'Department',
-  translationPath: 'forms.patients.gender',
+  translationPath: 'forms.patients.department',
   description: 'Select Department',
   type: 'checkBox',
   validationMessage: 'please select Department',
