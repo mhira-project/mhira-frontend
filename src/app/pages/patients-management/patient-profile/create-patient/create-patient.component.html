@@ -1,6 +1,6 @@
 <app-form
   class="mt-3"
-  [form]="patientForm"
+  [form]="patient?.id ? patientUpdateForm : patientForm"
   [formData]="patient"
   [isLoading]="isLoading"
   [inputMode]="inputMode"

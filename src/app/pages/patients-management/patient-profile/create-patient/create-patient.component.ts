@@ -5,7 +5,7 @@ import { Patient } from '../../@types/patient';
 import { environment } from '@env/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
-import { PatientForm } from '@app/pages/patients-management/@forms/patient-form';
+import { PatientCreateForm, PatientUpdateForm } from '@app/pages/patients-management/@forms/patient-form';
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
 import { EmergencyContactsService } from '@app/pages/patients-management/@services/contacts.service';
 import { Contact } from '@app/pages/patients-management/@types/contact';
@@ -27,7 +27,8 @@ export class CreatePatientComponent implements OnInit {
   populateForm = false;
   resetForm = false;
   loadingMessage = '';
-  patientForm = PatientForm;
+  patientForm = PatientCreateForm;
+  patientUpdateForm = PatientUpdateForm;
   patient: Patient;
   inputMode = true;
   showCancelButton = false;
