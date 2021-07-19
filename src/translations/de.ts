@@ -91,6 +91,7 @@ export default {
       id: 'Spital ID',
       birthDate: 'Geburtsdatum',
       gender: 'Geschlecht',
+      department: 'Abteilung',
       patientAddress: 'Adresse',
       street: 'Strasse',
       addressNumber: 'Hausnummer',
