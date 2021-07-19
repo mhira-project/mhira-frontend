@@ -3,7 +3,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { TranslateLoader, TranslateModule, MissingTranslationHandler } from '@ngx-translate/core';
+import {
+  TranslateLoader,
+  TranslateModule,
+  MissingTranslationHandler,
+  TranslateModuleConfig,
+} from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { environment } from '@env/environment';
@@ -22,6 +27,22 @@ import { registerLocale as registerLocaleLanguage } from '@cospired/i18n-iso-lan
 import { MhiraMissingTranslationHandler } from './@core/mhira-missing-translation-handler';
 import { TranslationCode } from './@shared/@types/translation';
 
+// Translations Config
+// DEV: show key and warn in console, PROD: show default lang translation
+const translationConfig: TranslateModuleConfig = {
+  useDefaultLang: environment.production,
+  loader: {
+    provide: TranslateLoader,
+    useClass: TypescriptTranslationLoader,
+  },
+  missingTranslationHandler: {
+    provide: MissingTranslationHandler,
+    useClass: MhiraMissingTranslationHandler,
+  },
+};
+
+if (environment.production) translationConfig.defaultLanguage = TranslationCode.EN;
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -29,18 +50,7 @@ import { TranslationCode } from './@shared/@types/translation';
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
     FormsModule,
     HttpClientModule,
-    TranslateModule.forRoot({
-      defaultLanguage: TranslationCode.EN,
-      useDefaultLang: environment.production, // DEV: show key and warn in console, PROD: show default lang translation
-      loader: {
-        provide: TranslateLoader,
-        useClass: TypescriptTranslationLoader,
-      },
-      missingTranslationHandler: {
-        provide: MissingTranslationHandler,
-        useClass: MhiraMissingTranslationHandler,
-      },
-    }),
+    TranslateModule.forRoot(translationConfig),
     NgbModule,
     LayoutModule,
     CoreModule,

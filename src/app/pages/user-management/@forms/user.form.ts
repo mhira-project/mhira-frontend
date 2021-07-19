@@ -325,72 +325,10 @@ const userRolesPermissions: Form = {
   ],
 };
 
-const userFilter: Form = {
-  groups: [
-    {
-      fields: [
-        {
-          title: '',
-          label: 'First name',
-          translationPath: 'forms.userFilter.firstName',
-          name: 'firstName',
-          type: 'text',
-          isRequired: false,
-          description: 'First name',
-          validationMessage: '',
-          span: 24,
-          value: '',
-        },
-        {
-          title: '',
-          label: 'Last name',
-          translationPath: 'forms.userFilter.lastName',
-          name: 'lastName',
-          type: 'text',
-          isRequired: false,
-          description: 'Last name',
-          validationMessage: '',
-          span: 24,
-          value: '',
-        },
-        {
-          value: '',
-          title: '',
-          name: 'gender',
-          label: 'Gender',
-          translationPath: 'forms.userFilter.gender',
-          description: 'Gender',
-          type: 'select',
-          validationMessage: 'please enter value',
-          isRequired: false,
-          options: [
-            { label: 'Male', value: 'male' },
-            { label: 'Female', value: 'female' },
-          ],
-          span: 24,
-        },
-        {
-          value: '',
-          title: '',
-          label: 'Date Registered',
-          translationPath: 'forms.userFilter.createdAt',
-          name: 'createdAt',
-          description: 'Enter date',
-          type: 'date',
-          validationMessage: 'please enter date',
-          isRequired: false,
-          span: 24,
-        },
-      ],
-    },
-  ],
-};
-
 export const userForms = {
   changeUserPassword,
   userProfile,
   userRolesPermissions,
   userProfileEdit,
-  userFilter,
   updateUserPassword,
 };

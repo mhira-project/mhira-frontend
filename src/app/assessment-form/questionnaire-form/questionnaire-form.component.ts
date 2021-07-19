@@ -9,6 +9,7 @@ import { Answer } from '../@types/answer';
 import { Question } from '../@types/question';
 import { SkipLogic } from '../skip-logic';
 import { ErrorHandlerService } from '../../@shared/services/error-handler.service';
+import { MhiraTranslations } from '../../@core/mhira-translations';
 
 @UntilDestroy()
 @Component({
@@ -34,7 +35,8 @@ export class QuestionnaireFormComponent {
   constructor(
     private activtedRoute: ActivatedRoute,
     private assessmentFormService: AssessmentFormService,
-    private errorService: ErrorHandlerService
+    private errorService: ErrorHandlerService,
+    public translations: MhiraTranslations
   ) {
     combineLatest([
       this.activtedRoute.params.pipe(
