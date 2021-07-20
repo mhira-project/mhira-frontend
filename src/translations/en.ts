@@ -134,7 +134,7 @@ export default {
     questionsAnswered: '{{actual}}/{{total}} answered',
     optionalAnswered: '+{{actual}} optional',
     fillingTime: 'Filling time: {{time}}min',
-    completeAssessment: 'Complete assessment',
+    completeAssessment: 'Submit assessment',
     alreadyCompleted: 'Assessment is completed',
     overview: 'Overview',
     next: 'Next',
