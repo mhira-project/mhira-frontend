@@ -66,6 +66,7 @@
   <button
     nz-button
     nzType="primary"
+    [class.highlight]="assessmentFormService.percentageCompleted >= 100"
     [disabled]="
       assessmentFormService.percentageCompleted < 100 ||
       assessment.questionnaireAssessment.status === AssessmentStatus.COMPLETED

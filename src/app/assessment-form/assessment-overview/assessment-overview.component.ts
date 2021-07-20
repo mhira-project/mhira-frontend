@@ -98,6 +98,7 @@ export class AssessmentOverviewComponent implements OnInit {
           nzDuration: 5000,
         });
         this.assessment.questionnaireAssessment.status = AssessmentStatus.COMPLETED;
+        this.cdr.detectChanges();
       },
       (err) => this.errorService.handleError(err, { prefix: `Unable to complete assessment with ID "${id}"` })
     );
