@@ -178,7 +178,13 @@ export class CaseManagersComponent implements OnInit {
 
   public departmentCheck(manager: CaseManager) {
     this.manager = manager;
+
+    // check if there is at least 1 of the same department
+    if (manager.departments.some((md) => this.patient.departments.find((pd) => pd.id === md.id))) {
+      this.assignCaseManager(manager);
+    } else {
     this.updatePatientDepartment(manager);
+    }
   }
 
   public toggleFilterDrawer() {
