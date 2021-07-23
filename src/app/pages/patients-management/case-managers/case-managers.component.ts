@@ -330,7 +330,8 @@ export class CaseManagersComponent implements OnInit {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () => {
-          this.data.unshift(CaseManagerModel.fromJson(manager));
+          // modify reference to trigger change detection
+          this.data = [CaseManagerModel.fromJson(manager), ...this.data];
           this.message.create(
             'success',
             `${manager.firstName} has been successfully assigned to ${this.patient.firstName}`
@@ -363,7 +364,12 @@ export class CaseManagersComponent implements OnInit {
       })
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        () => this.data.splice(this.caseManagers.indexOf(manager), 1),
+        () => {
+          // modify reference to trigger change detection
+          const list = [...this.data];
+          list.splice(list.indexOf(manager), 1);
+          this.data = list;
+        },
         (error) =>
           this.errorService.handleError(error, {
             prefix: 'Unable to remove case manager',
