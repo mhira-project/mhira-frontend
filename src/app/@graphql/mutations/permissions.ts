@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const removePermissionsFromUser = gql`
-  mutation ($input: RemovePermissionsFromUserInput!) {
+  mutation($input: RemovePermissionsFromUserInput!) {
     removePermissionsFromUser(input: $input) {
       id
       username
@@ -23,7 +23,7 @@ const removePermissionsFromUser = gql`
 `;
 
 const setPermissionsOnUser = gql`
-  mutation ($input: SetPermissionsOnUserInput!) {
+  mutation($input: SetPermissionsOnUserInput!) {
     setPermissionsOnUser(input: $input) {
       id
       username

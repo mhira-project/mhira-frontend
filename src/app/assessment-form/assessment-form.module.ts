@@ -23,6 +23,8 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     NzDatePickerModule,
     NzTimePickerModule,
     NgxInputSearchModule,
+    NzFormModule,
+    TranslateModule,
   ],
   providers: [AssessmentFormService],
 })

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { FullAssessment } from '@app/pages/assessment/@types/assessment';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { AnswerAssessmentInput, Answer } from './@types/answer';
 import { AssessmentService } from '../pages/assessment/@services/assessment.service';
 import { QuestionnaireVersion } from '@app/pages/questionnaire-management/@types/questionnaire';
-import { first, switchMap, tap } from 'rxjs/operators';
+import { first, switchMap, tap, catchError } from 'rxjs/operators';
 import { Question } from './@types/question';
+import { isApolloError } from 'apollo-client';
 
 @Injectable({ providedIn: 'root' })
 export class AssessmentFormService {
@@ -58,12 +59,28 @@ export class AssessmentFormService {
     return this.questionnaire$.pipe(
       first(),
       switchMap((questionnaire) =>
+        // upload answer
         this.assessmentService.addAnswer({
           ...answerInput,
           assessmentId: this._assessment.value.questionnaireAssessmentId,
           questionnaireVersionId: questionnaire._id,
         })
       ),
+      catchError((err: any) => {
+        // invalidate answer if its bad user input
+        if (isApolloError(err) && err.graphQLErrors.some((e) => e.extensions?.code === 'BAD_USER_INPUT')) {
+          const answers = this.assessmentSnapshot.questionnaireAssessment.answers;
+          const answer = answers.find((a) => a.question === answerInput.question);
+          if (answer) {
+            answer.valid = false;
+            this.setAnswers(answers);
+          }
+        }
+
+        // rethrow error
+        return throwError(err);
+      }),
+      // update answers with successfull server response
       tap((answers) => this.setAnswers(answers))
     );
   }
@@ -76,7 +93,8 @@ export class AssessmentFormService {
     const requiredQuestions = this._assessmentInfo.questions.filter((q) => q.required);
 
     const numAnswers = requiredQuestions.reduce(
-      (sum, question) => (this._assessmentInfo.answers.find((a) => a.question === question._id) ? (sum += 1) : sum),
+      (sum, question) =>
+        this._assessmentInfo.answers.find((a) => a.question === question._id)?.valid ? (sum += 1) : sum,
       0
     );
     this._assessmentInfo.percentage = (numAnswers / requiredQuestions.length) * 100;

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ExtraOptions, RouterModule, Routes } from '@angular/router';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
 import { AssessmentLayoutComponent } from '@app/@layout/assessment/assessment-layout.component';
 import { AuthLayoutComponent } from '@app/@layout/auth/auth.layout.component';
 import { BackendLayoutComponent } from '@app/@layout/backend/backend-layout.component';
@@ -34,18 +33,8 @@ const appRoutes: Routes = [
   },
 ];
 
-const config: ExtraOptions = {
-  useHash: false,
-};
-
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes, config)],
+  imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
-  providers: [
-    {
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy,
-    },
-  ],
 })
 export class AppRoutingModule {}

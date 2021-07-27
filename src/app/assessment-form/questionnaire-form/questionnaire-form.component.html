@@ -18,7 +18,7 @@
       [disabled]="currentGroupIdx <= 0"
       (click)="currentGroupIdx = currentGroupIdx - 1"
     >
-      Prev
+      {{ translations.assessmentForm.prev | translate }}
     </button>
     <div class="nav-pills">
       <ng-container *ngFor="let group of questionnaire.questionGroups; let index = index">
@@ -43,11 +43,13 @@
       nzType="primary"
       (click)="currentGroupIdx = currentGroupIdx + 1"
     >
-      Next
+      {{ translations.assessmentForm.next | translate }}
     </button>
   </section>
 </article>
 
 <ng-template #overviewBtn>
-  <button nz-button nzType="primary" routerLink="../../overview" queryParamsHandling="merge">Overview</button>
+  <button nz-button nzType="primary" routerLink="../../overview" queryParamsHandling="merge">
+    {{ translations.assessmentForm.overview | translate }}
+  </button>
 </ng-template>

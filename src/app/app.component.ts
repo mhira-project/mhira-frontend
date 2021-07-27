@@ -36,7 +36,6 @@ export class AppComponent implements OnInit {
     log.debug('init');
 
     // Setup translations
-    this.translateService.setDefaultLang(TranslationCode.EN);
     this.initStoredLang();
 
     // Change page title on navigation or language change, based on route data

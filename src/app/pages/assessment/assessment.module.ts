@@ -25,6 +25,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { ClipboardModule } from 'ngx-clipboard';
 
 const antModules = [
   NzGridModule,
@@ -53,6 +54,7 @@ const antModules = [
     ComponentsModule,
     ReactiveFormsModule,
     MasterDataModule,
+    ClipboardModule,
   ],
   declarations: [PlanAssessmentComponent, AssessmentsListComponent, QuestionnaireSelectionComponent],
   providers: [PatientsService, AssessmentService],

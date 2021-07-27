@@ -85,12 +85,6 @@ export default {
     userRolesPermissions: {
       roleId: 'User Role',
     },
-    userFilter: {
-      firstName: 'First name',
-      lastName: 'Last name',
-      gender: 'Gender',
-      createdAt: 'Date Registered',
-    },
     patients: {
       patientInformation: 'Patient Information',
       firstName: 'First Name',
@@ -99,6 +93,7 @@ export default {
       id: 'Id',
       birthDate: 'Date of Birth',
       gender: 'Gender',
+      department: 'Department',
       patientAddress: 'Patient Address',
       street: 'Street',
       addressNumber: 'Number',
@@ -133,5 +128,17 @@ export default {
       phone2: 'Alternative Phone',
       emergencyContacts: 'Emergency Contacts',
     },
+  },
+  assessmentForm: {
+    license: 'License: {{license}}',
+    questionsAnswered: '{{actual}}/{{total}} answered',
+    optionalAnswered: '+{{actual}} optional',
+    fillingTime: 'Filling time: {{time}}min',
+    completeAssessment: 'Submit assessment',
+    alreadyCompleted: 'Assessment is completed',
+    overview: 'Overview',
+    next: 'Next',
+    prev: 'Previous',
+    complete: 'Thank you for completing this assessment! You can close this page now.',
   },
 };

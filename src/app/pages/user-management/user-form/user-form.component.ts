@@ -241,7 +241,7 @@ export class UserFormComponent implements OnInit {
     this.isLoading = true;
     this.populateForm = false;
     this.resetForm = false;
-    formData.userName = formData.userName.toLowerCase();
+    formData.username = formData.username.toLowerCase();
     if (formData.password !== formData.passwordConfirmation) {
       this.errorService.handleError(new Error(`Passwords don't match`));
       return;

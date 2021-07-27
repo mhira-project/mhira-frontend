@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createOneDepartment = gql`
-  mutation ($input: CreateOneDepartmentInput!) {
+  mutation($input: CreateOneDepartmentInput!) {
     createOneDepartment(input: $input) {
       id
       name
@@ -14,7 +14,7 @@ const createOneDepartment = gql`
 `;
 
 const createManyDepartments = gql`
-  mutation ($input: CreateManyDepartmentsInput!) {
+  mutation($input: CreateManyDepartmentsInput!) {
     createManyDepartments(input: $input) {
       id
       name
@@ -27,7 +27,7 @@ const createManyDepartments = gql`
 `;
 
 const updateOneDepartment = gql`
-  mutation ($input: UpdateOneDepartmentInput!) {
+  mutation($input: UpdateOneDepartmentInput!) {
     updateOneDepartment(input: $input) {
       id
       name
@@ -40,7 +40,7 @@ const updateOneDepartment = gql`
 `;
 
 const updateManyDepartments = gql`
-  mutation ($input: UpdateManyDepartmentsInput!) {
+  mutation($input: UpdateManyDepartmentsInput!) {
     updateManyDepartments(input: $input) {
       id
       name
@@ -53,7 +53,7 @@ const updateManyDepartments = gql`
 `;
 
 const deleteOneDepartment = gql`
-  mutation ($input: DeleteOneInput!) {
+  mutation($input: DeleteOneInput!) {
     deleteOneDepartment(input: $input) {
       id
       name
@@ -66,7 +66,7 @@ const deleteOneDepartment = gql`
 `;
 
 const deleteManyDepartments = gql`
-  mutation ($input: DeleteManyDepartmentsInput!) {
+  mutation($input: DeleteManyDepartmentsInput!) {
     deleteManyDepartments(input: $input) {
       deletedCount
     }
@@ -74,7 +74,7 @@ const deleteManyDepartments = gql`
 `;
 
 const setDepartmentsOnUser = gql`
-  mutation ($input: SetDepartmentsOnUserInput!) {
+  mutation($input: SetDepartmentsOnUserInput!) {
     setDepartmentsOnUser(input: $input) {
       id
       username
@@ -96,7 +96,7 @@ const setDepartmentsOnUser = gql`
 `;
 
 const addDepartmentsToUser = gql`
-  mutation ($input: AddDepartmentsToUserInput!) {
+  mutation($input: AddDepartmentsToUserInput!) {
     addDepartmentsToUser(input: $input) {
       id
       username
@@ -118,7 +118,7 @@ const addDepartmentsToUser = gql`
 `;
 
 const removeDepartmentsFromUser = gql`
-  mutation ($input: RemoveDepartmentsFromUserInput!) {
+  mutation($input: RemoveDepartmentsFromUserInput!) {
     removeDepartmentsFromUser(input: $input) {
       id
       username

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const patientStatuses = gql`
-  query ($paging: CursorPaging, $filter: PatientStatusFilter) {
+  query($paging: CursorPaging, $filter: PatientStatusFilter) {
     patientStatuses(paging: $paging, filter: $filter) {
       pageInfo {
         hasNextPage

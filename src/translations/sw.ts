@@ -83,12 +83,6 @@ export default {
     userRolesPermissions: {
       roleId: 'User Role',
     },
-    userFilter: {
-      firstName: 'First name',
-      lastName: 'Last name',
-      gender: 'Gender',
-      createdAt: 'Date Registered',
-    },
     patients: {
       patientInformation: 'Taarifa za Mgonjwa',
       firstName: 'Jina la Kwanza',
@@ -97,6 +91,7 @@ export default {
       id: 'Namba ya hosipitali',
       birthDate: 'Tarehe ya Kuzaliwa',
       gender: 'Jinsia',
+      department: 'Idara',
       patientAddress: 'Taarifa za Makazi',
       street: 'Jina la Mtaa',
       addressNumber: 'Namba ya Mtaa',
@@ -110,5 +105,17 @@ export default {
       phone2: 'Namba ya ziada',
       emergencyContacts: 'Mawasiliano ya dharula',
     },
+  },
+  assessmentForm: {
+    license: 'License: {{license}}',
+    questionsAnswered: '{{actual}}/{{total}} answered',
+    optionalAnswered: '+{{actual}} optional',
+    fillingTime: 'Filling time: {{time}}min',
+    completeAssessment: 'Complete assessment',
+    alreadyCompleted: 'Assessment is completed',
+    overview: 'Overview',
+    next: 'Next',
+    prev: 'Previous',
+    complete: 'Thank you for completing this assessment! You can close this page now.',
   },
 };

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const roles = gql`
-  query ($paging: CursorPaging, $filter: RoleFilter, $sorting: [RoleSort!]) {
+  query($paging: CursorPaging, $filter: RoleFilter, $sorting: [RoleSort!]) {
     roles(paging: $paging, filter: $filter, sorting: $sorting) {
       edges {
         cursor

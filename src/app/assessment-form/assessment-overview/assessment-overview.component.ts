@@ -6,6 +6,9 @@ import { Answer } from '../@types/answer';
 import { AssessmentService } from '../../pages/assessment/@services/assessment.service';
 import { ErrorHandlerService } from '../../@shared/services/error-handler.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { MhiraTranslations } from '../../@core/mhira-translations';
+import { forkJoin } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-assessment-overview',
@@ -14,6 +17,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AssessmentOverviewComponent implements OnInit {
+  public AssessmentStatus = AssessmentStatus;
   public assessment: FullAssessment;
   public questions: Question[];
   public questionnaireQuestions: { [K in string]: Question[] };
@@ -24,10 +28,12 @@ export class AssessmentOverviewComponent implements OnInit {
 
   constructor(
     public assessmentFormService: AssessmentFormService,
+    public translations: MhiraTranslations,
     private cdr: ChangeDetectorRef,
     private assessmentService: AssessmentService,
     private messageService: NzMessageService,
-    private errorService: ErrorHandlerService
+    private errorService: ErrorHandlerService,
+    private translateService: TranslateService
   ) {}
 
   public ngOnInit(): void {
@@ -47,20 +53,31 @@ export class AssessmentOverviewComponent implements OnInit {
     });
   }
 
-  public getMaxQuestions(questionnaireId: string): number {
-    return this.questionnaireQuestions[questionnaireId].length;
+  public getMaxRequiredQuestions(questionnaireId: string): number {
+    return this.questionnaireQuestions[questionnaireId].filter((q) => q.required).length;
   }
 
   public getAnsweredQuestions(questionnaireId: string): number {
     return this.questionnaireQuestions[questionnaireId].reduce(
-      (sum, q) => (this.answers.find((a) => a.question === q._id) ? (sum += 1) : sum),
+      (sum, q) => (this.answers.find((a) => a.question === q._id)?.valid ? (sum += 1) : sum),
       0
     );
   }
 
+  public getAnsweredRequiredQuestions(questionnaireId: string): number {
+    return this.questionnaireQuestions[questionnaireId].reduce(
+      (sum, q) => (q.required && this.answers.find((a) => a.question === q._id)?.valid ? (sum += 1) : sum),
+      0
+    );
+  }
+
+  public getAnsweredOptionalQuestions(questionnaireId: string): number {
+    return this.getAnsweredQuestions(questionnaireId) - this.getAnsweredRequiredQuestions(questionnaireId);
+  }
+
   public isQuestionnaireDone(questionnaireId: string): boolean {
     const requiredQuestions = this.questionnaireQuestions[questionnaireId].filter((q) => q.required);
-    return requiredQuestions.every((q) => this.answers.find((a) => a.question === q._id));
+    return requiredQuestions.every((q) => this.answers.find((a) => a.question === q._id)?.valid);
   }
 
   public canAccessQuestionnaire(questionnaireIdx: number): boolean {
@@ -71,12 +88,19 @@ export class AssessmentOverviewComponent implements OnInit {
 
   public completeAssessment(): void {
     const id = this.assessment.questionnaireAssessment._id;
-    this.assessmentService.changeAssessmentStatus(id, AssessmentStatus.COMPLETED).subscribe(
-      () =>
-        this.messageService.success('Thank you for completing this assessment! You can close this page now.', {
+
+    forkJoin([
+      this.translateService.get(this.translations.assessmentForm.complete),
+      this.assessmentService.changeAssessmentStatus(id, AssessmentStatus.COMPLETED),
+    ]).subscribe(
+      ([translation]) => {
+        this.messageService.success(translation, {
           nzDuration: 5000,
-        }),
-      (err) => this.errorService.handleError(err, { prefix: `Unable to delete assessment with ID "${id}"` })
+        });
+        this.assessment.questionnaireAssessment.status = AssessmentStatus.COMPLETED;
+        this.cdr.detectChanges();
+      },
+      (err) => this.errorService.handleError(err, { prefix: `Unable to complete assessment with ID "${id}"` })
     );
   }
 }

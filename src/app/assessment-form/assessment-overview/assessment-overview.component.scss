@@ -1,5 +1,6 @@
+@import "../../../assets/scss/_variables";
+
 $warning: #f3b013;
-$success: #89d180;
 
 section + section {
   margin-top: 2em;
@@ -21,7 +22,36 @@ section + section {
     color: $warning;
 
     &.done {
-      color: $success;
+      color: $app-green;
     }
   }
+
+  .progress-optional {
+    font-size: 1.2em;
+    color: $app-green;
+  }
+}
+
+@keyframes highlightAnim {
+  0% {
+    color: rgba($body-color, 0.25);
+    background-color: $gray-lightest;
+    border-color: $border-color;
+  }
+  50% {
+    color: rgba($body-color, 0.25);
+    background-color: $gray-lightest;
+    border-color: $border-color;
+  }
+  100% {
+    background-color: $brand-primary;
+    border-color: $brand-primary;
+    color: $white;
+  }
+}
+
+button.highlight {
+  animation-name: highlightAnim;
+  animation-duration: 0.75s;
+  animation-timing-function: ease;
 }
