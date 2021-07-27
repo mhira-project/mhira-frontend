@@ -55,7 +55,19 @@ export class QuestionComponent {
         booleanValue: answer.booleanValue,
       })
       .subscribe(
-        (answers) => (this.answer = answers.find((a) => a.question === this.question._id)),
+        // override existing answer, but keep current values
+        (answers) =>
+          (this.answer = Object.assign(
+            {},
+            answers.find((a) => a.question === this.question._id),
+            {
+              textValue: this.answer.textValue,
+              numberValue: this.answer.numberValue,
+              booleanValue: this.answer.booleanValue,
+              dateValue: this.answer.dateValue,
+              multipleChoiceValue: this.answer.multipleChoiceValue,
+            } as Partial<Answer>
+          )),
         (err) => this.errorService.handleError(err, { prefix: 'Unable to answer question' })
       );
   }

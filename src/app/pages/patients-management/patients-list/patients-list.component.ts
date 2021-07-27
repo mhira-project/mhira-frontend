@@ -228,11 +228,14 @@ export class PatientsListComponent {
       .subscribe(
         ({ data }) => {
           patient = PatientModel.fromJson(data.updateOnePatient);
-          this.data.splice(
-            this.data.findIndex((p) => p.id === patient.id),
+          const list = [...this.data];
+          list.splice(
+            list.findIndex((p) => p.id === patient.id),
             1,
             patient
           );
+          // modify reference to trigger change detection
+          this.data = list;
         },
         (error) =>
           this.errorService.handleError(error, {

@@ -165,7 +165,11 @@ export class DepartmentsComponent implements OnInit {
       .deleteDepartment(department)
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
-        () => this.data.splice(this.data.indexOf(department), 1),
+        () => {
+          const data = [...this.data];
+          data.splice(this.data.indexOf(department), 1);
+          this.data = data; // mutate reference to trigger change detection
+        },
         (err) => this.errorService.handleError(err, { prefix: `Unable to delete department "${department.name}"` })
       );
   }
@@ -179,7 +183,8 @@ export class DepartmentsComponent implements OnInit {
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }) => {
-          this.data.push(Convert.toDepartment(data.createOneDepartment));
+          // mutate reference to trigger change detection
+          this.data = [...this.data, Convert.toDepartment(data.createOneDepartment)];
           this.closeCreatePanel();
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to create department' })
@@ -201,9 +206,11 @@ export class DepartmentsComponent implements OnInit {
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }) => {
+          const list = [...this.data];
           const updatedDepartment: Department = Convert.toDepartment(data.updateOneDepartment);
-          const idx = this.data.findIndex((dep) => dep.id === updatedDepartment.id);
-          this.data.splice(idx, 1, updatedDepartment);
+          const idx = list.findIndex((dep) => dep.id === updatedDepartment.id);
+          list.splice(idx, 1, updatedDepartment);
+          this.data = list; // mutate reference to trigger change detection
           this.closeCreatePanel();
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to update department' })
