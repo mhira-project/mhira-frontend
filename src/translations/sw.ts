@@ -25,7 +25,7 @@ export default {
     systemConfiguration: 'Usanidi wa Mfumo',
     patientStatuses: 'Hadhi za Mgonjwa',
     notFound: 'Haipo',
-    noTabs: 'No tabs',
+    noTabs: 'Hakuna kurasa',
   },
   tables: {
     patients: {
