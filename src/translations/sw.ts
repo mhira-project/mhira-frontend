@@ -54,12 +54,12 @@ export default {
   },
   forms: {
     changePassword: {
-      newPassword: 'Ingiza Nenosiri Jipya',
+      newPassword: 'Ingiza Neno siri Jipya',
       newPasswordConfirmation: 'Rudia neno siri',
     },
     changeUserPassword: {
-      currentPassword: 'Ingiza Nenosiri la sasa',
-      newPassword: 'Ingiza Nenosiri Jipya',
+      currentPassword: 'Ingiza Neno siri la sasa',
+      newPassword: 'Ingiza Neno siri Jipya',
       newPasswordConfirmation: 'Rudia neno siri',
     },
     userProfile: {
@@ -70,7 +70,7 @@ export default {
       middleName: 'Jina la Kati',
       lastName: 'Jina la Mwisho',
       phone: 'Namba ya Simu',
-      password: 'Nenosiri',
+      password: 'Neno siri',
       passwordConfirmation: 'Rudia neno siri',
     },
     userProfileEdit: {
