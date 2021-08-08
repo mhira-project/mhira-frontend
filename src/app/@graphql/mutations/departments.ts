@@ -53,7 +53,7 @@ const updateManyDepartments = gql`
 `;
 
 const deleteOneDepartment = gql`
-  mutation($input: DeleteOneInput!) {
+  mutation($input: DeleteOneDepartmentInput!) {
     deleteOneDepartment(input: $input) {
       id
       name

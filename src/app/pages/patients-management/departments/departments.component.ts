@@ -22,6 +22,7 @@ import { ErrorHandlerService } from '../../../@shared/services/error-handler.ser
 
 enum ActionKey {
   REMOVE_DEPARTMENT,
+  ADD_DEPARTMENT,
 }
 
 @Component({
@@ -31,6 +32,7 @@ enum ActionKey {
 })
 export class DepartmentsComponent implements OnInit {
   PK = PermissionKey;
+  ActionKey = ActionKey;
 
   @Input() public patient: FormattedPatient;
 
@@ -101,12 +103,12 @@ export class DepartmentsComponent implements OnInit {
   public onAction({ action, context: department }: ActionArgs<Department, ActionKey>): void {
     switch (action.key) {
       case ActionKey.REMOVE_DEPARTMENT:
-        this.managePatientDepartments('removeDepartmentsFromPatient', department);
+        this.managePatientDepartments(ActionKey.REMOVE_DEPARTMENT, department);
         return;
     }
   }
 
-  public async updatePatientDepartment(action: string, selectedDepartment?: Department): Promise<void> {
+  public async updatePatientDepartment(action: ActionKey, selectedDepartment?: Department): Promise<void> {
     const modal = this.modalService.create<SelectModalComponent<Department>>({
       nzTitle: `Add ${this.patient.firstName} ${this.patient.lastName} to department`,
       nzContent: SelectModalComponent,
@@ -165,21 +167,24 @@ export class DepartmentsComponent implements OnInit {
     ];
   }
 
-  private managePatientDepartments(action: string, department: Department) {
+  private managePatientDepartments(action: ActionKey, department: Department) {
     this.loading = true;
     const executedAction =
-      action === 'addDepartmentsToPatient'
+      action === ActionKey.ADD_DEPARTMENT
         ? this.departmentsService.addDepartmentsToPatient(this.patient.id, department.id)
         : this.departmentsService.removeDepartmentsFromPatient(this.patient.id, department.id);
     executedAction.pipe(finalize(() => (this.loading = false))).subscribe(
       () => {
-        if (action === 'addDepartmentsToPatient') {
-          this.data.unshift(department);
+        if (action === ActionKey.ADD_DEPARTMENT) {
+          // mutate reference to trigger change detection
+          this.data = [department, ...this.data];
         } else {
-          this.data.splice(
-            this.data.findIndex((p) => p.id === department.id),
+          const list = [...this.data];
+          list.splice(
+            list.findIndex((p) => p.id === department.id),
             1
           );
+          this.data = list; // mutate reference to trigger change detection
         }
         this.patientDepartmentsUpdated.emit({
           action,
