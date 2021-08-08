@@ -6,5 +6,6 @@ export interface TranslationItem {
 export enum TranslationCode {
   EN = 'en',
   SW = 'sw',
+  ES = 'es',
   DE = 'de',
 }
