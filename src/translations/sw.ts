@@ -64,7 +64,7 @@ export default {
     },
     userProfile: {
       username: 'Login Username',
-      workID: 'ID',
+      workID: 'Kitambulisho cha mfanyakazi',
       email: 'Barua pepe',
       firstName: 'Jina la Kwanza',
       middleName: 'Jina la Kati',
@@ -75,7 +75,7 @@ export default {
     },
     userProfileEdit: {
       username: 'Login Username',
-      workID: 'ID',
+      workID: 'Kitambulisho cha mfanyakazi',
       email: 'Barua pepe',
       firstName: 'Jina la Kwanza',
       middleName: 'Jina la Kati',
