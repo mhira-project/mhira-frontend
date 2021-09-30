@@ -20,7 +20,7 @@ COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy artifacts from the build stage
-COPY --from=builder ./dist /usr/share/nginx/html
+COPY ./dist /usr/share/nginx/html
 
 EXPOSE 80 80
 
