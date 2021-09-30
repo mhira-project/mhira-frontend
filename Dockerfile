@@ -1,13 +1,13 @@
 # ### Development container build #####################################
-# FROM node:latest as builder
+FROM node:latest as builder
 
-# WORKDIR /app
+WORKDIR /app
 
-# COPY . .
+COPY . .
 
-# RUN npm ci
+RUN npm ci
 
-# RUN npm run build:dev
+RUN npm run build:dev
 
 
 ### Production container build #####################################
