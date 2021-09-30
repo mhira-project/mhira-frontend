@@ -19,8 +19,8 @@ COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 ## Remove default nginx index page
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copy artifacts from the Stage 2
-COPY ./dist /usr/share/nginx/html
+# Copy artifacts from the build stage
+COPY --from=builder ./dist /usr/share/nginx/html
 
 EXPOSE 80 80
 
