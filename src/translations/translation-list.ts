@@ -5,4 +5,5 @@ export const translationList: TranslationItem[] = [
   { name: 'Deutsch', code: TranslationCode.DE },
   { name: 'Spanish', code: TranslationCode.ES },
   { name: 'Swahili', code: TranslationCode.SW },
+  { name: 'Albanian', code: TranslationCode.SQ },
 ];
