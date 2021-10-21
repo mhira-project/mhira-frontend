@@ -8,4 +8,5 @@ export enum TranslationCode {
   SW = 'sw',
   ES = 'es',
   DE = 'de',
+  SQ = 'sq',
 }
