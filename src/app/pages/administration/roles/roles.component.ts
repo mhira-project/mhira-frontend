@@ -173,7 +173,6 @@ export class RolesComponent implements OnInit {
       )
       .subscribe(
         ({ data }) => {
-          this.roles.push(Convert.toRole(data.createOneRole));
           this.rolesTable.rows = this.roles;
           this.resetForm = true;
           this.populateForm = false;
