@@ -57,7 +57,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
-          tags: mhiraproject/mhira-backend:development
+          tags: mhiraproject/mhira-frontend:development
 
       # Docker build and push AWS
       - name: Configure AWS credentials

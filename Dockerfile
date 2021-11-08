@@ -1,5 +1,5 @@
 # ### Development container build #####################################
-FROM node:latest as builder
+FROM node:14 as builder
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ RUN npm run build:dev
 
 
 ### Production container build #####################################
-FROM nginx:alpine
+FROM nginx:1.19.10-alpine
 
 # Overwrite default nginx config
 COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
