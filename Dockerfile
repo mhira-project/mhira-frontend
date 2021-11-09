@@ -11,7 +11,7 @@ RUN npm run build:dev
 
 
 ### Production container build #####################################
-FROM nginx:mainline-alpine
+FROM nginx:mainline-alpine AS production
 
 # Overwrite default nginx config
 COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
@@ -20,7 +20,7 @@ COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy artifacts from the build stage
-COPY ./dist /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 80 80
 
