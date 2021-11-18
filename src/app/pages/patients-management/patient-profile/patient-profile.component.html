@@ -14,9 +14,9 @@
   <nz-tab nzTitle="Profile">
     <app-create-patient></app-create-patient>
   </nz-tab>
-  <!--  <nz-tab *ngIf="patientTitle" nzTitle="Emergency Contacts">-->
-  <!--    <app-emergency-contact></app-emergency-contact>-->
-  <!--  </nz-tab>-->
+  <!--    <nz-tab *ngIf="patientTitle" nzTitle="Emergency Contacts">-->
+  <!--      <app-emergency-contact></app-emergency-contact>-->
+  <!--    </nz-tab>-->
   <nz-tab *ngIf="patientTitle" nzTitle="Case managers">
     <app-case-managers [managerType]="'caseManager'" [patient]="patient" [showAssignButton]="true" [filter]="filter">
     </app-case-managers>
