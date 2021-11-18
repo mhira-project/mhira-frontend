@@ -173,11 +173,12 @@ export class RolesComponent implements OnInit {
       )
       .subscribe(
         ({ data }) => {
-          this.roles.unshift(Convert.toRole(data.createOneRole));
+          this.roles.push(Convert.toRole(data.createOneRole));
           this.rolesTable.rows = this.roles;
           this.resetForm = true;
           this.populateForm = false;
           this.toggleCreatePanel();
+          this.getRoles();
           this.message.success('Role has successfully been created');
         },
         (error) => this.errorService.handleError(error, { prefix: 'Unable to create role' })
