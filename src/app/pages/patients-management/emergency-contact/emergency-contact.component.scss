@@ -1,0 +1,14 @@
+form {
+  nz-form-label,
+  nz-form-control {
+    width: 100%;
+  }
+  nz-form-item + nz-form-item {
+    margin-top: 30px;
+  }
+
+  input[readonly] {
+    border: 0;
+    padding: 0;
+  }
+}

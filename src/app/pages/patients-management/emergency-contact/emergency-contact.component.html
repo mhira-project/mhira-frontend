@@ -1,0 +1,24 @@
+<app-master-data-list
+  [data]="data"
+  [columns]="columns"
+  [loading]="loading"
+  [actions]="actions"
+  [pageInfo]="pageInfo"
+  (pageChange)="onPageChange($event)"
+  (filter)="onFilter($event)"
+>
+  <ng-container actions-left>
+    <app-master-data-search (search)="searchContact($event)"></app-master-data-search>
+  </ng-container>
+  <ng-container actions-right>
+    <button
+      nz-button
+      nzType="primary"
+      nzShape="circle"
+      (click)="updatePatientContact(ActionKey.ADD_CONTACT)"
+      *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS])"
+    >
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>
