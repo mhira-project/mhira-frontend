@@ -7,6 +7,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
     name: 'name',
     title: 'Name',
+    translationPath: 'plannedAssessments.name',
     sort: true,
     filterField: {
       type: 'text',
@@ -16,16 +17,19 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
     name: 'formattedStatus',
     title: 'Status',
+    translationPath: 'plannedAssessments.formattedStatus',
     render: 'tag',
   },
   {
     name: 'patientMedicalRecordNo',
     title: 'Patient Hospital ID',
+    translationPath: 'plannedAssessments.patientMedicalRecordNo',
   },
   {
     name: 'formattedPatient',
     altName: 'patient',
     title: 'Patient',
+    translationPath: 'plannedAssessments.formattedPatient',
     filterField: {
       type: 'text',
       value: undefined,
@@ -45,11 +49,13 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
     name: 'clinicianWorkId',
     title: 'Clinician Work ID',
+    translationPath: 'plannedAssessments.clinicianWorkId',
   },
   {
     name: 'formattedClinician',
     altName: 'clinician',
     title: 'Clinician',
+    translationPath: 'plannedAssessments.formattedClinician',
     filterField: {
       type: 'text',
       value: undefined,
@@ -69,6 +75,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
     name: 'informant',
     title: 'Informant',
+    translationPath: 'plannedAssessments.informant',
     sort: true,
     filterField: {
       type: 'text',
@@ -78,6 +85,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
     name: 'createdAt',
     title: 'Created at',
+    translationPath: 'plannedAssessments.createdAt',
     render: 'date',
     sort: true,
     filterField: {

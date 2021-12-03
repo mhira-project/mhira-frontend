@@ -9,7 +9,7 @@ const general: Form & { groups: { fields: { name: keyof Setting }[] }[] } = {
         {
           title: 'Set system locale',
           name: 'systemLocale',
-          label: 'Set system localed',
+          translationPath: 'form.system.systemLocale',
           type: 'select',
           options: [],
           isRequired: false,
@@ -21,7 +21,7 @@ const general: Form & { groups: { fields: { name: keyof Setting }[] }[] } = {
         {
           title: 'Set system time zone',
           name: 'systemTimezone',
-          label: 'Set system time zone',
+          translationPath: 'form.system.systemTimezone',
           type: 'select',
           options: [],
           isRequired: false,
@@ -33,7 +33,7 @@ const general: Form & { groups: { fields: { name: keyof Setting }[] }[] } = {
         {
           title: 'Set date format',
           name: 'dateFormat',
-          label: 'Set date format',
+          translationPath: 'form.system.dateFormat',
           type: 'select',
           options: [],
           isRequired: false,
@@ -45,7 +45,7 @@ const general: Form & { groups: { fields: { name: keyof Setting }[] }[] } = {
         {
           title: 'Set time format',
           name: 'timeFormat',
-          label: 'Set time format',
+          translationPath: 'form.system.timeFormat',
           type: 'select',
           options: [],
           isRequired: false,
@@ -57,7 +57,7 @@ const general: Form & { groups: { fields: { name: keyof Setting }[] }[] } = {
         {
           title: 'Password life time (In Days)',
           name: 'passwordLifeTimeInDays',
-          label: 'Set password life time',
+          translationPath: 'form.system.passwordLifeTimeInDays',
           type: 'number',
           isRequired: false,
           description: 'Set password life time',
@@ -68,7 +68,7 @@ const general: Form & { groups: { fields: { name: keyof Setting }[] }[] } = {
         {
           title: 'Password re-use cut off(In Days)',
           name: 'passwordReUseCutoffInDays',
-          label: 'Set password re-use cut off',
+          translationPath: 'form.system.passwordReUseCutoffInDays',
           type: 'number',
           isRequired: false,
           description: 'Set password re-use cut off',
@@ -79,7 +79,7 @@ const general: Form & { groups: { fields: { name: keyof Setting }[] }[] } = {
         {
           title: 'Max login attempts',
           name: 'maxLoginAttempts',
-          label: 'Max login attempts',
+          translationPath: 'form.system.maxLoginAttempts',
           type: 'number',
           isRequired: false,
           description: 'Set the number of max login attempts',

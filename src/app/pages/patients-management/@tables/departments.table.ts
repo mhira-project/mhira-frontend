@@ -5,6 +5,7 @@ export const DepartmentsColumns: TableColumn<Department>[] = [
   {
     title: 'Name',
     name: 'name',
+    translationPath: 'tables.departments.name',
     sort: true,
     filterField: {
       type: 'text',
@@ -14,6 +15,7 @@ export const DepartmentsColumns: TableColumn<Department>[] = [
   {
     title: 'Description',
     name: 'description',
+    translationPath: 'tables.departments.description',
     sort: true,
     filterField: {
       type: 'text',
@@ -23,6 +25,7 @@ export const DepartmentsColumns: TableColumn<Department>[] = [
   {
     title: 'Created Date',
     name: 'createdAt',
+    translationPath: 'tables.departments.createdAt',
     render: 'date',
     sort: true,
     filterField: {
