@@ -1,12 +1,7 @@
 <div class="buttons">
   <button nz-button nzType="primary" (click)="goBack()">Back</button>
-  <button
-    *ngIf="patientTitle"
-    nz-button
-    nzType="primary"
-    [routerLink]="'https://rstudio.test?token=' + getToken() + '&patient_id=' + patient.id"
-  >
-    Report
+  <button *ngIf="patientTitle" nz-button nzType="primary">
+    <a href="{{ 'https://rstudio.test?token=' + getToken() + '&patient_id=' + patient.id }}" target="_blank">Report</a>
   </button>
 </div>
 <h1 *ngIf="patientTitle">{{ patientTitle }}</h1>
@@ -14,9 +9,9 @@
   <nz-tab nzTitle="Profile">
     <app-create-patient></app-create-patient>
   </nz-tab>
-  <!--    <nz-tab *ngIf="patientTitle" nzTitle="Emergency Contacts">-->
-  <!--      <app-emergency-contact></app-emergency-contact>-->
-  <!--    </nz-tab>-->
+<!--   <nz-tab *ngIf="patientTitle" nzTitle="Emergency Contacts">
+    <app-emergency-contact></app-emergency-contact>
+  </nz-tab> -->
   <nz-tab *ngIf="patientTitle" nzTitle="Case managers">
     <app-case-managers [managerType]="'caseManager'" [patient]="patient" [showAssignButton]="true" [filter]="filter">
     </app-case-managers>
