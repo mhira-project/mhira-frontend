@@ -5,7 +5,7 @@ export const QuestionnaireColumns: TableColumn<FormattedQuestionnaireVersion>[] 
   {
     title: 'Name',
     name: 'name',
-git     translationPath: 'questionnaires.name',
+    translationPath: 'questionnaires.name',
     sort: true,
     filterField: {
       type: 'text',
