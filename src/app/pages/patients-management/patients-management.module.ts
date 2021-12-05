@@ -8,7 +8,7 @@ import { CaseManagersComponent } from './case-managers/case-managers.component';
 import { PatientsService } from './@services/patients.service';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { CreatePatientComponent } from './patient-profile/create-patient/create-patient.component';
-import { EmergencyContactComponent } from './patient-profile/emergency-contact/emergency-contact.component';
+import { EmergencyContactComponent } from './emergency-contact/emergency-contact.component';
 import { CaseManagersService } from './@services/case-managers.service';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
 import { EmergencyContactsService } from './@services/contacts.service';
