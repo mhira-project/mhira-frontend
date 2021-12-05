@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../@services/assessment.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { QuestionnaireVersion } from '../../questionnaire-management/@types/questionnaire';
 import { User } from '@app/pages/user-management/@types/user';
@@ -34,7 +34,8 @@ export class PlanAssessmentComponent implements OnInit {
     private nzMessage: NzMessageService,
     private errorService: ErrorHandlerService,
     private activatedRoute: ActivatedRoute,
-    public perms: AppPermissionsService
+    public perms: AppPermissionsService,
+    private router: Router
   ) {}
 
   public ngOnInit(): void {
@@ -83,6 +84,10 @@ export class PlanAssessmentComponent implements OnInit {
 
   public onPatientSelect(patient: Patient) {
     this.assessmentForm.patchValue({ patientId: patient?.id });
+  }
+
+  goBack() {
+    this.router.navigate(['/mhira/assessments/planned-assessments']);
   }
 
   private initAssessment() {

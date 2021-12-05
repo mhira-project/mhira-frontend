@@ -5,6 +5,7 @@ export const QuestionnaireColumns: TableColumn<FormattedQuestionnaireVersion>[] 
   {
     title: 'Name',
     name: 'name',
+git     translationPath: 'questionnaires.name',
     sort: true,
     filterField: {
       type: 'text',
@@ -14,6 +15,7 @@ export const QuestionnaireColumns: TableColumn<FormattedQuestionnaireVersion>[] 
   {
     title: 'Status',
     name: 'formattedStatus',
+    translationPath: 'questionnaires.formattedStatus',
     altName: 'status',
     render: 'tag',
     sort: true,
@@ -31,35 +33,43 @@ export const QuestionnaireColumns: TableColumn<FormattedQuestionnaireVersion>[] 
   {
     title: 'Language',
     name: 'language',
+    translationPath: 'questionnaires.language',
   },
   {
     title: 'Abbreviation',
     name: 'abbreviation',
+    translationPath: 'questionnaires.abbreviation',
   },
   {
     title: 'Keywords',
     name: 'keywords',
+    translationPath: 'questionnaires.keywords',
     render: 'array',
   },
   {
     title: 'Time to complete',
     name: 'timeToComplete',
+    translationPath: 'questionnaires.timeToComplete',
   },
   {
     title: 'Copyright',
     name: 'copyright',
+    translationPath: 'questionnaires.copyright',
   },
   {
     title: 'Website',
     name: 'website',
+    translationPath: 'questionnaires.website',
   },
   {
     title: 'License',
     name: 'license',
+    translationPath: 'questionnaires.license',
   },
   {
     title: 'Created at',
     name: 'createdAt',
+    translationPath: 'questionnaires.createdAt',
     render: 'date',
     sort: true,
   },

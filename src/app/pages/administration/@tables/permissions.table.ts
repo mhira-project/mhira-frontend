@@ -4,11 +4,13 @@ const columns: any[] = [
   {
     title: 'Permission Name',
     name: 'name',
+    translationPath: 'tables.permission.name',
     isFilterable: false,
   },
   {
     title: 'Created At',
     name: 'createdAt',
+    translationPath: 'tables.permission.name',
     isFilterable: false,
   },
 ];

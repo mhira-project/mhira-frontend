@@ -5,6 +5,7 @@ export const DepartmentColumns: TableColumn<Partial<FormattedDepartment>>[] = [
   {
     title: 'Department Name',
     name: 'name',
+    translationPath: 'tables.department.name',
     sort: true,
     filterField: {
       type: 'text',
@@ -14,6 +15,7 @@ export const DepartmentColumns: TableColumn<Partial<FormattedDepartment>>[] = [
   {
     title: 'Description',
     name: 'description',
+    translationPath: 'tables.department.description',
     sort: true,
     filterField: {
       type: 'text',
@@ -23,6 +25,7 @@ export const DepartmentColumns: TableColumn<Partial<FormattedDepartment>>[] = [
   {
     title: 'Status',
     name: 'formattedStatus',
+    translationPath: 'tables.department.formattedStatus',
     altName: 'active',
     sort: true,
     render: 'tag',
@@ -38,6 +41,7 @@ export const DepartmentColumns: TableColumn<Partial<FormattedDepartment>>[] = [
   {
     title: 'Created At',
     name: 'createdAt',
+    translationPath: 'tables.department.createdAt',
     sort: true,
     render: 'date',
     filterField: {

@@ -1,3 +1,5 @@
+<button style="margin-bottom: 16px" nz-button nzType="primary" (click)="goBack()">Back</button>
+
 <article nz-row [nzGutter]="20">
   <section nz-col nzSpan="12" class="questionnaires">
     <app-questionnaire-selection
@@ -9,13 +11,13 @@
   <section nz-col nzSpan="12">
     <form nz-form [formGroup]="assessmentForm" (submit)="onSubmitAssessment()">
       <nz-form-item>
-        <nz-form-label>Assessment name</nz-form-label>
+        <nz-form-label>{{ 'planAssessment.assessmentName' | translate }}</nz-form-label>
         <nz-form-control>
           <input nz-input type="string" formControlName="name" [readonly]="!editMode" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label nzFor="patient">Patient</nz-form-label>
+        <nz-form-label nzFor="patient">{{ 'planAssessment.patient' | translate }}</nz-form-label>
         <nz-form-control>
           <app-patient-picker
             [selectedPatient]="selectedPatient"
@@ -25,7 +27,7 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label nzFor="clinician">Clinician</nz-form-label>
+        <nz-form-label nzFor="clinician">{{ 'planAssessment.clinician' | translate }}</nz-form-label>
         <nz-form-control>
           <app-user-picker
             [assignSelfOption]="true"
@@ -36,7 +38,7 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label>Informant</nz-form-label>
+        <nz-form-label>{{ 'planAssessment.informant' | translate }}</nz-form-label>
         <nz-form-control>
           <input nz-input type="string" formControlName="informant" [readonly]="!editMode" />
         </nz-form-control>
@@ -45,7 +47,7 @@
         <nz-form-control>
           <ng-container *ngIf="editMode">
             <button nz-button nzType="primary" [disabled]="!assessmentForm.valid">Submit</button>
-            <button nz-button type="button" (click)="editMode = !editMode" *ngIf="fullAssessment">Cancel</button>
+            <button nz-button type="button" (click)="editMode = !editMode">Cancel</button>
           </ng-container>
           <button
             nz-button
