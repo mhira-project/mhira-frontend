@@ -123,6 +123,14 @@ export const MENU: SideNavInterface[] = [
     icon: 'setting',
     submenu: [
       {
+        path: 'administration/reports',
+        title: 'menu.reports',
+        permissions: [PK.VIEW_REPORTS],
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+      {
         path: 'administration/permission-matrix',
         title: 'menu.permissionMatrix',
         permissions: [PK.VIEW_ROLES_PERMISSIONS],

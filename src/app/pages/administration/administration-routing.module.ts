@@ -6,11 +6,23 @@ import { RolesComponent } from './roles/roles.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { PermissionGuard } from '../../permission.guard';
+import { ReportsComponent } from './reports/reports.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
+      {
+        path: 'reports',
+        component: ReportsComponent,
+        data: {
+          breadcrumbI18nKey: 'menu.reports',
+          permissions: {
+            only: [PermissionKey.VIEW_REPORTS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
       {
         path: 'permission-matrix',
         component: RolesAndPermissionsComponent,
