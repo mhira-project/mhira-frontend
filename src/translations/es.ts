@@ -1,6 +1,7 @@
 export default {
   dashboard: {
     welcome: 'Bienvenido/a a MHIRA',
+    name: 'MHIRA',
   },
   menu: {
     dashboard: 'Panel de Control',
@@ -17,6 +18,7 @@ export default {
     listUsers: 'Lista de Usuarios',
     newUser: 'Nuevo Usuario',
     administration: 'Administración',
+    reports: 'Informes',
     permissionMatrix: 'Permisos de Usuarios',
     permissions: 'Permisos',
     roles: 'Roles',
@@ -44,7 +46,11 @@ export default {
       firstName: 'Nombre',
       middleName: 'Segundo Nombre',
       lastName: 'Apellidos',
+      email: 'E-Mail',
       phone: 'Teléfono',
+      relation: 'Relación',
+      emergency: 'Emergencia',
+      note: 'Nota',
     },
     casemanagers: {
       firstName: 'Nombre',

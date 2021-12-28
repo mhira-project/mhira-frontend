@@ -1,6 +1,7 @@
 export default {
   dashboard: {
     welcome: 'Karibu  MHIRA',
+    name: 'MHIRA',
   },
   menu: {
     dashboard: 'Dashibodi',
@@ -17,6 +18,7 @@ export default {
     listUsers: 'Orodhesha Watumiaji',
     newUser: 'Mtumiaji Mpya',
     administration: 'Utawala',
+    reports: 'Ripoti',
     permissionMatrix: 'Jedwali La Ruhusa',
     permissions: 'Ruhusa',
     roles: 'Majukumu',
@@ -44,7 +46,11 @@ export default {
       firstName: 'Jina la Kwanza',
       middleName: 'Jina la Kati',
       lastName: 'Jina la Mwisho',
+      email: 'E-Mail',
       phone: 'Namba ya Simu',
+      relation: 'Uhusiano',
+      emergency: 'Dharura',
+      note: 'Kumbuka',
     },
     casemanagers: {
       firstName: 'Jina la Kwanza',
@@ -190,9 +196,9 @@ export default {
       systemTimezone: 'Weka Eneo la Saa la Mfumo',
       dateFormat: 'Weka Umbizo la Tarehe',
       timeFormat: 'Weka Umbizo la Wakati',
-      passwordLifeTimeInDays: 'Muda wa Maisha ya Nenosiri (Katika Siku)',
-      passwordReUseCutoffInDays: 'Nenosiri la Kutumia Tena Limekatwa (Katika Siku)',
-      maxLoginAttempts: 'Majaribio ya Juu ya Kuingia',
+      passwordLifeTimeInDays: 'Muda wa ukomo ya Nenosiri (Katika Siku)',
+      passwordReUseCutoffInDays: 'Muda wa ukomo wa kurudia neno siri (Katika Siku)',
+      maxLoginAttempts: 'Ukomo wa majaribio ya kuingia',
     },
   },
 };
