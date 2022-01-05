@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Contact } from '@app/pages/patients-management/@types/contact';
+import { Contact, UpdateOneEmergencyContactInput } from '@app/pages/patients-management/@types/contact';
 import { finalize } from 'rxjs/operators';
 import { EmergencyContactsService } from '@app/pages/patients-management/@services/contacts.service';
 import { ErrorHandlerService } from '@shared/services/error-handler.service';
@@ -13,12 +13,10 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { SelectModalComponent } from '@shared/components/select-modal/select-modal.component';
 import { ContactColumns } from '@app/pages/patients-management/@tables/contact.table';
 import { EmergencyContactForm } from '@app/pages/patients-management/@forms/contacts.form';
-import { Informant } from '@app/pages/patients-management/@types/informant';
-import { InformantModel } from '@app/pages/patients-management/@models/informant-model';
 
 enum ActionKey {
-  REMOVE_CONTACT,
-  ADD_CONTACT,
+  EDIT_CAREGIVER,
+  DELETE_CAREGIVER,
 }
 
 @Component({
@@ -32,12 +30,21 @@ export class EmergencyContactComponent implements OnInit {
   @Input() public patient: FormattedPatient;
 
   @Input() public contacts: Contact[] = [];
+  panelTitle = 'Update Contact';
+  isCreateAction = false;
 
   @Output() patientContactsUpdated: EventEmitter<any> = new EventEmitter<any>();
 
   public columns: TableColumn<Partial<Contact>>[] = ContactColumns as TableColumn<Partial<Contact>>[];
 
   public data: Partial<Contact>[];
+
+  // form properties
+  public showCreateContact = false;
+  public populateForm = false;
+  public resetForm = false;
+  public contact: Contact;
+  public contactForm = EmergencyContactForm;
 
   public pageInfo: PageInfo;
 
@@ -57,9 +64,7 @@ export class EmergencyContactComponent implements OnInit {
 
   public actions: Action<ActionKey>[] = [];
 
-  isLoading = false;
-  populateForm = false;
-  resetForm = false;
+  public isLoading = false;
   loadingMessage = '';
   showCancelButton = false;
   // patients: Patient;
@@ -104,10 +109,63 @@ export class EmergencyContactComponent implements OnInit {
     this.getContact();
   }
 
+  public openCreatePanel(contacts?: Contact[]): void {
+    if (contacts) this.contacts = contacts;
+    this.showCreateContact = true;
+    this.populateForm = true;
+    this.resetForm = true;
+    console.log('Clicked!');
+  }
+
+  public closeCreatePanel(): void {
+    this.contacts = null;
+    this.showCreateContact = false;
+    this.populateForm = false;
+    this.resetForm = false;
+  }
+
+  public onSubmitForm(contact: Contact): void {
+    // if (this.contact.id) {
+    //   contact.id = this.contact.id;
+    //   this.updatePatientContact(contact);
+    // } else {
+    this.createContact(contact);
+    // }
+  }
+
+  disableEnableFields() {
+    this.contactForm.groups.forEach((group) =>
+      group.fields.forEach((field) => {
+        field.name === 'name' && this.perms.isSuperAdmin ? (field.disabled = false) : (field.disabled = true);
+      })
+    );
+  }
+
+  toggleCreatePanel(create: boolean = true) {
+    this.disableEnableFields();
+    this.showCreateContact = !this.showCreateContact;
+    this.isCreateAction = create;
+    if (create) {
+      this.contact = null;
+      this.resetForm = true;
+    }
+    this.panelTitle = !this.isCreateAction ? 'Create Contact' : 'Update Contact';
+  }
+  handleRowClick(event: any) {
+    if (!this.perms.permissionsOnly([PermissionKey.MANAGE_ROLES_PERMISSIONS])) return;
+    this.contact = this.contacts[event.index];
+    this.populateForm = true;
+    this.toggleCreatePanel(false);
+  }
+
   public onAction({ action, context: contact }: ActionArgs<Contact, ActionKey>): void {
     switch (action.key) {
-      case ActionKey.REMOVE_CONTACT:
-        this.managePatientContacts(ActionKey.REMOVE_CONTACT, contact);
+      case ActionKey.EDIT_CAREGIVER:
+        // this.openCreatePanel(Contact);
+        return;
+
+      case ActionKey.DELETE_CAREGIVER:
+        this.managePatientContacts(ActionKey.DELETE_CAREGIVER, contact);
         return;
     }
   }
@@ -130,6 +188,31 @@ export class EmergencyContactComponent implements OnInit {
       ? selectedContact
       : this.contacts[this.contacts.findIndex((p) => p.id === contactId)];
     this.managePatientContacts(action, contact);
+  }
+
+  private async deleteContact(contact: Contact): Promise<void> {
+    const modal = this.modalService.confirm({
+      nzOnOk: () => true,
+      nzTitle: 'Delete contact',
+      nzContent: `
+        Are you sure you want to delete ${contact.firstName}? This action is irreversible.
+      `,
+    });
+
+    if (!(await modal.afterClose.toPromise())) return;
+
+    this.isLoading = true;
+    this.emergencyContactsService
+      .deleteEmergencyContact(contact)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        () => {
+          const data = [...this.data];
+          data.splice(this.data.indexOf(contact), 1);
+          this.data = data; // mutate reference to trigger change detection
+        },
+        (err) => this.errorService.handleError(err, { prefix: `Unable to delete department "${contact.firstName}"` })
+      );
   }
 
   private getContact(getAllContacts: boolean = false): void {
@@ -171,15 +254,32 @@ export class EmergencyContactComponent implements OnInit {
     ];
   }
 
+  private createContact(contact: Contact): void {
+    this.isLoading = true;
+    this.populateForm = false;
+    this.resetForm = false;
+    this.emergencyContactsService
+      .createEmergencyContact(contact)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }) => {
+          // mutate reference to trigger change detection
+          this.data = [...this.data, data.createOneEmergencyContact];
+          this.closeCreatePanel();
+        },
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to create contact' })
+      );
+  }
+
   private managePatientContacts(action: ActionKey, contact: Contact) {
     this.loading = true;
     const executedAction =
-      action === ActionKey.ADD_CONTACT
+      action === ActionKey.EDIT_CAREGIVER
         ? this.emergencyContactsService.addEmergencyContactsToPatient(this.patient.id, [contact.id])
         : this.emergencyContactsService.removeEmergencyContactsFromPatient(this.patient.id, [contact.id]);
     executedAction.pipe(finalize(() => (this.loading = false))).subscribe(
       () => {
-        if (action === ActionKey.ADD_CONTACT) {
+        if (action === ActionKey.EDIT_CAREGIVER) {
           // mutate reference to trigger change detection
           this.data = [contact, ...this.data];
         } else {
@@ -195,8 +295,34 @@ export class EmergencyContactComponent implements OnInit {
           contacts: this.data,
         });
       },
-      (error) => this.errorService.handleError(error, { prefix: 'Unable to update department on patient' })
+      (error) => this.errorService.handleError(error, { prefix: 'Unable to update caregiver on patient' })
     );
+  }
+
+  private updateContact(contact: Contact): void {
+    const updateOneContactInput: UpdateOneEmergencyContactInput = {
+      id: contact.id,
+      update: {
+        firstName: contact.firstName,
+        lastName: contact.lastName,
+        relation: contact.relation,
+      },
+    };
+    this.isLoading = true;
+    this.emergencyContactsService
+      .updateEmergencyContact(updateOneContactInput)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }) => {
+          const list = [...this.data];
+          const updatedContact: Contact = data.updateOneEmergencyContact;
+          const idx = list.findIndex((dep) => dep.id === updatedContact.id);
+          list.splice(idx, 1, updatedContact);
+          this.data = list; // mutate reference to trigger change detection
+          this.closeCreatePanel();
+        },
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to update Contact' })
+      );
   }
 
   private setActions(): void {
@@ -204,12 +330,13 @@ export class EmergencyContactComponent implements OnInit {
       this.actions = [
         ...this.actions,
         {
-          key: ActionKey.REMOVE_CONTACT,
-          title: 'Remove contact from Patient.',
+          key: ActionKey.DELETE_CAREGIVER,
+          title: 'Delete caregiver.',
         },
       ];
     }
   }
+
   // createInformant(contact: Informant) {
   //   this.isLoading = true;
   //   this.hasErrors = false;

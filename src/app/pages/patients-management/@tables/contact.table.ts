@@ -32,19 +32,49 @@ export const ContactColumns: TableColumn<Contact>[] = [
       value: undefined,
     },
   },
-  // {
-  //   title: 'E-mail',
-  //   name: 'email',
-  //   sort: true,
-  //   filterField: {
-  //     type: 'text',
-  //     value: undefined,
-  //   },
-  // },
+  {
+    title: 'E-mail',
+    name: 'email',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  },
   {
     title: 'Phone',
     name: 'phone',
     translationPath: 'tables.contact.phone',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  },
+  {
+    title: 'Relation',
+    name: 'relation',
+    translationPath: 'tables.contact.relation',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  },
+  {
+    title: 'Emergency',
+    name: 'emergency',
+    translationPath: 'tables.contact.emergency',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  },
+  {
+    title: 'Note',
+    name: 'note',
+    translationPath: 'tables.contact.note',
     sort: true,
     filterField: {
       type: 'text',

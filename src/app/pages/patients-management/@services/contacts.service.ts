@@ -6,7 +6,7 @@ import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
 import { Paging } from '@shared/@types/paging';
 import { EmergencyContactsQueries } from '../../../@graphql/queries/contacts';
-import { Contact } from '@app/pages/patients-management/@types/contact';
+import { Contact, UpdateOneEmergencyContactInput } from '@app/pages/patients-management/@types/contact';
 import { EmergencyContactsMutations } from '@app/@graphql/mutations/contacts';
 
 @Injectable({
@@ -47,7 +47,7 @@ export class EmergencyContactsService {
     });
   }
 
-  updateEmergencyContact(emergencyContact: Contact): Observable<FetchResult<any>> {
+  updateEmergencyContact(emergencyContact: UpdateOneEmergencyContactInput): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: EmergencyContactsMutations.updateOneEmergencyContact,
       variables: {
