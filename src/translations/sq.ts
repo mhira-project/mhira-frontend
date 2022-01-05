@@ -1,6 +1,7 @@
 export default {
   dashboard: {
     welcome: 'Mirë se Vini në MHIRA',
+    name: 'MHIRA',
   },
   menu: {
     dashboard: 'Paneli Kryesor',
@@ -17,6 +18,7 @@ export default {
     listUsers: 'Lista e Përdoruesve',
     newUser: 'Krijo një Përdorues',
     administration: 'Administrimi',
+    reports: 'Raporte',
     permissionMatrix: 'Matrica e Autorizimeve',
     permissions: 'Autorizimet',
     roles: 'Rolet',
@@ -45,7 +47,11 @@ export default {
       firstName: 'Emri',
       middleName: 'Emri i Mesëm',
       lastName: 'Mbiemri',
+      email: 'E-Mail',
       phone: 'Telefoni',
+      relation: 'Marrëdhënie',
+      emergency: 'Emergjenca',
+      note: 'Shënim',
     },
     casemanagers: {
       firstName: 'Emri',

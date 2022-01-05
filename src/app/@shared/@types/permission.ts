@@ -11,6 +11,8 @@ export enum PermissionKey {
   MANAGE_USERS = 'manage users',
   DELETE_USERS = 'delete users',
 
+  VIEW_REPORTS = 'view reports',
+
   VIEW_ROLES_PERMISSIONS = 'view roles_permissions',
   MANAGE_ROLES_PERMISSIONS = 'manage roles_permissions',
 

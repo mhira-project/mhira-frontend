@@ -30,6 +30,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { ReportsComponent } from './reports/reports.component';
 
 const antModules = [
   NzGridModule,
@@ -64,7 +65,13 @@ const antModules = [
     NzSwitchModule,
     MasterDataModule,
   ],
-  declarations: [RolesAndPermissionsComponent, PermissionsComponent, RolesComponent, DepartmentsComponent],
+  declarations: [
+    RolesAndPermissionsComponent,
+    PermissionsComponent,
+    RolesComponent,
+    DepartmentsComponent,
+    ReportsComponent,
+  ],
   providers: [PermissionsService, RolesService],
 })
 export class AdministrationModule {}
