@@ -15,10 +15,33 @@
       nz-button
       nzType="primary"
       nzShape="circle"
-      (click)="updatePatientContact(ActionKey.ADD_CONTACT)"
+      (click)="openCreatePanel()"
       *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS])"
     >
       <i nz-icon nzType="plus"></i>
     </button>
   </ng-container>
 </app-master-data-list>
+
+<nz-drawer
+  [nzMask]="true"
+  [nzClosable]="true"
+  [nzMaskClosable]="false"
+  [nzVisible]="showCreateContact"
+  nzPlacement="right"
+  [nzTitle]="contacts?.length ? 'Edit Caregiver' : 'Create Caregiver'"
+  (nzOnClose)="closeCreatePanel()"
+>
+  <app-form
+    class="mt-3"
+    [form]="contactForm"
+    [formData]="contacts"
+    [isLoading]="isLoading"
+    [populateForm]="populateForm"
+    [resetForm]="resetForm"
+    [inputMode]="true"
+    [showCancelButton]="false"
+    (submitForm)="onSubmitForm($event)"
+  >
+  </app-form>
+</nz-drawer>
