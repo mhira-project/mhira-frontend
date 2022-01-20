@@ -173,7 +173,11 @@ export class AssessmentsListComponent {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         (archived) => {
-          if (!archived) this.data.splice(this.data.indexOf(assessment), 1);
+          if (!archived) {
+            this.getAssessments();
+          } else {
+            this.getAssessments();
+          }
         },
         (error) => this.errorService.handleError(error, { prefix: `Unable to delete assessment "${assessment.name}"` })
       );
@@ -207,18 +211,18 @@ export class AssessmentsListComponent {
     ];
   }
 
-  private showAssessment({ id }: FormattedAssessment): void {
-    window.open(this.generateAssessmentURL(id));
+  private showAssessment({ id, uuid }: FormattedAssessment): void {
+    window.open(this.generateAssessmentURL(id, uuid));
   }
 
-  private copyAssessmentLink({ id }: FormattedAssessment): void {
-    const url = new URL(this.generateAssessmentURL(id), window.location.origin);
+  private copyAssessmentLink({ id, uuid }: FormattedAssessment): void {
+    const url = new URL(this.generateAssessmentURL(id, uuid), window.location.origin);
     this.clipboardService.copy(url.toString());
     this.messageService.create('success', 'Assessment link copied to clipboard');
   }
 
-  private generateAssessmentURL(assessmentId: number): string {
-    const cryptoId = CryptoJS.AES.encrypt(JSON.stringify(assessmentId), environment.secretKey).toString();
+  private generateAssessmentURL(assessmentId: number, uuid: string): string {
+    const cryptoId = CryptoJS.AES.encrypt(JSON.stringify({ assessmentId, uuid }), environment.secretKey).toString();
     const tree = this.router.createUrlTree(['/assessment/overview'], { queryParams: { assessment: cryptoId } });
     return this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(tree));
   }
