@@ -32,6 +32,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { CaregiverListComponent } from './caregiver-list/caregiver-list.component';
 
 const antModules = [
   NzGridModule,
@@ -69,6 +70,7 @@ const antModules = [
     CreatePatientComponent,
     EmergencyContactComponent,
     DepartmentsComponent,
+    CaregiverListComponent,
   ],
   providers: [
     PatientsService,

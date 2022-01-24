@@ -183,7 +183,7 @@ export class CaseManagersComponent implements OnInit {
     if (manager.departments.some((md) => this.patient.departments.find((pd) => pd.id === md.id))) {
       this.assignCaseManager(manager);
     } else {
-    this.updatePatientDepartment(manager);
+      this.updatePatientDepartment(manager);
     }
   }
 

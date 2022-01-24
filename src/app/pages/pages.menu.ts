@@ -34,6 +34,14 @@ export const MENU: SideNavInterface[] = [
         permissions: [PK.MANAGE_PATIENTS],
         submenu: [],
       },
+      {
+        path: 'case-management/caregiver-list',
+        title: 'menu.caregiverList',
+        iconType: '',
+        iconTheme: '',
+        permissions: [PK.VIEW_PATIENTS],
+        submenu: [],
+      },
     ],
   },
   {
