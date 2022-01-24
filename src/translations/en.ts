@@ -8,6 +8,7 @@ export default {
     caseManagement: 'Case Managment',
     patientList: 'Patients List',
     createPatient: 'Create Patient',
+    caregiverList: 'Caregiver List',
     questionnaires: 'Questionnaires',
     questionnairesList: 'Questionnaires List',
     uploadQuestionnaire: 'Upload Questionnaire',

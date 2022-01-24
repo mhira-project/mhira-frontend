@@ -8,6 +8,7 @@ export default {
     caseManagement: 'Usimamizi Wa Kesi',
     patientList: 'Orodha Ya Wagonjwa',
     createPatient: 'Sajili Mgonjwa',
+    caregiverList: 'Orodha ya Walezi',
     questionnaires: 'Madodoso',
     questionnairesList: 'Orodha Ya Madodoso',
     uploadQuestionnaire: 'Pakia Dodoso',

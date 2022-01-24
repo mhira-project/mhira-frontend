@@ -8,6 +8,7 @@ export default {
     caseManagement: 'Patienten',
     patientList: 'Patientenliste',
     createPatient: 'Patient erstellen',
+    caregiverList: 'Liste der Betreuer',
     questionnaires: 'Fragebögen',
     questionnairesList: 'Fragebogenliste',
     uploadQuestionnaire: 'Fragebogen hochladen',
