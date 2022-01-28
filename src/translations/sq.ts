@@ -8,6 +8,7 @@ export default {
     caseManagement: 'Menaxhimi i Rasteve',
     patientList: 'Lista e Klientëve',
     createPatient: 'Krijo një Klient',
+    caregiverList: 'Lista e Kujdestarëve',
     questionnaires: 'Pyetësorët',
     questionnairesList: 'Lista e Pyetësorëve',
     uploadQuestionnaire: 'Krijo një Pyetësor',

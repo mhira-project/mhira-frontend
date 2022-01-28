@@ -6,6 +6,7 @@ import { PatientProfileComponent } from './patient-profile/patient-profile.compo
 import { InformantsListComponent } from './informants-list/informants-list.component';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { PermissionGuard } from '../../permission.guard';
+import { CaregiverListComponent } from './caregiver-list/caregiver-list.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,17 @@ const routes: Routes = [
         component: PatientProfileComponent,
         data: {
           breadcrumbI18nKey: 'menu.createPatient',
+          permissions: {
+            only: [PermissionKey.VIEW_PATIENTS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'caregiver-list',
+        component: CaregiverListComponent,
+        data: {
+          breadcrumbI18nKey: 'menu.caregiverList',
           permissions: {
             only: [PermissionKey.VIEW_PATIENTS],
           },

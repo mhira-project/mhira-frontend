@@ -8,6 +8,7 @@ export default {
     caseManagement: 'Gestión de Casos',
     patientList: 'Lista de Pacientes',
     createPatient: 'Crear Paciente Nuevo',
+    caregiverList: 'Lista de Cuidadores',
     questionnaires: 'Cuestionarios',
     questionnairesList: 'Cuestionarios Disponibles',
     uploadQuestionnaire: 'Cargar un Cuestionario Nuevo',

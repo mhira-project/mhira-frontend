@@ -111,10 +111,11 @@ export class EmergencyContactComponent implements OnInit {
 
   public openCreatePanel(contacts?: Contact[]): void {
     if (contacts) this.contacts = contacts;
+    console.log(this.showCreateContact, this.populateForm, this.resetForm, 'Before');
     this.showCreateContact = true;
     this.populateForm = true;
     this.resetForm = true;
-    console.log('Clicked!');
+    console.log(this.showCreateContact, this.populateForm, this.resetForm, 'After');
   }
 
   public closeCreatePanel(): void {
