@@ -1,8 +1,7 @@
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
-import { Caregiver } from '@app/pages/patients-management/@types/caregiver';
-import { Patient } from '@app/pages/patients-management/@types/patient';
+import { Caregiver } from '../@types/caregiver';
 
-export const CaregiverTable: TableColumn<Caregiver>[] = [
+export const CaregiversPatientTable: TableColumn<Caregiver>[] = [
   {
     title: 'First name',
     name: 'firstName',
@@ -53,23 +52,33 @@ export const CaregiverTable: TableColumn<Caregiver>[] = [
     },
   },
   {
-    title: 'Patients',
-    name: 'patients',
-    translationPath: 'tables.contact.patients',
-    render: 'avatar',
+    title: 'Relation',
+    name: 'relation',
+    translationPath: 'tables.contact.relation',
+    sort: true,
     filterField: {
       type: 'text',
       value: undefined,
     },
-    filterQuery: (q: number) =>
-      q
-        ? {
-            or: [
-              { firstName: { iLike: `%${q}%` } },
-              { middleName: { iLike: `%${q}%` } },
-              { lastName: { iLike: `%${q}%` } },
-            ] as Array<{ [K in keyof Patient]: any }>,
-          }
-        : {},
+  },
+  {
+    title: 'Emergency',
+    name: 'emergency',
+    translationPath: 'tables.contact.emergency',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  },
+  {
+    title: 'Note',
+    name: 'note',
+    translationPath: 'tables.contact.note',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
 ];

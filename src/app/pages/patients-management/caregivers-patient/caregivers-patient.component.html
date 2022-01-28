@@ -1,0 +1,67 @@
+<app-master-data-list
+  [data]="data"
+  [columns]="columns"
+  [loading]="isLoading"
+  [pageInfo]="pageInfo"
+  [actions]="actions"
+  (pageChange)="onPageChange($event)"
+  (sort)="onSort($event)"
+  (filter)="onFilter($event)"
+>
+  <ng-container actions-left>
+    <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
+  </ng-container>
+  <ng-container actions-right>
+    <button
+      nz-button
+      nzType="primary"
+      nzShape="circle"
+      (click)="openCreatePanel()"
+      *ngIf="perms.permissionsOnly(PK.MANAGE_SETTINGS)"
+    >
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>
+
+<nz-drawer
+  [nzWidth]="820"
+  [nzMask]="true"
+  [nzClosable]="true"
+  [nzMaskClosable]="false"
+  [nzVisible]="showCreateCaregiver"
+  nzPlacement="right"
+  [nzTitle]="caregiver?.id ? 'Edit Caregiver' : 'Create Caregiver'"
+  (nzOnClose)="closeCreatePanel()"
+>
+  <div>
+    <p>Search caregiver from the list if they already exist:</p>
+  </div>
+  <div>
+    <section nz-col>
+      <form nz-form [formGroup]="addCaregiverForm" class="search-form">
+        <nz-form-item class="form-item">
+          <nz-form-label nzFor="caregiver">{{ 'translations.patients.addCaregiver ' | translate }}</nz-form-label>
+          <nz-form-control class="form-control">
+            <app-caregiver-picker
+              [assignSelfOption]="true"
+              [readonly]="!editMode"
+              [selectedCaregiver]="selectedCaregiver"
+              (selectCaregiver)="onPatientSelect($event)"
+            >
+            </app-caregiver-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <button nz-button nzType="primary" class="button">Add</button>
+      </form>
+    </section>
+  </div>
+  <div>
+    <p>Or create a new Caregiver:</p>
+  </div>
+  <div>
+    <button nz-button nzType="primary" class="add-button">
+      <i nz-icon nzType="plus" nzTheme="outline"></i>Add new caregiver
+    </button>
+  </div>
+</nz-drawer>

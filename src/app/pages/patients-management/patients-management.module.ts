@@ -8,13 +8,13 @@ import { CaseManagersComponent } from './case-managers/case-managers.component';
 import { PatientsService } from './@services/patients.service';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { CreatePatientComponent } from './patient-profile/create-patient/create-patient.component';
-import { EmergencyContactComponent } from './emergency-contact/emergency-contact.component';
+// import { EmergencyContactComponent } from './emergency-contact/emergency-contact.component';
 import { CaseManagersService } from './@services/case-managers.service';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
 import { EmergencyContactsService } from './@services/contacts.service';
 import { InformantsListComponent } from './informants-list/informants-list.component';
 import { PatientStatusesService } from './@services/patient-statuses.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MasterDataModule } from '../../@shared/@modules/master-data/master-data.module';
 import { DepartmentsComponent } from './departments/departments.component';
 import { DepartmentsService } from './@services/departments.service';
@@ -33,6 +33,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { CaregiverListComponent } from './caregiver-list/caregiver-list.component';
+import { CaregiversPatientComponent } from './caregivers-patient/caregivers-patient.component';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 const antModules = [
   NzGridModule,
@@ -61,6 +63,8 @@ const antModules = [
     SharedModule,
     PatientsManagementRoutingModule,
     MasterDataModule,
+    NzFormModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     PatientsListComponent,
@@ -68,9 +72,10 @@ const antModules = [
     InformantsListComponent,
     PatientProfileComponent,
     CreatePatientComponent,
-    EmergencyContactComponent,
+    // EmergencyContactComponent,
     DepartmentsComponent,
     CaregiverListComponent,
+    CaregiversPatientComponent,
   ],
   providers: [
     PatientsService,

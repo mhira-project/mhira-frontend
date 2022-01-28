@@ -15,7 +15,7 @@ import { EmergencyContactsMutations } from '@app/@graphql/mutations/contacts';
 export class EmergencyContactsService {
   constructor(private apollo: Apollo) {}
 
-  emergencyContacts(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting }): Observable<FetchResult<any>> {
+  emergencyContacts(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting[] }): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: EmergencyContactsQueries.emergencyContacts,
       variables: {
