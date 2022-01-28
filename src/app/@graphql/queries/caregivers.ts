@@ -2,50 +2,66 @@ import gql from 'graphql-tag';
 
 const caregivers = gql`
   query($paging: CursorPaging, $filter: CaregiverFilter, $sorting: [CaregiverSort!]) {
-    departments(paging: $paging, filter: $filter, sorting: $sorting) {
+    caregivers(paging: $paging, filter: $filter, sorting: $sorting) {
       edges {
         cursor
         node {
           id
-          emergencyContact
+          #          emergencyContact
           firstName
           middleName
           lastName
           email
           phone
+          street
+          number
+          apartment
+          place
+          postalCode
+          country
+          #          relation
+          #          note
+          #          street
+          #          number
+          #          apartment
+          #          place
+          #          postalCode
+          #          country
           deletedAt
           createdAt
           updatedAt
-          patient {
-            id
-            statusId
-            medicalRecordNo
-            firstName
-            middleName
-            lastName
-            phone
-            phone2
-            email
-            addressStreet
-            addressNumber
-            addressApartment
-            addressPlace
-            addressPostalCode
-            addressCountryCode
-            gender
-            birthDate
-            birthCountryCode
-            nationality
-            createdAt
-            updatedAt
+          patientCaregivers {
+            patient {
+              id
+              statusId
+              medicalRecordNo
+              firstName
+              middleName
+              lastName
+              phone
+              phone2
+              email
+              addressStreet
+              addressNumber
+              addressApartment
+              addressPlace
+              addressPostalCode
+              addressCountryCode
+              gender
+              birthDate
+              birthCountryCode
+              nationality
+              createdAt
+              updatedAt
+            }
           }
         }
-        pageInfo {
-          startCursor
-          endCursor
-          hasNextPage
-          hasPreviousPage
-        }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
       }
     }
   }

@@ -1,15 +1,29 @@
 import gql from 'graphql-tag';
 
 const createOneCaregiver = gql`
-  mutation($input: createOneCaregiverInput!) {
+  mutation($input: CreateOneCaregiverInput!) {
     createOneCaregiver(input: $input) {
-      id
-      emergencyContact
+      #      id
+      #      emergencyContact
       firstName
       middleName
       lastName
       email
       phone
+      street
+      number
+      apartment
+      place
+      postalCode
+      country
+      #      relation
+      #      note
+      #      street
+      #      number
+      #      apartment
+      #      place
+      #      postalCode
+      #      country
       deletedAt
       createdAt
       updatedAt
@@ -18,16 +32,29 @@ const createOneCaregiver = gql`
 `;
 
 const createManyCaregivers = gql`
-  mutation($input: createManyCaregiversInput!) {
+  mutation($input: CreateManyCaregiversInput!) {
     createManyCaregivers(input: $input) {
       id
-      patientId
-      emergencyContact
+      #      emergencyContact
       firstName
       middleName
       lastName
       email
       phone
+      street
+      number
+      apartment
+      place
+      postalCode
+      country
+      #      relation
+      #      note
+      #      street
+      #      number
+      #      apartment
+      #      place
+      #      postalCode
+      #      country
       deletedAt
       createdAt
       updatedAt
@@ -36,34 +63,64 @@ const createManyCaregivers = gql`
 `;
 
 const updateOneCaregiver = gql`
-  mutation($input: updateOneCaregiverInput!) {
+  mutation($input: UpdateOneCaregiverInput!) {
     updateOneCaregiver(input: $input) {
       id
-      patientId
-      emergencyContact
       firstName
       middleName
       lastName
       email
-      phone
       deletedAt
-      createdAt
-      updatedAt
+      street
+      number
+      apartment
+      place
+      postalCode
+      country
+      phone
+      #      emergencyContact
+      #      firstName
+      #      middleName
+      #      lastName
+      #      email
+      #      relation
+      #      note
+      #      street
+      #      number
+      #      apartment
+      #      place
+      #      postalCode
+      #      country
+      #      createdAt
+      #      updatedAt
     }
   }
 `;
 
 const updateManyCaregivers = gql`
-  mutation($input: updateManyCaregiversInput!) {
+  mutation($input: UpdateManyCaregiversInput!) {
     updateManyCaregivers(input: $input) {
       id
-      patientId
-      emergencyContact
+      #      emergencyContact
       firstName
       middleName
       lastName
       email
       phone
+      street
+      number
+      apartment
+      place
+      postalCode
+      country
+      #      relation
+      #      note
+      #      street
+      #      number
+      #      apartment
+      #      place
+      #      postalCode
+      #      country
       deletedAt
       createdAt
       updatedAt
@@ -72,16 +129,29 @@ const updateManyCaregivers = gql`
 `;
 
 const deleteOneCaregiver = gql`
-  mutation($input: DeleteOneInput!) {
+  mutation($input: DeleteOneCaregiverInput!) {
     deleteOneCaregiver(input: $input) {
       id
-      patientId
-      emergencyContact
+      #      emergencyContact
       firstName
       middleName
       lastName
       email
       phone
+      street
+      number
+      apartment
+      place
+      postalCode
+      country
+      #      relation
+      #      note
+      #      street
+      #      number
+      #      apartment
+      #      place
+      #      postalCode
+      #      country
       deletedAt
       createdAt
       updatedAt
@@ -90,7 +160,7 @@ const deleteOneCaregiver = gql`
 `;
 
 const deleteManyCaregivers = gql`
-  mutation($input: deleteManyCaregiversInput!) {
+  mutation($input: DeleteManyCaregiversInput!) {
     deleteManyCaregivers(input: $input) {
       deletedCount
     }
@@ -98,7 +168,7 @@ const deleteManyCaregivers = gql`
 `;
 
 const removeCaregiverFromPatient = gql`
-  mutation($input: removeCaregiverFromPatientInput!) {
+  mutation($input: RemoveCaregiverFromPatientInput!) {
     removeCaregiverFromPatient(input: $input) {
       id
       statusId
@@ -123,12 +193,26 @@ const removeCaregiverFromPatient = gql`
       updatedAt
       caregivers {
         id
-        emergencyContact
+        #        emergencyContact
         firstName
         middleName
         lastName
         email
         phone
+        street
+        number
+        apartment
+        place
+        postalCode
+        country
+        #        relation
+        #        note
+        #        street
+        #        number
+        #        apartment
+        #        place
+        #        postalCode
+        #        country
         deletedAt
         createdAt
         updatedAt
@@ -188,12 +272,25 @@ const addCaregiversToPatient = gql`
       updatedAt
       caregivers {
         id
-        emergencyContact
+        #        emergencyContact
         firstName
         middleName
         lastName
         email
         phone
+        street
+        number
+        apartment
+        place
+        postalCode
+        #        relation
+        #        note
+        #        street
+        #        number
+        #        apartment
+        #        place
+        #        postalCode
+        country
         deletedAt
         createdAt
         updatedAt

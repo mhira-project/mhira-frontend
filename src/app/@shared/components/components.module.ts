@@ -92,6 +92,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { TranslateModule } from '@ngx-translate/core';
+import { CaregiverPickerComponent } from './caregiver-picker/caregiver-picker.component';
 
 const antModules = [
   NzSkeletonModule,
@@ -193,6 +194,7 @@ const PIPES = [
     UserPickerComponent,
     PatientPickerComponent,
     BreadcrumbComponent,
+    CaregiverPickerComponent,
   ],
   exports: [
     ...PIPES,
@@ -204,6 +206,7 @@ const PIPES = [
     UserPickerComponent,
     PatientPickerComponent,
     BreadcrumbComponent,
+    CaregiverPickerComponent,
   ],
   providers: [XlsExportService],
 })
