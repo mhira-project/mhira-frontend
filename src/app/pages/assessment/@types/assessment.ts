@@ -14,6 +14,7 @@ export enum AssessmentStatus {
 
 export interface Assessment {
   id?: number;
+  uuid?: string | null;
   name: string;
   patientId: number;
   clinicianId: number;
