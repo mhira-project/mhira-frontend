@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 const createOneCaregiver = gql`
   mutation($input: CreateOneCaregiverInput!) {
     createOneCaregiver(input: $input) {
-      #      id
+      id
       #      emergencyContact
       firstName
       middleName

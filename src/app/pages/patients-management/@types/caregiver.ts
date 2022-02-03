@@ -9,9 +9,9 @@ export interface Caregiver {
   lastName: string;
   email: string;
   phone: string;
-  relation: string;
-  emergency: boolean;
-  note: string;
+  relation?: string;
+  emergency?: boolean;
+  note?: string;
   street: string;
   number: string;
   apartment: string;
@@ -19,6 +19,7 @@ export interface Caregiver {
   postalCode: string;
   country: string;
   patients?: Patient[];
+  patientCaregiverId?: number;
 }
 
 export interface FormattedCaregiver extends Caregiver {

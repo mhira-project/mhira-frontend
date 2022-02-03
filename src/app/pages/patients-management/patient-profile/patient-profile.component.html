@@ -17,8 +17,6 @@
     <app-patient-departments [patient]="patient"></app-patient-departments>
   </nz-tab>
   <nz-tab *ngIf="patientTitle" nzTitle="Caregivers">
-    <app-caregivers-patient></app-caregivers-patient>
+    <app-caregivers-patient [patient]="patient"></app-caregivers-patient>
   </nz-tab>
-  <!--  <nz-tab *ngIf="patientTitle" nzTitle="Reports">-->
-  <!--  </nz-tab>-->
 </nz-tabset>

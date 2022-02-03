@@ -1,5 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Caregiver } from '@app/pages/patients-management/@types/caregiver';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Caregiver,
+  FormattedCaregiver,
+  UpdateOneCaregiverInput,
+} from '@app/pages/patients-management/@types/caregiver';
 import { PermissionKey } from '@shared/@types/permission';
 import {
   Action,
@@ -15,12 +19,15 @@ import { FormattedPatient } from '@app/pages/patients-management/@types/formatte
 import { finalize } from 'rxjs/operators';
 import { CaregiversPatientService } from '@app/pages/patients-management/@services/caregivers-patient.service';
 import { CaregiversPatientTable } from '@app/pages/patients-management/@tables/caregivers-patient.table';
-import { CaregiverForm } from '@app/pages/patients-management/@forms/contacts.form';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { FormGroup } from '@angular/forms';
+import { ErrorHandlerService } from '@shared/services/error-handler.service';
+import { CaregiversPatientForm } from '@app/pages/patients-management/@forms/caregivers-patient.form';
+import { CaregiversService } from '@app/pages/patients-management/@services/caregivers.service';
+
 enum ActionKey {
+  REMOVE_CAREGIVER,
   EDIT_CAREGIVER,
-  DELETE_CAREGIVER,
 }
 
 @Component({
@@ -31,6 +38,8 @@ enum ActionKey {
 export class CaregiversPatientComponent implements OnInit {
   @Input() public patient: FormattedPatient;
   @Input() public caregivers: Caregiver[] = [];
+  @Output() patientCaregiversUpdated: EventEmitter<any> = new EventEmitter<any>();
+
   public PK = PermissionKey;
   public data: Partial<Caregiver>[];
   public columns: TableColumn<Partial<Caregiver>>[] = CaregiversPatientTable as TableColumn<Partial<Caregiver>>[];
@@ -39,11 +48,13 @@ export class CaregiversPatientComponent implements OnInit {
   public selectedCaregiver: Caregiver;
 
   // form properties
+  public showAddCaregiver = false;
   public showCreateCaregiver = false;
   public populateForm = false;
   public resetForm = false;
   public caregiver: Caregiver;
-  public caregiverForm = CaregiverForm;
+  public caregiverForm = CaregiversPatientForm;
+  public patientCaregiverMap = {};
 
   public caregiverRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
@@ -56,13 +67,24 @@ export class CaregiversPatientComponent implements OnInit {
   public isLoading = false;
   public actions: Action<ActionKey>[] = [];
 
-  constructor(private caregiversPatientService: CaregiversPatientService, public perms: AppPermissionsService) {}
+  constructor(
+    private caregiversPatientService: CaregiversPatientService,
+    private errorService: ErrorHandlerService,
+    private caregiversService: CaregiversService,
+    public perms: AppPermissionsService
+  ) {}
 
   ngOnInit(): void {
     this.getCaregivers();
+    this.setActions();
   }
-  public onPatientSelect(caregiver: Caregiver) {
-    this.addCaregiverForm.patchValue({ caregiverPhone: caregiver?.phone });
+
+  public onCaregiverSelect(caregiver: Caregiver) {
+    this.selectedCaregiver = caregiver;
+  }
+
+  public addCaregiverToPatient() {
+    this.managePatientCaregivers(ActionKey.EDIT_CAREGIVER, this.selectedCaregiver);
   }
 
   public searchCaregivers(searchString: string): void {
@@ -92,8 +114,21 @@ export class CaregiversPatientComponent implements OnInit {
     this.getCaregivers();
   }
 
+  public openAddPanel(caregiver?: Caregiver): void {
+    if (caregiver) this.caregiver = caregiver;
+    this.showAddCaregiver = true;
+    this.populateForm = true;
+    this.resetForm = true;
+  }
+
+  public closeAddPanel(): void {
+    this.caregiver = null;
+    this.showAddCaregiver = false;
+    this.populateForm = false;
+    this.resetForm = false;
+  }
+
   public openCreatePanel(caregiver?: Caregiver): void {
-    console.log(caregiver);
     if (caregiver) this.caregiver = caregiver;
     this.showCreateCaregiver = true;
     this.populateForm = true;
@@ -107,13 +142,28 @@ export class CaregiversPatientComponent implements OnInit {
     this.resetForm = false;
   }
 
-  // public onAction({ action, context: department }: ActionArgs<Department, ActionKey>): void {
-  //   switch (action.key) {
-  //     case ActionKey.REMOVE_DEPARTMENT:
-  //       this.managePatientCaregivers(ActionKey.REMOVE_DEPARTMENT, department);
-  //       return;
-  //   }
-  // }
+  public onSubmitForm(caregiver: Caregiver): void {
+    if (this.caregiver?.id) {
+      caregiver.id = this.caregiver.id;
+      this.updateCaregiversPatient(caregiver);
+    } else {
+      this.createCaregiversPatient(caregiver, true);
+    }
+  }
+
+  public onAction({ action, context: caregiver }: ActionArgs<Caregiver, ActionKey>): void {
+    switch (action.key) {
+      case ActionKey.REMOVE_CAREGIVER:
+        this.managePatientCaregivers(ActionKey.REMOVE_CAREGIVER, caregiver);
+        return;
+    }
+  }
+
+  public handleRowClick(event: any) {
+    if (!this.perms.permissionsOnly([PermissionKey.MANAGE_PATIENTS])) return;
+    this.populateForm = true;
+    this.openCreatePanel(event);
+  }
 
   private getCaregivers(getAllCaregivers: boolean = false): void {
     this.isLoading = true;
@@ -121,7 +171,7 @@ export class CaregiversPatientComponent implements OnInit {
 
     options.filter = {
       ...options.filter,
-      and: [getAllCaregivers ? {} : { patients: { id: { eq: this.patient?.id } } }, ...(options.filter.and ?? [])],
+      and: [getAllCaregivers ? {} : { patient: { id: { eq: this.patient?.id } } }, ...(options.filter.and ?? [])],
     };
 
     this.caregiversPatientService
@@ -129,28 +179,127 @@ export class CaregiversPatientComponent implements OnInit {
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe((response) => {
         if (getAllCaregivers) {
-          this.caregivers = response.data.caregivers.edges.map((e: any) => e.node);
+          this.caregivers = response.data.patientCaregivers.edges.map((e: any) => ({
+            ...e.node?.caregiver,
+            patientCaregiverId: e.node.id,
+            relation: e.node.relation,
+            emergency: e.node.emergency,
+            note: e.node.note,
+          }));
         } else {
-          this.data = response.data.caregivers.edges.map((e: any) => e.node);
+          this.data = response.data.patientCaregivers.edges
+            .filter((e: any) => e.node.caregiver)
+            .map((e: any) => ({
+              ...e.node?.caregiver,
+              patientCaregiverId: e.node.id,
+              relation: e.node.relation,
+              emergency: e.node.emergency,
+              note: e.node.note,
+            }));
         }
-        this.pageInfo = response.data.caregivers.pageInfo; // TODO: remove
+        this.pageInfo = response.data.patientCaregivers.pageInfo;
       });
   }
 
-  private createSearchFilter(searchString: string) {
+  private createSearchFilter(searchString: string): Array<{ [K in keyof Partial<FormattedCaregiver>]: {} }> {
     if (!searchString) return [];
-    return [
-      { name: { iLike: `%${searchString}%` } },
-      { description: { iLike: `%${searchString}%` } },
-      {
-        patients: {
-          or: [
-            { firstName: { iLike: `%${searchString}%` } },
-            { middleName: { iLike: `%${searchString}%` } },
-            { lastName: { iLike: `%${searchString}%` } },
-          ],
-        },
+    return [{ firstName: { iLike: `%${searchString}%` } }, { lastName: { iLike: `%${searchString}%` } }];
+  }
+
+  private managePatientCaregivers(action: ActionKey, caregiver: Caregiver) {
+    this.isLoading = true;
+    const executedAction =
+      action === ActionKey.EDIT_CAREGIVER
+        ? this.caregiversPatientService.addCaregiversToPatient(this.patient.id, caregiver)
+        : this.caregiversPatientService.removeCaregiversFromPatient(caregiver.patientCaregiverId);
+    executedAction.pipe(finalize(() => (this.isLoading = false))).subscribe(
+      (response) => {
+        if (action === ActionKey.EDIT_CAREGIVER) {
+          // mutate reference to trigger change detection
+          this.data = [caregiver, ...this.data];
+        } else {
+          const list = [...this.data];
+          list.splice(
+            list.findIndex((p) => p.id === caregiver.id),
+            1
+          );
+          this.data = list; // mutate reference to trigger change detection
+        }
+        this.patientCaregiversUpdated.emit({
+          action,
+          caregivers: this.data,
+        });
       },
-    ];
+      (error) => this.errorService.handleError(error, { prefix: 'Unable to update caregiver on patient' })
+    );
+  }
+
+  private setActions(): void {
+    if (this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
+      this.actions = [
+        ...this.actions,
+        {
+          key: ActionKey.REMOVE_CAREGIVER,
+          title: 'Remove patient from Caregiver',
+        },
+      ];
+    }
+  }
+
+  private createCaregiversPatient(caregiver: Caregiver, isAssign?: boolean): void {
+    this.isLoading = true;
+    this.populateForm = false;
+    this.resetForm = false;
+    const patientCaregiverData = {
+      relation: caregiver.relation,
+      note: caregiver.note,
+      emergency: caregiver.emergency,
+    };
+    delete caregiver.relation;
+    delete caregiver.note;
+    delete caregiver.emergency;
+    this.caregiversService
+      .createCaregiver(caregiver)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }) => {
+          // mutate reference to trigger change detection
+          this.closeCreatePanel();
+          this.data = [...this.data, data.createOneCaregiver];
+          if (isAssign) {
+            this.managePatientCaregivers(ActionKey.EDIT_CAREGIVER, {
+              ...data.createOneCaregiver,
+              ...patientCaregiverData,
+            });
+            this.getCaregivers();
+          }
+        },
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to create Caregiver' })
+      );
+  }
+
+  private updateCaregiversPatient(caregiver: Caregiver): void {
+    const caregiverLocal = JSON.parse(JSON.stringify(caregiver));
+    const id = caregiverLocal.id;
+    delete caregiverLocal.id;
+    const updateOneCaregiverInput: UpdateOneCaregiverInput = {
+      id,
+      update: caregiverLocal,
+    };
+    this.isLoading = true;
+    this.caregiversService
+      .updateCaregiver(updateOneCaregiverInput)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }) => {
+          const list = [...this.data];
+          const updatedCaregiver: Caregiver = data.updateOneCaregiver;
+          const idx = list.findIndex((car) => car.id === updatedCaregiver.id);
+          list.splice(idx, 1, updatedCaregiver);
+          this.data = list; // mutate reference to trigger change detection
+          this.closeCreatePanel();
+        },
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to update caregiver' })
+      );
   }
 }
