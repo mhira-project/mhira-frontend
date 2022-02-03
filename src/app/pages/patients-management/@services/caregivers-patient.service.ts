@@ -5,19 +5,25 @@ import { Paging } from '../../../@shared/@types/paging';
 import { Sorting } from '../../../@shared/@types/sorting';
 import { Observable } from 'rxjs';
 import { FetchResult } from 'apollo-link';
+import { UpdateOnePatientCaregiverInput } from '@app/pages/patients-management/@types/caregiver';
 
 const graphqlString = `
+      caregiverId
+      patientId
       id
-          emergencyContact
-          firstName
-          middleName
-          lastName
-          email
-          phone
-          deletedAt
-          createdAt
-          updatedAt
+       relation
+      emergency
+      note
+      caregiver{
+      id
+      firstName
+      middleName
+      lastName
+      email
+      phone
+      }
 `;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -29,7 +35,7 @@ export class CaregiversPatientService {
       params.sorting = [{ field: 'id', direction: 'DESC' }];
     }
     return this.apollo.query({
-      query: this.nestJsQueriesService.getManyQuery('caregiversPatient', graphqlString),
+      query: this.nestJsQueriesService.getManyQuery('patientCaregiver', graphqlString),
       variables: {
         paging: params && params.paging ? params.paging : undefined,
         filter: params && params.filter ? params.filter : undefined,
@@ -39,33 +45,58 @@ export class CaregiversPatientService {
     });
   }
 
-  addCaregiversToPatient(patientId: number, caregiverId: number): Observable<FetchResult<any>> {
+  addCaregiversToPatient(patientId: number, caregiver: any): Observable<FetchResult<any>> {
+    console.log({ caregiver });
     return this.apollo.mutate({
       mutation: this.nestJsQueriesService.relationalCommandMutation(
-        'addCaregiversToPatient',
-        'addCaregiversToPatientInput',
+        'createOnePatientCaregiver',
+        'CreateOnePatientCaregiverInput',
         `id`
       ),
       variables: {
         input: {
-          id: patientId,
-          relationIds: [caregiverId],
+          patientCaregiver: {
+            patientId,
+            note: caregiver.note,
+            relation: caregiver.relation,
+            emergency: caregiver.emergency,
+            caregiverId: caregiver.id,
+          },
         },
       },
     });
   }
 
-  removeCaregiversFromPatient(patientId: number, caregiverId: number): Observable<FetchResult<any>> {
+  updateCaregiversToPatient(
+    id: number,
+    patientCaregiver: UpdateOnePatientCaregiverInput
+  ): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: this.nestJsQueriesService.relationalCommandMutation(
-        'removeCaregiversFromPatient',
-        'removeCaregiversFromPatientInput',
+        'updateOnePatientCaregiver',
+        'UpdateOnePatientCaregiverInput',
         `id`
       ),
       variables: {
         input: {
-          id: patientId,
-          relationIds: [caregiverId],
+          id,
+          update: patientCaregiver,
+        },
+      },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
+  removeCaregiversFromPatient(id: number): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: this.nestJsQueriesService.relationalCommandMutation(
+        'deleteOnePatientCaregiver',
+        'DeleteOnePatientCaregiverInput',
+        `id`
+      ),
+      variables: {
+        input: {
+          id,
         },
       },
     });

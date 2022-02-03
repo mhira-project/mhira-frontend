@@ -48,7 +48,6 @@ export class CaregiversService {
   }
 
   updateCaregiver(caregiver: UpdateOneCaregiverInput): Observable<FetchResult<any>> {
-    console.log(caregiver);
     return this.apollo.mutate({
       mutation: CaregiversMutations.updateOneCaregiver,
       variables: {
