@@ -30,8 +30,13 @@ export interface UpdateOneCaregiverInput {
   update: UpdateCaregiver;
 }
 
+export interface UpdateOnePatientCaregiverInput {
+  emergency: string;
+  note: string;
+  relation: string;
+}
+
 export interface UpdateCaregiver {
   firstName: string;
   lastName: string;
-  relation: string;
 }

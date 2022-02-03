@@ -5,7 +5,7 @@ import { Paging } from '../../../@shared/@types/paging';
 import { Sorting } from '../../../@shared/@types/sorting';
 import { Observable } from 'rxjs';
 import { FetchResult } from 'apollo-link';
-import { Caregiver } from '@app/pages/patients-management/@types/caregiver';
+import { UpdateOnePatientCaregiverInput } from '@app/pages/patients-management/@types/caregiver';
 
 const graphqlString = `
       caregiverId
@@ -15,6 +15,7 @@ const graphqlString = `
       emergency
       note
       caregiver{
+      id
       firstName
       middleName
       lastName
@@ -63,6 +64,26 @@ export class CaregiversPatientService {
           },
         },
       },
+    });
+  }
+
+  updateCaregiversToPatient(
+    id: number,
+    patientCaregiver: UpdateOnePatientCaregiverInput
+  ): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: this.nestJsQueriesService.relationalCommandMutation(
+        'updateOnePatientCaregiver',
+        'UpdateOnePatientCaregiverInput',
+        `id`
+      ),
+      variables: {
+        input: {
+          id,
+          update: patientCaregiver,
+        },
+      },
+      fetchPolicy: 'no-cache',
     });
   }
 

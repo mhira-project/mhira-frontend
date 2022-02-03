@@ -3,6 +3,7 @@ import {
   Caregiver,
   FormattedCaregiver,
   UpdateOneCaregiverInput,
+  UpdateOnePatientCaregiverInput,
 } from '@app/pages/patients-management/@types/caregiver';
 import { PermissionKey } from '@shared/@types/permission';
 import {
@@ -54,7 +55,6 @@ export class CaregiversPatientComponent implements OnInit {
   public resetForm = false;
   public caregiver: Caregiver;
   public caregiverForm = CaregiversPatientForm;
-  public patientCaregiverMap = {};
 
   public caregiverRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
@@ -143,6 +143,7 @@ export class CaregiversPatientComponent implements OnInit {
   }
 
   public onSubmitForm(caregiver: Caregiver): void {
+    console.log({ caregiver });
     if (this.caregiver?.id) {
       caregiver.id = this.caregiver.id;
       this.updateCaregiversPatient(caregiver);
@@ -280,15 +281,24 @@ export class CaregiversPatientComponent implements OnInit {
 
   private updateCaregiversPatient(caregiver: Caregiver): void {
     const caregiverLocal = JSON.parse(JSON.stringify(caregiver));
+
+    const updateOnePatientCaregiverInput: UpdateOnePatientCaregiverInput = {
+      emergency: caregiverLocal.emergency,
+      note: caregiverLocal.note,
+      relation: caregiverLocal.relation,
+    };
+    const { patientCaregiverId } = this.data.find((entry) => entry.id === caregiver.id);
+    delete caregiverLocal.relation;
+    delete caregiverLocal.emergency;
+    delete caregiverLocal.note;
     const id = caregiverLocal.id;
     delete caregiverLocal.id;
-    const updateOneCaregiverInput: UpdateOneCaregiverInput = {
-      id,
-      update: caregiverLocal,
-    };
+
     this.isLoading = true;
+
+    console.log(caregiverLocal);
     this.caregiversService
-      .updateCaregiver(updateOneCaregiverInput)
+      .updateCaregiver({ id, update: caregiverLocal })
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }) => {
@@ -297,6 +307,17 @@ export class CaregiversPatientComponent implements OnInit {
           const idx = list.findIndex((car) => car.id === updatedCaregiver.id);
           list.splice(idx, 1, updatedCaregiver);
           this.data = list; // mutate reference to trigger change detection
+          this.closeCreatePanel();
+        },
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to update caregiver' })
+      );
+
+    this.caregiversPatientService
+      .updateCaregiversToPatient(patientCaregiverId, updateOnePatientCaregiverInput)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }) => {
+          this.getCaregivers();
           this.closeCreatePanel();
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to update caregiver' })
