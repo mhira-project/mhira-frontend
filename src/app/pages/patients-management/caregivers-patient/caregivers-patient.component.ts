@@ -85,6 +85,7 @@ export class CaregiversPatientComponent implements OnInit {
 
   public addCaregiverToPatient() {
     this.managePatientCaregivers(ActionKey.EDIT_CAREGIVER, this.selectedCaregiver);
+    this.closeAddPanel();
   }
 
   public searchCaregivers(searchString: string): void {
@@ -143,7 +144,6 @@ export class CaregiversPatientComponent implements OnInit {
   }
 
   public onSubmitForm(caregiver: Caregiver): void {
-    console.log({ caregiver });
     if (this.caregiver?.id) {
       caregiver.id = this.caregiver.id;
       this.updateCaregiversPatient(caregiver);
@@ -230,6 +230,7 @@ export class CaregiversPatientComponent implements OnInit {
           action,
           caregivers: this.data,
         });
+        this.getCaregivers();
       },
       (error) => this.errorService.handleError(error, { prefix: 'Unable to update caregiver on patient' })
     );
@@ -296,7 +297,6 @@ export class CaregiversPatientComponent implements OnInit {
 
     this.isLoading = true;
 
-    console.log(caregiverLocal);
     this.caregiversService
       .updateCaregiver({ id, update: caregiverLocal })
       .pipe(finalize(() => (this.isLoading = false)))
@@ -307,7 +307,6 @@ export class CaregiversPatientComponent implements OnInit {
           const idx = list.findIndex((car) => car.id === updatedCaregiver.id);
           list.splice(idx, 1, updatedCaregiver);
           this.data = list; // mutate reference to trigger change detection
-          this.closeCreatePanel();
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to update caregiver' })
       );
