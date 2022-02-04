@@ -76,10 +76,6 @@ export class CaregiversPatientComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCaregivers();
-    if (this.caregivers.length === 0) {
-      this.getCaregivers(true);
-    }
-    this.getCaregivers();
     this.setActions();
   }
 
@@ -89,7 +85,6 @@ export class CaregiversPatientComponent implements OnInit {
 
   public addCaregiverToPatient() {
     this.managePatientCaregivers(ActionKey.EDIT_CAREGIVER, this.selectedCaregiver);
-    this.getCaregivers();
     this.closeAddPanel();
   }
 
