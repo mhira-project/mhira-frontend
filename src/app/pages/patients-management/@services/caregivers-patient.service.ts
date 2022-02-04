@@ -75,7 +75,7 @@ export class CaregiversPatientService {
       mutation: this.nestJsQueriesService.relationalCommandMutation(
         'updateOnePatientCaregiver',
         'UpdateOnePatientCaregiverInput',
-        `id`
+        `id relation`
       ),
       variables: {
         input: {
