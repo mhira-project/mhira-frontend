@@ -204,7 +204,7 @@ export class CaregiversPatientComponent implements OnInit {
 
   private createSearchFilter(searchString: string): Array<{ [K in keyof Partial<FormattedCaregiver>]: {} }> {
     if (!searchString) return [];
-    return [{ firstName: { iLike: `%${searchString}%` } }, { lastName: { iLike: `%${searchString}%` } }];
+    return [{ relation: { iLike: `%${searchString}%` } }, { note: { iLike: `%${searchString}%` } }];
   }
 
   private managePatientCaregivers(action: ActionKey, caregiver: Caregiver) {

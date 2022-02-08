@@ -324,6 +324,16 @@ const addCaregiversToPatient = gql`
   }
 `;
 
+const deleteCaregiverPatient = gql`
+  mutation($input: DeleteOnePatientCaregiverInput!) {
+    deleteOnePatientCaregiver(input: $input) {
+      id
+      patientId
+      caregiverId
+    }
+  }
+`;
+
 export const CaregiversMutations = {
   createOneCaregiver,
   createManyCaregivers,
@@ -333,4 +343,5 @@ export const CaregiversMutations = {
   deleteManyCaregivers,
   removeCaregiverFromPatient,
   addCaregiversToPatient,
+  deleteCaregiverPatient,
 };

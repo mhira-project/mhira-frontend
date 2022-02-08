@@ -18,6 +18,7 @@ import { CaregiversService } from '@app/pages/patients-management/@services/care
 import {
   Caregiver,
   FormattedCaregiver,
+  PatientRelation,
   UpdateOneCaregiverInput,
 } from '@app/pages/patients-management/@types/caregiver';
 import { ErrorHandlerService } from '@shared/services/error-handler.service';
@@ -25,6 +26,10 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 
 enum ActionKey {
   DELETE_CAREGIVER,
+}
+
+enum ActionKey1 {
+  DELETE_CAREGIVERPATIENT,
 }
 
 @Component({
@@ -47,6 +52,7 @@ export class CaregiverListComponent implements OnInit {
   public caregiverForm = CaregiverForm;
 
   public actions: Action<ActionKey>[] = [];
+  public actions1: Action<ActionKey1>[] = [];
 
   public caregiverRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
@@ -93,10 +99,16 @@ export class CaregiverListComponent implements OnInit {
   }
 
   public openCreatePanel(caregiver?: Caregiver): void {
-    if (caregiver) this.caregiver = caregiver;
+    if (caregiver) {
+      this.caregiver = caregiver;
+    }
+    console.log(this.caregiver);
     this.showCreateCaregiver = true;
     this.populateForm = true;
     this.resetForm = true;
+    if (this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
+      this.actions1 = [{ key: ActionKey1.DELETE_CAREGIVERPATIENT, title: 'Delete Relation' }];
+    }
   }
 
   public closeCreatePanel(): void {
@@ -121,6 +133,10 @@ export class CaregiverListComponent implements OnInit {
         this.deleteCaregiver(caregiver);
         return;
     }
+  }
+
+  public onAction1(context: PatientRelation): void {
+    this.deleteCaregiverPatient(context);
   }
 
   public handleRowClick(event: any) {
@@ -171,6 +187,32 @@ export class CaregiverListComponent implements OnInit {
           this.data = data; // mutate reference to trigger change detection
         },
         (err) => this.errorService.handleError(err, { prefix: `Unable to delete caregiver "${caregiver.firstName}"` })
+      );
+  }
+
+  private async deleteCaregiverPatient(patientRelation: PatientRelation): Promise<void> {
+    const modal = this.modalService.confirm({
+      nzOnOk: () => true,
+      nzTitle: 'Delete relation',
+      nzContent: `
+        Are you sure you want to delete ${patientRelation.patient.firstName} as relation?
+      `,
+    });
+
+    if (!(await modal.afterClose.toPromise())) return;
+
+    this.isLoading = true;
+    this.caregiversService
+      .deleteCaregiverPatient(patientRelation.id)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        () => {
+          this.caregiver.patientCaregivers = this.caregiver.patientCaregivers.filter(
+            (relation) => relation.id !== patientRelation.id
+          );
+        },
+        (err) =>
+          this.errorService.handleError(err, { prefix: `Unable to delete relation "${patientRelation.relation}"` })
       );
   }
 

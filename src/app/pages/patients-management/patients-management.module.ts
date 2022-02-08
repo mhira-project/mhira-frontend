@@ -35,6 +35,8 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { CaregiverListComponent } from './caregiver-list/caregiver-list.component';
 import { CaregiversPatientComponent } from './caregivers-patient/caregivers-patient.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 const antModules = [
   NzGridModule,
@@ -65,6 +67,8 @@ const antModules = [
     MasterDataModule,
     NzFormModule,
     ReactiveFormsModule,
+    NzTableModule,
+    NzDividerModule,
   ],
   declarations: [
     PatientsListComponent,

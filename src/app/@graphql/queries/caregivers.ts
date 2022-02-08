@@ -31,6 +31,8 @@ const caregivers = gql`
           createdAt
           updatedAt
           patientCaregivers {
+            relation
+            id
             patient {
               id
               statusId

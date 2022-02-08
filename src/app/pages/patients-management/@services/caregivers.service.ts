@@ -93,4 +93,14 @@ export class CaregiversService {
       fetchPolicy: 'no-cache',
     });
   }
+
+  deleteCaregiverPatient(patientCaregiverId: number): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: CaregiversMutations.deleteCaregiverPatient,
+      variables: {
+        input: { id: patientCaregiverId },
+      },
+      fetchPolicy: 'no-cache',
+    });
+  }
 }
