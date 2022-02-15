@@ -116,9 +116,11 @@ const c = `questionnaires {
           }`;
 
 const getFullAssessment = gql`
-  query($id: Int!) {
-    getFullAssessment(id: $id) {
+  query($id: Int!, $uuid: String) {
+    getFullAssessment(id: $id, uuid: $uuid) {
       id
+      uuid
+      isActive
       date
       name
       status

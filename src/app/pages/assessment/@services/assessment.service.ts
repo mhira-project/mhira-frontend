@@ -92,11 +92,11 @@ export class AssessmentService {
     });
   }
 
-  getFullAssessment(assessmentId: number): Observable<FullAssessment> {
+  getFullAssessment(assessmentId: number, uuid?: string | null): Observable<FullAssessment> {
     return this.apollo
       .query({
         query: AssessmentsQueries.getFullAssessment,
-        variables: { id: assessmentId },
+        variables: { id: assessmentId, uuid },
         fetchPolicy: 'no-cache',
       })
       .pipe(map((result: any) => result?.data?.getFullAssessment));

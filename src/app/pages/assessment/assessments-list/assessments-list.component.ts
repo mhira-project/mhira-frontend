@@ -173,7 +173,11 @@ export class AssessmentsListComponent {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         (archived) => {
-          if (!archived) this.data.splice(this.data.indexOf(assessment), 1);
+          if (!archived) {
+            this.getAssessments();
+          } else {
+            this.getAssessments();
+          }
         },
         (error) => this.errorService.handleError(error, { prefix: `Unable to delete assessment "${assessment.name}"` })
       );
@@ -206,6 +210,7 @@ export class AssessmentsListComponent {
       },
     ];
   }
+
 
   private showAssessment({ uuid }: FormattedAssessment): void {
     window.open(this.generateAssessmentURL(uuid));

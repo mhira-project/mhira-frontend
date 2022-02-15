@@ -19,6 +19,7 @@ export default {
     listUsers: 'Lista de Usuarios',
     newUser: 'Nuevo Usuario',
     administration: 'Administración',
+    reports: 'Informes',
     permissionMatrix: 'Permisos de Usuarios',
     permissions: 'Permisos',
     roles: 'Roles',
