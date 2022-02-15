@@ -7,6 +7,7 @@ const assessments = gql`
         cursor
         node {
           id
+          uuid
           date
           name
           patientId
@@ -220,8 +221,116 @@ const getFullAssessment = gql`
   }
 `;
 
+const getFullPublicAssessment = gql`
+  query($uuid: String!) {
+    getFullPublicAssessment(uuid: $uuid) {
+      id
+      uuid
+      date
+      name
+      status
+      createdAt
+      updatedAt
+      deletedAt
+      informant
+      patientId
+      clinicianId
+      questionnaireAssessmentId
+      questionnaireAssessment {
+        _id
+        status
+        answers {
+          question
+          valid
+          textValue
+          multipleChoiceValue
+          numberValue
+          dateValue
+          booleanValue
+        }
+        questionnaires(populate: true) {
+          _id
+          name
+          status
+          createdAt
+          keywords
+          copyright
+          website
+          license
+          timeToComplete
+          questionnaire {
+            language
+            abbreviation
+          }
+          questionGroups {
+            label
+            questions {
+              _id
+              name
+              label
+              type
+              hint
+              relevant
+              calculation
+              constraint
+              constraintMessage
+              min
+              max
+              required
+              requiredMessage
+              image
+              appearance
+              default
+              choices {
+                name
+                label
+                image
+              }
+            }
+          }
+        }
+      }
+      clinician {
+        id
+        username
+        active
+        firstName
+        middleName
+        lastName
+        email
+        phone
+        workID
+        address
+        gender
+        birthDate
+        nationality
+        createdAt
+        updatedAt
+      }
+      patient {
+        id
+        active
+        medicalRecordNo
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        address
+        gender
+        birthDate
+        birthCountryCode
+        nationality
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 export const AssessmentsQueries = {
   assessments,
   questionnaires,
   getFullAssessment,
+  getFullPublicAssessment,
 };

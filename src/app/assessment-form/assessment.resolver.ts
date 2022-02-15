@@ -15,8 +15,8 @@ export class AssessmentResolver implements Resolve<FullAssessment> {
     try {
       const encryptedId = route.queryParamMap.get('assessment');
       const bytes = CryptoJS.AES.decrypt(encryptedId, environment.secretKey);
-      const assessmentId = +bytes.toString(CryptoJS.enc.Utf8);
-      return this.service.getFullAssessment(assessmentId);
+      const assessmentUuid = bytes.toString(CryptoJS.enc.Utf8);
+      return this.service.getFullPublicAssessment(assessmentUuid);
     } catch (err) {
       console.error('Assessment not found');
     }
