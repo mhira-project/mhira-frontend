@@ -102,6 +102,16 @@ export class AssessmentService {
       .pipe(map((result: any) => result?.data?.getFullAssessment));
   }
 
+  getFullPublicAssessment(assessmentUuid: string): Observable<FullAssessment> {
+    return this.apollo
+      .query({
+        query: AssessmentsQueries.getFullPublicAssessment,
+        variables: { uuid: assessmentUuid },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map((result: any) => result?.data?.getFullPublicAssessment));
+  }
+
   addAnswer(assessment: AnswerAssessmentInput): Observable<Answer[]> {
     return this.apollo
       .mutate({

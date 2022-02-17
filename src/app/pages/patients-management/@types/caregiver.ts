@@ -19,7 +19,16 @@ export interface Caregiver {
   postalCode: string;
   country: string;
   patients?: Patient[];
+  patientCaregivers: PatientRelation[];
   patientCaregiverId?: number;
+}
+
+export interface PatientRelation {
+  relation: string;
+  id: number;
+  patient: {
+    firstName: string;
+  };
 }
 
 export interface FormattedCaregiver extends Caregiver {

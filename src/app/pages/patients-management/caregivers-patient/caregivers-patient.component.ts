@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   Caregiver,
   FormattedCaregiver,
-  UpdateOneCaregiverInput,
   UpdateOnePatientCaregiverInput,
 } from '@app/pages/patients-management/@types/caregiver';
 import { PermissionKey } from '@shared/@types/permission';
@@ -83,9 +82,10 @@ export class CaregiversPatientComponent implements OnInit {
     this.selectedCaregiver = caregiver;
   }
 
-  public addCaregiverToPatient() {
-    this.managePatientCaregivers(ActionKey.EDIT_CAREGIVER, this.selectedCaregiver);
+  public async addCaregiverToPatient() {
+    await this.managePatientCaregivers(ActionKey.EDIT_CAREGIVER, this.selectedCaregiver);
     this.closeAddPanel();
+    // this.openCreatePanel(this.selectedCaregiver);
   }
 
   public searchCaregivers(searchString: string): void {
@@ -204,7 +204,7 @@ export class CaregiversPatientComponent implements OnInit {
 
   private createSearchFilter(searchString: string): Array<{ [K in keyof Partial<FormattedCaregiver>]: {} }> {
     if (!searchString) return [];
-    return [{ firstName: { iLike: `%${searchString}%` } }, { lastName: { iLike: `%${searchString}%` } }];
+    return [{ relation: { iLike: `%${searchString}%` } }, { note: { iLike: `%${searchString}%` } }];
   }
 
   private managePatientCaregivers(action: ActionKey, caregiver: Caregiver) {
@@ -218,6 +218,7 @@ export class CaregiversPatientComponent implements OnInit {
         if (action === ActionKey.EDIT_CAREGIVER) {
           // mutate reference to trigger change detection
           this.data = [caregiver, ...this.data];
+          this.openCreatePanel(caregiver);
         } else {
           const list = [...this.data];
           list.splice(

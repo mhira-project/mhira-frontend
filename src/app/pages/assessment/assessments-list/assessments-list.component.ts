@@ -211,18 +211,19 @@ export class AssessmentsListComponent {
     ];
   }
 
-  private showAssessment({ id, uuid }: FormattedAssessment): void {
-    window.open(this.generateAssessmentURL(id, uuid));
+
+  private showAssessment({ uuid }: FormattedAssessment): void {
+    window.open(this.generateAssessmentURL(uuid));
   }
 
-  private copyAssessmentLink({ id, uuid }: FormattedAssessment): void {
-    const url = new URL(this.generateAssessmentURL(id, uuid), window.location.origin);
+  private copyAssessmentLink({ uuid }: FormattedAssessment): void {
+    const url = new URL(this.generateAssessmentURL(uuid), window.location.origin);
     this.clipboardService.copy(url.toString());
     this.messageService.create('success', 'Assessment link copied to clipboard');
   }
 
-  private generateAssessmentURL(assessmentId: number, uuid: string): string {
-    const cryptoId = CryptoJS.AES.encrypt(JSON.stringify({ assessmentId, uuid }), environment.secretKey).toString();
+  private generateAssessmentURL(assesmentUuid: string): string {
+    const cryptoId = CryptoJS.AES.encrypt(assesmentUuid, environment.secretKey).toString();
     const tree = this.router.createUrlTree(['/assessment/overview'], { queryParams: { assessment: cryptoId } });
     return this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(tree));
   }
