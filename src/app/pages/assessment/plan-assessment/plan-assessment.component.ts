@@ -91,17 +91,17 @@ export class PlanAssessmentComponent implements OnInit {
   }
 
   private initAssessment() {
-    let assessmentUuid: string;
+    let assessmentId: number;
 
     try {
       const raw = this.activatedRoute.snapshot.queryParamMap.get('assessment');
       const bytes = CryptoJS.AES.decrypt(raw, environment.secretKey);
-      assessmentUuid = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).uuid;
+      assessmentId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).id;
     } catch {
       return;
     }
 
-    this.assessmentService.getFullPublicAssessment(assessmentUuid).subscribe(
+    this.assessmentService.getFullAssessment(assessmentId).subscribe(
       (assessment) => {
         this.assessmentForm.setValue({
           name: assessment.name,
@@ -118,7 +118,7 @@ export class PlanAssessmentComponent implements OnInit {
         this.editMode = false;
       },
       (error) =>
-        this.errorService.handleError(error, { prefix: `Unable to load the assessment with ID "${assessmentUuid}"` })
+        this.errorService.handleError(error, { prefix: `Unable to load the assessment with ID "${assessmentId}"` })
     );
   }
 }
