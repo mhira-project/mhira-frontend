@@ -10,7 +10,7 @@ import { PermissionsComponent } from './permissions/permissions.component';
 import { RolesComponent } from './roles/roles.component';
 import { PermissionsService } from './@services/permissions.service';
 import { RolesService } from './@services/roles.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DepartmentsComponent } from './departments/departments.component';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
 import { MasterDataModule } from '../../@shared/@modules/master-data/master-data.module';
@@ -31,6 +31,10 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { ReportsComponent } from './reports/reports.component';
+import { CreateReportComponent } from './create-report/create-report.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 const antModules = [
   NzGridModule,
@@ -64,6 +68,10 @@ const antModules = [
     AdministrationRoutingModule,
     NzSwitchModule,
     MasterDataModule,
+    ReactiveFormsModule,
+    NzSelectModule,
+    NzRadioModule,
+    NzFormModule,
   ],
   declarations: [
     RolesAndPermissionsComponent,
@@ -71,6 +79,7 @@ const antModules = [
     RolesComponent,
     DepartmentsComponent,
     ReportsComponent,
+    CreateReportComponent,
   ],
   providers: [PermissionsService, RolesService],
 })

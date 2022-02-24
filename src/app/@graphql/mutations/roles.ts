@@ -328,6 +328,42 @@ const removeDepartmentsFromUser = gql`
   }
 `;
 
+const addRolesToReport = gql`
+  mutation($input: AddRolesToReportInput!) {
+    addRolesToReport(input: $input) {
+      id
+      anonymus
+      name
+      description
+      status
+      repositoryLink
+      appName
+      url
+      resources
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+const removeRolesFromReport = gql`
+  mutation($input: RemoveRolesFromReportInput!) {
+    removeRolesFromReport(input: $input) {
+      id
+      anonymus
+      name
+      description
+      status
+      repositoryLink
+      appName
+      url
+      resources
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 export const RolesMutations = {
   createOneRole,
   createManyRoles,
@@ -345,4 +381,6 @@ export const RolesMutations = {
   addDepartmentsToUser,
   removeRolesFromUser,
   removeDepartmentsFromUser,
+  addRolesToReport,
+  removeRolesFromReport,
 };

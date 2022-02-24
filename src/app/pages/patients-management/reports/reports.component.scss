@@ -1,0 +1,13 @@
+.report-card {
+  width: 220px;
+  height: 100px;
+  border-radius: 10px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.report-card:hover {
+  background: #89d180;
+}

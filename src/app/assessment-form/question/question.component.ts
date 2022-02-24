@@ -33,9 +33,9 @@ export class QuestionComponent {
 
   constructor(private assessmentFormService: AssessmentFormService, private errorService: ErrorHandlerService) {
     // get date format and convert to ng-zorro datepicker readable type
-    this.dateFormat = JSON.parse(localStorage.getItem('settings'))?.dateFormat;
-    this.dateFormat = this.dateFormat.replace(/[D]/g, 'd');
-    this.dateFormat = this.dateFormat.replace(/[Y]/g, 'y');
+    // this.dateFormat = JSON.parse(localStorage.getItem('settings'))?.dateFormat;
+    // this.dateFormat = this.dateFormat.replace(/[D]/g, 'd');
+    // this.dateFormat = this.dateFormat.replace(/[Y]/g, 'y');
 
     // debounce answer
     this.answerGiven.pipe(debounceTime(500)).subscribe((answer) => this.addAnswer(answer));

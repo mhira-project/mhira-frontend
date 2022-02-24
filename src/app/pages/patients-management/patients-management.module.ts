@@ -8,7 +8,6 @@ import { CaseManagersComponent } from './case-managers/case-managers.component';
 import { PatientsService } from './@services/patients.service';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { CreatePatientComponent } from './patient-profile/create-patient/create-patient.component';
-// import { EmergencyContactComponent } from './emergency-contact/emergency-contact.component';
 import { CaseManagersService } from './@services/case-managers.service';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
 import { EmergencyContactsService } from './@services/contacts.service';
@@ -37,6 +36,7 @@ import { CaregiversPatientComponent } from './caregivers-patient/caregivers-pati
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { ReportsComponent } from './reports/reports.component';
 
 const antModules = [
   NzGridModule,
@@ -76,10 +76,10 @@ const antModules = [
     InformantsListComponent,
     PatientProfileComponent,
     CreatePatientComponent,
-    // EmergencyContactComponent,
     DepartmentsComponent,
     CaregiverListComponent,
     CaregiversPatientComponent,
+    ReportsComponent,
   ],
   providers: [
     PatientsService,

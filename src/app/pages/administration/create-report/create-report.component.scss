@@ -1,0 +1,26 @@
+form {
+  nz-form-item {
+    display: flex;
+    flex-direction: column;
+  }
+  nz-form-label {
+    text-align: left !important;
+    margin-top: 10px;
+    font-weight: bold !important;
+  }
+}
+
+.parent-div {
+  display: flex;
+}
+
+.card-div {
+  max-width: 400px;
+  margin-left: 30px;
+  margin-top: 20px;
+  border-radius: 15px;
+}
+
+.form-div {
+  width: 540px;
+}

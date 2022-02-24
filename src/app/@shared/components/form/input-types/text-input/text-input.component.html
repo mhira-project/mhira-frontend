@@ -11,7 +11,11 @@
   <nz-input-group
     [formGroup]="inputGroup"
     [nzSuffix]="suffix"
-    [ngClass]="{ 'has-error': inputIsValid() === false, 'has-success': inputIsValid() === true }"
+    [ngClass]="{
+      'has-error': inputIsValid() === false,
+      'has-success': inputIsValid() === true,
+      'is-disabled': field.disabled
+    }"
   >
     <input
       type="text"

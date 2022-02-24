@@ -8,7 +8,7 @@
   </b>
 </label>
 <ng-container *ngIf="inputMode">
-  <nz-input-group [formGroup]="inputGroup">
+  <nz-input-group [formGroup]="inputGroup" [ngClass]="{ 'is-disabled': field.disabled }">
     <nz-select
       style="width: 100%"
       (ngModelChange)="handleValueChange($event)"

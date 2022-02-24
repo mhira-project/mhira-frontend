@@ -20,6 +20,7 @@ export default {
     newUser: 'New User',
     administration: 'Administration',
     reports: 'Reports',
+    createReport: 'Create Report',
     permissionMatrix: 'Permission Matrix',
     permissions: 'Permissions',
     roles: 'Roles',
@@ -31,6 +32,14 @@ export default {
     noTabs: 'No Tabs',
   },
   tables: {
+    reports: {
+      name: 'Name',
+      resources: 'Report Type',
+      roles: 'Roles',
+      status: 'Status',
+      repositoryLink: 'Repository Link',
+      createdAt: 'Created At',
+    },
     patients: {
       firstName: 'First Name',
       middleName: 'Middle Name',
@@ -86,6 +95,17 @@ export default {
     },
   },
   forms: {
+    createReportForm: {
+      reportName: 'Report Name',
+      description: 'Description',
+      resources: 'Resources',
+      url: 'URL',
+      appName: 'App Name',
+      repositoryLink: 'Repository Link',
+      reportStatus: 'Report Status',
+      anonymus: 'Anonymus',
+      roles: 'Roles',
+    },
     changePassword: {
       newPassword: 'Enter New Password',
       newPasswordConfirmation: 'Repeat Password',

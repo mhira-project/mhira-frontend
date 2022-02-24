@@ -1,5 +1,5 @@
 export interface Field {
-  value: number | string | number[] | string[];
+  value: number | string | number[] | string[] | boolean;
   title?: string;
   name?: string;
   description?: string;

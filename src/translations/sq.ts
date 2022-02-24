@@ -20,6 +20,7 @@ export default {
     newUser: 'Krijo një Përdorues',
     administration: 'Administrimi',
     reports: 'Raporte',
+    createReport: 'Krijoni Raport',
     permissionMatrix: 'Matrica e Autorizimeve',
     permissions: 'Autorizimet',
     roles: 'Rolet',
@@ -31,6 +32,14 @@ export default {
     noTabs: 'Nuk ka skedar',
   },
   tables: {
+    reports: {
+      name: 'Emri',
+      resources: 'Lloji i Raportit',
+      roles: 'Rolet',
+      status: 'Statusi',
+      repositoryLink: 'Linku i Repozitorit',
+      createdAt: 'Krijuar Në',
+    },
     patients: {
       firstName: 'Emri',
       middleName: 'Emri i Mesëm',
@@ -87,6 +96,17 @@ export default {
     },
   },
   forms: {
+    createReportForm: {
+      reportName: 'Emri i Raportit',
+      description: 'Përshkrim',
+      resources: 'Burimet',
+      url: 'URL',
+      appName: 'Emri i Aplikacionit',
+      repositoryLink: 'Lidhja e Depove',
+      reportStatus: 'Raportoni Statusin',
+      anonymus: 'Anonim',
+      roles: 'Rolet',
+    },
     changePassword: {
       newPassword: 'Shkruaj një fjalëkalim të ri',
       newPasswordConfirmation: 'Rishkruaj fjalëkalimin',

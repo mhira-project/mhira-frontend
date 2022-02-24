@@ -29,3 +29,10 @@
 nz-select {
   font-size: 14px;
 }
+
+.is-disabled,
+.is-disabled input,
+.is-disabled nz-select-top-control {
+  pointer-events: none;
+  background: #f7f7f7;
+}
