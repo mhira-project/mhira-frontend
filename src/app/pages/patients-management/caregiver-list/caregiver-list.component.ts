@@ -28,10 +28,6 @@ enum ActionKey {
   DELETE_CAREGIVER,
 }
 
-enum ActionKey1 {
-  DELETE_CAREGIVERPATIENT,
-}
-
 @Component({
   selector: 'app-caregiver-list',
   templateUrl: './caregiver-list.component.html',
@@ -52,7 +48,6 @@ export class CaregiverListComponent implements OnInit {
   public caregiverForm = CaregiverForm;
 
   public actions: Action<ActionKey>[] = [];
-  public actions1: Action<ActionKey1>[] = [];
 
   public caregiverRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
@@ -107,7 +102,7 @@ export class CaregiverListComponent implements OnInit {
     this.populateForm = true;
     this.resetForm = true;
     if (this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
-      this.actions1 = [{ key: ActionKey1.DELETE_CAREGIVERPATIENT, title: 'Delete Relation' }];
+      this.actions = [{ key: ActionKey.DELETE_CAREGIVER, title: 'Delete Caregiver' }];
     }
   }
 
@@ -195,7 +190,7 @@ export class CaregiverListComponent implements OnInit {
       nzOnOk: () => true,
       nzTitle: 'Delete relation',
       nzContent: `
-        Are you sure you want to delete ${patientRelation.patient.firstName} as relation?
+        Are you sure you want to remove this caregiver for the patient?
       `,
     });
 
