@@ -24,6 +24,7 @@ import {
   FormattedCaregiver,
   UpdateOneCaregiverInput,
 } from '@app/pages/patients-management/@types/caregiver';
+import { ReportsModel } from '@app/pages/administration/@models/reports.model';
 
 enum ActionKey {
   EDIT_REPORT,
@@ -123,7 +124,8 @@ export class ReportsComponent implements OnInit {
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }: any) => {
-          this.data = data.reports.edges.map((report: any) => Convert.toReport(report.node));
+          this.data = data.reports.edges.map((report: any) => ReportsModel.fromJson(report.node));
+          console.log('this.data', this.data);
           this.pageInfo = data.reports.pageInfo;
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load reports' })
