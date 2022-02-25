@@ -28,12 +28,19 @@ export interface ReportRole {
 
 export interface UpdateOneReportInput {
   id: number;
-  update: CreateReportInput;
+  update: UpdateReport;
 }
 
 export interface UpdateReport {
-  name: string;
-  description: string;
+  anonymus?: boolean;
+  name?: string;
+  description?: string;
+  status?: boolean;
+  appName?: string;
+  repositoryLink?: any;
+  url?: string;
+  resources?: string;
+  id?: number;
 }
 
 export interface CreateReportInput {

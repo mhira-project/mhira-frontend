@@ -38,9 +38,10 @@ export class ReportsService {
   }
 
   updateReport(updateOneReportInput: UpdateOneReportInput): Observable<FetchResult<any>> {
+    console.log(updateOneReportInput);
     return this.apollo.mutate({
       mutation: ReportsMutations.updateOneReport,
-      variables: { updateOneReportInput },
+      variables: { input: updateOneReportInput },
       fetchPolicy: 'no-cache',
     });
   }
@@ -57,6 +58,7 @@ export class ReportsService {
   }
 
   addRolesToReport(reportId: number, rolesIds: number[]): Observable<FetchResult<any>> {
+    console.log();
     return this.apollo.mutate({
       mutation: ReportsMutations.addRolesToReport,
       variables: {
