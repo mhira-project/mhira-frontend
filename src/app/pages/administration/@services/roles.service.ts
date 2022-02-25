@@ -99,6 +99,32 @@ export class RolesService {
     });
   }
 
+  addRolesToReport(reportId: number, rolesIds: number[]): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: RolesMutations.addRolesToReport,
+      variables: {
+        input: {
+          id: reportId,
+          relationIds: rolesIds,
+        },
+      },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
+  removeRolesFromReport(reportId: number, rolesIds: number[]): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: RolesMutations.removeRolesFromReport,
+      variables: {
+        input: {
+          id: reportId,
+          relationIds: rolesIds,
+        },
+      },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
   removePermissionsFromRole(roleId: number, permissionsId: number[]): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: RolesMutations.removePermissionsFromRole,

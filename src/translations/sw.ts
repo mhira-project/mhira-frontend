@@ -20,6 +20,7 @@ export default {
     newUser: 'Mtumiaji Mpya',
     administration: 'Utawala',
     reports: 'Ripoti',
+    createReport: 'Kuunda Ripoti',
     permissionMatrix: 'Jedwali La Ruhusa',
     permissions: 'Ruhusa',
     roles: 'Majukumu',
@@ -31,6 +32,14 @@ export default {
     noTabs: 'Hakuna kurasa',
   },
   tables: {
+    reports: {
+      name: 'Jina',
+      resources: 'Aina ya Ripoti',
+      roles: 'Majukumu',
+      status: 'Hali',
+      repositoryLink: 'Kiungo cha Hifadhi',
+      createdAt: 'Imeundwa Katika',
+    },
     patients: {
       firstName: 'Jina la Kwanza',
       middleName: 'Jina la Kati',
@@ -86,6 +95,17 @@ export default {
     },
   },
   forms: {
+    createReportForm: {
+      reportName: 'Jina la Ripoti',
+      description: 'Maelezo',
+      resources: 'Rasilimali',
+      url: 'URL',
+      appName: 'App Jina',
+      repositoryLink: 'Kiungo cha Hifadhi',
+      reportStatus: 'Hali ya Ripoti',
+      anonymus: 'Anonymus',
+      roles: 'Majukumu',
+    },
     changePassword: {
       newPassword: 'Ingiza Neno siri Jipya',
       newPasswordConfirmation: 'Rudia neno siri',

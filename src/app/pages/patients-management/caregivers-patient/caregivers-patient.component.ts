@@ -44,11 +44,11 @@ export class CaregiversPatientComponent implements OnInit {
   public data: Partial<Caregiver>[];
   public columns: TableColumn<Partial<Caregiver>>[] = CaregiversPatientTable as TableColumn<Partial<Caregiver>>[];
   public addCaregiverForm: FormGroup;
-  public editMode = true;
   public selectedCaregiver: Caregiver;
 
   // form properties
   public showAddCaregiver = false;
+  showCancelButton = false;
   public showCreateCaregiver = false;
   public populateForm = false;
   public resetForm = false;
@@ -82,10 +82,9 @@ export class CaregiversPatientComponent implements OnInit {
     this.selectedCaregiver = caregiver;
   }
 
-  public async addCaregiverToPatient() {
-    await this.managePatientCaregivers(ActionKey.EDIT_CAREGIVER, this.selectedCaregiver);
+  public addCaregiverToPatient() {
+    this.managePatientCaregivers(ActionKey.EDIT_CAREGIVER, this.selectedCaregiver, true);
     this.closeAddPanel();
-    // this.openCreatePanel(this.selectedCaregiver);
   }
 
   public searchCaregivers(searchString: string): void {
@@ -130,7 +129,10 @@ export class CaregiversPatientComponent implements OnInit {
   }
 
   public openCreatePanel(caregiver?: Caregiver): void {
-    if (caregiver) this.caregiver = caregiver;
+    if (caregiver) {
+      this.caregiver = caregiver;
+      // this.disableEnableFields();
+    }
     this.showCreateCaregiver = true;
     this.populateForm = true;
     this.resetForm = true;
@@ -148,7 +150,7 @@ export class CaregiversPatientComponent implements OnInit {
       caregiver.id = this.caregiver.id;
       this.updateCaregiversPatient(caregiver);
     } else {
-      this.createCaregiversPatient(caregiver, true);
+      this.createCaregiversPatient(caregiver);
     }
   }
 
@@ -166,10 +168,22 @@ export class CaregiversPatientComponent implements OnInit {
     this.openCreatePanel(event);
   }
 
+  // public  disableEnableFields() {
+  //   this.caregiverForm.groups.forEach((group) =>
+  //     group.fields.forEach((field) => {
+  //       field.name === 'firstName' ? (field.disabled = false) : (field.disabled = true);
+  //     })
+  //   );
+  // }
+
+  private createSearchFilter(searchString: string): Array<{ [K in keyof Partial<FormattedCaregiver>]: {} }> {
+    if (!searchString) return [];
+    return [{ relation: { iLike: `%${searchString}%` } }, { note: { iLike: `%${searchString}%` } }];
+  }
+
   private getCaregivers(getAllCaregivers: boolean = false): void {
     this.isLoading = true;
     const options = { ...this.caregiverRequestOptions };
-
     options.filter = {
       ...options.filter,
       and: [getAllCaregivers ? {} : { patient: { id: { eq: this.patient?.id } } }, ...(options.filter.and ?? [])],
@@ -179,35 +193,20 @@ export class CaregiversPatientComponent implements OnInit {
       .caregiversPatient(options)
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe((response) => {
-        if (getAllCaregivers) {
-          this.caregivers = response.data.patientCaregivers.edges.map((e: any) => ({
+        this.data = response.data.patientCaregivers.edges
+          .filter((e: any) => e.node.caregiver)
+          .map((e: any) => ({
             ...e.node?.caregiver,
             patientCaregiverId: e.node.id,
             relation: e.node.relation,
             emergency: e.node.emergency,
             note: e.node.note,
           }));
-        } else {
-          this.data = response.data.patientCaregivers.edges
-            .filter((e: any) => e.node.caregiver)
-            .map((e: any) => ({
-              ...e.node?.caregiver,
-              patientCaregiverId: e.node.id,
-              relation: e.node.relation,
-              emergency: e.node.emergency,
-              note: e.node.note,
-            }));
-        }
         this.pageInfo = response.data.patientCaregivers.pageInfo;
       });
   }
 
-  private createSearchFilter(searchString: string): Array<{ [K in keyof Partial<FormattedCaregiver>]: {} }> {
-    if (!searchString) return [];
-    return [{ relation: { iLike: `%${searchString}%` } }, { note: { iLike: `%${searchString}%` } }];
-  }
-
-  private managePatientCaregivers(action: ActionKey, caregiver: Caregiver) {
+  private managePatientCaregivers(action: ActionKey, caregiver: Caregiver, shouldOpen: boolean = false) {
     this.isLoading = true;
     const executedAction =
       action === ActionKey.EDIT_CAREGIVER
@@ -217,8 +216,13 @@ export class CaregiversPatientComponent implements OnInit {
       (response) => {
         if (action === ActionKey.EDIT_CAREGIVER) {
           // mutate reference to trigger change detection
-          this.data = [caregiver, ...this.data];
-          this.openCreatePanel(caregiver);
+          this.data = [{ ...caregiver, patientCaregiverId: response.data.createOnePatientCaregiver.id }, ...this.data];
+          if (shouldOpen) {
+            this.populateForm = true;
+            setTimeout(() => {
+              this.openCreatePanel(caregiver);
+            }, 0);
+          }
         } else {
           const list = [...this.data];
           list.splice(
@@ -227,6 +231,7 @@ export class CaregiversPatientComponent implements OnInit {
           );
           this.data = list; // mutate reference to trigger change detection
         }
+        this.closeAddPanel();
         this.patientCaregiversUpdated.emit({
           action,
           caregivers: this.data,
@@ -249,7 +254,7 @@ export class CaregiversPatientComponent implements OnInit {
     }
   }
 
-  private createCaregiversPatient(caregiver: Caregiver, isAssign?: boolean): void {
+  private createCaregiversPatient(caregiver: Caregiver): void {
     this.isLoading = true;
     this.populateForm = false;
     this.resetForm = false;
@@ -268,14 +273,13 @@ export class CaregiversPatientComponent implements OnInit {
         ({ data }) => {
           // mutate reference to trigger change detection
           this.closeCreatePanel();
-          this.data = [...this.data, data.createOneCaregiver];
-          if (isAssign) {
-            this.managePatientCaregivers(ActionKey.EDIT_CAREGIVER, {
-              ...data.createOneCaregiver,
-              ...patientCaregiverData,
-            });
-            this.getCaregivers();
-          }
+          // this.data = [...this.data, data.createOneCaregiver];
+
+          this.managePatientCaregivers(ActionKey.EDIT_CAREGIVER, {
+            ...data.createOneCaregiver,
+            ...patientCaregiverData,
+          });
+          // this.getCaregivers();
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to create Caregiver' })
       );
@@ -290,6 +294,7 @@ export class CaregiversPatientComponent implements OnInit {
       relation: caregiverLocal.relation,
     };
     const { patientCaregiverId } = this.data.find((entry) => entry.id === caregiver.id);
+
     delete caregiverLocal.relation;
     delete caregiverLocal.emergency;
     delete caregiverLocal.note;

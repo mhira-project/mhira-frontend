@@ -8,6 +8,7 @@ import { MasterDataModule } from '../../@shared/@modules/master-data/master-data
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 @NgModule({
   declarations: [QuestionnaireFormComponent, QuestionnaireListComponent],
@@ -19,6 +20,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzButtonModule,
     NzIconModule,
     AppFormModule,
+    NzTabsModule,
   ],
 })
 export class QuestionnaireManagementModule {}

@@ -37,28 +37,7 @@
   (nzOnClose)="closeAddPanel()"
 >
   <div>
-    <p>Search caregiver from the list if they already exist:</p>
-  </div>
-  <div>
-    <section nz-col>
-      <form nz-form class="search-form">
-        <nz-form-item class="form-item">
-          <nz-form-label nzFor="caregiver">{{ 'translations.patients.addCaregiver ' | translate }}</nz-form-label>
-          <nz-form-control class="form-control">
-            <app-caregiver-picker
-              [assignSelfOption]="true"
-              [selectedCaregiver]="selectedCaregiver"
-              (selectCaregiver)="onCaregiverSelect($event)"
-            >
-            </app-caregiver-picker>
-          </nz-form-control>
-        </nz-form-item>
-        <button nz-button nzType="primary" class="button" (click)="addCaregiverToPatient()">Add</button>
-      </form>
-    </section>
-  </div>
-  <div>
-    <p>Or create a new Caregiver:</p>
+    <p style="color: black; font-size: 16px">Add a non-existing caregiver:</p>
   </div>
   <div>
     <button
@@ -68,8 +47,43 @@
       (click)="openCreatePanel()"
       *ngIf="perms.permissionsOnly(PK.MANAGE_SETTINGS)"
     >
-      <i nz-icon nzType="plus" nzTheme="outline"></i>Add new caregiver
+      <i nz-icon nzType="plus" nzTheme="outline"></i>New caregiver
     </button>
+  </div>
+  <br />
+  <br />
+  <div>
+    <h3><b>Or</b></h3>
+  </div>
+  <br />
+  <div>
+    <h5>Search for existing caregiver</h5>
+  </div>
+  <div>
+    <section nz-col>
+      <form nz-form class="search-form">
+        <nz-form-item class="form-item">
+          <nz-form-label nzFor="caregiver">Search existing caregiver number or name</nz-form-label>
+          <nz-form-control class="form-control">
+            <app-caregiver-picker
+              [assignSelfOption]="true"
+              [selectedCaregiver]="selectedCaregiver"
+              (selectCaregiver)="onCaregiverSelect($event)"
+            >
+            </app-caregiver-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <button
+          nz-button
+          nzType="primary"
+          class="button"
+          [disabled]="!this.selectedCaregiver"
+          (click)="addCaregiverToPatient()"
+        >
+          Add
+        </button>
+      </form>
+    </section>
   </div>
 </nz-drawer>
 
@@ -91,7 +105,7 @@
     [populateForm]="populateForm"
     [resetForm]="resetForm"
     [inputMode]="true"
-    [showCancelButton]="false"
+    [showCancelButton]="true"
     (submitForm)="onSubmitForm($event)"
   >
   </app-form>

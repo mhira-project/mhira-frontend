@@ -7,6 +7,7 @@ import { DepartmentsComponent } from './departments/departments.component';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { PermissionGuard } from '../../permission.guard';
 import { ReportsComponent } from './reports/reports.component';
+import { CreateReportComponent } from './create-report/create-report.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,17 @@ const routes: Routes = [
         component: ReportsComponent,
         data: {
           breadcrumbI18nKey: 'menu.reports',
+          permissions: {
+            only: [PermissionKey.VIEW_REPORTS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'create-report',
+        component: CreateReportComponent,
+        data: {
+          breadcrumbI18nKey: 'menu.createReport',
           permissions: {
             only: [PermissionKey.VIEW_REPORTS],
           },

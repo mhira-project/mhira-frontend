@@ -46,7 +46,6 @@ export class CaregiversPatientService {
   }
 
   addCaregiversToPatient(patientId: number, caregiver: any): Observable<FetchResult<any>> {
-    console.log({ caregiver });
     return this.apollo.mutate({
       mutation: this.nestJsQueriesService.relationalCommandMutation(
         'createOnePatientCaregiver',

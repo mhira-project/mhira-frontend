@@ -10,6 +10,7 @@ import {
   FormattedQuestionnaireVersion,
   QuestionnaireStatus,
 } from '../../pages/questionnaire-management/@types/questionnaire';
+import { Reports } from '@app/pages/administration/@types/reports';
 
 const STATUS_COLOR = {
   [QuestionnaireStatus.DRAFT]: 'blue',
@@ -30,6 +31,11 @@ export class Convert {
   // Permission
   public static toPermission(json: any): Permission {
     json.createdAt = json.createdAt ? moment(json.createdAt).format('DD-MM-YYYY HH:mm') : '';
+    return json;
+  }
+
+  public static toReport(json: any): Reports {
+    json.createdAt = json.createdAt ? moment(json.createdAt).format('DD-MM-YYYY') : '';
     return json;
   }
 

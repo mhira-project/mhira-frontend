@@ -1,21 +1,21 @@
 import { async, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { CaregiverListComponent } from './caregiver-list.component';
+import { CreateReportComponent } from './create-report.component';
 
-describe('CaregiverListComponent', () => {
-  let component: CaregiverListComponent;
-  let fixture: ComponentFixture<CaregiverListComponent>;
+describe('CreateReportComponent', () => {
+  let component: CreateReportComponent;
+  let fixture: ComponentFixture<CreateReportComponent>;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [CaregiverListComponent],
+        declarations: [CreateReportComponent],
       }).compileComponents();
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CaregiverListComponent);
+    fixture = TestBed.createComponent(CreateReportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

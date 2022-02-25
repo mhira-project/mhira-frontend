@@ -20,6 +20,7 @@ export default {
     newUser: 'Nuevo Usuario',
     administration: 'Administración',
     reports: 'Informes',
+    createReport: 'Crear Reporte',
     permissionMatrix: 'Permisos de Usuarios',
     permissions: 'Permisos',
     roles: 'Roles',
@@ -31,6 +32,14 @@ export default {
     noTabs: 'No hay Pestaña',
   },
   tables: {
+    reports: {
+      name: 'Nombre',
+      resources: 'Tipo de Informe',
+      roles: 'Roles',
+      status: 'Estado',
+      repositoryLink: 'Enlace del Repositorio',
+      createdAt: 'Creado En',
+    },
     patients: {
       firstName: 'Nombre',
       middleName: 'Segundo Nombre',
@@ -86,6 +95,17 @@ export default {
     },
   },
   forms: {
+    createReportForm: {
+      reportName: 'Reportar Nombre',
+      description: 'Descripción',
+      resources: 'Recursos',
+      url: 'URL',
+      appName: 'App Nombre',
+      repositoryLink: 'Enlace del Repositorio',
+      reportStatus: 'Estado del Informe',
+      anonymus: 'Anonymus',
+      roles: 'Roles',
+    },
     changePassword: {
       newPassword: 'Ingrese su Nueva Contraseña',
       newPasswordConfirmation: 'Repita su Contraseña',
