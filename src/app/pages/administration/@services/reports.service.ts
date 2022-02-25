@@ -56,26 +56,12 @@ export class ReportsService {
     });
   }
 
-  // addRolesToReport(reportId: number, rolesIds: number[]): Observable<FetchResult<any>> {
-  //   console.log('called')
-  //   return this.apollo.mutate({
-  //     mutation: ReportsMutations.addRolesToReport,
-  //     variables: {
-  //       input: {
-  //           id: reportId,
-  //           relationIds: rolesIds,
-  //       },
-  //     },
-  //     fetchPolicy: 'no-cache',
-  //   });
-  // }
-
   addRolesToReport(reportId: number, rolesIds: number[]): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: ReportsMutations.addRolesToReport,
       variables: {
         input: {
-          reportId: reportId,
+          reportId,
           roleIds: rolesIds,
         },
       },
