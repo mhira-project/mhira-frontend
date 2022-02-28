@@ -1,8 +1,8 @@
 <h5><b>Select the report you want to generate:</b></h5>
 
-<nz-card class="report-card">
-  <div>
-    <p style="color: black; text-align: center; font-size: 16px; margin-bottom: 0px">Report Number</p>
-    <p style="margin-top: 5px; text-align: center">Report Description</p>
+<div class="reports-container">
+  <div *ngFor="let report of reports" class="report-card" (click)="generateLink(report.appName)">
+    <p class="title-card">{{ report.name }}</p>
+    <p class="description-card">{{ report.description }}</p>
   </div>
-</nz-card>
+</div>
