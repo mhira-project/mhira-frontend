@@ -1,8 +1,5 @@
 <div class="buttons">
   <button nz-button nzType="primary" (click)="goBack()">Back</button>
-  <button *ngIf="patientTitle" nz-button nzType="primary">
-    <a href="{{ '/shiny/patient-report?token=' + getToken() + '&patient_id=' + patient.id }}" target="_blank">Report</a>
-  </button>
 </div>
 <h1 *ngIf="patientTitle">{{ patientTitle }}</h1>
 <nz-tabset nzSize="large">
