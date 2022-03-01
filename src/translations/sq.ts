@@ -100,7 +100,7 @@ export default {
       reportName: 'Emri i Raportit',
       description: 'Përshkrim',
       resources: 'Burimet',
-      url: 'URL',
+      url: 'URL-ja e Mjetit Të Raportimit',
       appName: 'Emri i Aplikacionit',
       repositoryLink: 'Lidhja e Depove',
       reportStatus: 'Raportoni Statusin',

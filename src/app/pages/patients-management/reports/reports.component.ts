@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormattedPatient } from '@app/pages/patients-management/@types/formatted-patient';
 import { Reports } from '@app/pages/administration/@types/reports';
 import { finalize } from 'rxjs/operators';
-import { ReportsModel } from '@app/pages/administration/@models/reports.model';
 import { ReportsResourcesService } from '@app/pages/patients-management/@services/reports-resources.service';
 import { ErrorHandlerService } from '@shared/services/error-handler.service';
 
@@ -41,11 +40,11 @@ export class ReportsComponent implements OnInit {
     return user.accessToken;
   }
 
-  generateLink(appName: string) {
-    appName = appName ? '/' + appName : '';
+  generateLink(url: string) {
+    url = url ? '/' + url : '';
 
     // '/shiny/patient-report?token=' + getToken() + '&patient_id=' + patient.id
-    console.log('/shiny' + appName + '?token=' + this.getToken() + '&patient_id=' + this.patient.id);
-    window.open('/shiny' + appName + '?token=' + this.getToken() + '&patient_id=' + this.patient.id, '_blank').focus();
+    console.log('/shiny' + url + '?token=' + this.getToken() + '&patient_id=' + this.patient.id);
+    window.open('/shiny' + url + '?token=' + this.getToken() + '&patient_id=' + this.patient.id, '_blank').focus();
   }
 }

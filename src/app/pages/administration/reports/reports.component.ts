@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PermissionKey } from '@shared/@types/permission';
-import { FormattedReport, Reports, UpdateOneReportInput } from '@app/pages/administration/@types/reports';
+import { FormattedReport, Reports } from '@app/pages/administration/@types/reports';
 import {
   Action,
   ActionArgs,
@@ -15,15 +15,9 @@ import { Sorting } from '@shared/@types/sorting';
 import { ReportsService } from '@app/pages/administration/@services/reports.service';
 import { finalize } from 'rxjs/operators';
 import { ErrorHandlerService } from '@shared/services/error-handler.service';
-import { Convert } from '@shared/classes/convert';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
-import {
-  Caregiver,
-  FormattedCaregiver,
-  UpdateOneCaregiverInput,
-} from '@app/pages/patients-management/@types/caregiver';
 import { ReportsModel } from '@app/pages/administration/@models/reports.model';
 
 enum ActionKey {
@@ -65,6 +59,10 @@ export class ReportsComponent implements OnInit {
       { key: ActionKey.EDIT_REPORT, title: 'Edit Report' },
       { key: ActionKey.DELETE_REPORT, title: 'Delete Report' },
     ];
+  }
+
+  public handleRowClick(event: any) {
+    this.onReportSelect(event);
   }
 
   public onPageChange(paging: Paging): void {
