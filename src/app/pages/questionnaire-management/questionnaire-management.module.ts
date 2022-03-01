@@ -9,10 +9,9 @@ import { AppFormModule } from '../../@shared/components/form/app-form.module';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
-import { QuestionnaireProfileComponent } from './questionnaire-profile/questionnaire-profile.component';
 
 @NgModule({
-  declarations: [QuestionnaireFormComponent, QuestionnaireListComponent, QuestionnaireProfileComponent],
+  declarations: [QuestionnaireFormComponent, QuestionnaireListComponent],
   imports: [
     CommonModule,
     QuestionnaireManagementRoutingModule,
