@@ -5,8 +5,9 @@ import {
   CreateReportInput,
   Reports,
   UpdateOneReportInput,
+  UpdateReport,
 } from '@app/pages/administration/@types/reports';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Role } from '@app/pages/administration/@types/role';
 import { finalize } from 'rxjs/operators';
 import { RolesService } from '@app/pages/administration/@services/roles.service';
@@ -101,6 +102,23 @@ export class CreateReportComponent implements OnInit {
     });
   }
 
+  addRolesToReport(selectedRoles: Role[]) {
+    setTimeout(() => {
+      console.log('here');
+      const rolesID = selectedRoles.map((item) => item.id);
+      this.reportsService.addRolesToReport(this.report.id, rolesID).subscribe(
+        ({ data }) => {
+          this.afterCreate();
+        },
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: 'Unable to create report',
+          })
+      );
+    }, 200);
+    console.log('Last check!');
+  }
+
   createReport(formData: any) {
     this.isLoading = true;
     this.populateForm = false;
@@ -135,26 +153,8 @@ export class CreateReportComponent implements OnInit {
       );
   }
 
-  addRolesToReport(selectedRoles: Role[]) {
-    setTimeout(() => {
-      console.log('here');
-      const rolesID = selectedRoles.map((item) => item.id);
-      this.reportsService.addRolesToReport(this.report.id, rolesID).subscribe(
-        ({ data }) => {
-          this.message.create('success', `Report has successfully been created`);
-
-          this.afterCreate();
-        },
-        (error) =>
-          this.errorService.handleError(error, {
-            prefix: 'Unable to create report',
-          })
-      );
-    }, 1000);
-    console.log('Last check!');
-  }
-
-  updateReport(reportUpdates: CreateReportInput) {
+  updateReport(reportUpdates: UpdateReport) {
+    delete reportUpdates.id;
     const reportInput: UpdateOneReportInput = {
       id: this.report.id,
       update: reportUpdates,
@@ -174,6 +174,12 @@ export class CreateReportComponent implements OnInit {
       .subscribe(
         async ({ data }) => {
           this.message.create('success', `Report has successfully been updated`);
+          this.report = data.updateOneReport;
+          console.log(this.report);
+          if (this.selectedRoles.length > 0) {
+            this.addRolesToReport(this.selectedRoles);
+            console.log(this.selectedRoles);
+          }
         },
         (error) => {
           this.populateForm = true;

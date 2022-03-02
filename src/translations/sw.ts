@@ -99,7 +99,7 @@ export default {
       reportName: 'Jina la Ripoti',
       description: 'Maelezo',
       resources: 'Rasilimali',
-      url: 'URL',
+      url: 'URL Ya Zana Ya Kuripoti',
       appName: 'App Jina',
       repositoryLink: 'Kiungo cha Hifadhi',
       reportStatus: 'Hali ya Ripoti',

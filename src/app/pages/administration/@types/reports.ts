@@ -1,6 +1,5 @@
-import { Role } from './role';
 import { TagInfo } from '@shared/@modules/master-data/@types/list';
-import { Department } from '@app/pages/administration/@types/department';
+import { Role } from '@app/pages/administration/@types/role';
 
 export interface Reports {
   id: number;
@@ -22,18 +21,27 @@ export interface CreateOneReportInput {
 }
 
 export interface ReportRole {
+  name: string;
   id: number;
   roleId: number;
+  role: Role;
 }
 
 export interface UpdateOneReportInput {
   id: number;
-  update: CreateReportInput;
+  update: UpdateReport;
 }
 
 export interface UpdateReport {
-  name: string;
-  description: string;
+  anonymus?: boolean;
+  name?: string;
+  description?: string;
+  status?: boolean;
+  appName?: string;
+  repositoryLink?: any;
+  url?: string;
+  resources?: string;
+  id?: number;
 }
 
 export interface CreateReportInput {
@@ -48,5 +56,5 @@ export interface CreateReportInput {
 }
 
 export interface FormattedReport extends Reports {
-  formattedStatus: TagInfo;
+  formattedRoles: TagInfo[];
 }

@@ -19,6 +19,9 @@ const reports = gql`
           updatedAt
           reportRoles {
             roleId
+            role {
+              name
+            }
           }
         }
       }

@@ -1,7 +1,7 @@
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
-import { Reports } from '../@types/reports';
+import { FormattedReport, Reports } from '../@types/reports';
 
-export const ReportsColumns: TableColumn<Partial<Reports>>[] = [
+export const ReportsColumns: TableColumn<Partial<FormattedReport>>[] = [
   {
     title: 'Name',
     name: 'name',
@@ -24,13 +24,15 @@ export const ReportsColumns: TableColumn<Partial<Reports>>[] = [
   },
   {
     title: 'Roles',
-    name: 'reportRoles',
-    translationPath: 'tables.reports.roles',
-    sort: true,
+    name: 'formattedRoles',
+    translationPath: 'tables.users.formattedRoles',
+    render: 'tag',
     filterField: {
-      type: 'text',
+      type: 'select',
       value: undefined,
+      // options will be added dynamically
     },
+    filterQuery: (q: number) => (q ? { id: { eq: q } } : { id: { is: null } }),
   },
   {
     title: 'Status',

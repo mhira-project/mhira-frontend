@@ -99,7 +99,7 @@ export default {
       reportName: 'Reportar Nombre',
       description: 'Descripción',
       resources: 'Recursos',
-      url: 'URL',
+      url: 'URL De La Herramienta De Informes',
       appName: 'App Nombre',
       repositoryLink: 'Enlace del Repositorio',
       reportStatus: 'Estado del Informe',
