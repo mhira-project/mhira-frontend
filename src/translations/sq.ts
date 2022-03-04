@@ -32,6 +32,13 @@ export default {
     noTabs: 'Nuk ka skedar',
   },
   tables: {
+    scripts: {
+      name: 'Emri',
+      version: 'Versioni',
+      creator: 'Krijuesi',
+      reports: 'Raportet',
+      repositoryLink: 'Linku i Repozitorit',
+    },
     reports: {
       name: 'Emri',
       resources: 'Lloji i Raportit',
@@ -96,6 +103,13 @@ export default {
     },
   },
   forms: {
+    scripts: {
+      name: 'Emri',
+      version: 'Versioni',
+      creator: 'Krijuesi',
+      reports: 'Raportet',
+      repositoryLink: 'Linku i Repozitorit',
+    },
     createReportForm: {
       reportName: 'Emri i Raportit',
       description: 'Përshkrim',

@@ -32,6 +32,13 @@ export default {
     noTabs: 'Keine Registerkarten',
   },
   tables: {
+    scripts: {
+      name: 'Name',
+      version: 'Ausführung',
+      creator: 'Schöpfer',
+      reports: 'Berichte',
+      repositoryLink: 'Repository-Link',
+    },
     reports: {
       name: 'Name',
       resources: 'Berichtstyp',
@@ -95,6 +102,13 @@ export default {
     },
   },
   forms: {
+    scripts: {
+      name: 'Name',
+      version: 'Ausführung',
+      creator: 'Schöpfer',
+      reports: 'Berichte',
+      repositoryLink: 'Repository-Link',
+    },
     createReportForm: {
       reportName: 'Berichtsname',
       description: 'Beschreibung',

@@ -32,6 +32,13 @@ export default {
     noTabs: 'No hay Pestaña',
   },
   tables: {
+    scripts: {
+      name: 'Name',
+      version: 'Versión',
+      creator: 'Creador',
+      reports: 'Informes',
+      repositoryLink: 'Enlace Del Repositorio',
+    },
     reports: {
       name: 'Nombre',
       resources: 'Tipo de Informe',
@@ -95,6 +102,13 @@ export default {
     },
   },
   forms: {
+    scripts: {
+      name: 'Name',
+      version: 'Versión',
+      creator: 'Creador',
+      reports: 'Informes',
+      repositoryLink: 'Enlace Del Repositorio',
+    },
     createReportForm: {
       reportName: 'Reportar Nombre',
       description: 'Descripción',

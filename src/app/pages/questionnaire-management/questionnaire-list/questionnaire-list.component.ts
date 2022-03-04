@@ -1,8 +1,8 @@
 import { Filter } from '@shared/@types/filter';
 import { Convert } from '@shared/classes/convert';
 import { Component } from '@angular/core';
-import { QuestionnaireManagementService } from '../../@services/questionnaire-management.service';
-import { FormattedQuestionnaireVersion, QuestionnaireStatus } from '../../@types/questionnaire';
+import { QuestionnaireManagementService } from '../@services/questionnaire-management.service';
+import { FormattedQuestionnaireVersion, QuestionnaireStatus } from '../@types/questionnaire';
 import {
   TableColumn,
   Action,
@@ -12,7 +12,7 @@ import {
 } from '@shared/@modules/master-data/@types/list';
 import { PermissionKey } from '@shared/@types/permission';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
-import { QuestionnaireColumns } from '../../@tables/questionnaire.table';
+import { QuestionnaireColumns } from '../@tables/questionnaire.table';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { NzModalService } from 'ng-zorro-antd/modal';
