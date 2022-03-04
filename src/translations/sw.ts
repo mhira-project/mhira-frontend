@@ -32,6 +32,13 @@ export default {
     noTabs: 'Hakuna kurasa',
   },
   tables: {
+    scripts: {
+      name: 'Jina',
+      version: 'Toleo',
+      creator: 'Muumba',
+      reports: 'Ripoti',
+      repositoryLink: 'Kiungo Cha Hifadhi',
+    },
     reports: {
       name: 'Jina',
       resources: 'Aina ya Ripoti',
@@ -95,6 +102,13 @@ export default {
     },
   },
   forms: {
+    scripts: {
+      name: 'Jina',
+      version: 'Toleo',
+      creator: 'Muumba',
+      reports: 'Ripoti',
+      repositoryLink: 'Kiungo Cha Hifadhi',
+    },
     createReportForm: {
       reportName: 'Jina la Ripoti',
       description: 'Maelezo',

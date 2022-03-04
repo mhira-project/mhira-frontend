@@ -33,13 +33,6 @@ const routes: Routes = [
     loadChildren: () => import('./assessment/assessment.module').then((m) => m.AssessmentModule),
   },
   {
-    path: 'reports',
-    data: {
-      breadcrumbI18nKey: 'menu.reports',
-    },
-    loadChildren: () => import('./reports/reports.module').then((m) => m.ReportsModule),
-  },
-  {
     path: 'user-management',
     data: {},
     loadChildren: () => import('./user-management/user-management.module').then((m) => m.UserManagementModule),

@@ -1,0 +1,32 @@
+<app-master-data-list [data]="data" [columns]="columns" [loading]="isLoading" [pageInfo]="pageInfo">
+  <ng-container actions-left>
+    <app-master-data-search></app-master-data-search>
+  </ng-container>
+  <ng-container actions-right>
+    <button nz-button nzType="primary" nzShape="circle" (click)="openCreatePanel()">
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>
+
+<nz-drawer
+  [nzWidth]="600"
+  [nzMask]="true"
+  [nzClosable]="true"
+  [nzMaskClosable]="false"
+  [nzVisible]="showCreateScript"
+  (nzOnClose)="closeCreatePanel()"
+  nzPlacement="right"
+>
+  <app-form
+    class="mt-3"
+    [form]="scriptForm"
+    [formData]="script"
+    [isLoading]="isLoading"
+    [populateForm]="populateForm"
+    [resetForm]="resetForm"
+    [inputMode]="true"
+    [showCancelButton]="false"
+  >
+  </app-form>
+</nz-drawer>

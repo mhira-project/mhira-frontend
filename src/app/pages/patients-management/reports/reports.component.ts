@@ -34,17 +34,11 @@ export class ReportsComponent implements OnInit {
       );
   }
 
-  getToken() {
-    const userStr = localStorage.getItem('auth_app_token');
-    const user = JSON.parse(userStr);
-    return user.accessToken;
-  }
-
   generateLink(url: string) {
-    url = url ? '/' + url : '';
-
-    // '/shiny/patient-report?token=' + getToken() + '&patient_id=' + patient.id
-    console.log('/shiny' + url + '?token=' + this.getToken() + '&patient_id=' + this.patient.id);
-    window.open('/shiny' + url + '?token=' + this.getToken() + '&patient_id=' + this.patient.id, '_blank').focus();
+    if (url.indexOf('/') !== 0) {
+      url = '/' + url;
+    }
+    console.log('/shiny' + url + '?patient_id=' + this.patient.id);
+    window.open('/shiny' + url + '?patient_id=' + this.patient.id, '_blank').focus();
   }
 }

@@ -1,15 +1,15 @@
 import { finalize } from 'rxjs/operators';
 import { Component } from '@angular/core';
-import { QuestionnaireManagementService } from '../@services/questionnaire-management.service';
-import { CreateQuestionnaireInput } from '../@types/questionnaire';
-import { QuestionnaireForm, QuestionnaireUpdateForm } from '../@forms/questionnaire.form';
-import { QuestionnaireVersion } from './../@types/questionnaire';
+import { QuestionnaireManagementService } from '../../@services/questionnaire-management.service';
+import { CreateQuestionnaireInput } from '../../@types/questionnaire';
+import { QuestionnaireForm, QuestionnaireUpdateForm } from '../../@forms/questionnaire.form';
+import { QuestionnaireVersion } from '../../@types/questionnaire';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '@env/environment';
-import { PermissionKey } from '../../../@shared/@types/permission';
-import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
-import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
+import { PermissionKey } from '@shared/@types/permission';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
+import { ErrorHandlerService } from '@shared/services/error-handler.service';
 
 const CryptoJS = require('crypto-js');
 

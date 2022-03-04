@@ -32,6 +32,13 @@ export default {
     noTabs: 'No Tabs',
   },
   tables: {
+    scripts: {
+      name: 'Name',
+      version: 'Version',
+      creator: 'Creator',
+      reports: 'Reports',
+      repositoryLink: 'Repository Link',
+    },
     reports: {
       name: 'Name',
       resources: 'Report Type',
@@ -95,6 +102,13 @@ export default {
     },
   },
   forms: {
+    scripts: {
+      name: 'Name',
+      version: 'Version',
+      creator: 'Creator',
+      reports: 'Reports',
+      repositoryLink: 'Repository Link',
+    },
     createReportForm: {
       reportName: 'Report Name',
       description: 'Description',

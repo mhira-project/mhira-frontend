@@ -1,9 +1,10 @@
 import { PermissionGuard } from './../../permission.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { QuestionnaireFormComponent } from './questionnaire-form/questionnaire-form.component';
+import { QuestionnaireFormComponent } from './questionnaire-profile/questionnaire-form/questionnaire-form.component';
 import { PermissionKey } from '../../@shared/@types/permission';
 import { QuestionnaireListComponent } from './questionnaire-list/questionnaire-list.component';
+import { QuestionnaireProfileComponent } from './questionnaire-profile/questionnaire-profile.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'questionnaire-form',
-    component: QuestionnaireFormComponent,
+    component: QuestionnaireProfileComponent,
     data: {
       breadcrumbI18nKey: 'menu.uploadQuestionnaire',
       permissions: {
