@@ -62,7 +62,7 @@ export class CreateReportComponent implements OnInit {
   }
 
   reportHasRole(roleId: number): boolean {
-    const roles = this.report?.reportRoles?.filter((role) => role.roleId === roleId);
+    const roles = this.report?.roles?.filter((role) => role.id === roleId);
     return roles?.length > 0;
   }
 
@@ -74,7 +74,7 @@ export class CreateReportComponent implements OnInit {
     }
   }
 
-  public submitForm(reportData: Reports): void {
+  public submitForm(reportData: CreateReportInput): void {
     if (this.report) {
       reportData.id = this.report.id;
       this.updateReport(reportData);
@@ -102,30 +102,31 @@ export class CreateReportComponent implements OnInit {
     });
   }
 
-  addRolesToReport(selectedRoles: Role[]) {
-    setTimeout(() => {
-      console.log('here');
-      const rolesID = selectedRoles.map((item) => item.id);
-      this.reportsService.addRolesToReport(this.report.id, rolesID).subscribe(
-        ({ data }) => {
-          this.afterCreate();
-        },
-        (error) =>
-          this.errorService.handleError(error, {
-            prefix: 'Unable to create report',
-          })
-      );
-    }, 200);
-    console.log('Last check!');
-  }
+  // addRolesToReport(selectedRoles: Role[]) {
+  //   setTimeout(() => {
+  //     console.log('here');
+  //     const rolesID = selectedRoles.map((item) => item.id);
+  //     this.reportsService.addRolesToReport(this.report.id, rolesID).subscribe(
+  //       ({ data }) => {
+  //         this.afterCreate();
+  //       },
+  //       (error) =>
+  //         this.errorService.handleError(error, {
+  //           prefix: 'Unable to create report',
+  //         })
+  //     );
+  //   }, 200);
+  //   console.log('Last check!');
+  // }
 
-  createReport(formData: any) {
+  createReport(formData: CreateReportInput) {
     this.isLoading = true;
     this.populateForm = false;
     this.resetForm = false;
     const inputData: CreateReportInput = Object.assign({}, formData);
+    const roles = this.selectedRoles.map((item) => item.id);
     const reportInput: CreateOneReportInput = {
-      report: inputData,
+      report: { ...inputData, roles },
     };
     this.loadingMessage = `Creating report ${inputData.name} `;
     this.reportsService
@@ -140,8 +141,8 @@ export class CreateReportComponent implements OnInit {
         ({ data }) => {
           this.message.create('success', `Report has successfully been created`);
           this.report = data.createOneReport;
+          console.log(this.report);
           if (this.selectedRoles.length > 0) {
-            this.addRolesToReport(this.selectedRoles);
             console.log(this.selectedRoles);
           }
           this.afterCreate();
@@ -177,7 +178,6 @@ export class CreateReportComponent implements OnInit {
           this.report = data.updateOneReport;
           console.log(this.report);
           if (this.selectedRoles.length > 0) {
-            this.addRolesToReport(this.selectedRoles);
             console.log(this.selectedRoles);
           }
         },
@@ -215,12 +215,6 @@ export class CreateReportComponent implements OnInit {
           this.roles.push(_role);
           options.push({ label: _role.name, value: _role.id });
         });
-        // this.reportForm.groups[0].fields[0].options = options;
-        // this.profileFields.groups.map((group) =>
-        //   group.fields.map((field) => {
-        //     if (field.name === 'roleId') field.options = options;
-        //   })
-        // );
       },
       (error) => this.errorService.handleError(error, { prefix: 'Unable to load roles' })
     );

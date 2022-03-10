@@ -11,7 +11,7 @@ export interface Reports {
   repositoryLink: any;
   url: string;
   resources: string;
-  reportRoles: ReportRole[];
+  roles: Role[];
   createdAt?: string;
   updatedAt?: string;
 }
@@ -33,6 +33,7 @@ export interface UpdateOneReportInput {
 }
 
 export interface UpdateReport {
+  id?: number;
   anonymus?: boolean;
   name?: string;
   description?: string;
@@ -41,10 +42,11 @@ export interface UpdateReport {
   repositoryLink?: any;
   url?: string;
   resources?: string;
-  id?: number;
+  roles: number[];
 }
 
 export interface CreateReportInput {
+  id: number;
   anonymus?: boolean;
   name?: string;
   description?: string;
@@ -53,6 +55,7 @@ export interface CreateReportInput {
   repositoryLink?: any;
   url?: string;
   resources?: string;
+  roles: number[];
 }
 
 export interface FormattedReport extends Reports {
