@@ -1,32 +1,26 @@
 import gql from 'graphql-tag';
 
 const scripts = gql`
-  query($paging: CursorPaging, $filter: ScriptFilter, $sorting: [ScriptSort!]) {
-    scripts(paging: $paging, filter: $filter, sorting: $sorting) {
+  query($questionnaireId: String!, $paging: CursorPaging) {
+    scripts(questionnaireId: $questionnaireId, paging: $paging) {
       edges {
         cursor
         node {
           id
           name
+          scriptText
           version
           creator
           repositoryLink
           createdAt
           updatedAt
-          scriptRoles {
-            roleId
-            role {
-              name
-            }
-          }
+          deletedAt
         }
-      }
-      pageInfo {
-        startCursor
-        endCursor
-        hasNextPage
-        hasPreviousPage
       }
     }
   }
 `;
+
+export const ScriptsQueries = {
+  scripts,
+};
