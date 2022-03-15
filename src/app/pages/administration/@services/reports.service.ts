@@ -46,9 +46,9 @@ export class ReportsService {
 
   deleteReport(report: Reports): Observable<FetchResult<any>> {
     return this.apollo.mutate({
-      mutation: ReportsMutations.updateOneReport,
+      mutation: ReportsMutations.deleteOneReport,
       variables: {
-        input: { id: report.id, update: { deletedAt: new Date() } },
+        input: { id: report.id },
       },
       fetchPolicy: 'no-cache',
     });

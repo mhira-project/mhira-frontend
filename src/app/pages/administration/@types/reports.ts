@@ -32,6 +32,10 @@ export interface UpdateOneReportInput {
   update: UpdateReport;
 }
 
+export interface DeleteOneReportInput {
+  id: number;
+}
+
 export interface UpdateReport {
   id?: number;
   anonymus?: boolean;

@@ -156,9 +156,10 @@ export class CreateReportComponent implements OnInit {
 
   updateReport(reportUpdates: UpdateReport) {
     delete reportUpdates.id;
+    const roles = this.selectedRoles.map((item) => item.id);
     const reportInput: UpdateOneReportInput = {
       id: this.report.id,
-      update: reportUpdates,
+      update: { ...reportUpdates, roles },
     };
     this.isLoading = true;
     this.populateForm = false;
