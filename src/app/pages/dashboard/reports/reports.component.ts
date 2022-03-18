@@ -4,6 +4,7 @@ import { Reports } from '@app/pages/administration/@types/reports';
 import { finalize } from 'rxjs/operators';
 import { ReportsResourcesService } from '@app/pages/patients-management/@services/reports-resources.service';
 import { ErrorHandlerService } from '@shared/services/error-handler.service';
+import { ReportsDashboardService } from '../@services/reports.service';
 
 @Component({
   selector: 'app-reports',
@@ -15,7 +16,7 @@ export class ReportsComponent implements OnInit {
   reports: Reports[];
   public isLoading = false;
 
-  constructor(private errorService: ErrorHandlerService, private reportsResourcesService: ReportsResourcesService) {}
+  constructor(private errorService: ErrorHandlerService, private reportsDashboardService: ReportsDashboardService) {}
 
   ngOnInit(): void {
     this.getReportsByResources();
@@ -23,8 +24,8 @@ export class ReportsComponent implements OnInit {
 
   getReportsByResources() {
     this.isLoading = true;
-    this.reportsResourcesService
-      .getPatientCaseManagers()
+    this.reportsDashboardService
+      .getDashboardCaseManagers()
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data: { getReportsByResource } }: any) => {
