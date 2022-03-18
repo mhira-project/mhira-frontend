@@ -39,7 +39,7 @@ export class ReportsComponent implements OnInit {
     if (url.indexOf('/') !== 0) {
       url = '/' + url;
     }
-    console.log(url + '?patient_id=' + this.patient.id);
-    window.open(url + '?patient_id=' + this.patient.id, '_blank').focus();
+    console.log(url);
+    window.open(url + '_blank').focus();
   }
 }
