@@ -5,7 +5,7 @@ export interface Scripts {
   id: number;
   name: string;
   version: string;
-  scriptText: string;
+  scriptText: File;
   creator: string;
   repositoryLink: string;
   createdAt?: string;
@@ -14,21 +14,34 @@ export interface Scripts {
   reports: Reports[];
 }
 
-export interface CreateScriptInput {
-  id: number;
-  name: string;
-  version: string;
-  scriptText: string;
-  creator: string;
-  repositoryLink: string;
+export interface CreateOneScriptInput {
+  id?: number;
+  name?: string;
+  version?: string;
+  scriptText: File;
+  creator?: string;
+  repositoryLink?: string;
   createdAt?: string;
   updatedAt?: string;
-  questionnaireId: string;
-  reports: number[];
+  questionnaireId?: string;
+  reportIds?: number[];
 }
 
-export interface CreateOneScriptInput {
-  script: CreateScriptInput;
+export interface UpdateOneScriptInput {
+  id?: number;
+  update: UpdateScript;
+}
+
+export interface UpdateScript {
+  name?: string;
+  version?: string;
+  creator?: string;
+  scriptText: File;
+  repositoryLink?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  questionnaireId?: string;
+  reportIds?: number[];
 }
 
 export interface FormattedScript extends Scripts {

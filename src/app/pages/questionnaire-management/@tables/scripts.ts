@@ -1,7 +1,7 @@
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
-import { Scripts } from '../@types/scripts';
+import { FormattedScript, Scripts } from '../@types/scripts';
 
-export const ScriptColumns: TableColumn<Partial<Scripts>>[] = [
+export const ScriptColumns: TableColumn<Partial<FormattedScript>>[] = [
   {
     title: 'Name',
     name: 'name',
@@ -34,13 +34,15 @@ export const ScriptColumns: TableColumn<Partial<Scripts>>[] = [
   },
   {
     title: 'Reports',
-    name: 'reports',
+    name: 'formattedReports',
     translationPath: 'tables.scripts.reports',
-    sort: true,
+    render: 'tag',
     filterField: {
-      type: 'text',
+      type: 'select',
       value: undefined,
+      // options will be added dynamically
     },
+    filterQuery: (q: number) => (q ? { id: { eq: q } } : { id: { is: null } }),
   },
   {
     title: 'Repository Link',

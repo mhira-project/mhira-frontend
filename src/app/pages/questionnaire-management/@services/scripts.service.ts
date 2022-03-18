@@ -7,7 +7,11 @@ import { Sorting } from '../../../@shared/@types/sorting';
 import { Observable } from 'rxjs';
 import { FetchResult } from 'apollo-link';
 import { ScriptsQueries } from '../../../@graphql/queries/scripts';
-import { CreateOneScriptInput } from '@app/pages/questionnaire-management/@types/scripts';
+import {
+  CreateOneScriptInput,
+  Scripts,
+  UpdateOneScriptInput,
+} from '@app/pages/questionnaire-management/@types/scripts';
 import { ScriptsMutations } from '@app/@graphql/mutations/scripts';
 
 @Injectable({
@@ -34,10 +38,38 @@ export class ScriptsService {
     });
   }
 
-  createReport(createOneScriptInput: CreateOneScriptInput): Observable<FetchResult<any>> {
+  createScript(createOneScriptInput: CreateOneScriptInput): Observable<FetchResult<any>> {
+    const input = createOneScriptInput;
     return this.apollo.mutate({
       mutation: ScriptsMutations.createOneScript,
-      variables: { input: createOneScriptInput },
+      variables: { input },
+      fetchPolicy: 'no-cache',
+      context: {
+        useMultipart: true,
+      },
+    });
+  }
+
+  updateScript(id: number, updateOneScriptInput: CreateOneScriptInput): Observable<FetchResult<any>> {
+    const { questionnaireId, ...rest } = updateOneScriptInput;
+    const input = { id, update: { ...rest } };
+    console.log(id);
+    return this.apollo.mutate({
+      mutation: ScriptsMutations.updateOneScript,
+      variables: { input },
+      fetchPolicy: 'no-cache',
+      context: {
+        useMultipart: true,
+      },
+    });
+  }
+
+  deleteScript(script: Scripts): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: ScriptsMutations.deleteOneScript,
+      variables: {
+        input: { id: script.id },
+      },
       fetchPolicy: 'no-cache',
     });
   }

@@ -168,14 +168,6 @@ export class CaregiversPatientComponent implements OnInit {
     this.openCreatePanel(event);
   }
 
-  // public  disableEnableFields() {
-  //   this.caregiverForm.groups.forEach((group) =>
-  //     group.fields.forEach((field) => {
-  //       field.name === 'firstName' ? (field.disabled = false) : (field.disabled = true);
-  //     })
-  //   );
-  // }
-
   private createSearchFilter(searchString: string): Array<{ [K in keyof Partial<FormattedCaregiver>]: {} }> {
     if (!searchString) return [];
     return [{ relation: { iLike: `%${searchString}%` } }, { note: { iLike: `%${searchString}%` } }];

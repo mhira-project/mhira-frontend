@@ -108,6 +108,7 @@ export default {
       version: 'Versioni',
       creator: 'Krijuesi',
       reports: 'Raportet',
+      excelFile: 'Eksporto Skedarin',
       repositoryLink: 'Linku i Repozitorit',
     },
     createReportForm: {

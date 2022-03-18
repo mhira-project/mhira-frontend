@@ -32,11 +32,12 @@ export class QuestionnaireProfileComponent implements OnInit {
 
   getQuestionnaire() {
     this.activatedRoute.queryParams.subscribe((params) => {
-      if (params.profile) {
-        const bytes = CryptoJS.AES.decrypt(params.profile, environment.secretKey);
+      if (params.questionnaire) {
+        const bytes = CryptoJS.AES.decrypt(params.questionnaire, environment.secretKey);
         const questionnaire = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.questionnaire = QuestionnaireModel.fromJson(questionnaire);
       }
+      console.log(this.questionnaire);
     });
   }
 

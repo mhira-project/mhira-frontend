@@ -106,6 +106,7 @@ export default {
       name: 'Jina',
       version: 'Toleo',
       creator: 'Muumba',
+      excelFile: 'Hamisha Faili',
       reports: 'Ripoti',
       repositoryLink: 'Kiungo Cha Hifadhi',
     },

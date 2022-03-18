@@ -15,6 +15,10 @@ const scripts = gql`
           createdAt
           updatedAt
           deletedAt
+          reports {
+            id
+            name
+          }
         }
       }
     }
