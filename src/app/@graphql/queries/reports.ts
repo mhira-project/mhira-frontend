@@ -17,11 +17,9 @@ const reports = gql`
           resources
           createdAt
           updatedAt
-          reportRoles {
-            roleId
-            role {
-              name
-            }
+          roles {
+            id
+            name
           }
         }
       }

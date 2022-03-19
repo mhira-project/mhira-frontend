@@ -28,7 +28,10 @@ export const ReportForm: Form = {
           translationPath: 'forms.createReportForm.resources',
           description: 'Enter Report resources',
           type: 'select',
-          options: [{ label: 'Patients', value: 'Patients' }],
+          options: [
+            { label: 'Patients', value: 'Patients' },
+            { label: 'Dashboard', value: 'Dashboard' },
+          ],
           validationMessage: 'please Enter Report resources',
           isRequired: true,
           disabled: false,

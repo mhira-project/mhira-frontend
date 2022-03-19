@@ -14,6 +14,10 @@ const createOneReport = gql`
       resources
       createdAt
       updatedAt
+      roles {
+        id
+        name
+      }
     }
   }
 `;
@@ -50,6 +54,10 @@ const updateOneReport = gql`
       resources
       createdAt
       updatedAt
+      roles {
+        id
+        name
+      }
     }
   }
 `;
@@ -74,39 +82,11 @@ const updateManyReports = gql`
 
 const deleteOneReport = gql`
   mutation($input: DeleteOneReportInput!) {
-    deleteOneReport(input: $input) {
+    deleteReport(input: $input) {
       id
-      anonymus
-      name
-      description
-      status
-      repositoryLink
-      appName
-      url
-      resources
-      createdAt
-      updatedAt
     }
   }
 `;
-
-// const addRolesToReport = gql `
-//     mutation($input:CreateOneReportRoleInput!) {
-//       addRolesToReport(input: $input) {
-//         id
-//         anonymus
-//         name
-//         description
-//         status
-//         repositoryLink
-//         appName
-//         url
-//         resources
-//         createdAt
-//         updatedAt
-//       }
-//     }
-// `
 
 const addRolesToReport = gql`
   mutation($input: ReportRoleInput!) {

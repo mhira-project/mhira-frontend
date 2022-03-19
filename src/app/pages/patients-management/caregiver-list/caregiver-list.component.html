@@ -54,12 +54,16 @@
       <thead>
         <tr>
           <th>Patient</th>
+          <th>Birth Date</th>
+          <th>Medical Record Number</th>
           <th>Relation to patient</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of basicTable.data" (click)="onAction1(data)">
-          <td>{{ data.patient.firstName }}</td>
+          <td>{{ data.patient.firstName }} {{ data.patient.lastName }}</td>
+          <td>{{ data.patient.birthDate }}</td>
+          <td>{{ data.patient.medicalRecordNo }}</td>
           <td>{{ data.relation }}</td>
         </tr>
       </tbody>

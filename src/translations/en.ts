@@ -107,6 +107,7 @@ export default {
       version: 'Version',
       creator: 'Creator',
       reports: 'Reports',
+      excelFile: 'Export File',
       repositoryLink: 'Repository Link',
     },
     createReportForm: {

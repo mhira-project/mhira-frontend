@@ -12,6 +12,8 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { QuestionnaireProfileComponent } from './questionnaire-profile/questionnaire-profile.component';
 import { QuestionnaireScriptComponent } from './questionnaire-script/questionnaire-script.component';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
     AppFormModule,
     NzTabsModule,
     NzDrawerModule,
+    NzCardModule,
+    NzCheckboxModule,
   ],
 })
 export class QuestionnaireManagementModule {}

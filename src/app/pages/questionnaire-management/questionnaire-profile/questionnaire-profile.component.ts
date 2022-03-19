@@ -3,7 +3,7 @@ import { QuestionnaireVersion } from '@app/pages/questionnaire-management/@types
 import { QuestionnaireManagementService } from '@app/pages/questionnaire-management/@services/questionnaire-management.service';
 import { environment } from '@env/environment';
 import { ActivatedRoute, Router } from '@angular/router';
-import { QuestionnaireModel } from '@app/pages/questionnaire-management/models/questionnaire.model';
+import { QuestionnaireModel } from '@app/pages/questionnaire-management/@models/questionnaire.model';
 
 const CryptoJS = require('crypto-js');
 
@@ -32,12 +32,12 @@ export class QuestionnaireProfileComponent implements OnInit {
 
   getQuestionnaire() {
     this.activatedRoute.queryParams.subscribe((params) => {
-      console.log(params);
-      if (params.profile) {
-        const bytes = CryptoJS.AES.decrypt(params.profile, environment.secretKey);
+      if (params.questionnaire) {
+        const bytes = CryptoJS.AES.decrypt(params.questionnaire, environment.secretKey);
         const questionnaire = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.questionnaire = QuestionnaireModel.fromJson(questionnaire);
       }
+      console.log(this.questionnaire);
     });
   }
 
