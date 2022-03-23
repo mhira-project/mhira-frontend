@@ -40,6 +40,6 @@ export class ReportsComponent implements OnInit {
       url = '/' + url;
     }
     console.log(url);
-    window.open(url + '_blank').focus();
+    window.open(url, '_blank').focus();
   }
 }
