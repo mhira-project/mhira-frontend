@@ -19,11 +19,13 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { ReportsModel } from '@app/pages/administration/@models/reports.model';
+import { AppPermissionsService } from '@shared/services/app-permissions.service';
 
 enum ActionKey {
   EDIT_REPORT,
   DELETE_REPORT,
 }
+
 const CryptoJS = require('crypto-js');
 
 @Component({
@@ -50,6 +52,7 @@ export class ReportsComponent implements OnInit {
     private reportsService: ReportsService,
     private errorService: ErrorHandlerService,
     private modalService: NzModalService,
+    public perms: AppPermissionsService,
     private router: Router
   ) {}
 
@@ -97,11 +100,14 @@ export class ReportsComponent implements OnInit {
   public onAction({ action, context: report }: ActionArgs<FormattedReport, ActionKey>): void {
     switch (action.key) {
       case ActionKey.EDIT_REPORT:
-        this.onReportSelect(report);
+        if (this.perms.permissionsOnly(PermissionKey.MANAGE_REPORTS)) {
+          this.onReportSelect(report);
+        }
         return;
-
       case ActionKey.DELETE_REPORT:
-        this.deleteReport(report);
+        if (this.perms.permissionsOnly(PermissionKey.DELETE_REPORTS)) {
+          this.deleteReport(report);
+        }
         return;
     }
   }

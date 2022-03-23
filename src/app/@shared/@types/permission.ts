@@ -12,6 +12,8 @@ export enum PermissionKey {
   DELETE_USERS = 'delete users',
 
   VIEW_REPORTS = 'view reports',
+  MANAGE_REPORTS = 'manage reports',
+  DELETE_REPORTS = 'delete reports',
 
   VIEW_ROLES_PERMISSIONS = 'view roles_permissions',
   MANAGE_ROLES_PERMISSIONS = 'manage roles_permissions',
@@ -25,9 +27,6 @@ export enum PermissionKey {
   VIEW_QUESTIONNAIRES = 'view questionnaires',
   MANAGE_QUESTIONNAIRES = 'manage questionnaires',
   DELETE_QUESTIONNAIRES = 'delete questionnaires',
-
-  VIEW_REPORTING_TOOLS = 'view reporting_tools',
-  MANAGE_REPORTING_TOOLS = 'manage reporting_tools',
 }
 
 export const isPermissionKey = (key: any): key is PermissionKey => {
