@@ -1,0 +1,46 @@
+.input-class {
+  width: 480px !important;
+  margin-bottom: 15px;
+}
+
+.date-picker {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+h5 {
+  font-weight: bold;
+}
+
+.date-picker1 {
+  width: 233px;
+}
+
+.main-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.questionnaire {
+  min-width: 980px;
+}
+
+.button {
+  width: 240px;
+}
+
+nz-form-label {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+}
+
+input[readonly] {
+  border: 0;
+  padding: 0;
+}
+
+nz-date-picker [nzInputReadOnly] {
+  margin: 0 8px 12px 0;
+}

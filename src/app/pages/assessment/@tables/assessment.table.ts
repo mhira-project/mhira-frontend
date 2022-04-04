@@ -15,12 +15,6 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     },
   },
   {
-    name: 'formattedStatus',
-    title: 'Status',
-    translationPath: 'plannedAssessments.formattedStatus',
-    render: 'tag',
-  },
-  {
     name: 'patientMedicalRecordNo',
     title: 'Patient Hospital ID',
     translationPath: 'plannedAssessments.patientMedicalRecordNo',
@@ -83,15 +77,33 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     },
   },
   {
-    name: 'createdAt',
-    title: 'Created at',
-    translationPath: 'plannedAssessments.createdAt',
+    name: 'deliveryDate',
+    title: 'Delivery Date',
+    translationPath: 'plannedAssessments.deliveryDate',
     render: 'date',
-    sort: true,
+    sort: false,
     filterField: {
       type: 'dateRange',
       value: undefined,
-      title: 'Created at',
+      title: 'deliveryDate',
     },
+  },
+  {
+    name: 'expirationDate',
+    title: 'Expiration Date',
+    translationPath: 'plannedAssessments.expirationDate',
+    render: 'date',
+    sort: false,
+    filterField: {
+      type: 'dateRange',
+      value: undefined,
+      title: 'expirationDate',
+    },
+  },
+  {
+    name: 'formattedStatus',
+    title: 'Status',
+    translationPath: 'plannedAssessments.formattedStatus',
+    render: 'tag',
   },
 ];

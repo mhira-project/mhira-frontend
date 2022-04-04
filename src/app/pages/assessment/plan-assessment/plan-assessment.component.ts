@@ -27,6 +27,8 @@ export class PlanAssessmentComponent implements OnInit {
   public fullAssessment: FullAssessment;
   public assessmentForm: FormGroup;
   public editMode = true;
+  deliveryDate: any = null;
+  expireDate: any = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,6 +47,9 @@ export class PlanAssessmentComponent implements OnInit {
       patientId: [null, Validators.required],
       clinicianId: [null, Validators.required],
       questionnaires: [null, Validators.required],
+      deliveryDate: [null],
+      expirationDate: [null],
+      note: [null],
     });
 
     this.initAssessment();
@@ -90,6 +95,14 @@ export class PlanAssessmentComponent implements OnInit {
     this.router.navigate(['/mhira/assessments/planned-assessments']);
   }
 
+  public onChangeDelivery(result: Date): void {
+    console.log(result?.toISOString());
+  }
+
+  public onChangeExpire(result: Date): void {
+    console.log(result?.toISOString());
+  }
+
   private initAssessment() {
     let assessmentId: number;
 
@@ -108,7 +121,10 @@ export class PlanAssessmentComponent implements OnInit {
           informant: assessment.informant,
           patientId: assessment.patientId,
           clinicianId: assessment.clinicianId,
+          deliveryDate: assessment.deliveryDate,
+          expirationDate: assessment.expirationDate,
           questionnaires: assessment.questionnaireAssessment?.questionnaires,
+          note: assessment.note,
         });
 
         this.selectedQuestionnaires = assessment.questionnaireAssessment?.questionnaires;

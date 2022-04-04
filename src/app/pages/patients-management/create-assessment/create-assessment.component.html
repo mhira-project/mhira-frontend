@@ -1,0 +1,105 @@
+<h1 *ngIf="patientTitle">{{ patientTitle }}</h1>
+<div class="main-div">
+  <div class="form-div">
+    <section nz-col nzSpan="12">
+      <form nz-form [nzLayout]="'inline'" [formGroup]="formGroup" (submit)="onSubmitAssessment()">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group class="input-class">
+              <h5>Title</h5>
+              <input formControlName="name" nz-input placeholder="Baseline" [readonly]="!editMode" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control class="input-class">
+            <h5>Assessment Manager</h5>
+            <app-user-picker
+              [readonly]="!editMode"
+              [selectedUser]="selectedClinician"
+              (selectUser)="onUserSelect($event)"
+            ></app-user-picker>
+            <p><b>Tip:</b>Only assessment managers that share a department with the patient are shown.</p>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item style="margin-bottom: 15px">
+          <nz-radio-group
+            formControlName="informationType"
+            nzButtonStyle="solid"
+            [(ngModel)]="typeSelected"
+            (ngModelChange)="onSelectChange($event)"
+          >
+            <h5>Informant Type</h5>
+            <label nz-radio-button nzValue="Patient">Patient</label>
+            <label nz-radio-button nzValue="Department's User">Department's User</label>
+            <label nz-radio-button nzValue="Patient's Caregiver">Patient's Caregiver</label>
+          </nz-radio-group>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-input-group>
+            <h5>{{ typeSelected }}</h5>
+            <nz-select
+              [nzBorderless]="!editMode"
+              class="input-class"
+              [(ngModel)]="selectedInformant"
+              formControlName="informant"
+            >
+              <nz-option *ngFor="let data of dataToSelect" [nzLabel]="data.label" [nzValue]="data.value">{{
+                data.label
+              }}</nz-option>
+            </nz-select>
+          </nz-input-group>
+        </nz-form-item>
+        <div class="date-picker">
+          <nz-form-item>
+            <nz-input-group>
+              <h5>Delivery Date</h5>
+              <nz-date-picker
+                [nzBorderless]="!editMode"
+                class="date-picker1"
+                [(ngModel)]="deliveryDate"
+                formControlName="deliveryDate"
+                (ngModelChange)="onChangeDelivery($event)"
+              ></nz-date-picker>
+            </nz-input-group>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-input-group>
+              <h5>Expiration Date</h5>
+              <nz-date-picker
+                [nzBorderless]="!editMode"
+                class="date-picker1"
+                [(ngModel)]="expireDate"
+                formControlName="expirationDate"
+                (ngModelChange)="onChangeExpire($event)"
+              ></nz-date-picker>
+            </nz-input-group>
+          </nz-form-item>
+        </div>
+        <nz-form-item>
+          <nz-input-group class="input-class">
+            <h5>Notes for the assessment manager</h5>
+            <nz-textarea-count [nzMaxCharacterCount]="200" placeholder="Write notes">
+              <textarea formControlName="note" [nzBorderless]="!editMode" [(ngModel)]="noteValue" nz-input></textarea>
+            </nz-textarea-count>
+          </nz-input-group>
+        </nz-form-item>
+        <div *ngIf="editMode" style="margin-top: 20px; display: flex; justify-content: space-between">
+          <button nz-button class="button">Cancel</button>
+          <button nz-button nzType="primary" class="button" [disabled]="!formGroup.valid">Submit Session</button>
+        </div>
+        <button nz-button nzType="primary" type="button" *ngIf="!editMode" (click)="editMode = !editMode">Edit</button>
+      </form>
+    </section>
+  </div>
+  <div>
+    <section nz-col class="questionnaires" class="questionnaire">
+      <h4>Select Questionnaires</h4>
+      <app-questionnaire-selection
+        [readonly]="!editMode"
+        [selectedQuestionnaires]="selectedQuestionnaires"
+        (selectionChange)="onQuestionnaireSelected($event)"
+      ></app-questionnaire-selection>
+    </section>
+  </div>
+</div>

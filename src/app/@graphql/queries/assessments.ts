@@ -13,6 +13,9 @@ const assessments = gql`
           patientId
           clinicianId
           status
+          deliveryDate
+          expirationDate
+          note
           createdAt
           updatedAt
           deletedAt
@@ -53,6 +56,47 @@ const assessments = gql`
           }
           questionnaireAssessment {
             status
+            questionnaires(populate: true) {
+              _id
+              name
+              status
+              createdAt
+              keywords
+              copyright
+              website
+              license
+              timeToComplete
+              questionnaire {
+                language
+                abbreviation
+              }
+              questionGroups {
+                label
+                questions {
+                  _id
+                  name
+                  label
+                  type
+                  hint
+                  relevant
+                  calculation
+                  constraint
+                  constraintMessage
+                  min
+                  max
+                  required
+                  requiredMessage
+                  image
+                  appearance
+                  default
+                  choices {
+                    name
+                    label
+                    image
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -124,6 +168,9 @@ const getFullAssessment = gql`
       date
       name
       status
+      deliveryDate
+      expirationDate
+      note
       createdAt
       updatedAt
       deletedAt

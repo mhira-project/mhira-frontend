@@ -5,6 +5,7 @@ export default {
   },
   menu: {
     dashboard: 'Paneli Kryesor',
+    createAssessment: 'Krijo Vlerësim',
     caseManagement: 'Menaxhimi i Rasteve',
     patientList: 'Lista e Klientëve',
     createPatient: 'Krijo një Klient',
@@ -32,6 +33,15 @@ export default {
     noTabs: 'Nuk ka skedar',
   },
   tables: {
+    assessmentsPatients: {
+      title: 'Titulli',
+      manager: 'Menaxheri',
+      informant: 'Informatori',
+      questionnaires: 'Pyetësorë',
+      deliveryDate: 'Data e Dorëzimit',
+      expirationDate: 'Data e Skadencës',
+      status: 'Statusi',
+    },
     scripts: {
       name: 'Emri',
       version: 'Versioni',

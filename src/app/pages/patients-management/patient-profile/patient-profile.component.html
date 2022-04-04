@@ -3,6 +3,9 @@
 </div>
 <h1 *ngIf="patientTitle">{{ patientTitle }}</h1>
 <nz-tabset nzSize="large">
+  <nz-tab *ngIf="patientTitle" nzTitle="Assessments">
+    <app-assessments [patient]="patient"></app-assessments>
+  </nz-tab>
   <nz-tab nzTitle="Profile">
     <app-create-patient></app-create-patient>
   </nz-tab>

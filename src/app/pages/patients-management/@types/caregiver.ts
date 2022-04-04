@@ -49,3 +49,12 @@ export interface UpdateCaregiver {
   firstName: string;
   lastName: string;
 }
+
+export interface SelectedCaregiver {
+  email: string;
+  firstName: string;
+  id: number;
+  lastName: string;
+  middleName: string;
+  phone: string;
+}

@@ -76,6 +76,7 @@ const informationFields: Field[] = [
     options: [
       { label: 'Male', value: 'male' },
       { label: 'Female', value: 'female' },
+      { label: 'Other', value: 'other' },
     ],
     span: 8,
   },

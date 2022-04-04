@@ -149,7 +149,7 @@ const updatePatient = gql`
 `;
 
 const deletePatient = gql`
-  mutation($input: DeleteOneInput!) {
+  mutation($input: DeleteOnePatientInput!) {
     deleteOnePatient(input: $input) {
       id
       statusId

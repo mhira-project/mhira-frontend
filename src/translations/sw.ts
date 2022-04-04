@@ -5,6 +5,7 @@ export default {
   },
   menu: {
     dashboard: 'Dashibodi',
+    createAssessment: 'Tengeneza Tathmini',
     caseManagement: 'Usimamizi Wa Kesi',
     patientList: 'Orodha Ya Wagonjwa',
     createPatient: 'Sajili Mgonjwa',
@@ -32,6 +33,15 @@ export default {
     noTabs: 'Hakuna kurasa',
   },
   tables: {
+    assessmentsPatients: {
+      title: 'Kichwa',
+      manager: 'Meneja',
+      informant: 'Mtoa taarifa',
+      questionnaires: 'Hojaji',
+      deliveryDate: 'Tarehe ya Uwasilishaji',
+      expirationDate: 'Tarehe ya kumalizika Muda Wake',
+      status: 'Hali',
+    },
     scripts: {
       name: 'Jina',
       version: 'Toleo',

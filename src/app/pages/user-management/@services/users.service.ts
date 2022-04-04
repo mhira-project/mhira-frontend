@@ -19,7 +19,6 @@ export class UsersService {
   getUsers(options: { filter?: any; paging?: Paging; sorting?: Sorting[] }): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: UsersQueries.getUsers,
-      variables: options,
       fetchPolicy: 'no-cache',
     });
   }

@@ -43,6 +43,33 @@
           <input nz-input type="string" formControlName="informant" [readonly]="!editMode" />
         </nz-form-control>
       </nz-form-item>
+
+      <div class="date-picker">
+        <nz-form-item style="margin-top: 14px">
+          <nz-input-group>
+            <h5>Delivery Date</h5>
+            <nz-date-picker
+              [nzBorderless]="!editMode"
+              class="date-picker1"
+              [(ngModel)]="deliveryDate"
+              formControlName="deliveryDate"
+              (ngModelChange)="onChangeDelivery($event)"
+            ></nz-date-picker>
+          </nz-input-group>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-input-group>
+            <h5>Expiration Date</h5>
+            <nz-date-picker
+              [nzBorderless]="!editMode"
+              class="date-picker1"
+              [(ngModel)]="expireDate"
+              formControlName="expirationDate"
+              (ngModelChange)="onChangeExpire($event)"
+            ></nz-date-picker>
+          </nz-input-group>
+        </nz-form-item>
+      </div>
       <nz-form-item>
         <nz-form-control>
           <ng-container *ngIf="editMode">

@@ -1,5 +1,5 @@
-import { User } from '../@types/user';
 import { FormattedUser } from '@app/pages/user-management/@types/formatted-user';
+import { User } from '@app/pages/user-management/@types/user';
 
 export class UserModel {
   public static fromJson(json: FormattedUser): User {
