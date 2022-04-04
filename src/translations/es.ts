@@ -5,6 +5,7 @@ export default {
   },
   menu: {
     dashboard: 'Panel de Control',
+    createAssessment: 'Crear Evaluación',
     caseManagement: 'Gestión de Casos',
     patientList: 'Lista de Pacientes',
     createPatient: 'Crear Paciente Nuevo',
@@ -32,6 +33,15 @@ export default {
     noTabs: 'No hay Pestaña',
   },
   tables: {
+    assessmentsPatients: {
+      title: 'Título',
+      manager: 'Gerente',
+      informant: 'Informante',
+      questionnaires: 'Cuestionarios',
+      deliveryDate: 'Fecha De Entrega',
+      expirationDate: 'Fecha De Caducidad',
+      status: 'Estado',
+    },
     scripts: {
       name: 'Name',
       version: 'Versión',

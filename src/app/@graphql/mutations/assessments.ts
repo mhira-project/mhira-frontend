@@ -20,6 +20,9 @@ const createOneAssessment = gql`
       clinicianId
       informantId
       status
+      deliveryDate
+      expirationDate
+      note
       createdAt
       updatedAt
       deletedAt
@@ -99,6 +102,9 @@ const updateOneAssessment = gql`
       clinicianId
       informantId
       status
+      deliveryDate
+      expirationDate
+      note
       createdAt
       updatedAt
       deletedAt

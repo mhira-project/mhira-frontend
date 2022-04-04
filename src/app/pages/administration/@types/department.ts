@@ -1,4 +1,5 @@
 import { TagInfo } from '../../../@shared/@modules/master-data/@types/list';
+import { User } from '@app/pages/user-management/@types/user';
 
 export interface Department {
   id: number;
@@ -7,6 +8,7 @@ export interface Department {
   active: boolean;
   createdAt?: number;
   updatedAt?: number;
+  users: User[];
 }
 
 export interface FormattedDepartment extends Department {

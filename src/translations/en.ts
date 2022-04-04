@@ -5,6 +5,7 @@ export default {
   },
   menu: {
     dashboard: 'Dashboard',
+    createAssessment: 'Create Assessment',
     caseManagement: 'Case Managment',
     patientList: 'Patients List',
     createPatient: 'Create Patient',
@@ -32,6 +33,15 @@ export default {
     noTabs: 'No Tabs',
   },
   tables: {
+    assessmentsPatients: {
+      title: 'Title',
+      manager: 'Manager',
+      informant: 'Informant',
+      questionnaires: 'Questionnaires',
+      deliveryDate: 'Delivery Date',
+      expirationDate: 'Expiration Date',
+      status: 'Status',
+    },
     scripts: {
       name: 'Name',
       version: 'Version',
@@ -191,7 +201,7 @@ export default {
     fillingTime: 'Filling time: {{time}}min',
     completeAssessment: 'Submit assessment',
     alreadyCompleted: 'Assessment is completed',
-    overview: 'Overview',
+    overview: 'Finish Questionnaire',
     next: 'Next',
     prev: 'Previous',
     complete: 'Thank you for completing this assessment! You can close this page now.',
@@ -228,6 +238,8 @@ export default {
     formattedClinician: 'Clinician',
     informant: 'Informant',
     createdAt: 'Created At',
+    expirationDate: 'Expiration Date',
+    deliveryDate: 'Delivery Date',
   },
   planAssessment: {
     assessmentName: 'Assessment Name',

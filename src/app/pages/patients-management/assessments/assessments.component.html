@@ -1,0 +1,21 @@
+<app-master-data-list
+  [columns]="columns"
+  [data]="data"
+  [loading]="isLoading"
+  (pageChange)="onPageChange($event)"
+  [actions]="actions"
+  (sort)="onSort($event)"
+  (filter)="onFilter($event)"
+  (executeAction)="onAction($event)"
+  (rowClick)="onAssessmentSelect($event)"
+>
+  <ng-container actions-left>
+    <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
+    <button nz-button nzType="primary" (click)="onMyAssessments()">My Assessments</button>
+  </ng-container>
+  <ng-container actions-right>
+    <button nz-button nzType="primary" nzShape="circle" (click)="onPatientSelect()">
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>

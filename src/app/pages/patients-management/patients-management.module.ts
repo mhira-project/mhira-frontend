@@ -37,6 +37,11 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { ReportsComponent } from './reports/reports.component';
+import { AssessmentsComponent } from './assessments/assessments.component';
+import { CreateAssessmentComponent } from './create-assessment/create-assessment.component';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { AssessmentModule } from '../assessment/assessment.module';
 
 const antModules = [
   NzGridModule,
@@ -69,6 +74,9 @@ const antModules = [
     ReactiveFormsModule,
     NzTableModule,
     NzDividerModule,
+    NzRadioModule,
+    NzDatePickerModule,
+    AssessmentModule,
   ],
   declarations: [
     PatientsListComponent,
@@ -80,6 +88,8 @@ const antModules = [
     CaregiverListComponent,
     CaregiversPatientComponent,
     ReportsComponent,
+    AssessmentsComponent,
+    CreateAssessmentComponent,
   ],
   providers: [
     PatientsService,

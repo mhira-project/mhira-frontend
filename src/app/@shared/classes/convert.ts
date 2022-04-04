@@ -101,6 +101,13 @@ export class Convert {
     assessment.patientMedicalRecordNo = assessment.patient.medicalRecordNo;
     assessment.clinicianWorkId = assessment.clinician.workID;
 
+    assessment.formatedDeliveryDate = assessment.deliveryDate
+      ? moment(assessment.deliveryDate).format('DD-MM-YYYY')
+      : '';
+    assessment.formatedExpirationDate = assessment.expirationDate
+      ? moment(assessment.expirationDate).format('DD-MM-YYYY')
+      : '';
+
     return assessment;
   }
 }
