@@ -87,9 +87,9 @@ export class CreateAssessmentComponent implements OnInit {
   public onSelectChange(event: any) {
     if (event === 'Patient') {
       this.dataToSelect = [{ label: this.patient.firstName, value: this.patient.firstName }];
-    } else if (event === "Department's User") {
+    } else if (event === `Department's User`) {
       this.dataToSelect = this.users.map((user) => ({ label: user.firstName, value: user.firstName }));
-    } else if (event === "Patient's Caregiver") {
+    } else if (event === `Patient's Caregiver`) {
       this.dataToSelect = this.caregivers.map((caregiver) => ({
         label: caregiver.firstName,
         value: caregiver.firstName,
@@ -196,7 +196,7 @@ export class CreateAssessmentComponent implements OnInit {
     this.selectedClinician = this.fullAssessment.clinician;
     this.expireDate = this.fullAssessment.expirationDate;
     this.deliveryDate = this.fullAssessment.deliveryDate;
-    this.typeSelected = "Department's User";
+    this.typeSelected = `Department's User`;
     this.selectedInformant = this.fullAssessment.informant;
     this.selectedQuestionnaires = this.fullAssessment.questionnaireAssessment.questionnaires;
     this.noteValue = this.fullAssessment.note;
