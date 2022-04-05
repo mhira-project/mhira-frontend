@@ -37,6 +37,38 @@ const assessments = gql`
             createdAt
             updatedAt
           }
+          informantClinician {
+            id
+            username
+            active
+            firstName
+            middleName
+            lastName
+            email
+            phone
+            workID
+            address
+            gender
+            birthDate
+            nationality
+            createdAt
+            updatedAt
+            deletedAt
+          }
+          informantCaregiver {
+            id
+            firstName
+            middleName
+            lastName
+            email
+            phone
+            street
+            number
+            apartment
+            place
+            postalCode
+            country
+          }
           patient {
             id
             active
