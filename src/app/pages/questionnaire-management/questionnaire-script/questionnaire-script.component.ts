@@ -1,9 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import {
-  CreateOneScriptInput,
-  Scripts,
-  UpdateOneScriptInput,
-} from '@app/pages/questionnaire-management/@types/scripts';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Scripts } from '@app/pages/questionnaire-management/@types/scripts';
 import {
   Action,
   ActionArgs,
@@ -22,13 +18,12 @@ import { ErrorHandlerService } from '@shared/services/error-handler.service';
 import { Reports } from '@app/pages/administration/@types/reports';
 import { Convert } from '@shared/classes/convert';
 import { ReportsService } from '@app/pages/administration/@services/reports.service';
-import { environment } from '@env/environment';
 import { Router } from '@angular/router';
 import { ScriptsModel } from '@app/pages/questionnaire-management/@models/script.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { QuestionnaireVersion } from '@app/pages/questionnaire-management/@types/questionnaire';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { createLogErrorHandler } from '@angular/compiler-cli/ngcc/src/execution/tasks/completion';
+import { FormComponent } from '@shared/components/form/form.component';
 
 const CryptoJS = require('crypto-js');
 
@@ -45,6 +40,7 @@ enum ActionKey {
 })
 export class QuestionnaireScriptComponent implements OnInit {
   @Input() public questionnaire: QuestionnaireVersion;
+  @ViewChild(FormComponent) child: FormComponent;
   public data: Partial<Scripts>[];
   public columns: TableColumn<Partial<Scripts>>[] = ScriptColumns;
   public isLoading = false;
@@ -177,98 +173,71 @@ export class QuestionnaireScriptComponent implements OnInit {
   }
 
   public createScript() {
-    this.isLoading = true;
-    this.populateForm = false;
-    this.resetForm = false;
-    console.log(this.onUpdate);
-    const inputValues = {};
-    this.scriptForm?.groups[0]?.fields?.map((field) => {
-      inputValues[field.name] = field.value;
-    });
+    let scriptText;
+    try {
+      this.isLoading = true;
+      this.populateForm = false;
+      this.resetForm = false;
+      console.log(this.onUpdate);
+      const inputValues = {};
+      this.scriptForm?.groups[0]?.fields?.map((field) => {
+        inputValues[field.name] = field.value;
+      });
 
-    const inputData: any = { ...inputValues };
-    const reports = this.selectedReport.map((item) => item.id, inputValues);
-    const scriptText = (inputData.scriptText as FileList).item(0);
-    const scriptInput: CreateOneScriptInput = { ...inputValues, scriptText, reportIds: reports };
-    scriptInput.questionnaireId = this.questionnaire._id;
-    this.loadingMessage = `Creating script ${inputData.name} `;
+      const inputData: any = { ...inputValues };
+      const reports = this.selectedReport.map((item) => item.id, inputValues);
+      const scriptInput: any = { ...inputValues, scriptText, reportIds: reports };
 
-    if (this.onUpdate) {
-      return this.scriptsService
-        .updateScript(this.script.id, scriptInput)
-        .pipe(finalize(() => (this.isLoading = false)))
+      if (typeof inputData.scriptText !== 'string') {
+        console.log(typeof inputData.scriptText);
+        scriptText = (inputData.scriptText as FileList)?.item(0);
+        scriptInput.scriptText = scriptText;
+      }
+
+      scriptInput.questionnaireId = this.questionnaire._id;
+      this.loadingMessage = `Creating script ${inputData.name} `;
+
+      if (this.onUpdate) {
+        console.log(scriptInput);
+        return this.scriptsService
+          .updateScript(this.script.id, scriptInput)
+          .pipe(finalize(() => (this.isLoading = false)))
+          .subscribe(
+            ({ data }) => {
+              const list = [...this.data];
+              const updatedScript: Scripts = data.updateOneScript;
+              this.closeCreatePanel();
+              this.getScripts();
+            },
+            (error) => this.errorService.handleError(error, { prefix: 'Unable to update script' })
+          );
+      }
+      this.scriptsService
+        .createScript(scriptInput)
+        .pipe(
+          finalize(() => {
+            this.isLoading = false;
+            this.loadingMessage = '';
+          })
+        )
         .subscribe(
           ({ data }) => {
-            const list = [...this.data];
-            const updatedScript: Scripts = data.updateOneScript;
+            this.message.create('success', `Script has successfully been created`);
+            this.script = data.createOneScript;
+            if (this.selectedReport.length > 0) {
+            }
             this.closeCreatePanel();
             this.getScripts();
           },
-          (error) => this.errorService.handleError(error, { prefix: 'Unable to update script' })
+          (error) =>
+            this.errorService.handleError(error, {
+              prefix: 'Unable to create script',
+            })
         );
+    } catch (e) {
+      console.log(e);
+      this.isLoading = false;
     }
-    this.scriptsService
-      .createScript(scriptInput)
-      .pipe(
-        finalize(() => {
-          this.isLoading = false;
-          this.loadingMessage = '';
-        })
-      )
-      .subscribe(
-        ({ data }) => {
-          this.message.create('success', `Script has successfully been created`);
-          this.script = data.createOneScript;
-          if (this.selectedReport.length > 0) {
-          }
-          this.closeCreatePanel();
-          this.getScripts();
-        },
-        (error) =>
-          this.errorService.handleError(error, {
-            prefix: 'Unable to create script',
-          })
-      );
-  }
-
-  // private updateScript(script: Scripts): void {
-  //   const scriptLocal = JSON.parse(JSON.stringify(script));
-  //   const id = scriptLocal.id;
-  //   delete scriptLocal.id;
-  //   const updateOneScriptInput: UpdateOneScriptInput = {
-  //     id,
-  //     update: scriptLocal,
-  //   };
-  //   this.isLoading = true;
-  //   this.scriptsService
-  //     .updateScript(updateOneScriptInput)
-  //     .pipe(finalize(() => (this.isLoading = false)))
-  //     .subscribe(
-  //       ({ data }) => {
-  //         const list = [...this.data];
-  //         const updatedScript: Scripts = data.updateOneScript;
-  //         const idx = list.findIndex((scr) => scr.id === updatedScript.id);
-  //         list.splice(idx, 1, updatedScript);
-  //         this.data = list; // mutate reference to trigger change detection
-  //         this.closeCreatePanel();
-  //       },
-  //       (error) => this.errorService.handleError(error, { prefix: 'Unable to update script' })
-  //     );
-  // }
-
-  private afterCreate() {
-    this.populateForm = false;
-    this.resetForm = true;
-    // const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.script), environment.secretKey).toString();
-    // this.router.navigate(['/mhira/questionnaire-management/questionnaire-form'], {
-    //   state: {
-    //     title: `${this.script.name} `,
-    //   },
-    //   queryParams: {
-    //     script: dataString,
-    //   },
-    // });
-    this.newMode = false;
   }
 
   private async deleteScript(script: Scripts): Promise<void> {

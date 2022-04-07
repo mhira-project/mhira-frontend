@@ -30,19 +30,49 @@
             (ngModelChange)="onSelectChange($event)"
           >
             <h5>Informant Type</h5>
-            <label nz-radio-button nzValue="Patient">Patient</label>
-            <label nz-radio-button nzValue="Department's User">Department's User</label>
-            <label nz-radio-button nzValue="Patient's Caregiver">Patient's Caregiver</label>
+            <label nz-radio-button nzValue="Informant Patient">Patient</label>
+            <label nz-radio-button nzValue="Departments User">Department's User</label>
+            <label nz-radio-button nzValue="Patients Caregiver">Patient's Caregiver</label>
           </nz-radio-group>
         </nz-form-item>
-        <nz-form-item>
+        <nz-form-item *ngIf="typeSelected === 'Informant Patient'">
           <nz-input-group>
-            <h5>{{ typeSelected }}</h5>
+            <h5>Patient</h5>
             <nz-select
               [nzBorderless]="!editMode"
               class="input-class"
               [(ngModel)]="selectedInformant"
-              formControlName="informant"
+              formControlName="informantPatient"
+            >
+              <nz-option *ngFor="let data of dataToSelect" [nzLabel]="data.label" [nzValue]="data.value">{{
+                data.label
+              }}</nz-option>
+            </nz-select>
+          </nz-input-group>
+        </nz-form-item>
+        <nz-form-item *ngIf="typeSelected === 'Departments User'">
+          <nz-input-group>
+            <h5>Department's User</h5>
+            <nz-select
+              [nzBorderless]="!editMode"
+              class="input-class"
+              [(ngModel)]="selectedInformant"
+              formControlName="informantClinicianId"
+            >
+              <nz-option *ngFor="let data of dataToSelect" [nzLabel]="data.label" [nzValue]="data.value">{{
+                data.label
+              }}</nz-option>
+            </nz-select>
+          </nz-input-group>
+        </nz-form-item>
+        <nz-form-item *ngIf="typeSelected === 'Patients Caregiver'">
+          <nz-input-group>
+            <h5>Patient's Caregiver</h5>
+            <nz-select
+              [nzBorderless]="!editMode"
+              class="input-class"
+              [(ngModel)]="selectedInformant"
+              formControlName="informantCaregiverId"
             >
               <nz-option *ngFor="let data of dataToSelect" [nzLabel]="data.label" [nzValue]="data.value">{{
                 data.label
