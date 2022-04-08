@@ -157,7 +157,7 @@ export class CreateAssessmentComponent implements OnInit {
     const { informationType, informantPatient, ...rest } = this.formGroup.value;
     const newAssessmentData = {
       ...rest,
-      informant: 'aa',
+      informant: '',
       questionnaires,
       patientId: this.fullAssessment?.patientId ?? this.patient.id,
     };

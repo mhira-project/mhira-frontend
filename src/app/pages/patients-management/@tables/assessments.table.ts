@@ -48,8 +48,9 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
     translationPath: 'tables.assessmentsPatients.deliveryDate',
     sort: false,
     filterField: {
-      type: 'text',
+      type: 'dateRange',
       value: undefined,
+      title: 'Delivery Date',
     },
   },
   {
@@ -58,8 +59,9 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
     translationPath: 'tables.assessmentsPatients.expirationDate',
     sort: false,
     filterField: {
-      type: 'text',
+      type: 'dateRange',
       value: undefined,
+      title: 'Expiration Date',
     },
   },
   {
@@ -67,5 +69,10 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
     name: 'formattedStatus',
     translationPath: 'tables.assessmentsPatients.status',
     render: 'tag',
+    filterField: {
+      type: 'select',
+      value: undefined,
+      // options added dynamically
+    },
   },
 ];
