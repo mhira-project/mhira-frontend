@@ -99,7 +99,7 @@ export class Convert {
     }
 
     assessment.patientMedicalRecordNo = assessment.patient.medicalRecordNo;
-    assessment.clinicianWorkId = assessment.clinician.workID;
+    assessment.clinicianWorkId = assessment.clinician?.workID;
 
     assessment.formatedDeliveryDate = assessment.deliveryDate
       ? moment(assessment.deliveryDate).format('DD-MM-YYYY')

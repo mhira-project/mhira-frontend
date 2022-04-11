@@ -27,6 +27,7 @@ export class PatientProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPatient();
+    console.log(this.patient);
   }
 
   getPatient() {
@@ -34,7 +35,9 @@ export class PatientProfileComponent implements OnInit {
       if (params.profile) {
         const bytes = CryptoJS.AES.decrypt(params.profile, environment.secretKey);
         const patient = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-        this.patient = PatientModel.fromJson(patient);
+        // this.patient = PatientModel.fromJson(patient);
+        this.patient = patient;
+        console.log(this.patient);
         this.filter = {
           patientId: this.patient.id,
         };

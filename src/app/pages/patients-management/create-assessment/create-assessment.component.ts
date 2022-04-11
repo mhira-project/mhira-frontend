@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormattedPatient } from '@app/pages/patients-management/@types/formatted-patient';
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
 import { environment } from '@env/environment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CaseManagerFilter } from '@app/pages/patients-management/@types/case-manager-filter';
 import { QuestionnaireVersion } from '@app/pages/questionnaire-management/@types/questionnaire';
 import { User } from '@app/pages/user-management/@types/user';
@@ -36,6 +36,7 @@ export class CreateAssessmentComponent implements OnInit {
   dataToSelect: any = [];
   selectedInformant: any = null;
   noteValue: any = '';
+
   public fullAssessment: FullAssessment;
   public isLoading = false;
   public selectedClinician: User;
@@ -60,6 +61,7 @@ export class CreateAssessmentComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private caregiversPatientService: CaregiversPatientService,
     private errorService: ErrorHandlerService,
     private departmentsService: DepartmentsService,
@@ -83,6 +85,16 @@ export class CreateAssessmentComponent implements OnInit {
     this.getPatient();
     this.getCaregivers();
     this.getUserDepartments();
+    console.log(this.patient);
+  }
+
+  public goBack(patient: FormattedPatient): void {
+    const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.patient), environment.secretKey).toString();
+    this.router.navigate(['/mhira/case-management/profile'], {
+      queryParams: {
+        profile: dataString,
+      },
+    });
   }
 
   public onSelectChange(event: any) {
@@ -96,7 +108,20 @@ export class CreateAssessmentComponent implements OnInit {
         value: caregiver.id,
       }));
     }
+    console.log(this.formGroup.get('informantCaregiverId'));
   }
+
+  // public oninformantClinicianChange(event: any) {
+  //
+  // }
+  //
+  // public oninformantCaregiverChange(event: any) {
+  //
+  // }
+  //
+  // public onInformantPatientChange(event: any) {
+  //
+  // }
 
   public onQuestionnaireSelected(questionnaires: QuestionnaireVersion[]): void {
     this.selectedQuestionnaires = questionnaires;
@@ -117,12 +142,10 @@ export class CreateAssessmentComponent implements OnInit {
           page.edges.map((departmentData: any) => {
             const _department = Convert.toDepartment(departmentData.node);
             this.departments.push(_department);
-            console.log(_department);
             _department.users.map((user: any) => {
               const exists = this.users.some((user1) => user1.id === user.id);
               if (!exists) this.users.push(user);
             });
-            console.log(this.users);
           });
         },
         (error) =>
@@ -199,11 +222,10 @@ export class CreateAssessmentComponent implements OnInit {
     const assessment: FullAssessment = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     this.fullAssessment = assessment;
     this.patient = this.fullAssessment.patient;
-
+    this.editMode = false;
     this.formGroup.setValue({
       name: this.fullAssessment.name,
       clinicianId: this.fullAssessment.clinician.id,
-      // informant: { value: this.fullAssessment.informant, label: this.fullAssessment.informant },
       deliveryDate: this.fullAssessment.deliveryDate,
       informationType: '',
       informantPatient: this.fullAssessment.patient,
@@ -221,14 +243,15 @@ export class CreateAssessmentComponent implements OnInit {
     this.selectedClinician = this.fullAssessment.clinician;
     this.expireDate = this.fullAssessment.expirationDate;
     this.deliveryDate = this.fullAssessment.deliveryDate;
-    this.selectedInformant = this.fullAssessment.informant;
+    // this.selectedInformant = this.fullAssessment.informant;
     this.selectedQuestionnaires = this.fullAssessment.questionnaireAssessment.questionnaires;
     this.noteValue = this.fullAssessment.note;
     console.log(this.fullAssessment);
+
     if (this.fullAssessment.informantClinician) {
-      this.typeSelected = `Department's User`;
+      this.typeSelected = `Departments User`;
     } else if (this.fullAssessment.informantCaregiver) {
-      this.typeSelected = `Patient's Caregiver`;
+      this.typeSelected = `Patients Caregiver`;
     } else {
       this.typeSelected = 'Informant Patient';
     }

@@ -44,3 +44,8 @@ input[readonly] {
 nz-date-picker [nzInputReadOnly] {
   margin: 0 8px 12px 0;
 }
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
