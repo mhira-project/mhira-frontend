@@ -13,6 +13,7 @@ export default {
     questionnaires: 'Pyetësorët',
     questionnairesList: 'Lista e Pyetësorëve',
     uploadQuestionnaire: 'Krijo një Pyetësor',
+    questionnairesVersionList: 'Lista e Versioneve të Pyetësorit',
     assessments: 'Vlerësimet',
     planAssessment: 'Planifiko Vlerësimin',
     plannedAssessments: 'Vlerësimet e Planifikuara',
@@ -208,6 +209,7 @@ export default {
     complete: 'Faleminderit që e përfunduat vlerësimin! Tani mund ta mbyllni këtë faqe.',
   },
   questionnaires: {
+    id: 'ID',
     name: 'Emri',
     formattedStatus: 'Statusi',
     language: 'Gjuha',

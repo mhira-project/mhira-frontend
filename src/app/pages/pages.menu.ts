@@ -68,6 +68,14 @@ export const MENU: SideNavInterface[] = [
         iconTheme: '',
         submenu: [],
       },
+      {
+        path: 'questionnaire-management/questionnaire-version-list',
+        title: 'menu.questionnairesVersionList',
+        permissions: [PK.VIEW_QUESTIONNAIRES],
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
     ],
   },
   {

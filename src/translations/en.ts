@@ -12,6 +12,7 @@ export default {
     caregiverList: 'Caregiver List',
     questionnaires: 'Questionnaires',
     questionnairesList: 'Questionnaires List',
+    questionnairesVersionList: 'Questionnaire Version List',
     uploadQuestionnaire: 'Upload Questionnaire',
     assessments: 'Assessments',
     planAssessment: 'Plan Assessments',
@@ -207,6 +208,7 @@ export default {
     complete: 'Thank you for completing this assessment! You can close this page now.',
   },
   questionnaires: {
+    id: 'ID',
     name: 'Name',
     formattedStatus: 'Status',
     language: 'Language',

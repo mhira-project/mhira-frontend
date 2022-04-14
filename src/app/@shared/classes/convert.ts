@@ -20,11 +20,12 @@ const STATUS_COLOR = {
 };
 
 const ASSESSMENT_STATUS_COLOR = {
-  [AssessmentStatus.PENDING]: 'blue',
-  [AssessmentStatus.PARTIALLY_COMPLETED]: 'blue',
+  [AssessmentStatus.PLANNED]: 'grey',
+  [AssessmentStatus.OPEN_FOR_COMPLETION]: 'black',
+  [AssessmentStatus.PARTIALLY_FILLED]: 'blue',
   [AssessmentStatus.COMPLETED]: 'green',
-  [AssessmentStatus.ARCHIVED]: 'red',
-  [AssessmentStatus.EXPIRED]: 'red',
+  [AssessmentStatus.CANCELLED]: 'red',
+  [AssessmentStatus.EXPIRED]: 'orange',
 };
 
 export class Convert {
@@ -76,6 +77,17 @@ export class Convert {
 
     questionnaire.language = json.questionnaire.language;
     questionnaire.abbreviation = json.questionnaire.abbreviation;
+
+    return questionnaire;
+  }
+
+  public static toFormattedQuestionnaireVersion2(json: QuestionnaireVersion): FormattedQuestionnaireVersion {
+    const questionnaire: FormattedQuestionnaireVersion = json as FormattedQuestionnaireVersion;
+
+    questionnaire.formattedStatus = {
+      color: STATUS_COLOR['grey'],
+      title: 'OLD VERSION',
+    };
 
     return questionnaire;
   }

@@ -13,6 +13,7 @@ export default {
     questionnaires: 'Fragebögen',
     questionnairesList: 'Fragebogenliste',
     uploadQuestionnaire: 'Fragebogen hochladen',
+    questionnairesVersionList: 'Versionsliste Des Fragebogens',
     assessments: 'Einschätzungen',
     planAssessment: 'Einschätzung planen',
     plannedAssessments: 'Geplante Einschätzungen',
@@ -207,6 +208,7 @@ export default {
     complete: 'Danke für das Ausfüllen der Einschätzung. Die Seite kann jetzt geschlossen werden.',
   },
   questionnaires: {
+    id: 'ID',
     name: 'Name',
     formattedStatus: 'Status',
     language: 'Sprache',
