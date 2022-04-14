@@ -85,7 +85,7 @@ export class Convert {
     const questionnaire: FormattedQuestionnaireVersion = json as FormattedQuestionnaireVersion;
 
     questionnaire.formattedStatus = {
-      color: STATUS_COLOR['grey'],
+      color: ASSESSMENT_STATUS_COLOR[AssessmentStatus.PLANNED],
       title: 'OLD VERSION',
     };
 
@@ -102,7 +102,7 @@ export class Convert {
     assessment.formattedClinician = [json.clinician?.firstName, json.clinician?.middleName, json.clinician?.lastName]
       .filter((s) => !!s)
       .join(' ');
-
+    json;
     if (isFullAssessment(json)) {
       assessment.formattedStatus = {
         color: ASSESSMENT_STATUS_COLOR[json.questionnaireAssessment.status],
