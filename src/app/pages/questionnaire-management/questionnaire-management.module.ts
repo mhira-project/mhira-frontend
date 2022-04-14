@@ -14,6 +14,7 @@ import { QuestionnaireScriptComponent } from './questionnaire-script/questionnai
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { QuestionnaireVersionListComponent } from './questionnaire-version-list/questionnaire-version-list.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
     QuestionnaireListComponent,
     QuestionnaireProfileComponent,
     QuestionnaireScriptComponent,
+    QuestionnaireVersionListComponent,
   ],
   imports: [
     CommonModule,

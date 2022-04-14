@@ -13,6 +13,7 @@ export default {
     questionnaires: 'Cuestionarios',
     questionnairesList: 'Cuestionarios Disponibles',
     uploadQuestionnaire: 'Cargar un Cuestionario Nuevo',
+    questionnairesVersionList: 'Lista De Versiones Del Cuestionario',
     assessments: 'Evaluaciones',
     planAssessment: 'Crear una Evaluación',
     plannedAssessments: 'Evaluaciones Planificadas',
@@ -207,6 +208,7 @@ export default {
     complete: '¡Muchas gracias por completar su evaluación! Ahora puede cerrar esta ventana de navegación.',
   },
   questionnaires: {
+    id: 'ID',
     name: 'Nombre',
     formattedStatus: 'Estado',
     language: 'Idioma',

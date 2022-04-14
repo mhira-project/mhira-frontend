@@ -5,6 +5,7 @@ import { QuestionnaireFormComponent } from './questionnaire-profile/questionnair
 import { PermissionKey } from '../../@shared/@types/permission';
 import { QuestionnaireListComponent } from './questionnaire-list/questionnaire-list.component';
 import { QuestionnaireProfileComponent } from './questionnaire-profile/questionnaire-profile.component';
+import { QuestionnaireVersionListComponent } from './questionnaire-version-list/questionnaire-version-list.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,17 @@ const routes: Routes = [
       breadcrumbI18nKey: 'menu.uploadQuestionnaire',
       permissions: {
         only: [PermissionKey.MANAGE_QUESTIONNAIRES],
+      },
+    },
+    canActivate: [PermissionGuard],
+  },
+  {
+    path: 'questionnaire-version-list',
+    component: QuestionnaireVersionListComponent,
+    data: {
+      breadcrumbI18nKey: 'menu.questionnairesVersionList',
+      permissions: {
+        only: [PermissionKey.VIEW_QUESTIONNAIRES],
       },
     },
     canActivate: [PermissionGuard],

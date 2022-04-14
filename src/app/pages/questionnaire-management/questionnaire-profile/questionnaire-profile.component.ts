@@ -40,8 +40,4 @@ export class QuestionnaireProfileComponent implements OnInit {
       console.log(this.questionnaire);
     });
   }
-
-  goBack() {
-    this.router.navigate(['/mhira/questionnaire-management/questionnaire-list']);
-  }
 }

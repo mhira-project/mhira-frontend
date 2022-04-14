@@ -20,11 +20,12 @@ const STATUS_COLOR = {
 };
 
 const ASSESSMENT_STATUS_COLOR = {
-  [AssessmentStatus.PENDING]: 'blue',
-  [AssessmentStatus.PARTIALLY_COMPLETED]: 'blue',
+  [AssessmentStatus.PLANNED]: 'grey',
+  [AssessmentStatus.OPEN_FOR_COMPLETION]: 'black',
+  [AssessmentStatus.PARTIALLY_FILLED]: 'blue',
   [AssessmentStatus.COMPLETED]: 'green',
-  [AssessmentStatus.ARCHIVED]: 'red',
-  [AssessmentStatus.EXPIRED]: 'red',
+  [AssessmentStatus.CANCELLED]: 'red',
+  [AssessmentStatus.EXPIRED]: 'orange',
 };
 
 export class Convert {
@@ -80,6 +81,17 @@ export class Convert {
     return questionnaire;
   }
 
+  public static toFormattedQuestionnaireVersion2(json: QuestionnaireVersion): FormattedQuestionnaireVersion {
+    const questionnaire: FormattedQuestionnaireVersion = json as FormattedQuestionnaireVersion;
+
+    questionnaire.formattedStatus = {
+      color: ASSESSMENT_STATUS_COLOR[AssessmentStatus.PLANNED],
+      title: 'OLD VERSION',
+    };
+
+    return questionnaire;
+  }
+
   public static toFormattedAssessment(json: Assessment | FullAssessment): FormattedAssessment {
     const assessment: FormattedAssessment = json as FormattedAssessment;
 
@@ -90,7 +102,6 @@ export class Convert {
     assessment.formattedClinician = [json.clinician?.firstName, json.clinician?.middleName, json.clinician?.lastName]
       .filter((s) => !!s)
       .join(' ');
-
     if (isFullAssessment(json)) {
       assessment.formattedStatus = {
         color: ASSESSMENT_STATUS_COLOR[json.questionnaireAssessment.status],
@@ -99,7 +110,7 @@ export class Convert {
     }
 
     assessment.patientMedicalRecordNo = assessment.patient.medicalRecordNo;
-    assessment.clinicianWorkId = assessment.clinician.workID;
+    assessment.clinicianWorkId = assessment.clinician?.workID;
 
     assessment.formatedDeliveryDate = assessment.deliveryDate
       ? moment(assessment.deliveryDate).format('DD-MM-YYYY')

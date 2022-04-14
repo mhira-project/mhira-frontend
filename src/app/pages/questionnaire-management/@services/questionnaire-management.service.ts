@@ -51,6 +51,18 @@ export class QuestionnaireManagementService {
       .pipe(map(({ data }) => data.questionnaires));
   }
 
+  public getQuestionnairesVersion(
+    options: { paging?: Paging; filter?: any; sorting?: Sorting[] } = {}
+  ): Observable<ConnectionResult<QuestionnaireVersion>> {
+    return this.apollo
+      .query<{ getQuestionnaireVersions: ConnectionResult<QuestionnaireVersion> }>({
+        query: QuestionnaireQueries.getQuestionnairesVersion,
+        variables: { ...options },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map(({ data }) => data.getQuestionnaireVersions));
+  }
+
   public deleteQuestionnaire(_id: string, softDelete: boolean = true) {
     return this.apollo.mutate({
       mutation: QuestionnaireMutations.deleteQuestionnaire,

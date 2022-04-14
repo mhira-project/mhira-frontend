@@ -24,6 +24,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { LocationStrategy } from '@angular/common';
 import { ClipboardService } from 'ngx-clipboard';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { User } from '@app/pages/user-management/@types/user';
 
 const CryptoJS = require('crypto-js');
 
@@ -50,6 +51,7 @@ export class AssessmentsComponent implements OnInit {
   public filter: CaseManagerFilter;
   public data: FormattedAssessment[];
   public columns: TableColumn<FormattedAssessment>[] = AssessmentsPatientsTable;
+  public user: User;
   public isLoading = false;
   public pageInfo: PageInfo;
   public onlyMyAssessments = false;
@@ -192,6 +194,14 @@ export class AssessmentsComponent implements OnInit {
       and: [{ patient: { id: { eq: this.patient?.id } } }, ...(options.filter.and ?? [])],
     };
 
+    // apply for only my patients
+    if (this.onlyMyAssessments)
+      options.filter = {
+        ...options.filter,
+        and: [{ clinician: { id: { eq: this.userId } } }, ...(options.filter.and ?? [])],
+      };
+    console.log('User', this.user);
+
     this.isLoading = true;
     this.assessmentService
       .getAssessments(options)
@@ -233,5 +243,11 @@ export class AssessmentsComponent implements OnInit {
         },
         (error) => this.errorService.handleError(error, { prefix: `Unable to delete assessment "${assessment.name}"` })
       );
+  }
+
+  private get userId(): number {
+    const user = JSON.parse(localStorage.getItem('user')) as User;
+    console.log(user);
+    return user.id ?? 0;
   }
 }

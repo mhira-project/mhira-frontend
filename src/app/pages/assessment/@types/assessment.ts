@@ -6,11 +6,12 @@ import { TagInfo } from '../../../@shared/@modules/master-data/@types/list';
 import { Caregiver } from '@app/pages/patients-management/@types/caregiver';
 
 export enum AssessmentStatus {
+  PLANNED = 'PLANNED',
+  OPEN_FOR_COMPLETION = 'OPEN_FOR_COMPLETION',
   COMPLETED = 'COMPLETED',
-  PENDING = 'PENDING',
-  PARTIALLY_COMPLETED = 'PARTIALLY_COMPLETED',
+  PARTIALLY_FILLED = 'PARTIALLY_FILLED',
   EXPIRED = 'EXPIRED',
-  ARCHIVED = 'ARCHIVED',
+  CANCELLED = 'CANCELLED',
 }
 
 export interface Assessment {

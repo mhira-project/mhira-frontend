@@ -13,6 +13,7 @@ export default {
     questionnaires: 'Madodoso',
     questionnairesList: 'Orodha Ya Madodoso',
     uploadQuestionnaire: 'Pakia Dodoso',
+    questionnairesVersionList: 'Orodha ya Toleo la Hojaji',
     assessments: 'Tathmini',
     planAssessment: 'Panga Tathmini',
     plannedAssessments: 'Tathmini Zilizopangwa',
@@ -207,6 +208,7 @@ export default {
     complete: 'Asante kwa kumaliza tathmini hii! Unaweza kufunga ukurasa huu sasa.',
   },
   questionnaires: {
+    id: 'ID',
     name: 'Jina',
     formattedStatus: 'Hali',
     language: 'Lugha',
