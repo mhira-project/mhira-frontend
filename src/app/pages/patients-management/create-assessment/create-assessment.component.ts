@@ -245,7 +245,7 @@ export class CreateAssessmentComponent implements OnInit {
     // this.selectedInformant = this.fullAssessment.informant;
     this.selectedQuestionnaires = this.fullAssessment.questionnaireAssessment.questionnaires;
     this.noteValue = this.fullAssessment.note;
-    console.log(this.fullAssessment);
+    this.formGroup.controls.note.disable();
 
     if (this.fullAssessment.informantClinician) {
       this.typeSelected = `Departments User`;
