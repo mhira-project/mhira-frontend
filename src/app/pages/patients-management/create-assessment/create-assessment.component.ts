@@ -85,7 +85,6 @@ export class CreateAssessmentComponent implements OnInit {
     this.getPatient();
     this.getCaregivers();
     this.getUserDepartments();
-    console.log(this.patient);
   }
 
   public goBack(patient: FormattedPatient): void {

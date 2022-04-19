@@ -29,6 +29,7 @@
           <nz-radio-group
             formControlName="informationType"
             nzButtonStyle="solid"
+            [nzDisabled]="!editMode"
             [(ngModel)]="typeSelected"
             (ngModelChange)="onSelectChange($event)"
           >
@@ -44,6 +45,7 @@
             <nz-select
               [nzBorderless]="!editMode"
               class="input-class"
+              [nzDisabled]="!editMode"
               [(ngModel)]="selectedInformant"
               formControlName="informantPatient"
             >
@@ -59,6 +61,7 @@
             <nz-select
               [nzBorderless]="!editMode"
               class="input-class"
+              [nzDisabled]="!editMode"
               [(ngModel)]="selectedInformant"
               formControlName="informantClinicianId"
             >
@@ -74,6 +77,7 @@
             <nz-select
               [nzBorderless]="!editMode"
               class="input-class"
+              [nzDisabled]="!editMode"
               [(ngModel)]="selectedInformant"
               formControlName="informantCaregiverId"
             >
@@ -91,6 +95,7 @@
                 [nzBorderless]="!editMode"
                 class="date-picker1"
                 [(ngModel)]="deliveryDate"
+                [nzDisabled]="!editMode"
                 formControlName="deliveryDate"
                 (ngModelChange)="onChangeDelivery($event)"
               ></nz-date-picker>
@@ -103,6 +108,7 @@
                 [nzBorderless]="!editMode"
                 class="date-picker1"
                 [(ngModel)]="expireDate"
+                [nzDisabled]="!editMode"
                 formControlName="expirationDate"
                 (ngModelChange)="onChangeExpire($event)"
               ></nz-date-picker>
