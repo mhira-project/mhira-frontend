@@ -51,6 +51,8 @@
             <nz-date-picker
               [nzBorderless]="!editMode"
               class="date-picker1"
+              nzShowTime
+              nzFormat="yyyy-MM-dd HH:mm"
               [nzDisabled]="!editMode"
               [(ngModel)]="deliveryDate"
               formControlName="deliveryDate"
@@ -64,6 +66,8 @@
             <nz-date-picker
               [nzBorderless]="!editMode"
               class="date-picker1"
+              nzShowTime
+              nzFormat="yyyy-MM-dd HH:mm"
               [nzDisabled]="!editMode"
               [(ngModel)]="expireDate"
               formControlName="expirationDate"
