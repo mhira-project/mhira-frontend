@@ -11,9 +11,9 @@ export default {
     createPatient: 'Krijo një Klient',
     caregiverList: 'Lista e Kujdestarëve',
     questionnaires: 'Pyetësorët',
-    questionnairesList: 'Lista e Pyetësorëve',
+    questionnairesList: ' Pyetësorët',
     uploadQuestionnaire: 'Krijo një Pyetësor',
-    questionnairesVersionList: 'Lista e Versioneve të Pyetësorit',
+    questionnairesVersionList: 'Versionet të Pyetësorit',
     assessments: 'Vlerësimet',
     planAssessment: 'Planifiko Vlerësimin',
     plannedAssessments: 'Vlerësimet e Planifikuara',
@@ -32,8 +32,14 @@ export default {
     patientStatuses: 'Statusi i Klientëve',
     notFound: 'Nuk është gjetur',
     noTabs: 'Nuk ka skedar',
+    disclaimers: 'Mohimet',
   },
   tables: {
+    disclaimer: {
+      type: 'Tipi',
+      textInformation: 'Informacion me Tekst',
+      lastUpdate: 'Përditësimi Përfundimtar',
+    },
     assessmentsPatients: {
       title: 'Titulli',
       manager: 'Menaxheri',

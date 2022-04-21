@@ -3,6 +3,16 @@ import { FormattedQuestionnaireVersion, QuestionnaireStatus } from '../@types/qu
 
 export const QuestionnaireVersionsColumns: TableColumn<FormattedQuestionnaireVersion>[] = [
   {
+    title: 'Abbreviation',
+    name: 'abbreviation',
+    translationPath: 'questionnaires.abbreviation',
+  },
+  {
+    title: 'Language',
+    name: 'language',
+    translationPath: 'questionnaires.language',
+  },
+  {
     title: 'ID',
     name: '_id',
     translationPath: 'questionnaires.id',
@@ -34,16 +44,6 @@ export const QuestionnaireVersionsColumns: TableColumn<FormattedQuestionnaireVer
         { label: QuestionnaireStatus.ARCHIVED, value: QuestionnaireStatus.ARCHIVED },
       ],
     },
-  },
-  {
-    title: 'Language',
-    name: 'language',
-    translationPath: 'questionnaires.language',
-  },
-  {
-    title: 'Abbreviation',
-    name: 'abbreviation',
-    translationPath: 'questionnaires.abbreviation',
   },
   {
     title: 'Keywords',
