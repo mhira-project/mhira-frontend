@@ -110,18 +110,6 @@ export class CreateAssessmentComponent implements OnInit {
     console.log(this.formGroup.get('informantCaregiverId'));
   }
 
-  // public oninformantClinicianChange(event: any) {
-  //
-  // }
-  //
-  // public oninformantCaregiverChange(event: any) {
-  //
-  // }
-  //
-  // public onInformantPatientChange(event: any) {
-  //
-  // }
-
   public onQuestionnaireSelected(questionnaires: QuestionnaireVersion[]): void {
     this.selectedQuestionnaires = questionnaires;
   }
@@ -254,7 +242,7 @@ export class CreateAssessmentComponent implements OnInit {
     } else {
       this.typeSelected = 'Informant Patient';
     }
-    console.log('TYPE', this.typeSelected);
+    console.log('Form', this.formGroup);
   }
 
   private getCaregivers(): void {
