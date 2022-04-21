@@ -11,8 +11,8 @@ export default {
     createPatient: 'Create Patient',
     caregiverList: 'Caregiver List',
     questionnaires: 'Questionnaires',
-    questionnairesList: 'Questionnaires List',
-    questionnairesVersionList: 'Questionnaire Version List',
+    questionnairesList: 'Questionnaires',
+    questionnairesVersionList: 'Questionnaire Version',
     uploadQuestionnaire: 'Upload Questionnaire',
     assessments: 'Assessments',
     planAssessment: 'Plan Assessments',
@@ -32,8 +32,14 @@ export default {
     patientStatuses: 'Patient Statuses',
     notFound: 'Not Found',
     noTabs: 'No Tabs',
+    disclaimers: 'Disclaimers',
   },
   tables: {
+    disclaimer: {
+      type: 'Type',
+      textInformation: 'Text Information',
+      lastUpdate: 'Last Update',
+    },
     assessmentsPatients: {
       title: 'Title',
       manager: 'Manager',

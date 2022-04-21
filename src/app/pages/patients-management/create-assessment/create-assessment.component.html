@@ -29,6 +29,7 @@
           <nz-radio-group
             formControlName="informationType"
             nzButtonStyle="solid"
+            [nzDisabled]="!editMode"
             [(ngModel)]="typeSelected"
             (ngModelChange)="onSelectChange($event)"
           >
@@ -44,6 +45,7 @@
             <nz-select
               [nzBorderless]="!editMode"
               class="input-class"
+              [nzDisabled]="!editMode"
               [(ngModel)]="selectedInformant"
               formControlName="informantPatient"
             >
@@ -59,6 +61,7 @@
             <nz-select
               [nzBorderless]="!editMode"
               class="input-class"
+              [nzDisabled]="!editMode"
               [(ngModel)]="selectedInformant"
               formControlName="informantClinicianId"
             >
@@ -74,6 +77,7 @@
             <nz-select
               [nzBorderless]="!editMode"
               class="input-class"
+              [nzDisabled]="!editMode"
               [(ngModel)]="selectedInformant"
               formControlName="informantCaregiverId"
             >
@@ -90,7 +94,10 @@
               <nz-date-picker
                 [nzBorderless]="!editMode"
                 class="date-picker1"
+                nzShowTime
+                nzFormat="yyyy-MM-dd HH:mm"
                 [(ngModel)]="deliveryDate"
+                [nzDisabled]="!editMode"
                 formControlName="deliveryDate"
                 (ngModelChange)="onChangeDelivery($event)"
               ></nz-date-picker>
@@ -102,7 +109,10 @@
               <nz-date-picker
                 [nzBorderless]="!editMode"
                 class="date-picker1"
+                nzShowTime
+                nzFormat="yyyy-MM-dd HH:mm"
                 [(ngModel)]="expireDate"
+                [nzDisabled]="!editMode"
                 formControlName="expirationDate"
                 (ngModelChange)="onChangeExpire($event)"
               ></nz-date-picker>
@@ -113,12 +123,12 @@
           <nz-input-group class="input-class">
             <h5>Notes for the assessment manager</h5>
             <nz-textarea-count [nzMaxCharacterCount]="200" placeholder="Write notes">
-              <textarea formControlName="note" [nzBorderless]="!editMode" [(ngModel)]="noteValue" nz-input></textarea>
+              <textarea formControlName="note" [(ngModel)]="noteValue" nz-input [disabled]="!editMode"></textarea>
             </nz-textarea-count>
           </nz-input-group>
         </nz-form-item>
         <div *ngIf="editMode" style="margin-top: 20px; display: flex; justify-content: space-between">
-          <button nz-button class="button">Cancel</button>
+          <button nz-button class="button" style="margin-right: 10px">Cancel</button>
           <button nz-button nzType="primary" class="button" [disabled]="!formGroup.valid">Submit Session</button>
         </div>
         <!--        <button nz-button nzType="primary" type="button" *ngIf="!editMode" (click)="editMode = !editMode">Edit</button>-->

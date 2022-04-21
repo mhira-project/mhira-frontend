@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormattedQuestionnaireVersion } from '@app/pages/questionnaire-management/@types/questionnaire';
+import {
+  FormattedQuestionnaireVersion,
+  QuestionnaireVersion,
+} from '@app/pages/questionnaire-management/@types/questionnaire';
 import { DEFAULT_PAGE_SIZE, SortField, TableColumn } from '@shared/@modules/master-data/@types/list';
 import { QuestionnaireVersionsColumns } from '@app/pages/questionnaire-management/@tables/questionnaire-version.table';
 import { PageInfo, Paging } from '@shared/@types/paging';
@@ -13,6 +16,17 @@ import { environment } from '@env/environment';
 import { Router } from '@angular/router';
 
 const CryptoJS = require('crypto-js');
+
+export const createSearchFilter1 = (
+  searchString: string
+): Array<{ [K in keyof Partial<FormattedQuestionnaireVersion>]: {} }> => {
+  if (!searchString) return [];
+  return [
+    { name: { iLike: `%${searchString}%` } },
+    { abbreviation: { iLike: `%${searchString}%` } },
+    { language: { iLike: `%${searchString}%` } },
+  ];
+};
 
 @Component({
   selector: 'app-questionnaire-version-list',
@@ -52,7 +66,7 @@ export class QuestionnaireVersionListComponent implements OnInit {
   }
 
   public onSearch(searchString: string): void {
-    this.questionnaireRequestOptions.filter = { or: createSearchFilter(searchString) };
+    this.questionnaireRequestOptions.filter = { or: createSearchFilter1(searchString) };
     this.getQuestionnaires();
   }
 

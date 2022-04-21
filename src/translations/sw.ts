@@ -11,9 +11,9 @@ export default {
     createPatient: 'Sajili Mgonjwa',
     caregiverList: 'Orodha ya Walezi',
     questionnaires: 'Madodoso',
-    questionnairesList: 'Orodha Ya Madodoso',
+    questionnairesList: 'Madodoso',
     uploadQuestionnaire: 'Pakia Dodoso',
-    questionnairesVersionList: 'Orodha ya Toleo la Hojaji',
+    questionnairesVersionList: ' Toleo la Hojaji',
     assessments: 'Tathmini',
     planAssessment: 'Panga Tathmini',
     plannedAssessments: 'Tathmini Zilizopangwa',
@@ -32,8 +32,14 @@ export default {
     patientStatuses: 'Hadhi za Mgonjwa',
     notFound: 'Haipo',
     noTabs: 'Hakuna kurasa',
+    disclaimers: 'Kanusho',
   },
   tables: {
+    disclaimer: {
+      type: 'Aina',
+      textInformation: 'Habari za Maandishi',
+      lastUpdate: 'Mwisho Mwisho',
+    },
     assessmentsPatients: {
       title: 'Kichwa',
       manager: 'Meneja',

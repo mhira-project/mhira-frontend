@@ -85,7 +85,6 @@ export class CreateAssessmentComponent implements OnInit {
     this.getPatient();
     this.getCaregivers();
     this.getUserDepartments();
-    console.log(this.patient);
   }
 
   public goBack(patient: FormattedPatient): void {
@@ -110,18 +109,6 @@ export class CreateAssessmentComponent implements OnInit {
     }
     console.log(this.formGroup.get('informantCaregiverId'));
   }
-
-  // public oninformantClinicianChange(event: any) {
-  //
-  // }
-  //
-  // public oninformantCaregiverChange(event: any) {
-  //
-  // }
-  //
-  // public onInformantPatientChange(event: any) {
-  //
-  // }
 
   public onQuestionnaireSelected(questionnaires: QuestionnaireVersion[]): void {
     this.selectedQuestionnaires = questionnaires;
@@ -246,7 +233,7 @@ export class CreateAssessmentComponent implements OnInit {
     // this.selectedInformant = this.fullAssessment.informant;
     this.selectedQuestionnaires = this.fullAssessment.questionnaireAssessment.questionnaires;
     this.noteValue = this.fullAssessment.note;
-    console.log(this.fullAssessment);
+    this.formGroup.controls.note.disable();
 
     if (this.fullAssessment.informantClinician) {
       this.typeSelected = `Departments User`;
@@ -255,7 +242,7 @@ export class CreateAssessmentComponent implements OnInit {
     } else {
       this.typeSelected = 'Informant Patient';
     }
-    console.log('TYPE', this.typeSelected);
+    console.log('Form', this.formGroup);
   }
 
   private getCaregivers(): void {

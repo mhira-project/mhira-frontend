@@ -32,8 +32,14 @@ export default {
     patientStatuses: 'Patientenstatus',
     notFound: 'Nicht gefunden',
     noTabs: 'Keine Registerkarten',
+    disclaimers: 'Haftungsausschluss',
   },
   tables: {
+    disclaimer: {
+      type: 'Typ',
+      textInformation: 'Textinformationen',
+      lastUpdate: 'Letztes Update',
+    },
     assessmentsPatients: {
       title: 'Titel',
       manager: 'Manager',

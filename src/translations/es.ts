@@ -11,9 +11,9 @@ export default {
     createPatient: 'Crear Paciente Nuevo',
     caregiverList: 'Lista de Cuidadores',
     questionnaires: 'Cuestionarios',
-    questionnairesList: 'Cuestionarios Disponibles',
+    questionnairesList: 'Cuestionarios',
     uploadQuestionnaire: 'Cargar un Cuestionario Nuevo',
-    questionnairesVersionList: 'Lista De Versiones Del Cuestionario',
+    questionnairesVersionList: 'Versiones Del Cuestionario',
     assessments: 'Evaluaciones',
     planAssessment: 'Crear una Evaluación',
     plannedAssessments: 'Evaluaciones Planificadas',
@@ -32,8 +32,14 @@ export default {
     patientStatuses: 'Estado del Paciente',
     notFound: 'No encontrado',
     noTabs: 'No hay Pestaña',
+    disclaimers: 'Descargos de Responsabilidad',
   },
   tables: {
+    disclaimer: {
+      type: 'Tipo',
+      textInformation: 'Información de Texto',
+      lastUpdate: 'Última Actualización',
+    },
     assessmentsPatients: {
       title: 'Título',
       manager: 'Gerente',
