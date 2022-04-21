@@ -19,15 +19,12 @@ const CryptoJS = require('crypto-js');
 
 export const createSearchFilter1 = (
   searchString: string
-): Array<{ [K in keyof Partial<QuestionnaireVersion>]: {} }> => {
+): Array<{ [K in keyof Partial<FormattedQuestionnaireVersion>]: {} }> => {
   if (!searchString) return [];
   return [
     { name: { iLike: `%${searchString}%` } },
-    {
-      questionnaire: {
-        or: [{ abbreviation: { iLike: `%${searchString}%` } }, { language: { iLike: `%${searchString}%` } }],
-      },
-    },
+    { abbreviation: { iLike: `%${searchString}%` } },
+    { language: { iLike: `%${searchString}%` } },
   ];
 };
 
