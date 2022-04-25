@@ -180,6 +180,15 @@ export const MENU: SideNavInterface[] = [
         submenu: [],
       },
       {
+        path: 'administration/disclaimers',
+        title: 'menu.disclaimers',
+        permissions: [PK.VIEW_SETTINGS],
+        iconType: '',
+        iconTheme: '',
+        icon: '',
+        submenu: [],
+      },
+      {
         path: 'administration/settings',
         title: 'menu.settings',
         permissions: [PK.VIEW_SETTINGS, PK.VIEW_SYSCONF],

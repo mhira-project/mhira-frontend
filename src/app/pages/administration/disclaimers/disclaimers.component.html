@@ -1,0 +1,30 @@
+<app-master-data-list [data]="data" [columns]="columns" (rowClick)="handleRowClick($event)"> </app-master-data-list>
+
+<nz-drawer
+  [nzWidth]="600"
+  [nzMask]="true"
+  [nzClosable]="true"
+  [nzTitle]="'Edit Script'"
+  [nzVisible]="showCreateDisclaimer"
+  [nzMaskClosable]="false"
+  (nzOnClose)="closeCreatePanel()"
+  nzPlacement="right"
+>
+  <div class="big-div">
+    <app-form
+      class="mt-3"
+      [form]="disclaimerForm"
+      [formData]="disclaimer"
+      [isLoading]="isLoading"
+      [populateForm]="populateForm"
+      [resetForm]="resetForm"
+      [showCancelButton]="showCancelButton"
+      [loadingMessage]="loadingMessage"
+    >
+    </app-form>
+    <div class="buttons">
+      <button class="cancel-button" nz-button nzType="default" (click)="closeCreatePanel()">Cancel</button>
+      <button class="add-button" nz-button nzType="primary" (click)="updateDisclaimer()">Save</button>
+    </div>
+  </div>
+</nz-drawer>

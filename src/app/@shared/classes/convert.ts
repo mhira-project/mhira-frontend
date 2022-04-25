@@ -54,6 +54,13 @@ export class Convert {
     return JSON.stringify(value);
   }
 
+  // Disclaimer
+
+  public static toDisclaimer(json: any): Role {
+    json.updatedAt = json.updatedAt ? moment(json.updatedAt).format('DD-MM-YYYY') : '';
+    return json;
+  }
+
   // Department
   public static toDepartment(json: any): FormattedDepartment {
     json.formattedStatus = {
