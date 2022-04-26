@@ -3,3 +3,11 @@
     <app-reports></app-reports>
   </nz-tab>
 </nz-tabset>
+
+<nz-modal nzOkText="I accept" [(nzVisible)]="isVisible" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <p class="icon"><i class="fas fa-info-circle"></i></p>
+    <p class="title">Welcome to Mhira</p>
+    <p class="description">{{ disclaimer?.description }}</p>
+  </ng-container>
+</nz-modal>

@@ -1,0 +1,26 @@
+.description {
+  text-align: center;
+  color: black;
+}
+
+.title {
+  font-size: 20px;
+  text-align: center;
+  color: black;
+}
+
+.icon {
+  color: black !important;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fa-info-circle {
+  font-size: 50px;
+}
+
+.nz-modal-footer {
+  visibility: hidden;
+}
