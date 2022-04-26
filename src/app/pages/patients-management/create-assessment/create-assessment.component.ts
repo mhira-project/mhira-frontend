@@ -97,6 +97,10 @@ export class CreateAssessmentComponent implements OnInit {
   }
 
   public onSelectChange(event: any) {
+    if (!this.editMode) {
+      return;
+    }
+
     if (event === 'Informant Patient') {
       this.dataToSelect = [{ label: this.patient.firstName, value: this.patient.id }];
     } else if (event === `Departments User`) {
@@ -107,7 +111,6 @@ export class CreateAssessmentComponent implements OnInit {
         value: caregiver.id,
       }));
     }
-    console.log(this.formGroup.get('informantCaregiverId'));
   }
 
   public onQuestionnaireSelected(questionnaires: QuestionnaireVersion[]): void {
@@ -150,6 +153,7 @@ export class CreateAssessmentComponent implements OnInit {
         this.patient = PatientModel.fromJson(patient);
       }
     });
+    this.selectedInformant = this.patient.id;
   }
 
   public onChangeDelivery(result: Date): void {
@@ -239,12 +243,26 @@ export class CreateAssessmentComponent implements OnInit {
 
     if (this.fullAssessment.informantClinician) {
       this.typeSelected = `Departments User`;
+      this.selectedInformant = this.fullAssessment.informantClinician.id;
+      this.dataToSelect = [
+        {
+          label: this.fullAssessment.informantClinician.firstName,
+          value: this.fullAssessment.informantClinician.id,
+        },
+      ];
     } else if (this.fullAssessment.informantCaregiver) {
+      this.dataToSelect = [
+        {
+          label: this.fullAssessment.informantCaregiver.firstName,
+          value: this.fullAssessment.informantCaregiver.id,
+        },
+      ];
       this.typeSelected = `Patients Caregiver`;
+      this.selectedInformant = this.fullAssessment.informantCaregiver.id;
     } else {
       this.typeSelected = 'Informant Patient';
+      this.selectedInformant = this.fullAssessment.patient.id;
     }
-    console.log('Form', this.formGroup);
   }
 
   private getCaregivers(): void {
