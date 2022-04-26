@@ -11,8 +11,9 @@
       <router-outlet></router-outlet>
     </section>
   </div>
-  <span class="disclaimer">
-    <i class="fas fa-exclamation-triangle"></i>This assessment will take some time to be seen by a clinician. In case of
-    an emergency, please contact {{ assessment.clinician.phone }}. Thank you!</span
-  >
+  <!--  <span class="disclaimer">-->
+  <!--    <i class="fas fa-exclamation-triangle"></i>This assessment will take some time to be seen by a clinician. In case of-->
+  <!--    an emergency, please contact {{ assessment.clinician.phone }}. Thank you!</span-->
+  <!--  >-->
+  <span class="disclaimer"> <i class="fas fa-exclamation-triangle"></i>{{ disclaimer?.description }}</span>
 </article>
