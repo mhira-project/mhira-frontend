@@ -131,7 +131,9 @@
           <button nz-button class="button" style="margin-right: 10px">Cancel</button>
           <button nz-button nzType="primary" class="button" [disabled]="!formGroup.valid">Submit Session</button>
         </div>
-        <!--        <button nz-button nzType="primary" type="button" *ngIf="!editMode" (click)="editMode = !editMode">Edit</button>-->
+        <button nz-button nzType="primary" type="button" *ngIf="!editMode" (click)="onSubmitAssessment()">
+          Edit Note
+        </button>
       </form>
     </section>
   </div>

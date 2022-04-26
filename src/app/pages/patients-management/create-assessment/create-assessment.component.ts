@@ -184,7 +184,9 @@ export class CreateAssessmentComponent implements OnInit {
       newAssessmentData.informantClinicianId = null;
       newAssessmentData.informantCaregiverId = null;
     }
-
+    if (this.fullAssessment?.patientId) {
+      newAssessmentData.note = this.noteValue;
+    }
     const action = this.fullAssessment?.patientId
       ? this.assessmentService.updateMongoAssessment({
           ...newAssessmentData,
@@ -233,7 +235,7 @@ export class CreateAssessmentComponent implements OnInit {
     // this.selectedInformant = this.fullAssessment.informant;
     this.selectedQuestionnaires = this.fullAssessment.questionnaireAssessment.questionnaires;
     this.noteValue = this.fullAssessment.note;
-    this.formGroup.controls.note.disable();
+    // this.formGroup.controls.note.disable();
 
     if (this.fullAssessment.informantClinician) {
       this.typeSelected = `Departments User`;
