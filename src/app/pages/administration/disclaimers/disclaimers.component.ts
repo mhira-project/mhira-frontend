@@ -74,14 +74,6 @@ export class DisclaimersComponent implements OnInit {
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }) => {
-          this.data = this.data.map((disclaimer) => {
-            if (disclaimer.type === data.type) {
-              console.log('here');
-              disclaimer.description = data.description;
-              // disclaimer.updatedAt = data.updatedAt.Convert.toDisclaimer();
-            }
-            return disclaimer;
-          });
           this.closeCreatePanel();
           this.getDescription();
         },
@@ -97,7 +89,7 @@ export class DisclaimersComponent implements OnInit {
       .subscribe(
         ({ data }: any) => {
           console.log(data);
-          this.data = data.disclaimers.map((disclaimers: any) => disclaimers);
+          this.data = data.disclaimers.map((disclaimers: any) => Convert.toDisclaimer(disclaimers));
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load departments' })
       );
