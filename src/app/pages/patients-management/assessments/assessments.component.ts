@@ -98,7 +98,6 @@ export class AssessmentsComponent implements OnInit {
   }
 
   public onAction({ action, context: assessment }: ActionArgs<FormattedAssessment, ActionKey>): void {
-    console.log('works');
     switch (action.key) {
       case ActionKey.SHOW_ASSESSMENT:
         this.showAssessment(assessment);

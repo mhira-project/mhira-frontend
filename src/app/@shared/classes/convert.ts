@@ -22,8 +22,8 @@ const STATUS_COLOR = {
 
 const ASSESSMENT_STATUS_COLOR = {
   [AssessmentStatus.PLANNED]: 'grey',
-  [AssessmentStatus.OPEN_FOR_COMPLETION]: 'black',
-  [AssessmentStatus.PARTIALLY_FILLED]: 'blue',
+  OPEN_FOR_COMPLETION: 'black',
+  PARTIALLY_COMPLETED: 'blue',
   [AssessmentStatus.COMPLETED]: 'green',
   [AssessmentStatus.CANCELLED]: 'red',
   [AssessmentStatus.EXPIRED]: 'orange',
@@ -111,10 +111,21 @@ export class Convert {
       .filter((s) => !!s)
       .join(' ');
     if (isFullAssessment(json)) {
-      assessment.formattedStatus = {
-        color: ASSESSMENT_STATUS_COLOR[json.questionnaireAssessment.status],
-        title: json.questionnaireAssessment.status,
-      };
+      const expirationToDate = new Date(assessment?.expirationDate);
+      const newDate = new Date();
+
+      if (assessment?.expirationDate && expirationToDate < newDate) {
+        assessment.formattedStatus = {
+          color: ASSESSMENT_STATUS_COLOR[AssessmentStatus.EXPIRED],
+          title: 'EXPIRED',
+        };
+      } else {
+        assessment.formattedStatus = {
+          color: ASSESSMENT_STATUS_COLOR[json.questionnaireAssessment.status],
+          title: AssessmentStatus[json.questionnaireAssessment.status],
+        };
+        console.log(json.questionnaireAssessment.status);
+      }
     }
 
     assessment.patientMedicalRecordNo = assessment.patient.medicalRecordNo;
