@@ -100,7 +100,6 @@ export class CreateAssessmentComponent implements OnInit {
     if (!this.editMode) {
       return;
     }
-
     if (event === 'Informant Patient') {
       this.dataToSelect = [{ label: this.patient.firstName, value: this.patient.id }];
     } else if (event === `Departments User`) {
@@ -153,7 +152,9 @@ export class CreateAssessmentComponent implements OnInit {
         this.patient = PatientModel.fromJson(patient);
       }
     });
-    this.selectedInformant = this.patient.id;
+    if (this.editMode) {
+      this.selectedInformant = this.patient.id;
+    }
   }
 
   public onChangeDelivery(result: Date): void {
@@ -251,17 +252,24 @@ export class CreateAssessmentComponent implements OnInit {
         },
       ];
     } else if (this.fullAssessment.informantCaregiver) {
+      console.log('asd');
+      this.typeSelected = `Patients Caregiver`;
+      this.selectedInformant = this.fullAssessment.informantCaregiver.id;
       this.dataToSelect = [
         {
           label: this.fullAssessment.informantCaregiver.firstName,
           value: this.fullAssessment.informantCaregiver.id,
         },
       ];
-      this.typeSelected = `Patients Caregiver`;
-      this.selectedInformant = this.fullAssessment.informantCaregiver.id;
     } else {
       this.typeSelected = 'Informant Patient';
       this.selectedInformant = this.fullAssessment.patient.id;
+      this.dataToSelect = [
+        {
+          label: this.fullAssessment.patient.firstName,
+          value: this.fullAssessment.patient.id,
+        },
+      ];
     }
   }
 
