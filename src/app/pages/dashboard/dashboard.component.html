@@ -4,10 +4,13 @@
   </nz-tab>
 </nz-tabset>
 
-<nz-modal nzOkText="I accept" [(nzVisible)]="isVisible" (nzOnOk)="handleOk()">
+<nz-modal [nzStyle]="{}" nzOkText="I accept" [(nzVisible)]="isVisible">
   <ng-container *nzModalContent>
     <p class="icon"><i class="fas fa-info-circle"></i></p>
     <p class="title">Welcome to Mhira</p>
     <p class="description">{{ disclaimer?.description }}</p>
+    <div class="button-div">
+      <button nz-button nzType="primary" class="modal-button" (click)="handleOk()">I Accept</button>
+    </div>
   </ng-container>
 </nz-modal>

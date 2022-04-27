@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit {
   public disclaimer: Disclaimers;
   public data: Partial<Disclaimers>[];
   public isLoading = false;
+  public modalClassName = 'welcome-modal';
 
   constructor(
     public translations: MhiraTranslations,

@@ -111,21 +111,11 @@ export class Convert {
       .filter((s) => !!s)
       .join(' ');
     if (isFullAssessment(json)) {
-      const expirationToDate = new Date(assessment?.expirationDate);
-      const newDate = new Date();
-
-      if (assessment?.expirationDate && expirationToDate < newDate) {
-        assessment.formattedStatus = {
-          color: ASSESSMENT_STATUS_COLOR[AssessmentStatus.EXPIRED],
-          title: 'EXPIRED',
-        };
-      } else {
-        assessment.formattedStatus = {
-          color: ASSESSMENT_STATUS_COLOR[json.questionnaireAssessment.status],
-          title: AssessmentStatus[json.questionnaireAssessment.status],
-        };
-        console.log(json.questionnaireAssessment.status);
-      }
+      assessment.formattedStatus = {
+        color: ASSESSMENT_STATUS_COLOR[json.questionnaireAssessment.status],
+        title: AssessmentStatus[json.questionnaireAssessment.status],
+      };
+      console.log(json.questionnaireAssessment.status);
     }
 
     assessment.patientMedicalRecordNo = assessment.patient.medicalRecordNo;

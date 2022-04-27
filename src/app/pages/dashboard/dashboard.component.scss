@@ -21,6 +21,25 @@
   font-size: 50px;
 }
 
-.nz-modal-footer {
-  visibility: hidden;
+::ng-deep .ant-modal-footer {
+  display: none;
+}
+
+::ng-deep .ant-modal-close-x {
+  display: none;
+}
+
+.button-div {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-button {
+  padding: 5px 80px;
+  color: white;
+  font-size: 18px;
+  background: #8ad080;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
