@@ -73,6 +73,7 @@ const getUserProfile = gql`
       passwordChangeRequired
       gender
       birthDate
+      acceptedTerm
       updatedAt
       createdAt
       roles {

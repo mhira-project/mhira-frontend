@@ -8,6 +8,7 @@ import { PermissionKey } from '@app/@shared/@types/permission';
 import { PermissionGuard } from '../../permission.guard';
 import { ReportsComponent } from './reports/reports.component';
 import { CreateReportComponent } from './create-report/create-report.component';
+import { DisclaimersComponent } from './disclaimers/disclaimers.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,17 @@ const routes: Routes = [
         component: RolesComponent,
         data: {
           breadcrumbI18nKey: 'menu.roles',
+          permissions: {
+            only: [PermissionKey.VIEW_ROLES_PERMISSIONS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'disclaimers',
+        component: DisclaimersComponent,
+        data: {
+          breadcrumbI18nKey: 'menu.disclaimers',
           permissions: {
             only: [PermissionKey.VIEW_ROLES_PERMISSIONS],
           },

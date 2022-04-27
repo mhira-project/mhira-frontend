@@ -97,6 +97,9 @@ export class CreateAssessmentComponent implements OnInit {
   }
 
   public onSelectChange(event: any) {
+    if (!this.editMode) {
+      return;
+    }
     if (event === 'Informant Patient') {
       this.dataToSelect = [{ label: this.patient.firstName, value: this.patient.id }];
     } else if (event === `Departments User`) {
@@ -107,7 +110,6 @@ export class CreateAssessmentComponent implements OnInit {
         value: caregiver.id,
       }));
     }
-    console.log(this.formGroup.get('informantCaregiverId'));
   }
 
   public onQuestionnaireSelected(questionnaires: QuestionnaireVersion[]): void {
@@ -150,6 +152,9 @@ export class CreateAssessmentComponent implements OnInit {
         this.patient = PatientModel.fromJson(patient);
       }
     });
+    if (this.editMode) {
+      this.selectedInformant = this.patient.id;
+    }
   }
 
   public onChangeDelivery(result: Date): void {
@@ -184,7 +189,9 @@ export class CreateAssessmentComponent implements OnInit {
       newAssessmentData.informantClinicianId = null;
       newAssessmentData.informantCaregiverId = null;
     }
-
+    if (this.fullAssessment?.patientId) {
+      newAssessmentData.note = this.noteValue;
+    }
     const action = this.fullAssessment?.patientId
       ? this.assessmentService.updateMongoAssessment({
           ...newAssessmentData,
@@ -233,16 +240,37 @@ export class CreateAssessmentComponent implements OnInit {
     // this.selectedInformant = this.fullAssessment.informant;
     this.selectedQuestionnaires = this.fullAssessment.questionnaireAssessment.questionnaires;
     this.noteValue = this.fullAssessment.note;
-    this.formGroup.controls.note.disable();
+    // this.formGroup.controls.note.disable();
 
     if (this.fullAssessment.informantClinician) {
       this.typeSelected = `Departments User`;
+      this.selectedInformant = this.fullAssessment.informantClinician.id;
+      this.dataToSelect = [
+        {
+          label: this.fullAssessment.informantClinician.firstName,
+          value: this.fullAssessment.informantClinician.id,
+        },
+      ];
     } else if (this.fullAssessment.informantCaregiver) {
+      console.log('asd');
       this.typeSelected = `Patients Caregiver`;
+      this.selectedInformant = this.fullAssessment.informantCaregiver.id;
+      this.dataToSelect = [
+        {
+          label: this.fullAssessment.informantCaregiver.firstName,
+          value: this.fullAssessment.informantCaregiver.id,
+        },
+      ];
     } else {
       this.typeSelected = 'Informant Patient';
+      this.selectedInformant = this.fullAssessment.patient.id;
+      this.dataToSelect = [
+        {
+          label: this.fullAssessment.patient.firstName,
+          value: this.fullAssessment.patient.id,
+        },
+      ];
     }
-    console.log('Form', this.formGroup);
   }
 
   private getCaregivers(): void {

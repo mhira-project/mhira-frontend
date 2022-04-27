@@ -11,6 +11,7 @@ import {
   QuestionnaireStatus,
 } from '../../pages/questionnaire-management/@types/questionnaire';
 import { Reports } from '@app/pages/administration/@types/reports';
+import { Disclaimers } from '@app/pages/administration/@types/disclaimers';
 
 const STATUS_COLOR = {
   [QuestionnaireStatus.DRAFT]: 'blue',
@@ -21,8 +22,8 @@ const STATUS_COLOR = {
 
 const ASSESSMENT_STATUS_COLOR = {
   [AssessmentStatus.PLANNED]: 'grey',
-  [AssessmentStatus.OPEN_FOR_COMPLETION]: 'black',
-  [AssessmentStatus.PARTIALLY_FILLED]: 'blue',
+  OPEN_FOR_COMPLETION: 'black',
+  PARTIALLY_COMPLETED: 'blue',
   [AssessmentStatus.COMPLETED]: 'green',
   [AssessmentStatus.CANCELLED]: 'red',
   [AssessmentStatus.EXPIRED]: 'orange',
@@ -52,6 +53,13 @@ export class Convert {
 
   public static roleToJson(value: Role): string {
     return JSON.stringify(value);
+  }
+
+  // Disclaimer
+
+  public static toDisclaimer(json: any): Disclaimers {
+    json.updatedAt = json.updatedAt ? moment(json.updatedAt).format('DD-MM-YYYY') : '';
+    return json;
   }
 
   // Department
@@ -105,8 +113,9 @@ export class Convert {
     if (isFullAssessment(json)) {
       assessment.formattedStatus = {
         color: ASSESSMENT_STATUS_COLOR[json.questionnaireAssessment.status],
-        title: json.questionnaireAssessment.status,
+        title: AssessmentStatus[json.questionnaireAssessment.status],
       };
+      console.log(json.questionnaireAssessment.status);
     }
 
     assessment.patientMedicalRecordNo = assessment.patient.medicalRecordNo;
@@ -118,6 +127,14 @@ export class Convert {
     assessment.formatedExpirationDate = assessment.expirationDate
       ? moment(assessment.expirationDate).format('DD-MM-YYYY')
       : '';
+
+    if (json.informantClinician) {
+      assessment.informant = json.informantClinician.firstName;
+    } else if (json.informantCaregiver) {
+      assessment.informant = json.informantCaregiver.firstName;
+    } else {
+      assessment.informant = 'Patient';
+    }
 
     return assessment;
   }

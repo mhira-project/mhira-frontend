@@ -7,9 +7,9 @@ import { Caregiver } from '@app/pages/patients-management/@types/caregiver';
 
 export enum AssessmentStatus {
   PLANNED = 'PLANNED',
-  OPEN_FOR_COMPLETION = 'OPEN_FOR_COMPLETION',
+  OPEN_FOR_COMPLETION = 'OPEN FOR COMPLETION',
   COMPLETED = 'COMPLETED',
-  PARTIALLY_FILLED = 'PARTIALLY_FILLED',
+  PARTIALLY_COMPLETED = 'PARTIALLY COMPLETED',
   EXPIRED = 'EXPIRED',
   CANCELLED = 'CANCELLED',
 }
@@ -28,6 +28,8 @@ export interface Assessment {
   createdAt?: Date;
   deliveryDate?: Date;
   expirationDate?: Date;
+  informantCaregiver?: Caregiver;
+  informantClinician?: User;
 }
 
 export interface QuestionnaireAssessment {

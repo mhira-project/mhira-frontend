@@ -1,0 +1,45 @@
+.description {
+  text-align: center;
+  color: black;
+}
+
+.title {
+  font-size: 20px;
+  text-align: center;
+  color: black;
+}
+
+.icon {
+  color: black !important;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fa-info-circle {
+  font-size: 50px;
+}
+
+::ng-deep .ant-modal-footer {
+  display: none;
+}
+
+::ng-deep .ant-modal-close-x {
+  display: none;
+}
+
+.button-div {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-button {
+  padding: 5px 80px;
+  color: white;
+  font-size: 18px;
+  background: #8ad080;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

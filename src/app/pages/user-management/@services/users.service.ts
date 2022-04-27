@@ -39,6 +39,14 @@ export class UsersService {
     });
   }
 
+  updateUserAcceptedTerm(updateOneUserInput: UpdateOneUserInput): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: UsersMutations.userAcceptedTerm,
+      variables: { updateOneUserInput },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
   changeUserPassword(inputs: UserChangePasswordInput): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: UsersMutations.changeUserPassword,
