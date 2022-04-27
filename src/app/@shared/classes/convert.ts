@@ -138,6 +138,14 @@ export class Convert {
       ? moment(assessment.expirationDate).format('DD-MM-YYYY')
       : '';
 
+    if (json.informantClinician) {
+      assessment.informant = json.informantClinician.firstName;
+    } else if (json.informantCaregiver) {
+      assessment.informant = json.informantCaregiver.firstName;
+    } else {
+      assessment.informant = 'Patient';
+    }
+
     return assessment;
   }
 }

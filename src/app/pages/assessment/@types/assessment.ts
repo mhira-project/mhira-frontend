@@ -28,6 +28,8 @@ export interface Assessment {
   createdAt?: Date;
   deliveryDate?: Date;
   expirationDate?: Date;
+  informantCaregiver?: Caregiver;
+  informantClinician?: User;
 }
 
 export interface QuestionnaireAssessment {
