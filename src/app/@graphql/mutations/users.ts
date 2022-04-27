@@ -60,6 +60,7 @@ const updateOneUser = gql`
       gender
       birthDate
       nationality
+      acceptedTerm
       createdAt
       updatedAt
       deletedAt
@@ -129,6 +130,51 @@ const softDeleteUser = gql`
   }
 `;
 
+const userAcceptedTerm = gql`
+  mutation($updateOneUserInput: UpdateOneUserInput!) {
+    updateUserAcceptedTerm(input: $updateOneUserInput) {
+      id
+      username
+      active
+      firstName
+      middleName
+      lastName
+      email
+      phone
+      workID
+      address
+      gender
+      birthDate
+      nationality
+      acceptedTerm
+      createdAt
+      updatedAt
+      deletedAt
+      departments {
+        id
+        name
+        description
+        active
+      }
+      roles {
+        id
+        name
+        isSuperAdmin
+        hierarchy
+        code
+        createdAt
+        updatedAt
+      }
+      permissions {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 export const UsersMutations = {
   createOneUser,
   updateOneUser,
@@ -136,4 +182,5 @@ export const UsersMutations = {
   softDeleteUser,
   updateUserPassword,
   changeUserPassword,
+  userAcceptedTerm,
 };

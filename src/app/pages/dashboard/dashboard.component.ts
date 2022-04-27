@@ -5,6 +5,9 @@ import { Disclaimers } from '@app/pages/administration/@types/disclaimers';
 import { DisclaimersService } from '@app/pages/administration/@services/disclaimers.service';
 import { finalize } from 'rxjs/operators';
 import { ErrorHandlerService } from '@shared/services/error-handler.service';
+import { UsersService } from '@app/pages/user-management/@services/users.service';
+import { CreateUserInput, UpdateOneUserInput, User } from '@app/pages/user-management/@types/user';
+import { UserModel } from '@app/pages/user-management/@models/user.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,8 +16,10 @@ import { ErrorHandlerService } from '@shared/services/error-handler.service';
 })
 export class DashboardComponent implements OnInit {
   isVisible = true;
+  user: User;
   public disclaimer: Disclaimers;
   public data: Partial<Disclaimers>[];
+  public acceptedTerm = false;
   public isLoading = false;
   public modalClassName = 'welcome-modal';
 
@@ -22,17 +27,45 @@ export class DashboardComponent implements OnInit {
     public translations: MhiraTranslations,
     private disclaimersService: DisclaimersService,
     private errorService: ErrorHandlerService,
+    private usersService: UsersService,
     private modal: NzModalService
   ) {}
 
   ngOnInit(): void {
     this.getDescription();
-    console.log(this.disclaimer);
+    this.getUserAcceptedTerm();
   }
 
-  handleOk(): void {
-    console.log('Button ok clicked!');
-    this.isVisible = false;
+  getUserAcceptedTerm() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      this.user = user;
+      this.acceptedTerm = user.acceptedTerm;
+    }
+  }
+
+  updateUser() {
+    const userInput: UpdateOneUserInput = {
+      id: this.user.id,
+      update: { acceptedTerm: true },
+    };
+    this.isLoading = true;
+    this.usersService
+      .updateUserAcceptedTerm(userInput)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe(
+        async ({ data }) => {
+          this.user = data.updateUserAcceptedTerm;
+          this.acceptedTerm = this.user.acceptedTerm;
+        },
+        (error) => {
+          this.errorService.handleError(error, {});
+        }
+      );
   }
 
   private getDescription(): void {
