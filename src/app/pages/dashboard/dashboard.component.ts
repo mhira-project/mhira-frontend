@@ -8,6 +8,7 @@ import { ErrorHandlerService } from '@shared/services/error-handler.service';
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { CreateUserInput, UpdateOneUserInput, User } from '@app/pages/user-management/@types/user';
 import { UserModel } from '@app/pages/user-management/@models/user.model';
+import { AuthService } from '@app/auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,29 +20,30 @@ export class DashboardComponent implements OnInit {
   user: User;
   public disclaimer: Disclaimers;
   public data: Partial<Disclaimers>[];
-  public acceptedTerm = false;
+  public acceptedTerm = true;
   public isLoading = false;
-  public modalClassName = 'welcome-modal';
 
   constructor(
     public translations: MhiraTranslations,
+    private authService: AuthService,
     private disclaimersService: DisclaimersService,
     private errorService: ErrorHandlerService,
-    private usersService: UsersService,
-    private modal: NzModalService
+    private usersService: UsersService
   ) {}
 
   ngOnInit(): void {
+    this.getUser();
     this.getDescription();
-    this.getUserAcceptedTerm();
   }
 
-  getUserAcceptedTerm() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
-      this.user = user;
-      this.acceptedTerm = user.acceptedTerm;
-    }
+  getUser() {
+    this.authService.getUserProfile().subscribe(
+      ({ data }) => {
+        this.user = data.getUserProfile;
+        this.acceptedTerm = this.user.acceptedTerm;
+      },
+      (err) => this.errorService.handleError(err, { prefix: 'Unable to get user profile' })
+    );
   }
 
   updateUser() {
@@ -74,7 +76,6 @@ export class DashboardComponent implements OnInit {
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }: any) => {
-          console.log(data);
           this.disclaimer = data.disclaimers.find((disclaimers: any) => disclaimers.type === 'loginDisclaimer');
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load disclaimers' })

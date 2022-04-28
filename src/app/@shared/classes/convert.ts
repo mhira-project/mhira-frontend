@@ -115,7 +115,6 @@ export class Convert {
         color: ASSESSMENT_STATUS_COLOR[json.questionnaireAssessment.status],
         title: AssessmentStatus[json.questionnaireAssessment.status],
       };
-      console.log(json.questionnaireAssessment.status);
     }
 
     assessment.patientMedicalRecordNo = assessment.patient.medicalRecordNo;
