@@ -89,6 +89,7 @@ export class CreateAssessmentComponent implements OnInit {
 
   public goBack(patient: FormattedPatient): void {
     const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.patient), environment.secretKey).toString();
+    console.log(this.patient);
     this.router.navigate(['/mhira/case-management/profile'], {
       queryParams: {
         profile: dataString,
@@ -147,8 +148,10 @@ export class CreateAssessmentComponent implements OnInit {
   public getPatient() {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params.profile) {
+        console.log('here');
         const bytes = CryptoJS.AES.decrypt(params.profile, environment.secretKey);
         const patient = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        console.log(PatientModel.fromJson(patient));
         this.patient = PatientModel.fromJson(patient);
       }
     });

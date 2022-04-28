@@ -123,6 +123,7 @@ export class AssessmentsComponent implements OnInit {
   }
 
   public onPatientSelect(): void {
+    console.log(this.patient);
     const dataString = CryptoJS.AES.encrypt(JSON.stringify(this.patient), environment.secretKey).toString();
     this.router.navigate(['/mhira/case-management/create-assessment'], {
       queryParams: {
@@ -199,7 +200,6 @@ export class AssessmentsComponent implements OnInit {
         ...options.filter,
         and: [{ clinician: { id: { eq: this.userId } } }, ...(options.filter.and ?? [])],
       };
-    console.log('User', this.user);
 
     this.isLoading = true;
     this.assessmentService
@@ -246,7 +246,6 @@ export class AssessmentsComponent implements OnInit {
 
   private get userId(): number {
     const user = JSON.parse(localStorage.getItem('user')) as User;
-    console.log(user);
     return user.id ?? 0;
   }
 }
