@@ -102,12 +102,20 @@ export class CreateAssessmentComponent implements OnInit {
       return;
     }
     if (event === 'Informant Patient') {
-      this.dataToSelect = [{ label: this.patient.firstName, value: this.patient.id }];
+      this.dataToSelect = [
+        {
+          label: this.patient.firstName + ' ' + this.patient.lastName + ' ' + this.patient.medicalRecordNo,
+          value: this.patient.id,
+        },
+      ];
     } else if (event === `Departments User`) {
-      this.dataToSelect = this.users.map((user) => ({ label: user.firstName, value: user.id }));
+      this.dataToSelect = this.users.map((user) => ({
+        label: user.firstName + ' ' + user.lastName,
+        value: user.id,
+      }));
     } else if (event === `Patients Caregiver`) {
       this.dataToSelect = this.caregivers.map((caregiver) => ({
-        label: caregiver.firstName,
+        label: caregiver.firstName + ' ' + caregiver.lastName,
         value: caregiver.id,
       }));
     }
@@ -227,7 +235,8 @@ export class CreateAssessmentComponent implements OnInit {
       informationType: '',
       informantPatient: this.fullAssessment.patient,
       informantClinicianId: {
-        label: this.fullAssessment.informantClinician?.firstName,
+        label:
+          this.fullAssessment.informantClinician?.firstName + ' ' + this.fullAssessment.informantClinician?.lastName,
         value: this.fullAssessment.informantClinician?.id,
       },
       informantCaregiverId: {
