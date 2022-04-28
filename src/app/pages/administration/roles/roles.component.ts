@@ -136,7 +136,7 @@ export class RolesComponent implements OnInit {
   disableEnableFields() {
     this.roleForms.groups.forEach((group) =>
       group.fields.forEach((field) => {
-        field.name === 'hierarchy' && this.perms.isSuperAdmin ? (field.disabled = false) : (field.disabled = true);
+        field.name === 'hierarchy' && this.perms.isSuperAdmin ? (field.disabled = true) : (field.disabled = false);
       })
     );
   }
