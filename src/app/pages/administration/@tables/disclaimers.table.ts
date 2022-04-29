@@ -1,10 +1,10 @@
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
-import { Disclaimers } from '../@types/disclaimers';
+import { FormattedDisclaimer } from '../@types/disclaimers';
 
-export const DisclaimersColumns: TableColumn<Partial<Disclaimers>>[] = [
+export const DisclaimersColumns: TableColumn<Partial<FormattedDisclaimer>>[] = [
   {
     title: 'Type',
-    name: 'type',
+    name: 'formattedType',
     translationPath: 'tables.disclaimer.type',
     filterField: {
       type: 'text',

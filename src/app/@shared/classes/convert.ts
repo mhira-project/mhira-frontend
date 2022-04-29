@@ -11,7 +11,7 @@ import {
   QuestionnaireStatus,
 } from '../../pages/questionnaire-management/@types/questionnaire';
 import { Reports } from '@app/pages/administration/@types/reports';
-import { Disclaimers } from '@app/pages/administration/@types/disclaimers';
+import { DisclaimerEnum, Disclaimers, FormattedDisclaimer } from '@app/pages/administration/@types/disclaimers';
 
 const STATUS_COLOR = {
   [QuestionnaireStatus.DRAFT]: 'blue',
@@ -58,7 +58,6 @@ export class Convert {
   // Disclaimer
 
   public static toDisclaimer(json: any): Disclaimers {
-    json.updatedAt = json.updatedAt ? moment(json.updatedAt).format('DD-MM-YYYY') : '';
     return json;
   }
 
@@ -98,6 +97,13 @@ export class Convert {
     };
 
     return questionnaire;
+  }
+
+  public static toFormattedDisclaimer(json: Disclaimers): FormattedDisclaimer {
+    json.updatedAt = json.updatedAt ? moment(json.updatedAt).format('DD-MM-YYYY') : '';
+    const disclaimer: FormattedDisclaimer = json as FormattedDisclaimer;
+    disclaimer.formattedType = DisclaimerEnum[disclaimer.type];
+    return json;
   }
 
   public static toFormattedAssessment(json: Assessment | FullAssessment): FormattedAssessment {
