@@ -1,3 +1,8 @@
+export enum DisclaimerEnum {
+  assessments = 'Assessment',
+  loginDisclaimer = 'Login Disclaimer',
+}
+
 export interface Disclaimers {
   id?: number;
   type: string;
@@ -18,4 +23,5 @@ export interface FormattedDisclaimer {
   description: string;
   createdAt?: string;
   updatedAt?: string;
+  formattedType?: string;
 }

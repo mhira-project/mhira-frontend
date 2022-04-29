@@ -6,9 +6,10 @@ import { finalize } from 'rxjs/operators';
 import { DisclaimersService } from '@app/pages/administration/@services/disclaimers.service';
 import { ErrorHandlerService } from '@shared/services/error-handler.service';
 import { DisclaimerForm } from '../@forms/disclaimer.form';
-import { Scripts } from '../../questionnaire-management/@types/scripts';
-import { createLogErrorHandler } from '@angular/compiler-cli/ngcc/src/execution/tasks/completion';
 import { Convert } from '../../../@shared/classes/convert';
+import { UpdateOneUserInput, User } from '@app/pages/user-management/@types/user';
+import { UsersService } from '@app/pages/user-management/@services/users.service';
+import { AuthService } from '@app/auth/auth.service';
 
 @Component({
   selector: 'app-disclaimers',
@@ -23,6 +24,8 @@ export class DisclaimersComponent implements OnInit {
   public showCancelButton = false;
   public loadingMessage = '';
   public isLoading = false;
+  public acceptedTerm = true;
+  user: User;
 
   // form properties
   public showCreateDisclaimer = false;
@@ -32,10 +35,16 @@ export class DisclaimersComponent implements OnInit {
 
   // public disclaimerForm = DisclaimerForm;
 
-  constructor(private disclaimersService: DisclaimersService, private errorService: ErrorHandlerService) {}
+  constructor(
+    private disclaimersService: DisclaimersService,
+    private errorService: ErrorHandlerService,
+    private authService: AuthService,
+    private usersService: UsersService
+  ) {}
 
   ngOnInit(): void {
-    this.getDescription();
+    this.getDisclaimers();
+    this.getUser();
   }
 
   public openCreatePanel(disclaimer?: Disclaimers): void {
@@ -59,6 +68,36 @@ export class DisclaimersComponent implements OnInit {
     this.openCreatePanel(event);
   }
 
+  getUser() {
+    this.authService.getUserProfile().subscribe(
+      ({ data }) => {
+        this.user = data.getUserProfile;
+      },
+      (err) => this.errorService.handleError(err, { prefix: 'Unable to get user profile' })
+    );
+  }
+
+  updateUser() {
+    const userInput: UpdateOneUserInput = {
+      id: this.user.id,
+      update: { acceptedTerm: false },
+    };
+    this.isLoading = true;
+    this.usersService
+      .updateUserAcceptedTerm(userInput)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe(
+        async ({ data }) => {},
+        (error) => {
+          this.errorService.handleError(error, {});
+        }
+      );
+  }
+
   public updateDisclaimer() {
     const inputValues: any = {};
     this.disclaimerForm.groups[0]?.fields?.map((field) => {
@@ -74,14 +113,17 @@ export class DisclaimersComponent implements OnInit {
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }) => {
+          if (this.disclaimer.type === 'loginDisclaimer') {
+            this.updateUser();
+          }
           this.closeCreatePanel();
-          this.getDescription();
+          this.getDisclaimers();
         },
         (error) => this.errorService.handleError(error, { prefix: 'Unable to update disclaimer' })
       );
   }
 
-  private getDescription(): void {
+  private getDisclaimers(): void {
     this.isLoading = true;
     this.disclaimersService
       .disclaimers()
@@ -89,7 +131,7 @@ export class DisclaimersComponent implements OnInit {
       .subscribe(
         ({ data }: any) => {
           console.log(data);
-          this.data = data.disclaimers.map((disclaimers: any) => Convert.toDisclaimer(disclaimers));
+          this.data = data.disclaimers.map((disclaimers: any) => Convert.toFormattedDisclaimer(disclaimers));
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load departments' })
       );
