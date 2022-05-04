@@ -24,6 +24,7 @@ import {
   ActionArgs,
   DEFAULT_PAGE_SIZE,
 } from '../../../@shared/@modules/master-data/@types/list';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 const CryptoJS = require('crypto-js');
 
@@ -72,6 +73,7 @@ export class PatientsListComponent {
     private patientsService: PatientsService,
     private router: Router,
     private modalService: NzModalService,
+    private message: NzMessageService,
     private patientStateService: PatientStatusesService,
     private errorService: ErrorHandlerService,
     public perms: AppPermissionsService
@@ -264,7 +266,11 @@ export class PatientsListComponent {
       .deletePatient(patient)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        () => this.data.splice(this.data.indexOf(patient), 1),
+        () => {
+          this.data.splice(this.data.indexOf(patient), 1);
+          this.message.success('Patient has been successfully deleted');
+          this.getPatients();
+        },
         (error) =>
           this.errorService.handleError(error, {
             prefix: `Unable to delete patient "${patient.firstName} ${patient.lastName}"`,
