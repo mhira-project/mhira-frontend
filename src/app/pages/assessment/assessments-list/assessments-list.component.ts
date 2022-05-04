@@ -184,7 +184,6 @@ export class AssessmentsListComponent {
   }
 
   private createSearchFilter(searchString: string): Array<{ [K in keyof Partial<FormattedAssessment>]: {} }> {
-    if (!searchString) return [];
     return [
       { name: { iLike: `%${searchString}%` } },
       { informant: { iLike: `%${searchString}%` } },
@@ -210,7 +209,6 @@ export class AssessmentsListComponent {
       },
     ];
   }
-
 
   private showAssessment({ uuid }: FormattedAssessment): void {
     window.open(this.generateAssessmentURL(uuid));
