@@ -253,6 +253,16 @@ export default {
     clinician: 'Daktari wa kliniki',
     informant: 'Mtoa taarifa',
   },
+  createAssessment: {
+    title: 'Kichwa',
+    assessmentManager: 'Msimamizi wa Tathmini',
+    patient: 'Mgonjwa',
+    departmentsUser: `Mtumiaji wa Idara`,
+    patientsCaregiver: `Mlezi wa Mgonjwa`,
+    deliveryDate: 'Tarehe ya Uwasilishaji',
+    expirationDate: 'Tarehe ya kumalizika muda wake',
+    notes: 'Vidokezo kwa msimamizi wa tathmini',
+  },
   form: {
     system: {
       systemLocale: 'Weka Eneo la Mfumo',

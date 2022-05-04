@@ -9,14 +9,14 @@
         <nz-form-item>
           <nz-form-control nzErrorTip="Please input your username!">
             <nz-input-group class="input-class">
-              <h5>Title</h5>
+              <h5>{{ 'createAssessment.title' | translate }}</h5>
               <input formControlName="name" nz-input placeholder="Baseline" [readonly]="!editMode" />
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-control class="input-class">
-            <h5>Assessment Manager</h5>
+            <h5>{{ 'createAssessment.assessmentManager' | translate }}</h5>
             <app-user-picker
               [readonly]="!editMode"
               [selectedUser]="selectedClinician"
@@ -34,14 +34,18 @@
             (ngModelChange)="onSelectChange($event)"
           >
             <h5>Informant Type</h5>
-            <label nz-radio-button nzValue="Informant Patient">Patient</label>
-            <label nz-radio-button nzValue="Departments User">Department's User</label>
-            <label nz-radio-button nzValue="Patients Caregiver">Patient's Caregiver</label>
+            <label nz-radio-button nzValue="Informant Patient">{{ 'createAssessment.patient' | translate }}</label>
+            <label nz-radio-button nzValue="Departments User">{{
+              'createAssessment.departmentsUser' | translate
+            }}</label>
+            <label nz-radio-button nzValue="Patients Caregiver">{{
+              'createAssessment.patientsCaregiver' | translate
+            }}</label>
           </nz-radio-group>
         </nz-form-item>
         <nz-form-item *ngIf="typeSelected === 'Informant Patient'">
           <nz-input-group>
-            <h5>Patient</h5>
+            <h5>{{ 'createAssessment.patient' | translate }}</h5>
             <nz-select
               [nzBorderless]="!editMode"
               class="input-class"
@@ -57,7 +61,7 @@
         </nz-form-item>
         <nz-form-item *ngIf="typeSelected === 'Departments User'">
           <nz-input-group>
-            <h5>Department's User</h5>
+            <h5>{{ 'createAssessment.departmentsUser' | translate }}</h5>
             <nz-select
               [nzBorderless]="!editMode"
               class="input-class"
@@ -73,7 +77,7 @@
         </nz-form-item>
         <nz-form-item *ngIf="typeSelected === 'Patients Caregiver'">
           <nz-input-group>
-            <h5>Patient's Caregiver</h5>
+            <h5>{{ 'createAssessment.patientsCaregiver' | translate }}</h5>
             <nz-select
               [nzBorderless]="!editMode"
               class="input-class"
@@ -90,7 +94,7 @@
         <div class="date-picker">
           <nz-form-item>
             <nz-input-group>
-              <h5>Delivery Date</h5>
+              <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
               <nz-date-picker
                 [nzBorderless]="!editMode"
                 class="date-picker1"
@@ -105,7 +109,7 @@
           </nz-form-item>
           <nz-form-item>
             <nz-input-group>
-              <h5>Expiration Date</h5>
+              <h5>{{ 'createAssessment.expirationDate' | translate }}</h5>
               <nz-date-picker
                 [nzBorderless]="!editMode"
                 class="date-picker1"
@@ -121,7 +125,7 @@
         </div>
         <nz-form-item>
           <nz-input-group class="input-class">
-            <h5>Notes for the assessment manager</h5>
+            <h5>{{ 'createAssessment.notes' | translate }}</h5>
             <nz-textarea-count [nzMaxCharacterCount]="200" placeholder="Write notes">
               <textarea formControlName="note" [(ngModel)]="noteValue" nz-input [disabled]="!editMode"></textarea>
             </nz-textarea-count>
