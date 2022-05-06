@@ -14,6 +14,12 @@ export enum AssessmentStatus {
   CANCELLED = 'CANCELLED',
 }
 
+export enum AssessmentInformant {
+  PATIENT = 'PATIENT',
+  USER = 'USER',
+  CAREGIVER = 'CAREGIVER',
+}
+
 export interface Assessment {
   id?: number;
   uuid?: string;
@@ -23,12 +29,12 @@ export interface Assessment {
   clinicianId: number;
   patient: Patient;
   clinician?: User;
-  informant: string;
+  informantType: string;
   questionnaireAssessmentId?: string;
   createdAt?: Date;
   deliveryDate?: Date;
   expirationDate?: Date;
-  informantCaregiver?: Caregiver;
+  informantCaregiverRelation?: string;
   informantClinician?: User;
 }
 
@@ -42,7 +48,7 @@ export interface QuestionnaireAssessment {
 export interface FullAssessment extends Assessment {
   questionnaireAssessment: QuestionnaireAssessment;
   informantClinician: User;
-  informantCaregiver: Caregiver;
+  informantCaregiverRelation: string;
 }
 
 export interface FormattedAssessment extends Assessment {

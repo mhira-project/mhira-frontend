@@ -254,6 +254,16 @@ export default {
     clinician: 'Mjeku',
     informant: 'Informatori',
   },
+  createAssessment: {
+    title: 'Titulli',
+    assessmentManager: 'Menaxheri i Vlerësimit',
+    patient: 'Pacienti',
+    departmentsUser: `Përdoruesi i Departamentit`,
+    patientsCaregiver: ` Kujdestari i pacientit`,
+    deliveryDate: 'Data e dorëzimit',
+    expirationDate: ' Data e skadencës',
+    notes: 'Shënime për menaxherin e vlerësimit',
+  },
   form: {
     system: {
       systemLocale: 'Cakto Vendin e Sistemit',

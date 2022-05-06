@@ -127,18 +127,18 @@ export class Convert {
     assessment.clinicianWorkId = assessment.clinician?.workID;
 
     assessment.formatedDeliveryDate = assessment.deliveryDate
-      ? moment(assessment.deliveryDate).format('DD-MM-YYYY')
+      ? moment(assessment.deliveryDate).format('YYYY-MM-DD')
       : '';
     assessment.formatedExpirationDate = assessment.expirationDate
-      ? moment(assessment.expirationDate).format('DD-MM-YYYY')
+      ? moment(assessment.expirationDate).format('YYYY-MM-DD')
       : '';
 
     if (json.informantClinician) {
-      assessment.informant = json.informantClinician.firstName;
-    } else if (json.informantCaregiver) {
-      assessment.informant = json.informantCaregiver.firstName;
+      assessment.informantType = json.informantClinician.firstName;
+    } else if (json.informantCaregiverRelation) {
+      assessment.informantType = json.informantCaregiverRelation;
     } else {
-      assessment.informant = 'Patient';
+      assessment.informantType = 'Patient';
     }
 
     return assessment;

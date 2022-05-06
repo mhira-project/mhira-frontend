@@ -253,6 +253,16 @@ export default {
     clinician: 'Tratante',
     informant: 'Informante',
   },
+  createAssessment: {
+    title: 'Título',
+    assessmentManager: 'Gerente de Evaluación',
+    patient: 'Paciente',
+    departmentsUser: `Usuario del Departamento`,
+    patientsCaregiver: `Cuidador del Paciente`,
+    deliveryDate: 'Fecha de entrega',
+    expirationDate: 'Fecha de caducidad',
+    notes: 'Notas para el gerente de evaluación',
+  },
   form: {
     system: {
       systemLocale: 'Establecer configuración regional del sistema',

@@ -1,14 +1,7 @@
 <button style="margin-bottom: 16px" nz-button nzType="primary" (click)="goBack()">Back</button>
 
 <article nz-row [nzGutter]="20">
-  <section nz-col nzSpan="12" class="questionnaires">
-    <app-questionnaire-selection
-      [readonly]="!editMode"
-      [selectedQuestionnaires]="selectedQuestionnaires"
-      (selectionChange)="onQuestionnaireSelected($event)"
-    ></app-questionnaire-selection>
-  </section>
-  <section nz-col nzSpan="12">
+  <section nz-col nzSpan="9">
     <form nz-form [formGroup]="assessmentForm" (submit)="onSubmitAssessment()">
       <nz-form-item>
         <nz-form-label>{{ 'planAssessment.assessmentName' | translate }}</nz-form-label>
@@ -27,7 +20,7 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label nzFor="clinician">{{ 'planAssessment.clinician' | translate }}</nz-form-label>
+        <nz-form-label nzFor="clinician">{{ 'createAssessment.assessmentManager' | translate }}</nz-form-label>
         <nz-form-control>
           <app-user-picker
             [assignSelfOption]="true"
@@ -37,17 +30,78 @@
           ></app-user-picker>
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>{{ 'planAssessment.informant' | translate }}</nz-form-label>
-        <nz-form-control>
-          <input nz-input type="string" formControlName="informant" [readonly]="!editMode" />
-        </nz-form-control>
+      <!--      <nz-form-item>-->
+      <!--        <nz-form-label>{{ 'planAssessment.informant' | translate }}</nz-form-label>-->
+      <!--        <nz-form-control>-->
+      <!--          <input nz-input type="string" formControlName="informant" [readonly]="!editMode" />-->
+      <!--        </nz-form-control>-->
+      <!--      </nz-form-item>-->
+
+      <nz-form-item style="margin-bottom: 15px">
+        <nz-radio-group
+          formControlName="informantType"
+          nzButtonStyle="solid"
+          [nzDisabled]="!editMode"
+          [(ngModel)]="typeSelected"
+          (ngModelChange)="onSelectChange($event)"
+        >
+          <h5>Informant Type</h5>
+          <label nz-radio-button nzValue="PATIENT">{{ 'createAssessment.patient' | translate }}</label>
+          <label nz-radio-button nzValue="USER">{{ 'createAssessment.departmentsUser' | translate }}</label>
+          <label nz-radio-button nzValue="CAREGIVER">{{ 'createAssessment.patientsCaregiver' | translate }}</label>
+        </nz-radio-group>
+      </nz-form-item>
+      <nz-form-item *ngIf="typeSelected === 'PATIENT'">
+        <nz-input-group>
+          <h5>{{ 'createAssessment.patient' | translate }}</h5>
+          <nz-select
+            [nzBorderless]="!editMode"
+            class="input-class"
+            [nzDisabled]="!editMode"
+            [(ngModel)]="selectedInformant"
+            formControlName="informantPatient"
+          >
+            <nz-option *ngFor="let data of dataToSelect" [nzLabel]="data.label" [nzValue]="data.value">{{
+              data.label
+            }}</nz-option>
+          </nz-select>
+        </nz-input-group>
+      </nz-form-item>
+      <nz-form-item *ngIf="typeSelected === 'USER'">
+        <nz-input-group>
+          <h5>{{ 'createAssessment.departmentsUser' | translate }}</h5>
+          <nz-select
+            [nzBorderless]="!editMode"
+            class="input-class"
+            [nzDisabled]="!editMode"
+            [(ngModel)]="selectedInformant"
+            formControlName="informantClinicianId"
+          >
+            <nz-option *ngFor="let data of dataToSelect" [nzLabel]="data.label" [nzValue]="data.value">{{
+              data.label
+            }}</nz-option>
+          </nz-select>
+        </nz-input-group>
+      </nz-form-item>
+      <nz-form-item *ngIf="typeSelected === 'CAREGIVER'">
+        <nz-input-group>
+          <h5>{{ 'createAssessment.patientsCaregiver' | translate }}</h5>
+          <nz-select
+            [nzBorderless]="!editMode"
+            [nzOptions]="options"
+            class="input-class"
+            [nzDisabled]="!editMode"
+            [(ngModel)]="selectedInformant"
+            formControlName="informantCaregiverRelation"
+          >
+          </nz-select>
+        </nz-input-group>
       </nz-form-item>
 
       <div class="date-picker">
         <nz-form-item style="margin-top: 14px">
           <nz-input-group>
-            <h5>Delivery Date</h5>
+            <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
             <nz-date-picker
               [nzBorderless]="!editMode"
               class="date-picker1"
@@ -62,7 +116,7 @@
         </nz-form-item>
         <nz-form-item>
           <nz-input-group>
-            <h5>Expiration Date</h5>
+            <h5>{{ 'createAssessment.expirationDate' | translate }}</h5>
             <nz-date-picker
               [nzBorderless]="!editMode"
               class="date-picker1"
@@ -94,5 +148,12 @@
         </nz-form-control>
       </nz-form-item>
     </form>
+  </section>
+  <section nz-col nzSpan="15" class="questionnaires">
+    <app-questionnaire-selection
+      [readonly]="!editMode"
+      [selectedQuestionnaires]="selectedQuestionnaires"
+      (selectionChange)="onQuestionnaireSelected($event)"
+    ></app-questionnaire-selection>
   </section>
 </article>

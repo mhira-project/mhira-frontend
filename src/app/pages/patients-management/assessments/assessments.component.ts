@@ -161,7 +161,6 @@ export class AssessmentsComponent implements OnInit {
     if (!searchString) return [];
     return [
       { name: { iLike: `%${searchString}%` } },
-      { informant: { iLike: `%${searchString}%` } },
       {
         patient: {
           or: [

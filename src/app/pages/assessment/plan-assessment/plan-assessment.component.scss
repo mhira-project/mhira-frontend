@@ -18,6 +18,11 @@ form {
   }
 }
 
+.input-class {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
 h5 {
   font-weight: bold;
 }
@@ -30,27 +35,3 @@ h5 {
 .date-picker1 {
   width: 233px;
 }
-
-// .added-questionnaire-card {
-//   margin-bottom: 15px;
-//   button {
-//     cursor: pointer;
-//     border: none;
-//     background-color: transparent;
-//     i {
-//       font-size: 23px;
-//     }
-//   }
-//   button:first-child {
-//     color: #89d080;
-//   }
-//   button:last-child {
-//     color: #f1b0b0;
-//   }
-// }
-
-// ::ng-deep {
-//   .full-width {
-//     width: 100%;
-//   }
-// }

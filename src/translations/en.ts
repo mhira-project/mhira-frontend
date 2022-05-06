@@ -255,6 +255,16 @@ export default {
     clinician: 'Clinician',
     informant: 'Informant',
   },
+  createAssessment: {
+    title: 'Title',
+    assessmentManager: 'Assessment Manager',
+    patient: 'Patient',
+    departmentsUser: `Department's User`,
+    patientsCaregiver: `Patient's Caregiver`,
+    deliveryDate: 'Delivery Date',
+    expirationDate: 'Expiration Date',
+    notes: 'Notes for the assessment manager',
+  },
   form: {
     system: {
       systemLocale: 'Set System Locale',

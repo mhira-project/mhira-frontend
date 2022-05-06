@@ -253,6 +253,16 @@ export default {
     clinician: 'Kliniker',
     informant: 'Informant',
   },
+  createAssessment: {
+    title: 'Titel',
+    assessmentManager: 'Bewertungsmanager',
+    patient: 'Geduldig',
+    departmentsUser: `Benutzer der Abteilung`,
+    patientsCaregiver: `Betreuer des Patienten`,
+    deliveryDate: 'Lieferdatum',
+    expirationDate: 'Haltbarkeitsdatum',
+    notes: 'Hinweise für den Assessment-Manager',
+  },
   form: {
     system: {
       systemLocale: 'Systemgebietsschema festlegen',
