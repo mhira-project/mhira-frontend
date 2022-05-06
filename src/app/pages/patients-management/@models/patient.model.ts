@@ -21,8 +21,6 @@ export class PatientModel {
       [cm?.firstName?.charAt(0), cm?.middleName?.charAt(0), cm?.lastName?.charAt(0)].filter((s) => !!s).join('')
     );
 
-    console.log(json);
-
     return json;
   }
 

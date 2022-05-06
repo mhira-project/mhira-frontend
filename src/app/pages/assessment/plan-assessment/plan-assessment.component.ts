@@ -104,12 +104,17 @@ export class PlanAssessmentComponent implements OnInit {
     if (!this.editMode) {
       return;
     }
-    console.log(this.typeSelected);
+    console.log('hey', this.selectedPatient);
     if (event === 'PATIENT') {
       this.dataToSelect = [
         {
-          label: this.patient.firstName + ' ' + this.patient.lastName + ' ' + this.patient.medicalRecordNo,
-          value: this.patient.id,
+          label:
+            this.selectedPatient.firstName +
+            ' ' +
+            this.selectedPatient.lastName +
+            ' ' +
+            this.selectedPatient.medicalRecordNo,
+          value: this.selectedPatient.id,
         },
       ];
     } else if (event === `USER`) {
@@ -174,6 +179,17 @@ export class PlanAssessmentComponent implements OnInit {
 
   public onPatientSelect(patient: Patient) {
     this.assessmentForm.patchValue({ patientId: patient?.id });
+    if (this.typeSelected !== 'PATIENT') {
+      return;
+    }
+    this.patient = patient;
+    this.selectedInformant = patient.id;
+    this.dataToSelect = [
+      {
+        label: patient.firstName + ' ' + patient.lastName + ' ' + patient.medicalRecordNo,
+        value: patient.id,
+      },
+    ];
   }
 
   goBack() {
