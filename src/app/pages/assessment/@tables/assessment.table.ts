@@ -67,7 +67,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
         : {},
   },
   {
-    name: 'informant',
+    name: 'informantType',
     title: 'Informant',
     translationPath: 'plannedAssessments.informant',
     sort: true,

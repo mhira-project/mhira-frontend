@@ -32,11 +32,34 @@ export class CreateAssessmentComponent implements OnInit {
   formGroup: FormGroup;
   deliveryDate: any = null;
   expireDate: any = null;
-  typeSelected: any = 'Informant Patient';
+  typeSelected: any = 'PATIENT';
   dataToSelect: any = [];
   selectedInformant: any = null;
   noteValue: any = '';
-
+  options = [
+    { label: 'Mother', value: 'Mother' },
+    { label: 'Father', value: 'Father' },
+    { label: 'Grandparent', value: 'Grandparent' },
+    { label: 'Uncle/Aunt', value: 'Uncle/Aunt' },
+    { label: 'Extended Family', value: 'Extended Family' },
+    { label: 'Legal Guardian', value: 'Legal Guardian' },
+    { label: 'Family Doctor', value: 'Family Doctor' },
+    { label: 'External Paediatrician', value: 'External Paediatrician' },
+    { label: 'External Psychotherapist', value: 'External Psychotherapist' },
+    { label: 'External Psychologist', value: 'External Psychologist' },
+    { label: 'External Social Worker', value: 'External Social Worker' },
+    { label: 'External Nurse', value: 'External Nurse' },
+    { label: 'Emergency Department', value: 'Emergency Department' },
+    { label: 'Friend', value: 'Friend' },
+    { label: 'Neighbour', value: 'Neighbour' },
+    { label: 'Teacher', value: 'Teacher' },
+    { label: 'School Representative', value: 'School Representative' },
+    { label: 'Advisor', value: 'Advisor' },
+    { label: 'Legal Advisor', value: 'Legal Advisor' },
+    { label: 'Assistance', value: 'Assistance' },
+    { label: 'Supervisor', value: 'Supervisor' },
+    { label: 'Other', value: 'Other' },
+  ];
   public fullAssessment: FullAssessment;
   public isLoading = false;
   public selectedClinician: User;
@@ -75,8 +98,8 @@ export class CreateAssessmentComponent implements OnInit {
       clinicianId: [null, Validators.required],
       informantPatient: [null],
       informantClinicianId: [null],
-      informantCaregiverId: [null],
-      informationType: [null],
+      informantCaregiverRelation: [null],
+      informantType: [null],
       deliveryDate: [null],
       expirationDate: [null],
       note: [null],
@@ -101,19 +124,19 @@ export class CreateAssessmentComponent implements OnInit {
     if (!this.editMode) {
       return;
     }
-    if (event === 'Informant Patient') {
+    if (event === 'PATIENT') {
       this.dataToSelect = [
         {
           label: this.patient.firstName + ' ' + this.patient.lastName + ' ' + this.patient.medicalRecordNo,
           value: this.patient.id,
         },
       ];
-    } else if (event === `Departments User`) {
+    } else if (event === `USER`) {
       this.dataToSelect = this.users.map((user) => ({
         label: user.firstName + ' ' + user.lastName,
         value: user.id,
       }));
-    } else if (event === `Patients Caregiver`) {
+    } else if (event === `CAREGIVER`) {
       this.dataToSelect = this.caregivers.map((caregiver) => ({
         label: caregiver.firstName + ' ' + caregiver.lastName,
         value: caregiver.id,
@@ -180,25 +203,24 @@ export class CreateAssessmentComponent implements OnInit {
     if (this.formGroup.invalid) return;
 
     const questionnaires = this.selectedQuestionnaires.map((q) => q._id);
-    const { informationType, informantPatient, ...rest } = this.formGroup.value;
+    const { informant, informantPatient, ...rest } = this.formGroup.value;
     const newAssessmentData = {
       ...rest,
-      informant: '',
       questionnaires,
       patientId: this.fullAssessment?.patientId ?? this.patient.id,
     };
 
-    if (this.typeSelected === `Departments User`) {
-      newAssessmentData.informantCaregiverId = null;
+    if (this.typeSelected === `USER`) {
+      newAssessmentData.informantCaregiverRelation = null;
     }
 
-    if (this.typeSelected === `Patients Caregiver`) {
+    if (this.typeSelected === `CAREGIVER`) {
       newAssessmentData.informantClinicianId = null;
     }
 
-    if (this.typeSelected === 'Informant Patient') {
+    if (this.typeSelected === 'PATIENT') {
       newAssessmentData.informantClinicianId = null;
-      newAssessmentData.informantCaregiverId = null;
+      newAssessmentData.informantCaregiverRelation = null;
     }
     if (this.fullAssessment?.patientId) {
       newAssessmentData.note = this.noteValue;
@@ -232,16 +254,16 @@ export class CreateAssessmentComponent implements OnInit {
       name: this.fullAssessment.name,
       clinicianId: this.fullAssessment.clinician.id,
       deliveryDate: this.fullAssessment.deliveryDate,
-      informationType: '',
+      informantType: '',
       informantPatient: this.fullAssessment.patient,
       informantClinicianId: {
         label:
           this.fullAssessment.informantClinician?.firstName + ' ' + this.fullAssessment.informantClinician?.lastName,
         value: this.fullAssessment.informantClinician?.id,
       },
-      informantCaregiverId: {
-        label: this.fullAssessment.informantCaregiver?.firstName,
-        value: this.fullAssessment.informantCaregiver?.id,
+      informantCaregiverRelation: {
+        label: this.fullAssessment.informantCaregiverRelation,
+        value: this.fullAssessment.informantCaregiverRelation,
       },
       expirationDate: this.fullAssessment.expirationDate,
       note: '',
@@ -249,13 +271,12 @@ export class CreateAssessmentComponent implements OnInit {
     this.selectedClinician = this.fullAssessment.clinician;
     this.expireDate = this.fullAssessment.expirationDate;
     this.deliveryDate = this.fullAssessment.deliveryDate;
-    // this.selectedInformant = this.fullAssessment.informant;
     this.selectedQuestionnaires = this.fullAssessment.questionnaireAssessment.questionnaires;
     this.noteValue = this.fullAssessment.note;
     // this.formGroup.controls.note.disable();
 
     if (this.fullAssessment.informantClinician) {
-      this.typeSelected = `Departments User`;
+      this.typeSelected = `USER`;
       this.selectedInformant = this.fullAssessment.informantClinician.id;
       this.dataToSelect = [
         {
@@ -263,22 +284,22 @@ export class CreateAssessmentComponent implements OnInit {
           value: this.fullAssessment.informantClinician.id,
         },
       ];
-    } else if (this.fullAssessment.informantCaregiver) {
-      console.log('asd');
-      this.typeSelected = `Patients Caregiver`;
-      this.selectedInformant = this.fullAssessment.informantCaregiver.id;
+    } else if (this.fullAssessment.informantCaregiverRelation) {
+      this.typeSelected = `CAREGIVER`;
+      this.selectedInformant = this.fullAssessment.informantCaregiverRelation;
       this.dataToSelect = [
         {
-          label: this.fullAssessment.informantCaregiver.firstName,
-          value: this.fullAssessment.informantCaregiver.id,
+          label: this.fullAssessment.informantCaregiverRelation,
+          value: this.fullAssessment.informantCaregiverRelation,
         },
       ];
     } else {
-      this.typeSelected = 'Informant Patient';
+      this.typeSelected = 'PATIENT';
       this.selectedInformant = this.fullAssessment.patient.id;
       this.dataToSelect = [
         {
-          label: this.fullAssessment.patient.firstName,
+          label:
+            this.fullAssessment.patient.firstName + ' ' + this.patient.lastName + ' ' + this.patient.medicalRecordNo,
           value: this.fullAssessment.patient.id,
         },
       ];

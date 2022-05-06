@@ -24,7 +24,7 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
   },
   {
     title: 'Informants',
-    name: 'informant',
+    name: 'informantType',
     translationPath: 'tables.assessmentsPatients.informant',
     sort: true,
     filterField: {

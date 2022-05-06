@@ -27,6 +27,8 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { ClipboardModule } from 'ngx-clipboard';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 const antModules = [
   NzGridModule,
@@ -57,6 +59,8 @@ const antModules = [
     MasterDataModule,
     ClipboardModule,
     NzDatePickerModule,
+    NzRadioModule,
+    NzSelectModule,
   ],
   declarations: [PlanAssessmentComponent, AssessmentsListComponent, QuestionnaireSelectionComponent],
   providers: [PatientsService, AssessmentService],
