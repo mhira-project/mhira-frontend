@@ -104,29 +104,25 @@ export class PlanAssessmentComponent implements OnInit {
     if (!this.editMode) {
       return;
     }
-    console.log('hey', this.selectedPatient);
+    console.log(this.patient);
+    console.log(this.selectedPatient);
     if (event === 'PATIENT') {
       this.dataToSelect = [
         {
-          label:
-            this.selectedPatient.firstName +
-            ' ' +
-            this.selectedPatient.lastName +
-            ' ' +
-            this.selectedPatient.medicalRecordNo,
-          value: this.selectedPatient.id,
+          label: this.patient?.firstName + ' ' + this.patient?.lastName + ' ' + this.patient?.medicalRecordNo,
+          value: this.patient?.id,
         },
       ];
+      this.selectedInformant = this.patient?.id;
     } else if (event === `USER`) {
       this.dataToSelect = this.users.map((user) => ({
         label: user.firstName + ' ' + user.lastName,
         value: user.id,
       }));
+      this.selectedInformant = this.users[0]?.id;
     } else if (event === `CAREGIVER`) {
-      this.dataToSelect = this.caregivers.map((caregiver) => ({
-        label: caregiver.firstName + ' ' + caregiver.lastName,
-        value: caregiver.id,
-      }));
+      this.dataToSelect = this.options;
+      this.selectedInformant = this.options[0].value;
     }
   }
 
@@ -183,11 +179,11 @@ export class PlanAssessmentComponent implements OnInit {
       return;
     }
     this.patient = patient;
-    this.selectedInformant = patient.id;
+    this.selectedInformant = patient?.id;
     this.dataToSelect = [
       {
-        label: patient.firstName + ' ' + patient.lastName + ' ' + patient.medicalRecordNo,
-        value: patient.id,
+        label: patient?.firstName + ' ' + patient?.lastName + ' ' + patient?.medicalRecordNo,
+        value: patient?.id,
       },
     ];
   }
@@ -268,6 +264,7 @@ export class PlanAssessmentComponent implements OnInit {
         this.selectedPatient = this.fullAssessment.patient;
         this.selectedClinician = this.fullAssessment.clinician;
         this.fullAssessment = this.fullAssessment;
+        this.patient = this.fullAssessment.patient;
         this.typeSelected = this.fullAssessment.informantType;
         if (this.fullAssessment.informantClinician) {
           this.selectedInformant = this.fullAssessment.informantClinician.id;
