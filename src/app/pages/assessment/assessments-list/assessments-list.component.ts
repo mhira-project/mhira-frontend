@@ -47,8 +47,8 @@ export class AssessmentsListComponent {
   public pageInfo: PageInfo;
   public loading = false;
   public actions: Action<ActionKey>[] = [
-    { key: ActionKey.SHOW_ASSESSMENT, title: 'Show Assessment' },
-    { key: ActionKey.COPY_ASSESSMENT_LINK, title: 'Copy Assessment Link' },
+    { key: ActionKey.SHOW_ASSESSMENT, title: 'Start Session' },
+    { key: ActionKey.COPY_ASSESSMENT_LINK, title: 'Copy Session Link' },
   ];
   public onlyMyAssessments = false;
 
@@ -71,10 +71,10 @@ export class AssessmentsListComponent {
     this.getAssessments();
 
     if (this.perms.permissionsOnly(PermissionKey.MANAGE_ASSESSMENTS)) {
-      this.actions.push({ key: ActionKey.ARCHIVE_ASSESSMENT, title: 'Archive Assessment' });
+      this.actions.push({ key: ActionKey.ARCHIVE_ASSESSMENT, title: 'Cancel Session' });
     }
     if (this.perms.permissionsOnly(PermissionKey.DELETE_ASSESSMENTS)) {
-      this.actions.push({ key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Assessment' });
+      this.actions.push({ key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Session' });
     }
   }
 

@@ -319,7 +319,7 @@ const getFullPublicAssessment = gql`
       createdAt
       updatedAt
       deletedAt
-      informant
+      informantType
       patientId
       clinicianId
       questionnaireAssessmentId
