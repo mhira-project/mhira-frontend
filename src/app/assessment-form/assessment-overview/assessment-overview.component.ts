@@ -83,11 +83,7 @@ export class AssessmentOverviewComponent implements OnInit {
 
   public canAccessQuestionnaire(questionnaireIdx: number): boolean {
     console.log(this.assessment.questionnaireAssessment.status);
-    if (
-      this.assessment.questionnaireAssessment.status === 'EXPIRED' ||
-      this.assessment.questionnaireAssessment.status === 'CANCELLED' ||
-      this.assessment.questionnaireAssessment.status === 'PLANNED'
-    ) {
+    if (this.assessment.questionnaireAssessment.status === 'COMPLETED') {
       return false;
     }
     if (questionnaireIdx === 0) return true;
