@@ -51,6 +51,7 @@ export class AssessmentOverviewComponent implements OnInit {
 
       this.cdr.detectChanges();
     });
+    console.log(this.assessment);
   }
 
   public getMaxRequiredQuestions(questionnaireId: string): number {
@@ -81,6 +82,14 @@ export class AssessmentOverviewComponent implements OnInit {
   }
 
   public canAccessQuestionnaire(questionnaireIdx: number): boolean {
+    console.log(this.assessment.questionnaireAssessment.status);
+    if (
+      this.assessment.questionnaireAssessment.status === 'EXPIRED' ||
+      this.assessment.questionnaireAssessment.status === 'CANCELLED' ||
+      this.assessment.questionnaireAssessment.status === 'PLANNED'
+    ) {
+      return false;
+    }
     if (questionnaireIdx === 0) return true;
     const previousQuestionnaireId = this.assessment.questionnaireAssessment.questionnaires[questionnaireIdx - 1]._id;
     return this.isQuestionnaireDone(previousQuestionnaireId);
