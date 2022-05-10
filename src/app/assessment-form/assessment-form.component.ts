@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, filter, finalize } from 'rxjs/operators';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import { FullAssessment } from '@app/pages/assessment/@types/assessment';
+import { AssessmentStatus, FullAssessment } from '@app/pages/assessment/@types/assessment';
 import { TranslationCode } from '../@shared/@types/translation';
 import { translationList } from '../../translations/translation-list';
 import { Disclaimers } from '@app/pages/administration/@types/disclaimers';
@@ -18,6 +18,8 @@ import { ErrorHandlerService } from '@shared/services/error-handler.service';
   styleUrls: ['./assessment-form.component.scss'],
 })
 export class AssessmentFormComponent implements OnInit {
+  public assessment: FullAssessment;
+  public AssessmentStatus = AssessmentStatus;
   public disclaimer: Disclaimers;
   public data: Partial<Disclaimers>[];
   public isLoading = false;

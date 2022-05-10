@@ -4,7 +4,15 @@
       <div [style.width]="assessmentFormService.percentageCompleted + '%'"></div>
     </div>
 
-    <h1>{{ assessment.name }}</h1>
+    <h1
+      *ngIf="
+        AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.OPEN_FOR_COMPLETION ||
+        AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PARTIALLY_COMPLETED ||
+        AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.COMPLETED
+      "
+    >
+      {{ assessment.name }}
+    </h1>
     <section class="patient"></section>
 
     <section>

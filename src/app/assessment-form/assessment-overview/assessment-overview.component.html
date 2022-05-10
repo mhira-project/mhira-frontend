@@ -1,4 +1,11 @@
-<section class="overview" *ngIf="assessment">
+<section
+  class="overview"
+  *ngIf="
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.OPEN_FOR_COMPLETION ||
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PARTIALLY_COMPLETED ||
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.COMPLETED
+  "
+>
   <nz-card
     class="questionnaire"
     *ngFor="let questionnaire of assessment.questionnaireAssessment.questionnaires; index as idx"
@@ -62,7 +69,13 @@
   </nz-card>
 </section>
 
-<section>
+<section
+  *ngIf="
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.OPEN_FOR_COMPLETION ||
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PARTIALLY_COMPLETED ||
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.COMPLETED
+  "
+>
   <button
     nz-button
     nzType="primary"
@@ -80,4 +93,21 @@
       ) | translate
     }}
   </button>
+</section>
+
+<section
+  *ngIf="
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.EXPIRED ||
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.CANCELLED
+  "
+>
+  <div class="expired-text">
+    <h1>Sorry, assessment is no longer available!</h1>
+  </div>
+</section>
+
+<section *ngIf="AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PLANNED">
+  <div class="expired-text">
+    <h1>Sorry, assessment is not available!</h1>
+  </div>
 </section>
