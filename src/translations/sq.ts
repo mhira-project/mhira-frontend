@@ -250,7 +250,7 @@ export default {
   },
   planAssessment: {
     assessmentName: 'Emri i Vlerësimit',
-    patient: 'Pacienti',
+    patient: 'Zgjidhni pacientin të cilit i përket ky vlerësim',
     clinician: 'Mjeku',
     informant: 'Informatori',
   },

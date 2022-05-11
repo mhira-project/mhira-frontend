@@ -319,6 +319,8 @@ const getFullPublicAssessment = gql`
       createdAt
       updatedAt
       deletedAt
+      deliveryDate
+      expirationDate
       informantType
       patientId
       clinicianId

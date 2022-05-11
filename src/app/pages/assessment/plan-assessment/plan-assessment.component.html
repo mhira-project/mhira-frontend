@@ -4,12 +4,6 @@
   <section nz-col nzSpan="9">
     <form nz-form [formGroup]="assessmentForm" (submit)="onSubmitAssessment()">
       <nz-form-item>
-        <nz-form-label>{{ 'planAssessment.assessmentName' | translate }}</nz-form-label>
-        <nz-form-control>
-          <input nz-input type="string" formControlName="name" [readonly]="!editMode" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
         <nz-form-label nzFor="patient">{{ 'planAssessment.patient' | translate }}</nz-form-label>
         <nz-form-control>
           <app-patient-picker
@@ -17,6 +11,12 @@
             [readonly]="!editMode"
             (selectPatient)="onPatientSelect($event)"
           ></app-patient-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>{{ 'planAssessment.assessmentName' | translate }}</nz-form-label>
+        <nz-form-control>
+          <input nz-input type="string" formControlName="name" [readonly]="!editMode" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -30,13 +30,6 @@
           ></app-user-picker>
         </nz-form-control>
       </nz-form-item>
-      <!--      <nz-form-item>-->
-      <!--        <nz-form-label>{{ 'planAssessment.informant' | translate }}</nz-form-label>-->
-      <!--        <nz-form-control>-->
-      <!--          <input nz-input type="string" formControlName="informant" [readonly]="!editMode" />-->
-      <!--        </nz-form-control>-->
-      <!--      </nz-form-item>-->
-
       <nz-form-item style="margin-bottom: 15px">
         <nz-radio-group
           formControlName="informantType"
@@ -66,6 +59,7 @@
             }}</nz-option>
           </nz-select>
         </nz-input-group>
+        <p>Self Rating.</p>
       </nz-form-item>
       <nz-form-item *ngIf="typeSelected === 'USER'">
         <nz-input-group>
