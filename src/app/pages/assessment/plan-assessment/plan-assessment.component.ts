@@ -98,6 +98,7 @@ export class PlanAssessmentComponent implements OnInit {
 
     this.getUserDepartments();
     this.initAssessment();
+    this.userAutoSelect();
   }
 
   public onSelectChange(event: any) {
@@ -124,6 +125,11 @@ export class PlanAssessmentComponent implements OnInit {
       this.dataToSelect = this.options;
       this.selectedInformant = this.options[0].value;
     }
+  }
+
+  public userAutoSelect() {
+    const userLocalStorage = JSON.parse(localStorage.getItem('user')) as User;
+    this.selectedClinician = userLocalStorage;
   }
 
   public onSubmitAssessment() {

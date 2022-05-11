@@ -104,6 +104,7 @@ export class CreateAssessmentComponent implements OnInit {
       expirationDate: [null],
       note: [null],
     });
+    this.userAutoSelect();
     this.initAssessment();
     this.getPatient();
     this.getCaregivers();
@@ -146,6 +147,11 @@ export class CreateAssessmentComponent implements OnInit {
 
   public onQuestionnaireSelected(questionnaires: QuestionnaireVersion[]): void {
     this.selectedQuestionnaires = questionnaires;
+  }
+
+  public userAutoSelect() {
+    const userLocalStorage = JSON.parse(localStorage.getItem('user')) as User;
+    this.selectedClinician = userLocalStorage;
   }
 
   public onUserSelect(user: User) {
