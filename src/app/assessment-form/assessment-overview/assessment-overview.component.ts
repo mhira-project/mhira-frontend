@@ -82,7 +82,6 @@ export class AssessmentOverviewComponent implements OnInit {
   }
 
   public canAccessQuestionnaire(questionnaireIdx: number): boolean {
-    console.log(this.assessment.questionnaireAssessment.status);
     if (this.assessment.questionnaireAssessment.status === 'COMPLETED') {
       return false;
     }
@@ -93,7 +92,7 @@ export class AssessmentOverviewComponent implements OnInit {
 
   public completeAssessment(): void {
     const id = this.assessment.questionnaireAssessment._id;
-
+    console.log('here');
     forkJoin([
       this.translateService.get(this.translations.assessmentForm.complete),
       this.assessmentService.changeAssessmentStatus(id, AssessmentStatus.COMPLETED),

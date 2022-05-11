@@ -249,7 +249,7 @@ export default {
   },
   planAssessment: {
     assessmentName: 'Jina la Tathmini',
-    patient: 'Mgonjwa',
+    patient: 'Chagua mgonjwa ambaye tathmini hii ni yake',
     clinician: 'Daktari wa kliniki',
     informant: 'Mtoa taarifa',
   },

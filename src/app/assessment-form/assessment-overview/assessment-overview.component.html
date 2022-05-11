@@ -2,8 +2,7 @@
   class="overview"
   *ngIf="
     AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.OPEN_FOR_COMPLETION ||
-    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PARTIALLY_COMPLETED ||
-    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.COMPLETED
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PARTIALLY_COMPLETED
   "
 >
   <nz-card
@@ -72,8 +71,7 @@
 <section
   *ngIf="
     AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.OPEN_FOR_COMPLETION ||
-    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PARTIALLY_COMPLETED ||
-    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.COMPLETED
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PARTIALLY_COMPLETED
   "
 >
   <button
@@ -108,6 +106,13 @@
 
 <section *ngIf="AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PLANNED">
   <div class="expired-text">
-    <h1>Sorry, assessment is not available!</h1>
+    <h1>
+      Sorry, assessment is not available! It will be available at: {{ assessment.deliveryDate | date: 'medium' }}.
+    </h1>
+  </div>
+</section>
+<section *ngIf="AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.COMPLETED">
+  <div class="expired-text">
+    <h1>This assessment has been completed!</h1>
   </div>
 </section>

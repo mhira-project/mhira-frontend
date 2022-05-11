@@ -104,6 +104,7 @@ export class CreateAssessmentComponent implements OnInit {
       expirationDate: [null],
       note: [null],
     });
+    this.userAutoSelect();
     this.initAssessment();
     this.getPatient();
     this.getCaregivers();
@@ -131,21 +132,26 @@ export class CreateAssessmentComponent implements OnInit {
           value: this.patient.id,
         },
       ];
+      this.selectedInformant = this.patient?.id;
     } else if (event === `USER`) {
       this.dataToSelect = this.users.map((user) => ({
         label: user.firstName + ' ' + user.lastName,
         value: user.id,
       }));
+      this.selectedInformant = this.users[0]?.id;
     } else if (event === `CAREGIVER`) {
-      this.dataToSelect = this.caregivers.map((caregiver) => ({
-        label: caregiver.firstName + ' ' + caregiver.lastName,
-        value: caregiver.id,
-      }));
+      this.dataToSelect = this.options;
+      this.selectedInformant = this.options[0].value;
     }
   }
 
   public onQuestionnaireSelected(questionnaires: QuestionnaireVersion[]): void {
     this.selectedQuestionnaires = questionnaires;
+  }
+
+  public userAutoSelect() {
+    const userLocalStorage = JSON.parse(localStorage.getItem('user')) as User;
+    this.selectedClinician = userLocalStorage;
   }
 
   public onUserSelect(user: User) {

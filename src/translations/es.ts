@@ -249,7 +249,7 @@ export default {
   },
   planAssessment: {
     assessmentName: 'Nombre de la Evaluación',
-    patient: 'Paciente',
+    patient: 'Seleccione el paciente al que pertenece esta evaluación',
     clinician: 'Tratante',
     informant: 'Informante',
   },

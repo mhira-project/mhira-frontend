@@ -251,7 +251,7 @@ export default {
   },
   planAssessment: {
     assessmentName: 'Assessment Name',
-    patient: 'Patient',
+    patient: 'Select the patient this assesment belongs to',
     clinician: 'Clinician',
     informant: 'Informant',
   },

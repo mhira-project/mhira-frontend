@@ -10,7 +10,7 @@
           <nz-form-control nzErrorTip="Please input your username!">
             <nz-input-group class="input-class">
               <h5>{{ 'createAssessment.title' | translate }}</h5>
-              <input formControlName="name" nz-input placeholder="Baseline" [readonly]="!editMode" />
+              <input formControlName="name" nz-input placeholder="Please enter a title" [readonly]="!editMode" />
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
@@ -53,6 +53,7 @@
                 data.label
               }}</nz-option>
             </nz-select>
+            <p>Self Rating.</p>
           </nz-input-group>
         </nz-form-item>
         <nz-form-item *ngIf="typeSelected === 'USER'">
@@ -136,7 +137,7 @@
     </section>
   </div>
   <div>
-    <section nz-col class="questionnaires" class="questionnaire">
+    <section nz-col class="questionnaires" class="questionnaire" nzSpan="12">
       <h4>Select Questionnaires</h4>
       <app-questionnaire-selection
         [readonly]="!editMode"
