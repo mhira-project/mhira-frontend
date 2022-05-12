@@ -53,10 +53,10 @@
     <nz-table [nzFrontPagination]="false" #basicTable [nzData]="caregiver?.patientCaregivers">
       <thead>
         <tr>
-          <th>Patient</th>
-          <th>Birth Date</th>
-          <th>Medical Record Number</th>
-          <th>Relation to patient</th>
+          <th>{{ 'caregiver.patient' | translate }}</th>
+          <th>{{ 'caregiver.birthDate' | translate }}</th>
+          <th>{{ 'caregiver.medicalRecordNumber' | translate }}</th>
+          <th>{{ 'caregiver.relationToPatient' | translate }}</th>
         </tr>
       </thead>
       <tbody>

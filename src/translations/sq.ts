@@ -2,6 +2,10 @@ export default {
   dashboard: {
     welcome: 'Mirë se Vini në MHIRA',
     name: 'MHIRA',
+    header: 'Zgjidhni raportin që dëshironi të gjeneroni:',
+  },
+  assessments: {
+    myAssessment: 'Vlerësimet e Mia',
   },
   menu: {
     dashboard: 'Paneli Kryesor',
@@ -117,9 +121,15 @@ export default {
       description: 'Përshkrimi',
       formattedStatus: 'Statusi',
       createdAt: 'Krijuar më',
+      status: 'Statusi',
+      departmentName: 'Emri i Departamentit',
     },
   },
   forms: {
+    patientStatuses: {
+      name: 'Emri i Statusit të Pacientit',
+      description: 'Përshkrim',
+    },
     scripts: {
       name: 'Emri',
       version: 'Versioni',
@@ -215,6 +225,7 @@ export default {
     complete: 'Faleminderit që e përfunduat vlerësimin! Tani mund ta mbyllni këtë faqe.',
   },
   questionnaires: {
+    questionnairesId: 'ID-ja e versionit',
     id: 'ID',
     name: 'Emri',
     formattedStatus: 'Statusi',
@@ -247,6 +258,8 @@ export default {
     formattedClinician: 'Mjeku',
     informant: 'Informatori',
     createdAt: 'Krijuar Në',
+    expirationDate: 'Data e skadencës',
+    deliveryDate: 'Data e dorëzimit',
   },
   planAssessment: {
     assessmentName: 'Emri i Vlerësimit',
@@ -274,5 +287,20 @@ export default {
       passwordReUseCutoffInDays: 'Ndërprerja e ripërdorimit të fjalëkalimit (në ditë)',
       maxLoginAttempts: 'Përpjekjet maksimale të hyrjes',
     },
+  },
+  caregiver: {
+    patient: 'Pacienti',
+    birthDate: 'Data e lindjes',
+    medicalRecordNumber: 'Numri i dosjes mjekësore',
+    relationToPatient: 'Lidhja me pacientin',
+    nonExistingCaregiver: 'Shto një kujdestar që nuk ekziston:',
+    existingCaregiver: 'Kërkoni për kujdestarin ekzistues',
+    searchCaregiver: 'Kërkoni numrin ose emrin ekzistues të kujdestarit',
+    add: 'SHTONI',
+    newCaregiver: 'Kujdestar i Ri',
+  },
+  rolesPermissions: {
+    permissions: 'Lejet',
+    roles: 'Rolet',
   },
 };

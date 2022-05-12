@@ -2,6 +2,10 @@ export default {
   dashboard: {
     welcome: 'Karibu  MHIRA',
     name: 'MHIRA',
+    header: 'Chagua ripoti unayotaka kuripoti:',
+  },
+  assessments: {
+    myAssessment: 'Tathmini yangu',
   },
   menu: {
     dashboard: 'Dashibodi',
@@ -116,9 +120,15 @@ export default {
       description: 'Maelezo',
       formattedStatus: 'Hali',
       createdAt: 'Imetengenezwa',
+      status: 'Hali',
+      departmentName: 'Jina la Idara',
     },
   },
   forms: {
+    patientStatuses: {
+      name: 'Jina la Hali ya Mgonjwa',
+      description: 'Maelezo',
+    },
     scripts: {
       name: 'Jina',
       version: 'Toleo',
@@ -214,6 +224,7 @@ export default {
     complete: 'Asante kwa kumaliza tathmini hii! Unaweza kufunga ukurasa huu sasa.',
   },
   questionnaires: {
+    questionnairesId: 'Kitambulisho cha toleo',
     id: 'ID',
     name: 'Jina',
     formattedStatus: 'Hali',
@@ -246,6 +257,8 @@ export default {
     formattedClinician: 'Daktari wa kliniki',
     informant: 'Mtoa taarifa',
     createdAt: 'Imetengenezwa',
+    deliveryDate: 'Tarehe ya utoaji',
+    expirationDate: 'Tarehe ya kumalizika muda wake',
   },
   planAssessment: {
     assessmentName: 'Jina la Tathmini',
@@ -273,5 +286,20 @@ export default {
       passwordReUseCutoffInDays: 'Muda wa ukomo wa kurudia neno siri (Katika Siku)',
       maxLoginAttempts: 'Ukomo wa majaribio ya kuingia',
     },
+  },
+  caregiver: {
+    patient: 'Mgonjwa',
+    birthDate: 'Tarehe ya kuzaliwa',
+    medicalRecordNumber: 'Nambari ya Rekodi ya Matibabu',
+    relationToPatient: 'Uhusiano na Mgonjwa',
+    nonExistingCaregiver: 'Ongeza mlezi asiyekuwepo',
+    existingCaregiver: 'Tafuta mlezi aliyepo',
+    searchCaregiver: 'Buscar número o nombre de cuidador existente',
+    add: 'ONGEZA',
+    newCaregiver: 'Mlezi Mpya',
+  },
+  rolesPermissions: {
+    permissions: 'Ruhusa',
+    roles: 'Majukumu',
   },
 };

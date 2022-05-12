@@ -8,6 +8,11 @@ export const QuestionnaireColumns: TableColumn<FormattedQuestionnaireVersion>[] 
     translationPath: 'questionnaires.abbreviation',
   },
   {
+    title: 'QuestionnaireId',
+    name: '_id',
+    translationPath: 'questionnaires.questionnairesId',
+  },
+  {
     title: 'Language',
     name: 'language',
     translationPath: 'questionnaires.language',

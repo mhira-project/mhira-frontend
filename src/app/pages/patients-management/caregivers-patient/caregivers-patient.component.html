@@ -37,7 +37,7 @@
   (nzOnClose)="closeAddPanel()"
 >
   <div>
-    <p style="color: black; font-size: 16px">Add a non-existing caregiver:</p>
+    <p style="color: black; font-size: 16px">{{ 'caregiver.nonExistingCaregiver' | translate }}</p>
   </div>
   <div>
     <button
@@ -47,7 +47,7 @@
       (click)="openCreatePanel()"
       *ngIf="perms.permissionsOnly(PK.MANAGE_SETTINGS)"
     >
-      <i nz-icon nzType="plus" nzTheme="outline"></i>New caregiver
+      <i nz-icon nzType="plus" nzTheme="outline"></i>{{ 'caregiver.newCaregiver' | translate }}
     </button>
   </div>
   <br />
@@ -57,13 +57,13 @@
   </div>
   <br />
   <div>
-    <h5>Search for existing caregiver</h5>
+    <h5>{{ 'caregiver.existingCaregiver' | translate }}</h5>
   </div>
   <div>
     <section nz-col>
       <form nz-form class="search-form">
         <nz-form-item class="form-item">
-          <nz-form-label nzFor="caregiver">Search existing caregiver number or name</nz-form-label>
+          <nz-form-label nzFor="caregiver">{{ 'caregiver.searchCaregiver' | translate }}</nz-form-label>
           <nz-form-control class="form-control">
             <app-caregiver-picker
               [assignSelfOption]="true"
@@ -80,7 +80,7 @@
           [disabled]="!this.selectedCaregiver"
           (click)="addCaregiverToPatient()"
         >
-          Add
+          {{ 'caregiver.add' | translate }}
         </button>
       </form>
     </section>
