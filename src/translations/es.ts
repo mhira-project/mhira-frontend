@@ -17,7 +17,7 @@ export default {
     questionnaires: 'Cuestionarios',
     questionnairesList: 'Cuestionarios',
     uploadQuestionnaire: 'Cargar un Cuestionario Nuevo',
-    questionnairesVersionList: 'Versiones Del Cuestionario',
+    questionnairesVersionList: 'Versiones Antiguas',
     assessments: 'Evaluaciones',
     planAssessment: 'Crear una Evaluación',
     plannedAssessments: 'Evaluaciones Planificadas',

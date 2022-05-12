@@ -16,7 +16,7 @@ export default {
     caregiverList: 'Caregiver List',
     questionnaires: 'Questionnaires',
     questionnairesList: 'Questionnaires',
-    questionnairesVersionList: 'Questionnaire Version',
+    questionnairesVersionList: 'Old Versions',
     uploadQuestionnaire: 'Upload Questionnaire',
     assessments: 'Assessments',
     planAssessment: 'Plan Assessments',

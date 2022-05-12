@@ -17,7 +17,7 @@ export default {
     questionnaires: 'Pyetësorët',
     questionnairesList: ' Pyetësorët',
     uploadQuestionnaire: 'Krijo një Pyetësor',
-    questionnairesVersionList: 'Versionet të Pyetësorit',
+    questionnairesVersionList: 'Versionet e Vjetra të Pyetësorit',
     assessments: 'Vlerësimet',
     planAssessment: 'Planifiko Vlerësimin',
     plannedAssessments: 'Vlerësimet e Planifikuara',

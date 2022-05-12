@@ -17,7 +17,7 @@ export default {
     questionnaires: 'Madodoso',
     questionnairesList: 'Madodoso',
     uploadQuestionnaire: 'Pakia Dodoso',
-    questionnairesVersionList: ' Toleo la Hojaji',
+    questionnairesVersionList: 'Matoleo ya Zamani',
     assessments: 'Tathmini',
     planAssessment: 'Panga Tathmini',
     plannedAssessments: 'Tathmini Zilizopangwa',

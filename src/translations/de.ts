@@ -17,7 +17,7 @@ export default {
     questionnaires: 'Fragebögen',
     questionnairesList: 'Fragebogenliste',
     uploadQuestionnaire: 'Fragebogen hochladen',
-    questionnairesVersionList: 'Versionsliste Des Fragebogens',
+    questionnairesVersionList: 'Alte Versionen',
     assessments: 'Einschätzungen',
     planAssessment: 'Einschätzung planen',
     plannedAssessments: 'Geplante Einschätzungen',
