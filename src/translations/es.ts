@@ -2,6 +2,10 @@ export default {
   dashboard: {
     welcome: 'Bienvenido/a a MHIRA',
     name: 'MHIRA',
+    header: 'Seleccione el informe que desea generar:',
+  },
+  assessments: {
+    myAssessment: 'Mi Evaluación',
   },
   menu: {
     dashboard: 'Panel de Control',
@@ -13,7 +17,7 @@ export default {
     questionnaires: 'Cuestionarios',
     questionnairesList: 'Cuestionarios',
     uploadQuestionnaire: 'Cargar un Cuestionario Nuevo',
-    questionnairesVersionList: 'Versiones Del Cuestionario',
+    questionnairesVersionList: 'Versiones Antiguas',
     assessments: 'Evaluaciones',
     planAssessment: 'Crear una Evaluación',
     plannedAssessments: 'Evaluaciones Planificadas',
@@ -116,9 +120,15 @@ export default {
       description: 'Descripción',
       formattedStatus: 'Estado',
       createdAt: 'Creado En',
+      departmentName: 'Nombre de Departamento',
+      status: 'Estado',
     },
   },
   forms: {
+    patientStatuses: {
+      name: 'Nombre del Estado del Paciente',
+      description: 'Descripción',
+    },
     scripts: {
       name: 'Name',
       version: 'Versión',
@@ -214,6 +224,7 @@ export default {
     complete: '¡Muchas gracias por completar su evaluación! Ahora puede cerrar esta ventana de navegación.',
   },
   questionnaires: {
+    questionnairesId: 'Identificación de la versión',
     id: 'ID',
     name: 'Nombre',
     formattedStatus: 'Estado',
@@ -246,6 +257,8 @@ export default {
     formattedClinician: 'Tratante',
     informant: 'Informante',
     createdAt: 'Creado en',
+    expirationDate: 'fecha de caducidad',
+    deliveryDate: 'Fecha de entrega',
   },
   planAssessment: {
     assessmentName: 'Nombre de la Evaluación',
@@ -273,5 +286,20 @@ export default {
       passwordReUseCutoffInDays: 'Corte de reutilización de contraseña (en días)',
       maxLoginAttempts: 'Intentos máximos de inicio de sesión',
     },
+  },
+  caregiver: {
+    patient: 'Paciente',
+    birthDate: 'Fecha de nacimiento',
+    medicalRecordNumber: 'Numero de historia CLINICA',
+    relationToPatient: 'Relación con el paciente',
+    nonExistingCaregiver: 'Agregar un cuidador no existente:',
+    existingCaregiver: 'Buscar cuidador existente',
+    searchCaregiver: 'Buscar número o nombre de cuidador existente',
+    add: 'AGREGAR',
+    newCaregiver: 'Nuevo Cuidador',
+  },
+  rolesPermissions: {
+    permissions: 'Permisos',
+    roles: 'Roles',
   },
 };

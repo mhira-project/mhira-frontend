@@ -2,6 +2,10 @@ export default {
   dashboard: {
     welcome: 'Welcome to MHIRA',
     name: 'MHIRA',
+    header: 'Select the report you want to generate:',
+  },
+  assessments: {
+    myAssessment: 'My Assessment',
   },
   menu: {
     dashboard: 'Dashboard',
@@ -12,7 +16,7 @@ export default {
     caregiverList: 'Caregiver List',
     questionnaires: 'Questionnaires',
     questionnairesList: 'Questionnaires',
-    questionnairesVersionList: 'Questionnaire Version',
+    questionnairesVersionList: 'Old Versions',
     uploadQuestionnaire: 'Upload Questionnaire',
     assessments: 'Assessments',
     planAssessment: 'Plan Assessments',
@@ -116,9 +120,15 @@ export default {
       description: 'Description',
       formattedStatus: 'Status',
       createdAt: 'Created At',
+      departmentName: 'Department Name',
+      status: 'Status',
     },
   },
   forms: {
+    patientStatuses: {
+      name: 'Patient Status Name',
+      description: 'Description',
+    },
     scripts: {
       name: 'Name',
       version: 'Version',
@@ -214,6 +224,7 @@ export default {
     complete: 'Thank you for completing this assessment! You can close this page now.',
   },
   questionnaires: {
+    questionnairesId: 'Version ID',
     id: 'ID',
     name: 'Name',
     formattedStatus: 'Status',
@@ -275,5 +286,20 @@ export default {
       passwordReUseCutoffInDays: 'Password Re-Use Cut Off(In Days)',
       maxLoginAttempts: 'Max Login Attempts',
     },
+  },
+  caregiver: {
+    patient: 'Patient',
+    birthDate: 'Birth Date',
+    medicalRecordNumber: 'Medical Record Number',
+    relationToPatient: 'Relation To Patient',
+    nonExistingCaregiver: 'Add a non-existing caregiver:',
+    existingCaregiver: 'Search for existing caregiver',
+    searchCaregiver: 'Search existing caregiver number or name',
+    add: 'ADD',
+    newCaregiver: 'New Caregiver',
+  },
+  rolesPermissions: {
+    permissions: 'Permissions',
+    roles: 'Roles',
   },
 };

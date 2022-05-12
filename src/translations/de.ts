@@ -2,6 +2,10 @@ export default {
   dashboard: {
     welcome: 'Willkommen in MHIRA',
     name: 'MHIRA',
+    header: 'Wählen Sie den Bericht aus, den Sie erstellen möchten:',
+  },
+  assessments: {
+    myAssessment: 'Meine Einschätzung',
   },
   menu: {
     dashboard: 'Dashboard',
@@ -13,7 +17,7 @@ export default {
     questionnaires: 'Fragebögen',
     questionnairesList: 'Fragebogenliste',
     uploadQuestionnaire: 'Fragebogen hochladen',
-    questionnairesVersionList: 'Versionsliste Des Fragebogens',
+    questionnairesVersionList: 'Alte Versionen',
     assessments: 'Einschätzungen',
     planAssessment: 'Einschätzung planen',
     plannedAssessments: 'Geplante Einschätzungen',
@@ -116,9 +120,15 @@ export default {
       description: 'Beschreibung',
       formattedStatus: 'Status',
       createdAt: 'Erstellt am',
+      departmentName: 'Abteilungsname',
+      status: 'Status',
     },
   },
   forms: {
+    patientStatuses: {
+      name: 'Name des Patientenstatus',
+      description: 'Beschreibung',
+    },
     scripts: {
       name: 'Name',
       version: 'Ausführung',
@@ -214,6 +224,7 @@ export default {
     complete: 'Danke für das Ausfüllen der Einschätzung. Die Seite kann jetzt geschlossen werden.',
   },
   questionnaires: {
+    questionnairesId: 'Versions-ID',
     id: 'ID',
     name: 'Name',
     formattedStatus: 'Status',
@@ -246,6 +257,8 @@ export default {
     formattedClinician: 'Kliniker',
     informant: 'Informant',
     createdAt: 'Hergestellt am',
+    deliveryDate: 'Lieferdatum',
+    expirationDate: 'Haltbarkeitsdatum',
   },
   planAssessment: {
     assessmentName: 'Name der Einschätzung',
@@ -273,5 +286,20 @@ export default {
       passwordReUseCutoffInDays: 'Passwort-Wiederverwendung verbieten während (Tage)',
       maxLoginAttempts: 'Maximale Anmeldeversuche',
     },
+  },
+  caregiver: {
+    patient: 'Geduldig',
+    birthDate: 'Geburtsdatum',
+    medicalRecordNumber: 'Krankenaktennummer',
+    relationToPatient: 'Beziehung zum Patienten',
+    nonExistingCaregiver: 'Fügen Sie eine nicht vorhandene Bezugsperson hinzu:',
+    existingCaregiver: 'Suche nach bestehenden Betreuern',
+    searchCaregiver: 'Suchen Sie nach der Nummer oder dem Namen der vorhandenen Pflegekraft',
+    add: 'HINZUFÜGEN',
+    newCaregiver: 'Neue Pflegekraft',
+  },
+  rolesPermissions: {
+    permissions: 'Berechtigungen',
+    roles: 'Rollen',
   },
 };

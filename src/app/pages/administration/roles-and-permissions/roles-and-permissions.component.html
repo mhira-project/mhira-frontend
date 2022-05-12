@@ -3,8 +3,8 @@
   <nz-table [nzShowPagination]="false" [nzBordered]="true" [nzData]="matrix.permissions" nzSize="middle">
     <thead>
       <tr>
-        <th rowspan="2">Permissions</th>
-        <th [colspan]="matrix.roles.length" class="text-center">Roles</th>
+        <th rowspan="2">{{ 'rolesPermissions.permissions' | translate }}</th>
+        <th [colspan]="matrix.roles.length" class="text-center">{{ 'rolesPermissions.roles' | translate }}</th>
       </tr>
       <tr>
         <th *ngFor="let role of matrix.roles" nzAlign="center">{{ role.name }}</th>

@@ -18,7 +18,7 @@
       (click)="onMyAssessments()"
       *ngIf="perms.permissionsOnly([PK.MANAGE_ASSESSMENTS])"
     >
-      My Assessments
+      {{ 'assessments.myAssessment' | translate }}
     </button>
   </ng-container>
   <ng-container actions-right>
