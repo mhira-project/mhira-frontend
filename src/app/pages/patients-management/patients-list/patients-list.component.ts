@@ -157,29 +157,10 @@ export class PatientsListComponent {
   }
 
   private createSearchFilter(searchString: string) {
-    if (!searchString) return [];
     return [
       { firstName: { iLike: `%${searchString}%` } },
       { middleName: { iLike: `%${searchString}%` } },
       { lastName: { iLike: `%${searchString}%` } },
-      {
-        informants: {
-          or: [
-            { firstName: { iLike: `%${searchString}%` } },
-            { middleName: { iLike: `%${searchString}%` } },
-            { lastName: { iLike: `%${searchString}%` } },
-          ],
-        },
-      },
-      {
-        caseManagers: {
-          or: [
-            { firstName: { iLike: `%${searchString}%` } },
-            { middleName: { iLike: `%${searchString}%` } },
-            { lastName: { iLike: `%${searchString}%` } },
-          ],
-        },
-      },
       { medicalRecordNo: { iLike: `%${searchString}%` } },
     ];
   }
