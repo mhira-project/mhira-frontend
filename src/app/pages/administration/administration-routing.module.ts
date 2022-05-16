@@ -9,6 +9,7 @@ import { PermissionGuard } from '../../permission.guard';
 import { ReportsComponent } from './reports/reports.component';
 import { CreateReportComponent } from './create-report/create-report.component';
 import { DisclaimersComponent } from './disclaimers/disclaimers.component';
+import { PatientStatusesComponent } from './settings/patient-statuses/patient-statuses.component';
 
 const routes: Routes = [
   {
@@ -65,6 +66,17 @@ const routes: Routes = [
           breadcrumbI18nKey: 'menu.disclaimers',
           permissions: {
             only: [PermissionKey.VIEW_ROLES_PERMISSIONS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'patient-statuses',
+        component: PatientStatusesComponent,
+        data: {
+          breadcrumbI18nKey: 'menu.patientStatuses',
+          permissions: {
+            only: [PermissionKey.VIEW_SETTINGS],
           },
         },
         canActivate: [PermissionGuard],
