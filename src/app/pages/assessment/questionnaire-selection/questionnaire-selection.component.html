@@ -13,7 +13,9 @@
     </section>
     <section>
       <nz-list nzBordered nzHeader="Found Questionnaires">
-        <nz-list-item *ngIf="!foundQuestionnaires?.length">No results</nz-list-item>
+        <nz-list-item *ngIf="!foundQuestionnaires?.length">{{
+          'questionnaireSelection.noResult' | translate
+        }}</nz-list-item>
         <nz-list-item *ngFor="let questionnaire of foundQuestionnaires">
           <ng-container
             [ngTemplateOutlet]="questionnaireItem"
@@ -35,7 +37,7 @@
   <section>
     <nz-list nzBordered nzHeader="Selected Questionnaires">
       <nz-list-item *ngIf="!selectedQuestionnaires?.length">
-        Search and select questionnaires to add to the assessment
+        {{ 'questionnaireSelection.searchSelect' | translate }}
       </nz-list-item>
       <nz-list-item *ngFor="let questionnaire of selectedQuestionnaires">
         <ng-container

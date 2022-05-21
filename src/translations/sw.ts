@@ -7,6 +7,16 @@ export default {
   assessments: {
     myAssessment: 'Tathmini yangu',
   },
+  card: {
+    changePassword: 'Badilisha neno la siri',
+    profile: 'Wasifu',
+    logout: 'Ondoka',
+  },
+  questionnaireSelection: {
+    noResult: 'Hakuna Matokeo',
+    searchSelect: 'Tafuta na uchague dodoso za kuongeza kwenye tathmini',
+    selectQuestionnaires: 'Chagua Madodoso',
+  },
   menu: {
     dashboard: 'Dashibodi',
     createAssessment: 'Tengeneza Tathmini',
@@ -37,6 +47,9 @@ export default {
     notFound: 'Haipo',
     noTabs: 'Hakuna kurasa',
     disclaimers: 'Kanusho',
+  },
+  patients: {
+    myPatients: 'Wagonjwa Wangu',
   },
   tables: {
     disclaimer: {

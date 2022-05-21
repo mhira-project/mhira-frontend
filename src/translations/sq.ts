@@ -7,6 +7,16 @@ export default {
   assessments: {
     myAssessment: 'Vlerësimet e Mia',
   },
+  card: {
+    changePassword: 'Ndrysho fjalekalimin',
+    profile: 'Profili',
+    logout: 'Shkyç',
+  },
+  questionnaireSelection: {
+    noResult: 'Asnjë Rezultat',
+    searchSelect: `Kërkoni dhe zgjidhni pyetësorët për t'i shtuar vlerësimit`,
+    selectQuestionnaires: 'Zgjidhni Pyetësorët',
+  },
   menu: {
     dashboard: 'Paneli Kryesor',
     createAssessment: 'Krijo Vlerësim',
@@ -37,6 +47,9 @@ export default {
     notFound: 'Nuk është gjetur',
     noTabs: 'Nuk ka skedar',
     disclaimers: 'Mohimet',
+  },
+  patients: {
+    myPatients: 'Pacientët e Mi',
   },
   tables: {
     disclaimer: {
