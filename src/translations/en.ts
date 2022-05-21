@@ -7,6 +7,16 @@ export default {
   assessments: {
     myAssessment: 'My Assessment',
   },
+  card: {
+    changePassword: 'Change Password',
+    profile: 'Profile',
+    logout: 'Logout',
+  },
+  questionnaireSelection: {
+    noResult: 'No Result',
+    searchSelect: 'Search and select questionnaires to add to the assessment',
+    selectQuestionnaires: 'Select Questionnaires',
+  },
   menu: {
     dashboard: 'Dashboard',
     createAssessment: 'Create Assessment',
@@ -37,6 +47,9 @@ export default {
     notFound: 'Not Found',
     noTabs: 'No Tabs',
     disclaimers: 'Disclaimers',
+  },
+  patients: {
+    myPatients: 'My Patients',
   },
   tables: {
     disclaimer: {

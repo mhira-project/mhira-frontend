@@ -7,6 +7,16 @@ export default {
   assessments: {
     myAssessment: 'Meine Einschätzung',
   },
+  card: {
+    changePassword: 'Ändere das Passwort',
+    profile: 'Profil',
+    logout: 'Ausloggen',
+  },
+  questionnaireSelection: {
+    noResult: 'Kein Ergebnis',
+    searchSelect: 'Suchen und wählen Sie Fragebögen aus, die Sie der Bewertung hinzufügen möchten',
+    selectQuestionnaires: 'Wählen Sie Fragebögen aus',
+  },
   menu: {
     dashboard: 'Dashboard',
     createAssessment: 'Bewertung Erstellen',
@@ -37,6 +47,9 @@ export default {
     notFound: 'Nicht gefunden',
     noTabs: 'Keine Registerkarten',
     disclaimers: 'Haftungsausschluss',
+  },
+  patients: {
+    myPatients: 'Meine Patienten',
   },
   tables: {
     disclaimer: {

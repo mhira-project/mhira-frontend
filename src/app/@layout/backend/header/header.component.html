@@ -84,7 +84,7 @@
                         <i class="opacity-04 font-size-16" nz-icon nzType="key" theme="outline"></i>
                       </div>
                       <div nz-col nzFlex="auto">
-                        <span class="m-l-10">Change password</span>
+                        <span class="m-l-10">{{ 'card.changePassword' | translate }}</span>
                       </div>
                       <div nz-col>
                         <i class="font-size-10" nz-icon nzType="right" theme="outline"></i>
@@ -99,7 +99,7 @@
                         <i class="opacity-04 font-size-16" nz-icon nzType="user" theme="outline"></i>
                       </div>
                       <div nz-col nzFlex="auto">
-                        <span class="m-l-10">Profile</span>
+                        <span class="m-l-10">{{ 'card.profile' | translate }}</span>
                       </div>
                       <div nz-col>
                         <i class="font-size-10" nz-icon nzType="right" theme="outline"></i>
@@ -111,7 +111,9 @@
                   <a (click)="logout()" class="p-v-5 d-flex align-items-center justify-content-between">
                     <div nz-row>
                       <div nz-col><i class="opacity-04 font-size-16" nz-icon nzType="logout" theme="outline"></i></div>
-                      <div nz-col nzFlex="auto"><span class="m-l-10">Logout</span></div>
+                      <div nz-col nzFlex="auto">
+                        <span class="m-l-10">{{ 'card.logout' | translate }}</span>
+                      </div>
                       <div nz-col><i class="font-size-10" nz-icon nzType="right" theme="outline"></i></div>
                     </div>
                   </a>
