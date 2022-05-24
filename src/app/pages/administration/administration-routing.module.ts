@@ -9,7 +9,7 @@ import { PermissionGuard } from '../../permission.guard';
 import { ReportsComponent } from './reports/reports.component';
 import { CreateReportComponent } from './create-report/create-report.component';
 import { DisclaimersComponent } from './disclaimers/disclaimers.component';
-import { PatientStatusesComponent } from './settings/patient-statuses/patient-statuses.component';
+import { PatientStatusesComponent } from './patient-statuses/patient-statuses.component';
 
 const routes: Routes = [
   {

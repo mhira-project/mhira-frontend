@@ -5,6 +5,7 @@
       [showPagination]="false"
       [showCustomActions]="true"
       [showSearch]="true"
+      [showCheckBoxColumn]="false"
       [listOfCustomActions]="perms.permissionsOnly([PK.MANAGE_SETTINGS]) ? actions : []"
       [listOfData]="patientStatusesTable.rows"
       [listOfColumn]="patientStatusesTable.columns"
@@ -22,7 +23,7 @@
 </div>
 
 <nz-drawer
-  [nzMask]="false"
+  [nzMask]="true"
   [nzClosable]="true"
   [nzVisible]="showCreatePatientStatus"
   nzPlacement="right"

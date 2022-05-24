@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientStatus } from '@app/pages/patients-management/@types/patient-status';
 import { Paging } from '@shared/@types/paging';
-import { PatientStatusesTable } from '@app/pages/administration/settings/@tables/patient-statuses.table';
-import { PatientStatusForm } from '@app/pages/administration/settings/@forms/patient-status.form';
+import { PatientStatusesTable } from '@app/pages/administration/@tables/patient-statuses.table';
+import { PatientStatusForm } from '@app/pages/administration/@forms/patient-status.form';
 import { PatientStatusesService } from '@app/pages/patients-management/@services/patient-statuses.service';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { PatientStatusModel } from '@app/pages/administration/settings/@models/patient-status.model';
 import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
-import { PermissionKey } from '../../../../@shared/@types/permission';
-import { ErrorHandlerService } from '../../../../@shared/services/error-handler.service';
+import { PermissionKey } from '@shared/@types/permission';
+import { ErrorHandlerService } from '@shared/services/error-handler.service';
 import { finalize } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -152,9 +152,11 @@ export class PatientStatusesComponent implements OnInit {
       )
       .subscribe(
         ({ data }) => {
+          console.log(data);
           this.patientStatuses.unshift(PatientStatusModel.fromJson(data.createOnePatientStatus));
           this.patientStatusesTable.rows = this.patientStatuses;
           this.toggleCreatePanel();
+          this.getPatientStatuses();
           this.message.create('success', `PatientStatus has successfully been created`);
         },
         (error) => this.errorService.handleError(error, { prefix: 'Unable to create patient status' })
@@ -172,6 +174,7 @@ export class PatientStatusesComponent implements OnInit {
           const newPatientStatus = data.updateOnePatientStatus;
           this.patientStatuses[this.selectedIndex] = PatientStatusModel.fromJson(newPatientStatus);
           this.toggleCreatePanel();
+          this.getPatientStatuses();
           this.message.success('Patient status has been successfully edited', {
             nzDuration: 3000,
           });
