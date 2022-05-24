@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '@shared';
 import { FormsModule } from '@angular/forms';
 import { AppFormModule } from '../../../@shared/components/form/app-form.module';
-import { PatientStatusesComponent } from './patient-statuses/patient-statuses.component';
+import { PatientStatusesComponent } from '../patient-statuses/patient-statuses.component';
 import { SystemConfigurationComponent } from './system-configuration/system-configuration.component';
 import { PatientStatusesService } from '../../patients-management/@services/patient-statuses.service';
 import { SettingsRoutingModule } from './settings-routing.module';

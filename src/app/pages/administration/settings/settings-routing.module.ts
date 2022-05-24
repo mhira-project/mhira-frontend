@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SystemConfigurationComponent } from './system-configuration/system-configuration.component';
-import { PatientStatusesComponent } from './patient-statuses/patient-statuses.component';
+import { PatientStatusesComponent } from '../patient-statuses/patient-statuses.component';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { PermissionGuard } from '../../../permission.guard';
 
