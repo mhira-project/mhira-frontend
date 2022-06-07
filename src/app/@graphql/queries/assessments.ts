@@ -9,7 +9,10 @@ const assessments = gql`
           id
           uuid
           date
-          name
+          assessmentType {
+            id
+            name
+          }
           patientId
           clinicianId
           status
@@ -185,7 +188,10 @@ const getFullAssessment = gql`
       uuid
       isActive
       date
-      name
+      assessmentType {
+        id
+        name
+      }
       status
       deliveryDate
       expirationDate
@@ -314,7 +320,10 @@ const getFullPublicAssessment = gql`
       id
       uuid
       date
-      name
+      assessmentType {
+        id
+        name
+      }
       status
       createdAt
       updatedAt

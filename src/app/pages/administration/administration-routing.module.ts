@@ -10,6 +10,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { CreateReportComponent } from './create-report/create-report.component';
 import { DisclaimersComponent } from './disclaimers/disclaimers.component';
 import { PatientStatusesComponent } from './patient-statuses/patient-statuses.component';
+import { AssessmentAdministrationComponent } from './assessment-administration/assessment-administration.component';
 
 const routes: Routes = [
   {
@@ -64,6 +65,17 @@ const routes: Routes = [
         component: DisclaimersComponent,
         data: {
           breadcrumbI18nKey: 'menu.disclaimers',
+          permissions: {
+            only: [PermissionKey.VIEW_ROLES_PERMISSIONS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'assessments',
+        component: AssessmentAdministrationComponent,
+        data: {
+          breadcrumbI18nKey: 'menu.assessments',
           permissions: {
             only: [PermissionKey.VIEW_ROLES_PERMISSIONS],
           },

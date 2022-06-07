@@ -1,0 +1,41 @@
+import gql from 'graphql-tag';
+
+const createOneAssessmentType = gql`
+  mutation($assessmentType: CreateAssessmentTypeInput!) {
+    createNewAssessmentType(assessmentType: $assessmentType) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+const updateOneAssessmentType = gql`
+  mutation($assessmentType: UpdateAssessmentTypeInput!) {
+    updateAssessmentType(assessmentType: $assessmentType) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+const deleteOneAssessmentType = gql`
+  mutation($input: DeleteOneInput!) {
+    deleteOnePatientStatus(input: $input) {
+      id
+      name
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const AssessmentAdministrationMutations = {
+  createOneAssessmentType,
+  updateOneAssessmentType,
+  deleteOneAssessmentType,
+};

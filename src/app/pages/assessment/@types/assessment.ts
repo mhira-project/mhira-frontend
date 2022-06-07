@@ -4,6 +4,7 @@ import { User } from '@app/pages/user-management/@types/user';
 import { Answer } from '../../../assessment-form/@types/answer';
 import { TagInfo } from '../../../@shared/@modules/master-data/@types/list';
 import { Caregiver } from '@app/pages/patients-management/@types/caregiver';
+import { AssessmentAdministration } from '@app/pages/administration/@types/assessment-administration';
 
 export enum AssessmentStatus {
   PLANNED = 'PLANNED',
@@ -24,6 +25,7 @@ export interface Assessment {
   id?: number;
   uuid?: string;
   name: string;
+  assessmentType: AssessmentAdministration;
   patientId: number;
   note: string;
   clinicianId: number;
@@ -48,12 +50,14 @@ export interface QuestionnaireAssessment {
 export interface FullAssessment extends Assessment {
   questionnaireAssessment: QuestionnaireAssessment;
   informantClinician: User;
+  assessmentType: AssessmentAdministration;
   informantCaregiverRelation: string;
 }
 
 export interface FormattedAssessment extends Assessment {
   formattedPatient: string;
   formattedClinician: string;
+  formattedAssessmentType: string;
   formattedStatus: TagInfo;
   patientMedicalRecordNo: string;
   clinicianWorkId: string;

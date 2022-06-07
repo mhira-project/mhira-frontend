@@ -4,7 +4,7 @@ import { FormattedAssessment } from '@app/pages/assessment/@types/assessment';
 export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
   {
     title: 'Title',
-    name: 'name',
+    name: 'formattedAssessmentType',
     translationPath: 'tables.assessmentsPatients.title',
     sort: true,
     filterField: {

@@ -13,13 +13,15 @@ import { ErrorHandlerService } from '../../../@shared/services/error-handler.ser
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FormattedPatient } from '@app/pages/patients-management/@types/formatted-patient';
 import { SelectedCaregiver } from '@app/pages/patients-management/@types/caregiver';
-import { Paging } from '@shared/@types/paging';
+import { PageInfo, Paging } from '@shared/@types/paging';
 import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';
 import { finalize } from 'rxjs/operators';
 import { Convert } from '@shared/classes/convert';
 import { DepartmentsService } from '@app/pages/administration/@services/departments.service';
 import { Department } from '@app/pages/administration/@types/department';
+import { AssessmentAdministrationService } from '@app/pages/administration/@services/assessment-administration.service';
+import { AssessmentAdministration } from '@app/pages/administration/@types/assessment-administration';
 
 const CryptoJS = require('crypto-js');
 
@@ -31,21 +33,24 @@ const CryptoJS = require('crypto-js');
 export class PlanAssessmentComponent implements OnInit {
   public PK = PermissionKey;
   public selectedQuestionnaires: QuestionnaireVersion[] = [];
-  typeSelected: any = 'PATIENT';
-  dataToSelect: any = [];
+  public selectedAssessment: any = null;
+  public typeSelected: any = 'PATIENT';
+  public dataToSelect: any = [];
   public users: User[] = [];
+  public data: Partial<AssessmentAdministration>[];
+  public pageInfo: PageInfo;
   public selectedPatient: Patient;
   @Input() public patient: FormattedPatient;
   @Input() public caregivers: SelectedCaregiver[] = [];
-  selectedInformant: any = null;
+  public selectedInformant: any = null;
   public selectedClinician: User;
   public fullAssessment: FullAssessment;
   public assessmentForm: FormGroup;
   public editMode = true;
   public isLoading = false;
   public departments: Department[] = [];
-  deliveryDate: any = null;
-  expireDate: any = null;
+  public deliveryDate: any = null;
+  public expireDate: any = null;
   options = [
     { label: 'Mother', value: 'Mother' },
     { label: 'Father', value: 'Father' },
@@ -78,13 +83,14 @@ export class PlanAssessmentComponent implements OnInit {
     private errorService: ErrorHandlerService,
     private activatedRoute: ActivatedRoute,
     private departmentsService: DepartmentsService,
+    private assessmentAdministrationService: AssessmentAdministrationService,
     public perms: AppPermissionsService,
     private router: Router
   ) {}
 
   public ngOnInit(): void {
     this.assessmentForm = this.formBuilder.group({
-      name: [null, Validators.required],
+      assessmentTypeId: [null, Validators.required],
       patientId: [null, Validators.required],
       clinicianId: [null, Validators.required],
       questionnaires: [null, Validators.required],
@@ -95,7 +101,7 @@ export class PlanAssessmentComponent implements OnInit {
       deliveryDate: [null],
       expirationDate: [null],
     });
-
+    this.getAssessmentTypes();
     this.getUserDepartments();
     this.initAssessment();
     this.userAutoSelect();
@@ -246,7 +252,10 @@ export class PlanAssessmentComponent implements OnInit {
         this.editMode = false;
         this.fullAssessment = assessment;
         this.assessmentForm.setValue({
-          name: this.fullAssessment.name,
+          assessmentTypeId: {
+            label: this.fullAssessment.assessmentType?.name,
+            value: this.fullAssessment.assessmentType?.id,
+          },
           informantType: this.fullAssessment.informantType,
           patientId: this.fullAssessment.patientId,
           clinicianId: this.fullAssessment.clinicianId,
@@ -264,6 +273,7 @@ export class PlanAssessmentComponent implements OnInit {
           },
           deliveryDate: this.fullAssessment.deliveryDate,
           expirationDate: this.fullAssessment.expirationDate,
+
           questionnaires: this.fullAssessment.questionnaireAssessment?.questionnaires,
         });
         this.selectedQuestionnaires = this.fullAssessment.questionnaireAssessment?.questionnaires;
@@ -271,6 +281,7 @@ export class PlanAssessmentComponent implements OnInit {
         this.selectedClinician = this.fullAssessment.clinician;
         this.fullAssessment = this.fullAssessment;
         this.patient = this.fullAssessment.patient;
+        this.selectedAssessment = this.fullAssessment.assessmentType?.id;
         this.typeSelected = this.fullAssessment.informantType;
         if (this.fullAssessment.informantClinician) {
           this.selectedInformant = this.fullAssessment.informantClinician.id;
@@ -302,9 +313,27 @@ export class PlanAssessmentComponent implements OnInit {
             },
           ];
         }
+        console.log(this.fullAssessment);
       },
       (error) =>
         this.errorService.handleError(error, { prefix: `Unable to load the assessment with ID "${assessmentId}"` })
     );
+  }
+
+  private getAssessmentTypes(): void {
+    this.isLoading = true;
+    this.assessmentAdministrationService
+      .assessmentAdministration()
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }: any) => {
+          this.data = data.assessmentTypes.edges.map((assessmentTypes: any) =>
+            Convert.toAssessmentAdministration(assessmentTypes.node)
+          );
+          console.log('this.data', data);
+          this.pageInfo = data.assessmentTypes.pageInfo;
+        },
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to load assessment type' })
+      );
   }
 }

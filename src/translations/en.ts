@@ -17,6 +17,11 @@ export default {
     searchSelect: 'Search and select questionnaires to add to the assessment',
     selectQuestionnaires: 'Select Questionnaires',
   },
+  assessmentMessages: {
+    expiredText: 'Sorry, assessment is no longer available!',
+    plannedText: 'Sorry, assessment is not available! It will be available at:',
+    completedText: 'This assessment has been completed!',
+  },
   menu: {
     dashboard: 'Dashboard',
     createAssessment: 'Create Assessment',
@@ -46,19 +51,26 @@ export default {
     patientStatuses: 'Patient Statuses',
     notFound: 'Not Found',
     noTabs: 'No Tabs',
-    disclaimers: 'Disclaimers',
+    disclaimers: 'Messages',
   },
   patients: {
     myPatients: 'My Patients',
   },
   tables: {
+    assessmentAdministration: {
+      assessmentType: 'Assessment Type',
+      lastUpdate: 'Last Update',
+    },
+    patientStatus: {
+      name: '',
+    },
     disclaimer: {
       type: 'Type',
       textInformation: 'Text Information',
       lastUpdate: 'Last Update',
     },
     assessmentsPatients: {
-      title: 'Title',
+      title: 'Assessment Name',
       manager: 'Manager',
       informant: 'Informant',
       questionnaires: 'Questionnaires',
@@ -138,6 +150,9 @@ export default {
     },
   },
   forms: {
+    assessmentAdministration: {
+      typeName: 'Type Name',
+    },
     patientStatuses: {
       name: 'Patient Status Name',
       description: 'Description',
@@ -262,7 +277,7 @@ export default {
     keywords: 'Keywords',
   },
   plannedAssessments: {
-    name: 'Name',
+    name: 'Assessment Name',
     formattedStatus: 'Status',
     patientMedicalRecordNo: 'Patient Hospital ID',
     formattedPatient: 'Patient',
@@ -280,7 +295,7 @@ export default {
     informant: 'Informant',
   },
   createAssessment: {
-    title: 'Title',
+    title: 'Assessment Name',
     assessmentManager: 'Assessment Manager',
     patient: 'Patient',
     departmentsUser: `Department's User`,
