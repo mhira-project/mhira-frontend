@@ -12,7 +12,11 @@ import {
 } from '../../pages/questionnaire-management/@types/questionnaire';
 import { Reports } from '@app/pages/administration/@types/reports';
 import { DisclaimerEnum, Disclaimers, FormattedDisclaimer } from '@app/pages/administration/@types/disclaimers';
-import { AssessmentAdministration } from '@app/pages/administration/@types/assessment-administration';
+import {
+  AssessmentAdministration,
+  AssessmentAdministrationStatus,
+  FormattedAssessmentAdministration,
+} from '@app/pages/administration/@types/assessment-administration';
 
 const STATUS_COLOR = {
   [QuestionnaireStatus.DRAFT]: 'blue',
@@ -48,7 +52,11 @@ export class Convert {
 
   // AssessmentAdministation
 
-  public static toAssessmentAdministration(json: any): AssessmentAdministration {
+  public static toAssessmentAdministration(json: any): FormattedAssessmentAdministration {
+    json.formattedStatus = {
+      color: json.status === AssessmentAdministrationStatus.ACTIVE ? 'green' : 'orange',
+      title: json.status === AssessmentAdministrationStatus.ACTIVE ? 'ACTIVE' : 'INACTIVE',
+    };
     json.updatedAt = json.updatedAt ? moment(json.updatedAt).format('YYYY-MM-DD') : '';
     return json;
   }

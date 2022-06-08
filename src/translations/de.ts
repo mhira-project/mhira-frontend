@@ -61,6 +61,7 @@ export default {
     assessmentAdministration: {
       assessmentType: 'Bewertungstyp',
       lastUpdate: 'Letztes Update',
+      status: 'Status',
     },
     disclaimer: {
       type: 'Art',
@@ -150,6 +151,7 @@ export default {
   forms: {
     assessmentAdministration: {
       nameType: 'Modellname',
+      status: 'Status',
     },
     patientStatuses: {
       name: 'Patientenstatus',

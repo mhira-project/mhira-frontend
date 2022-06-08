@@ -55,6 +55,7 @@ export default {
     assessmentAdministration: {
       assessmentType: 'Aina ya Tathmini',
       lastUpdate: 'Sasisho la Mwisho',
+      status: 'Hali',
     },
     disclaimer: {
       type: 'Aina',
@@ -144,6 +145,7 @@ export default {
   forms: {
     assessmentAdministration: {
       typeName: 'Aina ya Jina',
+      status: 'Hali',
     },
     patientStatuses: {
       name: 'Jina la Hali ya Mgonjwa',

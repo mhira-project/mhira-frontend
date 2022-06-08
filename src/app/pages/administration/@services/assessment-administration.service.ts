@@ -15,6 +15,14 @@ import { Injectable } from '@angular/core';
 export class AssessmentAdministrationService {
   constructor(private apollo: Apollo) {}
 
+  assessmentActive(): Observable<FetchResult<any>> {
+    return this.apollo.query({
+      query: AssessmentAdministrationQueries.assessmentAdministrationActive,
+      variables: {},
+      fetchPolicy: 'no-cache',
+    });
+  }
+
   assessmentAdministration(params?: {
     paging?: Paging;
     filter?: Filter;
@@ -45,7 +53,11 @@ export class AssessmentAdministrationService {
     return this.apollo.mutate({
       mutation: AssessmentAdministrationMutations.updateOneAssessmentType,
       variables: {
-        assessmentType: { assessmentTypeId: assessmentType.id, name: assessmentType.name },
+        assessmentType: {
+          assessmentTypeId: assessmentType.id,
+          name: assessmentType.name,
+          status: assessmentType.status,
+        },
       },
       fetchPolicy: 'no-cache',
     });

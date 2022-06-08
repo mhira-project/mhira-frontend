@@ -185,7 +185,12 @@ export class AssessmentsListComponent {
 
   private createSearchFilter(searchString: string): Array<{ [K in keyof Partial<FormattedAssessment>]: {} }> {
     return [
-      { name: { iLike: `%${searchString}%` } },
+      {
+        assessmentType: {
+          or: [{ name: { iLike: `%${searchString}%` } }],
+        },
+      },
+
       {
         patient: {
           or: [

@@ -60,6 +60,7 @@ export default {
     assessmentAdministration: {
       assessmentType: 'Tipo de Evaluación',
       lastUpdate: 'Última Actualización',
+      status: 'Estado',
     },
     disclaimer: {
       type: 'Tipo',
@@ -149,6 +150,7 @@ export default {
   forms: {
     assessmentAdministration: {
       typeName: 'Escribe un Nombre',
+      status: 'Estado',
     },
     patientStatuses: {
       name: 'Nombre',

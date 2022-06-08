@@ -59,14 +59,17 @@ export class AssessmentAdministrationComponent implements OnInit {
 
   public onPageChange(paging: Paging): void {
     this.assessmentAdministrationRequestOptions.paging = paging;
+    this.getAssessmentTypes();
   }
 
   public onSort(sorting: SortField<AssessmentAdministration>[]): void {
     this.assessmentAdministrationRequestOptions.sorting = sorting;
+    this.getAssessmentTypes();
   }
 
   public onFilter(filter: Filter): void {
     this.assessmentAdministrationRequestOptions.filter = filter;
+    this.getAssessmentTypes();
   }
 
   public onAction({

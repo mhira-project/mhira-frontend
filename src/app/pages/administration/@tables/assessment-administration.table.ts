@@ -1,7 +1,7 @@
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
-import { AssessmentAdministration } from '@app/pages/administration/@types/assessment-administration';
+import { FormattedAssessmentAdministration } from '@app/pages/administration/@types/assessment-administration';
 
-export const AssessmentAdministrationColumns: TableColumn<Partial<AssessmentAdministration>>[] = [
+export const AssessmentAdministrationColumns: TableColumn<Partial<FormattedAssessmentAdministration>>[] = [
   {
     title: 'Type of Assessment',
     name: 'name',
@@ -10,6 +10,20 @@ export const AssessmentAdministrationColumns: TableColumn<Partial<AssessmentAdmi
     filterField: {
       type: 'text',
       value: undefined,
+    },
+  },
+  {
+    title: 'Status',
+    name: 'formattedStatus',
+    translationPath: 'tables.department.formattedStatus',
+    render: 'tag',
+    filterField: {
+      type: 'select',
+      value: undefined,
+      options: [
+        { label: 'Active', value: true },
+        { label: 'Inactive', value: false },
+      ],
     },
   },
   {
