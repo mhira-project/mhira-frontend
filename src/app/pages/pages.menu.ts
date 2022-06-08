@@ -189,6 +189,15 @@ export const MENU: SideNavInterface[] = [
         submenu: [],
       },
       {
+        path: 'administration/assessments',
+        title: 'menu.assessments',
+        permissions: [PK.VIEW_SETTINGS],
+        iconType: '',
+        iconTheme: '',
+        icon: '',
+        submenu: [],
+      },
+      {
         path: 'administration/patient-statuses',
         title: 'menu.patientStatuses',
         permissions: [PK.VIEW_SETTINGS],

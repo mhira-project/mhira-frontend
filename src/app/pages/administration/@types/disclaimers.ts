@@ -1,6 +1,9 @@
 export enum DisclaimerEnum {
   assessments = 'Assessment',
   loginDisclaimer = 'Login Disclaimer',
+  expiredText = 'Assessment Expired',
+  plannedText = 'Assessment Planned',
+  completedText = 'Assessment Completed',
 }
 
 export interface Disclaimers {

@@ -17,6 +17,11 @@ export default {
     searchSelect: 'Buscar y seleccionar cuestionarios para agregar a la evaluación',
     selectQuestionnaires: 'Seleccionar Cuestionarios',
   },
+  assessmentMessages: {
+    expiredText: 'Lo sentimos, ¡la evaluación ya no está disponible!',
+    plannedText: 'Lo sentimos, ¡la evaluación no está disponible! Estará disponible en:',
+    completedText: '¡Esta evaluación ha sido completada!',
+  },
   menu: {
     dashboard: 'Panel de Control',
     createAssessment: 'Crear Evaluación',
@@ -25,8 +30,8 @@ export default {
     createPatient: 'Crear Paciente Nuevo',
     caregiverList: 'Lista de Cuidadores',
     questionnaires: 'Cuestionarios',
-    questionnairesList: 'Cuestionarios',
-    uploadQuestionnaire: 'Cargar un Cuestionario Nuevo',
+    questionnairesList: 'Lista de Cuestionarios',
+    uploadQuestionnaire: 'Cargar Cuestionario Nuevo',
     questionnairesVersionList: 'Versiones Antiguas',
     assessments: 'Evaluaciones',
     planAssessment: 'Crear una Evaluación',
@@ -36,7 +41,7 @@ export default {
     newUser: 'Nuevo Usuario',
     administration: 'Administración',
     reports: 'Informes',
-    createReport: 'Crear Reporte',
+    createReport: 'Crear Informe',
     permissionMatrix: 'Permisos de Usuarios',
     permissions: 'Permisos',
     roles: 'Roles',
@@ -46,12 +51,16 @@ export default {
     patientStatuses: 'Estado del Paciente',
     notFound: 'No encontrado',
     noTabs: 'No hay Pestaña',
-    disclaimers: 'Descargos de Responsabilidad',
+    disclaimers: 'Mensajes',
   },
   patients: {
     myPatients: 'Mis Pacientes',
   },
   tables: {
+    assessmentAdministration: {
+      assessmentType: 'Tipo de Evaluación',
+      lastUpdate: 'Última Actualización',
+    },
     disclaimer: {
       type: 'Tipo',
       textInformation: 'Información de Texto',
@@ -59,11 +68,11 @@ export default {
     },
     assessmentsPatients: {
       title: 'Título',
-      manager: 'Gerente',
+      manager: 'Administrador',
       informant: 'Informante',
       questionnaires: 'Cuestionarios',
-      deliveryDate: 'Fecha De Entrega',
-      expirationDate: 'Fecha De Caducidad',
+      deliveryDate: 'Fecha de Entrega',
+      expirationDate: 'Fecha de Expiración',
       status: 'Estado',
     },
     scripts: {
@@ -71,7 +80,7 @@ export default {
       version: 'Versión',
       creator: 'Creador',
       reports: 'Informes',
-      repositoryLink: 'Enlace Del Repositorio',
+      repositoryLink: 'Enlace del Repositorio',
     },
     reports: {
       name: 'Nombre',
@@ -138,8 +147,11 @@ export default {
     },
   },
   forms: {
+    assessmentAdministration: {
+      typeName: 'Escribe un Nombre',
+    },
     patientStatuses: {
-      name: 'Nombre del Estado del Paciente',
+      name: 'Nombre',
       description: 'Descripción',
     },
     scripts: {
@@ -151,14 +163,14 @@ export default {
       repositoryLink: 'Enlace Del Repositorio',
     },
     createReportForm: {
-      reportName: 'Reportar Nombre',
+      reportName: 'Nombre Informe',
       description: 'Descripción',
       resources: 'Recursos',
       url: 'URL De La Herramienta De Informes',
-      appName: 'App Nombre',
+      appName: 'Nombre App',
       repositoryLink: 'Enlace del Repositorio',
       reportStatus: 'Estado del Informe',
-      anonymus: 'Anonymus',
+      anonymus: 'Anónimo',
       roles: 'Roles',
     },
     changePassword: {
@@ -172,8 +184,8 @@ export default {
     },
     userProfile: {
       username: 'Nombre de Usuario',
-      workID: 'ID',
-      email: 'EMail',
+      workID: 'ID o RUT',
+      email: 'E-Mail',
       firstName: 'Nombre',
       middleName: 'Segundo Nombre',
       lastName: 'Apellidos',
@@ -183,7 +195,7 @@ export default {
     },
     userProfileEdit: {
       username: 'Nombre de Usuario',
-      workID: 'ID',
+      workID: 'ID o RUT',
       email: 'Email',
       firstName: 'Nombre',
       middleName: 'Segundo Nombre',
@@ -198,7 +210,7 @@ export default {
       firstName: 'Nombre',
       middleName: 'Segundo Nombre',
       lastName: 'Apellidos',
-      id: 'Id',
+      id: 'Ficha o RUT',
       birthDate: 'Fecha de Nacimiento',
       gender: 'Sexo',
       department: 'Departamento',
@@ -264,30 +276,30 @@ export default {
   plannedAssessments: {
     name: 'Nombre',
     formattedStatus: 'Estado',
-    patientMedicalRecordNo: 'Identificación Del Hospital Del Paciente',
+    patientMedicalRecordNo: 'Número de Ficha o RUT',
     formattedPatient: 'Paciente',
-    clinicianWorkId: 'ID de trabajo del tratante',
+    clinicianWorkId: 'ID del tratante o RUT',
     formattedClinician: 'Tratante',
     informant: 'Informante',
     createdAt: 'Creado en',
-    expirationDate: 'fecha de caducidad',
-    deliveryDate: 'Fecha de entrega',
+    expirationDate: 'Fecha de Expiración',
+    deliveryDate: 'Fecha de Entrega',
   },
   planAssessment: {
     assessmentName: 'Nombre de la Evaluación',
     patient: 'Seleccione el paciente al que pertenece esta evaluación',
     clinician: 'Tratante',
-    informant: 'Informante',
+    informant: 'Tipo de Informante',
   },
   createAssessment: {
     title: 'Título',
-    assessmentManager: 'Gerente de Evaluación',
+    assessmentManager: 'Encargado de la Evaluación',
     patient: 'Paciente',
     departmentsUser: `Usuario del Departamento`,
     patientsCaregiver: `Cuidador del Paciente`,
     deliveryDate: 'Fecha de entrega',
-    expirationDate: 'Fecha de caducidad',
-    notes: 'Notas para el gerente de evaluación',
+    expirationDate: 'Fecha de Expiración',
+    notes: 'Notas para el encargado de la evaluación',
   },
   form: {
     system: {
@@ -303,7 +315,7 @@ export default {
   caregiver: {
     patient: 'Paciente',
     birthDate: 'Fecha de nacimiento',
-    medicalRecordNumber: 'Numero de historia CLINICA',
+    medicalRecordNumber: 'Numero de ficha CLINICA',
     relationToPatient: 'Relación con el paciente',
     nonExistingCaregiver: 'Agregar un cuidador no existente:',
     existingCaregiver: 'Buscar cuidador existente',

@@ -36,6 +36,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { DisclaimersComponent } from './disclaimers/disclaimers.component';
+import { AssessmentAdministrationComponent } from './assessment-administration/assessment-administration.component';
 
 const antModules = [
   NzGridModule,
@@ -82,6 +83,7 @@ const antModules = [
     ReportsComponent,
     CreateReportComponent,
     DisclaimersComponent,
+    AssessmentAdministrationComponent,
   ],
   providers: [PermissionsService, RolesService],
 })

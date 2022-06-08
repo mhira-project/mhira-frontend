@@ -22,6 +22,10 @@ const createOneAssessment = gql`
       status
       deliveryDate
       expirationDate
+      assessmentType {
+        id
+        name
+      }
       note
       createdAt
       updatedAt
@@ -105,6 +109,10 @@ const updateOneAssessment = gql`
       deliveryDate
       expirationDate
       note
+      assessmentType {
+        id
+        name
+      }
       createdAt
       updatedAt
       deletedAt

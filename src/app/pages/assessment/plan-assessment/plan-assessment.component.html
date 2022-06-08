@@ -16,7 +16,16 @@
       <nz-form-item>
         <nz-form-label>{{ 'planAssessment.assessmentName' | translate }}</nz-form-label>
         <nz-form-control>
-          <input nz-input type="string" formControlName="name" [readonly]="!editMode" />
+          <!--          <input nz-input type="string" formControlName="name" [readonly]="!editMode" />-->
+          <nz-select
+            [nzBorderless]="!editMode"
+            class="input-class"
+            [nzDisabled]="!editMode"
+            [(ngModel)]="selectedAssessment"
+            formControlName="assessmentTypeId"
+          >
+            <nz-option *ngFor="let data of data" [nzLabel]="data.name" [nzValue]="data.id">{{ data.name }}</nz-option>
+          </nz-select>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>

@@ -5,7 +5,7 @@ import { Patient } from '@app/pages/patients-management/@types/patient';
 
 export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
-    name: 'name',
+    name: 'formattedAssessmentType',
     title: 'Name',
     translationPath: 'plannedAssessments.name',
     sort: true,

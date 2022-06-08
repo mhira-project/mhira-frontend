@@ -1,6 +1,7 @@
 import { Patient } from '@app/pages/patients-management/@types/patient';
 import { User } from '@app/pages/user-management/@types/user';
 import { TagInfo } from '@shared/@modules/master-data/@types/list';
+import { AssessmentAdministration } from '../../administration/@types/assessment-administration';
 
 export enum AssessmentStatus {
   COMPLETED = 'COMPLETED',
@@ -14,6 +15,7 @@ export interface Assessment {
   id?: number;
   uuid?: string;
   name: string;
+  assessmentType: AssessmentAdministration;
   patientId: number;
   clinicianId: number;
   patient: Patient;
@@ -29,6 +31,7 @@ export interface Assessment {
 export interface FormattedPatientAssessment extends Assessment {
   formattedPatient: string;
   formattedClinician: string;
+  formattedAssessmentType: string;
   formattedStatus: TagInfo;
   patientMedicalRecordNo: string;
   clinicianWorkId: string;

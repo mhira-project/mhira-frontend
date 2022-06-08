@@ -10,7 +10,18 @@
           <nz-form-control nzErrorTip="Please input your username!">
             <nz-input-group class="input-class">
               <h5>{{ 'createAssessment.title' | translate }}</h5>
-              <input formControlName="name" nz-input placeholder="Please enter a title" [readonly]="!editMode" />
+              <!--              <input formControlName="name" nz-input placeholder="Please enter a title" [readonly]="!editMode" />-->
+              <nz-select
+                [nzBorderless]="!editMode"
+                class="input-class"
+                [nzDisabled]="!editMode"
+                [(ngModel)]="selectedAssessment"
+                formControlName="assessmentTypeId"
+              >
+                <nz-option *ngFor="let a of assessmentAdministration" [nzLabel]="a.name" [nzValue]="a.id">{{
+                  a.name
+                }}</nz-option>
+              </nz-select>
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>

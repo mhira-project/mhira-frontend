@@ -17,6 +17,11 @@ export default {
     searchSelect: `Kërkoni dhe zgjidhni pyetësorët për t'i shtuar vlerësimit`,
     selectQuestionnaires: 'Zgjidhni Pyetësorët',
   },
+  assessmentMessages: {
+    expiredText: 'Na vjen keq, vlerësimi nuk është më i disponueshëm!',
+    plannedText: 'Na vjen keq, vlerësimi nuk është i disponueshëm! Do të jetë në dispozicion në:',
+    completedText: 'Ky vlerësim ka përfunduar!!',
+  },
   menu: {
     dashboard: 'Paneli Kryesor',
     createAssessment: 'Krijo Vlerësim',
@@ -46,12 +51,16 @@ export default {
     patientStatuses: 'Statusi i Klientëve',
     notFound: 'Nuk është gjetur',
     noTabs: 'Nuk ka skedar',
-    disclaimers: 'Mohimet',
+    disclaimers: 'Mesazhet',
   },
   patients: {
     myPatients: 'Pacientët e Mi',
   },
   tables: {
+    assessmentAdministration: {
+      assessmentType: 'Lloji i Vlerësimit',
+      lastUpdate: 'Përditësimi Përfundimtar',
+    },
     disclaimer: {
       type: 'Tipi',
       textInformation: 'Informacion me Tekst',
@@ -139,6 +148,9 @@ export default {
     },
   },
   forms: {
+    assessmentAdministration: {
+      typeName: 'Shkruani Emrin',
+    },
     patientStatuses: {
       name: 'Emri i Statusit të Pacientit',
       description: 'Përshkrim',

@@ -20,6 +20,8 @@ import { DepartmentsService } from '@app/pages/administration/@services/departme
 import { AssessmentService } from '@app/pages/assessment/@services/assessment.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FullAssessment } from '../../assessment/@types/assessment';
+import { AssessmentAdministration } from '@app/pages/administration/@types/assessment-administration';
+import { AssessmentAdministrationService } from '@app/pages/administration/@services/assessment-administration.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -60,6 +62,8 @@ export class CreateAssessmentComponent implements OnInit {
     { label: 'Supervisor', value: 'Supervisor' },
     { label: 'Other', value: 'Other' },
   ];
+  public selectedAssessment: any = null;
+  public assessmentAdministration: Partial<AssessmentAdministration>[];
   public fullAssessment: FullAssessment;
   public isLoading = false;
   public selectedClinician: User;
@@ -86,6 +90,7 @@ export class CreateAssessmentComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private caregiversPatientService: CaregiversPatientService,
+    private assessmentAdministrationService: AssessmentAdministrationService,
     private errorService: ErrorHandlerService,
     private departmentsService: DepartmentsService,
     private assessmentService: AssessmentService,
@@ -94,7 +99,7 @@ export class CreateAssessmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
-      name: [null, Validators.required],
+      assessmentTypeId: [null, Validators.required],
       clinicianId: [null, Validators.required],
       informantPatient: [null],
       informantClinicianId: [null],
@@ -104,11 +109,13 @@ export class CreateAssessmentComponent implements OnInit {
       expirationDate: [null],
       note: [null],
     });
+    this.getAssessmentTypes();
     this.userAutoSelect();
     this.initAssessment();
     this.getPatient();
     this.getCaregivers();
     this.getUserDepartments();
+    console.log(this.assessmentAdministration);
   }
 
   public goBack(patient: FormattedPatient): void {
@@ -257,7 +264,10 @@ export class CreateAssessmentComponent implements OnInit {
     this.patient = this.fullAssessment.patient;
     this.editMode = false;
     this.formGroup.setValue({
-      name: this.fullAssessment.name,
+      assessmentTypeId: {
+        label: this.fullAssessment.assessmentType?.name,
+        value: this.fullAssessment.assessmentType?.id,
+      },
       clinicianId: this.fullAssessment.clinician.id,
       deliveryDate: this.fullAssessment.deliveryDate,
       informantType: '',
@@ -279,6 +289,7 @@ export class CreateAssessmentComponent implements OnInit {
     this.deliveryDate = this.fullAssessment.deliveryDate;
     this.selectedQuestionnaires = this.fullAssessment.questionnaireAssessment.questionnaires;
     this.noteValue = this.fullAssessment.note;
+    this.selectedAssessment = this.fullAssessment.assessmentType?.id;
     // this.formGroup.controls.note.disable();
 
     if (this.fullAssessment.informantClinician) {
@@ -328,5 +339,21 @@ export class CreateAssessmentComponent implements OnInit {
           .map((caregiver: any) => caregiver.node.caregiver);
         this.pageInfo = response.data.patientCaregivers.pageInfo;
       });
+  }
+
+  private getAssessmentTypes(): void {
+    this.isLoading = true;
+    this.assessmentAdministrationService
+      .assessmentAdministration()
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }: any) => {
+          this.assessmentAdministration = data.assessmentTypes.edges.map((assessmentTypes: any) => {
+            return Convert.toAssessmentAdministration(assessmentTypes.node);
+          });
+          this.pageInfo = data.assessmentTypes.pageInfo;
+        },
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to load assessment type' })
+      );
   }
 }
