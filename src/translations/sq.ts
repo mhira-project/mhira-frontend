@@ -60,6 +60,7 @@ export default {
     assessmentAdministration: {
       assessmentType: 'Lloji i Vlerësimit',
       lastUpdate: 'Përditësimi Përfundimtar',
+      status: 'Statusi',
     },
     disclaimer: {
       type: 'Tipi',
@@ -150,6 +151,7 @@ export default {
   forms: {
     assessmentAdministration: {
       typeName: 'Shkruani Emrin',
+      status: 'Statusi',
     },
     patientStatuses: {
       name: 'Emri i Statusit të Pacientit',

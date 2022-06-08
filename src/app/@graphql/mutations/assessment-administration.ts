@@ -5,6 +5,7 @@ const createOneAssessmentType = gql`
     createNewAssessmentType(assessmentType: $assessmentType) {
       id
       name
+      status
       createdAt
       updatedAt
     }
@@ -16,6 +17,7 @@ const updateOneAssessmentType = gql`
     updateAssessmentType(assessmentType: $assessmentType) {
       id
       name
+      status
       createdAt
       updatedAt
     }
@@ -28,6 +30,7 @@ const deleteOneAssessmentType = gql`
       id
       name
       description
+      status
       createdAt
       updatedAt
     }

@@ -323,15 +323,12 @@ export class PlanAssessmentComponent implements OnInit {
   private getAssessmentTypes(): void {
     this.isLoading = true;
     this.assessmentAdministrationService
-      .assessmentAdministration()
+      .assessmentActive()
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }: any) => {
-          this.data = data.assessmentTypes.edges.map((assessmentTypes: any) =>
-            Convert.toAssessmentAdministration(assessmentTypes.node)
-          );
+          this.data = data.activeAssessmentTypes;
           console.log('this.data', data);
-          this.pageInfo = data.assessmentTypes.pageInfo;
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load assessment type' })
       );

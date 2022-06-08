@@ -344,14 +344,11 @@ export class CreateAssessmentComponent implements OnInit {
   private getAssessmentTypes(): void {
     this.isLoading = true;
     this.assessmentAdministrationService
-      .assessmentAdministration()
+      .assessmentActive()
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }: any) => {
-          this.assessmentAdministration = data.assessmentTypes.edges.map((assessmentTypes: any) => {
-            return Convert.toAssessmentAdministration(assessmentTypes.node);
-          });
-          this.pageInfo = data.assessmentTypes.pageInfo;
+          this.assessmentAdministration = data.activeAssessmentTypes;
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load assessment type' })
       );

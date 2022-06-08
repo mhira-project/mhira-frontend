@@ -60,6 +60,7 @@ export default {
     assessmentAdministration: {
       assessmentType: 'Assessment Type',
       lastUpdate: 'Last Update',
+      status: 'Status',
     },
     patientStatus: {
       name: '',
@@ -152,6 +153,7 @@ export default {
   forms: {
     assessmentAdministration: {
       typeName: 'Type Name',
+      status: 'Status',
     },
     patientStatuses: {
       name: 'Patient Status Name',

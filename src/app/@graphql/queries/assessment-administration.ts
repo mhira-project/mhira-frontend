@@ -13,6 +13,7 @@ const assessmentAdministration = gql`
         node {
           id
           name
+          status
           createdAt
           updatedAt
         }
@@ -22,6 +23,17 @@ const assessmentAdministration = gql`
   }
 `;
 
+const assessmentAdministrationActive = gql`
+  query {
+    activeAssessmentTypes {
+      id
+      name
+      status
+    }
+  }
+`;
+
 export const AssessmentAdministrationQueries = {
   assessmentAdministration,
+  assessmentAdministrationActive,
 };
