@@ -10,7 +10,6 @@
       [isLoading]="isLoading"
       [loadingMessage]="loadingMessage"
       [inputMode]="inputMode"
-      roles
       [showCancelButton]="showCancelButton"
       [showEditButton]="perms.permissionsOnly([PK.MANAGE_USERS]) && perms.hasAccessLevelToUser(user)"
       [form]="profileFields"
@@ -100,12 +99,7 @@
   </nz-tab>
 </nz-tabset>
 
-<nz-modal
-  [(nzVisible)]="showModal"
-  [nzTitle]="modalType?.title"
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="clickChangePassword()"
->
+<nz-modal [(nzVisible)]="showModal" [nzTitle]="modalType?.title" (nzOnCancel)="handleCancel()" (nzOnOk)="(false)">
   <app-form
     [form]="updatePasswordForm"
     [formData]="user"
@@ -117,4 +111,8 @@
     [loadingMessage]="loadingMessage"
     (submitForm)="submitForm($event)"
   ></app-form>
+  <div class="button-div">
+    <button nz-button nzType="default" class="cancel-button" (click)="handleCancel()">Cancel</button>
+    <button nz-button nzType="primary" class="modal-button" (click)="clickChangePassword()">Change Password</button>
+  </div>
 </nz-modal>
