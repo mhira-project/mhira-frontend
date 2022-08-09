@@ -16,6 +16,7 @@ const updateUserPassword: Form = {
           validationMessage: '',
           span: 24,
           value: '',
+          minLength: 6,
         },
         {
           title: 'Repeat Password',
@@ -185,6 +186,7 @@ const userProfile: Form = {
           validationMessage: 'Please fill password',
           span: 8,
           value: '',
+          minLength: 6,
         },
         {
           title: 'Repeat Password',
