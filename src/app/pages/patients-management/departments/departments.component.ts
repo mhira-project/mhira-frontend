@@ -117,6 +117,7 @@ export class DepartmentsComponent implements OnInit {
         titleField: 'name',
       },
       nzOnOk: (m) => m.selected,
+      nzOnCancel: () => console.log('Cancel'),
     });
 
     const state: Department = await modal.afterClose.toPromise();
