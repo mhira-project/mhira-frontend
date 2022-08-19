@@ -1,4 +1,20 @@
 export default {
+  core: {
+    assessments: 'Assessments',
+    profile: 'Profile',
+    caseManagers: 'Case Managers',
+    departments: 'Departments',
+    caregivers: 'Caregivers',
+    reports: 'Reports',
+    previous: 'Previous',
+    next: 'Next',
+    reset: 'Reset',
+    search: 'Search',
+    editCaregiver: 'Edit Caregiver',
+    createCaregiver: 'Create Caregiver',
+    questionnaire: 'Questionnaire',
+    scripts: 'Scripts',
+  },
   dashboard: {
     welcome: 'Welcome to MHIRA',
     name: 'MHIRA',

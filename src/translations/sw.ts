@@ -1,4 +1,20 @@
 export default {
+  core: {
+    assessments: 'Tathmini',
+    profile: 'Maelezo Mafupi',
+    caseManagers: 'Wasimamizi wa Kesi',
+    departments: 'Idara',
+    caregivers: 'Walezi',
+    reports: 'Ripoti',
+    previous: 'Iliyotangulia',
+    next: 'Inayofuata',
+    reset: 'Weka upya',
+    search: 'Tafuta',
+    editCaregiver: 'Hariri Mlezi',
+    createCaregiver: 'Unda Mlezi',
+    questionnaire: 'Hojaji',
+    scripts: 'Hati',
+  },
   dashboard: {
     welcome: 'Karibu  MHIRA',
     name: 'MHIRA',

@@ -8,7 +8,9 @@
       <button nz-button nzType="primary" nzShape="circle" (click)="drawer.open()">
         <i nz-icon nzType="filter"></i>
       </button>
-      <button nz-button nzType="primary" nzShape="round" (click)="onReset()"><i nz-icon nzType="undo"></i>Reset</button>
+      <button nz-button nzType="primary" nzShape="round" (click)="onReset()">
+        <i nz-icon nzType="undo"></i>{{ 'core.reset' | translate }}
+      </button>
     </div>
   </section>
   <section class="list">
@@ -31,7 +33,7 @@
       nz-button
       nzType="primary"
     >
-      Previous
+      {{ 'core.previous' | translate }}
     </button>
     <nz-select [(ngModel)]="pageSize" (ngModelChange)="onPageChange()">
       <nz-option *ngFor="let ps of PAGE_SIZES" [nzValue]="ps" nzLabel="Page size: {{ ps }}"></nz-option>
@@ -43,7 +45,7 @@
       nz-button
       nzType="primary"
     >
-      Next
+      {{ 'core.next' | translate }}
     </button>
   </section>
 
