@@ -3,23 +3,23 @@
 </div>
 <h1 *ngIf="patientTitle">{{ patientTitle }}</h1>
 <nz-tabset nzSize="large">
-  <nz-tab *ngIf="patientTitle" nzTitle="Assessments">
+  <nz-tab *ngIf="patientTitle" [nzTitle]="'core.assessments' | translate">
     <app-assessments [patient]="patient"></app-assessments>
   </nz-tab>
-  <nz-tab nzTitle="Profile">
+  <nz-tab [nzTitle]="'core.profile' | translate">
     <app-create-patient></app-create-patient>
   </nz-tab>
-  <nz-tab *ngIf="patientTitle" nzTitle="Case managers">
+  <nz-tab *ngIf="patientTitle" [nzTitle]="'core.caseManagers' | translate">
     <app-case-managers [managerType]="'caseManager'" [patient]="patient" [showAssignButton]="true" [filter]="filter">
     </app-case-managers>
   </nz-tab>
-  <nz-tab *ngIf="patientTitle" nzTitle="Departments">
+  <nz-tab *ngIf="patientTitle" [nzTitle]="'core.departments' | translate">
     <app-patient-departments [patient]="patient"></app-patient-departments>
   </nz-tab>
-  <nz-tab *ngIf="patientTitle" nzTitle="Caregivers">
+  <nz-tab *ngIf="patientTitle" [nzTitle]="'core.caregivers' | translate">
     <app-caregivers-patient [patient]="patient"></app-caregivers-patient>
   </nz-tab>
-  <nz-tab *ngIf="patientTitle" nzTitle="Reports">
+  <nz-tab *ngIf="patientTitle" [nzTitle]="'core.reports' | translate">
     <app-reports [patient]="patient"></app-reports>
   </nz-tab>
 </nz-tabset>

@@ -3,7 +3,7 @@
     style="width: 100%"
     #field
     type="text"
-    [placeholder]="placeholder ? placeholder : 'Search'"
+    [placeholder]="placeholder ? placeholder : ('core.search' | translate)"
     nz-input
     [debounceTime]="300"
     (ngxInputSearch)="search.emit(field.value)"

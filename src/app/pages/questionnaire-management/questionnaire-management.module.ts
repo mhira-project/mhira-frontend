@@ -15,6 +15,7 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { QuestionnaireVersionListComponent } from './questionnaire-version-list/questionnaire-version-list.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { QuestionnaireVersionListComponent } from './questionnaire-version-list/
     NzDrawerModule,
     NzCardModule,
     NzCheckboxModule,
+    TranslateModule,
   ],
 })
 export class QuestionnaireManagementModule {}

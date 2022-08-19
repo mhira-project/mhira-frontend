@@ -1,4 +1,20 @@
 export default {
+  core: {
+    assessments: 'Vlerësimet',
+    profile: 'Profili',
+    caseManagers: 'Menaxherët e rasteve',
+    departments: 'Departamentet',
+    caregivers: 'Kujdestarët',
+    reports: 'Raportet',
+    previous: 'E mëparshme',
+    next: 'Tjetra',
+    reset: 'Rivendos',
+    search: 'Kërko',
+    editCaregiver: 'Redakto Kujdestarin',
+    createCaregiver: 'Krijo Kujdestar',
+    questionnaire: 'Pyetësor',
+    scripts: 'Skriptet',
+  },
   dashboard: {
     welcome: 'Mirë se Vini në MHIRA',
     name: 'MHIRA',
