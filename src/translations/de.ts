@@ -1,19 +1,19 @@
 export default {
   core: {
-    assessments: 'Bewertungen',
+    assessments: 'Testungen',
     profile: 'Profil',
-    caseManagers: 'Fallmanager',
+    caseManagers: 'Case Manager',
     departments: 'Abteilungen',
     caregivers: 'Betreuer',
     reports: 'Berichte',
     previous: 'Vorherige',
     next: 'Nächste',
     reset: 'Zurücksetzen',
-    search: 'Suche',
+    search: 'Suchen',
     editCaregiver: 'Betreuer bearbeiten',
     createCaregiver: 'Betreuer erstellen',
     questionnaire: 'Fragebogen',
-    scripts: 'Skripte',
+    scripts: 'Scripts',
   },
   dashboard: {
     welcome: 'Willkommen in MHIRA',
