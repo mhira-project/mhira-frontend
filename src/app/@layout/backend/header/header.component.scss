@@ -2,34 +2,40 @@
 @import "../../../../assets/scss/_mixins";
 
 ::ng-deep .ant-modal-footer {
-  display: none;
+  display: flex !important;
 }
 
-::ng-deep .ant-modal-close-x {
-  display: none;
-}
-
-.button-div {
-  display: flex;
-  justify-content: right;
-}
-
-.modal-button {
-  color: white;
-  background: #89d180;
-  //padding: 5px 80px;
-  font-size: 18px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-left: 5px;
-}
-
-.cancel-button {
-  font-size: 18px;
-  border-radius: 8px;
-  cursor: pointer;
-}
+//::ng-deep .ant-modal-footer {
+//  display: none !important;
+//}
+//
+//::ng-deep .ant-modal-close-x {
+//  display: none !important;
+//}
+//
+//.button-div {
+//  display: flex;
+//  justify-content: right;
+//}
+//
+//.modal-button {
+//  color: white;
+//  background: #89d180;
+//  //padding: 5px 80px;
+//  font-size: 18px;
+//  border: none;
+//  border-radius: 8px;
+//  cursor: pointer;
+//  margin-left: 5px;
+//  padding: 5px;
+//}
+//
+//.cancel-button {
+//  border: none;
+//  font-size: 18px;
+//  border-radius: 8px;
+//  cursor: pointer;
+//}
 .tabs::-webkit-scrollbar {
   width: 0;
   height: 0;
