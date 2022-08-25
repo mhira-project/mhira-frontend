@@ -2,11 +2,11 @@
 @import "../../../../assets/scss/_mixins";
 
 ::ng-deep .ant-modal-footer {
-  display: none;
+  display: none !important;
 }
 
 ::ng-deep .ant-modal-close-x {
-  display: none;
+  display: none !important;
 }
 
 .button-div {
@@ -23,9 +23,11 @@
   border-radius: 8px;
   cursor: pointer;
   margin-left: 5px;
+  padding: 5px;
 }
 
 .cancel-button {
+  border: none;
   font-size: 18px;
   border-radius: 8px;
   cursor: pointer;
