@@ -132,7 +132,7 @@
   [(nzVisible)]="changePasswordModal"
   nzTitle="Change your password"
   (nzOnCancel)="handleCancel()"
-  (nzOnOk)="(false)"
+  (nzOnOk)="clickChangePassword()"
 >
   <app-form
     [isLoading]="isLoading"
