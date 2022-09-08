@@ -21,20 +21,12 @@
   font-size: 50px;
 }
 
-::ng-deep .ant-modal-footer {
-  display: none;
-}
-
 ::ng-deep .ant-modal-close-x {
   display: none;
 }
 
-.button-div {
-  display: flex;
-  justify-content: center;
-}
-
 .modal-button {
+  margin-left: 120px;
   padding: 5px 80px;
   color: white;
   font-size: 18px;

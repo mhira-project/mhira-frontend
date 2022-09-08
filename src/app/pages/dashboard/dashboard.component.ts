@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MhiraTranslations } from '../../@core/mhira-translations';
-import { NzModalService } from 'ng-zorro-antd/modal';
 import { Disclaimers } from '@app/pages/administration/@types/disclaimers';
 import { DisclaimersService } from '@app/pages/administration/@services/disclaimers.service';
 import { finalize } from 'rxjs/operators';
 import { ErrorHandlerService } from '@shared/services/error-handler.service';
 import { UsersService } from '@app/pages/user-management/@services/users.service';
 import { CreateUserInput, UpdateOneUserInput, User } from '@app/pages/user-management/@types/user';
-import { UserModel } from '@app/pages/user-management/@models/user.model';
 import { AuthService } from '@app/auth/auth.service';
 
 @Component({

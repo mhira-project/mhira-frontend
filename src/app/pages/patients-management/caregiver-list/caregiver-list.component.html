@@ -33,7 +33,7 @@
   [nzMaskClosable]="false"
   [nzVisible]="showCreateCaregiver"
   nzPlacement="right"
-  [nzTitle]="caregiver?.id ? 'core.editCaregiver' : ('core.createCaregiver' | translate)"
+  [nzTitle]="caregiver?.id ? ('core.editCaregiver' | translate) : ('core.createCaregiver' | translate)"
   (nzOnClose)="closeCreatePanel()"
 >
   <app-form
