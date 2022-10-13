@@ -25,6 +25,7 @@ export interface Assessment {
   createdAt?: Date;
   deliveryDate: Date;
   expirationDate: Date;
+  updatedAt: Date;
   status: AssessmentStatus;
 }
 

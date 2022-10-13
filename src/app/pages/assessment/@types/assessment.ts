@@ -36,6 +36,7 @@ export interface Assessment {
   createdAt?: Date;
   deliveryDate?: Date;
   expirationDate?: Date;
+  updatedAt?: Date;
   informantCaregiverRelation?: string;
   informantClinician?: User;
 }

@@ -90,6 +90,7 @@ export default {
       questionnaires: 'Cuestionarios',
       deliveryDate: 'Fecha de Entrega',
       expirationDate: 'Fecha de Expiración',
+      updatedAt: 'Día de Entrega',
       status: 'Estado',
     },
     scripts: {
@@ -301,6 +302,7 @@ export default {
     informant: 'Informante',
     createdAt: 'Creado en',
     expirationDate: 'Fecha de Expiración',
+    updatedAt: 'Día de Entrega',
     deliveryDate: 'Fecha de Entrega',
   },
   planAssessment: {

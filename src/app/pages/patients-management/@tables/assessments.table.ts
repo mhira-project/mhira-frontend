@@ -65,6 +65,18 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
     },
   },
   {
+    title: 'Submission Date',
+    name: 'updatedAt',
+    translationPath: 'tables.assessmentsPatients.updatedAt',
+    sort: false,
+    render: 'date',
+    filterField: {
+      type: 'dateRange',
+      value: undefined,
+      title: 'Submission Date',
+    },
+  },
+  {
     title: 'Status',
     name: 'formattedStatus',
     translationPath: 'tables.assessmentsPatients.status',
