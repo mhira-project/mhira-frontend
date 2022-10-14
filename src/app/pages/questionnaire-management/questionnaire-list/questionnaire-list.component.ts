@@ -16,7 +16,7 @@ import { QuestionnaireColumns } from '../@tables/questionnaire.table';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { finalize } from 'rxjs/operators';
+import { filter, finalize } from 'rxjs/operators';
 import { ErrorHandlerService } from '@shared/services/error-handler.service';
 import { PageInfo, Paging } from '@shared/@types/paging';
 import { Sorting } from '@shared/@types/sorting';
@@ -35,6 +35,7 @@ export const createSearchFilter = (searchString: string): Array<{ [K in keyof Pa
   if (!searchString) return [];
   return [
     { name: { iLike: `%${searchString}%` } },
+    { keywords: { in: [searchString] } },
     {
       questionnaire: {
         or: [{ abbreviation: { iLike: `%${searchString}%` } }, { language: { iLike: `%${searchString}%` } }],
@@ -116,15 +117,33 @@ export class QuestionnaireListComponent {
 
   public onFilter(filter: Filter): void {
     this.questionnaireRequestOptions.filter = filter;
-    this.getQuestionnaires();
+    this.getQuestionnairesFiltered();
   }
 
   public onSearch(searchString: string): void {
     this.questionnaireRequestOptions.filter = { or: createSearchFilter(searchString) };
+    console.log(this.questionnaireRequestOptions.filter);
     this.getQuestionnaires();
   }
 
   private getQuestionnaires(): void {
+    this.loading = true;
+    this.qmService
+      .getQuestionnaires(this.questionnaireRequestOptions)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(({ edges, pageInfo }) => {
+        this.pageInfo = pageInfo;
+        if (Object.keys(this.questionnaireRequestOptions.filter).length === 0) {
+          this.data = edges
+            .map((e) => Convert.toFormattedQuestionnaireVersion(e.node))
+            .filter((data) => data.formattedStatus.title === 'PUBLISHED');
+          return this.data;
+        }
+        this.data = edges.map((e) => Convert.toFormattedQuestionnaireVersion(e.node));
+      });
+  }
+
+  private getQuestionnairesFiltered(): void {
     this.loading = true;
     this.qmService
       .getQuestionnaires(this.questionnaireRequestOptions)
