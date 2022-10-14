@@ -16,7 +16,7 @@ import { QuestionnaireColumns } from '../@tables/questionnaire.table';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { filter, finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { ErrorHandlerService } from '@shared/services/error-handler.service';
 import { PageInfo, Paging } from '@shared/@types/paging';
 import { Sorting } from '@shared/@types/sorting';
@@ -115,7 +115,6 @@ export class QuestionnaireListComponent {
     this.getQuestionnaires();
   }
 
-  // tslint:disable-next-line:no-shadowed-variable
   public onFilter(filter: Filter): void {
     this.questionnaireRequestOptions.filter = filter;
     this.getQuestionnaires();
