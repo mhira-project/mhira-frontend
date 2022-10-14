@@ -115,9 +115,10 @@ export class QuestionnaireListComponent {
     this.getQuestionnaires();
   }
 
+  // tslint:disable-next-line:no-shadowed-variable
   public onFilter(filter: Filter): void {
     this.questionnaireRequestOptions.filter = filter;
-    this.getQuestionnairesFiltered();
+    this.getQuestionnaires();
   }
 
   public onSearch(searchString: string): void {
@@ -139,17 +140,6 @@ export class QuestionnaireListComponent {
             .filter((data) => data.formattedStatus.title === 'PUBLISHED');
           return this.data;
         }
-        this.data = edges.map((e) => Convert.toFormattedQuestionnaireVersion(e.node));
-      });
-  }
-
-  private getQuestionnairesFiltered(): void {
-    this.loading = true;
-    this.qmService
-      .getQuestionnaires(this.questionnaireRequestOptions)
-      .pipe(finalize(() => (this.loading = false)))
-      .subscribe(({ edges, pageInfo }) => {
-        this.pageInfo = pageInfo;
         this.data = edges.map((e) => Convert.toFormattedQuestionnaireVersion(e.node));
       });
   }
