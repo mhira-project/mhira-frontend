@@ -167,8 +167,13 @@ export class CreateAssessmentComponent implements OnInit {
 
   public getUserDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting[] }) {
     this.isLoading = true;
+    const options = {
+      filter: {
+        and: [{ patients: { id: { eq: this.fullAssessment?.patientId ?? this.patient.id } } }],
+      },
+    };
     this.departmentsService
-      .departments(params)
+      .departments(options)
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }: any) => {
