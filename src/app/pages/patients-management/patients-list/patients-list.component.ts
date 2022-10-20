@@ -145,6 +145,12 @@ export class PatientsListComponent {
         and: [{ caseManagers: { id: { eq: this.userId } } }, ...(options.filter.and ?? [])],
       };
 
+    // const options = {
+    //   filter: {
+    //     and: {deletedAt: {eq: true}} ,
+    //   },
+    // };
+
     this.patientsService
       .patients(options)
       .pipe(finalize(() => (this.loading = false)))
@@ -284,15 +290,16 @@ export class PatientsListComponent {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () => {
-          this.data.splice(this.data.indexOf(patient), 1);
-          this.message.success('Patient has been successfully archived');
-          this.getPatients();
+          // this.data.splice(this.data.indexOf(patient), 1);
+          // this.message.success('Patient has been successfully archived');
+          // this.getPatients();
         },
         (error) =>
           this.errorService.handleError(error, {
             prefix: `Unable to archived patient "${patient.firstName} ${patient.lastName}"`,
           })
       );
+    this.getPatients();
   }
 
   private get userId(): number {
