@@ -35,6 +35,7 @@ export const createSearchFilter = (searchString: string): Array<{ [K in keyof Pa
   if (!searchString) return [];
   return [
     { name: { iLike: `%${searchString}%` } },
+    { keywords: { in: [searchString] } },
     {
       questionnaire: {
         or: [{ abbreviation: { iLike: `%${searchString}%` } }, { language: { iLike: `%${searchString}%` } }],
@@ -121,6 +122,7 @@ export class QuestionnaireListComponent {
 
   public onSearch(searchString: string): void {
     this.questionnaireRequestOptions.filter = { or: createSearchFilter(searchString) };
+    console.log(this.questionnaireRequestOptions.filter);
     this.getQuestionnaires();
   }
 
@@ -131,6 +133,12 @@ export class QuestionnaireListComponent {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(({ edges, pageInfo }) => {
         this.pageInfo = pageInfo;
+        if (Object.keys(this.questionnaireRequestOptions.filter).length === 0) {
+          this.data = edges
+            .map((e) => Convert.toFormattedQuestionnaireVersion(e.node))
+            .filter((data) => data.formattedStatus.title === 'PUBLISHED');
+          return this.data;
+        }
         this.data = edges.map((e) => Convert.toFormattedQuestionnaireVersion(e.node));
       });
   }

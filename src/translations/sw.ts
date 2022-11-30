@@ -85,6 +85,7 @@ export default {
       questionnaires: 'Hojaji',
       deliveryDate: 'Tarehe ya Uwasilishaji',
       expirationDate: 'Tarehe ya kumalizika Muda Wake',
+      updatedAt: 'Tarehe ya Kuwasilisha',
       status: 'Hali',
     },
     scripts: {
@@ -296,6 +297,7 @@ export default {
     informant: 'Mtoa taarifa',
     createdAt: 'Imetengenezwa',
     deliveryDate: 'Tarehe ya utoaji',
+    updatedAt: 'Tarehe ya Kuwasilisha',
     expirationDate: 'Tarehe ya kumalizika muda wake',
   },
   planAssessment: {
