@@ -249,6 +249,7 @@ export class CreateAssessmentComponent implements OnInit {
       () => {
         this.nzMessage.success('Assessment created', { nzDuration: 3000 });
         this.editMode = false;
+        this.goBack(this.patient);
       },
       (err) => this.errorService.handleError(err, { prefix: 'Unable to create assessment ' })
     );

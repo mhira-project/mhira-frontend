@@ -119,7 +119,8 @@ export class CreatePatientComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false;
-          this.loadingMessage = '';
+          this.message.create('success', `Patient has successfully been created`);
+          this.router.navigate(['/mhira/case-management/patients']);
         })
       )
       .subscribe(
@@ -157,6 +158,7 @@ export class CreatePatientComponent implements OnInit {
           const patientData = data.updateOnePatient;
           PatientModel.fromJson(patientData);
           this.message.create('success', `Patient has successfully been updated`);
+          this.router.navigate(['/mhira/case-management/patients']);
         },
         (error) =>
           this.errorService.handleError(error, {

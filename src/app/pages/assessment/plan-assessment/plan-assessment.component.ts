@@ -171,6 +171,7 @@ export class PlanAssessmentComponent implements OnInit {
       () => {
         this.nzMessage.success('Assessment created', { nzDuration: 3000 });
         this.editMode = false;
+        this.router.navigate(['/mhira/assessments/planned-assessments']);
       },
       (err) => this.errorService.handleError(err, { prefix: 'Unable to create assessment ' })
     );
