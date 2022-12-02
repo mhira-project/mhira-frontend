@@ -106,4 +106,11 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     translationPath: 'plannedAssessments.formattedStatus',
     render: 'tag',
   },
+  // Added this:
+  {
+    name: 'emailStatus',
+    title: 'Email Status',
+    translationPath: 'Email Status',
+    render: 'tag',
+  },
 ];

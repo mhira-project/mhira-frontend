@@ -55,6 +55,7 @@ export class PlanAssessmentComponent implements OnInit {
   public deliveryDate: any = null;
   public expireDate: any = null;
   public maxLength: number = 200;
+  public checked = true;
   options = [
     {
       label: 'Mother',

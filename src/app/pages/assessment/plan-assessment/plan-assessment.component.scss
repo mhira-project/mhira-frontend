@@ -57,3 +57,15 @@ p {
   margin: 0;
   text-decoration: underline;
 }
+
+.email-label-wrapper{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.email-label{
+  color: rgb(78, 78, 78);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
