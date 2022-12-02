@@ -1,0 +1,28 @@
+::ng-deep .ant-modal-footer {
+  display: none;
+}
+
+::ng-deep .ant-modal-close-x {
+  display: none;
+}
+
+.button-div {
+  display: flex;
+  justify-content: right;
+}
+
+.modal-button {
+  //padding: 5px 80px;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.cancel-button {
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}

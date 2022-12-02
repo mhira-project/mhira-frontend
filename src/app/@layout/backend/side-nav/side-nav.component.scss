@@ -1,0 +1,142 @@
+@import "../../../../assets/scss/_variables";
+@import "../../../../assets/scss/_mixins";
+
+.side-nav {
+  overflow: visible;
+  margin-bottom: 50px;
+}
+
+ul {
+  background-color: $app-dark;
+  li {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    a,
+    span {
+      text-decoration: none;
+      color: $menu-text;
+    }
+    a:hover,
+    span:hover {
+      color: $app-green !important;
+    }
+    i {
+      font-size: 30px !important;
+      font-weight: bold;
+    }
+  }
+  li:hover {
+    color: $app-green;
+  }
+}
+
+::ng-deep {
+  .no-padding {
+    div {
+      padding-left: 18px !important;
+      li {
+        padding-left: 43px !important;
+        margin-top: 11px !important;
+        margin-bottom: 9px !important;
+      }
+    }
+  }
+  .ant-menu-inline,
+  .ant-menu-inline-collapsed {
+    border-right: 0 solid #f0f0f0 !important;
+  }
+
+  .ant-menu:not(.ant-menu-horizontal) {
+    .ant-menu-item-selected {
+      background-color: transparent;
+    }
+  }
+  .ant-menu-submenu-popup {
+    .ant-menu-sub {
+      background-color: $app-dark;
+    }
+  }
+  .ant-menu-sub.ant-menu-inline {
+    background-color: $app-dark;
+  }
+  .ant-menu-submenu-selected {
+    .ant-menu-submenu-title {
+      span {
+        color: $app-green !important;
+      }
+      .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+      .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+      .ant-menu-submenu-vertical-left > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+      .ant-menu-submenu-vertical-left > .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+      .ant-menu-submenu-vertical-right > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+      .ant-menu-submenu-vertical-right > .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+      .ant-menu-submenu-vertical > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+      .ant-menu-submenu-vertical > .ant-menu-submenu-title .ant-menu-submenu-arrow::before {
+        background-image: linear-gradient(to right, $app-green, $app-green);
+      }
+    }
+  }
+  .ant-menu-submenu-title:hover {
+    .ant-menu-submenu-arrow::before {
+      background-image: linear-gradient(to right, $app-green, $app-green);
+    }
+    .ant-menu-submenu-arrow::after {
+      background-image: linear-gradient(to right, $app-green, $app-green);
+    }
+  }
+  .ant-menu-inline .ant-menu-item,
+  .ant-menu-vertical .ant-menu-item,
+  .ant-menu-vertical-left .ant-menu-item,
+  .ant-menu-vertical-right .ant-menu-item {
+    outline: none;
+  }
+  .ant-menu-inline .ant-menu-item::after,
+  .ant-menu-vertical .ant-menu-item::after,
+  .ant-menu-vertical-left .ant-menu-item::after,
+  .ant-menu-vertical-right .ant-menu-item::after {
+    border-right: 3px solid $app-green;
+  }
+
+  .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+  .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+  .ant-menu-submenu-vertical-left > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+  .ant-menu-submenu-vertical-left > .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+  .ant-menu-submenu-vertical-right > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+  .ant-menu-submenu-vertical-right > .ant-menu-submenu-title .ant-menu-submenu-arrow::before,
+  .ant-menu-submenu-vertical > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
+  .ant-menu-submenu-vertical > .ant-menu-submenu-title .ant-menu-submenu-arrow::before {
+    background-image: linear-gradient(to right, $menu-text, $menu-text);
+  }
+}
+
+.help-text {
+  width: 100%;
+  justify-content: center;
+  // text-align: center;
+  // margin-right: 150px;
+  margin-left: 20px;
+}
+
+.big-div {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 800px;
+}
+
+.text-in-help {
+  color: white;
+}
+
+.text-in-help:hover {
+  color: #89d180;
+}
+
+.version-text{
+  color: white;
+}
+
+.version-text-collapsed{
+  color: white;
+  margin-left: -10px;
+}

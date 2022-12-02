@@ -1,0 +1,38 @@
+.loadingSpinner {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  padding-top: 5px;
+  font-size: 2em;
+  text-shadow: 0 1px 2px #fff;
+}
+
+.form-item {
+  margin-bottom: 15px;
+  label {
+    margin-bottom: 10px;
+  }
+  p {
+    color: #ff4d4e;
+  }
+  .has-error {
+    border: 1px solid #ff4d4e;
+  }
+  .field-value {
+    padding: 0.375rem 0;
+    color: #495057;
+    line-height: 1.5;
+    background-color: transparent;
+  }
+}
+
+nz-select {
+  font-size: 14px;
+}
+
+.is-disabled,
+.is-disabled input,
+.is-disabled nz-select-top-control {
+  pointer-events: none;
+  background: #f7f7f7;
+}

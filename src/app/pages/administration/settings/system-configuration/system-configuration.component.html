@@ -1,0 +1,8 @@
+<app-form
+  [isLoading]="isLoading"
+  [loadingMessage]="loadingMessage"
+  [inputMode]="perms.permissionsOnly([PK.MANAGE_SYSCONF])"
+  [showEditButton]="false"
+  (submitForm)="saveSettings($event)"
+  [form]="settingsForm"
+></app-form>

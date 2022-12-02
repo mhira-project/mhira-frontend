@@ -1,0 +1,8 @@
+<div
+  class="option"
+  *ngFor="let option of question.options; let i = index"
+  [ngClass]="{ active: i === selectedOptionIndex }"
+  (click)="selectOption(i)"
+>
+  <p>{{ option.label }}</p>
+</div>

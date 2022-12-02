@@ -1,0 +1,135 @@
+/* Border */
+.border {
+  border: 1px solid $border-color;
+
+  &.top {
+    border: 0px !important;
+    border-top: 1px solid $border-color !important;
+  }
+
+  &.right {
+    border: 0px !important;
+    border-right: 1px solid $border-color !important;
+  }
+
+  &.bottom {
+    border: 0px !important;
+    border-bottom: 1px solid $border-color !important;
+  }
+
+  &.left {
+    border: 0px !important;
+    border-left: 1px solid $border-color !important;
+  }
+
+  @include screen-tablet {
+    &.border-hide-md {
+      border-top: 0px !important;
+      border-right: 0px !important;
+      border-bottom: 0px !important;
+      border-left: 0px !important;
+    }
+  }
+
+  @include screen-mobile {
+    &.border-hide-sm {
+      border-top: 0px !important;
+      border-right: 0px !important;
+      border-bottom: 0px !important;
+      border-left: 0px !important;
+    }
+  }
+}
+
+.no-border {
+  border: 0px !important;
+  border-radius: 0px !important;
+}
+
+.rounded {
+  border-radius: 8px !important;
+}
+/* Display */
+
+.display-block {
+  display: block !important;
+}
+
+.inline-block {
+  display: inline-block !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+/* Position */
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.static {
+  position: static;
+}
+
+/* Overflow */
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+/* Float */
+@include screen-mobile {
+  .pull-left-sm {
+    float: left !important;
+  }
+
+  .pull-right-sm {
+    float: right !important;
+  }
+
+  .pull-none-sm {
+    float: none !important;
+  }
+}
+
+/* Image */
+.img-circle {
+  border-radius: 50% !important;
+}
+
+/* Background */
+.bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}

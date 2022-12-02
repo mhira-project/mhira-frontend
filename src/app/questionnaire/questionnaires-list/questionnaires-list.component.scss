@@ -1,0 +1,102 @@
+.mt-3 {
+  margin-top: 30px;
+}
+
+.patient-details {
+  h4 {
+    color: #2c8aa7;
+    margin-bottom: 0;
+  }
+
+  h3 {
+    color: #f3b013;
+  }
+}
+
+.total-time {
+  border-bottom: 1px solid #cecece;
+  i {
+    position: relative;
+    bottom: 3px;
+    color: #89d17f;
+    font-size: 25px;
+  }
+  .time-text {
+    position: relative;
+    bottom: 8px;
+    left: 5px;
+    color: #777;
+  }
+}
+
+::ng-deep {
+  .questionnaire-description {
+    .ant-alert-info {
+      background-color: transparent;
+      border: 1px solid #51a1b9;
+      border-radius: 10px;
+      color: #172b4d;
+      font-weight: bold;
+      .ant-alert-icon {
+        color: #51a1b9;
+      }
+    }
+  }
+
+  .questionnaire {
+    padding: 15px;
+    cursor: pointer;
+    .ant-card {
+      background-color: #f1f4ff;
+      border: 2px solid #89d17f;
+      border-radius: 10px;
+    }
+    .active {
+      border-color: #808781;
+    }
+    .ant-card-head {
+      border-bottom: 0;
+    }
+    .ant-card-head-title {
+      font-weight: bold;
+      font-size: 20px;
+      color: #172b4d;
+      white-space: initial;
+    }
+    .ant-card-body {
+      p {
+        color: #0f326b;
+        font-weight: 500;
+      }
+    }
+    .extra {
+      background-color: #fff;
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      color: #0f326b;
+      border: 2px solid #f3b013;
+      text-align: center;
+      font-weight: bold;
+      padding-top: 2px;
+    }
+    .footer {
+      .filling-time {
+        color: #0f326b;
+        font-weight: 500;
+      }
+      i {
+        font-size: 25px;
+        color: #2c8aa7;
+      }
+    }
+  }
+
+  .questionnaire:nth-child(odd) {
+    padding-left: 0;
+  }
+
+  .questionnaire:nth-child(even) {
+    padding-right: 0;
+  }
+}

@@ -1,0 +1,27 @@
+<ng-template #indicatorTemplate><i nz-icon class="loadingSpinner" nzType="loading"></i></ng-template>
+<nz-spin [nzSpinning]="loading" [nzIndicator]="indicatorTemplate">
+  <nz-table [nzShowPagination]="false" [nzBordered]="true" [nzData]="matrix.permissions" nzSize="middle">
+    <thead>
+      <tr>
+        <th rowspan="2">{{ 'rolesPermissions.permissions' | translate }}</th>
+        <th [colspan]="matrix.roles.length" class="text-center">{{ 'rolesPermissions.roles' | translate }}</th>
+      </tr>
+      <tr>
+        <th *ngFor="let role of matrix.roles" nzAlign="center">{{ role.name }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let permission of matrix.permissions">
+        <td nzLeft>{{ permission.name }}</td>
+        <td *ngFor="let role of matrix.roles" nzAlign="center">
+          <div
+            nz-checkbox
+            [disabled]="role.isSuperAdmin || !perms.permissionsOnly([PK.MANAGE_ROLES_PERMISSIONS])"
+            [ngModel]="permissionInRole(permission, role)"
+            (ngModelChange)="assignPermissionToRole(permission, role, $event)"
+          ></div>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>

@@ -1,0 +1,12 @@
+<app-form
+  class="mt-3"
+  [form]="form"
+  [formData]="formData"
+  [isLoading]="loading"
+  [populateForm]="populateForm"
+  [resetForm]="resetForm"
+  [inputMode]="inputMode"
+  [showCancelButton]="false"
+  [showEditButton]="perms.permissionsOnly(PK.MANAGE_QUESTIONNAIRES)"
+  (submitForm)="onSubmit($event)"
+></app-form>

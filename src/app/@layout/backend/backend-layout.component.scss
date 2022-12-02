@@ -1,0 +1,70 @@
+@import "../../../assets/scss/_variables";
+
+.layout {
+  overflow-y: hidden;
+  nz-sider {
+    position: fixed;
+    height: 100%;
+    z-index: 2;
+    background-color: $app-dark;
+    .logo {
+      height: 44px;
+      background-color: transparent;
+      border-bottom: 1px solid #606060;
+      margin: 16px;
+      overflow: hidden;
+      text-align: right;
+      i {
+        color: #fff;
+        cursor: pointer;
+        font-size: 25px;
+      }
+    }
+    .nav-menu {
+      height: 100%;
+      overflow-y: scroll;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .nav-menu::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+  }
+  .content-area {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    background-color: #fff;
+    nz-header {
+      position: fixed;
+      width: calc(100% - 250px);
+      z-index: 2;
+      background: $app-light-blue;
+      padding: 0;
+    }
+    nz-content {
+      margin: 65px 16px;
+      background-color: #fff;
+      .inner-content {
+        padding: 24px;
+        background: #fff;
+      }
+    }
+  }
+  .side-bar-collapsed {
+    width: calc(100% - 80px);
+    left: 80px;
+    nz-header {
+      width: calc(100% - 80px);
+    }
+  }
+  .side-bar-not-collapsed {
+    width: calc(100% - 250px);
+    left: 250px;
+    nz-header {
+      width: calc(100% - 250px);
+    }
+  }
+}

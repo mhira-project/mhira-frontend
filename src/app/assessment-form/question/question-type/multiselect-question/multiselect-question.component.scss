@@ -1,0 +1,24 @@
+@import "../../../../../assets/scss/_variables";
+@import "../../../../../theme/theme-variables";
+
+.select-group {
+  &,
+  .select {
+    display: block;
+  }
+
+  .select {
+    margin: 0.6em 0;
+    border-radius: 0.25rem;
+    border: 1px solid $gray-300;
+
+    &:before {
+      content: none;
+      display: none;
+    }
+
+    &.ant-radio-button-wrapper-checked {
+      border: 1px solid $app-green;
+    }
+  }
+}

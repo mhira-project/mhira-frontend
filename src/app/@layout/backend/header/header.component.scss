@@ -1,0 +1,82 @@
+@import "../../../../assets/scss/_variables";
+@import "../../../../assets/scss/_mixins";
+
+::ng-deep .ant-modal-footer {
+  display: flex !important;
+}
+
+//::ng-deep .ant-modal-footer {
+//  display: none !important;
+//}
+//
+//::ng-deep .ant-modal-close-x {
+//  display: none !important;
+//}
+//
+//.button-div {
+//  display: flex;
+//  justify-content: right;
+//}
+//
+//.modal-button {
+//  color: white;
+//  background: #89d180;
+//  //padding: 5px 80px;
+//  font-size: 18px;
+//  border: none;
+//  border-radius: 8px;
+//  cursor: pointer;
+//  margin-left: 5px;
+//  padding: 5px;
+//}
+//
+//.cancel-button {
+//  border: none;
+//  font-size: 18px;
+//  border-radius: 8px;
+//  cursor: pointer;
+//}
+.tabs::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+nz-breadcrumb {
+  padding: 0 $spacer;
+}
+
+.header-menu {
+  background-color: transparent;
+  border: none;
+  .notifications {
+    border-right: 1px solid #eaedf8;
+  }
+  nz-badge {
+    i {
+      font-size: 25px;
+      color: #373737;
+    }
+    nz-avatar,
+    .user-name {
+      color: #373737;
+    }
+  }
+}
+
+::ng-deep {
+  .ant-menu-horizontal > .ant-menu-item-active,
+  .ant-menu-horizontal > .ant-menu-item-open,
+  .ant-menu-horizontal > .ant-menu-item-selected,
+  .ant-menu-horizontal > .ant-menu-item:hover,
+  .ant-menu-horizontal > .ant-menu-submenu-active,
+  .ant-menu-horizontal > .ant-menu-submenu-open,
+  .ant-menu-horizontal > .ant-menu-submenu-selected,
+  .ant-menu-horizontal > .ant-menu-submenu:hover {
+    color: inherit;
+    border: none;
+  }
+  .usermenu .ant-menu-item,
+  .usermenu .ant-menu-item:hover {
+    border: 0px solid !important;
+  }
+}

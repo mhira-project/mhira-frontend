@@ -1,0 +1,14 @@
+<app-form
+  class="mt-3"
+  [form]="patient?.id ? patientUpdateForm : patientForm"
+  [formData]="patient"
+  [isLoading]="isLoading"
+  [inputMode]="inputMode"
+  [resetForm]="resetForm"
+  [showEditButton]="perms.permissionsOnly(PK.MANAGE_PATIENTS)"
+  [showCancelButton]="showCancelButton"
+  [populateForm]="populateForm"
+  [loadingMessage]="loadingMessage"
+  (submitForm)="submitForm($event)"
+>
+</app-form>

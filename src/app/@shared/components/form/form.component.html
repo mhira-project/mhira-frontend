@@ -1,0 +1,145 @@
+<ng-template #indicatorTemplate>
+  <i nz-icon class="loadingSpinner" nzType="loading"></i>
+</ng-template>
+<nz-spin [nzSpinning]="isLoading" [nzIndicator]="indicatorTemplate">
+  <ng-container *ngFor="let group of form.groups">
+    <ng-container *ngIf="!group.hidden">
+      <div>
+        <h2 *ngIf="group.title">
+          <span *ngIf="group.translationPath; else plainTitle" [translate]="group.translationPath"></span>
+          <ng-template #plainTitle> {{ group.title }} </ng-template>
+        </h2>
+      </div>
+      <div nz-row nzGutter="16">
+        <ng-container *ngFor="let field of group.fields; let i = index">
+          <div nz-col class="gutter-row form-item" [nzSpan]="field?.span">
+            <ng-container [ngSwitch]="field.type">
+              <div *ngSwitchCase="'text'">
+                <app-text-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-text-input>
+              </div>
+              <div *ngSwitchCase="'textArea'">
+                <app-text-area-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-text-area-input>
+              </div>
+              <div *ngSwitchCase="'number'">
+                <app-number-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-number-input>
+              </div>
+              <div *ngSwitchCase="'select'">
+                <app-select-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-select-input>
+              </div>
+              <div *ngSwitchCase="'search'">
+                <app-search-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (searchOptions)="handleSearch($event)"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-search-input>
+              </div>
+              <div *ngSwitchCase="'checkBox'">
+                <app-check-box-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-check-box-input>
+              </div>
+              <div *ngSwitchCase="'radio'">
+                <app-radio-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-radio-input>
+              </div>
+              <div *ngSwitchCase="'date'">
+                <app-date-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-date-input>
+              </div>
+              <div *ngSwitchCase="'dateRange'">
+                <app-date-range-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-date-range-input>
+              </div>
+              <div *ngSwitchCase="'password'">
+                <app-password-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-password-input>
+              </div>
+              <div *ngSwitchCase="'array'">
+                <app-array-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (rowAdded)="handleRowAdded($event)"
+                  (rowRemoved)="handleRowRemoved($event)"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-array-input>
+              </div>
+              <div *ngSwitchCase="'file'">
+                <app-file-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-file-input>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+  <nz-button-group *ngIf="form.submitButtonText && inputMode" [ngClass]="form.submitButtonClass">
+    <button nz-button *ngIf="showCancelButton" [nzShape]="'round'" (click)="onCancel()">Cancel</button>
+    <button
+      *ngIf="showSubmitButton"
+      nz-button
+      [disabled]="!isValidForm(form)"
+      [nzShape]="'round'"
+      (click)="handleSubmitForm(form)"
+      [nzType]="'primary'"
+    >
+      {{ form.submitButtonText }}
+    </button>
+  </nz-button-group>
+  <button
+    *ngIf="form.submitButtonText && !inputMode && showEditButton"
+    nz-button
+    [nzType]="'primary'"
+    [nzShape]="'round'"
+    [ngClass]="form.submitButtonClass"
+    (click)="toggleEdit()"
+  >
+    {{ form.editButtonText }}
+  </button>
+</nz-spin>

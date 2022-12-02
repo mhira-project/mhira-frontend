@@ -1,0 +1,117 @@
+<ng-template #questionnaireItem let-questionnaire>
+  <div>
+    <!-- <span class="questionnaire-title">{{ questionnaire.name }}</span> -->
+    <nz-tag nzColor="blue">{{ questionnaire.questionnaire.language }}</nz-tag>
+    <nz-tag [nzColor]="tagColor(questionnaire.status)">{{ questionnaire.status }}</nz-tag>
+  </div>
+</ng-template>
+
+<article>
+  <ng-container *ngIf="!readonly">
+    <section>
+      <app-master-data-search class="w-max" (search)="onQuestionnaireSearch($event)"></app-master-data-search>
+    </section>
+    <section *ngIf="foundQuestionnaires?.length > 0">
+      <!-- <nz-list nzBordered nzHeader="Found Questionnaires"> -->
+      <nz-list nzBordered>
+        <nz-list-item *ngIf="!foundQuestionnaires?.length">{{
+          'questionnaireSelection.noResult' | translate
+        }}</nz-list-item>
+        <nz-list-item *ngFor="let questionnaire of foundQuestionnaires">
+          <ng-template #questionnaireItemSearch let-questionnaire>
+            <div>
+              <span class="questionnaire-title">{{ questionnaire.name }}</span>
+              <nz-tag nzColor="blue">{{ questionnaire.questionnaire.language }}</nz-tag>
+              <nz-tag [nzColor]="tagColor(questionnaire.status)">{{ questionnaire.status }}</nz-tag>
+            </div>
+          </ng-template>
+          <ng-container
+            [ngTemplateOutlet]="questionnaireItemSearch"
+            [ngTemplateOutletContext]="{ $implicit: questionnaire }"
+          ></ng-container>
+          <button
+            nz-button
+            [nzType]="isSelected(questionnaire) ? 'danger' : 'primary'"
+            nzShape="circle"
+            [disabled]="isDisabled(questionnaire)"
+            (click)="onToggleQuestionnaire(questionnaire)"
+          >
+            <i nz-icon [nzType]="isSelected(questionnaire) ? 'minus' : 'plus'"></i>
+          </button>
+        </nz-list-item>
+      </nz-list>
+    </section>
+  </ng-container>
+  <section>
+    <h5>Selected Questionnaires ({{ selectedQuestionnaires?.length }})</h5>
+    <div nz-row [nzGutter]="16">
+      <div nz-col nzSpan="12" class="m-right" *ngFor="let questionnaire of selectedQuestionnaires; let i = index">
+        <ng-template class="header-title" #dummy>
+          <div class="header-container">
+            <p>{{ questionnaire.name }}</p>
+            <span
+              nz-popover
+              [nzPopoverTitle]="questionnaire.name"
+              [nzPopoverContent]="questionnaire.questionnaire.abbreviation"
+              (click)="showModal(questionnaire)"
+              style="font-size: 18px"
+              nz-icon
+              nzType="info-circle"
+              nzTheme="outline"
+            ></span>
+          </div>
+        </ng-template>
+        <!-- <p>{{questionnaire | json }}</p> -->
+        <!-- Modal -->
+        <app-questionnaire-modal
+          *ngIf="questionnareActive"
+          (handleCancelEvent)="handleCancel()"
+          (handleOkEvent)="handleOk()"
+          [isVisible]="isVisible"
+          [questionnaire]="questionnareActive"
+        ></app-questionnaire-modal>
+        <!-- Modal End -->
+        <nz-list nzBordered [nzHeader]="dummy">
+          <nz-list-item *ngIf="!selectedQuestionnaires?.length">
+            {{ 'questionnaireSelection.searchSelect' | translate }}
+          </nz-list-item>
+          <nz-list-item>
+            <ng-container
+              [ngTemplateOutlet]="questionnaireItem"
+              [ngTemplateOutletContext]="{ $implicit: questionnaire }"
+            ></ng-container>
+            <div *ngIf="!readonly">
+              <button
+                nz-button
+                nzSize="small"
+                nzShape="circle"
+                [disabled]="!canMove('down', questionnaire)"
+                (click)="move('down', questionnaire)"
+              >
+                <i nz-icon nzType="down"></i>
+              </button>
+              <button
+                nz-button
+                nzSize="small"
+                nzShape="circle"
+                [disabled]="!canMove('up', questionnaire)"
+                (click)="move('up', questionnaire)"
+              >
+                <i nz-icon nzType="up"></i>
+              </button>
+              <button
+                nz-button
+                nzSize="small"
+                nzType="danger"
+                nzShape="circle"
+                (click)="onToggleQuestionnaire(questionnaire)"
+              >
+                <i style="color: white" nz-icon nzType="delete"></i>
+              </button>
+            </div>
+          </nz-list-item>
+        </nz-list>
+      </div>
+    </div>
+  </section>
+</article>

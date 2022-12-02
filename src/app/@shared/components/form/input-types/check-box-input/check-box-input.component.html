@@ -1,0 +1,31 @@
+<label>
+  <b>
+    <ng-container *ngIf="field.translationPath; else plainTitle">
+      <span [translate]="field.translationPath"></span>
+    </ng-container>
+    <ng-template #plainTitle> {{ field?.title }} </ng-template>
+    <span style="color: red" *ngIf="field?.isRequired && inputMode"> *</span>
+  </b>
+</label>
+<ng-container *ngIf="inputMode" [formGroup]="inputGroup">
+  <div>
+    <nz-checkbox-group
+      [formControlName]="field.name"
+      [attr.autocomplete]="autoFill"
+      [(ngModel)]="field.options"
+      [disabled]="field.disabled ? field.disabled : false"
+      [ngClass]="{ 'has-error': inputIsValid() === false, 'has-success': inputIsValid() === true }"
+      (ngModelChange)="handleValueChange($event)"
+    >
+    </nz-checkbox-group>
+  </div>
+</ng-container>
+<div class="field-value" *ngIf="!inputMode">
+  <span>{{ field?.value ? field?.value : '-' }}</span>
+</div>
+<p
+  *ngIf="this.inputGroup.controls[this.field.name].dirty && this.inputGroup.controls[this.field.name].invalid"
+  translate
+>
+  {{ field.validationMessage }}
+</p>

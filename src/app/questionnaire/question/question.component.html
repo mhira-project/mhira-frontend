@@ -1,0 +1,35 @@
+<div class="question">
+  <h3 class="question-text">{{ question.text }}</h3>
+  <nz-card [nzTitle]="question.help">
+    <ng-container [ngSwitch]="question.type">
+      <ng-container *ngSwitchCase="'text'">
+        <app-text-question [question]="question"></app-text-question>
+      </ng-container>
+      <ng-container *ngSwitchCase="'number'">
+        <app-number-question [question]="question"></app-number-question>
+      </ng-container>
+      <ng-container *ngSwitchCase="'choice'">
+        <app-choice-question [question]="question"></app-choice-question>
+      </ng-container>
+      <ng-container *ngSwitchCase="'checkbox'">
+        <app-checkbox-question [question]="question"></app-checkbox-question>
+      </ng-container>
+      <ng-container *ngSwitchCase="'time'">
+        <app-time-question [question]="question"></app-time-question>
+      </ng-container>
+      <ng-container *ngSwitchCase="'date'">
+        <app-date-question [question]="question"></app-date-question>
+      </ng-container>
+    </ng-container>
+    <div nz-row class="question-navigation">
+      <div nz-col nzSpan="12" class="navigation previous">
+        <i nz-icon nzType="arrow-left" nzTheme="outline" (click)="fetchPreviousQuestion()"></i>
+        <span (click)="fetchPreviousQuestion()">Previous Question</span>
+      </div>
+      <div nz-col nzSpan="12" class="navigation next">
+        <span (click)="fetchNextQuestion()">Next Question</span>
+        <i nz-icon nzType="arrow-right" nzTheme="outline" (click)="fetchNextQuestion()"></i>
+      </div>
+    </div>
+  </nz-card>
+</div>

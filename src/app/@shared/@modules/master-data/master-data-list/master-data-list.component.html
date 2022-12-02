@@ -1,0 +1,65 @@
+<article>
+  <section class="actions">
+    <div>
+      <ng-content select="[actions-left]"></ng-content>
+    </div>
+    <div>
+      <ng-content select="[actions-right]"></ng-content>
+      <button nz-button nzType="primary" nzShape="circle" (click)="drawer.open()">
+        <i nz-icon nzType="filter"></i>
+      </button>
+      <button nz-button nzType="primary" nzShape="round" (click)="onReset()">
+        <i nz-icon nzType="undo"></i>{{ 'core.reset' | translate }}
+      </button>
+    </div>
+  </section>
+  <section class="list">
+    <app-master-data-table
+      [data]="data"
+      [columns]="columns"
+      [loading]="loading"
+      [contextMenu]="contextMenu"
+      [(context)]="context"
+      (rowClick)="rowClick.emit($event)"
+      (sort)="sort.emit($event)"
+    ></app-master-data-table>
+  </section>
+
+  <section class="paging">
+    <button
+      nzShape="round"
+      [disabled]="!this.pageInfo?.hasPreviousPage"
+      (click)="onPageChange('prev')"
+      nz-button
+      nzType="primary"
+    >
+      {{ 'core.previous' | translate }}
+    </button>
+    <nz-select [(ngModel)]="pageSize" (ngModelChange)="onPageChange()">
+      <nz-option *ngFor="let ps of PAGE_SIZES" [nzValue]="ps" nzLabel="Page size: {{ ps }}"></nz-option>
+    </nz-select>
+    <button
+      nzShape="round"
+      [disabled]="!this.pageInfo?.hasNextPage"
+      (click)="onPageChange('next')"
+      nz-button
+      nzType="primary"
+    >
+      {{ 'core.next' | translate }}
+    </button>
+  </section>
+
+  <nz-dropdown-menu #contextMenu="nzDropdownMenu">
+    <ul nz-menu *ngIf="actions?.length">
+      <li nz-menu-item *ngFor="let action of actions" (click)="onSelectAction(action)">{{ action.title }}</li>
+    </ul>
+  </nz-dropdown-menu>
+
+  <nz-drawer #drawer [nzClosable]="true" nzTitle="Filter" (nzOnClose)="drawer.close()">
+    <app-master-data-filter-form
+      [drawer]="drawer"
+      [columns]="columns"
+      (filter)="filter.emit($event)"
+    ></app-master-data-filter-form>
+  </nz-drawer>
+</article>

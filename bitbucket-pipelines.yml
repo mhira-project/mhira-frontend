@@ -1,0 +1,180 @@
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+# We are using chybie/node-aws-cli image which contains npm and aws-cli tools
+#
+# Also you need to specify AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in
+# pipeline environment variables for push to s3 to work
+#
+# Pipeline is configured to run only on master branch, but you can configure
+# additional branches if required
+# -----
+image: node:latest
+
+# enable Docker for your repository
+options:
+  docker: true
+
+definitions:
+
+  steps:
+    - step: &install
+        name: Installation
+        caches:
+          - node
+        script:
+          - npm ci
+
+    - step: &lint
+        name: Lint
+        caches:
+          - node
+        script:
+          - npm run lint:ts
+    
+    - step: &build-docker
+        name: Build docker image
+        caches:
+          - docker
+        #python image with aws-cli installed
+        image: amazon/aws-cli
+        script:
+          # aws login
+          - if ! [[ $AWS_REGISTRY_URL == public.ecr.aws* ]]; then aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_REGISTRY_URL}; fi
+          - if [[ $AWS_REGISTRY_URL == public.ecr.aws* ]]; then aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws; fi
+          # docker
+          - export BUILD_ID=$BITBUCKET_BRANCH_$BITBUCKET_COMMIT_$BITBUCKET_BUILD_NUMBER
+          - docker build -t ${AWS_REGISTRY_URL}:$BUILD_ID .
+          - docker push ${AWS_REGISTRY_URL}:$BUILD_ID
+          - docker tag ${AWS_REGISTRY_URL}:$BUILD_ID ${AWS_REGISTRY_URL}:development
+          - docker push ${AWS_REGISTRY_URL}:development
+
+pipelines:
+  pull-requests:
+    '**':
+      - step: *install
+      - step: *lint
+      - step:
+          name: Build
+          caches:
+            - node
+          script:
+            - npm run build
+          artifacts:
+            - dist/**
+
+  tags:
+    release/*:
+      - step: *install
+      - step: *lint
+      - step:
+          name: Build Production
+          caches:
+            - node
+          script:
+            - npm run build:prod
+          artifacts:
+            - dist/**
+      - step:
+          name: Deploy to S3
+          script:
+            - pipe: atlassian/aws-s3-deploy:0.3.8
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'af-south-1'
+                S3_BUCKET: 'mhira-portal'
+                LOCAL_PATH: 'dist'
+                ACL: 'private'
+      - step:
+          name: Invalidate cloudfront distribution
+          script:
+            - pipe: atlassian/aws-cloudfront-invalidate:0.1.2
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'us-east-1'
+                DISTRIBUTION_ID: 'ELKUDD46VAWKE'
+                PATHS: '/*'
+                # DEBUG: "true" # Optional
+
+  branches:
+    
+    feature/docker-build:
+      - step: *install
+      - step:
+          name: Build Development
+          caches:
+            - node
+          script:
+            - npm run build:dev
+          artifacts:
+            - dist/**
+      - step: *build-docker 
+        
+    master:
+      - step: *install
+      - step: *lint
+      - step:
+          name: Build Staging
+          caches:
+            - node
+          script:
+            - npm run build:staging
+          artifacts:
+            - dist/**
+      - step:
+          name: Deploy to S3
+          script:
+            - pipe: atlassian/aws-s3-deploy:0.3.8
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'af-south-1'
+                S3_BUCKET: 'staging-mhira-portal'
+                LOCAL_PATH: 'dist'
+                ACL: 'private'
+      - step:
+          name: Invalidate cloudfront distribution
+          script:
+            - pipe: atlassian/aws-cloudfront-invalidate:0.1.2
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'us-east-1'
+                DISTRIBUTION_ID: 'E11DI7VOZ40527'
+                PATHS: '/*'
+                # DEBUG: "true" # Optional
+
+    develop:
+      - step: *install
+      - step: *lint
+      - step:
+          name: Build Development
+          caches:
+            - node
+          script:
+            - npm run build:dev
+          artifacts:
+            - dist/**
+      - step:
+          name: Deploy to S3
+          script:
+            - pipe: atlassian/aws-s3-deploy:0.3.8
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'af-south-1'
+                S3_BUCKET: 'dev-mhira-portal'
+                LOCAL_PATH: 'dist'
+                ACL: 'private'
+      - step:
+          name: Invalidate cloudfront distribution
+          script:
+            - pipe: atlassian/aws-cloudfront-invalidate:0.1.2
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'us-east-1'
+                DISTRIBUTION_ID: 'E2QVFULEY0HFWR'
+                PATHS: '/*'
+                # DEBUG: "true" # Optional

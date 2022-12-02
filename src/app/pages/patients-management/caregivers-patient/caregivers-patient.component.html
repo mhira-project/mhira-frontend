@@ -1,0 +1,112 @@
+<app-master-data-list
+  [data]="data"
+  [columns]="columns"
+  [loading]="isLoading"
+  [pageInfo]="pageInfo"
+  [actions]="actions"
+  (pageChange)="onPageChange($event)"
+  (executeAction)="onAction($event)"
+  (sort)="onSort($event)"
+  (filter)="onFilter($event)"
+  (rowClick)="handleRowClick($event)"
+>
+  <ng-container actions-left>
+    <app-master-data-search (search)="searchCaregivers($event)"></app-master-data-search>
+  </ng-container>
+  <ng-container actions-right>
+    <button
+      nz-button
+      nzType="primary"
+      nzShape="circle"
+      (click)="openAddPanel()"
+      *ngIf="perms.permissionsOnly(PK.MANAGE_SETTINGS)"
+    >
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>
+
+<nz-drawer
+  [nzWidth]="820"
+  [nzMask]="true"
+  [nzClosable]="true"
+  [nzMaskClosable]="false"
+  [nzVisible]="showAddCaregiver"
+  nzPlacement="right"
+  [nzTitle]="caregiver?.id ? ('core.editCaregiver' | translate) : ('core.createCaregiver' | translate)"
+  (nzOnClose)="closeAddPanel()"
+>
+  <div>
+    <p style="color: black; font-size: 16px">{{ 'caregiver.nonExistingCaregiver' | translate }}</p>
+  </div>
+  <div>
+    <button
+      nz-button
+      nzType="primary"
+      class="add-button"
+      (click)="openCreatePanel()"
+      *ngIf="perms.permissionsOnly(PK.MANAGE_SETTINGS)"
+    >
+      <i nz-icon nzType="plus" nzTheme="outline"></i>{{ 'caregiver.newCaregiver' | translate }}
+    </button>
+  </div>
+  <br />
+  <br />
+  <div>
+    <h3><b>Or</b></h3>
+  </div>
+  <br />
+  <div>
+    <h5>{{ 'caregiver.existingCaregiver' | translate }}</h5>
+  </div>
+  <div>
+    <section nz-col>
+      <form nz-form class="search-form">
+        <nz-form-item class="form-item">
+          <nz-form-label nzFor="caregiver">{{ 'caregiver.searchCaregiver' | translate }}</nz-form-label>
+          <nz-form-control class="form-control">
+            <app-caregiver-picker
+              [assignSelfOption]="true"
+              [selectedCaregiver]="selectedCaregiver"
+              (selectCaregiver)="onCaregiverSelect($event)"
+            >
+            </app-caregiver-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <button
+          nz-button
+          nzType="primary"
+          class="button"
+          [disabled]="!this.selectedCaregiver"
+          (click)="addCaregiverToPatient()"
+        >
+          {{ 'caregiver.add' | translate }}
+        </button>
+      </form>
+    </section>
+  </div>
+</nz-drawer>
+
+<nz-drawer
+  [nzWidth]="820"
+  [nzMask]="true"
+  [nzClosable]="true"
+  [nzMaskClosable]="false"
+  [nzVisible]="showCreateCaregiver"
+  nzPlacement="right"
+  [nzTitle]="caregiver?.id ? ('core.editCaregiver' | translate) : ('core.createCaregiver' | translate)"
+  (nzOnClose)="closeCreatePanel()"
+>
+  <app-form
+    class="mt-3"
+    [form]="caregiverForm"
+    [formData]="caregiver"
+    [isLoading]="isLoading"
+    [populateForm]="populateForm"
+    [resetForm]="resetForm"
+    [inputMode]="true"
+    [showCancelButton]="true"
+    (submitForm)="onSubmitForm($event)"
+  >
+  </app-form>
+</nz-drawer>

@@ -1,0 +1,26 @@
+article {
+  .head-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  section,
+  .group-title {
+    margin: 2rem 0;
+  }
+
+  .question {
+    display: block;
+    margin: 4rem 0;
+  }
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .nav-pills {
+    margin: 0 1em;
+  }
+}

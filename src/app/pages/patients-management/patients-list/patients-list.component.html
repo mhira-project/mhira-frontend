@@ -1,0 +1,30 @@
+<app-master-data-list
+  [data]="data"
+  [columns]="columns"
+  [loading]="loading"
+  [actions]="actions"
+  [pageInfo]="pageInfo"
+  (pageChange)="onPageChange($event)"
+  (rowClick)="onPatientSelect($event)"
+  (executeAction)="onAction($event)"
+  (sort)="onSort($event)"
+  (filter)="onFilter($event)"
+>
+  <ng-container actions-left>
+    <app-master-data-search (search)="searchPatients($event)"></app-master-data-search>
+    <button nz-button nzType="primary" (click)="onMyPatients()" *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS])">
+      {{ 'patients.myPatients' | translate }}
+    </button>
+  </ng-container>
+  <ng-container actions-right>
+    <button
+      nz-button
+      nzType="primary"
+      nzShape="circle"
+      routerLink="/mhira/case-management/profile"
+      *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS])"
+    >
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>

@@ -1,0 +1,22 @@
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <app-table
+      [loading]="isLoading"
+      [showPagination]="false"
+      [showCustomActions]="true"
+      [showSearch]="false"
+      [showActionColumn]="false"
+      [showCheckBoxColumn]="false"
+      [listOfData]="permissionsTable.rows"
+      [listOfColumn]="permissionsTable.columns"
+      [showButton]="false"
+      [hasNextPage]="pageInfo?.hasNextPage"
+      [hasPreviousPage]="pageInfo?.hasPreviousPage"
+      (onNext)="navigatePages('next')"
+      (onPrevious)="navigatePages('previous')"
+      (onAction)="handleActionClick($event)"
+      (rowClick)="handleRowClick($event)"
+    >
+    </app-table>
+  </div>
+</div>

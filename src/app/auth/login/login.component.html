@@ -1,0 +1,71 @@
+<nz-layout>
+  <nz-content>
+    <div class="form-container">
+      <div class="app-logo">
+        <img src="../../../assets/images/logo.svg" />
+        <h1>MHIRA</h1>
+        <p class="version-text">
+          <!-- <span nz-icon nzType="code" nzTheme="outline"></span> -->
+          Version: 2.0.16</p
+        >
+      </div>
+      <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+        <div nz-row class="form-title">
+          <div nz-col nzSpan="8">
+            <div class="line"></div>
+          </div>
+          <div nz-col nzSpan="8">
+            <p>Log In</p>
+          </div>
+          <div nz-col nzSpan="8">
+            <div class="line"></div>
+          </div>
+        </div>
+        <div class="errors" *ngIf="hasErrors">
+          <nz-alert *ngFor="let error of errors" nzType="error" [nzDescription]="error" nzShowIcon></nz-alert>
+        </div>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group nzPrefixIcon="user">
+              <input
+                readonly
+                onfocus="this.removeAttribute('readonly')"
+                autocomplete="off"
+                type="text"
+                nz-input
+                formControlName="identifier"
+                placeholder="Username or email"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your Password!">
+            <nz-input-group [nzSuffix]="suffixTemplate" nzPrefixIcon="lock">
+              <input
+                readonly
+                onfocus="this.removeAttribute('readonly')"
+                autocomplete="off"
+                [type]="passwordVisible ? 'text' : 'password'"
+                nz-input
+                formControlName="password"
+                placeholder="Password"
+              />
+            </nz-input-group>
+          </nz-form-control>
+          <ng-template #suffixTemplate>
+            <i
+              nz-icon
+              [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+              (click)="passwordVisible = !passwordVisible"
+            ></i>
+          </ng-template>
+        </nz-form-item>
+        <button nz-button class="login-form-button login-form-margin" [nzLoading]="isLoading" [nzType]="'primary'">
+          Log in
+        </button>
+        <a class="forgot-password" href="javascript:;" (click)="forgotPassword()">Forgot password</a>
+      </form>
+    </div>
+  </nz-content>
+</nz-layout>

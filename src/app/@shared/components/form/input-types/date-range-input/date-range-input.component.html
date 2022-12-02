@@ -1,0 +1,37 @@
+<label>
+  <b>
+    <ng-container *ngIf="field.translationPath; else plainTitle">
+      <span [translate]="field.translationPath"></span>
+    </ng-container>
+    <ng-template #plainTitle> {{ field?.title }} </ng-template>
+    <span style="color: red" *ngIf="field?.isRequired && inputMode"> *</span>
+  </b>
+</label>
+<ng-container *ngIf="inputMode">
+  <nz-input-group
+    [formGroup]="inputGroup"
+    [nzSuffix]="suffix"
+    [ngClass]="{ 'has-error': inputIsValid() === false, 'has-success': inputIsValid() === true }"
+  >
+    <nz-range-picker
+      [attr.placeholder]="field.description"
+      [formControlName]="field.name"
+      [attr.autocomplete]="autoFill"
+      [(ngModel)]="field.value"
+      (ngModelChange)="handleValueChange($event)"
+    >
+    </nz-range-picker>
+  </nz-input-group>
+</ng-container>
+<div class="field-value" *ngIf="!inputMode">
+  <span>{{ field?.value ? field?.value : '-' }}</span>
+</div>
+<ng-template #suffix>
+  <i nz-icon [nzType]="field?.iconName"></i>
+</ng-template>
+<p
+  *ngIf="this.inputGroup.controls[this.field.name].dirty && this.inputGroup.controls[this.field.name].invalid"
+  translate
+>
+  {{ field.validationMessage }}
+</p>

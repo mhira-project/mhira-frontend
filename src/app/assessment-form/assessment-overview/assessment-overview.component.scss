@@ -1,0 +1,62 @@
+@import "../../../assets/scss/_variables";
+
+$warning: #f3b013;
+
+section + section {
+  margin-top: 2em;
+}
+
+.overview {
+  display: grid;
+  grid-gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.questionnaire {
+  span {
+    display: block;
+  }
+
+  .progress {
+    font-size: 1.5em;
+    color: $warning;
+
+    &.done {
+      color: $app-green;
+    }
+  }
+
+  .progress-optional {
+    font-size: 1.2em;
+    color: $app-green;
+  }
+}
+
+@keyframes highlightAnim {
+  0% {
+    color: rgba($body-color, 0.25);
+    background-color: $gray-lightest;
+    border-color: $border-color;
+  }
+  50% {
+    color: rgba($body-color, 0.25);
+    background-color: $gray-lightest;
+    border-color: $border-color;
+  }
+  100% {
+    background-color: $brand-primary;
+    border-color: $brand-primary;
+    color: $white;
+  }
+}
+
+button.highlight {
+  animation-name: highlightAnim;
+  animation-duration: 0.75s;
+  animation-timing-function: ease;
+}
+
+.expired-text {
+  display: flex;
+  justify-content: center;
+}

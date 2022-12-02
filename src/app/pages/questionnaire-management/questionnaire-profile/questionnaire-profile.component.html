@@ -1,0 +1,9 @@
+<h1 *ngIf="questionnaireTitle">{{ questionnaireTitle }}</h1>
+<nz-tabset nzSize="large">
+  <nz-tab [nzTitle]="'core.questionnaire' | translate">
+    <app-questionnaire-form></app-questionnaire-form>
+  </nz-tab>
+  <nz-tab *ngIf="questionnaireTitle" [nzTitle]="'core.scripts' | translate">
+    <app-questionnaire-script [questionnaire]="questionnaire"></app-questionnaire-script>
+  </nz-tab>
+</nz-tabset>

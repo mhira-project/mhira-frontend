@@ -1,0 +1,312 @@
+<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="onSubmitForm($event)">
+  <div nz-row [nzGutter]="[16, 16]">
+    <div nz-col class="gutter-row" *ngFor="let formItem of formItems" [style.width]="formItem.fillPercent + '%'">
+      <nz-form-item>
+        <div style="width: 100%">
+          <nz-form-label [nzRequired]="formItem.isRequired">
+            {{ formItem.label }}
+            <i
+              *ngIf="formItem.type === 'text-array'"
+              (click)="addMetaField(formItem)"
+              nz-icon
+              class="add-icon"
+              nzType="plus-circle"
+              nzTheme="outline"
+            >
+            </i>
+            <i
+              *ngIf="formItem.type === 'meta' || formItem.type === 'metaWithOptions'"
+              (click)="addMetaField(formItem)"
+              nz-icon
+              class="add-icon"
+              nzType="plus-circle"
+              nzTheme="outline"
+            >
+            </i>
+          </nz-form-label>
+          <nz-form-control *ngIf="formItem.type === 'text'" [nzErrorTip]="formItem.validationMessage">
+            <nz-input-group>
+              <label>
+                <input
+                  [formControlName]="formItem.name"
+                  nz-input
+                  readonly
+                  onfocus="this.removeAttribute('readonly')"
+                  autocomplete="off"
+                  [placeholder]="formItem.label"
+                />
+              </label>
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-control *ngIf="formItem.type === 'password'" [nzErrorTip]="formItem.validationMessage">
+            <nz-input-group>
+              <label>
+                <input
+                  [formControlName]="formItem.name"
+                  nz-input
+                  type="password"
+                  readonly
+                  onfocus="this.removeAttribute('readonly')"
+                  autocomplete="off"
+                  [placeholder]="formItem.label"
+                />
+              </label>
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-control *ngIf="formItem.type === 'number'" [nzErrorTip]="formItem.validationMessage">
+            <nz-input-group>
+              <nz-input-number style="width: 100%" [formControlName]="formItem.name"></nz-input-number>
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-control *ngIf="formItem.type === 'textArea'" [nzErrorTip]="formItem.validationMessage">
+            <nz-input-group>
+              <label>
+                <textarea nz-input [formControlName]="formItem.name" [placeholder]="formItem.label"></textarea>
+              </label>
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-control *ngIf="formItem.type === 'date'" [nzErrorTip]="formItem.validationMessage">
+            <nz-input-group>
+              <label>
+                <nz-date-picker
+                  style="width: 100%"
+                  [formControlName]="formItem.name"
+                  nzFormat="yyyy-MM-dd HH:mm:ss"
+                  [nzShowTime]="{ nzDefaultOpenValue: timeDefaultValue }"
+                >
+                </nz-date-picker>
+              </label>
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-control *ngIf="formItem.type === 'select'" [nzErrorTip]="formItem.validationMessage">
+            <nz-input-group>
+              <label>
+                <nz-select style="width: 100%" [formControlName]="formItem.name">
+                  <nz-option
+                    *ngFor="let selection of formItem.selections"
+                    [nzValue]="selection.value"
+                    [nzLabel]="selection.label"
+                  ></nz-option>
+                </nz-select>
+              </label>
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-control *ngIf="formItem.type === 'radio'" [nzErrorTip]="formItem.validationMessage">
+            <nz-input-group>
+              <label>
+                <nz-radio-group class="w-100" [formControlName]="formItem.name">
+                  <label *ngFor="let selection of formItem.selections" nz-radio [nzValue]="selection.value"
+                    >{{ selection.label }}
+                    <input
+                      class="m-t-15 w-100"
+                      type="text"
+                      nz-input
+                      *ngIf="validateForm.controls[formItem.name].value === selection.explainValue"
+                      [placeholder]="selection.label"
+                    />
+                  </label>
+                </nz-radio-group>
+              </label>
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-control *ngIf="formItem.type === 'checkBox'" [nzErrorTip]="formItem.validationMessage">
+            <nz-input-group>
+              <label>
+                <label nz-checkbox [formControlName]="formItem.name">{{ formItem.label }}</label>
+              </label>
+            </nz-input-group>
+          </nz-form-control>
+          <div nz-row [nzGutter]="[16, 16]" *ngIf="formItem.type === 'text-array'">
+            <div
+              nz-col
+              class="gutter-row"
+              class="m-b-10"
+              *ngFor="let textArray of validateForm.get(formItem.name)['controls']; let i = index"
+              [formGroup]="textArray"
+              [style.width]="formItem.fillPercent + '%'"
+            >
+              <div nz-row style="width: 100%">
+                <div nzFlex="auto" nz-col>
+                  <nz-form-control [nzErrorTip]="formItem.validationMessage">
+                    <nz-input-group>
+                      <label>
+                        <input nz-input formControlName="name" placeholder="{{ formItem.name }} {{ i + 1 }}" />
+                      </label>
+                    </nz-input-group>
+                  </nz-form-control>
+                </div>
+                <div nz-col nzFlex="20px">
+                  <i
+                    (click)="removeMetaFiled(i, formItem.name)"
+                    nz-icon
+                    class="minus-icon"
+                    nzType="minus-circle"
+                    nzTheme="outline"
+                  >
+                  </i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div nz-row [nzGutter]="[16, 16]" *ngIf="formItem.type === 'meta'">
+            <div
+              nz-col
+              class="gutter-row"
+              class="m-b-10"
+              *ngFor="let meta of validateForm.get(formItem.name)['controls']; let i = index"
+              [formGroup]="meta"
+              [style.width]="formItem.fillPercent + '%'"
+            >
+              <div nz-row style="width: 100%">
+                <div nz-col nzFlex="auto">
+                  <nz-form-control [nzErrorTip]="formItem.validationMessage">
+                    <nz-input-group>
+                      <label>
+                        <input nz-input formControlName="name" placeholder="name {{ i + 1 }}" />
+                      </label>
+                    </nz-input-group>
+                  </nz-form-control>
+                </div>
+                <div class="m-l-15" nz-col nzFlex="90">
+                  <nz-form-control [nzErrorTip]="formItem.validationMessage">
+                    <nz-input-group>
+                      <label>
+                        <input nz-input formControlName="value" placeholder="value {{ i + 1 }}" />
+                      </label>
+                    </nz-input-group>
+                  </nz-form-control>
+                </div>
+                <div nz-col nzFlex="20px">
+                  <i
+                    (click)="removeMetaFiled(i, formItem.name)"
+                    nz-icon
+                    class="minus-icon"
+                    nzType="minus-circle"
+                    nzTheme="outline"
+                  >
+                  </i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div nz-row [nzGutter]="[16, 16]" *ngIf="formItem.type === 'metaWithOptions'">
+            <div
+              nz-col
+              class="gutter-row m-b-10"
+              *ngFor="let control of validateForm.get(formItem.name)['controls']; let i = index"
+              [formGroup]="control"
+              [style.width]="formItem.fillPercent + '%'"
+            >
+              <div nz-row style="width: 100%">
+                <div
+                  nzFlex="180px"
+                  class="m-r-10"
+                  nz-col
+                  *ngFor="let field of formItem.fields"
+                  [style.width]="field.fillPercent + '%'"
+                >
+                  <div>
+                    <nz-form-control [nzErrorTip]="field.validationMessage">
+                      <nz-input-group>
+                        <label>
+                          <nz-select
+                            style="width: 100%"
+                            [ngClass]="
+                              field.hideWhenEqualTo &&
+                              field.hideWhenEqualTo.inputName &&
+                              control.get(field.hideWhenEqualTo.inputName).value === field.hideWhenEqualTo.value
+                                ? 'hide'
+                                : 'show'
+                            "
+                            *ngIf="field.type === 'select'"
+                            [formControlName]="field.name"
+                            [nzPlaceHolder]="field.label"
+                          >
+                            <nz-option
+                              *ngFor="let selection of field.selections"
+                              [nzValue]="selection.value"
+                              [nzLabel]="selection.label"
+                            >
+                            </nz-option>
+                          </nz-select>
+                          <input
+                            nz-input
+                            [ngClass]="
+                              field.hideWhenEqualTo &&
+                              field.hideWhenEqualTo.inputName &&
+                              control.get(field.hideWhenEqualTo.inputName).value === field.hideWhenEqualTo.value
+                                ? 'hide'
+                                : 'show'
+                            "
+                            *ngIf="field.type === 'text'"
+                            [formControlName]="field.name"
+                            [placeholder]="field.description"
+                          />
+                        </label>
+                      </nz-input-group>
+                    </nz-form-control>
+                  </div>
+                </div>
+                <!--<div nzFlex="180px" nz-col>
+                  <nz-institutionForm-control [nzErrorTip]="formItem.validationMessage">
+                    <nz-input-group>
+                      <label>
+                        <nz-select style="width: 100%" [nzPlaceHolder]="formItem.label"
+                                   [formControlName]="metaWithDropDown.name">
+                          <nz-option *ngFor="let selection of formItem.selections"
+                                     [nzValue]="selection.value"
+                                     [nzLabel]="selection.label">
+
+                          </nz-option>
+                        </nz-select>
+                      </label>
+                    </nz-input-group>
+                  </nz-institutionForm-control>
+                </div>-->
+                <!--<div  nzFlex="180px" nz-col *ngIf="field.type==='text'">
+                  <nz-institutionForm-control [nzErrorTip]="field.validationMessage">
+                    <nz-input-group>
+                      <label>
+                        <input nz-input
+                               [formControlName]="formItem.fields[i].name"
+                               [placeholder]="field.description"/>
+                      </label>
+                    </nz-input-group>
+                  </nz-institutionForm-control>
+                </div>-->
+                <!--<div *ngIf="checkMetaSelect(formItem.selections, control)" class="m-l-15" nzFlex="200px"
+                     nz-col>
+                  <nz-institutionForm-control [nzErrorTip]="formItem.validationMessage">
+                    <nz-input-group>
+                      <label>
+                        <input nz-input
+                               formControlName="value"
+                               [placeholder]="formItem.extraLabel"/>
+                      </label>
+                    </nz-input-group>
+                  </nz-institutionForm-control>
+                </div>-->
+                <div nzFlex="20px" nz-col>
+                  <i
+                    (click)="removeMetaFiled(i, formItem)"
+                    nz-icon
+                    class="minus-icon"
+                    nzType="minus-circle"
+                    nzTheme="outline"
+                  >
+                  </i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <nz-form-item class="m-t-30">
+    <nz-form-control>
+      <button nz-button nzType="primary" [disabled]="!validateForm.valid">{{ submitButtonText }}</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

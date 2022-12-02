@@ -1,0 +1,18 @@
+<nz-select
+  nzShowSearch
+  nzServerSearch
+  nzAllowClear
+  nzPlaceHolder="Search..."
+  [nzShowArrow]="false"
+  [(ngModel)]="selectedCaregiver"
+  [compareWith]="compareCaregivers"
+  *ngIf="!readonly; else plainText"
+>
+  <nz-option *ngFor="let caregiver of caregivers" [nzValue]="caregiver" [nzLabel]="caregiver.phone">
+    <nz-option [nzValue]="caregiver" [nzLabel]="caregiver.firstName + ' ' + caregiver.lastName"> </nz-option>
+  </nz-option>
+</nz-select>
+
+<ng-template #plainText>
+  {{ selectedCaregiver?.phone }}
+</ng-template>

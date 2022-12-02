@@ -1,0 +1,27 @@
+<app-master-data-list
+  [data]="data"
+  [columns]="columns"
+  [loading]="loading"
+  [pageInfo]="pageInfo"
+  [actions]="actions"
+  (rowClick)="onSelect($event)"
+  (pageChange)="onPageChange($event)"
+  (sort)="onSort($event)"
+  (filter)="onFilter($event)"
+  (executeAction)="onAction($event)"
+>
+  <ng-container actions-left>
+    <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
+  </ng-container>
+  <ng-container actions-right>
+    <button
+      nz-button
+      nzType="primary"
+      nzShape="circle"
+      routerLink="/mhira/questionnaire-management/questionnaire-form"
+      *ngIf="perms.permissionsOnly([PK.MANAGE_QUESTIONNAIRES])"
+    >
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>

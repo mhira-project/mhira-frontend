@@ -1,0 +1,50 @@
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <app-table
+      [loading]="isLoading"
+      [showPagination]="false"
+      [showCustomActions]="true"
+      [showSearch]="true"
+      [listOfCustomActions]="actions"
+      [listOfData]="informantsTable.rows"
+      [listOfColumn]="informantsTable.columns"
+      [showButton]="true"
+      [buttonText]="'Create Informant'"
+      [hasNextPage]="pageInfo?.hasNextPage"
+      [hasPreviousPage]="pageInfo?.hasPreviousPage"
+      (onNext)="navigatePages('next')"
+      (onPrevious)="navigatePages('previous')"
+      (onAction)="handleActionClick($event)"
+      (onButton)="toggleCreatePanel()"
+    >
+    </app-table>
+  </div>
+</div>
+
+<nz-drawer
+  [nzMask]="false"
+  [nzClosable]="true"
+  [nzVisible]="showCreateInformant"
+  nzPlacement="right"
+  [nzTitle]="panelTitle"
+  (nzOnClose)="toggleCreatePanel()"
+>
+  <div nz-row>
+    <!-- <div nz-col nzSpan="24" *ngIf="errors.length>0">
+      <nz-alert *ngFor="let error of errors" nzType="error" [nzDescription]="error" nzShowIcon></nz-alert>
+    </div>-->
+    <div nz-col nzSpan="24">
+      <app-form
+        class="mt-3"
+        [form]="informantForms"
+        [isLoading]="isLoading"
+        [inputMode]="inputMode"
+        [showCancelButton]="showCancelButton"
+        [loadingMessage]="loadingMessage"
+        (searchOptions)="searchPatients($event)"
+        (submitForm)="submitForm($event)"
+      >
+      </app-form>
+    </div>
+  </div>
+</nz-drawer>

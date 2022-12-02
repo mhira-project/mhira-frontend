@@ -1,0 +1,7 @@
+<app-form
+  *ngIf="form"
+  #formComponent
+  [form]="form"
+  (submitForm)="onFilter($event)"
+  (cancel)="formComponent.toggleEdit(); drawer.close()"
+></app-form>

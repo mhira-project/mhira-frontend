@@ -1,0 +1,121 @@
+<section
+  class="overview"
+  *ngIf="
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.OPEN_FOR_COMPLETION ||
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PARTIALLY_COMPLETED
+  "
+>
+  <nz-card
+    class="questionnaire"
+    *ngFor="let questionnaire of assessment.questionnaireAssessment.questionnaires; index as idx"
+    [nzTitle]="questionnaire.name"
+    [nzExtra]="questionnaireInfo"
+  >
+    <ng-template #questionnaireInfo>
+      <button
+        nz-button
+        [nzType]="isQuestionnaireDone(questionnaire._id) ? 'default' : 'primary'"
+        nzShape="circle"
+        class="header-icon"
+        nzSize="small"
+        [disabled]="!canAccessQuestionnaire(idx)"
+        routerLink="../questionnaire/{{ idx }}"
+        queryParamsHandling="merge"
+      >
+        <i nz-icon [nzType]="isQuestionnaireDone(questionnaire._id) ? 'check' : 'caret-right'"></i>
+      </button>
+      <app-questionnaire-info [website]="questionnaire.website">
+        <button
+          nz-button
+          nzShape="circle"
+          nzSize="small"
+          nz-tooltip
+          nzTooltipOverlayClassName="questionnaire-tooltip"
+          [nzTooltipTitle]="tooltipContent"
+        >
+          <i class="tooltip-icon header-icon" nz-icon nzType="exclamation"></i>
+        </button>
+      </app-questionnaire-info>
+      <ng-template #tooltipContent>
+        <div class="tooltip">
+          <span *ngIf="questionnaire.license">
+            {{ translations.assessmentForm.license | translate: { license: questionnaire.license } }}
+          </span>
+          <span *ngIf="questionnaire.copyright">&copy; {{ questionnaire.copyright }}</span>
+        </div>
+      </ng-template>
+    </ng-template>
+
+    <span class="progress" [class.done]="isQuestionnaireDone(questionnaire._id)">
+      {{
+        translations.assessmentForm.questionsAnswered
+          | translate
+            : {
+                actual: getAnsweredRequiredQuestions(questionnaire._id),
+                total: getMaxRequiredQuestions(questionnaire._id)
+              }
+      }}
+    </span>
+    <span class="progress-optional" *ngIf="getAnsweredOptionalQuestions(questionnaire._id)">
+      {{
+        translations.assessmentForm.optionalAnswered
+          | translate: { actual: getAnsweredOptionalQuestions(questionnaire._id) }
+      }}
+    </span>
+    <span *ngIf="questionnaire.timeToComplete">
+      {{ translations.assessmentForm.fillingTime | translate: { time: questionnaire.timeToComplete } }}
+    </span>
+  </nz-card>
+</section>
+
+<section
+  *ngIf="
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.OPEN_FOR_COMPLETION ||
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PARTIALLY_COMPLETED
+  "
+>
+  <button
+    nz-button
+    nzType="primary"
+    [class.highlight]="assessmentFormService.percentageCompleted >= 100"
+    [disabled]="
+      assessmentFormService.percentageCompleted < 100 ||
+      assessment.questionnaireAssessment.status === AssessmentStatus.COMPLETED
+    "
+    (click)="completeAssessment()"
+  >
+    {{
+      (assessment.questionnaireAssessment.status === AssessmentStatus.COMPLETED
+        ? translations.assessmentForm.alreadyCompleted
+        : translations.assessmentForm.completeAssessment
+      ) | translate
+    }}
+  </button>
+</section>
+
+<section
+  *ngIf="
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.EXPIRED ||
+    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.CANCELLED
+  "
+>
+  <div class="expired-text">
+    <h1>{{ expiredDisclaimer }}</h1>
+  </div>
+</section>
+
+<section *ngIf="AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PLANNED">
+  <div class="expired-text">
+    <h1>
+      {{ plannedDisclaimer }}
+      {{ assessment.deliveryDate | date: 'medium' }}.
+    </h1>
+  </div>
+</section>
+<section *ngIf="AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.COMPLETED">
+  <div class="expired-text">
+    <h1>
+      {{ completedDisclaimer }}
+    </h1>
+  </div>
+</section>

@@ -1,0 +1,10 @@
+<div class="select-group ant-radio-group ant-radio-group-solid">
+  <label
+    *ngFor="let choice of question.choices"
+    class="select ant-radio-button-wrapper"
+    [class.ant-radio-button-wrapper-checked]="isChecked(choice)"
+  >
+    <input type="checkbox" (change)="toggle(choice)" />
+    <span [class.ant-radio-button-checked]="isChecked(choice)">{{ choice.label }}</span>
+  </label>
+</div>

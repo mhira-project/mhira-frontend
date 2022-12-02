@@ -1,0 +1,3 @@
+<nz-select [(ngModel)]="selected">
+  <nz-option *ngFor="let option of options" [nzValue]="option" [nzLabel]="option[titleField]"></nz-option>
+</nz-select>

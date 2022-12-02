@@ -1,0 +1,31 @@
+<article class="article" *ngIf="assessmentFormService.assessment$ | async as assessment">
+  <div>
+    <div class="progress">
+      <div [style.width]="assessmentFormService.percentageCompleted + '%'"></div>
+    </div>
+
+    <h1
+      *ngIf="
+        AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.OPEN_FOR_COMPLETION ||
+        AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PARTIALLY_COMPLETED
+      "
+    >
+      {{ assessment.name }}
+    </h1>
+    <section class="patient"></section>
+
+    <section>
+      <router-outlet></router-outlet>
+    </section>
+  </div>
+
+  <span
+    class="disclaimer"
+    *ngIf="
+      AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.OPEN_FOR_COMPLETION ||
+      AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PARTIALLY_COMPLETED
+    "
+  >
+    <i class="fas fa-exclamation-triangle"></i>{{ disclaimer?.description }}</span
+  >
+</article>

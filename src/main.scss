@@ -1,0 +1,33 @@
+/*
+ * Entry point of global application style.
+ * Component-specific style should not go here and be included directly as part of the components.
+ */
+// Theme variables, must be included before the libraries to allow overriding defaults
+@import "theme/theme-variables";
+// 3rd party libraries
+//@import "~bootstrap/scss/bootstrap";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+// ant
+@import "./assets/scss/app.scss";
+// Theme customization
+@import "theme/theme";
+
+.questionnaire-tooltip span {
+  display: block;
+}
+
+nz-card.multiline-header .ant-card-head-title {
+  overflow: auto;
+  white-space: normal;
+  text-overflow: initial;
+}
+
+nz-card.required-question .ant-card-head-title::after {
+  content: "*";
+  color: $red;
+  font-weight: bold;
+  padding-left: 0.4em;
+}

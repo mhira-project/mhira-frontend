@@ -1,0 +1,132 @@
+{
+  "name": "ng-x-rocket",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "ng": "ng",
+    "build": "npm run env -s && ng build --aot --prod",
+    "build:dev": "npm run build -- --configuration=dev",
+    "build:staging": "npm run build -- --configuration=staging",
+    "build:prod": "npm run build -- --configuration=production",
+    "start": "npm run env -s && ng serve",
+    "start:dev": "npm run env -s && ng serve --configuration=dev",
+    "serve:sw": "npm run build -s && npx http-server ./dist -p 4200",
+    "lint:ts": "ng lint",
+    "lint:style": "stylelint \"src/**/*.scss\" --syntax scss",
+    "lint:html": "htmlhint \"src\" --config .htmlhintrc",
+    "lint": "npm run lint:ts && npm run lint:style && npm run lint:html",
+    "test": "npm run env -s && ng test",
+    "test:ci": "npm run env -s && npm run lint -s && ng test --configuration=ci",
+    "e2e": "npm run env -s && ng e2e",
+    "translations:extract": "ngx-translate-extract --input ./src --output ./src/translations/template.json --format=json --clean --sort --marker extract",
+    "docs": "hads ./docs -o",
+    "env": "ngx-scripts env npm_package_version",
+    "prettier": "prettier --write \"./{src,e2e}/**/*.{ts,js,html,scss}\"",
+    "prettier:check": "prettier --list-different \"./{src,e2e}/**/*.{ts,js,html,scss}\"",
+    "postinstall": "npm run prettier -s",
+    "generate": "ng generate",
+    "deploy": "ng build --aot --prod --extract-css false && aws s3 sync dist s3://mhira-portal --delete --profile Mhira --region=af-south-1 && aws cloudfront create-invalidation --distribution-id ELKUDD46VAWKE --paths \"/index.html\" --profile Mhira"
+  },
+  "dependencies": {
+    "@angular/animations": "^10.0.14",
+    "@angular/common": "^10.0.14",
+    "@angular/compiler": "^10.0.14",
+    "@angular/core": "^10.0.14",
+    "@angular/forms": "^10.0.14",
+    "@angular/localize": "^10.0.14",
+    "@angular/platform-browser": "^10.0.14",
+    "@angular/platform-browser-dynamic": "^10.0.14",
+    "@angular/router": "^10.0.14",
+    "@angular/service-worker": "^10.0.14",
+    "@cospired/i18n-iso-languages": "^3.0.0",
+    "@fortawesome/fontawesome-free": "^5.1.0",
+    "@ng-bootstrap/ng-bootstrap": "^6.0.2",
+    "@ngneat/until-destroy": "^8.0.4",
+    "@ngx-translate/core": "^12.0.0",
+    "angularx-qrcode": "^10.0.12",
+    "apollo-angular": "^1.9.1",
+    "apollo-angular-link-http": "^1.9.0",
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "apollo-link": "^1.2.13",
+    "apollo-link-error": "^1.1.12",
+    "bootstrap": "^4.1.1",
+    "crypto-js": "^4.0.0",
+    "date-fns": "^2.10.0",
+    "FileSaver": "^0.10.0",
+    "gql-query-builder": "^3.1.3",
+    "graphql": "^15.1.0",
+    "graphql-tag": "^2.10.3",
+    "i18n-iso-countries": "^6.6.0",
+    "jquery": "^3.5.1",
+    "moment": "^2.28.0",
+    "moment-timezone": "^0.5.32",
+    "ng-zorro-antd": "^11.4.1",
+    "ngx-clipboard": "^14.0.1",
+    "ngx-input-search": "^3.0.8",
+    "ngx-perfect-scrollbar": "^10.0.1",
+    "rxjs": "^6.5.5",
+    "tailwindcss": "^1.8.8",
+    "tslib": "^2.0.0",
+    "xlsx": "^0.16.3",
+    "zone.js": "^0.10.3"
+  },
+  "devDependencies": {
+    "@angular-builders/jest": "^8.3.2",
+    "@angular-devkit/build-angular": "^0.1000.8",
+    "@angular/cli": "~10.0.8",
+    "@angular/compiler-cli": "^10.0.14",
+    "@angular/language-service": "^10.0.14",
+    "@angularclass/hmr": "^2.1.3",
+    "@biesbjerg/ngx-translate-extract": "^4.2.0",
+    "@ngx-rocket/scripts": "^4.0.0",
+    "@types/jasmine": "^3.3.13",
+    "@types/jasminewd2": "^2.0.3",
+    "@types/jest": "^25.1.2",
+    "@types/node": "^12.11.1",
+    "codelyzer": "^6.0.0",
+    "commitizen": "^4.2.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "faker": "^5.1.0",
+    "hads": "^2.0.1",
+    "htmlhint": "^0.11.0",
+    "https-proxy-agent": "^5.0.0",
+    "husky": "^4.2.3",
+    "jasmine-core": "~3.5.0",
+    "jasmine-spec-reporter": "~5.0.0",
+    "jest": "^25.1.0",
+    "prettier": "^2.0.2",
+    "pretty-quick": "^2.0.1",
+    "protractor": "~7.0.0",
+    "stylelint": "~13.2.1",
+    "stylelint-config-prettier": "^8.0.1",
+    "stylelint-config-recommended-scss": "~4.2.0",
+    "stylelint-config-standard": "~20.0.0",
+    "stylelint-scss": "~3.16.0",
+    "ts-node": "^8.8.1",
+    "tslint": "~6.1.0",
+    "tslint-config-prettier": "^1.14.0",
+    "typescript": "~3.9.7"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.scss",
+        "options": {
+          "singleQuote": false
+        }
+      }
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

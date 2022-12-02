@@ -1,0 +1,19 @@
+<nz-tabset nzSize="large">
+  <nz-tab nzTitle="Dashboard">
+    <app-reports></app-reports>
+  </nz-tab>
+</nz-tabset>
+
+<nz-modal [nzStyle]="{}" nzOkText="I accept" [(nzVisible)]="!acceptedTerm">
+  <ng-container *nzModalContent>
+    <p class="icon"><i class="fas fa-info-circle"></i></p>
+    <p class="title">Welcome to Mhira</p>
+    <p class="description">{{ disclaimer?.description }}</p>
+    <!--    <div class="button-div" *nzModalFooter>-->
+    <!--      <button nz-button nzType="primary" class="modal-button" (click)="updateUser()">I Accept</button>-->
+    <!--    </div>-->
+  </ng-container>
+  <ng-container *nzModalFooter>
+    <button nz-button nzType="primary" style="" class="modal-button" (click)="updateUser()">I Accept</button>
+  </ng-container>
+</nz-modal>

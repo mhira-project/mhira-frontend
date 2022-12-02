@@ -1,0 +1,106 @@
+<div nz-row nzGutter="16">
+  <ng-container *ngFor="let row of field.rows; let i = index">
+    <div nz-col nzSpan="22">
+      <nz-divider nzOrientation="left" nzText="{{ field.label }} {{ i + 1 }}"></nz-divider>
+    </div>
+    <div nz-col nzSpan="2" style="text-align: right">
+      <button nz-button nzType="primary" nzShape="circle" *ngIf="i === 0" (click)="addRow()">
+        <i nz-icon nzType="plus" nzTheme="outline"></i>
+      </button>
+      <button nz-button nzType="primary" nzDanger nzShape="circle" *ngIf="i !== 0" (click)="removeRow(i)">
+        <i nz-icon nzType="minus" nzTheme="outline"></i>
+      </button>
+    </div>
+    <div nz-col class="gutter-row form-item" *ngFor="let child of row; let childIndex = index" [nzSpan]="child?.span">
+      <ng-container [ngSwitch]="child.type">
+        <div *ngSwitchCase="'text'">
+          <app-text-input [field]="child" [inputMode]="inputMode" (valueChange)="handleInputChange(child, $event, i)">
+          </app-text-input>
+        </div>
+        <div *ngSwitchCase="'textArea'">
+          <app-text-area-input
+            [field]="child"
+            [attr.autocomplete]="autoFill"
+            [inputMode]="inputMode"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
+          </app-text-area-input>
+        </div>
+        <div *ngSwitchCase="'number'">
+          <app-number-input
+            [field]="child"
+            [attr.autocomplete]="autoFill"
+            [inputMode]="inputMode"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
+          </app-number-input>
+        </div>
+        <div *ngSwitchCase="'select'">
+          <app-select-input
+            [field]="child"
+            [attr.autocomplete]="autoFill"
+            [inputMode]="inputMode"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
+          </app-select-input>
+        </div>
+        <div *ngSwitchCase="'search'">
+          <app-search-input
+            [field]="child"
+            [attr.autocomplete]="autoFill"
+            [inputMode]="inputMode"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
+          </app-search-input>
+        </div>
+        <div *ngSwitchCase="'checkBox'">
+          <app-check-box-input
+            [field]="child"
+            [attr.autocomplete]="autoFill"
+            [inputMode]="inputMode"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
+          </app-check-box-input>
+        </div>
+        <div *ngSwitchCase="'radio'">
+          <app-radio-input
+            [field]="child"
+            [attr.autocomplete]="autoFill"
+            [inputMode]="inputMode"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
+          </app-radio-input>
+        </div>
+        <div *ngSwitchCase="'date'">
+          <app-date-input
+            [field]="child"
+            [attr.autocomplete]="autoFill"
+            [inputMode]="inputMode"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
+          </app-date-input>
+        </div>
+        <div *ngSwitchCase="'dateRange'">
+          <app-date-range-input
+            [field]="child"
+            [attr.autocomplete]="autoFill"
+            [inputMode]="inputMode"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
+          </app-date-range-input>
+        </div>
+        <div *ngSwitchCase="'password'">
+          <app-password-input
+            [field]="child"
+            [attr.autocomplete]="autoFill"
+            (valueChange)="handleInputChange(child, $event, i)"
+          >
+          </app-password-input>
+        </div>
+        <div *ngSwitchCase="'array'">
+          <app-array-input [field]="child" [inputMode]="inputMode"></app-array-input>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

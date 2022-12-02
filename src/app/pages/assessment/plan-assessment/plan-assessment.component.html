@@ -1,0 +1,192 @@
+<button style="margin-bottom: 16px" nz-button nzType="primary" (click)="goBack()">Back</button>
+
+<article nz-row [nzGutter]="20">
+  <section nz-col nzSpan="9">
+    <form nz-form [formGroup]="assessmentForm" (submit)="onSubmitAssessment()">
+      <nz-form-item>
+        <nz-form-label nzFor="patient">{{ 'planAssessment.patient' | translate }}</nz-form-label>
+        <nz-form-control>
+          <app-patient-picker
+            [selectedPatient]="selectedPatient"
+            [readonly]="!editMode"
+            (selectPatient)="onPatientSelect($event)"
+          ></app-patient-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>{{ 'planAssessment.assessmentName' | translate }}</nz-form-label>
+        <nz-form-control>
+          <!--          <input nz-input type="string" formControlName="name" [readonly]="!editMode" />-->
+          <nz-select
+            [nzBorderless]="!editMode"
+            class="input-class"
+            [nzDisabled]="!editMode"
+            [(ngModel)]="selectedAssessment"
+            formControlName="assessmentTypeId"
+          >
+            <nz-option *ngFor="let data of data" [nzLabel]="data.name" [nzValue]="data.id">{{ data.name }}</nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="clinician">{{ 'createAssessment.assessmentManager' | translate }}</nz-form-label>
+        <nz-form-control>
+          <app-user-picker
+            [readonly]="!editMode"
+            [selectedUser]="selectedClinician"
+            (selectUser)="onUserSelect($event)"
+          ></app-user-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item style="margin-bottom: 15px">
+        <nz-radio-group
+          formControlName="informantType"
+          nzButtonStyle="solid"
+          [nzDisabled]="!editMode"
+          [(ngModel)]="typeSelected"
+          (ngModelChange)="onSelectChange($event)"
+        >
+          <h5>Informant Type</h5>
+          <label nz-radio-button nzValue="PATIENT">{{ 'createAssessment.patient' | translate }}</label>
+          <label nz-radio-button nzValue="USER">{{ 'createAssessment.departmentsUser' | translate }}</label>
+          <label nz-radio-button nzValue="CAREGIVER">{{ 'createAssessment.patientsCaregiver' | translate }}</label>
+        </nz-radio-group>
+      </nz-form-item>
+      <nz-form-item *ngIf="typeSelected === 'PATIENT'">
+        <nz-input-group>
+          <h5>{{ 'createAssessment.patient' | translate }}</h5>
+          <nz-select
+            [nzBorderless]="!editMode"
+            class="input-class"
+            [nzDisabled]="!editMode"
+            [(ngModel)]="selectedInformant"
+            formControlName="informantPatient"
+          >
+            <nz-option *ngFor="let data of dataToSelect" [nzLabel]="data.label" [nzValue]="data.value">{{
+              data.label
+            }}</nz-option>
+          </nz-select>
+        </nz-input-group>
+        <p>Self Rating.</p>
+      </nz-form-item>
+      <nz-form-item *ngIf="typeSelected === 'USER'">
+        <nz-input-group>
+          <h5>{{ 'createAssessment.departmentsUser' | translate }}</h5>
+          <nz-select
+            [nzBorderless]="!editMode"
+            class="input-class"
+            [nzDisabled]="!editMode"
+            [(ngModel)]="selectedInformant"
+            formControlName="informantClinicianId"
+          >
+            <nz-option *ngFor="let data of dataToSelect" [nzLabel]="data.label" [nzValue]="data.value">{{
+              data.label
+            }}</nz-option>
+          </nz-select>
+        </nz-input-group>
+      </nz-form-item>
+      <nz-form-item *ngIf="typeSelected === 'CAREGIVER'">
+        <nz-input-group>
+          <h5>{{ 'createAssessment.patientsCaregiver' | translate }}</h5>
+          <nz-select
+            [nzBorderless]="!editMode"
+            [nzOptions]="options"
+            class="input-class"
+            [nzDisabled]="!editMode"
+            [(ngModel)]="selectedInformant"
+            formControlName="informantCaregiverRelation"
+          >
+          </nz-select>
+        </nz-input-group>
+      </nz-form-item>
+
+      <div class="date-picker">
+        <nz-form-item style="margin-top: 14px">
+          <nz-input-group>
+            <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
+            <nz-date-picker
+              [nzBorderless]="!editMode"
+              class="date-picker1"
+              nzShowTime
+              nzFormat="yyyy-MM-dd HH:mm"
+              [nzDisabled]="!editMode"
+              [(ngModel)]="deliveryDate"
+              formControlName="deliveryDate"
+              (ngModelChange)="onChangeDelivery($event)"
+            ></nz-date-picker>
+          </nz-input-group>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-input-group>
+            <h5>{{ 'createAssessment.expirationDate' | translate }}</h5>
+            <nz-date-picker
+              [nzBorderless]="!editMode"
+              class="date-picker1"
+              nzShowTime
+              nzFormat="yyyy-MM-dd HH:mm"
+              [nzDisabled]="!editMode"
+              [(ngModel)]="expireDate"
+              formControlName="expirationDate"
+              (ngModelChange)="onChangeExpire($event)"
+            ></nz-date-picker>
+          </nz-input-group>
+        </nz-form-item>
+      </div>
+      <!-- <nz-form-item>
+        <nz-input-group>
+          <h5>Notes for the assessment manager</h5>
+          <textarea formControlName="notes" [attr.maxlength]="maxLength" placeholder="Write notes" rows="4" nz-input></textarea>
+          <p *ngIf="assessmentForm.controls.notes.value?.length !== null">{{assessmentForm.controls.notes.value?.length}}/{{maxLength}} words</p>
+          <p *ngIf="assessmentForm.controls.notes.value?.length === null">0/{{maxLength}} words</p>
+        </nz-input-group>
+      </nz-form-item> -->
+
+      <!-- Dummy -->
+      <nz-form-item>
+        <nz-input-group>
+          <h5>Notes for the assessment manager</h5>
+          <textarea [attr.maxlength]="maxLength" placeholder="Write notes" rows="4" nz-input></textarea>
+          <p>0/{{ maxLength }} words</p>
+        </nz-input-group>
+      </nz-form-item>
+      <!-- Dummy End -->
+
+      <nz-form-item>
+        <nz-form-control>
+          <ng-container *ngIf="editMode">
+            <button nz-button nzType="primary" [disabled]="!assessmentForm.valid">Submit</button>
+            <button nz-button type="button" (click)="editMode = !editMode">Cancel</button>
+          </ng-container>
+          <button
+            nz-button
+            nzType="primary"
+            type="button"
+            *ngIf="!editMode && perms.permissionsOnly(PK.MANAGE_ASSESSMENTS)"
+            (click)="editMode = !editMode"
+          >
+            Edit
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </section>
+  <section nz-col nzSpan="15" class="questionnaires">
+    <h4>{{ 'questionnaireSelection.selectQuestionnaires' | translate }}</h4>
+    <app-questionnaire-selection
+      [readonly]="!editMode"
+      [selectedQuestionnaires]="selectedQuestionnaires"
+      (selectionChange)="onQuestionnaireSelected($event)"
+    ></app-questionnaire-selection>
+  </section>
+</article>
+<hr>
+<div style="margin-top: 15px">
+  <h5 *ngIf="fullAssessment?.uuid !== null && fullAssessment?.uuid !== undefined"><span nz-icon nzType="link" nzTheme="outline"></span> Questionnaire Link</h5>
+  <br />
+</div>
+<div class="link-container" *ngIf="fullAssessment?.uuid !== null && fullAssessment?.uuid !== undefined">
+  <a target="_blank" [href]="assessmentUrl">{{ this.assessmentUrl?.toString().slice(0, 50) }}...</a>
+  <button style="margin-left: 10px;" nz-button nzType="default" nzShape="circle"><span (click)="copyAssessmentLink(this.assessmentUrl)" nz-icon nzType="copy" nzTheme="outline"></span></button>
+  <qrcode [qrdata]="assessmentUrl?.toString()" [width]="128" [errorCorrectionLevel]="'M'"></qrcode>
+  <!-- <p>{{fullAssessment | json}}</p> -->
+</div>
