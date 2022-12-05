@@ -33,6 +33,7 @@ enum ActionKey {
   COPY_ASSESSMENT_LINK,
   ARCHIVE_ASSESSMENT,
   DELETE_ASSESSMENT,
+  SENT_EMAIL
 }
 
 @Component({
@@ -49,6 +50,7 @@ export class AssessmentsListComponent {
   public actions: Action<ActionKey>[] = [
     { key: ActionKey.SHOW_ASSESSMENT, title: 'Start Session' },
     { key: ActionKey.COPY_ASSESSMENT_LINK, title: 'Copy Session Link' },
+    { key: ActionKey.SENT_EMAIL, title: 'Sent Email' },
   ];
   public onlyMyAssessments = false;
 
