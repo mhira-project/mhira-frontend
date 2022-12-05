@@ -10,6 +10,11 @@
   (executeAction)="onAction($event)"
   (rowClick)="onAssessmentSelect($event)"
 >
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalData?.assessmentType?.name" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <qrcode [qrdata]="newUrl.toString()" [width]="450" [errorCorrectionLevel]="'M'"></qrcode>
+  </ng-container>
+</nz-modal>
   <ng-container actions-left>
     <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
     <button

@@ -18,6 +18,7 @@ export class QuestionnaireSelectionComponent {
 
   @Input()
   public readonly = false;
+  public dummy = '';
 
   public foundQuestionnaires: QuestionnaireVersion[] = [];
 
@@ -30,6 +31,22 @@ export class QuestionnaireSelectionComponent {
     if (q === '') {
       this.foundQuestionnaires = [];
       return;
+    }
+
+    const filter = { or: createSearchFilter(q) };
+
+    this.questionnaireService
+      .getQuestionnaires({ filter })
+      .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node)));
+  }
+
+  public onQuestionnaireSearchNew(q: string) {
+    if (q === '') {
+      const filter = { or: createSearchFilter(q) };
+
+      this.questionnaireService
+        .getQuestionnaires({ filter })
+        .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node)));
     }
 
     const filter = { or: createSearchFilter(q) };

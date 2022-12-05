@@ -9,7 +9,16 @@
 <article>
   <ng-container *ngIf="!readonly">
     <section>
-      <app-master-data-search class="w-max" (search)="onQuestionnaireSearch($event)"></app-master-data-search>
+      <!-- <app-master-data-search class="w-max" (search)="onQuestionnaireSearch($event)"></app-master-data-search> -->
+
+      <!-- Updated -->
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input (keyup)="onQuestionnaireSearch($event.target.value)" type="text" nz-input placeholder="Search" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i (click)="onQuestionnaireSearchNew('')" nz-icon nzType="down"></i>
+      </ng-template>
+      <!--  -->
     </section>
     <section *ngIf="foundQuestionnaires?.length > 0">
       <!-- <nz-list nzBordered nzHeader="Found Questionnaires"> -->

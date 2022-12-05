@@ -33,7 +33,8 @@ enum ActionKey {
   COPY_ASSESSMENT_LINK,
   ARCHIVE_ASSESSMENT,
   DELETE_ASSESSMENT,
-  SENT_EMAIL
+  SENT_EMAIL,
+  SCAN_QR_CODE
 }
 
 @Component({
@@ -51,14 +52,18 @@ export class AssessmentsListComponent {
     { key: ActionKey.SHOW_ASSESSMENT, title: 'Start Session' },
     { key: ActionKey.COPY_ASSESSMENT_LINK, title: 'Copy Session Link' },
     { key: ActionKey.SENT_EMAIL, title: 'Sent Email' },
+    { key: ActionKey.SCAN_QR_CODE, title: 'Scan QR Code' },
   ];
   public onlyMyAssessments = false;
+  isVisible = false;
+  modalData: any = '';
 
   public assessmentRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
     filter: {},
     sorting: [],
   };
+  newUrl: URL;
 
   constructor(
     private assessmentService: AssessmentService,
@@ -79,6 +84,25 @@ export class AssessmentsListComponent {
       this.actions.push({ key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Session' });
     }
   }
+
+  // Modal stuff
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    console.log('Button ok clicked!');
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
+  }
+
+  // 
+
 
   public onPageChange(paging: Paging): void {
     this.assessmentRequestOptions.paging = paging;
@@ -113,6 +137,12 @@ export class AssessmentsListComponent {
         return;
       case ActionKey.DELETE_ASSESSMENT:
         this.deleteAssessment(assessment, false);
+        return;
+      case ActionKey.SCAN_QR_CODE:
+        this.modalData = assessment
+        this.newUrl = new URL(this.generateAssessmentURL(assessment.uuid), window.location.origin);
+        this.showModal()
+        console.log('Yes: ', assessment) 
         return;
     }
   }
