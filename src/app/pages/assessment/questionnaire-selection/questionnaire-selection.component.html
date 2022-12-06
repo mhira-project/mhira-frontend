@@ -12,16 +12,55 @@
       <!-- <app-master-data-search class="w-max" (search)="onQuestionnaireSearch($event)"></app-master-data-search> -->
 
       <!-- Updated -->
-      <nz-input-group [nzSuffix]="suffixIconSearch">
+      <!-- <nz-input-group [nzSuffix]="suffixIconSearch">
         <input (keyup)="onQuestionnaireSearch($event.target.value)" type="text" nz-input placeholder="Search" />
       </nz-input-group>
       <ng-template #suffixIconSearch>
         <i (click)="onQuestionnaireSearchNew('')" nz-icon nzType="down"></i>
-      </ng-template>
+      </ng-template> -->
+      <nz-select
+      style="width: 100%;"
+      nzShowSearch
+      nzServerSearch
+      nzPlaceHolder="Search"
+      [nzShowArrow]="true"
+      (nzOnSearch)="onQuestionnaireSearchNew('')"
+      [nzOptionHeightPx]="80"
+      (keyup)="onQuestionnaireSearch($event.target.value)"
+    >
+      <nz-option *ngFor="let o of foundQuestionnaires" [nzValue]="o.value" [nzCustomContent]="true">
+        <nz-list>
+          <nz-list-item *ngIf="!foundQuestionnaires?.length">{{
+            'questionnaireSelection.noResult' | translate
+          }}</nz-list-item>
+          <nz-list-item>
+            <ng-template #questionnaireItemSearch let-questionnaire>
+              <div>
+                <span class="questionnaire-title">{{ questionnaire.name }}</span>
+                <nz-tag nzColor="blue">{{ questionnaire.questionnaire.language }}</nz-tag>
+                <nz-tag [nzColor]="tagColor(questionnaire.status)">{{ questionnaire.status }}</nz-tag>
+              </div>
+            </ng-template>
+            <ng-container
+              [ngTemplateOutlet]="questionnaireItemSearch"
+              [ngTemplateOutletContext]="{ $implicit: o }"
+            ></ng-container>
+            <button
+              nz-button
+              [nzType]="isSelected(o) ? 'danger' : 'primary'"
+              nzShape="circle"
+              [disabled]="isDisabled(o)"
+              (click)="onToggleQuestionnaire(o)"
+            >
+              <i nz-icon [nzType]="isSelected(o) ? 'minus' : 'plus'"></i>
+            </button>
+          </nz-list-item>
+        </nz-list>
+      </nz-option>
+    </nz-select>
       <!--  -->
     </section>
-    <section *ngIf="foundQuestionnaires?.length > 0">
-      <!-- <nz-list nzBordered nzHeader="Found Questionnaires"> -->
+    <!-- <section *ngIf="foundQuestionnaires?.length > 0">
       <nz-list nzBordered>
         <nz-list-item *ngIf="!foundQuestionnaires?.length">{{
           'questionnaireSelection.noResult' | translate
@@ -49,12 +88,12 @@
           </button>
         </nz-list-item>
       </nz-list>
-    </section>
+    </section> -->
   </ng-container>
   <section>
     <h5>Selected Questionnaires ({{ selectedQuestionnaires?.length }})</h5>
     <div nz-row [nzGutter]="16">
-      <div nz-col nzSpan="12" class="m-right" *ngFor="let questionnaire of selectedQuestionnaires; let i = index">
+      <div nz-col nzSpan="12" class="m-right spacer-class" *ngFor="let questionnaire of selectedQuestionnaires; let i = index">
         <ng-template class="header-title" #dummy>
           <div class="header-container">
             <p>{{ questionnaire.name }}</p>
