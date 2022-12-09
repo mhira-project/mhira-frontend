@@ -78,7 +78,8 @@
                     </nz-form-item>
                 </div>
                 <div class="email-label-wrapper">
-                    <label [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" nzChecked="checked" nz-checkbox>Sent assessment via email</label>
+                    <label [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>Sent assessment via email</label>
+                    <input style="width: 240px;" nz-input placeholder="Basic usage" [value]="fullAssessment.patient.firstName" [disabled]="!checked" />
                 </div>
                 <nz-form-item>
                     <nz-input-group class="input-class">
@@ -98,7 +99,7 @@
             </form>
         </section>
         <hr>
-        <div style="margin-top: 15px">
+        <div style="margin-top: 15px; margin-bottom: 15px;">
             <h5>
                 <span nz-icon nzType="link" nzTheme="outline"></span>
                 Questionnaire Link</h5>
@@ -107,7 +108,7 @@
         <div class="link-container" *ngIf="fullAssessment?.uuid !== null && fullAssessment?.uuid !== undefined">
             <a target="_blank" [href]="assessmentUrl">{{ this.assessmentUrl?.toString().slice(0, 50) }}...</a>
             <button (click)="copyAssessmentLink(this.assessmentUrl)" nz-button nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
-            <qrcode [qrdata]="assessmentUrl?.toString()" [width]="128" [errorCorrectionLevel]="'M'"></qrcode>
+            <!-- <qrcode [qrdata]="assessmentUrl?.toString()" [width]="128" [errorCorrectionLevel]="'M'"></qrcode> -->
         </div>
     </div>
     <div>

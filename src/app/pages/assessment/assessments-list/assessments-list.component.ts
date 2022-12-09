@@ -51,7 +51,7 @@ export class AssessmentsListComponent {
   public actions: Action<ActionKey>[] = [
     { key: ActionKey.SHOW_ASSESSMENT, title: 'Start Session' },
     { key: ActionKey.COPY_ASSESSMENT_LINK, title: 'Copy Session Link' },
-    { key: ActionKey.SENT_EMAIL, title: 'Sent Email' },
+    { key: ActionKey.SENT_EMAIL, title: 'Send Email' },
     { key: ActionKey.SCAN_QR_CODE, title: 'Scan QR Code' },
   ];
   public onlyMyAssessments = false;
@@ -83,6 +83,7 @@ export class AssessmentsListComponent {
     if (this.perms.permissionsOnly(PermissionKey.DELETE_ASSESSMENTS)) {
       this.actions.push({ key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Session' });
     }
+    // this.addTest();
   }
 
   // Modal stuff
@@ -122,6 +123,12 @@ export class AssessmentsListComponent {
   public onSearch(searchString: string): void {
     this.assessmentRequestOptions.filter = { or: this.createSearchFilter(searchString) };
     this.getAssessments();
+  }
+
+  public addTest({ action, context: assessment }: ActionArgs<FormattedAssessment, ActionKey>){
+    if(assessment.uuid.length > 3){
+      this.actions.push({ key: ActionKey.ARCHIVE_ASSESSMENT, title: 'Testiiiing' });
+    }
   }
 
   public onAction({ action, context: assessment }: ActionArgs<FormattedAssessment, ActionKey>): void {
@@ -183,6 +190,10 @@ export class AssessmentsListComponent {
         },
         (error) => this.errorService.handleError(error, { prefix: 'Unable to load assessments' })
       );
+
+      setTimeout(() => {
+        console.log('assessment', this.data)
+      }, 1000);
   }
 
   private async deleteAssessment(assessment: FormattedAssessment, archive: boolean = true): Promise<void> {

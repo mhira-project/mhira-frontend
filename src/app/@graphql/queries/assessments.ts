@@ -13,6 +13,9 @@ const assessments = gql`
             id
             name
           }
+          emailReminder
+          emailStatus
+          receiverEmail
           patientId
           clinicianId
           status
@@ -192,6 +195,9 @@ const getFullAssessment = gql`
         id
         name
       }
+      emailReminder
+      emailStatus
+      receiverEmail
       status
       deliveryDate
       expirationDate

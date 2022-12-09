@@ -80,6 +80,7 @@ export class CreateAssessmentComponent implements OnInit {
   public pageInfo: PageInfo;
   public assessmentUrl: URL;
   public selectedQuestionnaires: QuestionnaireVersion[] = [];
+  public checked: boolean = false;
 
   get patientTitle(): string {
     const name = [this.patient?.firstName, this.patient?.middleName, this.patient?.lastName]

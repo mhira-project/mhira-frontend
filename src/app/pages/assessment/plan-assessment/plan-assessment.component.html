@@ -132,8 +132,38 @@
           </nz-input-group>
         </nz-form-item>
       </div>
+      <div *ngFor="let control of  rolesFieldAsFormArray.controls ;let i = index;" formArrayName='roles' >
+        <div [formGroupName]="i" >
+            <div class="date-picker">
+                <nz-date-picker
+                [nzBorderless]="!editMode"
+                class="date-picker1"
+                nzShowTime
+                nzFormat="yyyy-MM-dd HH:mm"
+                [nzDisabled]="!editMode"
+                [(ngModel)]="expireDate"
+                formControlName="role"
+                (ngModelChange)="onChangeExpire($event)"
+              ></nz-date-picker>
+              <nz-date-picker
+              [nzBorderless]="!editMode"
+              class="date-picker1"
+              nzShowTime
+              nzFormat="yyyy-MM-dd HH:mm"
+              [nzDisabled]="!editMode"
+              [(ngModel)]="expireDate"
+              formControlName="role"
+              (ngModelChange)="onChangeExpire($event)"
+            ></nz-date-picker>    
+            <!-- <button class="button" type="button" (click)="remove(i)" >Remove</button> -->
+            <button (click)="remove(i)" nz-button nzShape="circle"><span nz-icon nzType="delete"></span></button>
+            </div>
+        </div>
+      </div>
+    <button (click)="addControl()" nz-button nzShape="circle"><span nz-icon nzType="plus"></span></button>
       <div class="email-label-wrapper">
-        <label [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" nzChecked="checked" nz-checkbox>Sent assessment via email</label>
+        <label [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [nzChecked]="fullAssessment?.emailReminder" nz-checkbox>Sent assessment via email</label>
+        <input style="width: 240px;" nz-input placeholder="Basic usage" [value]="fullAssessment?.patient?.firstName" [disabled]="!fullAssessment?.emailReminder" />
       </div>
       <!-- <nz-form-item>
         <nz-input-group>
@@ -183,13 +213,13 @@
   </section>
 </article>
 <hr>
-<div style="margin-top: 15px">
+<div style="margin-top: 15px; margin-bottom: 15px;">
   <h5 *ngIf="fullAssessment?.uuid !== null && fullAssessment?.uuid !== undefined"><span nz-icon nzType="link" nzTheme="outline"></span> Questionnaire Link</h5>
   <br />
 </div>
 <div class="link-container" *ngIf="fullAssessment?.uuid !== null && fullAssessment?.uuid !== undefined">
   <a target="_blank" [href]="assessmentUrl">{{ this.assessmentUrl?.toString().slice(0, 50) }}...</a>
   <button style="margin-left: 10px;" nz-button nzType="default" nzShape="circle"><span (click)="copyAssessmentLink(this.assessmentUrl)" nz-icon nzType="copy" nzTheme="outline"></span></button>
-  <qrcode [qrdata]="assessmentUrl?.toString()" [width]="128" [errorCorrectionLevel]="'M'"></qrcode>
+  <!-- <qrcode [qrdata]="assessmentUrl?.toString()" [width]="128" [errorCorrectionLevel]="'M'"></qrcode> -->
   <!-- <p>{{fullAssessment | json}}</p> -->
 </div>

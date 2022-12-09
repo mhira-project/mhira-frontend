@@ -5,7 +5,7 @@ import { environment } from '@env/environment';
 import { QuestionnaireVersion } from '../../questionnaire-management/@types/questionnaire';
 import { User } from '@app/pages/user-management/@types/user';
 import { Patient } from '@app/pages/patients-management/@types/patient';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { FullAssessment } from '../@types/assessment';
 import { PermissionKey } from '../../../@shared/@types/permission';
 import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
@@ -55,7 +55,7 @@ export class PlanAssessmentComponent implements OnInit {
   public deliveryDate: any = null;
   public expireDate: any = null;
   public maxLength: number = 200;
-  public checked = true;
+  public checked: boolean = false;
   options = [
     {
       label: 'Mother',
@@ -173,8 +173,12 @@ export class PlanAssessmentComponent implements OnInit {
       informantCaregiverRelation: [null],
       deliveryDate: [null],
       expirationDate: [null],
+      emailReminder: [null],
+      // New:
+      roles: this.formBuilder.array([]),
       // notes: [null]
     });
+    
     this.getAssessmentTypes();
     this.getUserDepartments();
     this.initAssessment();
@@ -187,6 +191,24 @@ export class PlanAssessmentComponent implements OnInit {
     setTimeout(() => {
       console.log('Full Assessment: ', this.fullAssessment)      
     }, 1000);
+  }
+
+  get rolesFieldAsFormArray(): any {
+    return this.assessmentForm.get('roles') as FormArray;
+  }
+
+  role(): any {
+    return this.formBuilder.group({
+      role: this.formBuilder.control(''),
+    });
+  }
+
+  addControl(): void {
+    this.rolesFieldAsFormArray.push(this.role());
+  }
+
+  remove(i: number): void {
+    this.rolesFieldAsFormArray.removeAt(i);
   }
 
   public onSelectChange(event: any) {
@@ -337,6 +359,7 @@ export class PlanAssessmentComponent implements OnInit {
         this.editMode = false;
         this.fullAssessment = assessment;
         this.assessmentForm.setValue({
+          emailReminder: this.fullAssessment.emailReminder,
           assessmentTypeId: {
             label: this.fullAssessment.assessmentType?.name,
             value: this.fullAssessment.assessmentType?.id,
