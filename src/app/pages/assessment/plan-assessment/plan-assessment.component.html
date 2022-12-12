@@ -162,8 +162,8 @@
       </div>
     <button (click)="addControl()" nz-button nzShape="circle"><span nz-icon nzType="plus"></span></button>
       <div class="email-label-wrapper">
-        <label [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [nzChecked]="fullAssessment?.emailReminder" nz-checkbox>Sent assessment via email</label>
-        <input style="width: 240px;" nz-input placeholder="Basic usage" [value]="fullAssessment?.patient?.firstName" [disabled]="!fullAssessment?.emailReminder" />
+        <label [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>Sent assessment via email</label>
+        <input style="width: 240px;" nz-input placeholder="youremail@domain.com" [value]="fullAssessment?.patient?.firstName" [disabled]="!checked" />
       </div>
       <!-- <nz-form-item>
         <nz-input-group>

@@ -205,15 +205,15 @@ export const MENU: SideNavInterface[] = [
         iconTheme: '',
         submenu: [],
       },
-      // {
-      //   path: null,
-      //   title: 'Version: 2.0.16',
-      //   permissions: [PK.VIEW_SETTINGS],
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'code',
-      //   submenu: [],
-      // }
+      {
+        path: null,
+        title: 'Version: 2.0.16',
+        permissions: [PK.VIEW_SETTINGS],
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'code',
+        submenu: [],
+      }
       // {
       //   path: 'administration/settings',
       //   title: 'menu.settings',

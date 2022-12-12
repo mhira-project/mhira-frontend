@@ -106,7 +106,7 @@
             <br/>
         </div>
         <div class="link-container" *ngIf="fullAssessment?.uuid !== null && fullAssessment?.uuid !== undefined">
-            <a target="_blank" [href]="assessmentUrl">{{ this.assessmentUrl?.toString().slice(0, 50) }}...</a>
+            <a style="margin-right: 10px;" target="_blank" [href]="assessmentUrl">{{ this.assessmentUrl?.toString().slice(0, 50) }}...</a>
             <button (click)="copyAssessmentLink(this.assessmentUrl)" nz-button nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
             <!-- <qrcode [qrdata]="assessmentUrl?.toString()" [width]="128" [errorCorrectionLevel]="'M'"></qrcode> -->
         </div>
