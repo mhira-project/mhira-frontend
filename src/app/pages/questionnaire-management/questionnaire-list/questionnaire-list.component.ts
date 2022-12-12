@@ -35,7 +35,6 @@ export const createSearchFilter = (searchString: string): Array<{ [K in keyof Pa
   if (!searchString) return [];
   return [
     { name: { iLike: `%${searchString}%` } },
-    { keywords: { in: [searchString] } },
     {
       questionnaire: {
         or: [{ abbreviation: { iLike: `%${searchString}%` } }, { language: { iLike: `%${searchString}%` } }],
