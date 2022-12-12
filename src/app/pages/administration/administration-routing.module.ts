@@ -11,6 +11,7 @@ import { CreateReportComponent } from './create-report/create-report.component';
 import { DisclaimersComponent } from './disclaimers/disclaimers.component';
 import { PatientStatusesComponent } from './patient-statuses/patient-statuses.component';
 import { AssessmentAdministrationComponent } from './assessment-administration/assessment-administration.component';
+import { VersionComponent } from './version/version.component';
 
 const routes: Routes = [
   {
@@ -116,6 +117,17 @@ const routes: Routes = [
         component: DepartmentsComponent,
         data: {
           breadcrumbI18nKey: 'menu.departments',
+          permissions: {
+            only: [PermissionKey.VIEW_SETTINGS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'version',
+        component: VersionComponent,
+        data: {
+          breadcrumbI18nKey: 'Version',
           permissions: {
             only: [PermissionKey.VIEW_SETTINGS],
           },

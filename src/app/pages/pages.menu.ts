@@ -206,7 +206,7 @@ export const MENU: SideNavInterface[] = [
         submenu: [],
       },
       {
-        path: null,
+        path: 'administration/version',
         title: 'Version: 2.0.16',
         permissions: [PK.VIEW_SETTINGS],
         iconType: 'nzIcon',
