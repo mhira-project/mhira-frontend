@@ -91,6 +91,7 @@ export default {
       questionnaires: 'Fragebögen',
       deliveryDate: 'Aktivierungsdatum',
       expirationDate: 'Ablaufdatum',
+      updatedAt: 'Abgabetermin',
       status: 'Status',
     },
     scripts: {
@@ -302,6 +303,7 @@ export default {
     informant: 'Informant',
     createdAt: 'Hergestellt am',
     deliveryDate: 'Aktivierungsdatum',
+    updatedAt: 'Abgabetermin',
     expirationDate: 'Ablaufdatum',
   },
   planAssessment: {

@@ -90,6 +90,7 @@ export default {
       questionnaires: 'Pyetësorë',
       deliveryDate: 'Data e Dorëzimit',
       expirationDate: 'Data e Skadencës',
+      updatedAt: 'Data e dorezimit',
       status: 'Statusi',
     },
     scripts: {
@@ -302,6 +303,7 @@ export default {
     informant: 'Informatori',
     createdAt: 'Krijuar Në',
     expirationDate: 'Data e skadencës',
+    updatedAt: 'Data e dorezimit',
     deliveryDate: 'Data e dorëzimit',
   },
   planAssessment: {

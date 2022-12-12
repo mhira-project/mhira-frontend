@@ -244,7 +244,6 @@ export class PlanAssessmentComponent implements OnInit {
 
   public onSubmitAssessment() {
     if (this.assessmentForm.invalid) return;
-
     const questionnaires = this.selectedQuestionnaires.map((q) => q._id);
     const { informant, informantPatient, ...rest } = this.assessmentForm.value;
     const newAssessmentData = {
