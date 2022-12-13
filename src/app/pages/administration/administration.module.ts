@@ -38,6 +38,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { DisclaimersComponent } from './disclaimers/disclaimers.component';
 import { AssessmentAdministrationComponent } from './assessment-administration/assessment-administration.component';
 import { VersionComponent } from './version/version.component';
+import { EmailTemplatesComponent } from './email-templates/email-templates.component';
 
 const antModules = [
   NzGridModule,
@@ -85,7 +86,8 @@ const antModules = [
     CreateReportComponent,
     DisclaimersComponent,
     AssessmentAdministrationComponent,
-    VersionComponent
+    VersionComponent,
+    EmailTemplatesComponent
   ],
   providers: [PermissionsService, RolesService],
 })

@@ -12,6 +12,7 @@ import { DisclaimersComponent } from './disclaimers/disclaimers.component';
 import { PatientStatusesComponent } from './patient-statuses/patient-statuses.component';
 import { AssessmentAdministrationComponent } from './assessment-administration/assessment-administration.component';
 import { VersionComponent } from './version/version.component';
+import { EmailTemplatesComponent } from './email-templates/email-templates.component';
 
 const routes: Routes = [
   {
@@ -117,6 +118,17 @@ const routes: Routes = [
         component: DepartmentsComponent,
         data: {
           breadcrumbI18nKey: 'menu.departments',
+          permissions: {
+            only: [PermissionKey.VIEW_SETTINGS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'email-templates',
+        component: EmailTemplatesComponent,
+        data: {
+          breadcrumbI18nKey: 'Email Templates',
           permissions: {
             only: [PermissionKey.VIEW_SETTINGS],
           },

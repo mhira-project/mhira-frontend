@@ -206,8 +206,17 @@ export const MENU: SideNavInterface[] = [
         submenu: [],
       },
       {
+        path: 'administration/email-templates',
+        title: 'Email Templates',
+        permissions: [PK.VIEW_SETTINGS],
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'code',
+        submenu: [],
+      },
+      {
         path: 'administration/version',
-        title: 'Version: 2.0.16',
+        title: 'Version',
         permissions: [PK.VIEW_SETTINGS],
         iconType: 'nzIcon',
         iconTheme: 'outline',

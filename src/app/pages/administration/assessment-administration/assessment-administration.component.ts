@@ -7,6 +7,7 @@ import {
   TableColumn,
 } from '@shared/@modules/master-data/@types/list';
 import { AssessmentAdministrationColumns } from '@app/pages/administration/@tables/assessment-administration.table';
+// import { EmailTemplatesColumns } from '@app/pages/administration/@tables/email-templates.table';
 import { PageInfo, Paging } from '@shared/@types/paging';
 import { Filter } from '@shared/@types/filter';
 import { Sorting } from '@shared/@types/sorting';

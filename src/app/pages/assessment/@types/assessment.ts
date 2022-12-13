@@ -66,4 +66,5 @@ export interface FormattedAssessment extends Assessment {
   formatedExpirationDate?: string;
   // Added this:
   emailStatus: string;
+  updatedAt: Date;
 }

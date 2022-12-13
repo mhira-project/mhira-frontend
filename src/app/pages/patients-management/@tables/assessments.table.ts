@@ -75,4 +75,15 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
       // options added dynamically
     },
   },
+  {
+    title: 'Email Status',
+    name: 'emailStatus',
+    render: 'emailStatus',
+    translationPath: 'Email Status',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  }
 ];

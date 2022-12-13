@@ -40,10 +40,16 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
           }
         : {},
   },
+  // {
+  //   name: 'clinicianWorkId',
+  //   title: 'Clinician Work ID',
+  //   translationPath: 'plannedAssessments.clinicianWorkId',
+  // },
   {
-    name: 'clinicianWorkId',
-    title: 'Clinician Work ID',
-    translationPath: 'plannedAssessments.clinicianWorkId',
+    name: 'updatedAt',
+    title: 'Updated At',
+    translationPath: 'Submission Date',
+    render: 'date'
   },
   {
     name: 'formattedClinician',

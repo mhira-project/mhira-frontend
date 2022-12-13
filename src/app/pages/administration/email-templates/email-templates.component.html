@@ -1,0 +1,12 @@
+<p>email-templates works!</p>
+<app-master-data-list
+  [data]="data"
+  [columns]="columns"
+  [loading]="isLoading"
+  [pageInfo]="pageInfo"
+  [actions]="actions"
+  (pageChange)="onPageChange($event)"
+  (sort)="onSort($event)"
+  (filter)="onFilter($event)"
+  (executeAction)="onAction($event)"
+>

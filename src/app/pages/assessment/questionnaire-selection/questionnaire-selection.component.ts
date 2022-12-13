@@ -37,7 +37,8 @@ export class QuestionnaireSelectionComponent {
 
     this.questionnaireService
       .getQuestionnaires({ filter })
-      .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node)));
+      // Added filter to filter out the archieved quest.
+      .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node).filter(e => e.status !== 'ARCHIVED')));
   }
 
   public onQuestionnaireSearchNew(q: string) {
@@ -46,14 +47,14 @@ export class QuestionnaireSelectionComponent {
 
       this.questionnaireService
         .getQuestionnaires({ filter })
-        .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node)));
+        .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node).filter(e => e.status !== 'ARCHIVED')));
     }
 
     const filter = { or: createSearchFilter(q) };
 
     this.questionnaireService
       .getQuestionnaires({ filter })
-      .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node)));
+      .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node).filter(e => e.status !== 'ARCHIVED')));
   }
 
   public onToggleQuestionnaire(questionnaire: QuestionnaireVersion): void {
