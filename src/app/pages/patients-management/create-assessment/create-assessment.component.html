@@ -90,10 +90,10 @@
                     </nz-input-group>
                 </nz-form-item>
                 <div *ngIf="editMode" style="margin-top: 20px; display: flex; justify-content: space-between">
-                    <button nz-button class="button" style="margin-right: 10px">Cancel</button>
-                    <button nz-button nztype="primary" class="button" [disabled]="!formGroup.valid">Submit Session</button>
+                    <button nz-button class="button" style="margin-right: 10px" (click)="editMode = !editMode">Cancel</button>
+                    <button nz-button nztype="primary" class="button" [disabled]="!formGroup.valid">Submit</button>
                 </div>
-                <button nz-button nztype="primary" type="button" *ngIf="!editMode" (click)="onSubmitAssessment()">
+                <button nz-button nztype="primary" type="button" *ngIf="!editMode" (click)="editMode = !editMode">
                     Edit Note
                 </button>
             </form>

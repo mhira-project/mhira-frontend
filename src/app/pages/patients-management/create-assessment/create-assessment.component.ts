@@ -113,6 +113,7 @@ export class CreateAssessmentComponent implements OnInit {
       informantType: [null],
       deliveryDate: [null],
       expirationDate: [null],
+      emailReminder: [null],
       note: [null],
     });
     this.getAssessmentTypes();
@@ -122,6 +123,7 @@ export class CreateAssessmentComponent implements OnInit {
     this.getCaregivers();
     this.getUserDepartments();
     console.log(this.assessmentAdministration);
+    this.formGroup.valueChanges.subscribe(() => console.log('Value is changing!'))
 
     setTimeout(() => {
       this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
@@ -279,23 +281,27 @@ export class CreateAssessmentComponent implements OnInit {
     this.patient = this.fullAssessment.patient;
     this.editMode = false;
     this.formGroup.setValue({
-      assessmentTypeId: {
-        label: this.fullAssessment.assessmentType?.name,
-        value: this.fullAssessment.assessmentType?.id,
-      },
+      // assessmentTypeId: {
+      //   label: this.fullAssessment.assessmentType?.name,
+      //   value: this.fullAssessment.assessmentType?.id as number,
+      // },
+      assessmentTypeId: this.fullAssessment.assessmentType?.id,
       clinicianId: this.fullAssessment.clinician.id,
       deliveryDate: this.fullAssessment.deliveryDate,
       informantType: '',
       informantPatient: this.fullAssessment.patient,
-      informantClinicianId: {
-        label:
-          this.fullAssessment.informantClinician?.firstName + ' ' + this.fullAssessment.informantClinician?.lastName,
-        value: this.fullAssessment.informantClinician?.id,
-      },
-      informantCaregiverRelation: {
-        label: this.fullAssessment.informantCaregiverRelation,
-        value: this.fullAssessment.informantCaregiverRelation,
-      },
+      emailReminder: this.fullAssessment.emailReminder,
+      // informantClinicianId: {
+      //   label:
+      //     this.fullAssessment.informantClinician?.firstName + ' ' + this.fullAssessment.informantClinician?.lastName,
+      //   value: this.fullAssessment.informantClinician?.id,
+      // },
+      informantClinicianId: this.fullAssessment.informantClinician?.id || null,
+      // informantCaregiverRelation: {
+      //   label: this.fullAssessment.informantCaregiverRelation,
+      //   value: this.fullAssessment.informantCaregiverRelation,
+      // },
+      informantCaregiverRelation: this.fullAssessment.informantCaregiverRelation,
       expirationDate: this.fullAssessment.expirationDate,
       note: '',
     });

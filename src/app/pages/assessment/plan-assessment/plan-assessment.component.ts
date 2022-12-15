@@ -175,7 +175,7 @@ export class PlanAssessmentComponent implements OnInit {
       expirationDate: [null],
       emailReminder: [null],
       // New:
-      roles: this.formBuilder.array([]),
+      // roles: this.formBuilder.array([]),
       // notes: [null]
     });
     
@@ -367,17 +367,19 @@ export class PlanAssessmentComponent implements OnInit {
           patientId: this.fullAssessment.patientId,
           clinicianId: this.fullAssessment.clinicianId,
           informantPatient: this.fullAssessment.patient,
-          informantClinicianId: {
-            label:
-              this.fullAssessment.informantClinician?.firstName +
-              ' ' +
-              this.fullAssessment.informantClinician?.lastName,
-            value: this.fullAssessment.informantClinician?.id,
-          },
-          informantCaregiverRelation: {
-            label: this.fullAssessment.informantCaregiverRelation,
-            value: this.fullAssessment.informantCaregiverRelation,
-          },
+          // informantClinicianId: {
+          //   label:
+          //     this.fullAssessment.informantClinician?.firstName +
+          //     ' ' +
+          //     this.fullAssessment.informantClinician?.lastName,
+          //   value: this.fullAssessment.informantClinician?.id,
+          // },
+          informantClinicianId: this.fullAssessment.informantClinician?.id,
+          // informantCaregiverRelation: {
+          //   label: this.fullAssessment.informantCaregiverRelation,
+          //   value: this.fullAssessment.informantCaregiverRelation,
+          // },
+          informantCaregiverRelation: this.fullAssessment.informantCaregiverRelation,
           deliveryDate: this.fullAssessment.deliveryDate,
           expirationDate: this.fullAssessment.expirationDate,
 

@@ -132,7 +132,7 @@
           </nz-input-group>
         </nz-form-item>
       </div>
-      <div *ngFor="let control of  rolesFieldAsFormArray.controls ;let i = index;" formArrayName='roles' >
+      <!-- <div *ngFor="let control of  rolesFieldAsFormArray.controls ;let i = index;" formArrayName='roles' >
         <div [formGroupName]="i" >
             <div class="date-picker">
                 <nz-date-picker
@@ -155,11 +155,10 @@
               formControlName="role"
               (ngModelChange)="onChangeExpire($event)"
             ></nz-date-picker>    
-            <!-- <button class="button" type="button" (click)="remove(i)" >Remove</button> -->
             <button (click)="remove(i)" nz-button nzShape="circle"><span nz-icon nzType="delete"></span></button>
             </div>
         </div>
-      </div>
+      </div> -->
     <button (click)="addControl()" nz-button nzShape="circle"><span nz-icon nzType="plus"></span></button>
       <div class="email-label-wrapper">
         <label [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>Sent assessment via email</label>

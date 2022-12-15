@@ -10,6 +10,7 @@ import { PermissionsComponent } from './permissions/permissions.component';
 import { RolesComponent } from './roles/roles.component';
 import { PermissionsService } from './@services/permissions.service';
 import { RolesService } from './@services/roles.service';
+import {EmailTemplatesService} from './@services/email-templates.service'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DepartmentsComponent } from './departments/departments.component';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
@@ -89,6 +90,6 @@ const antModules = [
     VersionComponent,
     EmailTemplatesComponent
   ],
-  providers: [PermissionsService, RolesService],
+  providers: [PermissionsService, RolesService, EmailTemplatesService],
 })
 export class AdministrationModule {}

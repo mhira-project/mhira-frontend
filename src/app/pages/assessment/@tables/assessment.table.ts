@@ -46,8 +46,8 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   //   translationPath: 'plannedAssessments.clinicianWorkId',
   // },
   {
-    name: 'updatedAt',
-    title: 'Updated At',
+    name: 'submissionDate',
+    title: 'Submission Date',
     translationPath: 'Submission Date',
     render: 'date'
   },

@@ -8,6 +8,7 @@ import { Action } from 'rxjs/internal/scheduler/Action';
 import { finalize } from 'rxjs/operators';
 import { AssessmentAdministrationForm } from '../@forms/assessment-administration.form';
 import { AssessmentAdministrationService } from '../@services/assessment-administration.service';
+import { EmailTemplatesService } from '../@services/email-templates.service';
 import { EmailTemplatesColumns } from '../@tables/email-templates.table';
 import { AssessmentAdministration } from '../@types/assessment-administration';
 
@@ -22,7 +23,7 @@ enum ActionKey {
 })
 export class EmailTemplatesComponent implements OnInit {
 
-  public data: Partial<AssessmentAdministration>[];
+  public data: Partial<AssessmentAdministration>[] | any;
   public columns: TableColumn<Partial<AssessmentAdministration>>[] = EmailTemplatesColumns;
   public isLoading = false;
   public pageInfo: PageInfo;
@@ -36,12 +37,15 @@ export class EmailTemplatesComponent implements OnInit {
   public assessmentAdministrationForm = AssessmentAdministrationForm;
   assessmentAdministrationRequestOptions: any;
 
-  constructor(private assessmentAdministrationService: AssessmentAdministrationService,
+  constructor(private assessmentAdministrationService: AssessmentAdministrationService, private emailTemplatesService: EmailTemplatesService,
     private errorService: ErrorHandlerService) { }
 
   ngOnInit(): void {
-    this.getAssessmentTypes();
+    // this.getAssessmentTypes();
     // this.actions = [{ key: ActionKey.EDIT, title: 'Edit Type' }];
+    this.getEmailTemplates();
+    // this.deleteEmailTemplate(2);
+    // this.createEmailTemplate();
   }
 
   public onPageChange(paging: Paging): void {
@@ -49,8 +53,8 @@ export class EmailTemplatesComponent implements OnInit {
     // this.getAssessmentTypes();
     console.log('Page change!')
   }
+  
   getAssessmentTypes() {
-    // throw new Error('Method not implemented.');
     this.isLoading = true;
     this.assessmentAdministrationService
       .assessmentAdministration(this.assessmentAdministrationRequestOptions)
@@ -67,10 +71,42 @@ export class EmailTemplatesComponent implements OnInit {
       );
   }
 
+  getEmailTemplates(){
+    this.emailTemplatesService.getAllEmailTemplates()
+    .pipe(finalize(() => (this.isLoading = false)))
+    .subscribe((x: any) => { this.data = x.data.getAllEmailTemplates.edges.map((x: any) => x.node)
+      this.pageInfo = x.data.getAllEmailTemplates.pageInfo;
+      console.log('Dataaa: ', x),
+      (err: any) => this.errorService.handleError(err, { prefix: 'Unable to load email templates' })});
+  }
+  
+  createEmailTemplate() {
+    this.emailTemplatesService
+      .createEmailTemplate({name: 'Test VS Code', subject: 'test', status: true, body: 'test', module: 'CLIENT'})
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe(
+        ({ data }) => {
+          console.log('Test Data: ', data);
+          this.isLoading = false;
+          this.getAssessmentTypes();
+          // this.closeCreatePanel();
+        },
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to create assessment type' })
+      );
+  }
+
+  deleteEmailTemplate(id: number){
+    this.emailTemplatesService.deleteEmailTemplate(7).subscribe(() => {})
+  }
+
   public onSort(sorting: SortField<AssessmentAdministration>[]): void {
     // this.assessmentAdministrationRequestOptions.sorting = sorting;
     // this.getAssessmentTypes();
-    console.log('Sort!')
+    console.log('Sort!');
   }
 
   public onFilter(filter: Filter): void {

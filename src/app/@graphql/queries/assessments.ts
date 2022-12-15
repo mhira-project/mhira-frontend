@@ -18,6 +18,7 @@ const assessments = gql`
           receiverEmail
           patientId
           clinicianId
+          submissionDate
           status
           deliveryDate
           expirationDate
