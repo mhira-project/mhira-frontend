@@ -27,6 +27,7 @@ const getAllEmailTemplates = gql` {
     getAllEmailTemplates {
         edges {
             node {
+                id
                 name
                 status
                 subject

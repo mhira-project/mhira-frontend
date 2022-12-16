@@ -34,9 +34,12 @@ export class EmailTemplatesService {
                 mutation: EmailTemplatesMutations.updateOneEmailTemplate,
                 variables: {
                     input: {
-                        assessmentTypeId: emailTemplate.id,
+                        id: emailTemplate.id,
                         name: emailTemplate.name,
-                        status: emailTemplate.status
+                        status: emailTemplate.status,
+                        subject: emailTemplate.subject,
+                        module: emailTemplate.module,
+                        body: emailTemplate.body
                     }
                 },
                 fetchPolicy: 'no-cache'

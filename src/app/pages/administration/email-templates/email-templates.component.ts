@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActionArgs, SortField, TableColumn } from '@app/@shared/@modules/master-data/@types/list';
 import { Filter } from '@app/@shared/@types/filter';
 import { PageInfo, Paging } from '@app/@shared/@types/paging';
 import { Convert } from '@app/@shared/classes/convert';
 import { ErrorHandlerService } from '@app/@shared/services/error-handler.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Action } from 'rxjs/internal/scheduler/Action';
 import { finalize } from 'rxjs/operators';
 import { AssessmentAdministrationForm } from '../@forms/assessment-administration.form';
@@ -14,6 +16,7 @@ import { AssessmentAdministration } from '../@types/assessment-administration';
 
 enum ActionKey {
   EDIT,
+  DELETE
 }
 
 @Component({
@@ -27,7 +30,7 @@ export class EmailTemplatesComponent implements OnInit {
   public columns: TableColumn<Partial<AssessmentAdministration>>[] = EmailTemplatesColumns;
   public isLoading = false;
   public pageInfo: PageInfo;
-  public actions: Action<ActionKey>[] = [];
+  public actions: Action<ActionKey>[] | any = [];
 
   // form properties
   public showCreateAssessmentAdministration = false;
@@ -38,14 +41,11 @@ export class EmailTemplatesComponent implements OnInit {
   assessmentAdministrationRequestOptions: any;
 
   constructor(private assessmentAdministrationService: AssessmentAdministrationService, private emailTemplatesService: EmailTemplatesService,
-    private errorService: ErrorHandlerService) { }
+    private errorService: ErrorHandlerService, private nzMessage: NzMessageService, private router: Router) { }
 
   ngOnInit(): void {
-    // this.getAssessmentTypes();
-    // this.actions = [{ key: ActionKey.EDIT, title: 'Edit Type' }];
     this.getEmailTemplates();
-    // this.deleteEmailTemplate(2);
-    // this.createEmailTemplate();
+    this.actions = [{ key: ActionKey.EDIT, title: 'Edit Template' }, {key: ActionKey.DELETE, title: 'Delete Template'}];
   }
 
   public onPageChange(paging: Paging): void {
@@ -80,27 +80,30 @@ export class EmailTemplatesComponent implements OnInit {
       (err: any) => this.errorService.handleError(err, { prefix: 'Unable to load email templates' })});
   }
   
-  createEmailTemplate() {
-    this.emailTemplatesService
-      .createEmailTemplate({name: 'Test VS Code', subject: 'test', status: true, body: 'test', module: 'CLIENT'})
-      .pipe(
-        finalize(() => {
-          this.isLoading = false;
-        })
-      )
-      .subscribe(
-        ({ data }) => {
-          console.log('Test Data: ', data);
-          this.isLoading = false;
-          this.getAssessmentTypes();
-          // this.closeCreatePanel();
-        },
-        (error) => this.errorService.handleError(error, { prefix: 'Unable to create assessment type' })
-      );
-  }
+  // createEmailTemplate() {
+  //   this.emailTemplatesService
+  //     .createEmailTemplate({name: 'Test VS Code', subject: 'test', status: true, body: 'test', module: 'CLIENT'})
+  //     .pipe(
+  //       finalize(() => {
+  //         this.isLoading = false;
+  //       })
+  //     )
+  //     .subscribe(
+  //       ({ data }) => {
+  //         console.log('Test Data: ', data);
+  //         this.isLoading = false;
+  //         this.getAssessmentTypes();
+  //         // this.closeCreatePanel();
+  //       },
+  //       (error) => this.errorService.handleError(error, { prefix: 'Unable to create assessment type' })
+  //     );
+  // }
 
   deleteEmailTemplate(id: number){
-    this.emailTemplatesService.deleteEmailTemplate(7).subscribe(() => {})
+    this.emailTemplatesService.deleteEmailTemplate(id).subscribe(() => {
+      this.nzMessage.success('Email template deleted successfully!', { nzDuration: 3000 });
+      this.getEmailTemplates();
+    });
   }
 
   public onSort(sorting: SortField<AssessmentAdministration>[]): void {
@@ -121,15 +124,20 @@ export class EmailTemplatesComponent implements OnInit {
   }: ActionArgs<AssessmentAdministration, ActionKey>): void {
     switch (action.key) {
       case ActionKey.EDIT:
-        this.openCreatePanel(assessmentAdministration);
+        // this.openCreatePanel(assessmentAdministration);
+        this.router.navigate([`/mhira/administration/create-template/${assessmentAdministration.id}`])
         return;
+      case ActionKey.DELETE:
+        this.deleteEmailTemplate(assessmentAdministration.id);
     }
   }
-  public openCreatePanel(assessmentAdministration?: AssessmentAdministration): void {
-    if (assessmentAdministration) this.assessmentAdministration = assessmentAdministration;
-    this.showCreateAssessmentAdministration = true;
-    this.populateForm = true;
-    this.resetForm = true;
+
+  public openCreatePanel(assessmentAdministration?: any): void {
+    // if (assessmentAdministration) this.assessmentAdministration = assessmentAdministration;
+    // this.showCreateAssessmentAdministration = true;
+    // this.populateForm = true;
+    // this.resetForm = true;
+    console.log(assessmentAdministration.name)
   }
 
 }

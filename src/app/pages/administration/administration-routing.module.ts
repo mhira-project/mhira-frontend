@@ -13,6 +13,7 @@ import { PatientStatusesComponent } from './patient-statuses/patient-statuses.co
 import { AssessmentAdministrationComponent } from './assessment-administration/assessment-administration.component';
 import { VersionComponent } from './version/version.component';
 import { EmailTemplatesComponent } from './email-templates/email-templates.component';
+import { CreateEmailTemplateComponent } from './create-email-template/create-email-template.component';
 
 const routes: Routes = [
   {
@@ -129,6 +130,28 @@ const routes: Routes = [
         component: EmailTemplatesComponent,
         data: {
           breadcrumbI18nKey: 'Email Templates',
+          permissions: {
+            only: [PermissionKey.VIEW_SETTINGS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'create-template',
+        component: CreateEmailTemplateComponent,
+        data: {
+          breadcrumbI18nKey: 'Create Template',
+          permissions: {
+            only: [PermissionKey.VIEW_SETTINGS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'create-template/:id',
+        component: CreateEmailTemplateComponent,
+        data: {
+          breadcrumbI18nKey: 'Create Template',
           permissions: {
             only: [PermissionKey.VIEW_SETTINGS],
           },

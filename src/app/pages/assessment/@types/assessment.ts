@@ -67,4 +67,5 @@ export interface FormattedAssessment extends Assessment {
   // Added this:
   emailStatus: string;
   submissionDate: Date;
+  questionnaireAssessment: {};
 }
