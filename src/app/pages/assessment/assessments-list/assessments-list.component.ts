@@ -83,10 +83,7 @@ export class AssessmentsListComponent {
     if (this.perms.permissionsOnly(PermissionKey.DELETE_ASSESSMENTS)) {
       this.actions.push({ key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Session' });
     }
-    // this.addTest();
   }
-
-  // Modal stuff
 
   showModal(): void {
     this.isVisible = true;
@@ -101,9 +98,6 @@ export class AssessmentsListComponent {
     console.log('Button cancel clicked!');
     this.isVisible = false;
   }
-
-  // 
-
 
   public onPageChange(paging: Paging): void {
     this.assessmentRequestOptions.paging = paging;
@@ -125,12 +119,6 @@ export class AssessmentsListComponent {
     this.getAssessments();
   }
 
-  public addTest({ action, context: assessment }: ActionArgs<FormattedAssessment, ActionKey>){
-    if(assessment.uuid.length > 3){
-      this.actions.push({ key: ActionKey.ARCHIVE_ASSESSMENT, title: 'Testiiiing' });
-    }
-  }
-
   public onAction({ action, context: assessment }: ActionArgs<FormattedAssessment, ActionKey>): void {
     switch (action.key) {
       case ActionKey.SHOW_ASSESSMENT:
@@ -149,7 +137,6 @@ export class AssessmentsListComponent {
         this.modalData = assessment
         this.newUrl = new URL(this.generateAssessmentURL(assessment.uuid), window.location.origin);
         this.showModal()
-        console.log('Yes: ', assessment) 
         return;
     }
   }
@@ -190,10 +177,6 @@ export class AssessmentsListComponent {
         },
         (error) => this.errorService.handleError(error, { prefix: 'Unable to load assessments' })
       );
-
-      setTimeout(() => {
-        console.log('assessment', this.data)
-      }, 1000);
   }
 
   private async deleteAssessment(assessment: FormattedAssessment, archive: boolean = true): Promise<void> {
@@ -270,7 +253,6 @@ export class AssessmentsListComponent {
   private generateAssessmentURL(assesmentUuid: string): string {
     const cryptoId = CryptoJS.AES.encrypt(assesmentUuid, environment.secretKey).toString();
     const tree = this.router.createUrlTree(['/assessment/overview'], { queryParams: { assessment: cryptoId } });
-    console.log('What is this', this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(tree)));
     return this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(tree));
   }
 

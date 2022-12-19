@@ -31,6 +31,7 @@ const CryptoJS = require('crypto-js');
 enum ActionKey {
   CHANGE_STATUS,
   DELETE_PATIENT,
+  ARCHIVE_PATIENT
 }
 
 @Component({
@@ -124,6 +125,9 @@ export class PatientsListComponent {
       case ActionKey.CHANGE_STATUS:
         this.changePatientStatus(patient);
         return;
+        case ActionKey.ARCHIVE_PATIENT:
+          this.archivePatient(patient);
+          return;
       case ActionKey.DELETE_PATIENT:
         this.deletePatient(patient);
         return;
@@ -259,6 +263,40 @@ export class PatientsListComponent {
       );
   }
 
+  private async archivePatient(patient: FormattedPatient): Promise<void> {
+    // create confirmation modal
+    const modal = this.modalService.confirm({
+      nzOnOk: () => true,
+      nzTitle: 'Archive Patient',
+      nzContent: `
+        Are you sure you want to archive ${patient.firstName} ${patient.lastName}? This action is irreversible
+      `,
+    });
+
+    // wait for modal to successfully complete
+    const confirmation = await modal.afterClose.toPromise();
+    if (!confirmation) return;
+
+    // delete patient
+    this.loading = true;
+    this.patientsService
+      .archivePatient(patient)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        () => {
+          // this.data.splice(this.data.indexOf(patient), 1);
+          // this.message.success('Patient has been successfully archived');
+          // this.getPatients();
+        },
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: `Unable to archived patient "${patient.firstName} ${patient.lastName}"`,
+          })
+      );
+    this.getPatients();
+  }
+
+
   private get userId(): number {
     const user = JSON.parse(localStorage.getItem('user')) as User;
     return user.id ?? 0;
@@ -267,6 +305,10 @@ export class PatientsListComponent {
   private setActions(): void {
     if (this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
       this.actions = [...this.actions, { key: ActionKey.CHANGE_STATUS, title: 'Change Status' }];
+    }
+
+    if (this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
+      this.actions = [...this.actions, { key: ActionKey.ARCHIVE_PATIENT, title: 'Archive Patient' }];
     }
 
     if (this.perms.permissionsOnly(PermissionKey.DELETE_PATIENTS)) {

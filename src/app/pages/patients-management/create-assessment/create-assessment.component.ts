@@ -122,12 +122,9 @@ export class CreateAssessmentComponent implements OnInit {
     this.getPatient();
     this.getCaregivers();
     this.getUserDepartments();
-    console.log(this.assessmentAdministration);
-    this.formGroup.valueChanges.subscribe(() => console.log('Value is changing!'))
 
     setTimeout(() => {
       this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
-      console.log('Full: ', this.fullAssessment)
     }, 500);
   }
 
@@ -281,26 +278,13 @@ export class CreateAssessmentComponent implements OnInit {
     this.patient = this.fullAssessment.patient;
     this.editMode = false;
     this.formGroup.setValue({
-      // assessmentTypeId: {
-      //   label: this.fullAssessment.assessmentType?.name,
-      //   value: this.fullAssessment.assessmentType?.id as number,
-      // },
       assessmentTypeId: this.fullAssessment.assessmentType?.id,
       clinicianId: this.fullAssessment.clinician.id,
       deliveryDate: this.fullAssessment.deliveryDate,
       informantType: '',
       informantPatient: this.fullAssessment.patient,
       emailReminder: this.fullAssessment.emailReminder,
-      // informantClinicianId: {
-      //   label:
-      //     this.fullAssessment.informantClinician?.firstName + ' ' + this.fullAssessment.informantClinician?.lastName,
-      //   value: this.fullAssessment.informantClinician?.id,
-      // },
       informantClinicianId: this.fullAssessment.informantClinician?.id || null,
-      // informantCaregiverRelation: {
-      //   label: this.fullAssessment.informantCaregiverRelation,
-      //   value: this.fullAssessment.informantCaregiverRelation,
-      // },
       informantCaregiverRelation: this.fullAssessment.informantCaregiverRelation,
       expirationDate: this.fullAssessment.expirationDate,
       note: '',
@@ -378,7 +362,6 @@ export class CreateAssessmentComponent implements OnInit {
   private generateAssessmentURL(assesmentUuid: string): string {
     const cryptoId = CryptoJS.AES.encrypt(assesmentUuid, environment.secretKey).toString();
     const tree = this.router.createUrlTree(['/assessment/overview'], { queryParams: { assessment: cryptoId } });
-    console.log('What is this', this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(tree)));
     return this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(tree));
   }
 

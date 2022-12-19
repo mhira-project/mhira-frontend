@@ -41,6 +41,7 @@ import { AssessmentAdministrationComponent } from './assessment-administration/a
 import { VersionComponent } from './version/version.component';
 import { EmailTemplatesComponent } from './email-templates/email-templates.component';
 import { CreateEmailTemplateComponent } from './create-email-template/create-email-template.component';
+import { QuillModule } from 'ngx-quill';
 
 const antModules = [
   NzGridModule,
@@ -78,6 +79,7 @@ const antModules = [
     NzSelectModule,
     NzRadioModule,
     NzFormModule,
+    QuillModule.forRoot()
   ],
   declarations: [
     RolesAndPermissionsComponent,

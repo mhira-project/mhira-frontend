@@ -174,7 +174,6 @@ export class PlanAssessmentComponent implements OnInit {
       deliveryDate: [null],
       expirationDate: [null],
       emailReminder: [null],
-      // New:
       // roles: this.formBuilder.array([]),
       // notes: [null]
     });
@@ -187,10 +186,6 @@ export class PlanAssessmentComponent implements OnInit {
     setTimeout(() => {
       this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
     }, 500);
-
-    setTimeout(() => {
-      console.log('Full Assessment: ', this.fullAssessment)      
-    }, 1000);
   }
 
   get rolesFieldAsFormArray(): any {
@@ -275,6 +270,7 @@ export class PlanAssessmentComponent implements OnInit {
       () => {
         this.nzMessage.success('Assessment created', { nzDuration: 3000 });
         this.editMode = false;
+        this.router.navigate(['/mhira/assessments/planned-assessments']);
       },
       (err) => this.errorService.handleError(err, { prefix: 'Unable to create assessment ' })
     );
@@ -349,7 +345,6 @@ export class PlanAssessmentComponent implements OnInit {
       const bytes = CryptoJS.AES.decrypt(raw, environment.secretKey);
       assessmentId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).id;
     } catch {
-      // console.log('Catch!')
       return;
     }
 
@@ -367,18 +362,7 @@ export class PlanAssessmentComponent implements OnInit {
           patientId: this.fullAssessment.patientId,
           clinicianId: this.fullAssessment.clinicianId,
           informantPatient: this.fullAssessment.patient,
-          // informantClinicianId: {
-          //   label:
-          //     this.fullAssessment.informantClinician?.firstName +
-          //     ' ' +
-          //     this.fullAssessment.informantClinician?.lastName,
-          //   value: this.fullAssessment.informantClinician?.id,
-          // },
-          informantClinicianId: this.fullAssessment.informantClinician?.id,
-          // informantCaregiverRelation: {
-          //   label: this.fullAssessment.informantCaregiverRelation,
-          //   value: this.fullAssessment.informantCaregiverRelation,
-          // },
+          informantClinicianId: this.fullAssessment.informantClinician?.id || '',
           informantCaregiverRelation: this.fullAssessment.informantCaregiverRelation,
           deliveryDate: this.fullAssessment.deliveryDate,
           expirationDate: this.fullAssessment.expirationDate,
@@ -422,7 +406,6 @@ export class PlanAssessmentComponent implements OnInit {
             },
           ];
         }
-        console.log('Test', this.fullAssessment);
       },
       (error) =>
         this.errorService.handleError(error, { prefix: `Unable to load the assessment with ID "${assessmentId}"` })
@@ -436,7 +419,6 @@ export class PlanAssessmentComponent implements OnInit {
   private generateAssessmentURL(assesmentUuid: string): string {
     const cryptoId = CryptoJS.AES.encrypt(assesmentUuid, environment.secretKey).toString();
     const tree = this.router.createUrlTree(['/assessment/overview'], { queryParams: { assessment: cryptoId } });
-    console.log('What is this', this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(tree)));
     return this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(tree));
   }
 

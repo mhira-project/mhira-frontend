@@ -1,41 +1,45 @@
 <button nz-button routerLink="/mhira/administration/email-templates" nzType="secondary">Go back</button>
-<form nz-form [formGroup]="emailForm">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6">Name</nz-form-label>
-      <nz-form-control [nzSpan]="14">
-        <input formControlName="name" nz-input name="name" type="text" id="name">
-      </nz-form-control>
-    </nz-form-item >
-    <nz-form-item>
-        <nz-form-label [nzSpan]="6">Subject</nz-form-label>
-        <nz-form-control [nzSpan]="14">
-          <input formControlName="subject" nz-input name="subject" type="text" id="subject">
-        </nz-form-control>
-    </nz-form-item >
-    <nz-form-item>
-        <nz-form-label [nzSpan]="6">Body</nz-form-label>
-        <nz-form-control [nzSpan]="14">
-          <input formControlName="body" nz-input name="body" type="text" id="body">
-        </nz-form-control>
-    </nz-form-item >
-    <nz-form-item>
-        <nz-form-label [nzSpan]="6">Status</nz-form-label>
-        <nz-form-control [nzSpan]="14">
-            <nz-select formControlName="status" nzShowSearch nzAllowClear nzPlaceHolder="Select true or false">
-                <nz-option nzLabel="True" [nzValue]="true"></nz-option>
-                <nz-option nzLabel="False" [nzValue]="false"></nz-option>
-            </nz-select>
-        </nz-form-control>
-    </nz-form-item >
-    <nz-form-item>
-        <nz-form-label [nzSpan]="6">Module</nz-form-label>
-        <nz-form-control [nzSpan]="14">
-            <nz-select formControlName="module" nzShowSearch nzAllowClear nzPlaceHolder="Select module">
-                <nz-option nzLabel="Client" nzValue="CLIENT"></nz-option>
-                <nz-option nzLabel="Assessment" nzValue="ASSESSMENT"></nz-option>
-            </nz-select>
-        </nz-form-control>
-    </nz-form-item >
-    <button *ngIf="!isUpdateMode" (click)="onFormSubmit()" nz-button type="submit" nzType="primary">Submit</button>
-    <button *ngIf="isUpdateMode" (click)="onFormUpdateSubmit()" nz-button nzType="primary">Update</button>
-</form>
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <form nz-form [formGroup]="emailForm">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="6">Name</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input formControlName="name" nz-input name="name" type="text" id="name">
+              </nz-form-control>
+            </nz-form-item >
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6">Subject</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <input formControlName="subject" nz-input name="subject" type="text" id="subject">
+                </nz-form-control>
+            </nz-form-item >
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6">Body</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <quill-editor formControlName="body" [styles]="customStyles"></quill-editor>
+                </nz-form-control>
+            </nz-form-item >
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6">Status</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                    <nz-select formControlName="status" nzShowSearch nzAllowClear nzPlaceHolder="Select true or false">
+                        <nz-option nzLabel="True" [nzValue]="true"></nz-option>
+                        <nz-option nzLabel="False" [nzValue]="false"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item >
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6">Module</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                    <nz-select formControlName="module" nzShowSearch nzAllowClear nzPlaceHolder="Select module">
+                        <nz-option nzLabel="Client" nzValue="CLIENT"></nz-option>
+                        <nz-option nzLabel="Assessment" nzValue="ASSESSMENT"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item >
+            <button *ngIf="!isUpdateMode" (click)="onFormSubmit()" nz-button type="submit" nzType="primary">Submit</button>
+            <button *ngIf="isUpdateMode" (click)="onFormUpdateSubmit()" nz-button nzType="primary">Update</button>
+        </form>
+    </div>
+</div>

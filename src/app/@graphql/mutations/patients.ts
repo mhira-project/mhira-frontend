@@ -74,6 +74,80 @@ const createPatient = gql`
   }
 `;
 
+const archivePatient = gql`
+  mutation($input: ID!) {
+    archiveOnePatient(input: $input) {
+      id
+      statusId
+      medicalRecordNo
+      firstName
+      middleName
+      lastName
+      phone
+      phone2
+      email
+      addressStreet
+      addressNumber
+      addressApartment
+      addressPlace
+      addressPostalCode
+      addressCountryCode
+      gender
+      birthDate
+      birthCountryCode
+      nationality
+      createdAt
+      updatedAt
+      emergencyContacts {
+        id
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        createdAt
+        updatedAt
+      }
+      informants {
+        id
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        address
+        createdAt
+        updatedAt
+      }
+      caseManagers {
+        id
+        username
+        active
+        firstName
+        middleName
+        lastName
+        email
+        phone
+        workID
+        address
+        gender
+        birthDate
+        nationality
+        createdAt
+        updatedAt
+        deletedAt
+      }
+      status {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 const updatePatient = gql`
   mutation($input: UpdateOnePatientInput!) {
     updateOnePatient(input: $input) {
@@ -172,6 +246,52 @@ const deletePatient = gql`
       nationality
       createdAt
       updatedAt
+      emergencyContacts {
+        id
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        createdAt
+        updatedAt
+      }
+      informants {
+        id
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        address
+        createdAt
+        updatedAt
+      }
+      caseManagers {
+        id
+        username
+        active
+        firstName
+        middleName
+        lastName
+        email
+        phone
+        workID
+        address
+        gender
+        birthDate
+        nationality
+        createdAt
+        updatedAt
+        deletedAt
+      }
+      status {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
@@ -284,4 +404,5 @@ export const PatientsMutations = {
   deletePatient,
   addInformantsToPatient,
   removeStatusFromPatient,
+  archivePatient
 };

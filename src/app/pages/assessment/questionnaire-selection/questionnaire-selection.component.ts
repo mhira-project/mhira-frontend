@@ -18,7 +18,6 @@ export class QuestionnaireSelectionComponent {
 
   @Input()
   public readonly = false;
-  public dummy = '';
 
   public foundQuestionnaires: QuestionnaireVersion[] = [];
 
@@ -112,19 +111,15 @@ export class QuestionnaireSelectionComponent {
   // Handling modal
 
   showModal(questionnaire: any): void {
-    // this.clipboard.copy('po nga vete mo njeshke')
     this.questionnareActive = questionnaire;
     this.isVisible = true;
-    console.log('It fires');
   }
 
   handleOk(): void {
-    console.log('Button ok clicked!');
     this.isVisible = false;
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!');
     this.isVisible = false;
   }
 }

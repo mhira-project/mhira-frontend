@@ -14,6 +14,7 @@ export class CreateEmailTemplateComponent implements OnInit {
 
   selectedId: number = null;
   emailTemplate: any;
+  customStyles = {height: '250px', width: '100%'}
   isUpdateMode: boolean = false;
   emailForm = this.fb.group({
     name: '',
@@ -32,7 +33,6 @@ export class CreateEmailTemplateComponent implements OnInit {
         this.route.paramMap.pipe(
           switchMap((params) => {
             this.selectedId = Number(params.get('id'));
-            console.log('id', this.selectedId);
             return this.emailTemplatesService.getAllEmailTemplates();
           })
         ).subscribe((data: any) => {
@@ -49,8 +49,8 @@ export class CreateEmailTemplateComponent implements OnInit {
 
   onFormSubmit(){
     this.emailTemplatesService.createEmailTemplate(this.emailForm.value).subscribe(() => {
-      console.log('Form Update Submit', this.emailForm.value)
       this.emailForm.reset();
+      console.log('Form value: ', this.emailForm.value)
       this.nzMessage.success('Email template created successfully!', { nzDuration: 3000 });
       this.router.navigate(['/mhira/administration/email-templates'])
     },
@@ -60,7 +60,6 @@ export class CreateEmailTemplateComponent implements OnInit {
   }
 
   onFormUpdateSubmit(){
-    console.log('Form Update Submit', this.emailForm.value);
     this.emailTemplatesService.updateEmailTemplate({id: this.selectedId, ...this.emailForm.value}).subscribe(() => {
       this.emailForm.reset();
       this.nzMessage.success('Email template updated successfully!', { nzDuration: 3000 });

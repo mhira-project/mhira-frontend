@@ -5,7 +5,7 @@ import { CreateQuestionnaireInput } from '../../@types/questionnaire';
 import { QuestionnaireForm, QuestionnaireUpdateForm } from '../../@forms/questionnaire.form';
 import { QuestionnaireVersion } from '../../@types/questionnaire';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { PermissionKey } from '@shared/@types/permission';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
@@ -37,7 +37,8 @@ export class QuestionnaireFormComponent {
     private messageService: NzMessageService,
     private errorService: ErrorHandlerService,
     private activatedRoute: ActivatedRoute,
-    public perms: AppPermissionsService
+    public perms: AppPermissionsService,
+    private router: Router
   ) {
     this.resetForm = true;
     this.initQuestionnaire();
@@ -64,6 +65,7 @@ export class QuestionnaireFormComponent {
           this.isExisting ? 'Questionnaire updated successfully' : 'Questionnaire created successfully',
           { nzDuration: 3000 }
         );
+        this.router.navigate(['/mhira/questionnaire-management/questionnaire-list']);
       },
       (error) =>
         this.errorService.handleError(error, {
