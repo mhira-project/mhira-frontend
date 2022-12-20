@@ -37,11 +37,11 @@ export class CreateEmailTemplateComponent implements OnInit {
           })
         ).subscribe((data: any) => {
           this.emailTemplate = data.data.getAllEmailTemplates.edges.filter((template: any) => template.node.id === this.selectedId);
-          this.emailForm.controls['name'].setValue(this.emailTemplate[0].node.name);
-          this.emailForm.controls['subject'].setValue(this.emailTemplate[0].node.subject);
-          this.emailForm.controls['body'].setValue(this.emailTemplate[0].node.body);
-          this.emailForm.controls['status'].setValue(this.emailTemplate[0].node.status);
-          this.emailForm.controls['module'].setValue(this.emailTemplate[0].node.module);
+          this.emailForm.controls['name'].setValue(this.emailTemplate[0]?.node.name);
+          this.emailForm.controls['subject'].setValue(this.emailTemplate[0]?.node.subject);
+          this.emailForm.controls['body'].setValue(this.emailTemplate[0]?.node.body);
+          this.emailForm.controls['status'].setValue(this.emailTemplate[0]?.node.status);
+          this.emailForm.controls['module'].setValue(this.emailTemplate[0]?.node.module);
         });
       }
     });
@@ -50,7 +50,6 @@ export class CreateEmailTemplateComponent implements OnInit {
   onFormSubmit(){
     this.emailTemplatesService.createEmailTemplate(this.emailForm.value).subscribe(() => {
       this.emailForm.reset();
-      console.log('Form value: ', this.emailForm.value)
       this.nzMessage.success('Email template created successfully!', { nzDuration: 3000 });
       this.router.navigate(['/mhira/administration/email-templates'])
     },

@@ -1,7 +1,8 @@
 import gql from 'graphql-tag';
 
-const getAllEmailTemplates = gql` {
-    getAllEmailTemplates {
+const getAllEmailTemplates = gql`
+ query($paging: CursorPaging, $filter: MailTemplateFilter) {
+    getAllEmailTemplates(paging: $paging, filter: $filter) {
         edges {
             node {
                 id

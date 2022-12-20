@@ -1,7 +1,7 @@
 <button style="margin-bottom: 16px" nz-button nzType="primary" (click)="goBack()">Back</button>
 
 <article nz-row [nzGutter]="20">
-  <section nz-col nzSpan="9">
+  <section nz-col nzSpan="10">
     <form nz-form [formGroup]="assessmentForm" (submit)="onSubmitAssessment()">
       <nz-form-item>
         <nz-form-label nzFor="patient">{{ 'planAssessment.patient' | translate }}</nz-form-label>
@@ -102,11 +102,10 @@
 
       <div class="date-picker">
         <nz-form-item style="margin-top: 14px">
-          <nz-input-group>
+          <nz-input-group class="date-picker1">
             <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
             <nz-date-picker
               [nzBorderless]="!editMode"
-              class="date-picker1"
               nzShowTime
               nzFormat="yyyy-MM-dd HH:mm"
               [nzDisabled]="!editMode"
@@ -117,11 +116,10 @@
           </nz-input-group>
         </nz-form-item>
         <nz-form-item>
-          <nz-input-group>
+          <nz-input-group class="date-picker1">
             <h5>{{ 'createAssessment.expirationDate' | translate }}</h5>
             <nz-date-picker
               [nzBorderless]="!editMode"
-              class="date-picker1"
               nzShowTime
               nzFormat="yyyy-MM-dd HH:mm"
               [nzDisabled]="!editMode"
@@ -202,7 +200,7 @@
       </nz-form-item>
     </form>
   </section>
-  <section nz-col nzSpan="15" class="questionnaires">
+  <section nz-col nzSpan="14" class="questionnaires">
     <h4>{{ 'questionnaireSelection.selectQuestionnaires' | translate }}</h4>
     <app-questionnaire-selection
       [readonly]="!editMode"

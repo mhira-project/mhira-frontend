@@ -27,8 +27,8 @@ enum ActionKey {
   styleUrls: ['./assessment-administration.component.scss'],
 })
 export class AssessmentAdministrationComponent implements OnInit {
-  public data: Partial<AssessmentAdministration>[];
 
+  public data: Partial<AssessmentAdministration>[];
   public columns: TableColumn<Partial<AssessmentAdministration>>[] = AssessmentAdministrationColumns;
   public isLoading = false;
   public pageInfo: PageInfo;
@@ -117,7 +117,6 @@ export class AssessmentAdministrationComponent implements OnInit {
           this.data = data.assessmentTypes.edges.map((assessmentTypes: any) =>
             Convert.toAssessmentAdministration(assessmentTypes.node)
           );
-          console.log('this.data', data);
           this.pageInfo = data.assessmentTypes.pageInfo;
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load assessment type' })

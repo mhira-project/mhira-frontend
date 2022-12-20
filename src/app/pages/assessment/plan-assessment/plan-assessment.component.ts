@@ -430,7 +430,6 @@ export class PlanAssessmentComponent implements OnInit {
       .subscribe(
         ({ data }: any) => {
           this.data = data.activeAssessmentTypes;
-          console.log('this.data', data);
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load assessment type' })
       );
