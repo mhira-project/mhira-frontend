@@ -182,10 +182,6 @@ export class PlanAssessmentComponent implements OnInit {
     this.getUserDepartments();
     this.initAssessment();
     this.userAutoSelect();
-
-    setTimeout(() => {
-      this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
-    }, 500);
   }
 
   get rolesFieldAsFormArray(): any {
@@ -352,6 +348,7 @@ export class PlanAssessmentComponent implements OnInit {
       (assessment) => {
         this.editMode = false;
         this.fullAssessment = assessment;
+        this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
         this.assessmentForm.setValue({
           emailReminder: this.fullAssessment.emailReminder,
           assessmentTypeId: {

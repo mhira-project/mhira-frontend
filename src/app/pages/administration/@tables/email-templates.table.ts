@@ -4,21 +4,21 @@ export const EmailTemplatesColumns: TableColumn<any>[] = [
   {
     title: 'Name',
     name: 'name',
-    translationPath: 'Name',
+    translationPath: 'emailTemplates.name',
   },
   {
     title: 'Subject',
     name: 'subject',
-    translationPath: 'Subject',
+    translationPath: 'emailTemplates.subject',
   },
   {
     title: 'Status',
     name: 'status',
-    translationPath: 'Status',
+    translationPath: 'emailTemplates.status',
   },
   {
     title: 'Module',
     name: 'module',
-    translationPath: 'Module',
+    translationPath: 'emailTemplates.module',
   },
 ];

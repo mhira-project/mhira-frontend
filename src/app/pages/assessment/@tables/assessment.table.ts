@@ -43,7 +43,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
     name: 'submissionDate',
     title: 'Submission Date',
-    translationPath: 'Submission Date',
+    translationPath: 'plannedAssessments.submissionDate',
     render: 'date'
   },
   {
@@ -110,7 +110,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
     name: 'emailStatus',
     title: 'Email Status',
-    translationPath: 'Email Status',
+    translationPath: 'plannedAssessments.emailStatus',
     render: 'emailStatus',
   },
 ];

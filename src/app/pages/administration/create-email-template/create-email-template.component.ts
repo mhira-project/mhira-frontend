@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { EmailTemplatesService } from '../@services/email-templates.service';
 import { switchMap } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-email-template',
@@ -24,7 +25,14 @@ export class CreateEmailTemplateComponent implements OnInit {
     module: ''
   })
 
-  constructor(private emailTemplatesService: EmailTemplatesService, private fb: FormBuilder, private nzMessage: NzMessageService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+     private emailTemplatesService: EmailTemplatesService,
+     private fb: FormBuilder, 
+     private nzMessage: NzMessageService, 
+     private router: Router, 
+     private route: ActivatedRoute,
+     private translate: TranslateService
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((data) => {
@@ -50,7 +58,10 @@ export class CreateEmailTemplateComponent implements OnInit {
   onFormSubmit(){
     this.emailTemplatesService.createEmailTemplate(this.emailForm.value).subscribe(() => {
       this.emailForm.reset();
-      this.nzMessage.success('Email template created successfully!', { nzDuration: 3000 });
+      const message$ = this.translate.get('emailTemplates.created').subscribe((message) => {
+        this.nzMessage.success(message, { nzDuration: 3000 });
+      });
+      message$.unsubscribe();
       this.router.navigate(['/mhira/administration/email-templates'])
     },
     (err) => {
@@ -61,7 +72,10 @@ export class CreateEmailTemplateComponent implements OnInit {
   onFormUpdateSubmit(){
     this.emailTemplatesService.updateEmailTemplate({id: this.selectedId, ...this.emailForm.value}).subscribe(() => {
       this.emailForm.reset();
-      this.nzMessage.success('Email template updated successfully!', { nzDuration: 3000 });
+      const message$ = this.translate.get('emailTemplates.updated').subscribe((message) => {
+        this.nzMessage.success(message, { nzDuration: 3000 });
+      });
+      message$.unsubscribe();
       this.router.navigate(['/mhira/administration/email-templates'])
     },
     (err) => {

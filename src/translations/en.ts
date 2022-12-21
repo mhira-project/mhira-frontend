@@ -68,6 +68,8 @@ export default {
     notFound: 'Not Found',
     noTabs: 'No Tabs',
     disclaimers: 'Messages',
+    emailTemplates: 'Email Templates',
+    version: 'Version'
   },
   patients: {
     myPatients: 'My Patients',
@@ -93,7 +95,7 @@ export default {
       questionnaires: 'Questionnaires',
       deliveryDate: 'Delivery Date',
       expirationDate: 'Expiration Date',
-      updatedAt: 'Submission Date',
+      emailStatus: 'Email Status',
       status: 'Status',
     },
     scripts: {
@@ -300,6 +302,8 @@ export default {
     formattedStatus: 'Status',
     patientMedicalRecordNo: 'Patient Hospital ID',
     formattedPatient: 'Patient',
+    submissionDate: 'Submission Date',
+    emailStatus: 'Email Status',
     clinicianWorkId: 'Clinician Work ID',
     formattedClinician: 'Clinician',
     informant: 'Informant',
@@ -350,4 +354,15 @@ export default {
     permissions: 'Permissions',
     roles: 'Roles',
   },
+  emailTemplates:{
+    createTemplate: 'Create Template',
+    created: 'Email template created successfully!',
+    updated: 'Email template updated successfully!',
+    deleted: 'Email template deleted successfully!',
+    unableToLoad: 'Unable to load email templates',
+    name: 'Name',
+    subject: 'Subject',
+    status: 'Status',
+    module: 'Module'
+  }
 };

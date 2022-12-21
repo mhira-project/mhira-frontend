@@ -129,7 +129,7 @@ const routes: Routes = [
         path: 'email-templates',
         component: EmailTemplatesComponent,
         data: {
-          breadcrumbI18nKey: 'Email Templates',
+          breadcrumbI18nKey: 'menu.emailTemplates',
           permissions: {
             only: [PermissionKey.VIEW_SETTINGS],
           },
@@ -140,7 +140,7 @@ const routes: Routes = [
         path: 'create-template',
         component: CreateEmailTemplateComponent,
         data: {
-          breadcrumbI18nKey: 'Create Template',
+          breadcrumbI18nKey: 'emailTemplates.createTemplate',
           permissions: {
             only: [PermissionKey.VIEW_SETTINGS],
           },
@@ -151,7 +151,7 @@ const routes: Routes = [
         path: 'create-template/:id',
         component: CreateEmailTemplateComponent,
         data: {
-          breadcrumbI18nKey: 'Create Template',
+          breadcrumbI18nKey: 'emailTemplates.createTemplate',
           permissions: {
             only: [PermissionKey.VIEW_SETTINGS],
           },
@@ -162,7 +162,7 @@ const routes: Routes = [
         path: 'version',
         component: VersionComponent,
         data: {
-          breadcrumbI18nKey: 'Version',
+          breadcrumbI18nKey: 'menu.version',
           permissions: {
             only: [PermissionKey.VIEW_SETTINGS],
           },

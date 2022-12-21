@@ -5,13 +5,12 @@ import { Filter } from '@app/@shared/@types/filter';
 import { PageInfo, Paging } from '@app/@shared/@types/paging';
 import { Sorting } from '@app/@shared/@types/sorting';
 import { ErrorHandlerService } from '@app/@shared/services/error-handler.service';
+import { TranslateService } from '@ngx-translate/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Action } from 'rxjs/internal/scheduler/Action';
 import { finalize } from 'rxjs/operators';
-import { AssessmentAdministrationForm } from '../@forms/assessment-administration.form';
 import { EmailTemplatesService } from '../@services/email-templates.service';
 import { EmailTemplatesColumns } from '../@tables/email-templates.table';
-import { AssessmentAdministration } from '../@types/assessment-administration';
 
 enum ActionKey {
   EDIT,
@@ -42,8 +41,13 @@ export class EmailTemplatesComponent implements OnInit {
     sorting: [],
   };
 
-  constructor(private emailTemplatesService: EmailTemplatesService,
-    private errorService: ErrorHandlerService, private nzMessage: NzMessageService, private router: Router) { }
+  constructor(
+    private emailTemplatesService: EmailTemplatesService,
+    private errorService: ErrorHandlerService,
+    private nzMessage: NzMessageService, 
+    private router: Router,
+    private translate: TranslateService
+  ) { }
 
   ngOnInit(): void {
     this.getEmailTemplates();
@@ -70,12 +74,19 @@ export class EmailTemplatesComponent implements OnInit {
     .pipe(finalize(() => (this.isLoading = false)))
     .subscribe((x: any) => { this.data = x.data.getAllEmailTemplates.edges.map((x: any) => x.node);
       this.pageInfo = x.data.getAllEmailTemplates.pageInfo;
-      (err: any) => this.errorService.handleError(err, { prefix: 'Unable to load email templates' })});
+      const message$ = this.translate.get('emailTemplates.unableToLoad').subscribe((message) => {
+        (err: any) => this.errorService.handleError(err, { prefix: message })
+      });
+      message$.unsubscribe();
+    });
   }
 
   deleteEmailTemplate(id: number){
     this.emailTemplatesService.deleteEmailTemplate(id).subscribe(() => {
-      this.nzMessage.success('Email template deleted successfully!', { nzDuration: 3000 });
+      const message$ = this.translate.get('emailTemplates.deleted').subscribe((message) => {
+        this.nzMessage.success(message, { nzDuration: 3000 });
+      });
+      message$.unsubscribe();
       this.getEmailTemplates();
     });
   }

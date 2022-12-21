@@ -122,10 +122,6 @@ export class CreateAssessmentComponent implements OnInit {
     this.getPatient();
     this.getCaregivers();
     this.getUserDepartments();
-
-    setTimeout(() => {
-      this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
-    }, 500);
   }
 
   public goBack(patient: FormattedPatient): void {
@@ -275,6 +271,7 @@ export class CreateAssessmentComponent implements OnInit {
     const bytes = CryptoJS.AES.decrypt(data, environment.secretKey);
     const assessment: FullAssessment = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     this.fullAssessment = assessment;
+    this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
     this.patient = this.fullAssessment.patient;
     this.editMode = false;
     this.formGroup.setValue({
