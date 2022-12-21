@@ -246,52 +246,6 @@ const deletePatient = gql`
       nationality
       createdAt
       updatedAt
-      emergencyContacts {
-        id
-        firstName
-        middleName
-        lastName
-        phone
-        email
-        createdAt
-        updatedAt
-      }
-      informants {
-        id
-        firstName
-        middleName
-        lastName
-        phone
-        email
-        address
-        createdAt
-        updatedAt
-      }
-      caseManagers {
-        id
-        username
-        active
-        firstName
-        middleName
-        lastName
-        email
-        phone
-        workID
-        address
-        gender
-        birthDate
-        nationality
-        createdAt
-        updatedAt
-        deletedAt
-      }
-      status {
-        id
-        name
-        description
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
@@ -328,81 +282,15 @@ const removeStatusFromPatient = gql`
   mutation($input: RemoveStatusFromPatientInput!) {
     removeStatusFromPatient(input: $input) {
       id
-      statusId
-      medicalRecordNo
-      firstName
-      middleName
-      lastName
-      phone
-      phone2
-      email
-      addressStreet
-      addressNumber
-      addressApartment
-      addressPlace
-      addressPostalCode
-      addressCountryCode
-      gender
-      birthDate
-      birthCountryCode
-      nationality
-      createdAt
-      updatedAt
-      emergencyContacts {
-        id
-        firstName
-        middleName
-        lastName
-        phone
-        email
-        createdAt
-        updatedAt
-      }
-      informants {
-        id
-        firstName
-        middleName
-        lastName
-        phone
-        email
-        address
-        createdAt
-        updatedAt
-      }
-      caseManagers {
-        id
-        username
-        active
-        firstName
-        middleName
-        lastName
-        email
-        phone
-        workID
-        address
-        gender
-        birthDate
-        nationality
-        createdAt
-        updatedAt
-        deletedAt
-      }
-      status {
-        id
-        name
-        description
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
 
 export const PatientsMutations = {
   createPatient,
+  archivePatient,
   updatePatient,
   deletePatient,
   addInformantsToPatient,
   removeStatusFromPatient,
-  archivePatient
 };
