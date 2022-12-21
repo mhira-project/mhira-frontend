@@ -42,6 +42,9 @@ import { CreateAssessmentComponent } from './create-assessment/create-assessment
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { AssessmentModule } from '../assessment/assessment.module';
+import { QRCodeModule } from 'angularx-qrcode';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 const antModules = [
   NzGridModule,
@@ -58,6 +61,8 @@ const antModules = [
   NzDrawerModule,
   NzAvatarModule,
   NzSelectModule,
+  NzToolTipModule,
+  NzCheckboxModule
 ];
 
 @NgModule({
@@ -77,6 +82,7 @@ const antModules = [
     NzRadioModule,
     NzDatePickerModule,
     AssessmentModule,
+    QRCodeModule
   ],
   declarations: [
     PatientsListComponent,

@@ -36,7 +36,6 @@ export interface Assessment {
   createdAt?: Date;
   deliveryDate?: Date;
   expirationDate?: Date;
-  updatedAt?: Date;
   informantCaregiverRelation?: string;
   informantClinician?: User;
 }
@@ -53,6 +52,7 @@ export interface FullAssessment extends Assessment {
   informantClinician: User;
   assessmentType: AssessmentAdministration;
   informantCaregiverRelation: string;
+  emailReminder: boolean;
 }
 
 export interface FormattedAssessment extends Assessment {
@@ -64,4 +64,8 @@ export interface FormattedAssessment extends Assessment {
   clinicianWorkId: string;
   formatedDeliveryDate?: string;
   formatedExpirationDate?: string;
+  // Added this:
+  emailStatus: string;
+  submissionDate: Date;
+  questionnaireAssessment: {};
 }

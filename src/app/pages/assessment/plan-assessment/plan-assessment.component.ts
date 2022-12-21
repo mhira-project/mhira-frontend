@@ -5,7 +5,7 @@ import { environment } from '@env/environment';
 import { QuestionnaireVersion } from '../../questionnaire-management/@types/questionnaire';
 import { User } from '@app/pages/user-management/@types/user';
 import { Patient } from '@app/pages/patients-management/@types/patient';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { FullAssessment } from '../@types/assessment';
 import { PermissionKey } from '../../../@shared/@types/permission';
 import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
@@ -22,6 +22,8 @@ import { DepartmentsService } from '@app/pages/administration/@services/departme
 import { Department } from '@app/pages/administration/@types/department';
 import { AssessmentAdministrationService } from '@app/pages/administration/@services/assessment-administration.service';
 import { AssessmentAdministration } from '@app/pages/administration/@types/assessment-administration';
+import { LocationStrategy } from '@angular/common';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 const CryptoJS = require('crypto-js');
 
@@ -37,6 +39,7 @@ export class PlanAssessmentComponent implements OnInit {
   public typeSelected: any = 'PATIENT';
   public dataToSelect: any = [];
   public users: User[] = [];
+  public assessmentUrl: URL;
   public data: Partial<AssessmentAdministration>[];
   public pageInfo: PageInfo;
   public selectedPatient: Patient;
@@ -51,29 +54,97 @@ export class PlanAssessmentComponent implements OnInit {
   public departments: Department[] = [];
   public deliveryDate: any = null;
   public expireDate: any = null;
+  public maxLength: number = 200;
+  public checked: boolean = false;
   options = [
-    { label: 'Mother', value: 'Mother' },
-    { label: 'Father', value: 'Father' },
-    { label: 'Grandparent', value: 'Grandparent' },
-    { label: 'Uncle/Aunt', value: 'Uncle/Aunt' },
-    { label: 'Extended Family', value: 'Extended Family' },
-    { label: 'Legal Guardian', value: 'Legal Guardian' },
-    { label: 'Family Doctor', value: 'Family Doctor' },
-    { label: 'External Paediatrician', value: 'External Paediatrician' },
-    { label: 'External Psychotherapist', value: 'External Psychotherapist' },
-    { label: 'External Psychologist', value: 'External Psychologist' },
-    { label: 'External Social Worker', value: 'External Social Worker' },
-    { label: 'External Nurse', value: 'External Nurse' },
-    { label: 'Emergency Department', value: 'Emergency Department' },
-    { label: 'Friend', value: 'Friend' },
-    { label: 'Neighbour', value: 'Neighbour' },
-    { label: 'Teacher', value: 'Teacher' },
-    { label: 'School Representative', value: 'School Representative' },
-    { label: 'Advisor', value: 'Advisor' },
-    { label: 'Legal Advisor', value: 'Legal Advisor' },
-    { label: 'Assistance', value: 'Assistance' },
-    { label: 'Supervisor', value: 'Supervisor' },
-    { label: 'Other', value: 'Other' },
+    {
+      label: 'Mother',
+      value: 'Mother',
+    },
+    {
+      label: 'Father',
+      value: 'Father',
+    },
+    {
+      label: 'Grandparent',
+      value: 'Grandparent',
+    },
+    {
+      label: 'Uncle/Aunt',
+      value: 'Uncle/Aunt',
+    },
+    {
+      label: 'Extended Family',
+      value: 'Extended Family',
+    },
+    {
+      label: 'Legal Guardian',
+      value: 'Legal Guardian',
+    },
+    {
+      label: 'Family Doctor',
+      value: 'Family Doctor',
+    },
+    {
+      label: 'External Paediatrician',
+      value: 'External Paediatrician',
+    },
+    {
+      label: 'External Psychotherapist',
+      value: 'External Psychotherapist',
+    },
+    {
+      label: 'External Psychologist',
+      value: 'External Psychologist',
+    },
+    {
+      label: 'External Social Worker',
+      value: 'External Social Worker',
+    },
+    {
+      label: 'External Nurse',
+      value: 'External Nurse',
+    },
+    {
+      label: 'Emergency Department',
+      value: 'Emergency Department',
+    },
+    {
+      label: 'Friend',
+      value: 'Friend',
+    },
+    {
+      label: 'Neighbour',
+      value: 'Neighbour',
+    },
+    {
+      label: 'Teacher',
+      value: 'Teacher',
+    },
+    {
+      label: 'School Representative',
+      value: 'School Representative',
+    },
+    {
+      label: 'Advisor',
+      value: 'Advisor',
+    },
+    {
+      label: 'Legal Advisor',
+      value: 'Legal Advisor',
+    },
+    {
+      label: 'Assistance',
+      value: 'Assistance',
+    },
+    {
+      label: 'Supervisor',
+      value: 'Supervisor',
+    },
+    {
+      label: 'Other',
+      value: 'Other',
+    },
   ];
 
   constructor(
@@ -85,7 +156,9 @@ export class PlanAssessmentComponent implements OnInit {
     private departmentsService: DepartmentsService,
     private assessmentAdministrationService: AssessmentAdministrationService,
     public perms: AppPermissionsService,
-    private router: Router
+    private router: Router,
+    private locationStrategy: LocationStrategy,
+    private clipboard: Clipboard
   ) {}
 
   public ngOnInit(): void {
@@ -98,13 +171,38 @@ export class PlanAssessmentComponent implements OnInit {
       informantPatient: [null],
       informantClinicianId: [null],
       informantCaregiverRelation: [null],
-      deliveryDate: [null],
-      expirationDate: [null],
+      // deliveryDate: [null],
+      // expirationDate: [null],
+      emailReminder: [null],
+      dates: this.formBuilder.array([
+        // this.formBuilder.group({
+        //   expirationDate: [null],
+        //   deliveryDate: [null]
+        // })
+      ])
+      // notes: [null]
     });
+    
     this.getAssessmentTypes();
     this.getUserDepartments();
     this.initAssessment();
     this.userAutoSelect();
+  }
+
+  get datesFieldAsFormArray(): FormArray {
+    return this.assessmentForm.get('dates') as FormArray;
+  }
+
+  addControl(): void {
+    this.datesFieldAsFormArray.push(
+      this.formBuilder.group({
+      expirationDate: [null],
+      deliveryDate: [null]
+    }));
+  }
+
+  remove(i: number): void {
+    this.datesFieldAsFormArray.removeAt(i);
   }
 
   public onSelectChange(event: any) {
@@ -183,11 +281,15 @@ export class PlanAssessmentComponent implements OnInit {
   }
 
   public onUserSelect(user: User) {
-    this.assessmentForm.patchValue({ clinicianId: user?.id });
+    this.assessmentForm.patchValue({
+      clinicianId: user?.id,
+    });
   }
 
   public onPatientSelect(patient: Patient) {
-    this.assessmentForm.patchValue({ patientId: patient?.id });
+    this.assessmentForm.patchValue({
+      patientId: patient?.id,
+    });
     if (this.typeSelected !== 'PATIENT') {
       return;
     }
@@ -230,11 +332,12 @@ export class PlanAssessmentComponent implements OnInit {
             });
           });
         },
-        (error) =>
-          this.errorService.handleError(error, {
-            prefix: 'Unable to load departments',
-          })
+        (error) => this.errorService.handleError(error, { prefix: 'Unable to load departments' })
       );
+  }
+
+  get dates(): FormArray {
+    return this.assessmentForm.get('dates') as FormArray;
   }
 
   private initAssessment() {
@@ -252,7 +355,9 @@ export class PlanAssessmentComponent implements OnInit {
       (assessment) => {
         this.editMode = false;
         this.fullAssessment = assessment;
-        this.assessmentForm.setValue({
+        this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
+        this.assessmentForm.patchValue({
+          emailReminder: this.fullAssessment.emailReminder,
           assessmentTypeId: {
             label: this.fullAssessment.assessmentType?.name,
             value: this.fullAssessment.assessmentType?.id,
@@ -261,22 +366,19 @@ export class PlanAssessmentComponent implements OnInit {
           patientId: this.fullAssessment.patientId,
           clinicianId: this.fullAssessment.clinicianId,
           informantPatient: this.fullAssessment.patient,
-          informantClinicianId: {
-            label:
-              this.fullAssessment.informantClinician?.firstName +
-              ' ' +
-              this.fullAssessment.informantClinician?.lastName,
-            value: this.fullAssessment.informantClinician?.id,
-          },
-          informantCaregiverRelation: {
-            label: this.fullAssessment.informantCaregiverRelation,
-            value: this.fullAssessment.informantCaregiverRelation,
-          },
-          deliveryDate: this.fullAssessment.deliveryDate,
-          expirationDate: this.fullAssessment.expirationDate,
+          informantClinicianId: this.fullAssessment.informantClinician?.id || null,
+          informantCaregiverRelation: this.fullAssessment.informantCaregiverRelation,
+          // deliveryDate: this.fullAssessment.deliveryDate,
+          // expirationDate: this.fullAssessment.expirationDate,
 
           questionnaires: this.fullAssessment.questionnaireAssessment?.questionnaires,
         });
+        //@ts-ignore
+          this.dates.push(this.formBuilder.group({
+            deliveryDate: this.fullAssessment.deliveryDate,
+            expirationDate:  this.fullAssessment.expirationDate
+          }))
+  
         this.selectedQuestionnaires = this.fullAssessment.questionnaireAssessment?.questionnaires;
         this.selectedPatient = this.fullAssessment.patient;
         this.selectedClinician = this.fullAssessment.clinician;
@@ -314,11 +416,20 @@ export class PlanAssessmentComponent implements OnInit {
             },
           ];
         }
-        console.log(this.fullAssessment);
       },
       (error) =>
         this.errorService.handleError(error, { prefix: `Unable to load the assessment with ID "${assessmentId}"` })
     );
+  }
+
+  public copyAssessmentLink(url: any) {
+    this.clipboard.copy(url);
+  }
+
+  private generateAssessmentURL(assesmentUuid: string): string {
+    const cryptoId = CryptoJS.AES.encrypt(assesmentUuid, environment.secretKey).toString();
+    const tree = this.router.createUrlTree(['/assessment/overview'], { queryParams: { assessment: cryptoId } });
+    return this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(tree));
   }
 
   private getAssessmentTypes(): void {
@@ -329,7 +440,6 @@ export class PlanAssessmentComponent implements OnInit {
       .subscribe(
         ({ data }: any) => {
           this.data = data.activeAssessmentTypes;
-          console.log('this.data', data);
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load assessment type' })
       );

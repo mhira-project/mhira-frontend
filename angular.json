@@ -38,9 +38,14 @@
             "styles": [
               "./node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css",
               "./node_modules/ng-zorro-antd/resizable/style/index.min.css",
+              "./node_modules/quill/dist/quill.core.css",
+              "./node_modules/quill/dist/quill.snow.css",
               "src/main.scss"
             ],
-            "scripts": ["node_modules/jquery/dist/jquery.min.js"]
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/quill/dist/quill.min.js"
+            ]
           },
           "configurations": {
             "production": {

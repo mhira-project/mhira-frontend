@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormattedPatient } from '@app/pages/patients-management/@types/formatted-patient';
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
 import { environment } from '@env/environment';
@@ -22,6 +22,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { FullAssessment } from '../../assessment/@types/assessment';
 import { AssessmentAdministration } from '@app/pages/administration/@types/assessment-administration';
 import { AssessmentAdministrationService } from '@app/pages/administration/@services/assessment-administration.service';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { LocationStrategy } from '@angular/common';
 
 const CryptoJS = require('crypto-js');
 
@@ -76,7 +78,9 @@ export class CreateAssessmentComponent implements OnInit {
   public departments: Department[] = [];
   public editMode = true;
   public pageInfo: PageInfo;
+  public assessmentUrl: URL;
   public selectedQuestionnaires: QuestionnaireVersion[] = [];
+  public checked: boolean = false;
 
   get patientTitle(): string {
     const name = [this.patient?.firstName, this.patient?.middleName, this.patient?.lastName]
@@ -94,7 +98,9 @@ export class CreateAssessmentComponent implements OnInit {
     private errorService: ErrorHandlerService,
     private departmentsService: DepartmentsService,
     private assessmentService: AssessmentService,
-    private nzMessage: NzMessageService
+    private nzMessage: NzMessageService,
+    private clipboard: Clipboard,
+    private locationStrategy: LocationStrategy,
   ) {}
 
   ngOnInit(): void {
@@ -105,9 +111,16 @@ export class CreateAssessmentComponent implements OnInit {
       informantClinicianId: [null],
       informantCaregiverRelation: [null],
       informantType: [null],
-      deliveryDate: [null],
-      expirationDate: [null],
+      // deliveryDate: [null],
+      // expirationDate: [null],
+      emailReminder: [null],
       note: [null],
+      dates: this.formBuilder.array([
+        // this.formBuilder.group({
+        //   expirationDate: [null],
+        //   deliveryDate: [null]
+        // })
+      ])
     });
     this.getAssessmentTypes();
     this.userAutoSelect();
@@ -115,7 +128,26 @@ export class CreateAssessmentComponent implements OnInit {
     this.getPatient();
     this.getCaregivers();
     this.getUserDepartments();
-    console.log(this.assessmentAdministration);
+  }
+
+  get datesFieldAsFormArray(): FormArray {
+    return this.formGroup.get('dates') as FormArray;
+  }
+
+  get dates(): FormArray {
+    return this.formGroup.get('dates') as FormArray;
+  }
+
+  addControl(): void {
+    this.datesFieldAsFormArray.push(
+      this.formBuilder.group({
+      expirationDate: [null],
+      deliveryDate: [null]
+    }));
+  }
+
+  remove(i: number): void {
+    this.datesFieldAsFormArray.removeAt(i);
   }
 
   public goBack(patient: FormattedPatient): void {
@@ -165,15 +197,14 @@ export class CreateAssessmentComponent implements OnInit {
     this.formGroup.patchValue({ clinicianId: user?.id });
   }
 
+  public copyAssessmentLink(url: any) {
+    this.clipboard.copy(url);
+  }
+
   public getUserDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting[] }) {
     this.isLoading = true;
-    const options = {
-      filter: {
-        and: [{ patients: { id: { eq: this.fullAssessment?.patientId ?? this.patient.id } } }],
-      },
-    };
     this.departmentsService
-      .departments(options)
+      .departments(params)
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }: any) => {
@@ -254,10 +285,11 @@ export class CreateAssessmentComponent implements OnInit {
       () => {
         this.nzMessage.success('Assessment created', { nzDuration: 3000 });
         this.editMode = false;
-        this.goBack(this.patient);
       },
       (err) => this.errorService.handleError(err, { prefix: 'Unable to create assessment ' })
     );
+
+    console.log('Form value: ', this.formGroup.value);
   }
 
   public async initAssessment(): Promise<void> {
@@ -267,29 +299,25 @@ export class CreateAssessmentComponent implements OnInit {
     const bytes = CryptoJS.AES.decrypt(data, environment.secretKey);
     const assessment: FullAssessment = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     this.fullAssessment = assessment;
+    this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
     this.patient = this.fullAssessment.patient;
     this.editMode = false;
-    this.formGroup.setValue({
-      assessmentTypeId: {
-        label: this.fullAssessment.assessmentType?.name,
-        value: this.fullAssessment.assessmentType?.id,
-      },
+    this.formGroup.patchValue({
+      assessmentTypeId: this.fullAssessment.assessmentType?.id,
       clinicianId: this.fullAssessment.clinician.id,
       deliveryDate: this.fullAssessment.deliveryDate,
       informantType: '',
       informantPatient: this.fullAssessment.patient,
-      informantClinicianId: {
-        label:
-          this.fullAssessment.informantClinician?.firstName + ' ' + this.fullAssessment.informantClinician?.lastName,
-        value: this.fullAssessment.informantClinician?.id,
-      },
-      informantCaregiverRelation: {
-        label: this.fullAssessment.informantCaregiverRelation,
-        value: this.fullAssessment.informantCaregiverRelation,
-      },
+      emailReminder: this.fullAssessment.emailReminder,
+      informantClinicianId: this.fullAssessment.informantClinician?.id || null,
+      informantCaregiverRelation: this.fullAssessment.informantCaregiverRelation,
       expirationDate: this.fullAssessment.expirationDate,
       note: '',
     });
+    this.dates.push(this.formBuilder.group({
+      deliveryDate: this.fullAssessment.deliveryDate,
+      expirationDate:  this.fullAssessment.expirationDate
+    }))
     this.selectedClinician = this.fullAssessment.clinician;
     this.expireDate = this.fullAssessment.expirationDate;
     this.deliveryDate = this.fullAssessment.deliveryDate;
@@ -359,4 +387,11 @@ export class CreateAssessmentComponent implements OnInit {
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load assessment type' })
       );
   }
+
+  private generateAssessmentURL(assesmentUuid: string): string {
+    const cryptoId = CryptoJS.AES.encrypt(assesmentUuid, environment.secretKey).toString();
+    const tree = this.router.createUrlTree(['/assessment/overview'], { queryParams: { assessment: cryptoId } });
+    return this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(tree));
+  }
+
 }

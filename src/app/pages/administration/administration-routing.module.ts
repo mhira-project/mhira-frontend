@@ -11,6 +11,9 @@ import { CreateReportComponent } from './create-report/create-report.component';
 import { DisclaimersComponent } from './disclaimers/disclaimers.component';
 import { PatientStatusesComponent } from './patient-statuses/patient-statuses.component';
 import { AssessmentAdministrationComponent } from './assessment-administration/assessment-administration.component';
+import { VersionComponent } from './version/version.component';
+import { EmailTemplatesComponent } from './email-templates/email-templates.component';
+import { CreateEmailTemplateComponent } from './create-email-template/create-email-template.component';
 
 const routes: Routes = [
   {
@@ -116,6 +119,50 @@ const routes: Routes = [
         component: DepartmentsComponent,
         data: {
           breadcrumbI18nKey: 'menu.departments',
+          permissions: {
+            only: [PermissionKey.VIEW_SETTINGS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'email-templates',
+        component: EmailTemplatesComponent,
+        data: {
+          breadcrumbI18nKey: 'menu.emailTemplates',
+          permissions: {
+            only: [PermissionKey.VIEW_SETTINGS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'create-template',
+        component: CreateEmailTemplateComponent,
+        data: {
+          breadcrumbI18nKey: 'emailTemplates.createTemplate',
+          permissions: {
+            only: [PermissionKey.VIEW_SETTINGS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'create-template/:id',
+        component: CreateEmailTemplateComponent,
+        data: {
+          breadcrumbI18nKey: 'emailTemplates.createTemplate',
+          permissions: {
+            only: [PermissionKey.VIEW_SETTINGS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'version',
+        component: VersionComponent,
+        data: {
+          breadcrumbI18nKey: 'menu.version',
           permissions: {
             only: [PermissionKey.VIEW_SETTINGS],
           },

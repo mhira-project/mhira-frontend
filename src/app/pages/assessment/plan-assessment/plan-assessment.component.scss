@@ -30,8 +30,47 @@ h5 {
 .date-picker {
   margin-bottom: 15px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
 }
+
 .date-picker1 {
-  width: 233px;
+  // width: 233px;
+  width: 100%;
+  margin-right: 15px;
+}
+
+textarea {
+  border-radius: 5px !important;
+}
+
+p {
+  text-align: end;
+}
+
+.link-container {
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  margin-top: -40px;
+}
+
+.link-container a {
+  text-align: start;
+  margin: 0;
+  text-decoration: underline;
+}
+
+.email-label-wrapper{
+  display: flex; 
+  // justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.email-label{
+  color: rgb(78, 78, 78);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
 }

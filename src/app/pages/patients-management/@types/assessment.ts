@@ -1,7 +1,7 @@
-import { Patient } from '@app/pages/patients-management/@types/patient';
-import { User } from '@app/pages/user-management/@types/user';
-import { TagInfo } from '@shared/@modules/master-data/@types/list';
+import { Patient } from '../../patients-management/@types/patient';
+import { TagInfo } from '../../../@shared/@modules/master-data/@types/list';
 import { AssessmentAdministration } from '../../administration/@types/assessment-administration';
+import { User } from '../../user-management/@types/user';
 
 export enum AssessmentStatus {
   COMPLETED = 'COMPLETED',
@@ -25,7 +25,6 @@ export interface Assessment {
   createdAt?: Date;
   deliveryDate: Date;
   expirationDate: Date;
-  updatedAt: Date;
   status: AssessmentStatus;
 }
 

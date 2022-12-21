@@ -12,7 +12,7 @@ import { AppFormModule } from '../../@shared/components/form/app-form.module';
 import { MasterDataModule } from '../../@shared/@modules/master-data/master-data.module';
 import { QuestionnaireSelectionComponent } from './questionnaire-selection/questionnaire-selection.component';
 import { ComponentsModule } from '../../@shared/components/components.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -29,6 +29,10 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { QuestionnaireModalComponent } from './questionnaire-modal/questionnaire-modal.component';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { QRCodeModule } from 'angularx-qrcode';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 const antModules = [
   NzGridModule,
@@ -43,6 +47,8 @@ const antModules = [
   NzIconModule,
   NzToolTipModule,
   NzTagModule,
+  NzPopoverModule,
+  NzCheckboxModule
 ];
 
 @NgModule({
@@ -61,8 +67,14 @@ const antModules = [
     NzDatePickerModule,
     NzRadioModule,
     NzSelectModule,
+    QRCodeModule,
   ],
-  declarations: [PlanAssessmentComponent, AssessmentsListComponent, QuestionnaireSelectionComponent],
+  declarations: [
+    PlanAssessmentComponent,
+    AssessmentsListComponent,
+    QuestionnaireSelectionComponent,
+    QuestionnaireModalComponent,
+  ],
   providers: [PatientsService, AssessmentService],
   exports: [QuestionnaireSelectionComponent],
 })

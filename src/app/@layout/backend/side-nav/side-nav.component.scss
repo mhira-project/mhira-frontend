@@ -110,9 +110,11 @@ ul {
 }
 
 .help-text {
+  width: 100%;
   justify-content: center;
-  text-align: center;
-  margin-right: 150px;
+  // text-align: center;
+  // margin-right: 150px;
+  margin-left: 20px;
 }
 
 .big-div {
@@ -125,6 +127,16 @@ ul {
 .text-in-help {
   color: white;
 }
+
 .text-in-help:hover {
   color: #89d180;
+}
+
+.version-text{
+  color: white;
+}
+
+.version-text-collapsed{
+  color: white;
+  margin-left: -10px;
 }

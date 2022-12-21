@@ -51,21 +51,21 @@ export class PatientsService {
     });
   }
 
-  archivePatient(patient: Patient): Observable<FetchResult<any>> {
-    return this.apollo.mutate({
-      mutation: PatientsMutations.archivePatient,
-      variables: {
-        input: patient.id,
-      },
-      fetchPolicy: 'no-cache',
-    });
-  }
-
   deletePatient(patient: Patient): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: PatientsMutations.deletePatient,
       variables: {
         input: { id: patient.id },
+      },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
+  archivePatient(patient: Patient): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: PatientsMutations.archivePatient,
+      variables: {
+        input: patient.id,
       },
       fetchPolicy: 'no-cache',
     });

@@ -41,9 +41,10 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
         : {},
   },
   {
-    name: 'clinicianWorkId',
-    title: 'Clinician Work ID',
-    translationPath: 'plannedAssessments.clinicianWorkId',
+    name: 'submissionDate',
+    title: 'Submission Date',
+    translationPath: 'plannedAssessments.submissionDate',
+    render: 'date'
   },
   {
     name: 'formattedClinician',
@@ -101,21 +102,15 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     },
   },
   {
-    name: 'updatedAt',
-    title: 'Submission Date',
-    translationPath: 'plannedAssessments.updatedAt',
-    render: 'date',
-    sort: false,
-    filterField: {
-      type: 'dateRange',
-      value: undefined,
-      title: 'updatedAt',
-    },
-  },
-  {
     name: 'formattedStatus',
     title: 'Status',
     translationPath: 'plannedAssessments.formattedStatus',
     render: 'tag',
+  },
+  {
+    name: 'emailStatus',
+    title: 'Email Status',
+    translationPath: 'plannedAssessments.emailStatus',
+    render: 'emailStatus',
   },
 ];

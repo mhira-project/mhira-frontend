@@ -30,8 +30,8 @@ const CryptoJS = require('crypto-js');
 
 enum ActionKey {
   CHANGE_STATUS,
-  ARCHIVE_PATIENT,
   DELETE_PATIENT,
+  ARCHIVE_PATIENT
 }
 
 @Component({
@@ -125,9 +125,9 @@ export class PatientsListComponent {
       case ActionKey.CHANGE_STATUS:
         this.changePatientStatus(patient);
         return;
-      case ActionKey.ARCHIVE_PATIENT:
-        this.archivePatient(patient);
-        return;
+        case ActionKey.ARCHIVE_PATIENT:
+          this.archivePatient(patient);
+          return;
       case ActionKey.DELETE_PATIENT:
         this.deletePatient(patient);
         return;
@@ -144,12 +144,6 @@ export class PatientsListComponent {
         ...options.filter,
         and: [{ caseManagers: { id: { eq: this.userId } } }, ...(options.filter.and ?? [])],
       };
-
-    // const options = {
-    //   filter: {
-    //     and: {deletedAt: {eq: true}} ,
-    //   },
-    // };
 
     this.patientsService
       .patients(options)
@@ -301,6 +295,7 @@ export class PatientsListComponent {
       );
     this.getPatients();
   }
+
 
   private get userId(): number {
     const user = JSON.parse(localStorage.getItem('user')) as User;

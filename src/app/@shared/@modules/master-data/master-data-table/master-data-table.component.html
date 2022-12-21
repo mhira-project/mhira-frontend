@@ -27,6 +27,11 @@
               {{ tag.title }}
             </nz-tag>
           </span>
+          <span *ngSwitchCase="'emailStatus'">
+            <nz-tag *ngFor="let tag of [d[column.name]].flat()" nzColor="red">
+              {{d[column.name]}}
+            </nz-tag> 
+          </span>
           <span *ngSwitchCase="'avatar'">
             <nz-avatar *ngFor="let avatar of [d[column.name]].flat()" [nzText]="avatar"></nz-avatar>
           </span>

@@ -32,16 +32,16 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
       value: undefined,
     },
   },
-  // {
-  //   title: 'Questionnaires',
-  //   name: 'questionnaires',
-  //   translationPath: 'tables.assessmentsPatients.questionnaires',
-  //   sort: true,
-  //   filterField: {
-  //     type: 'text',
-  //     value: undefined,
-  //   },
-  // },
+  {
+    title: 'Questionnaires',
+    name: 'questionnaireAssessment',
+    translationPath: 'tables.assessmentsPatients.questionnaires',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  },
   {
     title: 'Delivery Date',
     name: 'formatedDeliveryDate',
@@ -65,18 +65,6 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
     },
   },
   {
-    title: 'Submission Date',
-    name: 'updatedAt',
-    translationPath: 'tables.assessmentsPatients.updatedAt',
-    sort: false,
-    render: 'date',
-    filterField: {
-      type: 'dateRange',
-      value: undefined,
-      title: 'Submission Date',
-    },
-  },
-  {
     title: 'Status',
     name: 'formattedStatus',
     translationPath: 'tables.assessmentsPatients.status',
@@ -87,4 +75,15 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
       // options added dynamically
     },
   },
+  {
+    title: 'Email Status',
+    name: 'emailStatus',
+    render: 'emailStatus',
+    translationPath: 'tables.assessmentsPatients.emailStatus',
+    sort: true,
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  }
 ];

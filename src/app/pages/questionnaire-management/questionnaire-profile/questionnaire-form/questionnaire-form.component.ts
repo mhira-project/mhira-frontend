@@ -37,8 +37,8 @@ export class QuestionnaireFormComponent {
     private messageService: NzMessageService,
     private errorService: ErrorHandlerService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    public perms: AppPermissionsService
+    public perms: AppPermissionsService,
+    private router: Router
   ) {
     this.resetForm = true;
     this.initQuestionnaire();

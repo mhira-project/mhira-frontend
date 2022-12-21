@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { QuestionnaireVersion } from '../../questionnaire-management/@types/questionnaire';
 import { QuestionnaireManagementService } from '../../questionnaire-management/@services/questionnaire-management.service';
 import { createSearchFilter } from '../../questionnaire-management/questionnaire-list/questionnaire-list.component';
-
+import { Clipboard } from '@angular/cdk/clipboard';
 @Component({
   selector: 'app-questionnaire-selection',
   templateUrl: './questionnaire-selection.component.html',
@@ -21,7 +21,10 @@ export class QuestionnaireSelectionComponent {
 
   public foundQuestionnaires: QuestionnaireVersion[] = [];
 
-  constructor(private questionnaireService: QuestionnaireManagementService) {}
+  isVisible = false;
+  questionnareActive: any = null;
+
+  constructor(private questionnaireService: QuestionnaireManagementService, private clipboard: Clipboard) {}
 
   public onQuestionnaireSearch(q: string) {
     if (q === '') {
@@ -33,7 +36,24 @@ export class QuestionnaireSelectionComponent {
 
     this.questionnaireService
       .getQuestionnaires({ filter })
-      .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node)));
+      // Added filter to filter out the archieved quest.
+      .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node).filter(e => e.status !== 'ARCHIVED')));
+  }
+
+  public onQuestionnaireSearchNew(q: string) {
+    if (q === '') {
+      const filter = { or: createSearchFilter(q) };
+
+      this.questionnaireService
+        .getQuestionnaires({ filter })
+        .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node).filter(e => e.status !== 'ARCHIVED')));
+    }
+
+    const filter = { or: createSearchFilter(q) };
+
+    this.questionnaireService
+      .getQuestionnaires({ filter })
+      .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node).filter(e => e.status !== 'ARCHIVED')));
   }
 
   public onToggleQuestionnaire(questionnaire: QuestionnaireVersion): void {
@@ -86,5 +106,20 @@ export class QuestionnaireSelectionComponent {
 
   private moveArrayItem(from: number, to: number): void {
     this.selectedQuestionnaires.splice(to, 0, this.selectedQuestionnaires.splice(from, 1)[0]);
+  }
+
+  // Handling modal
+
+  showModal(questionnaire: any): void {
+    this.questionnareActive = questionnaire;
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 }
