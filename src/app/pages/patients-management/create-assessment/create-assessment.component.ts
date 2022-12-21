@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormattedPatient } from '@app/pages/patients-management/@types/formatted-patient';
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
 import { environment } from '@env/environment';
@@ -111,10 +111,16 @@ export class CreateAssessmentComponent implements OnInit {
       informantClinicianId: [null],
       informantCaregiverRelation: [null],
       informantType: [null],
-      deliveryDate: [null],
-      expirationDate: [null],
+      // deliveryDate: [null],
+      // expirationDate: [null],
       emailReminder: [null],
       note: [null],
+      dates: this.formBuilder.array([
+        // this.formBuilder.group({
+        //   expirationDate: [null],
+        //   deliveryDate: [null]
+        // })
+      ])
     });
     this.getAssessmentTypes();
     this.userAutoSelect();
@@ -122,6 +128,26 @@ export class CreateAssessmentComponent implements OnInit {
     this.getPatient();
     this.getCaregivers();
     this.getUserDepartments();
+  }
+
+  get datesFieldAsFormArray(): FormArray {
+    return this.formGroup.get('dates') as FormArray;
+  }
+
+  get dates(): FormArray {
+    return this.formGroup.get('dates') as FormArray;
+  }
+
+  addControl(): void {
+    this.datesFieldAsFormArray.push(
+      this.formBuilder.group({
+      expirationDate: [null],
+      deliveryDate: [null]
+    }));
+  }
+
+  remove(i: number): void {
+    this.datesFieldAsFormArray.removeAt(i);
   }
 
   public goBack(patient: FormattedPatient): void {
@@ -262,6 +288,8 @@ export class CreateAssessmentComponent implements OnInit {
       },
       (err) => this.errorService.handleError(err, { prefix: 'Unable to create assessment ' })
     );
+
+    console.log('Form value: ', this.formGroup.value);
   }
 
   public async initAssessment(): Promise<void> {
@@ -274,7 +302,7 @@ export class CreateAssessmentComponent implements OnInit {
     this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
     this.patient = this.fullAssessment.patient;
     this.editMode = false;
-    this.formGroup.setValue({
+    this.formGroup.patchValue({
       assessmentTypeId: this.fullAssessment.assessmentType?.id,
       clinicianId: this.fullAssessment.clinician.id,
       deliveryDate: this.fullAssessment.deliveryDate,
@@ -286,6 +314,10 @@ export class CreateAssessmentComponent implements OnInit {
       expirationDate: this.fullAssessment.expirationDate,
       note: '',
     });
+    this.dates.push(this.formBuilder.group({
+      deliveryDate: this.fullAssessment.deliveryDate,
+      expirationDate:  this.fullAssessment.expirationDate
+    }))
     this.selectedClinician = this.fullAssessment.clinician;
     this.expireDate = this.fullAssessment.expirationDate;
     this.deliveryDate = this.fullAssessment.deliveryDate;

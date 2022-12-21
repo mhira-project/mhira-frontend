@@ -171,10 +171,15 @@ export class PlanAssessmentComponent implements OnInit {
       informantPatient: [null],
       informantClinicianId: [null],
       informantCaregiverRelation: [null],
-      deliveryDate: [null],
-      expirationDate: [null],
+      // deliveryDate: [null],
+      // expirationDate: [null],
       emailReminder: [null],
-      // roles: this.formBuilder.array([]),
+      dates: this.formBuilder.array([
+        // this.formBuilder.group({
+        //   expirationDate: [null],
+        //   deliveryDate: [null]
+        // })
+      ])
       // notes: [null]
     });
     
@@ -184,22 +189,20 @@ export class PlanAssessmentComponent implements OnInit {
     this.userAutoSelect();
   }
 
-  get rolesFieldAsFormArray(): any {
-    return this.assessmentForm.get('roles') as FormArray;
-  }
-
-  role(): any {
-    return this.formBuilder.group({
-      role: this.formBuilder.control(''),
-    });
+  get datesFieldAsFormArray(): FormArray {
+    return this.assessmentForm.get('dates') as FormArray;
   }
 
   addControl(): void {
-    this.rolesFieldAsFormArray.push(this.role());
+    this.datesFieldAsFormArray.push(
+      this.formBuilder.group({
+      expirationDate: [null],
+      deliveryDate: [null]
+    }));
   }
 
   remove(i: number): void {
-    this.rolesFieldAsFormArray.removeAt(i);
+    this.datesFieldAsFormArray.removeAt(i);
   }
 
   public onSelectChange(event: any) {
@@ -333,6 +336,10 @@ export class PlanAssessmentComponent implements OnInit {
       );
   }
 
+  get dates(): FormArray {
+    return this.assessmentForm.get('dates') as FormArray;
+  }
+
   private initAssessment() {
     let assessmentId: number;
 
@@ -349,7 +356,7 @@ export class PlanAssessmentComponent implements OnInit {
         this.editMode = false;
         this.fullAssessment = assessment;
         this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
-        this.assessmentForm.setValue({
+        this.assessmentForm.patchValue({
           emailReminder: this.fullAssessment.emailReminder,
           assessmentTypeId: {
             label: this.fullAssessment.assessmentType?.name,
@@ -359,13 +366,19 @@ export class PlanAssessmentComponent implements OnInit {
           patientId: this.fullAssessment.patientId,
           clinicianId: this.fullAssessment.clinicianId,
           informantPatient: this.fullAssessment.patient,
-          informantClinicianId: this.fullAssessment.informantClinician?.id || '',
+          informantClinicianId: this.fullAssessment.informantClinician?.id || null,
           informantCaregiverRelation: this.fullAssessment.informantCaregiverRelation,
-          deliveryDate: this.fullAssessment.deliveryDate,
-          expirationDate: this.fullAssessment.expirationDate,
+          // deliveryDate: this.fullAssessment.deliveryDate,
+          // expirationDate: this.fullAssessment.expirationDate,
 
           questionnaires: this.fullAssessment.questionnaireAssessment?.questionnaires,
         });
+        //@ts-ignore
+          this.dates.push(this.formBuilder.group({
+            deliveryDate: this.fullAssessment.deliveryDate,
+            expirationDate:  this.fullAssessment.expirationDate
+          }))
+  
         this.selectedQuestionnaires = this.fullAssessment.questionnaireAssessment?.questionnaires;
         this.selectedPatient = this.fullAssessment.patient;
         this.selectedClinician = this.fullAssessment.clinician;

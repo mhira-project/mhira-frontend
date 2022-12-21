@@ -174,6 +174,7 @@ export class AssessmentsListComponent {
         ({ edges, pageInfo }) => {
           this.data = edges.map((e: any) => Convert.toFormattedAssessment(e.node));
           this.pageInfo = pageInfo;
+          console.log('ASSESSMENTS: ', this.data);
         },
         (error) => this.errorService.handleError(error, { prefix: 'Unable to load assessments' })
       );
