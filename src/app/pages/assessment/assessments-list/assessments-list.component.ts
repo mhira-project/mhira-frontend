@@ -90,12 +90,10 @@ export class AssessmentsListComponent {
   }
 
   handleOk(): void {
-    console.log('Button ok clicked!');
     this.isVisible = false;
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!');
     this.isVisible = false;
   }
 
@@ -174,7 +172,6 @@ export class AssessmentsListComponent {
         ({ edges, pageInfo }) => {
           this.data = edges.map((e: any) => Convert.toFormattedAssessment(e.node));
           this.pageInfo = pageInfo;
-          console.log('ASSESSMENTS: ', this.data);
         },
         (error) => this.errorService.handleError(error, { prefix: 'Unable to load assessments' })
       );

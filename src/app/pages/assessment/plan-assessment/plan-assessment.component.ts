@@ -56,6 +56,7 @@ export class PlanAssessmentComponent implements OnInit {
   public expireDate: any = null;
   public maxLength: number = 200;
   public checked: boolean = false;
+  url: any = '';
   options = [
     {
       label: 'Mother',
@@ -158,35 +159,67 @@ export class PlanAssessmentComponent implements OnInit {
     public perms: AppPermissionsService,
     private router: Router,
     private locationStrategy: LocationStrategy,
-    private clipboard: Clipboard
+    private clipboard: Clipboard,
   ) {}
 
   public ngOnInit(): void {
-    this.assessmentForm = this.formBuilder.group({
-      assessmentTypeId: [null, Validators.required],
-      patientId: [null, Validators.required],
-      clinicianId: [null, Validators.required],
-      questionnaires: [null, Validators.required],
-      informantType: [null],
-      informantPatient: [null],
-      informantClinicianId: [null],
-      informantCaregiverRelation: [null],
-      // deliveryDate: [null],
-      // expirationDate: [null],
-      emailReminder: [null],
-      dates: this.formBuilder.array([
-        // this.formBuilder.group({
-        //   expirationDate: [null],
-        //   deliveryDate: [null]
-        // })
-      ])
-      // notes: [null]
-    });
-    
-    this.getAssessmentTypes();
-    this.getUserDepartments();
-    this.initAssessment();
-    this.userAutoSelect();
+
+    this.url = this.router.url;
+
+    if(this.url.length > 60){
+      this.assessmentForm = this.formBuilder.group({
+        assessmentTypeId: [null, Validators.required],
+        patientId: [null, Validators.required],
+        clinicianId: [null, Validators.required],
+        questionnaires: [null, Validators.required],
+        informantType: [null],
+        informantPatient: [null],
+        informantClinicianId: [null],
+        informantCaregiverRelation: [null],
+        deliveryDate: [null],
+        expirationDate: [null],
+        emailReminder: [null],
+        dates: this.formBuilder.array([
+          // this.formBuilder.group({
+          //   expirationDate: [null],
+          //   deliveryDate: [null]
+          // })
+        ])
+      });
+      
+      this.getAssessmentTypes();
+      this.getUserDepartments();
+      this.initAssessment();
+      this.userAutoSelect();
+    }
+
+    else{
+      this.assessmentForm = this.formBuilder.group({
+        assessmentTypeId: [null, Validators.required],
+        patientId: [null, Validators.required],
+        clinicianId: [null, Validators.required],
+        questionnaires: [null, Validators.required],
+        informantType: [null],
+        informantPatient: [null],
+        informantClinicianId: [null],
+        informantCaregiverRelation: [null],
+        emailReminder: [null],
+        dates: this.formBuilder.array([
+          this.formBuilder.group({
+            expirationDate: [null],
+            deliveryDate: [null]
+          })
+        ])
+      });
+      
+      this.getAssessmentTypes();
+      this.getUserDepartments();
+      this.initAssessment();
+      this.userAutoSelect();
+  
+      console.log(this.router.url)
+    }
+  
   }
 
   get datesFieldAsFormArray(): FormArray {
@@ -239,8 +272,7 @@ export class PlanAssessmentComponent implements OnInit {
   public onSubmitAssessment() {
     if (this.assessmentForm.invalid) return;
     const questionnaires = this.selectedQuestionnaires.map((q) => q._id);
-    const { informant, informantPatient, ...rest } = this.assessmentForm.value;
-    const newAssessmentData = {
+    const { informant, informantPatient, ...rest } = this.assessmentForm.value;let newAssessmentData = {
       ...rest,
       questionnaires,
     };
@@ -273,6 +305,7 @@ export class PlanAssessmentComponent implements OnInit {
       },
       (err) => this.errorService.handleError(err, { prefix: 'Unable to create assessment ' })
     );
+    console.log(this.dates.getRawValue()[0])
   }
 
   public onQuestionnaireSelected(questionnaires: QuestionnaireVersion[]): void {
@@ -368,8 +401,8 @@ export class PlanAssessmentComponent implements OnInit {
           informantPatient: this.fullAssessment.patient,
           informantClinicianId: this.fullAssessment.informantClinician?.id || null,
           informantCaregiverRelation: this.fullAssessment.informantCaregiverRelation,
-          // deliveryDate: this.fullAssessment.deliveryDate,
-          // expirationDate: this.fullAssessment.expirationDate,
+          deliveryDate: this.fullAssessment.deliveryDate,
+          expirationDate: this.fullAssessment.expirationDate,
 
           questionnaires: this.fullAssessment.questionnaireAssessment?.questionnaires,
         });
