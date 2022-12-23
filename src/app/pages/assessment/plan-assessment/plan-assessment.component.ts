@@ -341,6 +341,7 @@ export class PlanAssessmentComponent implements OnInit {
         informantClinicianId: [null],
         informantCaregiverRelation: [null],
         emailReminder: [null],
+        receiverEmail: [null],
         deliveryDate: [null],
         expirationDate: [null],
         dates: this.formBuilder.array([])
@@ -356,6 +357,7 @@ export class PlanAssessmentComponent implements OnInit {
         informantClinicianId: [null],
         informantCaregiverRelation: [null],
         emailReminder: [null],
+        receiverEmail: [null],
         dates: this.formBuilder.array([
           this.formBuilder.group({
             expirationDate: [null],
@@ -386,6 +388,7 @@ export class PlanAssessmentComponent implements OnInit {
           informantCaregiverRelation: this.fullAssessment.informantCaregiverRelation,
           deliveryDate: this.fullAssessment.deliveryDate,
           expirationDate: this.fullAssessment.expirationDate,
+          receiverEmail: this.fullAssessment.receiverEmail,
 
           questionnaires: this.fullAssessment.questionnaireAssessment?.questionnaires,
         });

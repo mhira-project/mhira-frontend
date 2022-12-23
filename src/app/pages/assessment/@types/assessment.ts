@@ -53,6 +53,7 @@ export interface FullAssessment extends Assessment {
   assessmentType: AssessmentAdministration;
   informantCaregiverRelation: string;
   emailReminder: boolean;
+  receiverEmail: string
 }
 
 export interface FormattedAssessment extends Assessment {
