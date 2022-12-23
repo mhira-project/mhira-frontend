@@ -253,7 +253,6 @@ export class PlanAssessmentComponent implements OnInit {
       },
       (err) => this.errorService.handleError(err, { prefix: 'Unable to create assessment ' })
     );
-    console.log(this.dates.getRawValue()[0])
   }
 
   public onQuestionnaireSelected(questionnaires: QuestionnaireVersion[]): void {
@@ -435,7 +434,6 @@ export class PlanAssessmentComponent implements OnInit {
             },
           ];
         }
-        console.log(this.fullAssessment)
       },
       (error) =>
         this.errorService.handleError(error, { prefix: `Unable to load the assessment with ID "${assessmentId}"` })

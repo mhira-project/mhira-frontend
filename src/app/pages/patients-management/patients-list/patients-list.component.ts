@@ -70,6 +70,8 @@ export class PatientsListComponent {
 
   private onlyMyPatients = false;
 
+  private archievedPatients = false;
+
   constructor(
     private patientsService: PatientsService,
     private router: Router,
@@ -111,6 +113,11 @@ export class PatientsListComponent {
     this.getPatients();
   }
 
+  public onArchievedPatients(): void {
+    this.archievedPatients = !this.archievedPatients;
+    this.getPatients();
+  }
+
   public onPatientSelect(patient: FormattedPatient): void {
     const dataString = CryptoJS.AES.encrypt(JSON.stringify(patient), environment.secretKey).toString();
     this.router.navigate(['/mhira/case-management/profile'], {
@@ -139,11 +146,21 @@ export class PatientsListComponent {
     const options = { ...this.patientRequestOptions };
 
     // apply for only my patients
-    if (this.onlyMyPatients)
+    if (this.onlyMyPatients){
       options.filter = {
         ...options.filter,
         and: [{ caseManagers: { id: { eq: this.userId } } }, ...(options.filter.and ?? [])],
       };
+    }
+
+    // archieved patients
+
+    if(this.archievedPatients){
+      options.filter = {
+        ...options.filter,
+        and: [{ deletedAt: {lte: new Date()} }, ...(options.filter.and ?? [])],
+      };
+    }  
 
     this.patientsService
       .patients(options)
@@ -152,6 +169,7 @@ export class PatientsListComponent {
         (patients) => {
           this.data = patients.data.patients.edges.map((e: any) => PatientModel.fromJson(e.node));
           this.pageInfo = patients.data.patients.pageInfo; // TODO: remove
+          console.log('Data', this.data);
         },
         (error) =>
           this.errorService.handleError(error, {
