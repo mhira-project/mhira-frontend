@@ -32,6 +32,7 @@ export default {
     noResult: 'No Result',
     searchSelect: 'Search and select questionnaires to add to the assessment',
     selectQuestionnaires: 'Select Questionnaires',
+    selectedQuestionnaires: 'Selected Questionnaires',
   },
   assessmentMessages: {
     expiredText: 'Sorry, assessment is no longer available!',

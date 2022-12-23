@@ -64,7 +64,6 @@ export interface FormattedAssessment extends Assessment {
   clinicianWorkId: string;
   formatedDeliveryDate?: string;
   formatedExpirationDate?: string;
-  // Added this:
   emailStatus: string;
   submissionDate: Date;
   questionnaireAssessment: {};

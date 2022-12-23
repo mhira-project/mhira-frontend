@@ -23,9 +23,9 @@
             <nz-form-item>
                 <nz-form-label [nzSpan]="6">Status</nz-form-label>
                 <nz-form-control [nzSpan]="14">
-                    <nz-select formControlName="status" nzShowSearch nzAllowClear nzPlaceHolder="Select true or false">
-                        <nz-option nzLabel="True" [nzValue]="true"></nz-option>
-                        <nz-option nzLabel="False" [nzValue]="false"></nz-option>
+                    <nz-select formControlName="status" nzShowSearch nzAllowClear nzPlaceHolder="Select active or inactive">
+                        <nz-option nzLabel="Active" nzValue="ACTIVE"></nz-option>
+                        <nz-option nzLabel="Inactive" nzValue="INACTIVE"></nz-option>
                     </nz-select>
                 </nz-form-control>
             </nz-form-item >
