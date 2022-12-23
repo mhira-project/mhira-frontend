@@ -31,6 +31,7 @@ const getPatients = gql`
           birthCountryCode
           nationality
           createdAt
+          deletedAt
           updatedAt
           emergencyContacts {
             id

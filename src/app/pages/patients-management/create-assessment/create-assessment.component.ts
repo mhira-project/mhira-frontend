@@ -115,6 +115,7 @@ export class CreateAssessmentComponent implements OnInit {
       deliveryDate: [null],
       expirationDate: [null],
       emailReminder: [null],
+      receiverEmail: [null],
       note: [null],
       dates: this.formBuilder.array([
         // this.formBuilder.group({
@@ -314,6 +315,7 @@ export class CreateAssessmentComponent implements OnInit {
       informantType: '',
       informantPatient: this.fullAssessment.patient,
       emailReminder: this.fullAssessment.emailReminder,
+      receiverEmail: this.fullAssessment.receiverEmail,
       informantClinicianId: this.fullAssessment.informantClinician?.id || null,
       informantCaregiverRelation: this.fullAssessment.informantCaregiverRelation,
       expirationDate: this.fullAssessment.expirationDate,

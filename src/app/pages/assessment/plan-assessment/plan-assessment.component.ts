@@ -253,7 +253,6 @@ export class PlanAssessmentComponent implements OnInit {
       },
       (err) => this.errorService.handleError(err, { prefix: 'Unable to create assessment ' })
     );
-    console.log(this.dates.getRawValue()[0])
   }
 
   public onQuestionnaireSelected(questionnaires: QuestionnaireVersion[]): void {
@@ -341,6 +340,7 @@ export class PlanAssessmentComponent implements OnInit {
         informantClinicianId: [null],
         informantCaregiverRelation: [null],
         emailReminder: [null],
+        receiverEmail: [null],
         deliveryDate: [null],
         expirationDate: [null],
         dates: this.formBuilder.array([])
@@ -356,6 +356,7 @@ export class PlanAssessmentComponent implements OnInit {
         informantClinicianId: [null],
         informantCaregiverRelation: [null],
         emailReminder: [null],
+        receiverEmail: [null],
         dates: this.formBuilder.array([
           this.formBuilder.group({
             expirationDate: [null],
@@ -386,6 +387,7 @@ export class PlanAssessmentComponent implements OnInit {
           informantCaregiverRelation: this.fullAssessment.informantCaregiverRelation,
           deliveryDate: this.fullAssessment.deliveryDate,
           expirationDate: this.fullAssessment.expirationDate,
+          receiverEmail: this.fullAssessment.receiverEmail,
 
           questionnaires: this.fullAssessment.questionnaireAssessment?.questionnaires,
         });

@@ -15,6 +15,9 @@
     <button nz-button nzType="primary" (click)="onMyPatients()" *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS])">
       {{ 'patients.myPatients' | translate }}
     </button>
+    <button nz-button nzType="primary" (click)="onArchievedPatients()" *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS])">
+      Archieved
+    </button>
   </ng-container>
   <ng-container actions-right>
     <button

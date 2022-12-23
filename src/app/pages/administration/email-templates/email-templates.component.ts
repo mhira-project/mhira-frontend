@@ -4,6 +4,7 @@ import { ActionArgs, SortField, TableColumn, DEFAULT_PAGE_SIZE } from '@app/@sha
 import { Filter } from '@app/@shared/@types/filter';
 import { PageInfo, Paging } from '@app/@shared/@types/paging';
 import { Sorting } from '@app/@shared/@types/sorting';
+import { Convert } from '@app/@shared/classes/convert';
 import { ErrorHandlerService } from '@app/@shared/services/error-handler.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -65,6 +66,7 @@ export class EmailTemplatesComponent implements OnInit {
 
   public onFilter(filter: Filter): void {
     this.emailTemplatesRequestOptions.filter = filter;
+    this.getEmailTemplates();
   }
 
   private getEmailTemplates(): void{
@@ -72,7 +74,8 @@ export class EmailTemplatesComponent implements OnInit {
     this.emailTemplatesService
     .getAllEmailTemplates(this.emailTemplatesRequestOptions)
     .pipe(finalize(() => (this.isLoading = false)))
-    .subscribe((x: any) => { this.data = x.data.getAllEmailTemplates.edges.map((x: any) => x.node);
+    .subscribe((x: any) => { this.data = x.data.getAllEmailTemplates.edges.map((x: any) =>
+      Convert.toAssessmentAdministration(x.node));
       this.pageInfo = x.data.getAllEmailTemplates.pageInfo;
       const message$ = this.translate.get('emailTemplates.unableToLoad').subscribe((message) => {
         (err: any) => this.errorService.handleError(err, { prefix: message })
