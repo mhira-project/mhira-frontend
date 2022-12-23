@@ -5,11 +5,19 @@ export const EmailTemplatesColumns: TableColumn<any>[] = [
     title: 'Name',
     name: 'name',
     translationPath: 'emailTemplates.name',
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
     title: 'Subject',
     name: 'subject',
     translationPath: 'emailTemplates.subject',
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
   },
   {
     title: 'Status',

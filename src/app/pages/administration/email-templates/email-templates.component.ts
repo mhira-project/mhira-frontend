@@ -66,6 +66,7 @@ export class EmailTemplatesComponent implements OnInit {
 
   public onFilter(filter: Filter): void {
     this.emailTemplatesRequestOptions.filter = filter;
+    this.getEmailTemplates();
   }
 
   private getEmailTemplates(): void{
