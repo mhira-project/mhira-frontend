@@ -13,7 +13,8 @@ export const EmailTemplatesColumns: TableColumn<any>[] = [
   },
   {
     title: 'Status',
-    name: 'status',
+    name: 'formattedStatus',
+    render: 'tag',
     translationPath: 'emailTemplates.status',
   },
   {
