@@ -81,6 +81,7 @@ export class CreateAssessmentComponent implements OnInit {
   public assessmentUrl: URL;
   public selectedQuestionnaires: QuestionnaireVersion[] = [];
   public checked: boolean = false;
+  public isUpdate: boolean; 
 
   get patientTitle(): string {
     const name = [this.patient?.firstName, this.patient?.middleName, this.patient?.lastName]
@@ -111,8 +112,8 @@ export class CreateAssessmentComponent implements OnInit {
       informantClinicianId: [null],
       informantCaregiverRelation: [null],
       informantType: [null],
-      // deliveryDate: [null],
-      // expirationDate: [null],
+      deliveryDate: [null],
+      expirationDate: [null],
       emailReminder: [null],
       note: [null],
       dates: this.formBuilder.array([
@@ -294,8 +295,12 @@ export class CreateAssessmentComponent implements OnInit {
 
   public async initAssessment(): Promise<void> {
     const data = this.activatedRoute.snapshot.queryParamMap.get('assessment');
-    if (!data) return;
+    if (!data){
+      this.isUpdate = false;
+      return;
+    }
 
+    this.isUpdate = true;
     const bytes = CryptoJS.AES.decrypt(data, environment.secretKey);
     const assessment: FullAssessment = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     this.fullAssessment = assessment;

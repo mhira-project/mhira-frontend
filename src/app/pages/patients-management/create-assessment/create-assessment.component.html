@@ -63,54 +63,75 @@
                         <nz-select [nzBorderless]="!editMode" [nzOptions]="options" class="input-class" [nzDisabled]="!editMode" [(ngModel)]="selectedInformant" [ngModelOptions]="{standalone: true}" formcontrolname="informantCaregiverRelation"></nz-select>
                     </nz-input-group>
                 </nz-form-item>
-                <!-- <div class="date-picker">
-                    <nz-form-item>
-                        <nz-input-group>
-                            <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
-                            <nz-date-picker [nzBorderless]="!editMode" class="date-picker1" nzshowtime nzformat="yyyy-MM-dd HH:mm" [(ngModel)]="deliveryDate" [ngModelOptions]="{standalone: true}" [nzDisabled]="!editMode" formcontrolname="deliveryDate" (ngModelChange)="onChangeDelivery($event)"></nz-date-picker>
-                        </nz-input-group>
-                    </nz-form-item>
-                    <nz-form-item>
-                        <nz-input-group>
-                            <h5>{{ 'createAssessment.expirationDate' | translate }}</h5>
-                            <nz-date-picker [nzBorderless]="!editMode" class="date-picker1" nzshowtime nzformat="yyyy-MM-dd HH:mm" [(ngModel)]="expireDate" [ngModelOptions]="{standalone: true}" [nzDisabled]="!editMode" formcontrolname="expirationDate" (ngModelChange)="onChangeExpire($event)"></nz-date-picker>
-                        </nz-input-group>
-                    </nz-form-item>
-                </div> -->
+                <!-- Start Update -->
+                <div class="date-picker">
+                <nz-form-item style="margin-top: 14px">
+                    <nz-input-group class="date-picker1">
+                    <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
+                    <nz-date-picker
+                        [nzBorderless]="!editMode"
+                        nzShowTime
+                        nzFormat="yyyy-MM-dd HH:mm"
+                        [nzDisabled]="!editMode"
+                        [(ngModel)]="deliveryDate"
+                        formControlName="deliveryDate"
+                        (ngModelChange)="onChangeDelivery($event)"
+                    ></nz-date-picker>
+                    </nz-input-group>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-input-group class="date-picker1">
+                    <h5>{{ 'createAssessment.expirationDate' | translate }}</h5>
+                    <nz-date-picker
+                        [nzBorderless]="!editMode"
+                        nzShowTime
+                        nzFormat="yyyy-MM-dd HH:mm"
+                        [nzDisabled]="!editMode"
+                        [(ngModel)]="expireDate"
+                        formControlName="expirationDate"
+                        (ngModelChange)="onChangeExpire($event)"
+                    ></nz-date-picker>
+                    </nz-input-group>
+                </nz-form-item>
+                </div>
+                <!-- End Update -->
+
                 <!-- Start -->
-                <div *ngFor="let control of  datesFieldAsFormArray.controls ;let i = index;" formArrayName='dates' >
-                    <div [formGroupName]="i" >
-                        <div class="date-picker">
-                          <nz-form-item>
-                            <nz-input-group class="date-picker1">
-                              <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
-                              <nz-date-picker
-                                [nzBorderless]="!editMode"
-                                nzShowTime
-                                nzFormat="yyyy-MM-dd HH:mm"
-                                [nzDisabled]="!editMode"
-                                formControlName="deliveryDate"
-                              ></nz-date-picker>
-                            </nz-input-group>
-                          </nz-form-item>
-                          <nz-form-item>
-                            <nz-input-group class="date-picker1">
-                              <h5>{{ 'createAssessment.expirationDate' | translate }}</h5>
-                              <nz-date-picker
-                                [nzBorderless]="!editMode"
-                                nzShowTime
-                                nzFormat="yyyy-MM-dd HH:mm"
-                                [nzDisabled]="!editMode"
-                                formControlName="expirationDate"
-                              ></nz-date-picker>
-                            </nz-input-group>
-                          </nz-form-item>
-                        <button (click)="remove(i)" nz-button nzShape="circle"><span nz-icon nzType="delete"></span></button>
+                <div *ngIf="isUpdate === false">
+                    <div *ngFor="let control of  datesFieldAsFormArray.controls ;let i = index;" formArrayName='dates' >
+                        <div [formGroupName]="i" >
+                            <div class="date-picker">
+                              <nz-form-item>
+                                <nz-input-group class="date-picker1">
+                                  <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
+                                  <nz-date-picker
+                                    [nzBorderless]="!editMode"
+                                    nzShowTime
+                                    nzFormat="yyyy-MM-dd HH:mm"
+                                    [nzDisabled]="!editMode"
+                                    formControlName="deliveryDate"
+                                  ></nz-date-picker>
+                                </nz-input-group>
+                              </nz-form-item>
+                              <nz-form-item>
+                                <nz-input-group class="date-picker1">
+                                  <h5>{{ 'createAssessment.expirationDate' | translate }}</h5>
+                                  <nz-date-picker
+                                    [nzBorderless]="!editMode"
+                                    nzShowTime
+                                    nzFormat="yyyy-MM-dd HH:mm"
+                                    [nzDisabled]="!editMode"
+                                    formControlName="expirationDate"
+                                  ></nz-date-picker>
+                                </nz-input-group>
+                              </nz-form-item>
+                            <button (click)="remove(i)" nz-button nzShape="circle"><span nz-icon nzType="delete"></span></button>
+                            </div>
                         </div>
+                      </div>
+                      <button (click)="addControl()" [disabled]="!editMode" type="button" nz-button nzShape="circle"><span nz-icon nzType="plus"></span></button>
                     </div>
-                  </div>
                 <!-- End -->
-                <button (click)="addControl()" [disabled]="!editMode" type="button" nz-button nzShape="circle"><span nz-icon nzType="plus"></span></button>
                 <div class="email-label-wrapper">
                     <label [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>Sent assessment via email</label>
                     <input style="width: 240px;" nz-input placeholder="Basic usage" [value]="fullAssessment?.patient?.firstName" [disabled]="!checked" />
@@ -142,7 +163,6 @@
         <div class="link-container" *ngIf="fullAssessment?.uuid !== null && fullAssessment?.uuid !== undefined">
             <a style="margin-right: 10px;" target="_blank" [href]="assessmentUrl">{{ this.assessmentUrl?.toString().slice(0, 50) }}...</a>
             <button (click)="copyAssessmentLink(this.assessmentUrl)" nz-button nzType="default" nzShape="circle"><span nz-icon nzType="copy"></span></button>
-            <!-- <qrcode [qrdata]="assessmentUrl?.toString()" [width]="128" [errorCorrectionLevel]="'M'"></qrcode> -->
         </div>
     </div>
     <div>

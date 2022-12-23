@@ -101,7 +101,7 @@
       </nz-form-item>
 
       <!-- Start Update -->
-      <div *ngIf="url.includes('=')" class="date-picker">
+      <div *ngIf="isUpdate" class="date-picker">
         <nz-form-item style="margin-top: 14px">
           <nz-input-group class="date-picker1">
             <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
@@ -134,7 +134,7 @@
       <!-- End Update -->
 
       <!-- Start Create -->
-      <div *ngIf="!url.includes('=')">
+      <div *ngIf="!isUpdate">
         <div *ngFor="let control of  datesFieldAsFormArray.controls ;let i = index;" formArrayName='dates' >
           <div [formGroupName]="i" >
               <div class="date-picker">
