@@ -125,6 +125,17 @@ export class Convert {
   public static toFormattedAssessment(json: Assessment | FullAssessment): FormattedAssessment {
     const assessment: FormattedAssessment = json as FormattedAssessment;
 
+    assessment.emailFormatedStatus = {
+      color:  json.emailStatus === 'SCHEDULED' ? 'green' 
+            : json.emailStatus === 'NOT_SCHEDULED' ? 'orange' 
+            : json.emailStatus === 'FAILED' ? 'red' 
+            : json.emailStatus === 'NOT_SENT' ? 'gray': 'blue',
+      title:  json.emailStatus === 'SCHEDULED' ? 'SCHEDULED'
+            : json.emailStatus === 'NOT_SCHEDULED' ? 'NOT SCHEDULED' 
+            : json.emailStatus === 'NOT_SENT' ? 'NOT SENT' 
+            : json.emailStatus === 'SENT' ? 'SENT' : 'FAILED',
+    };
+
     assessment.formattedPatient = [json.patient?.firstName, json.patient?.middleName, json.patient?.lastName]
       .filter((s) => !!s)
       .join(' ');

@@ -77,8 +77,8 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
   },
   {
     title: 'Email Status',
-    name: 'emailStatus',
-    render: 'emailStatus',
+    name: 'emailFormatedStatus',
+    render: 'tag',
     translationPath: 'tables.assessmentsPatients.emailStatus',
     sort: true,
     filterField: {

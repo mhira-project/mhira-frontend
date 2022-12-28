@@ -169,7 +169,6 @@ export class PatientsListComponent {
         (patients) => {
           this.data = patients.data.patients.edges.map((e: any) => PatientModel.fromJson(e.node));
           this.pageInfo = patients.data.patients.pageInfo; // TODO: remove
-          console.log('Data', this.data);
         },
         (error) =>
           this.errorService.handleError(error, {
