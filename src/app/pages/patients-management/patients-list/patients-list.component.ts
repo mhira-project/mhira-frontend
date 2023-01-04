@@ -158,7 +158,7 @@ export class PatientsListComponent {
     if(this.archievedPatients){
       options.filter = {
         ...options.filter,
-        and: [{ deletedAt: {lte: new Date()} }, ...(options.filter.and ?? [])],
+        and: [{ deleted: {is: true} }, ...(options.filter.and ?? [])],
       };
     }  
 
