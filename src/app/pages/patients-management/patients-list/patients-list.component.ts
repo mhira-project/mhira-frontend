@@ -29,7 +29,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 const CryptoJS = require('crypto-js');
 
 enum ActionKey {
-  CHANGE_STATUS,
   DELETE_PATIENT,
   ARCHIVE_PATIENT
 }
@@ -129,9 +128,6 @@ export class PatientsListComponent {
 
   public onAction({ action, context: patient }: ActionArgs<FormattedPatient, ActionKey>): void {
     switch (action.key) {
-      case ActionKey.CHANGE_STATUS:
-        this.changePatientStatus(patient);
-        return;
         case ActionKey.ARCHIVE_PATIENT:
           this.archivePatient(patient);
           return;
@@ -144,6 +140,14 @@ export class PatientsListComponent {
   private getPatients(): void {
     this.loading = true;
     const options = { ...this.patientRequestOptions };
+
+    if(!this.archievedPatients){
+      options.filter = {
+        ...options.filter,
+        and: [{ deleted: {is: false} }, ...(options.filter.and ?? [])],
+      };
+    }  
+
 
     // apply for only my patients
     if (this.onlyMyPatients){
@@ -158,7 +162,7 @@ export class PatientsListComponent {
     if(this.archievedPatients){
       options.filter = {
         ...options.filter,
-        and: [{ deletedAt: {lte: new Date()} }, ...(options.filter.and ?? [])],
+        and: [{ deleted: {is: true} }, ...(options.filter.and ?? [])],
       };
     }  
 
@@ -169,7 +173,6 @@ export class PatientsListComponent {
         (patients) => {
           this.data = patients.data.patients.edges.map((e: any) => PatientModel.fromJson(e.node));
           this.pageInfo = patients.data.patients.pageInfo; // TODO: remove
-          console.log('Data', this.data);
         },
         (error) =>
           this.errorService.handleError(error, {
@@ -321,10 +324,6 @@ export class PatientsListComponent {
   }
 
   private setActions(): void {
-    if (this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
-      this.actions = [...this.actions, { key: ActionKey.CHANGE_STATUS, title: 'Change Status' }];
-    }
-
     if (this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
       this.actions = [...this.actions, { key: ActionKey.ARCHIVE_PATIENT, title: 'Archive Patient' }];
     }

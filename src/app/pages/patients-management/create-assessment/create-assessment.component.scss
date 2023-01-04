@@ -16,27 +16,9 @@
   margin-right: 15px;
 }
 
-// .date-picker {
-//   margin-bottom: 15px;
-//   display: flex;
-//   justify-content: space-between;
-// }
 
 h5 {
   font-weight: bold;
-}
-
-// .date-picker1 {
-//   width: 233px;
-// }
-
-.main-div {
-  display: flex;
-  justify-content: space-between;
-}
-
-.questionnaire {
-  min-width: 980px;
 }
 
 .button {
@@ -65,7 +47,6 @@ nz-date-picker [nzInputReadOnly] {
 
 .link-container {
   display: flex;
-  // justify-content: center;
   align-items: center;
   margin-top: -40px;
 }

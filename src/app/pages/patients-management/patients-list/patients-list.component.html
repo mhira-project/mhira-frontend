@@ -16,7 +16,7 @@
       {{ 'patients.myPatients' | translate }}
     </button>
     <button nz-button nzType="primary" (click)="onArchievedPatients()" *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS])">
-      Archieved
+      {{ 'patients.archivedPatients' | translate }}
     </button>
   </ng-container>
   <ng-container actions-right>

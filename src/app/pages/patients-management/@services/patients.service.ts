@@ -63,9 +63,9 @@ export class PatientsService {
 
   archivePatient(patient: Patient): Observable<FetchResult<any>> {
     return this.apollo.mutate({
-      mutation: PatientsMutations.archivePatient,
+      mutation: PatientsMutations.archiveOnePatient,
       variables: {
-        input: patient.id,
+        id: patient.id,
       },
       fetchPolicy: 'no-cache',
     });

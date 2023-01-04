@@ -172,8 +172,8 @@ const updateOneAssessment = gql`
 `;
 
 const deleteAssessment = gql`
-  mutation($id: Int!, $archive: Boolean) {
-    deleteAssessment(id: $id, archive: $archive)
+  mutation($id: Int!, $statusCancel: Boolean) {
+    deleteAssessment(id: $id, statusCancel: $statusCancel)
   }
 `;
 
