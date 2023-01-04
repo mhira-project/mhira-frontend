@@ -62,9 +62,11 @@
             [(ngModel)]="selectedInformant"
             formControlName="informantPatient"
           >
+          <ng-container *ngIf="dataToSelect[0].value !== undefined">
             <nz-option *ngFor="let data of dataToSelect" [nzLabel]="data.label" [nzValue]="data.value">{{
               data.label
             }}</nz-option>
+          </ng-container>
           </nz-select>
         </nz-input-group>
         <p>Self Rating.</p>
