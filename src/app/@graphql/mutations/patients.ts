@@ -74,9 +74,9 @@ const createPatient = gql`
   }
 `;
 
-const archivePatient = gql`
-  mutation($input: ID!) {
-    archiveOnePatient(input: $input) {
+const archiveOnePatient = gql`
+  mutation($id: ID!) {
+    archiveOnePatient(id: $id) {
       id
       statusId
       medicalRecordNo
@@ -288,7 +288,7 @@ const removeStatusFromPatient = gql`
 
 export const PatientsMutations = {
   createPatient,
-  archivePatient,
+  archiveOnePatient,
   updatePatient,
   deletePatient,
   addInformantsToPatient,

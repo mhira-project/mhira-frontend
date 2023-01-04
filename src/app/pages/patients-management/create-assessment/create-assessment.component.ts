@@ -290,8 +290,6 @@ export class CreateAssessmentComponent implements OnInit {
       },
       (err) => this.errorService.handleError(err, { prefix: 'Unable to create assessment ' })
     );
-
-    console.log('Form value: ', this.formGroup.value);
   }
 
   public async initAssessment(): Promise<void> {
