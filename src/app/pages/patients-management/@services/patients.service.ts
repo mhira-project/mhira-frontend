@@ -71,6 +71,16 @@ export class PatientsService {
     });
   }
 
+  restorePatient(patient: Patient): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: PatientsMutations.restorePatient,
+      variables: {
+        id: patient.id,
+      },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
   removeStatusFromPatient(relationInput: { patientId: number; statusId: number }): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: PatientsMutations.removeStatusFromPatient,

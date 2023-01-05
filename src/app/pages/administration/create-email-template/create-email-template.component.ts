@@ -22,7 +22,7 @@ export class CreateEmailTemplateComponent implements OnInit {
     subject: '',
     body: '',
     status: null,
-    module: ''
+    module: 'ASSESSMENT'
   })
 
   constructor(

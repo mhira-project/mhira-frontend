@@ -177,6 +177,22 @@ const deleteAssessment = gql`
   }
 `;
 
+const archiveOneAssessment = gql`
+  mutation($id: Int!) {
+    archiveOneAssessment(id: $id){
+      id
+    }
+  }
+`;
+
+const restoreOneAssessment = gql`
+  mutation($id: Int!) {
+    restoreOneAssessment(id: $id){
+      id
+    }
+  }
+`;
+
 const createOneMongoAssessment = gql`
   mutation($assessment: CreateFullAssessmentInput!) {
     createNewAssessment(assessment: $assessment) {
@@ -219,12 +235,21 @@ const changeAssessmentStatus = gql`
   }
 `;
 
+const sendAssessmentEmail = gql`
+  mutation($assessmentId: ID!) {
+    sendAssessmentEmail(assessmentId: $assessmentId)
+  }
+`;
+
 export const AssessmentsMutations = {
   createOneAssessment,
   updateOneAssessment,
   deleteAssessment,
+  archiveOneAssessment,
+  restoreOneAssessment,
   createOneMongoAssessment,
   updateOneMongoAssessment,
   addAnswer,
   changeAssessmentStatus,
+  sendAssessmentEmail
 };

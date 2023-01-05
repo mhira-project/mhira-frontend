@@ -30,7 +30,8 @@ const CryptoJS = require('crypto-js');
 
 enum ActionKey {
   DELETE_PATIENT,
-  ARCHIVE_PATIENT
+  ARCHIVE_PATIENT,
+  RESTORE_PATIENT
 }
 
 @Component({
@@ -69,7 +70,7 @@ export class PatientsListComponent {
 
   private onlyMyPatients = false;
 
-  private archievedPatients = false;
+  public archievedPatients = false;
 
   constructor(
     private patientsService: PatientsService,
@@ -128,9 +129,12 @@ export class PatientsListComponent {
 
   public onAction({ action, context: patient }: ActionArgs<FormattedPatient, ActionKey>): void {
     switch (action.key) {
-        case ActionKey.ARCHIVE_PATIENT:
-          this.archivePatient(patient);
-          return;
+      case ActionKey.ARCHIVE_PATIENT:
+        this.archivePatient(patient);
+        return;
+      case ActionKey.RESTORE_PATIENT:
+        this.restorePatient(patient);
+        return;
       case ActionKey.DELETE_PATIENT:
         this.deletePatient(patient);
         return;
@@ -285,7 +289,6 @@ export class PatientsListComponent {
   }
 
   private async archivePatient(patient: FormattedPatient): Promise<void> {
-    // create confirmation modal
     const modal = this.modalService.confirm({
       nzOnOk: () => true,
       nzTitle: 'Archive Patient',
@@ -294,24 +297,46 @@ export class PatientsListComponent {
       `,
     });
 
-    // wait for modal to successfully complete
     const confirmation = await modal.afterClose.toPromise();
     if (!confirmation) return;
 
-    // delete patient
+    // archive patient
     this.loading = true;
     this.patientsService
       .archivePatient(patient)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        () => {
-          // this.data.splice(this.data.indexOf(patient), 1);
-          // this.message.success('Patient has been successfully archived');
-          // this.getPatients();
-        },
+        () => {},
         (error) =>
           this.errorService.handleError(error, {
             prefix: `Unable to archived patient "${patient.firstName} ${patient.lastName}"`,
+          })
+      );
+    this.getPatients();
+  }
+
+  private async restorePatient(patient: FormattedPatient): Promise<void> {
+    const modal = this.modalService.confirm({
+      nzOnOk: () => true,
+      nzTitle: 'Restore Patient',
+      nzContent: `
+        Are you sure you want to restore ${patient.firstName} ${patient.lastName}? This action is irreversible
+      `,
+    });
+
+    const confirmation = await modal.afterClose.toPromise();
+    if (!confirmation) return;
+
+    // restore patient
+    this.loading = true;
+    this.patientsService
+      .restorePatient(patient)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        () => {},
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: `Unable to restore patient "${patient.firstName} ${patient.lastName}"`,
           })
       );
     this.getPatients();
@@ -326,6 +351,7 @@ export class PatientsListComponent {
   private setActions(): void {
     if (this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
       this.actions = [...this.actions, { key: ActionKey.ARCHIVE_PATIENT, title: 'Archive Patient' }];
+      this.actions = [...this.actions, { key: ActionKey.RESTORE_PATIENT, title: 'Restore Patient' }];
     }
 
     if (this.perms.permissionsOnly(PermissionKey.DELETE_PATIENTS)) {
