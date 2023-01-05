@@ -21,7 +21,9 @@ export default {
     header: 'Select the report you want to generate:',
   },
   assessments: {
-    myAssessment: 'My Assessment',
+    myAssessment: 'My Assessments',
+    archivedAssessments: 'Archived',
+    notArchivedAssessments: 'Not Archived'
   },
   card: {
     changePassword: 'Change Password',
@@ -74,7 +76,8 @@ export default {
   },
   patients: {
     myPatients: 'My Patients',
-    archivedPatients: 'Archived'
+    archivedPatients: 'Archived',
+    notArchivedPatients: 'Not Archived'
   },
   tables: {
     assessmentAdministration: {

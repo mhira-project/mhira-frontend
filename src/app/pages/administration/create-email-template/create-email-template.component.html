@@ -29,7 +29,7 @@
                     </nz-select>
                 </nz-form-control>
             </nz-form-item >
-            <nz-form-item>
+            <!-- <nz-form-item>
                 <nz-form-label [nzSpan]="6">Module</nz-form-label>
                 <nz-form-control [nzSpan]="14">
                     <nz-select formControlName="module" nzShowSearch nzAllowClear nzPlaceHolder="Select module">
@@ -37,7 +37,7 @@
                         <nz-option nzLabel="Assessment" nzValue="ASSESSMENT"></nz-option>
                     </nz-select>
                 </nz-form-control>
-            </nz-form-item >
+            </nz-form-item > -->
             <button *ngIf="!isUpdateMode" (click)="onFormSubmit()" nz-button type="submit" nzType="primary">Submit</button>
             <button *ngIf="isUpdateMode" (click)="onFormUpdateSubmit()" nz-button nzType="primary">Update</button>
         </form>

@@ -250,6 +250,34 @@ const deletePatient = gql`
   }
 `;
 
+const restorePatient = gql`
+  mutation($id: ID!) {
+    restoreOnePatient(id: $id) {
+      id
+      statusId
+      medicalRecordNo
+      firstName
+      middleName
+      lastName
+      phone
+      phone2
+      email
+      addressStreet
+      addressNumber
+      addressApartment
+      addressPlace
+      addressPostalCode
+      addressCountryCode
+      gender
+      birthDate
+      birthCountryCode
+      nationality
+      createdAt
+      updatedAt
+    }
+  }
+`
+
 const addInformantsToPatient = gql`
   mutation($input: AddInformantsToPatientInput!) {
     addInformantsToPatient(input: $input) {
@@ -289,6 +317,7 @@ const removeStatusFromPatient = gql`
 export const PatientsMutations = {
   createPatient,
   archiveOnePatient,
+  restorePatient,
   updatePatient,
   deletePatient,
   addInformantsToPatient,
