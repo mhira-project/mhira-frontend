@@ -22,8 +22,8 @@ export default {
   },
   assessments: {
     myAssessment: 'My Assessments',
-    archivedAssessments: 'Archived',
-    notArchivedAssessments: 'Not Archived'
+    archivedAssessments: 'Show Archived',
+    notArchivedAssessments: 'Show Not Archived'
   },
   card: {
     changePassword: 'Change Password',

@@ -41,12 +41,6 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
         : {},
   },
   {
-    name: 'submissionDate',
-    title: 'Submission Date',
-    translationPath: 'plannedAssessments.submissionDate',
-    render: 'date'
-  },
-  {
     name: 'formattedClinician',
     altName: 'clinician',
     title: 'Clinician',
@@ -100,6 +94,12 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
       value: undefined,
       title: 'expirationDate',
     },
+  },
+  {
+    name: 'submissionDate',
+    title: 'Submission Date',
+    translationPath: 'plannedAssessments.submissionDate',
+    render: 'date'
   },
   {
     name: 'formattedStatus',
