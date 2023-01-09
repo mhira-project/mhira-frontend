@@ -1,16 +1,16 @@
 <div class="buttons">
-    <button nz-button nztype="primary" (click)="goBack(patient)">Back</button>
+    <button nz-button nzType="primary" (click)="goBack(patient)">Back</button>
 </div>
 <h1 *ngIf="patientTitle">{{ patientTitle }}</h1>
 <div nz-row [nzGutter]="200">
     <div nz-col nzSpan="10">
         <form nz-form [nzLayout]="'inline'" [formGroup]="formGroup" (submit)="onSubmitAssessment()">
             <nz-form-item>
-                <nz-form-control nzerrortip="Please input your username!">
+                <nz-form-control nzErrorTip="Please input your username!">
                     <nz-input-group class="input-class">
                         <h5>{{ 'createAssessment.title' | translate }}</h5>
                         <!--              <input formControlName="name" nz-input placeholder="Please enter a title" [readonly]="!editMode" />-->
-                        <nz-select [nzBorderless]="!editMode" class="input-class" [nzDisabled]="!editMode" [(ngModel)]="selectedAssessment" [ngModelOptions]="{standalone: true}" formcontrolname="assessmentTypeId">
+                        <nz-select [nzBorderless]="!editMode" class="input-class" [nzDisabled]="!editMode" [(ngModel)]="selectedAssessment" formControlName="assessmentTypeId">
                             <nz-option *ngFor="let a of assessmentAdministration" [nzLabel]="a.name" [nzValue]="a.id">{{
                 a.name
             }}</nz-option>
@@ -28,17 +28,17 @@
                 </nz-form-control>
             </nz-form-item>
             <nz-form-item style="margin-bottom: 15px">
-                <nz-radio-group formcontrolname="informantType" nzbuttonstyle="solid" [nzDisabled]="!editMode" [(ngModel)]="typeSelected" [ngModelOptions]="{standalone: true}" (ngModelChange)="onSelectChange($event)">
+                <nz-radio-group formControlName="informantType" nzButtonStyle="solid" [nzDisabled]="!editMode" [(ngModel)]="typeSelected" (ngModelChange)="onSelectChange($event)">
                     <h5>Informant Type</h5>
-                    <label nz-radio-button nzvalue="PATIENT">{{ 'createAssessment.patient' | translate }}</label>
-                    <label nz-radio-button nzvalue="USER">{{ 'createAssessment.departmentsUser' | translate }}</label>
-                    <label nz-radio-button nzvalue="CAREGIVER">{{ 'createAssessment.patientsCaregiver' | translate }}</label>
+                    <label nz-radio-button nzValue="PATIENT">{{ 'createAssessment.patient' | translate }}</label>
+                    <label nz-radio-button nzValue="USER">{{ 'createAssessment.departmentsUser' | translate }}</label>
+                    <label nz-radio-button nzValue="CAREGIVER">{{ 'createAssessment.patientsCaregiver' | translate }}</label>
                 </nz-radio-group>
             </nz-form-item>
             <nz-form-item *ngIf="typeSelected === 'PATIENT'">
                 <nz-input-group>
                     <h5>{{ 'createAssessment.patient' | translate }}</h5>
-                    <nz-select [nzBorderless]="!editMode" class="input-class" [nzDisabled]="!editMode" [(ngModel)]="selectedInformant" [ngModelOptions]="{standalone: true}" formcontrolname="informantPatient">
+                    <nz-select [nzBorderless]="!editMode" class="input-class" [nzDisabled]="!editMode" [(ngModel)]="selectedInformant" formControlName="informantPatient">
                         <nz-option *ngFor="let data of dataToSelect" [nzLabel]="data.label" [nzValue]="data.value">{{
             data.label
             }}</nz-option>
@@ -49,7 +49,7 @@
             <nz-form-item *ngIf="typeSelected === 'USER'">
                 <nz-input-group>
                     <h5>{{ 'createAssessment.departmentsUser' | translate }}</h5>
-                    <nz-select [nzBorderless]="!editMode" class="input-class" [nzDisabled]="!editMode" [(ngModel)]="selectedInformant" [ngModelOptions]="{standalone: true}" formcontrolname="informantClinicianId">
+                    <nz-select [nzBorderless]="!editMode" class="input-class" [nzDisabled]="!editMode" [(ngModel)]="selectedInformant" formControlName="informantClinicianId">
                         <nz-option *ngFor="let data of dataToSelect" [nzLabel]="data.label" [nzValue]="data.value">{{
             data.label
             }}</nz-option>
@@ -59,7 +59,7 @@
             <nz-form-item *ngIf="typeSelected === 'CAREGIVER'">
                 <nz-input-group>
                     <h5>{{ 'createAssessment.patientsCaregiver' | translate }}</h5>
-                    <nz-select [nzBorderless]="!editMode" [nzOptions]="options" class="input-class" [nzDisabled]="!editMode" [(ngModel)]="selectedInformant" [ngModelOptions]="{standalone: true}" formcontrolname="informantCaregiverRelation"></nz-select>
+                    <nz-select [nzBorderless]="!editMode" [nzOptions]="options" class="input-class" [nzDisabled]="!editMode" [(ngModel)]="selectedInformant" formControlName="informantCaregiverRelation"></nz-select>
                 </nz-input-group>
             </nz-form-item>
             <!-- Start Update -->
@@ -139,7 +139,7 @@
                 <nz-input-group class="input-class">
                     <h5>{{ 'createAssessment.notes' | translate }}</h5>
                     <nz-textarea-count [nzMaxCharacterCount]="200" placeholder="Write notes">
-                        <textarea formcontrolname="note" [(ngModel)]="noteValue" [ngModelOptions]="{standalone: true}" nz-input [disabled]="!editMode"></textarea>
+                        <textarea formControlName="note" [(ngModel)]="noteValue" nz-input [disabled]="!editMode"></textarea>
                     </nz-textarea-count>
                 </nz-input-group>
             </nz-form-item>

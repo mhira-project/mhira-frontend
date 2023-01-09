@@ -310,7 +310,7 @@ export class CreateAssessmentComponent implements OnInit {
       assessmentTypeId: this.fullAssessment.assessmentType?.id,
       clinicianId: this.fullAssessment.clinician.id,
       deliveryDate: this.fullAssessment.deliveryDate,
-      informantType: '',
+      informantType: this.fullAssessment.informantType,
       informantPatient: this.fullAssessment.patient,
       emailReminder: this.fullAssessment.emailReminder,
       receiverEmail: this.fullAssessment.receiverEmail,
