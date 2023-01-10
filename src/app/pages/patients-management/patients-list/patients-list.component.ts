@@ -306,13 +306,14 @@ export class PatientsListComponent {
       .archivePatient(patient)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        () => {},
+        () => {
+          this.getPatients();
+        },
         (error) =>
           this.errorService.handleError(error, {
             prefix: `Unable to archived patient "${patient.firstName} ${patient.lastName}"`,
           })
       );
-    this.getPatients();
   }
 
   private async restorePatient(patient: FormattedPatient): Promise<void> {
@@ -333,13 +334,14 @@ export class PatientsListComponent {
       .restorePatient(patient)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        () => {},
+        () => {
+          this.getPatients();
+        },
         (error) =>
           this.errorService.handleError(error, {
             prefix: `Unable to restore patient "${patient.firstName} ${patient.lastName}"`,
           })
       );
-    this.getPatients();
   }
 
 

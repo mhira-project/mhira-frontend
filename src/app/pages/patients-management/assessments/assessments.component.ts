@@ -33,6 +33,7 @@ enum ActionKey {
   COPY_ASSESSMENT_LINK,
   ARCHIVE_ASSESSMENT,
   DELETE_ASSESSMENT,
+  SCAN_QR_CODE
 }
 
 @Component({
@@ -47,12 +48,16 @@ export class AssessmentsComponent implements OnInit {
     { key: ActionKey.COPY_ASSESSMENT_LINK, title: 'Copy Session Link' },
     { key: ActionKey.ARCHIVE_ASSESSMENT, title: 'Cancel Session' },
     { key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Session' },
+    { key: ActionKey.SCAN_QR_CODE, title: 'Scan QR Code' },
   ];
   public filter: CaseManagerFilter;
   public data: FormattedAssessment[];
   public columns: TableColumn<FormattedAssessment>[] = AssessmentsPatientsTable;
   public user: User;
   public isLoading = false;
+  isVisible = false;
+  newUrl : URL;
+  modalData : any = '';
   public pageInfo: PageInfo;
   public onlyMyAssessments = false;
 
@@ -111,11 +116,28 @@ export class AssessmentsComponent implements OnInit {
       case ActionKey.DELETE_ASSESSMENT:
         this.deleteAssessment(assessment, false);
         return;
+      case ActionKey.SCAN_QR_CODE:
+        this.modalData = assessment
+        this.newUrl = new URL(this.generateAssessmentURL(assessment.uuid), window.location.origin);
+        this.showModal()
+        return;  
     }
   }
   public onMyAssessments(): void {
     this.onlyMyAssessments = !this.onlyMyAssessments;
     this.getAssessments();
+  }
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 
   navigate() {
