@@ -127,7 +127,9 @@ export class AssessmentsListComponent {
             this.actions.push({key: ActionKey.CANCEL_SESSION, title: 'Cancel Session'});
             this.actions.push({key: ActionKey.ARCHIVE_ASSESSMENT, title: 'Archive Assessment'});
             this.archivedActions.push({key: ActionKey.RESTORE_ASSESSMENT, title: 'Restore Assessment'})
+            this.archivedActions.push({key: ActionKey.CANCEL_SESSION, title: 'Cancel Session'})
             this.notArchivedActions.push({key: ActionKey.ARCHIVE_ASSESSMENT, title: 'Archive Assessment'});
+            this.notArchivedActions.push({key: ActionKey.CANCEL_SESSION, title: 'Cancel Session'});
         }
         if (this.perms.permissionsOnly(PermissionKey.DELETE_ASSESSMENTS)) {
             this.archivedActions.push({key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Session'});
