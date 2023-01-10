@@ -46,48 +46,7 @@ export class AssessmentsListComponent {
     public data : FormattedAssessment[];
     public pageInfo : PageInfo;
     public loading = false;
-
-    // With the new implementation we have three sets of actions:
-    // 1. Default Actions (actions)
-    // 2. Archived Actions (archivedActions)
-    // 3. Not Archived Actions (notArchivedActions)
-
-    // actions, archivedActions and
-    // notArchivedActions I think can be initialized with
-    // the same value on the constructor to eleminate
-    // duplicate code, but I wasn't getting the same
-    // result, therefore for the moment I've let as it is:
     public actions : Action < ActionKey > [] = [
-        {
-            key: ActionKey.SHOW_ASSESSMENT,
-            title: 'Start Session'
-        }, {
-            key: ActionKey.COPY_ASSESSMENT_LINK,
-            title: 'Copy Session Link'
-        }, {
-            key: ActionKey.SENT_EMAIL,
-            title: 'Send Email'
-        }, {
-            key: ActionKey.SCAN_QR_CODE,
-            title: 'Scan QR Code'
-        },
-    ];
-    public archivedActions: Action < ActionKey > [] = [
-        {
-            key: ActionKey.SHOW_ASSESSMENT,
-            title: 'Start Session'
-        }, {
-            key: ActionKey.COPY_ASSESSMENT_LINK,
-            title: 'Copy Session Link'
-        }, {
-            key: ActionKey.SENT_EMAIL,
-            title: 'Send Email'
-        }, {
-            key: ActionKey.SCAN_QR_CODE,
-            title: 'Scan QR Code'
-        },
-    ];
-    public notArchivedActions: Action < ActionKey > [] = [
         {
             key: ActionKey.SHOW_ASSESSMENT,
             title: 'Start Session'
@@ -125,13 +84,10 @@ export class AssessmentsListComponent {
 
         if (this.perms.permissionsOnly(PermissionKey.MANAGE_ASSESSMENTS)) {
             this.actions.push({key: ActionKey.CANCEL_SESSION, title: 'Cancel Session'});
+            this.actions.push({key: ActionKey.RESTORE_ASSESSMENT, title: 'Restore Assessment'});
             this.actions.push({key: ActionKey.ARCHIVE_ASSESSMENT, title: 'Archive Assessment'});
-            this.archivedActions.push({key: ActionKey.RESTORE_ASSESSMENT, title: 'Restore Assessment'})
-            this.notArchivedActions.push({key: ActionKey.ARCHIVE_ASSESSMENT, title: 'Archive Assessment'});
         }
         if (this.perms.permissionsOnly(PermissionKey.DELETE_ASSESSMENTS)) {
-            this.archivedActions.push({key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Session'});
-            this.notArchivedActions.push({key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Session'});
             this.actions.push({key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Session'});
         }
     }
@@ -216,21 +172,9 @@ export class AssessmentsListComponent {
     }
 
     public onArchivedAssessments(): void {
-        // Each time the filter button is
-        // clicked we switch between the 
-        // sets of actions for each state,
-        // archived or unarchived.
-
-        if(!this.onlyArchivedAssessments){
-            this.actions = this.archivedActions;
-        }
-        else{
-            this.actions = this.notArchivedActions;
-        }
-
-        this.onlyArchivedAssessments = !this.onlyArchivedAssessments;
-        this.getAssessments();
-    }
+      this.onlyArchivedAssessments = !this.onlyArchivedAssessments;
+      this.getAssessments();
+  }
 
     private getAssessments(): void { // copy to not modify original options
         const options = {
