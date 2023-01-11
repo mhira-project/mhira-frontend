@@ -343,7 +343,8 @@ export class PlanAssessmentComponent implements OnInit {
         receiverEmail: [null],
         deliveryDate: [null],
         expirationDate: [null],
-        dates: this.formBuilder.array([])
+        dates: this.formBuilder.array([]),
+        note: [null]
       });
     } catch {
       this.assessmentForm = this.formBuilder.group({
@@ -362,7 +363,8 @@ export class PlanAssessmentComponent implements OnInit {
             expirationDate: [null],
             deliveryDate: [null]
           })
-        ])
+        ]),
+        note:[null]
       });
       this.isUpdate = false;
       return;
@@ -388,7 +390,7 @@ export class PlanAssessmentComponent implements OnInit {
           deliveryDate: this.fullAssessment.deliveryDate,
           expirationDate: this.fullAssessment.expirationDate,
           receiverEmail: this.fullAssessment.receiverEmail,
-
+          note: this.fullAssessment.note,
           questionnaires: this.fullAssessment.questionnaireAssessment?.questionnaires,
         });
         //@ts-ignore

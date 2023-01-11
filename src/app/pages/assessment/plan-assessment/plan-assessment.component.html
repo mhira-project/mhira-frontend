@@ -180,8 +180,9 @@
       <nz-form-item>
         <nz-input-group>
           <h5>Notes for the assessment manager</h5>
-          <textarea [attr.maxlength]="maxLength" placeholder="Write notes" rows="4" nz-input></textarea>
-          <p>0/{{ maxLength }} words</p>
+          <nz-textarea-count [nzMaxCharacterCount]="200" placeholder="Write notes">
+            <textarea formControlName="note" nz-input [disabled]="!editMode"></textarea>
+          </nz-textarea-count>
         </nz-input-group>
       </nz-form-item>
 

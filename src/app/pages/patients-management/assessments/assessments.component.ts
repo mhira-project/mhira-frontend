@@ -32,6 +32,7 @@ enum ActionKey {
   SHOW_ASSESSMENT,
   COPY_ASSESSMENT_LINK,
   ARCHIVE_ASSESSMENT,
+  RESTORE_ASSESSMENT,
   DELETE_ASSESSMENT,
   SCAN_QR_CODE
 }
@@ -46,7 +47,8 @@ export class AssessmentsComponent implements OnInit {
   public actions: Action<ActionKey>[] = [
     { key: ActionKey.SHOW_ASSESSMENT, title: 'Start Session' },
     { key: ActionKey.COPY_ASSESSMENT_LINK, title: 'Copy Session Link' },
-    { key: ActionKey.ARCHIVE_ASSESSMENT, title: 'Cancel Session' },
+    { key: ActionKey.ARCHIVE_ASSESSMENT, title: 'Archive Session' },
+    { key: ActionKey.RESTORE_ASSESSMENT, title: 'Restore Session' },
     { key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Session' },
     { key: ActionKey.SCAN_QR_CODE, title: 'Scan QR Code' },
   ];
@@ -55,6 +57,7 @@ export class AssessmentsComponent implements OnInit {
   public columns: TableColumn<FormattedAssessment>[] = AssessmentsPatientsTable;
   public user: User;
   public isLoading = false;
+  public onlyArchivedAssessments = false;
   isVisible = false;
   newUrl : URL;
   modalData : any = '';
@@ -111,8 +114,11 @@ export class AssessmentsComponent implements OnInit {
         this.copyAssessmentLink(assessment);
         return;
       case ActionKey.ARCHIVE_ASSESSMENT:
-        this.deleteAssessment(assessment);
+        this.archiveAssessment(assessment);
         return;
+      case ActionKey.RESTORE_ASSESSMENT:
+        this.restoreAssessment(assessment);
+        return;  
       case ActionKey.DELETE_ASSESSMENT:
         this.deleteAssessment(assessment, false);
         return;
@@ -125,6 +131,11 @@ export class AssessmentsComponent implements OnInit {
   }
   public onMyAssessments(): void {
     this.onlyMyAssessments = !this.onlyMyAssessments;
+    this.getAssessments();
+  }
+
+  public onArchivedAssessments(): void {
+    this.onlyArchivedAssessments = !this.onlyArchivedAssessments;
     this.getAssessments();
   }
 
@@ -210,6 +221,13 @@ export class AssessmentsComponent implements OnInit {
     // copy to not modify original options
     const options = { ...this.assessmentRequestOptions };
 
+    if(!this.onlyArchivedAssessments){
+      options.filter = {
+        ...options.filter,
+        and: [{ deleted: {is: false} }, ...(options.filter.and ?? [])],
+      };
+    } 
+
     options.filter = {
       ...options.filter,
       and: [{ patient: { id: { eq: this.patient?.id } } }, ...(options.filter.and ?? [])],
@@ -221,6 +239,14 @@ export class AssessmentsComponent implements OnInit {
         ...options.filter,
         and: [{ clinician: { id: { eq: this.userId } } }, ...(options.filter.and ?? [])],
       };
+
+    // apply for archived assessments
+    if (this.onlyArchivedAssessments)
+    options.filter = {
+        ...options.filter,
+        and: [{ deleted: {is: true} }, ...(options.filter.and ?? [])],
+    };
+  
 
     this.isLoading = true;
     this.assessmentService
@@ -234,6 +260,60 @@ export class AssessmentsComponent implements OnInit {
         },
         (error) => this.errorService.handleError(error, { prefix: 'Unable to load assessments' })
       );
+  }
+
+  private async archiveAssessment(assessment : FormattedAssessment) {
+    const modal = this.modalService.confirm({
+        nzOnOk: () => true,
+        nzTitle: 'Archive Assessment',
+        nzContent: `
+        Are you sure you want to archive ${
+            assessment.name
+        }?`
+    });
+
+    const confirmation = await modal.afterClose.toPromise();
+    if (! confirmation) 
+        return;
+    
+
+    this.isLoading = true;
+    this.assessmentService.archiveAssessment(assessment).pipe(finalize(() => (this.isLoading = false))).subscribe((archived) => {
+        if (!archived) {
+            this.getAssessments();
+        } else {
+            this.getAssessments();
+        }
+    }, (error) => this.errorService.handleError(error, {prefix: `Unable to archive assessment "${
+            assessment.name
+        }"`}));
+  }
+
+  private async restoreAssessment(assessment : FormattedAssessment) {
+    const modal = this.modalService.confirm({
+        nzOnOk: () => true,
+        nzTitle: 'Restore Assessment',
+        nzContent: `
+        Are you sure you want to restore ${
+            assessment?.name
+        }?`
+    });
+
+    const confirmation = await modal.afterClose.toPromise();
+    if (! confirmation) 
+        return;
+    
+
+    this.isLoading = true;
+    this.assessmentService.restoreAssessment(assessment).pipe(finalize(() => (this.isLoading = false))).subscribe((archived) => {
+        if (!archived) {
+            this.getAssessments();
+        } else {
+            this.getAssessments();
+        }
+    }, (error) => this.errorService.handleError(error, {prefix: `Unable to restore assessment "${
+            assessment.name
+        }"`}));
   }
 
   private async deleteAssessment(assessment: FormattedAssessment, archive: boolean = true): Promise<void> {

@@ -174,7 +174,7 @@ export class AssessmentsListComponent {
     public onArchivedAssessments(): void {
       this.onlyArchivedAssessments = !this.onlyArchivedAssessments;
       this.getAssessments();
-  }
+    }
 
     private getAssessments(): void { // copy to not modify original options
         const options = {

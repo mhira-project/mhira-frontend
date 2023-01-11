@@ -17,7 +17,7 @@
             <nz-form-item>
                 <nz-form-label [nzSpan]="6">Body</nz-form-label>
                 <nz-form-control [nzSpan]="14">
-                  <quill-editor formControlName="body" [styles]="customStyles"></quill-editor>
+                  <angular-editor [config]="editorConfig" [placeholder]="'Enter email body here...'" formControlName="body"></angular-editor>
                 </nz-form-control>
             </nz-form-item >
             <nz-form-item>

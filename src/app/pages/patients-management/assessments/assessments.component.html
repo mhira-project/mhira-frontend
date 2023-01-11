@@ -22,6 +22,22 @@
   <ng-container actions-left>
     <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
     <button nz-button nzType="primary" (click)="onMyAssessments()">{{ 'assessments.myAssessment' | translate }}</button>
+    <button
+    nz-button
+    nzType="primary"
+    (click)="onArchivedAssessments()"
+    *ngIf="!onlyArchivedAssessments"
+  >
+    {{ 'assessments.archivedAssessments' | translate }}
+  </button>
+  <button
+    nz-button
+    nzType="primary"
+    (click)="onArchivedAssessments()"
+    *ngIf="onlyArchivedAssessments"
+  >
+    {{ 'assessments.notArchivedAssessments' | translate }}
+  </button>
   </ng-container>
   <ng-container actions-right>
     <button nz-button nzType="primary" nzShape="circle" (click)="onPatientSelect()">
