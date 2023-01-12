@@ -15,7 +15,6 @@ import { EmailTemplatesColumns } from '../@tables/email-templates.table';
 
 enum ActionKey {
   EDIT,
-  DELETE
 }
 
 @Component({
@@ -52,7 +51,7 @@ export class EmailTemplatesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmailTemplates();
-    this.actions = [{ key: ActionKey.EDIT, title: 'Edit Template' }, {key: ActionKey.DELETE, title: 'Delete Template'}];
+    this.actions = [{ key: ActionKey.EDIT, title: 'Edit Template' }];
   }
 
   public onPageChange(paging: Paging): void {
@@ -102,8 +101,6 @@ export class EmailTemplatesComponent implements OnInit {
       case ActionKey.EDIT:
         this.router.navigate([`/mhira/administration/create-template/${assessmentAdministration.id}`])
         return;
-      case ActionKey.DELETE:
-        this.deleteEmailTemplate(assessmentAdministration.id);
     }
   }
 }

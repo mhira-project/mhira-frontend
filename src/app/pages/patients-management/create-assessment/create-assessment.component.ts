@@ -206,7 +206,7 @@ export class CreateAssessmentComponent implements OnInit {
   public getUserDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting[] }) {
     this.isLoading = true;
     this.departmentsService
-      .departments(params)
+      .departments({...params, filter: {...params?.filter, and: [{ patients: { id: { eq: this.fullAssessment?.patientId ?? this.patient?.id } } }]}})
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }: any) => {
@@ -219,6 +219,7 @@ export class CreateAssessmentComponent implements OnInit {
               if (!exists) this.users.push(user);
             });
           });
+          console.log('User Departments: ', this.departments);
         },
         (error) =>
           this.errorService.handleError(error, {

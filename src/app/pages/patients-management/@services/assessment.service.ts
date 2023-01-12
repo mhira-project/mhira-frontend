@@ -52,11 +52,31 @@ export class AssessmentService {
     });
   }
 
-  deleteAssessment(assessment: Assessment, archive: boolean = true): Observable<boolean> {
+  deleteAssessment(assessment: Assessment, statusCancel: boolean = true): Observable<boolean> {
     return this.apollo
       .mutate({
         mutation: AssessmentsMutations.deleteAssessment,
-        variables: { id: assessment.id, archive },
+        variables: { id: assessment.id, statusCancel },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map((result: any) => result?.data?.deleteAssessment));
+  }
+
+  archiveAssessment(assessment: Assessment): Observable<boolean> {
+    return this.apollo
+      .mutate({
+        mutation: AssessmentsMutations.archiveOneAssessment,
+        variables: { id: assessment.id },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map((result: any) => result?.data?.deleteAssessment));
+  }
+
+  restoreAssessment(assessment: Assessment): Observable<boolean> {
+    return this.apollo
+      .mutate({
+        mutation: AssessmentsMutations.restoreOneAssessment,
+        variables: { id: assessment.id },
         fetchPolicy: 'no-cache',
       })
       .pipe(map((result: any) => result?.data?.deleteAssessment));

@@ -76,8 +76,8 @@ export default {
   },
   patients: {
     myPatients: 'My Patients',
-    archivedPatients: 'Archived',
-    notArchivedPatients: 'Not Archived'
+    archivedPatients: 'Show Archived',
+    notArchivedPatients: 'Show not Archived'
   },
   tables: {
     assessmentAdministration: {

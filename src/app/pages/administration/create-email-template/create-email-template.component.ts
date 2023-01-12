@@ -5,6 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { EmailTemplatesService } from '../@services/email-templates.service';
 import { switchMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: 'app-create-email-template',
@@ -17,13 +18,17 @@ export class CreateEmailTemplateComponent implements OnInit {
   emailTemplate: any;
   customStyles = {height: '250px', width: '100%'}
   isUpdateMode: boolean = false;
+  editorConfig: AngularEditorConfig = {
+    minHeight: '200px',
+    editable: true
+  }
   emailForm = this.fb.group({
     name: '',
     subject: '',
     body: '',
     status: null,
     module: 'ASSESSMENT'
-  })
+  });
 
   constructor(
      private emailTemplatesService: EmailTemplatesService,
