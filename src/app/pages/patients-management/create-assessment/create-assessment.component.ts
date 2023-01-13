@@ -296,6 +296,8 @@ export class CreateAssessmentComponent implements OnInit {
   public async initAssessment(): Promise<void> {
     const data = this.activatedRoute.snapshot.queryParamMap.get('assessment');
     if (!data){
+      this.formGroup.removeControl('deliveryDate'); 
+      this.formGroup.removeControl('expirationDate'); 
       this.isUpdate = false;
       return;
     }
