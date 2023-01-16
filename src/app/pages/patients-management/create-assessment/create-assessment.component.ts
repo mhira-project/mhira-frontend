@@ -219,7 +219,6 @@ export class CreateAssessmentComponent implements OnInit {
               if (!exists) this.users.push(user);
             });
           });
-          console.log('User Departments: ', this.departments);
         },
         (error) =>
           this.errorService.handleError(error, {
