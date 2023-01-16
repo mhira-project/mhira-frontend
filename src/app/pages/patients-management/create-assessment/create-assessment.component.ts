@@ -118,10 +118,10 @@ export class CreateAssessmentComponent implements OnInit {
       receiverEmail: [null],
       note: [null],
       dates: this.formBuilder.array([
-        // this.formBuilder.group({
-        //   expirationDate: [null],
-        //   deliveryDate: [null]
-        // })
+        this.formBuilder.group({
+          expirationDate: [null],
+          deliveryDate: [null]
+        })
       ])
     });
     this.getAssessmentTypes();

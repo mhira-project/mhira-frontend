@@ -63,7 +63,7 @@
                 </nz-input-group>
             </nz-form-item>
             <!-- Start Update -->
-            <div class="date-picker">
+            <div *ngIf="isUpdate === true" class="date-picker">
             <nz-form-item>
                 <nz-input-group class="date-picker1">
                 <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
@@ -124,7 +124,7 @@
                                 ></nz-date-picker>
                             </nz-input-group>
                             </nz-form-item>
-                        <button type="button" (click)="remove(i)" nz-button nzShape="circle"><span nz-icon nzType="delete"></span></button>
+                        <button *ngIf="i !== 0" type="button" (click)="remove(i)" nz-button nzShape="circle"><span nz-icon nzType="delete"></span></button>
                         </div>
                     </div>
                     </div>
