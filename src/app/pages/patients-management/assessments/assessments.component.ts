@@ -72,7 +72,6 @@ export class AssessmentsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private assessmentService: AssessmentService,
     private errorService: ErrorHandlerService,
     private clipboardService: ClipboardService,

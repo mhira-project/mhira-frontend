@@ -57,8 +57,10 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
   {
     title: 'Status',
     name: 'formattedStatus',
+    altName: 'status',
     translationPath: 'tables.assessmentsPatients.status',
     render: 'tag',
+    sort: true,
     filterField: {
       type: 'select',
       value: undefined,
@@ -68,6 +70,7 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
   {
     title: 'Email Status',
     name: 'emailFormatedStatus',
+    altName: 'emailStatus',
     render: 'tag',
     translationPath: 'tables.assessmentsPatients.emailStatus',
     sort: true,
