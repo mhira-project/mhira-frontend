@@ -57,6 +57,7 @@ const antModules = [
     CommonModule,
     AppFormModule,
     TranslateModule,
+    FormsModule,
     SharedModule,
     AssessmentRoutingModule,
     MasterDataModule,

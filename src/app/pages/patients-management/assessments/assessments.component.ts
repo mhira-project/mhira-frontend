@@ -8,7 +8,7 @@ import {
   TableColumn,
 } from '@shared/@modules/master-data/@types/list';
 import { AssessmentsPatientsTable } from '@app/pages/patients-management/@tables/assessments.table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { CaseManagerFilter } from '@app/pages/patients-management/@types/case-manager-filter';
 import { finalize } from 'rxjs/operators';

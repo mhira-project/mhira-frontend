@@ -10,18 +10,11 @@
   (sort)="onSort($event)"
   (filter)="onFilter($event)"
 >
-  <ng-container actions-left>
+  <div class="actions-left" actions-left>
     <app-master-data-search (search)="searchPatients($event)"></app-master-data-search>
-    <button nz-button nzType="primary" (click)="onMyPatients()" *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS])">
-      {{ 'patients.myPatients' | translate }}
-    </button>
-    <button nz-button nzType="primary" (click)="onArchievedPatients()" *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS]) && !archievedPatients">
-      {{ 'patients.archivedPatients' | translate }}
-    </button>
-    <button nz-button nzType="primary" (click)="onArchievedPatients()" *ngIf="perms.permissionsOnly([PK.MANAGE_PATIENTS]) && archievedPatients">
-      {{ 'patients.notArchivedPatients' | translate }}
-    </button>
-  </ng-container>
+   <label [ngClass]="{'text-green' : onlyMyPatients}" class="spacer" (ngModelChange)="onMyPatients()" nz-checkbox [(ngModel)]="onlyMyPatients">{{ 'patients.myPatients' | translate }}</label>
+   <label [ngClass]="{'text-green' : archivedPatients}" (ngModelChange)="onArchievedPatients()" nz-checkbox [(ngModel)]="archivedPatients">{{ 'assessments.archivedAssessments' | translate }}</label>
+  </div>
   <ng-container actions-right>
     <button
       nz-button

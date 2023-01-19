@@ -72,6 +72,15 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     },
   },
   {
+    name: 'formatedQuestionnaires',
+    title: 'Questionnaires',
+    render: 'avatar',
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  },
+  {
     name: 'deliveryDate',
     title: 'Delivery Date',
     translationPath: 'plannedAssessments.deliveryDate',
@@ -116,5 +125,5 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     translationPath: 'plannedAssessments.emailStatus',
     render: 'tag',
     sort: true
-  },
+  }
 ];
