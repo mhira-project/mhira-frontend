@@ -118,10 +118,10 @@ export class CreateAssessmentComponent implements OnInit {
       receiverEmail: [null],
       note: [null],
       dates: this.formBuilder.array([
-        // this.formBuilder.group({
-        //   expirationDate: [null],
-        //   deliveryDate: [null]
-        // })
+        this.formBuilder.group({
+          expirationDate: [null],
+          deliveryDate: [null]
+        })
       ])
     });
     this.getAssessmentTypes();
@@ -219,7 +219,6 @@ export class CreateAssessmentComponent implements OnInit {
               if (!exists) this.users.push(user);
             });
           });
-          console.log('User Departments: ', this.departments);
         },
         (error) =>
           this.errorService.handleError(error, {
@@ -296,6 +295,8 @@ export class CreateAssessmentComponent implements OnInit {
   public async initAssessment(): Promise<void> {
     const data = this.activatedRoute.snapshot.queryParamMap.get('assessment');
     if (!data){
+      this.formGroup.removeControl('deliveryDate'); 
+      this.formGroup.removeControl('expirationDate'); 
       this.isUpdate = false;
       return;
     }

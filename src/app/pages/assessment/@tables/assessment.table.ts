@@ -103,14 +103,18 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   },
   {
     name: 'formattedStatus',
+    altName: 'status',
     title: 'Status',
+    sort: true,
     translationPath: 'plannedAssessments.formattedStatus',
     render: 'tag',
   },
   {
     name: 'emailFormatedStatus',
+    altName: 'emailStatus',
     title: 'Email Status',
     translationPath: 'plannedAssessments.emailStatus',
     render: 'tag',
+    sort: true
   },
 ];
