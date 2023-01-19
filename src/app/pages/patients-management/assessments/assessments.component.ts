@@ -254,7 +254,6 @@ export class AssessmentsComponent implements OnInit {
       .subscribe(
         ({ edges, pageInfo }) => {
           this.data = edges.map((e: any) => Convert.toFormattedAssessment(e.node));
-          console.log(this.data);
           this.pageInfo = pageInfo;
         },
         (error) => this.errorService.handleError(error, { prefix: 'Unable to load assessments' })
