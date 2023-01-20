@@ -40,6 +40,7 @@ export class CreateAssessmentComponent implements OnInit {
   dataToSelect: any = [];
   selectedInformant: any = null;
   noteValue: any = '';
+  patientEmail: string= '';
   options = [
     { label: 'Mother', value: 'Mother' },
     { label: 'Father', value: 'Father' },
@@ -115,7 +116,7 @@ export class CreateAssessmentComponent implements OnInit {
       deliveryDate: [null],
       expirationDate: [null],
       emailReminder: [null],
-      receiverEmail: [null],
+      receiverEmail: [{value: this.patient?.email}],
       note: [null],
       dates: this.formBuilder.array([
         this.formBuilder.group({
@@ -235,6 +236,7 @@ export class CreateAssessmentComponent implements OnInit {
         const patient = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         console.log(PatientModel.fromJson(patient));
         this.patient = PatientModel.fromJson(patient);
+        this.patientEmail = this.patient.email;
       }
     });
     if (this.editMode) {
@@ -285,7 +287,12 @@ export class CreateAssessmentComponent implements OnInit {
 
     action.subscribe(
       () => {
-        this.nzMessage.success('Assessment created', { nzDuration: 3000 });
+        if(this.isUpdate){
+          this.nzMessage.success('Assessment updated', { nzDuration: 3000 });
+        }
+        else{
+          this.nzMessage.success('Assessment created', { nzDuration: 3000 });
+        }
         this.editMode = false;
       },
       (err) => this.errorService.handleError(err, { prefix: 'Unable to create assessment ' })
@@ -330,6 +337,7 @@ export class CreateAssessmentComponent implements OnInit {
     this.deliveryDate = this.fullAssessment.deliveryDate;
     this.selectedQuestionnaires = this.fullAssessment.questionnaireAssessment.questionnaires;
     this.noteValue = this.fullAssessment.note;
+    this.patientEmail = this.patient.email;
     this.selectedAssessment = this.fullAssessment.assessmentType?.id;
     // this.formGroup.controls.note.disable();
 
