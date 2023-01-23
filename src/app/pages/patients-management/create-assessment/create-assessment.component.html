@@ -104,6 +104,7 @@
                             <nz-input-group class="date-picker1">
                                 <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
                                 <nz-date-picker
+                                [required]="formGroup.controls.emailReminder.value === true"
                                 [nzBorderless]="!editMode"
                                 nzShowTime
                                 nzFormat="yyyy-MM-dd HH:mm"

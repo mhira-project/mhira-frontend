@@ -168,6 +168,7 @@ export class PlanAssessmentComponent implements OnInit {
     this.getUserDepartments();
     this.initAssessment();
     this.userAutoSelect();
+    console.log('Valueeee: ', this.assessmentForm.controls.emailReminder.value)
   }
 
   get datesFieldAsFormArray(): FormArray {
