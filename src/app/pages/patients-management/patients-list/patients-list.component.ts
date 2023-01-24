@@ -68,9 +68,9 @@ export class PatientsListComponent {
 
   public patientStates: PatientStatus[] = [];
 
-  private onlyMyPatients = false;
+  public onlyMyPatients = false;
 
-  public archievedPatients = false;
+  public archivedPatients = false;
 
   constructor(
     private patientsService: PatientsService,
@@ -114,7 +114,7 @@ export class PatientsListComponent {
   }
 
   public onArchievedPatients(): void {
-    this.archievedPatients = !this.archievedPatients;
+    this.archivedPatients = !this.archivedPatients;
     this.getPatients();
   }
 
@@ -145,7 +145,7 @@ export class PatientsListComponent {
     this.loading = true;
     const options = { ...this.patientRequestOptions };
 
-    if(!this.archievedPatients){
+    if(!this.archivedPatients){
       options.filter = {
         ...options.filter,
         and: [{ deleted: {is: false} }, ...(options.filter.and ?? [])],
@@ -163,7 +163,7 @@ export class PatientsListComponent {
 
     // archieved patients
 
-    if(this.archievedPatients){
+    if(this.archivedPatients){
       options.filter = {
         ...options.filter,
         and: [{ deleted: {is: true} }, ...(options.filter.and ?? [])],

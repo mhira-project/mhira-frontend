@@ -33,6 +33,15 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
     },
   },
   {
+    name: 'formatedQuestionnaires',
+    title: 'Questionnaires',
+    render: 'avatar',
+    filterField: {
+      type: 'text',
+      value: undefined,
+    },
+  },
+  {
     title: 'Delivery Date',
     name: 'formatedDeliveryDate',
     translationPath: 'tables.assessmentsPatients.deliveryDate',

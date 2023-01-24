@@ -144,6 +144,7 @@
                   <nz-input-group class="date-picker1">
                     <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
                     <nz-date-picker
+                      [required]="assessmentForm.controls.emailReminder.value === true"
                       [nzBorderless]="!editMode"
                       nzShowTime
                       nzFormat="yyyy-MM-dd HH:mm"
@@ -174,7 +175,7 @@
       
       <div class="email-label-wrapper">
         <label formControlName="emailReminder" [nzValue]="fullAssessment?.emailReminder" [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>Sent assessment via email</label>
-        <input style="width: 240px;" formControlName="receiverEmail" nz-input placeholder="youremail@domain.com" [value]="fullAssessment?.patient?.email" [disabled]="!checked" />
+        <input [ngModel]="patient?.email" style="width: 240px;" formControlName="receiverEmail" nz-input placeholder="youremail@domain.com" [value]="fullAssessment?.patient?.email" [disabled]="!checked" />
       </div>
 
       <nz-form-item>

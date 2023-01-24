@@ -124,6 +124,9 @@ export class Convert {
 
   public static toFormattedAssessment(json: Assessment | FullAssessment): FormattedAssessment {
     const assessment: FormattedAssessment = json as FormattedAssessment;
+    
+    assessment.formatedQuestionnaires = json?.questionnaireAssessment?.questionnaires.map((questionnaire: any) =>
+    [questionnaire.questionnaire.abbreviation]);
 
     assessment.emailFormatedStatus = {
       color:  json.emailStatus === 'SCHEDULED' ? 'green' 

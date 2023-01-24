@@ -8,7 +8,7 @@ import {
   TableColumn,
 } from '@shared/@modules/master-data/@types/list';
 import { AssessmentsPatientsTable } from '@app/pages/patients-management/@tables/assessments.table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { CaseManagerFilter } from '@app/pages/patients-management/@types/case-manager-filter';
 import { finalize } from 'rxjs/operators';
@@ -254,7 +254,6 @@ export class AssessmentsComponent implements OnInit {
       .subscribe(
         ({ edges, pageInfo }) => {
           this.data = edges.map((e: any) => Convert.toFormattedAssessment(e.node));
-          console.log(this.data);
           this.pageInfo = pageInfo;
         },
         (error) => this.errorService.handleError(error, { prefix: 'Unable to load assessments' })
