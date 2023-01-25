@@ -54,9 +54,6 @@ export class AssessmentsListComponent {
             key: ActionKey.COPY_ASSESSMENT_LINK,
             title: 'Copy Session Link'
         }, {
-            key: ActionKey.SENT_EMAIL,
-            title: 'Send Email'
-        }, {
             key: ActionKey.SCAN_QR_CODE,
             title: 'Scan QR Code'
         },
@@ -89,6 +86,9 @@ export class AssessmentsListComponent {
         }
         if (this.perms.permissionsOnly(PermissionKey.DELETE_ASSESSMENTS)) {
             this.actions.push({key: ActionKey.DELETE_ASSESSMENT, title: 'Delete Session'});
+        }
+        if(environment.email){
+            this.actions.push({key: ActionKey.SENT_EMAIL, title: 'Send Email'});
         }
     }
 

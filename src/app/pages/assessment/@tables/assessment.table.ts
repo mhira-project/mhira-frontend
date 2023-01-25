@@ -2,6 +2,7 @@ import { User } from './../../user-management/@types/user';
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
 import { FormattedAssessment } from '../@types/assessment';
 import { Patient } from '@app/pages/patients-management/@types/patient';
+import { environment } from '@env/environment';
 
 export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
@@ -127,3 +128,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     sort: true
   }
 ];
+
+if(!environment.email){
+  AssessmentTable.pop();
+}

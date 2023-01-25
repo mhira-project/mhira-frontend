@@ -1,5 +1,6 @@
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
 import { FormattedAssessment } from '@app/pages/assessment/@types/assessment';
+import { environment } from '@env/environment';
 
 export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
   {
@@ -89,3 +90,7 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
     },
   }
 ];
+
+if(!environment.email){
+  AssessmentsPatientsTable.pop();
+}

@@ -173,7 +173,7 @@
       </div>
       <!-- End Create -->
       
-      <div class="email-label-wrapper">
+      <div *ngIf="hasEmail" class="email-label-wrapper">
         <label formControlName="emailReminder" [nzValue]="fullAssessment?.emailReminder" [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>Sent assessment via email</label>
         <input [ngModel]="patient?.email" style="width: 240px;" formControlName="receiverEmail" nz-input placeholder="youremail@domain.com" [value]="fullAssessment?.patient?.email" [disabled]="!checked" />
       </div>
