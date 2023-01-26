@@ -45,7 +45,7 @@ export class QuestionnaireManagementService {
     return this.apollo
       .query<{ questionnaires: ConnectionResult<QuestionnaireVersion> }>({
         query: QuestionnaireQueries.getQuestionnaires,
-        variables: { ...options },
+        variables: { ...options, paging: {first: 20} },
         fetchPolicy: 'no-cache',
       })
       .pipe(map(({ data }) => data.questionnaires));
