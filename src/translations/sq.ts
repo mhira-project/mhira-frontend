@@ -22,6 +22,8 @@ export default {
   },
   assessments: {
     myAssessment: 'Vlerësimet e Mia',
+    archivedAssessments: 'Të Arkivuara',
+    notArchivedAssessments: 'Jo Të Arkivuara'
   },
   card: {
     changePassword: 'Ndrysho fjalekalimin',
@@ -40,7 +42,7 @@ export default {
   },
   menu: {
     dashboard: 'Paneli Kryesor',
-    createAssessment: 'Krijo Vlerësim',
+    createAssessment: 'Krijo Vlerësimin',
     caseManagement: 'Menaxhimi i Rasteve',
     patientList: 'Lista e Klientëve',
     createPatient: 'Krijo një Klient',
@@ -68,9 +70,13 @@ export default {
     notFound: 'Nuk është gjetur',
     noTabs: 'Nuk ka skedar',
     disclaimers: 'Mesazhet',
+    emailTemplates: 'Shabllonet e Email',
+    version: 'Versioni'
   },
   patients: {
-    myPatients: 'Pacientët e Mi',
+    myPatients: 'Klientët e Mi',
+    archivedPatients: 'Të Arkivuar',
+    notArchivedPatients: 'Jo Të Arkivuar'
   },
   tables: {
     assessmentAdministration: {
@@ -106,7 +112,7 @@ export default {
       roles: 'Rolet',
       status: 'Statusi',
       repositoryLink: 'Linku i Repozitorit',
-      createdAt: 'Krijuar Në',
+      createdAt: 'Krijuar Më',
     },
     patients: {
       firstName: 'Emri',
@@ -127,10 +133,10 @@ export default {
       lastName: 'Mbiemri',
       email: 'E-Mail',
       phone: 'Telefoni',
-      relation: 'Marrëdhënie',
+      relation: 'Marrëdhënia',
       emergency: 'Emergjenca',
       note: 'Shënim',
-      patients: 'Pacientët',
+      patients: 'Klientët',
     },
     casemanagers: {
       firstName: 'Emri',
@@ -245,7 +251,7 @@ export default {
       email: 'Email Adresa',
       phone: 'Telefoni',
       phone2: 'Numër tjetër Telefoni',
-      relation: 'Marrëdhënia me Pacientin',
+      relation: 'Marrëdhënia me Klientin',
       number: 'Numër',
       apartment: 'Apartment',
       place: 'Vendi',
@@ -280,7 +286,7 @@ export default {
     copyright: 'E Drejta e Autorit',
     website: 'Faqja e Internetit',
     license: 'Liçensë',
-    createdAt: 'Krijuar Në',
+    createdAt: 'Krijuar Më',
   },
   questionnairesForm: {
     name: 'Emri',
@@ -296,10 +302,12 @@ export default {
   plannedAssessments: {
     name: 'Emri',
     formattedStatus: 'Statusi',
-    patientMedicalRecordNo: 'ID e Spitalit të Pacientit Në',
-    formattedPatient: 'Pacient',
-    clinicianWorkId: 'ID e Punës së Mjekut',
-    formattedClinician: 'Mjeku',
+    patientMedicalRecordNo: 'ID e Spitalit të Klientit Në',
+    formattedPatient: 'Klienti',
+    submissionDate: 'Data e Dorëzimit',
+    emailStatus: 'Statusi i Email',
+    clinicianWorkId: 'ID e Punës së Profesionistit',
+    formattedClinician: 'Profesionisti',
     informant: 'Informatori',
     createdAt: 'Krijuar Në',
     expirationDate: 'Data e skadencës',
@@ -308,7 +316,7 @@ export default {
   },
   planAssessment: {
     assessmentName: 'Emri i Vlerësimit',
-    patient: 'Zgjidhni pacientin të cilit i përket ky vlerësim',
+    patient: 'Zgjidhni klientin të cilit i përket ky vlerësim',
     clinician: 'Mjeku',
     informant: 'Informatori',
   },
@@ -317,7 +325,7 @@ export default {
     assessmentManager: 'Menaxheri i Vlerësimit',
     patient: 'Pacienti',
     departmentsUser: `Përdoruesi i Departamentit`,
-    patientsCaregiver: ` Kujdestari i pacientit`,
+    patientsCaregiver: ` Kujdestari i klientit`,
     deliveryDate: 'Data e dorëzimit',
     expirationDate: ' Data e skadencës',
     notes: 'Shënime për menaxherin e vlerësimit',
@@ -334,10 +342,10 @@ export default {
     },
   },
   caregiver: {
-    patient: 'Pacienti',
+    patient: 'Klienti',
     birthDate: 'Data e lindjes',
     medicalRecordNumber: 'Numri i dosjes mjekësore',
-    relationToPatient: 'Lidhja me pacientin',
+    relationToPatient: 'Lidhja me klientin',
     nonExistingCaregiver: 'Shto një kujdestar që nuk ekziston:',
     existingCaregiver: 'Kërkoni për kujdestarin ekzistues',
     searchCaregiver: 'Kërkoni numrin ose emrin ekzistues të kujdestarit',
@@ -348,4 +356,16 @@ export default {
     permissions: 'Lejet',
     roles: 'Rolet',
   },
+  emailTemplates:{
+    createTemplate: 'Krijo Shabllon',
+    created: 'Shablloni i email u krijua me sukses!',
+    updated: 'Shablloni i email u rifreskua me sukses!',
+    deleted: 'Shablloni i email u fshi me sukses!',
+    unableToLoad: 'Shabllonet email nuk mund të shfaqen!',
+    name: 'Emri',
+    body: 'Trupi',
+    subject: 'Subjekti',
+    status: 'Statusi',
+    module: 'Moduli'
+  }
 };

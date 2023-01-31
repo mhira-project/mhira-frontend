@@ -183,10 +183,11 @@ export class CreateReportComponent implements OnInit {
           if (this.selectedRoles.length > 0) {
             console.log(this.selectedRoles);
           }
+          this.goBack();
         },
         (error) => {
           this.populateForm = true;
-          this.errorService.handleError(error, {
+          this.errorService.handleError(error, { 
             prefix: `Unable to update user "${reportUpdates.name}"`,
           });
         }

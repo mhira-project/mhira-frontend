@@ -7,7 +7,7 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
     title: 'Title',
     name: 'formattedAssessmentType',
     translationPath: 'tables.assessmentsPatients.title',
-    sort: true,
+    // sort: true,
     filterField: {
       type: 'text',
       value: undefined,

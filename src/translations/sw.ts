@@ -22,6 +22,8 @@ export default {
   },
   assessments: {
     myAssessment: 'Tathmini yangu',
+    archivedAssessments: 'Show Archived - REPLACE',
+    notArchivedAssessments: 'Show Not Archived - REPLACE'
   },
   card: {
     changePassword: 'Badilisha neno la siri',
@@ -63,9 +65,13 @@ export default {
     notFound: 'Haipo',
     noTabs: 'Hakuna kurasa',
     disclaimers: 'Kanusho',
+    emailTemplates: 'Email Templates - REPLACE',
+    version: 'Version - REPLACE'
   },
   patients: {
     myPatients: 'Wagonjwa Wangu',
+    archivedPatients: 'Show Archived - REPLACE',
+    notArchivedPatients: 'Show not Archived - REPLACE'
   },
   tables: {
     assessmentAdministration: {
@@ -292,6 +298,8 @@ export default {
     formattedStatus: 'Hali',
     patientMedicalRecordNo: 'Kitambulisho cha Hospitali cha Mgonjwa',
     formattedPatient: 'Mgonjwa',
+    submissionDate: 'Submission Date - REPLACE',
+    emailStatus: 'Email Status - REPLACE',
     clinicianWorkId: 'Kitambulisho cha Kazi cha Daktari',
     formattedClinician: 'Daktari wa kliniki',
     informant: 'Mtoa taarifa',
@@ -342,4 +350,16 @@ export default {
     permissions: 'Ruhusa',
     roles: 'Majukumu',
   },
+  emailTemplates:{
+    createTemplate: 'Create Template - REPLACE',
+    created: 'Email template created successfully! - REPLACE',
+    updated: 'Email template updated successfully! - REPLACE',
+    deleted: 'Email template deleted successfully! - REPLACE',
+    unableToLoad: 'Unable to load email templates - REPLACE',
+    name: 'Name - REPLACE',
+    body: 'Body - REPLACE',
+    subject: 'Subject - REPLACE',
+    status: 'Status - REPLACE',
+    module: 'Module - REPLACE'
+  }
 };

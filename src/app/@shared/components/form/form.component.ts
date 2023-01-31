@@ -47,6 +47,7 @@ export class FormComponent implements OnInit {
   @Output() rowRemoved: EventEmitter<any> = new EventEmitter<any>();
   @Output() formUpdate: EventEmitter<any> = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<void>();
+  @Output() inputModeChanged = new EventEmitter<boolean>()
   formGroup: FormGroup;
   private _resetForm = false;
 
@@ -61,6 +62,7 @@ export class FormComponent implements OnInit {
 
   toggleEdit() {
     this.inputMode = !this.inputMode;
+    this.inputModeChanged.emit(this.inputMode)
   }
 
   isValidForm(form?: Form): boolean {

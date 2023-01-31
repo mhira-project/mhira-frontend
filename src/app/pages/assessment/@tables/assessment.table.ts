@@ -9,7 +9,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     name: 'formattedAssessmentType',
     title: 'Name',
     translationPath: 'plannedAssessments.name',
-    sort: true,
+    // sort: true,
     filterField: {
       type: 'text',
       value: undefined,

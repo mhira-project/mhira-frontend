@@ -5,7 +5,7 @@ export default {
     caseManagers: 'Administradores del Caso',
     departments: 'Departamentos',
     caregivers: 'Cuidadores',
-    reports: 'informes',
+    reports: 'Informes',
     previous: 'Anterior',
     next: 'Siguiente',
     reset: 'Restablecer',
@@ -22,9 +22,11 @@ export default {
   },
   assessments: {
     myAssessment: 'Mi Evaluación',
+    archivedAssessments: 'Mostrar Evaluaciones Archivadas',
+    notArchivedAssessments: 'Mostrar Evaluaciones No Archivadas',
   },
   card: {
-    changePassword: 'Cambia la contraseña',
+    changePassword: 'Cambiar la Contraseña',
     profile: 'Perfil',
     logout: 'Cerrar sesión',
   },
@@ -68,9 +70,13 @@ export default {
     notFound: 'No encontrado',
     noTabs: 'No hay Pestaña',
     disclaimers: 'Mensajes',
+    emailTemplates: 'Modelos de Email',
+    version: 'Versión',
   },
   patients: {
     myPatients: 'Mis Pacientes',
+    archivedPatients: 'Mostrar Pacientes Archivados',
+    notArchivedPatients: 'Mostrar Pacientes No Archivados'
   },
   tables: {
     assessmentAdministration: {
@@ -297,6 +303,8 @@ export default {
     formattedStatus: 'Estado',
     patientMedicalRecordNo: 'Número de Ficha o RUT',
     formattedPatient: 'Paciente',
+    submissionDate: 'Fecha de envío',
+    emailStatus: 'Estado del email',
     clinicianWorkId: 'ID del tratante o RUT',
     formattedClinician: 'Tratante',
     informant: 'Informante',
@@ -335,7 +343,7 @@ export default {
   caregiver: {
     patient: 'Paciente',
     birthDate: 'Fecha de nacimiento',
-    medicalRecordNumber: 'Numero de ficha CLINICA',
+    medicalRecordNumber: 'Numero de ficha clínica',
     relationToPatient: 'Relación con el paciente',
     nonExistingCaregiver: 'Agregar un cuidador no existente:',
     existingCaregiver: 'Buscar cuidador existente',
@@ -347,4 +355,16 @@ export default {
     permissions: 'Permisos',
     roles: 'Roles',
   },
+  emailTemplates:{
+    createTemplate: 'Crear Modelo de Email',
+    created: '¡Modelo de email creado exitosamente!',
+    updated: '¡Modelo de email actualizado exitosamente!',
+    deleted: '¡Modelo de email borrado exitosamente!',
+    unableToLoad: 'No se puede cargar modelo de email',
+    name: 'Nombre',
+    body: 'Cotenido',
+    subject: 'Asunto',
+    status: 'Estado',
+    module: 'Módulo'
+  }
 };
