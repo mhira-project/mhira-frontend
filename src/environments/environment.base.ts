@@ -17,6 +17,7 @@ export const EnvironmentBase = {
   baseURL: 'https://dev-api.mhira.net/graphql',
   defaultLanguage: 'en-US',
   supportedLanguages: ['en-US', 'fr-FR'],
+  email: true,
 };
 
 /*
