@@ -366,6 +366,7 @@ export default {
     deleted: 'Email template deleted successfully!',
     unableToLoad: 'Unable to load email templates',
     name: 'Name',
+    body: 'Body',
     subject: 'Subject',
     status: 'Status',
     module: 'Module'

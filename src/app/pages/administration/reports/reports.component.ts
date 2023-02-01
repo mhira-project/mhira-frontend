@@ -59,7 +59,6 @@ export class ReportsComponent implements OnInit {
   ngOnInit(): void {
     this.getReports();
     this.actions = [
-      { key: ActionKey.EDIT_REPORT, title: 'Edit Report' },
       { key: ActionKey.DELETE_REPORT, title: 'Delete Report' },
     ];
   }

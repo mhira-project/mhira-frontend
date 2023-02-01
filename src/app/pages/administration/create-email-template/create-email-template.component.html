@@ -3,25 +3,25 @@
     <div nz-col nzSpan="24">
         <form nz-form [formGroup]="emailForm">
             <nz-form-item>
-              <nz-form-label [nzSpan]="6">Name</nz-form-label>
+              <nz-form-label [nzSpan]="6">{{'emailTemplates.name' | translate}}</nz-form-label>
               <nz-form-control [nzSpan]="14">
                 <input formControlName="name" nz-input name="name" type="text" id="name">
               </nz-form-control>
             </nz-form-item >
             <nz-form-item>
-                <nz-form-label [nzSpan]="6">Subject</nz-form-label>
+                <nz-form-label [nzSpan]="6">{{'emailTemplates.subject' | translate}}</nz-form-label>
                 <nz-form-control [nzSpan]="14">
                   <input formControlName="subject" nz-input name="subject" type="text" id="subject">
                 </nz-form-control>
             </nz-form-item >
             <nz-form-item>
-                <nz-form-label [nzSpan]="6">Body</nz-form-label>
+                <nz-form-label [nzSpan]="6">{{'emailTemplates.body' | translate}}</nz-form-label>
                 <nz-form-control [nzSpan]="14">
                   <angular-editor [config]="editorConfig" [placeholder]="'Enter email body here...'" formControlName="body"></angular-editor>
                 </nz-form-control>
             </nz-form-item >
             <nz-form-item>
-                <nz-form-label [nzSpan]="6">Status</nz-form-label>
+                <nz-form-label [nzSpan]="6">{{'emailTemplates.status' | translate}}</nz-form-label>
                 <nz-form-control [nzSpan]="14">
                     <nz-select formControlName="status" nzShowSearch nzAllowClear nzPlaceHolder="Select active or inactive">
                         <nz-option nzLabel="Active" nzValue="ACTIVE"></nz-option>

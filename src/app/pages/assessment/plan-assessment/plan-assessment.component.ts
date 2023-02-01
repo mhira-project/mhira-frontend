@@ -57,6 +57,7 @@ export class PlanAssessmentComponent implements OnInit {
   public maxLength: number = 200;
   public checked: boolean = false;
   public isUpdate: boolean;
+  public hasEmail: boolean = false;
   url: any = '';
   options = [
     {
@@ -168,6 +169,7 @@ export class PlanAssessmentComponent implements OnInit {
     this.getUserDepartments();
     this.initAssessment();
     this.userAutoSelect();
+    this.hasEmail = environment.email;
   }
 
   get datesFieldAsFormArray(): FormArray {

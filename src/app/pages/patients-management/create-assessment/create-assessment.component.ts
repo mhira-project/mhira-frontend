@@ -82,7 +82,8 @@ export class CreateAssessmentComponent implements OnInit {
   public assessmentUrl: URL;
   public selectedQuestionnaires: QuestionnaireVersion[] = [];
   public checked: boolean = false;
-  public isUpdate: boolean; 
+  public isUpdate: boolean;
+  public hasEmail: boolean = false;
 
   get patientTitle(): string {
     const name = [this.patient?.firstName, this.patient?.middleName, this.patient?.lastName]
@@ -131,6 +132,7 @@ export class CreateAssessmentComponent implements OnInit {
     this.getPatient();
     this.getCaregivers();
     this.getUserDepartments();
+    this.hasEmail = environment.email
   }
 
   get datesFieldAsFormArray(): FormArray {

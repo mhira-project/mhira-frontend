@@ -1,12 +1,13 @@
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
 import { FormattedAssessment } from '@app/pages/assessment/@types/assessment';
+import { environment } from '@env/environment';
 
 export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
   {
     title: 'Title',
     name: 'formattedAssessmentType',
     translationPath: 'tables.assessmentsPatients.title',
-    sort: true,
+    // sort: true,
     filterField: {
       type: 'text',
       value: undefined,
@@ -89,3 +90,7 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
     },
   }
 ];
+
+if(!environment.email){
+  AssessmentsPatientsTable.pop();
+}

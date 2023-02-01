@@ -1,7 +1,8 @@
 import { SideNavInterface } from '@app/@layout/backend/side-nav.type';
 import { PermissionKey as PK } from '@app/@shared/@types/permission';
+import { environment } from '@env/environment';
 
-export const MENU: SideNavInterface[] = [
+export const MENU: SideNavInterface[] | any = [
   {
     path: 'dashboard',
     title: 'menu.dashboard',
@@ -205,15 +206,15 @@ export const MENU: SideNavInterface[] = [
         iconTheme: '',
         submenu: [],
       },
-      {
-        path: 'administration/email-templates',
-        title: 'menu.emailTemplates',
-        permissions: [PK.VIEW_SETTINGS],
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'code',
-        submenu: [],
-      },
+      // {
+      //   path: 'administration/email-templates',
+      //   title: 'menu.emailTemplates',
+      //   permissions: [PK.VIEW_SETTINGS],
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'code',
+      //   submenu: [],
+      // },
       {
         path: 'administration/version',
         title: 'menu.version',
@@ -251,3 +252,20 @@ export const MENU: SideNavInterface[] = [
     ],
   },
 ];
+
+// Logic for conditionally adding email templates
+// button on the menu, if env variable is true..
+
+if(environment.email){
+  MENU[5].submenu.splice(8, 0,
+    {
+      path: 'administration/email-templates',
+      title: 'menu.emailTemplates',
+      permissions: [PK.VIEW_SETTINGS],
+      iconType: 'nzIcon',
+      iconTheme: 'outline',
+      icon: 'code',
+      submenu: [],
+    },
+  )
+}

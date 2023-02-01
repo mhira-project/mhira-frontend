@@ -14,6 +14,7 @@
       [showCancelButton]="showCancelButton"
       [loadingMessage]="loadingMessage"
       (submitForm)="submitForm($event)"
+      (inputModeChanged)="inputMode = $event"
     >
     </app-form>
   </div>
@@ -25,6 +26,7 @@
             <label
               nz-checkbox
               [nzValue]="role.id"
+              [disabled]="!inputMode"
               [ngModel]="reportHasRole(role.id)"
               (ngModelChange)="assignRoleToReport(role, $event)"
               >{{ role.name }}</label
