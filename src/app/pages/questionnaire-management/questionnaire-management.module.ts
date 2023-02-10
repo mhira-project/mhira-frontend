@@ -14,6 +14,7 @@ import { QuestionnaireScriptComponent } from './questionnaire-script/questionnai
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { QuestionnaireVersionListComponent } from './questionnaire-version-list/questionnaire-version-list.component';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -32,6 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MasterDataModule,
     NzButtonModule,
     NzIconModule,
+    NzSelectModule,
     AppFormModule,
     NzTabsModule,
     NzDrawerModule,

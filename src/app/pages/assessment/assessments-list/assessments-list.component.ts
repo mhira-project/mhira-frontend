@@ -181,6 +181,10 @@ export class AssessmentsListComponent {
             ...this.assessmentRequestOptions
         };
 
+        if(options.sorting.length === 0){
+            options.sorting.push({field: 'createdAt', direction: 'DESC'})
+        }
+
         if(!this.onlyArchivedAssessments){
             options.filter = {
               ...options.filter,

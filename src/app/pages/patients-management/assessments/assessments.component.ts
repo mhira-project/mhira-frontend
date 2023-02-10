@@ -220,6 +220,10 @@ export class AssessmentsComponent implements OnInit {
     // copy to not modify original options
     const options = { ...this.assessmentRequestOptions };
 
+    if(options.sorting.length === 0){
+      options.sorting.push({field: 'createdAt', direction: 'DESC'})
+    }
+
     if(!this.onlyArchivedAssessments){
       options.filter = {
         ...options.filter,
