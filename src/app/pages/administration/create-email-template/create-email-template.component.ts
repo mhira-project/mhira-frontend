@@ -20,7 +20,8 @@ export class CreateEmailTemplateComponent implements OnInit {
   isUpdateMode: boolean = false;
   editorConfig: AngularEditorConfig = {
     minHeight: '200px',
-    editable: true
+    editable: true,
+    sanitize: false
   }
   emailForm = this.fb.group({
     name: '',
