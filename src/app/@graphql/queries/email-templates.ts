@@ -11,6 +11,10 @@ const getAllEmailTemplates = gql`
                 subject
                 module
                 body
+                isPublic
+                departments{
+                    id
+                }
             }
         }
         pageInfo{
@@ -23,6 +27,24 @@ const getAllEmailTemplates = gql`
 }
 `;
 
+const getOneEmailTemplate = gql`
+ query($id: ID!) {
+    getEmailTemplate(id: $id) {
+        id
+        name
+        status
+        subject
+        module
+        body
+        isPublic
+        departments{
+            id
+        }
+    }
+}
+`;
+
 export const EmailTemplatesQueries = {
-    getAllEmailTemplates
+    getAllEmailTemplates,
+    getOneEmailTemplate
 };

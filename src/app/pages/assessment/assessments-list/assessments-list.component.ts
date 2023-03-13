@@ -58,8 +58,8 @@ export class AssessmentsListComponent {
             title: 'Scan QR Code'
         },
     ];
-    public onlyMyAssessments = false;
-    public onlyArchivedAssessments = false;
+    public onlyMyAssessments = (localStorage.getItem('onlyMyAssessments') === "true");
+    public onlyArchivedAssessments = (localStorage.getItem('onlyArchivedAssessments') === "true");
     isVisible = false;
     modalData : any = '';
 
@@ -90,6 +90,22 @@ export class AssessmentsListComponent {
         if(environment.email){
             this.actions.push({key: ActionKey.SENT_EMAIL, title: 'Send Email'});
         }
+
+        if(!localStorage.getItem('onlyMyAssessments')){
+            localStorage.setItem('onlyMyAssessments', this.onlyMyAssessments.toString());
+        }
+        if(!localStorage.getItem('onlyArchivedAssessments')){
+            localStorage.setItem('onlyArchivedAssessments', this.onlyArchivedAssessments.toString());
+        }
+        if(!localStorage.getItem('paging')){
+            localStorage.setItem('paging', JSON.stringify(this.assessmentRequestOptions.paging));
+        }
+        if(!localStorage.getItem('filter')){
+            localStorage.setItem('filter', JSON.stringify(this.assessmentRequestOptions.filter));
+        }
+        if(!localStorage.getItem('sorting')){
+            localStorage.setItem('sorting', JSON.stringify(this.assessmentRequestOptions.sorting));
+        }
     }
 
     showModal(): void {
@@ -106,16 +122,19 @@ export class AssessmentsListComponent {
 
     public onPageChange(paging : Paging): void {
         this.assessmentRequestOptions.paging = paging;
+        localStorage.setItem('paging', JSON.stringify(this.assessmentRequestOptions.paging));
         this.getAssessments();
     }
 
     public onSort(sorting : SortField < FormattedAssessment > []): void {
         this.assessmentRequestOptions.sorting = sorting;
+        localStorage.setItem('sorting', JSON.stringify(this.assessmentRequestOptions.sorting));
         this.getAssessments();
     }
 
     public onFilter(filter : Filter): void {
         this.assessmentRequestOptions.filter = filter;
+        localStorage.setItem('filter', JSON.stringify(this.assessmentRequestOptions.filter));
         this.getAssessments();
     }
 
@@ -167,12 +186,26 @@ export class AssessmentsListComponent {
     }
 
     public onMyAssessments(): void {
-        this.onlyMyAssessments = !this.onlyMyAssessments;
+        if(this.onlyMyAssessments === true){
+           localStorage.setItem('onlyMyAssessments', 'false');
+           this.onlyMyAssessments = false;
+        }
+        else{
+           localStorage.setItem('onlyMyAssessments', 'true');
+           this.onlyMyAssessments = true;
+        }
         this.getAssessments();
     }
 
     public onArchivedAssessments(): void {
-      this.onlyArchivedAssessments = !this.onlyArchivedAssessments;
+      if(this.onlyArchivedAssessments === true){
+        localStorage.setItem('onlyArchivedAssessments', 'false');
+        this.onlyArchivedAssessments = false;
+      }
+      else{
+        localStorage.setItem('onlyArchivedAssessments', 'true');
+        this.onlyArchivedAssessments = true;
+      }
       this.getAssessments();
     }
 
@@ -180,6 +213,18 @@ export class AssessmentsListComponent {
         const options = {
             ...this.assessmentRequestOptions
         };
+
+        if(localStorage.getItem('filter')){
+            options.filter = {...options.filter, ...JSON.parse(localStorage.getItem('filter'))}
+        }
+
+        if(localStorage.getItem('sorting')){
+            options.sorting = {...options.sorting, ...JSON.parse(localStorage.getItem('sorting'))}
+        }
+
+        if(localStorage.getItem('paging')){
+            options.paging = {...options.paging, ...JSON.parse(localStorage.getItem('paging'))};
+        }
 
         if(options.sorting.length === 0){
             options.sorting.push({field: 'createdAt', direction: 'DESC'})

@@ -12,6 +12,10 @@ form {
     margin-top: 1em;
   }
 
+  nz-select{
+    width: 100%;
+  }
+
   input[readonly] {
     border: 0;
     padding: 0;
@@ -50,7 +54,6 @@ p {
 
 .link-container {
   display: flex;
-  // justify-content: center;
   align-items: center;
   margin-top: -40px;
 }
@@ -62,9 +65,9 @@ p {
 }
 
 .email-label-wrapper{
-  display: flex; 
-  // justify-content: center;
-  margin-top: 20px;
+  display: flex;
+  align-items: center; 
+  margin-top: 10px;
   margin-bottom: 20px;
 }
 

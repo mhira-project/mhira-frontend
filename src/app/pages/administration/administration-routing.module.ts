@@ -131,7 +131,7 @@ const routes: Routes = [
         data: {
           breadcrumbI18nKey: 'menu.emailTemplates',
           permissions: {
-            only: [PermissionKey.VIEW_SETTINGS],
+            only: [PermissionKey.VIEW_TEMPLATES],
           },
         },
         canActivate: [PermissionGuard],

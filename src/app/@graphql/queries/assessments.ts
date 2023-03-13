@@ -199,6 +199,7 @@ const getFullAssessment = gql`
       emailReminder
       emailStatus
       receiverEmail
+      mailTemplateId
       status
       deliveryDate
       expirationDate

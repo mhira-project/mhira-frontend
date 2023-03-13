@@ -4,6 +4,7 @@ export interface Filter {
   date?: string;
   name?: string;
   patientId?: number;
+  patients?: any;
   clinicianId?: number;
   informantId?: number;
   status?: string;

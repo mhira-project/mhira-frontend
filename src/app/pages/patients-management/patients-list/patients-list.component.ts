@@ -68,9 +68,8 @@ export class PatientsListComponent {
 
   public patientStates: PatientStatus[] = [];
 
-  public onlyMyPatients = false;
-
-  public archivedPatients = false;
+  public onlyMyPatients = (localStorage.getItem('onlyMyPatients') === "true");
+  public archivedPatients = (localStorage.getItem('archivedPatients') === "true");
 
   constructor(
     private patientsService: PatientsService,
@@ -81,6 +80,12 @@ export class PatientsListComponent {
     private errorService: ErrorHandlerService,
     public perms: AppPermissionsService
   ) {
+    if(!localStorage.getItem('onlyMyPatients')){
+      localStorage.setItem('onlyMyPatients', this.onlyMyPatients.toString());
+    }
+    if(!localStorage.getItem('archivedPatients')){
+      localStorage.setItem('archivedPatients', this.archivedPatients.toString());
+    }
     this.getPatients();
     this.getPatientStates();
     this.setActions();
@@ -109,12 +114,26 @@ export class PatientsListComponent {
   }
 
   public onMyPatients(): void {
-    this.onlyMyPatients = !this.onlyMyPatients;
+    if(this.onlyMyPatients === true){
+      localStorage.setItem('onlyMyPatients', 'false');
+      this.onlyMyPatients = false;
+   }
+    else{
+      localStorage.setItem('onlyMyPatients', 'true');
+      this.onlyMyPatients = true;
+    }
     this.getPatients();
   }
 
   public onArchievedPatients(): void {
-    this.archivedPatients = !this.archivedPatients;
+    if(this.archivedPatients === true){
+      localStorage.setItem('archivedPatients', 'false');
+      this.archivedPatients = false;
+    }
+    else{
+      localStorage.setItem('archivedPatients', 'true');
+      this.archivedPatients = true;
+    }
     this.getPatients();
   }
 

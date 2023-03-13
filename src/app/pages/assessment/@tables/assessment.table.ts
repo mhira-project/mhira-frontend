@@ -1,12 +1,13 @@
 import { User } from './../../user-management/@types/user';
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
-import { FormattedAssessment } from '../@types/assessment';
+import { Assessment, FormattedAssessment, QuestionnaireAssessment } from '../@types/assessment';
 import { Patient } from '@app/pages/patients-management/@types/patient';
 import { environment } from '@env/environment';
 
 export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
     name: 'formattedAssessmentType',
+    altName: 'assessmentType',
     title: 'Name',
     translationPath: 'plannedAssessments.name',
     // sort: true,
@@ -14,6 +15,14 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
       type: 'text',
       value: undefined,
     },
+    filterQuery: (q: number) =>
+      q
+        ? {
+            or: [
+              { name: { iLike: `%${q}%` } },
+            ] as Array<{ [K in keyof Assessment]: any }>,
+          }
+        : {},
   },
   {
     name: 'patientMedicalRecordNo',
@@ -76,10 +85,10 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     name: 'formatedQuestionnaires',
     title: 'Questionnaires',
     render: 'avatar',
-    filterField: {
-      type: 'text',
-      value: undefined,
-    },
+    // filterField: {
+    //   type: 'text',
+    //   value: undefined,
+    // },
   },
   {
     name: 'deliveryDate',

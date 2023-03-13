@@ -24,6 +24,8 @@ import { AssessmentAdministrationService } from '@app/pages/administration/@serv
 import { AssessmentAdministration } from '@app/pages/administration/@types/assessment-administration';
 import { LocationStrategy } from '@angular/common';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { EmailTemplatesService } from '@app/pages/administration/@services/email-templates.service';
+import { DEFAULT_PAGE_SIZE } from '@app/@shared/@modules/master-data/@types/list';
 
 const CryptoJS = require('crypto-js');
 
@@ -52,6 +54,12 @@ export class PlanAssessmentComponent implements OnInit {
   public editMode = true;
   public isLoading = false;
   public departments: Department[] = [];
+  public emailTemplates:[] = [];
+  public emailTemplatesRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
+    paging: { first: DEFAULT_PAGE_SIZE },
+    filter: {},
+    sorting: [],
+  };
   public deliveryDate: any = null;
   public expireDate: any = null;
   public maxLength: number = 200;
@@ -156,6 +164,7 @@ export class PlanAssessmentComponent implements OnInit {
     private nzMessage: NzMessageService,
     private errorService: ErrorHandlerService,
     private activatedRoute: ActivatedRoute,
+    private emailTemplatesService: EmailTemplatesService,
     private departmentsService: DepartmentsService,
     private assessmentAdministrationService: AssessmentAdministrationService,
     public perms: AppPermissionsService,
@@ -166,6 +175,7 @@ export class PlanAssessmentComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getAssessmentTypes();
+    this.getEmailTemplates();
     this.getUserDepartments();
     this.initAssessment();
     this.userAutoSelect();
@@ -283,6 +293,8 @@ export class PlanAssessmentComponent implements OnInit {
         value: patient?.id,
       },
     ];
+    this.users = [];
+    this.getUserDepartments({filter: { and: [{ patients: { id: { eq: this.fullAssessment?.patientId ?? this.patient?.id } } }]}});
   }
 
   goBack() {
@@ -318,6 +330,15 @@ export class PlanAssessmentComponent implements OnInit {
       );
   }
 
+  getEmailTemplates(){
+    this.emailTemplatesService
+    .getAllEmailTemplates(this.emailTemplatesRequestOptions)
+    .pipe(finalize(() => (this.isLoading = false)))
+    .subscribe((x: any) => { this.emailTemplates = x.data.getAllEmailTemplates.edges.map((x: any) =>
+      Convert.toAssessmentAdministration(x.node));
+    });
+  }
+
   get dates(): FormArray {
     return this.assessmentForm.get('dates') as FormArray;
   }
@@ -343,6 +364,7 @@ export class PlanAssessmentComponent implements OnInit {
         informantCaregiverRelation: [null],
         emailReminder: [null],
         receiverEmail: [null],
+        mailTemplateId: [null],
         deliveryDate: [null],
         expirationDate: [null],
         dates: this.formBuilder.array([]),
@@ -360,6 +382,7 @@ export class PlanAssessmentComponent implements OnInit {
         informantCaregiverRelation: [null],
         emailReminder: [null],
         receiverEmail: [null],
+        mailTemplateId: [null],
         dates: this.formBuilder.array([
           this.formBuilder.group({
             expirationDate: [null],
@@ -392,6 +415,7 @@ export class PlanAssessmentComponent implements OnInit {
           deliveryDate: this.fullAssessment.deliveryDate,
           expirationDate: this.fullAssessment.expirationDate,
           receiverEmail: this.fullAssessment.receiverEmail,
+          mailTemplateId: this.fullAssessment.mailTemplateId,
           note: this.fullAssessment.note,
           questionnaires: this.fullAssessment.questionnaireAssessment?.questionnaires,
         });

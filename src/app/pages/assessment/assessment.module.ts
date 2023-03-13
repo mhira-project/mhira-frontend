@@ -19,6 +19,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -48,7 +49,8 @@ const antModules = [
   NzToolTipModule,
   NzTagModule,
   NzPopoverModule,
-  NzCheckboxModule
+  NzCheckboxModule,
+  NzAvatarModule
 ];
 
 @NgModule({

@@ -27,6 +27,10 @@ export enum PermissionKey {
   VIEW_QUESTIONNAIRES = 'view questionnaires',
   MANAGE_QUESTIONNAIRES = 'manage questionnaires',
   DELETE_QUESTIONNAIRES = 'delete questionnaires',
+
+  VIEW_TEMPLATES = 'view templates',
+  MANAGE_TEMPLATES = 'manage templates',
+  DELETE_TEMPLATES = 'delete templates'
 }
 
 export const isPermissionKey = (key: any): key is PermissionKey => {
