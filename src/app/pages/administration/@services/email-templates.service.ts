@@ -32,6 +32,15 @@ export class EmailTemplatesService {
         })
     }
 
+    getOneEmailTemplate(id: any): Observable<FetchResult<any>> {
+        return this.apollo.query({
+          query: EmailTemplatesQueries.getOneEmailTemplate,
+          variables: {
+            id: id,
+          },
+        });
+    }
+
     createEmailTemplate(emailTemplate : any): Observable < FetchResult < any >> {
         return this.apollo.mutate(
             {
@@ -57,7 +66,9 @@ export class EmailTemplatesService {
                         status: emailTemplate.status,
                         subject: emailTemplate.subject,
                         module: emailTemplate.module,
-                        body: emailTemplate.body
+                        body: emailTemplate.body,
+                        isPublic: emailTemplate.isPublic,
+                        departmentIds: emailTemplate.departmentIds
                     }
                 },
                 fetchPolicy: 'no-cache'

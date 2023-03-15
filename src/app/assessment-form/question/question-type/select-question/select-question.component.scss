@@ -11,6 +11,7 @@
     margin: 0.6em 0;
     border-radius: 0.25rem;
     border: 1px solid $gray-300;
+    height: max-content;
 
     &:before {
       content: none;

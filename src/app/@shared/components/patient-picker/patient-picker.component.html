@@ -5,6 +5,7 @@
   nzPlaceHolder="Search..."
   [nzShowArrow]="false"
   [(ngModel)]="selectedPatient"
+  (ngModelChange)="patientChanged"
   [compareWith]="comparePatients"
   *ngIf="!readonly; else plainText"
 >

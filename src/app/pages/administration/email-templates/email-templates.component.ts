@@ -14,7 +14,7 @@ import { EmailTemplatesService } from '../@services/email-templates.service';
 import { EmailTemplatesColumns } from '../@tables/email-templates.table';
 
 enum ActionKey {
-  EDIT,
+  EDIT
 }
 
 @Component({
@@ -51,7 +51,7 @@ export class EmailTemplatesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmailTemplates();
-    this.actions = [{ key: ActionKey.EDIT, title: 'Edit Template' }];
+    this.actions = [{ key: ActionKey.EDIT, title: 'Edit Template'}];
   }
 
   public onPageChange(paging: Paging): void {

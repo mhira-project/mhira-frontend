@@ -172,11 +172,21 @@
         <button (click)="addControl()" [disabled]="!editMode" type="button" nz-button nzShape="circle"><span nz-icon nzType="plus"></span></button>
       </div>
       <!-- End Create -->
-      
-      <div *ngIf="hasEmail" class="email-label-wrapper">
-        <label formControlName="emailReminder" [nzValue]="fullAssessment?.emailReminder" [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>Sent assessment via email</label>
-        <input [ngModel]="patient?.email" style="width: 240px;" formControlName="receiverEmail" nz-input placeholder="youremail@domain.com" [value]="fullAssessment?.patient?.email" [disabled]="!checked" />
-      </div>
+
+      <ng-container *ngIf="hasEmail">
+        <h5 style="margin-top: 20px">Send Email</h5>
+        <div class="email-label-wrapper">
+          <label formControlName="emailReminder" [nzValue]="fullAssessment?.emailReminder" [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>Sent assessment via email</label>
+          <input [ngModel]="patient?.email" style="width: 100%; height: min-content;" formControlName="receiverEmail" nz-input placeholder="youremail@domain.com" [value]="fullAssessment?.patient?.email" [disabled]="!checked" />
+        </div>
+        <nz-form-item>
+          <nz-input-group *ngIf="assessmentForm.controls.emailReminder.value === true">
+            <nz-select formControlName="mailTemplateId" nzPlaceHolder="Please select the email template">
+              <nz-option *ngFor="let template of emailTemplates" [nzValue]="template.id" [nzLabel]="template.name"></nz-option>
+            </nz-select>
+          </nz-input-group>
+        </nz-form-item>
+      </ng-container>
 
       <nz-form-item>
         <nz-input-group>

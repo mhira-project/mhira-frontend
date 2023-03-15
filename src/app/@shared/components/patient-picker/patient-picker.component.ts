@@ -15,6 +15,9 @@ export class PatientPickerComponent {
   @Output()
   public selectPatient = new EventEmitter<Patient>();
 
+  @Output()
+  public patientChanged = new EventEmitter<Patient>();
+
   @ViewChild(NzSelectComponent, { static: false })
   public set selectComponent(component: NzSelectComponent) {
     if (component) {

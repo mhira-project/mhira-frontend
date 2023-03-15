@@ -27,6 +27,8 @@ export class QuestionnaireFormComponent {
   public loading = false;
   public inputMode = true;
   public existingId: string;
+  listOfOption: any = [];
+  listOfTagOptions: any;
 
   public get isExisting(): boolean {
     return !!this.existingId;
@@ -51,7 +53,9 @@ export class QuestionnaireFormComponent {
       input.excelFile = (form.excelFile as FileList).item(0);
     }
 
-    input.keywords = this.prepareKeywords(form.keywords);
+    // input.keywords = this.prepareKeywords(form.keywords);
+
+    input.keywords = this.listOfTagOptions;
 
     const action = this.isExisting
       ? this.qmService.updateQuestionnaire(this.existingId, input)
@@ -91,16 +95,17 @@ export class QuestionnaireFormComponent {
       keywords: (questionnaire.keywords ?? []).join(' '),
       language: questionnaire.questionnaire?.language,
     };
+    this.listOfTagOptions = questionnaire.keywords;
     this.populateForm = true;
     this.inputMode = false;
   }
 
-  private prepareKeywords(keywords: string = ''): string[] {
-    if (!keywords || keywords === '') return [];
-    return keywords
-      .trim()
-      .split(' ')
-      .map((word) => word.trim())
-      .filter((word) => word !== '');
-  }
+  // private prepareKeywords(keywords: string = ''): string[] {
+  //   if (!keywords || keywords === '') return [];
+  //   return keywords
+  //     .trim()
+  //     .split(' ')
+  //     .map((word) => word.trim())
+  //     .filter((word) => word !== '');
+  // }
 }

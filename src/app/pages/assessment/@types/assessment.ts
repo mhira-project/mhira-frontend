@@ -58,6 +58,7 @@ export interface FullAssessment extends Assessment {
   emailReminder: boolean;
   receiverEmail: string;
   emailStatus: string;
+  mailTemplateId: number;
 }
 
 export interface FormattedAssessment extends Assessment {

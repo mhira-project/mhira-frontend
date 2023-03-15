@@ -9,6 +9,10 @@ const createOneEmailTemplate = gql `
       body
       status
       module
+      isPublic
+      departments{
+        id
+      }
     }
   }
 `;
@@ -22,6 +26,10 @@ const updateOneEmailTemplate = gql `
       body
       status
       module
+      isPublic
+      departments{
+        id
+      }
     }
   }
 `;

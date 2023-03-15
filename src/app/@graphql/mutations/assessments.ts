@@ -108,6 +108,7 @@ const updateOneAssessment = gql`
       status
       deliveryDate
       expirationDate
+      mailTemplateId
       note
       assessmentType {
         id
