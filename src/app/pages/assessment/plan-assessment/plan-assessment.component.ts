@@ -175,7 +175,6 @@ export class PlanAssessmentComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getAssessmentTypes();
-    this.getEmailTemplates();
     this.getUserDepartments();
     this.initAssessment();
     this.userAutoSelect();
@@ -295,6 +294,8 @@ export class PlanAssessmentComponent implements OnInit {
     ];
     this.users = [];
     this.getUserDepartments({filter: { and: [{ patients: { id: { eq: this.fullAssessment?.patientId ?? this.patient?.id } } }]}});
+    this.emailTemplates = [];
+    this.getPatientEmailTemplates(this.fullAssessment?.patientId || this.patient?.id);
   }
 
   goBack() {
@@ -330,12 +331,9 @@ export class PlanAssessmentComponent implements OnInit {
       );
   }
 
-  getEmailTemplates(){
-    this.emailTemplatesService
-    .getAllEmailTemplates(this.emailTemplatesRequestOptions)
-    .pipe(finalize(() => (this.isLoading = false)))
-    .subscribe((x: any) => { this.emailTemplates = x.data.getAllEmailTemplates.edges.map((x: any) =>
-      Convert.toAssessmentAdministration(x.node));
+  getPatientEmailTemplates(id: number){
+    this.emailTemplatesService.getPatientEmailTemplates(id).subscribe((data: any) => {
+      this.emailTemplates = data?.data?.getPatientEmailTemplates
     });
   }
 

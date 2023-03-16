@@ -24,6 +24,7 @@ import { AssessmentAdministration } from '@app/pages/administration/@types/asses
 import { AssessmentAdministrationService } from '@app/pages/administration/@services/assessment-administration.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { LocationStrategy } from '@angular/common';
+import { EmailTemplatesService } from '@app/pages/administration/@services/email-templates.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -79,6 +80,7 @@ export class CreateAssessmentComponent implements OnInit {
   public departments: Department[] = [];
   public editMode = true;
   public pageInfo: PageInfo;
+  public emailTemplates: any[] = [];
   public assessmentUrl: URL;
   public selectedQuestionnaires: QuestionnaireVersion[] = [];
   public checked: boolean = false;
@@ -100,6 +102,7 @@ export class CreateAssessmentComponent implements OnInit {
     private assessmentAdministrationService: AssessmentAdministrationService,
     private errorService: ErrorHandlerService,
     private departmentsService: DepartmentsService,
+    private emailTemplatesService: EmailTemplatesService,
     private assessmentService: AssessmentService,
     private nzMessage: NzMessageService,
     private clipboard: Clipboard,
@@ -118,6 +121,7 @@ export class CreateAssessmentComponent implements OnInit {
       expirationDate: [null],
       emailReminder: [null],
       receiverEmail: [{value: this.patient?.email}],
+      mailTemplateId: [null],
       note: [null],
       dates: this.formBuilder.array([
         this.formBuilder.group({
@@ -132,6 +136,7 @@ export class CreateAssessmentComponent implements OnInit {
     this.getPatient();
     this.getCaregivers();
     this.getUserDepartments();
+    this.getPatientEmailTemplates(this.patient.id);
     this.hasEmail = environment.email
   }
 
@@ -204,6 +209,12 @@ export class CreateAssessmentComponent implements OnInit {
 
   public copyAssessmentLink(url: any) {
     this.clipboard.copy(url);
+  }
+
+  getPatientEmailTemplates(id: number){
+    this.emailTemplatesService.getPatientEmailTemplates(id).subscribe((data: any) => {
+      this.emailTemplates = data?.data?.getPatientEmailTemplates
+    });
   }
 
   public getUserDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting[] }) {
@@ -322,6 +333,7 @@ export class CreateAssessmentComponent implements OnInit {
       clinicianId: this.fullAssessment.clinician.id,
       deliveryDate: this.fullAssessment.deliveryDate,
       informantType: this.fullAssessment.informantType,
+      mailTemplateId: this.fullAssessment.mailTemplateId,
       informantPatient: this.fullAssessment.patient,
       emailReminder: this.fullAssessment.emailReminder,
       receiverEmail: this.fullAssessment.receiverEmail,
