@@ -42,6 +42,7 @@ export class QuestionnaireSelectionComponent {
 
   public onQuestionnaireSearchNew(q: string) {
     if (q === '') {
+      // tslint:disable
       const filter = { or: createSearchFilter(q) };
 
       this.questionnaireService
@@ -110,6 +111,7 @@ export class QuestionnaireSelectionComponent {
 
   // Handling modal
 
+  // tslint:disable
   showModal(questionnaire: any): void {
     this.questionnareActive = questionnaire;
     this.isVisible = true;

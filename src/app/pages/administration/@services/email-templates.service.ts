@@ -36,7 +36,7 @@ export class EmailTemplatesService {
         return this.apollo.query({
             query: EmailTemplatesQueries.getPatientEmailTemplates,
             variables: {
-                patientId: patientId,
+                patientId,
             },
             fetchPolicy: 'no-cache',
         })
@@ -46,7 +46,7 @@ export class EmailTemplatesService {
         return this.apollo.query({
           query: EmailTemplatesQueries.getOneEmailTemplate,
           variables: {
-            id: id,
+            id,
           },
         });
     }
@@ -91,7 +91,7 @@ export class EmailTemplatesService {
           {
               mutation: EmailTemplatesMutations.deleteOneEmailTemplate,
               variables: {
-                id: id
+                id
               },
               fetchPolicy: 'no-cache'
           }

@@ -41,7 +41,7 @@ export class CreateAssessmentComponent implements OnInit {
   dataToSelect: any = [];
   selectedInformant: any = null;
   noteValue: any = '';
-  patientEmail: string= '';
+  patientEmail = '';
   options = [
     { label: 'Mother', value: 'Mother' },
     { label: 'Father', value: 'Father' },
@@ -83,9 +83,9 @@ export class CreateAssessmentComponent implements OnInit {
   public emailTemplates: any[] = [];
   public assessmentUrl: URL;
   public selectedQuestionnaires: QuestionnaireVersion[] = [];
-  public checked: boolean = false;
+  public checked = false;
   public isUpdate: boolean;
-  public hasEmail: boolean = false;
+  public hasEmail = false;
 
   get patientTitle(): string {
     const name = [this.patient?.firstName, this.patient?.middleName, this.patient?.lastName]

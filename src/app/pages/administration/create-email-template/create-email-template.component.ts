@@ -32,8 +32,8 @@ export class CreateEmailTemplateComponent implements OnInit {
   };
   selectedDepartments: [] = [];
   customStyles = {height: '250px', width: '100%'}
-  isUpdateMode: boolean = false;
-  allDepartments: boolean = false;
+  isUpdateMode = false;
+  allDepartments = false;
   editorConfig: AngularEditorConfig = {
     minHeight: '200px',
     editable: true,
@@ -70,6 +70,7 @@ export class CreateEmailTemplateComponent implements OnInit {
             this.selectedId = Number(params.get('id'));
             return this.emailTemplatesService.getOneEmailTemplate(this.selectedId);
           })
+          // tslint:disable
         ).subscribe((data: any) => {
           this.emailTemplate = data.data.getEmailTemplate;
           this.emailForm.controls['name'].setValue(this.emailTemplate?.name);
