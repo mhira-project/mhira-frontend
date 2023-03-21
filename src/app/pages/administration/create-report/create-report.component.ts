@@ -55,7 +55,9 @@ export class CreateReportComponent implements OnInit {
   ngOnInit(): void {
     this.getReportFromUrl();
     this.getRoles();
-    this.selectedRoles = this.report?.roles?.filter((role) => this.reportHasRole(role.id));
+    if(this.report){
+      this.selectedRoles = this.report?.roles?.filter((role) => this.reportHasRole(role.id));
+    }
   }
 
   goBack() {
@@ -68,11 +70,11 @@ export class CreateReportComponent implements OnInit {
   }
 
   assignRoleToReport(role: Role, checked: boolean) {
-    if (checked && !this.selectedRoles.includes(role)) {
-      this.selectedRoles.push(role);
+    if (checked && !this.selectedRoles?.includes(role)) {
+      this.selectedRoles?.push(role);
     } 
     else if (!checked) {
-      this.selectedRoles = this.selectedRoles.filter((item) => item.id !== role.id);
+      this.selectedRoles = this.selectedRoles?.filter((item) => item.id !== role.id);
     }
   }
 
@@ -126,7 +128,7 @@ export class CreateReportComponent implements OnInit {
     this.populateForm = false;
     this.resetForm = false;
     const inputData: CreateReportInput = Object.assign({}, formData);
-    const roles = this.selectedRoles.map((item) => item.id);
+    const roles = this.selectedRoles?.map((item) => item.id);
     const reportInput: CreateOneReportInput = {
       report: { ...inputData, roles },
     };

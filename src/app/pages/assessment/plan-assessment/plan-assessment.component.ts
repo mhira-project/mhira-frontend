@@ -62,10 +62,10 @@ export class PlanAssessmentComponent implements OnInit {
   };
   public deliveryDate: any = null;
   public expireDate: any = null;
-  public maxLength: number = 200;
-  public checked: boolean = false;
+  public maxLength = 200;
+  public checked = false;
   public isUpdate: boolean;
-  public hasEmail: boolean = false;
+  public hasEmail = false;
   url: any = '';
   options = [
     {
@@ -175,7 +175,6 @@ export class PlanAssessmentComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getAssessmentTypes();
-    this.getEmailTemplates();
     this.getUserDepartments();
     this.initAssessment();
     this.userAutoSelect();
@@ -232,7 +231,7 @@ export class PlanAssessmentComponent implements OnInit {
   public onSubmitAssessment() {
     if (this.assessmentForm.invalid) return;
     const questionnaires = this.selectedQuestionnaires.map((q) => q._id);
-    const { informant, informantPatient, ...rest } = this.assessmentForm.value;let newAssessmentData = {
+    const { informant, informantPatient, ...rest } = this.assessmentForm.value; const newAssessmentData = {
       ...rest,
       questionnaires,
     };
@@ -295,6 +294,8 @@ export class PlanAssessmentComponent implements OnInit {
     ];
     this.users = [];
     this.getUserDepartments({filter: { and: [{ patients: { id: { eq: this.fullAssessment?.patientId ?? this.patient?.id } } }]}});
+    this.emailTemplates = [];
+    this.getPatientEmailTemplates(this.fullAssessment?.patientId || this.patient?.id);
   }
 
   goBack() {
@@ -330,12 +331,9 @@ export class PlanAssessmentComponent implements OnInit {
       );
   }
 
-  getEmailTemplates(){
-    this.emailTemplatesService
-    .getAllEmailTemplates(this.emailTemplatesRequestOptions)
-    .pipe(finalize(() => (this.isLoading = false)))
-    .subscribe((x: any) => { this.emailTemplates = x.data.getAllEmailTemplates.edges.map((x: any) =>
-      Convert.toAssessmentAdministration(x.node));
+  getPatientEmailTemplates(id: number){
+    this.emailTemplatesService.getPatientEmailTemplates(id).subscribe((data: any) => {
+      this.emailTemplates = data?.data?.getPatientEmailTemplates
     });
   }
 
@@ -419,7 +417,7 @@ export class PlanAssessmentComponent implements OnInit {
           note: this.fullAssessment.note,
           questionnaires: this.fullAssessment.questionnaireAssessment?.questionnaires,
         });
-        //@ts-ignore
+        // @ts-ignore
           this.dates.push(this.formBuilder.group({
             deliveryDate: this.fullAssessment.deliveryDate,
             expirationDate:  this.fullAssessment.expirationDate
@@ -468,6 +466,7 @@ export class PlanAssessmentComponent implements OnInit {
     );
   }
 
+  // tslint:disable
   public copyAssessmentLink(url: any) {
     this.clipboard.copy(url);
   }

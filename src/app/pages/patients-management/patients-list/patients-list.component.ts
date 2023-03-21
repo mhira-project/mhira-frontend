@@ -68,8 +68,8 @@ export class PatientsListComponent {
 
   public patientStates: PatientStatus[] = [];
 
-  public onlyMyPatients = (localStorage.getItem('onlyMyPatients') === "true");
-  public archivedPatients = (localStorage.getItem('archivedPatients') === "true");
+  public onlyMyPatients = (localStorage.getItem('onlyMyPatients') === 'true');
+  public archivedPatients = (localStorage.getItem('archivedPatients') === 'true');
 
   constructor(
     private patientsService: PatientsService,

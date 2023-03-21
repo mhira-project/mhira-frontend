@@ -32,11 +32,21 @@ export class EmailTemplatesService {
         })
     }
 
+    getPatientEmailTemplates(patientId: any): Observable<FetchResult<any>>{
+        return this.apollo.query({
+            query: EmailTemplatesQueries.getPatientEmailTemplates,
+            variables: {
+                patientId,
+            },
+            fetchPolicy: 'no-cache',
+        })
+    }
+
     getOneEmailTemplate(id: any): Observable<FetchResult<any>> {
         return this.apollo.query({
           query: EmailTemplatesQueries.getOneEmailTemplate,
           variables: {
-            id: id,
+            id,
           },
         });
     }
@@ -81,7 +91,7 @@ export class EmailTemplatesService {
           {
               mutation: EmailTemplatesMutations.deleteOneEmailTemplate,
               variables: {
-                id: id
+                id
               },
               fetchPolicy: 'no-cache'
           }

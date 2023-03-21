@@ -192,7 +192,17 @@ export class AssessmentsComponent implements OnInit {
   private createSearchFilter(searchString: string): Array<{ [K in keyof Partial<FormattedAssessment>]: {} }> {
     if (!searchString) return [];
     return [
-      { name: { iLike: `%${searchString}%` } },
+      {
+        assessmentType: {
+            or: [
+                {
+                    name: {
+                        iLike: `%${searchString}%`
+                    }
+                }
+            ]
+        }
+      },
       {
         patient: {
           or: [

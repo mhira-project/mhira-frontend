@@ -58,8 +58,8 @@ export class AssessmentsListComponent {
             title: 'Scan QR Code'
         },
     ];
-    public onlyMyAssessments = (localStorage.getItem('onlyMyAssessments') === "true");
-    public onlyArchivedAssessments = (localStorage.getItem('onlyArchivedAssessments') === "true");
+    public onlyMyAssessments = (localStorage.getItem('onlyMyAssessments') === 'true');
+    public onlyArchivedAssessments = (localStorage.getItem('onlyArchivedAssessments') === 'true');
     isVisible = false;
     modalData : any = '';
 
@@ -76,6 +76,7 @@ export class AssessmentsListComponent {
     };
     newUrl : URL;
 
+    // tslint:disable
     constructor(private assessmentService : AssessmentService, private router : Router, private modalService : NzModalService, private errorService : ErrorHandlerService, private clipboardService : ClipboardService, private messageService : NzMessageService, private locationStrategy : LocationStrategy, public perms : AppPermissionsService) {
         this.getAssessments();
 

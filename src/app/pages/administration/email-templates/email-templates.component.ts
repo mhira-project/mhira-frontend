@@ -73,6 +73,7 @@ export class EmailTemplatesComponent implements OnInit {
     this.emailTemplatesService
     .getAllEmailTemplates(this.emailTemplatesRequestOptions)
     .pipe(finalize(() => (this.isLoading = false)))
+    // tslint:disable
     .subscribe((x: any) => { this.data = x.data.getAllEmailTemplates.edges.map((x: any) =>
       Convert.toAssessmentAdministration(x.node));
       this.pageInfo = x.data.getAllEmailTemplates.pageInfo;
