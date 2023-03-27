@@ -50,7 +50,7 @@ export class MasterDataFilterFormComponent<T> {
 
   public onFilter(event: { [K in keyof T]: any }): void {
     const filters = Object.entries(event)
-      .filter(([_, value]) => value !== undefined)
+      .filter(([_, value]) => value !== undefined && value !== '')
       .map(([key, value]) => {
         const column = this.columns.find((c) => (c.altName ?? c.name) === key);
         return { [key]: this.getFilter(column.filterField.type, value, column.filterQuery) };

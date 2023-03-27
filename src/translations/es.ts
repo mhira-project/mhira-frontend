@@ -34,6 +34,7 @@ export default {
     noResult: 'Sin Resultados',
     searchSelect: 'Buscar y seleccionar cuestionarios para agregar a la evaluación',
     selectQuestionnaires: 'Seleccionar Cuestionarios',
+    selectedQuestionnaires: 'Cuestionarios Seleccionados',
   },
   assessmentMessages: {
     expiredText: 'Lo sentimos, ¡la evaluación ya no está disponible!',

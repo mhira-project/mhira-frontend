@@ -135,12 +135,12 @@
             <div *ngIf="hasEmail">
                 <h5 style="margin-top: 20px">Send Email</h5>
                 <div class="email-label-wrapper">
-                    <label [nzDisabled]="!editMode" formControlName="emailReminder" [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>Sent assessment via email</label>
-                    <input formControlName="receiverEmail" style="width: 240px;" nz-input placeholder="patientemail@domain.com" [(ngModel)]="patientEmail" />
+                    <label [disableControl]="!editMode" formControlName="emailReminder" [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>Sent assessment via email</label>
+                    <input [disableControl]="!editMode" formControlName="receiverEmail" style="width: 240px;" nz-input placeholder="patientemail@domain.com" [(ngModel)]="patientEmail" />
                 </div>
                 <nz-form-item style="margin-bottom: 15px; min-width: 250px;">
                     <nz-input-group *ngIf="formGroup.controls.emailReminder.value === true">
-                        <nz-select formControlName="mailTemplateId" nzPlaceHolder="Please select the email template">
+                        <nz-select [nzDisabled]="!editMode" formControlName="mailTemplateId" nzPlaceHolder="Please select the email template">
                         <nz-option *ngFor="let template of emailTemplates" [nzValue]="template.id" [nzLabel]="template.name"></nz-option>
                         </nz-select>
                     </nz-input-group>
@@ -150,7 +150,7 @@
                 <nz-input-group class="input-class">
                     <h5>{{ 'createAssessment.notes' | translate }}</h5>
                     <nz-textarea-count [nzMaxCharacterCount]="200" placeholder="Write notes">
-                        <textarea formControlName="note" [(ngModel)]="noteValue" nz-input [disabled]="!editMode"></textarea>
+                        <textarea [disableControl]="!editMode" formControlName="note" [(ngModel)]="noteValue" nz-input [disabled]="!editMode"></textarea>
                     </nz-textarea-count>
                 </nz-input-group>
             </nz-form-item>
