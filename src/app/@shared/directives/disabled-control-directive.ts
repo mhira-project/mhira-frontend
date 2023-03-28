@@ -1,6 +1,7 @@
 import { Directive, Input } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
+// tslint:disable
 @Directive({
   selector: '[disableControl]'
 })
