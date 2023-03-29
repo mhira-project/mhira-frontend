@@ -44,6 +44,7 @@ export class AssessmentsListComponent {
     PK = PermissionKey;
     public columns : TableColumn < FormattedAssessment > [] = AssessmentTable;
     public data : FormattedAssessment[];
+    public cacheFilters = JSON.parse(localStorage.getItem('filter'));
     public pageInfo : PageInfo;
     public loading = false;
     public actions : Action < ActionKey > [] = [

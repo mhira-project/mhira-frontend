@@ -82,6 +82,9 @@ export class MasterDataListComponent<T> {
     if(localStorage.getItem('filter')){
       localStorage.removeItem('filter')
     }
+    if(localStorage.getItem('filter-patient-assessment')){
+      localStorage.removeItem('filter-patient-assessment')
+    }
     location.reload();
   }
 }

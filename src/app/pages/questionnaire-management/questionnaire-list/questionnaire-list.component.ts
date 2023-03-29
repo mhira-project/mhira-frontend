@@ -63,7 +63,7 @@ export class QuestionnaireListComponent {
 
   public questionnaireRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
-    filter: {},
+    filter: {and: [{status: {eq: 'PUBLISHED'}}]},
     sorting: [],
   };
 
@@ -131,13 +131,7 @@ export class QuestionnaireListComponent {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(({ edges, pageInfo }) => {
         this.pageInfo = pageInfo;
-        // this.data = edges.map((e) => Convert.toFormattedQuestionnaireVersion(e.node));
-        if (Object.keys(this.questionnaireRequestOptions.filter).length === 0) {
-          this.data = edges
-            .map((e) => Convert.toFormattedQuestionnaireVersion(e.node))
-            .filter((data) => data.formattedStatus.title === 'PUBLISHED');
-          return this.data;
-        }
+        this.data = edges.map((e) => Convert.toFormattedQuestionnaireVersion(e.node));
       });
   }
 

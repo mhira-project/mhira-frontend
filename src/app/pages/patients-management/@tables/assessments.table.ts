@@ -1,27 +1,49 @@
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
-import { FormattedAssessment } from '@app/pages/assessment/@types/assessment';
+import { Assessment, FormattedAssessment } from '@app/pages/assessment/@types/assessment';
 import { environment } from '@env/environment';
+import { User } from '@app/pages/user-management/@types/user';
 
 export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
   {
     title: 'Title',
     name: 'formattedAssessmentType',
+    altName: 'assessmentType',
     translationPath: 'tables.assessmentsPatients.title',
     // sort: true,
     filterField: {
       type: 'text',
       value: undefined,
     },
+    filterQuery: (q: number) =>
+    q
+      ? {
+          or: [
+            { name: { iLike: `%${q}%` } },
+          ] as Array<{ [K in keyof Assessment]: any }>,
+        }
+      : {},
   },
   {
     title: 'Manager',
     name: 'formattedClinician',
+    altName: 'clinician',
     translationPath: 'tables.assessmentsPatients.manager',
     sort: false,
     filterField: {
       type: 'text',
       value: undefined,
     },
+    filterQuery: (q: number) =>
+    q
+      ? {
+          or: [
+            { firstName: { iLike: `%${q}%` } },
+            { middleName: { iLike: `%${q}%` } },
+            { lastName: { iLike: `%${q}%` } },
+            { workID: { iLike: `%${q}%` } },
+          ] as Array<{ [K in keyof User]: any }>,
+        }
+      : {},
   },
   {
     title: 'Informants',

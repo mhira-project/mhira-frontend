@@ -35,6 +35,7 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { CustomDirectivesModule } from '@app/@shared/directives/custom-directives.module';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 const antModules = [
   NzGridModule,
@@ -69,8 +70,10 @@ const antModules = [
     MasterDataModule,
     ClipboardModule,
     NzDatePickerModule,
+    NzBadgeModule,
     NzRadioModule,
     NzSelectModule,
+    NzToolTipModule,
     QRCodeModule,
     CustomDirectivesModule
   ],
