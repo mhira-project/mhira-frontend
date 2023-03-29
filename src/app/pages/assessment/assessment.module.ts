@@ -34,6 +34,7 @@ import { QuestionnaireModalComponent } from './questionnaire-modal/questionnaire
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { CustomDirectivesModule } from '@app/@shared/directives/custom-directives.module';
 
 const antModules = [
   NzGridModule,
@@ -71,6 +72,7 @@ const antModules = [
     NzRadioModule,
     NzSelectModule,
     QRCodeModule,
+    CustomDirectivesModule
   ],
   declarations: [
     PlanAssessmentComponent,

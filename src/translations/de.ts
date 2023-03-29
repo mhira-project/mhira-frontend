@@ -34,6 +34,7 @@ export default {
     noResult: 'Keine Fragebögen gefunden',
     searchSelect: 'Fragebögen suchen',
     selectQuestionnaires: 'Fragebögen hinzufügen',
+    selectedQuestionnaires: 'Ausgewählte Fragebögen',
   },
   assessmentMessages: {
     expiredText: 'Diese Testung ist nicht mehr verfügbar!',

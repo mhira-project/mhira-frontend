@@ -45,6 +45,7 @@ import { AssessmentModule } from '../assessment/assessment.module';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { CustomDirectivesModule } from '@app/@shared/directives/custom-directives.module';
 
 const antModules = [
   NzGridModule,
@@ -82,7 +83,8 @@ const antModules = [
     NzRadioModule,
     NzDatePickerModule,
     AssessmentModule,
-    QRCodeModule
+    QRCodeModule,
+    CustomDirectivesModule
   ],
   declarations: [
     PatientsListComponent,
