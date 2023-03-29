@@ -54,15 +54,16 @@ export class AssessmentsComponent implements OnInit {
   ];
   public filter: CaseManagerFilter;
   public data: FormattedAssessment[];
+  public cacheFilters = JSON.parse(localStorage.getItem('filter-patient-assessment'));
   public columns: TableColumn<FormattedAssessment>[] = AssessmentsPatientsTable;
   public user: User;
   public isLoading = false;
-  public onlyArchivedAssessments = false;
+  public onlyArchivedAssessments = (localStorage.getItem('onlyArchivedAssessmentsPatients') === 'true');
   isVisible = false;
   newUrl : URL;
   modalData : any = '';
   public pageInfo: PageInfo;
-  public onlyMyAssessments = false;
+  public onlyMyAssessments = (localStorage.getItem('onlyMyAssessmentsPatients') === 'true');
 
   public assessmentRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
@@ -82,20 +83,39 @@ export class AssessmentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAssessments();
+
+    if(!localStorage.getItem('onlyMyAssessmentsPatients')){
+      localStorage.setItem('onlyMyAssessmentsPatients', this.onlyMyAssessments.toString());
+    }
+    if(!localStorage.getItem('onlyArchivedAssessmentsPatients')){
+      localStorage.setItem('onlyArchivedAssessmentsPatients', this.onlyArchivedAssessments.toString());
+    }
+    if(!localStorage.getItem('paging-patient-assessment')){
+      localStorage.setItem('paging-patient-assessment', JSON.stringify(this.assessmentRequestOptions.paging));
+    }
+    if(!localStorage.getItem('filter-patient-assessment')){
+        localStorage.setItem('filter-patient-assessment', JSON.stringify(this.assessmentRequestOptions.filter));
+    }
+    if(!localStorage.getItem('sorting-patient-assessment')){
+        localStorage.setItem('sorting-patient-assessment', JSON.stringify(this.assessmentRequestOptions.sorting));
+    }
   }
 
   public onPageChange(paging: Paging): void {
     this.assessmentRequestOptions.paging = paging;
+    localStorage.setItem('paging-patient-assessment', JSON.stringify(this.assessmentRequestOptions.paging));
     this.getAssessments();
   }
 
   public onSort(sorting: SortField<FormattedAssessment>[]): void {
     this.assessmentRequestOptions.sorting = sorting;
+    localStorage.setItem('sorting-patient-assessment', JSON.stringify(this.assessmentRequestOptions.sorting));
     this.getAssessments();
   }
 
   public onFilter(filter: Filter): void {
     this.assessmentRequestOptions.filter = filter;
+    localStorage.setItem('filter-patient-assessment', JSON.stringify(this.assessmentRequestOptions.filter));
     this.getAssessments();
   }
 
@@ -129,12 +149,26 @@ export class AssessmentsComponent implements OnInit {
     }
   }
   public onMyAssessments(): void {
-    this.onlyMyAssessments = !this.onlyMyAssessments;
+    if(this.onlyMyAssessments === true){
+      localStorage.setItem('onlyMyAssessmentsPatients', 'false');
+      this.onlyMyAssessments = false;
+    }
+    else{
+      localStorage.setItem('onlyMyAssessmentsPatients', 'true');
+      this.onlyMyAssessments = true;
+    }
     this.getAssessments();
   }
 
   public onArchivedAssessments(): void {
-    this.onlyArchivedAssessments = !this.onlyArchivedAssessments;
+    if(this.onlyArchivedAssessments === true){
+      localStorage.setItem('onlyArchivedAssessmentsPatients', 'false');
+      this.onlyArchivedAssessments = false;
+    }
+    else{
+      localStorage.setItem('onlyArchivedAssessmentsPatients', 'true');
+      this.onlyArchivedAssessments = true;
+    }
     this.getAssessments();
   }
 
@@ -229,6 +263,18 @@ export class AssessmentsComponent implements OnInit {
   private getAssessments(): void {
     // copy to not modify original options
     const options = { ...this.assessmentRequestOptions };
+
+    if(localStorage.getItem('filter-patient-assessment')){
+      options.filter = {...options.filter, ...JSON.parse(localStorage.getItem('filter-patient-assessment'))}
+    }
+
+    if(localStorage.getItem('sorting-patient-assessment')){
+      options.sorting = {...options.sorting, ...JSON.parse(localStorage.getItem('sorting-patient-assessment'))}
+    }
+
+    if(localStorage.getItem('paging-patient-assessment')){
+      options.paging = {...options.paging, ...JSON.parse(localStorage.getItem('paging-patient-assessment'))};
+    }
 
     if(options.sorting.length === 0){
       options.sorting.push({field: 'createdAt', direction: 'DESC'})

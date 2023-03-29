@@ -23,6 +23,8 @@
     <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
    <label [ngClass]="{'text-green' : onlyMyAssessments}" class="spacer" (ngModelChange)="onMyAssessments()" nz-checkbox [(ngModel)]="onlyMyAssessments">{{ 'assessments.myAssessment' | translate }}</label>
    <label [ngClass]="{'text-green' : onlyArchivedAssessments}" (ngModelChange)="onArchivedAssessments()" nz-checkbox [(ngModel)]="onlyArchivedAssessments">{{ 'assessments.archivedAssessments' | translate }}</label>
+   <nz-badge *ngIf="cacheFilters?.and" nz-tooltip [nzTooltipTitle]="badgeTitle" nzDot><span nz-icon nzType="filter"></span></nz-badge>
+   <ng-template #badgeTitle>You have {{this.cacheFilters?.and?.length}} active filters on cache. Press the reset button to reset filters.</ng-template>
 </div>
   <ng-container actions-right>
     <button nz-button nzType="primary" nzShape="circle" (click)="onPatientSelect()">
