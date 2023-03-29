@@ -79,6 +79,9 @@ export class MasterDataListComponent<T> {
   }
 
   public onReset(): void {
+    if(localStorage.getItem('filter')){
+      localStorage.removeItem('filter')
+    }
     location.reload();
   }
 }
