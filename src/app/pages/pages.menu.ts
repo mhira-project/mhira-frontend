@@ -1,7 +1,8 @@
 import { SideNavInterface } from '@app/@layout/backend/side-nav.type';
 import { PermissionKey as PK } from '@app/@shared/@types/permission';
+import { environment } from '@env/environment';
 
-export const MENU: SideNavInterface[] = [
+export const MENU: SideNavInterface[] | any = [
   {
     path: 'dashboard',
     title: 'menu.dashboard',
@@ -34,6 +35,14 @@ export const MENU: SideNavInterface[] = [
         permissions: [PK.MANAGE_PATIENTS],
         submenu: [],
       },
+      {
+        path: 'case-management/caregiver-list',
+        title: 'menu.caregiverList',
+        iconType: '',
+        iconTheme: '',
+        permissions: [PK.VIEW_PATIENTS],
+        submenu: [],
+      },
     ],
   },
   {
@@ -56,6 +65,14 @@ export const MENU: SideNavInterface[] = [
         path: 'questionnaire-management/questionnaire-form',
         title: 'menu.uploadQuestionnaire',
         permissions: [PK.MANAGE_QUESTIONNAIRES],
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+      {
+        path: 'questionnaire-management/questionnaire-version-list',
+        title: 'menu.questionnairesVersionList',
+        permissions: [PK.VIEW_QUESTIONNAIRES],
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -123,6 +140,14 @@ export const MENU: SideNavInterface[] = [
     icon: 'setting',
     submenu: [
       {
+        path: 'administration/reports',
+        title: 'menu.reports',
+        permissions: [PK.VIEW_REPORTS],
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+      {
         path: 'administration/permission-matrix',
         title: 'menu.permissionMatrix',
         permissions: [PK.VIEW_ROLES_PERMISSIONS],
@@ -156,30 +181,91 @@ export const MENU: SideNavInterface[] = [
         submenu: [],
       },
       {
-        path: 'administration/settings',
-        title: 'menu.settings',
-        permissions: [PK.VIEW_SETTINGS, PK.VIEW_SYSCONF],
+        path: 'administration/disclaimers',
+        title: 'menu.disclaimers',
+        permissions: [PK.VIEW_SETTINGS],
         iconType: '',
         iconTheme: '',
-        submenu: [
-          {
-            path: 'administration/settings/system-configuration',
-            title: 'menu.systemConfiguration',
-            permissions: [PK.VIEW_SYSCONF],
-            iconType: '',
-            iconTheme: '',
-            submenu: [],
-          },
-          {
-            path: 'administration/settings/patient-statuses',
-            title: 'menu.patientStatuses',
-            permissions: [PK.VIEW_SETTINGS],
-            iconType: '',
-            iconTheme: '',
-            submenu: [],
-          },
-        ],
+        icon: '',
+        submenu: [],
       },
+      {
+        path: 'administration/assessments',
+        title: 'menu.assessments',
+        permissions: [PK.VIEW_SETTINGS],
+        iconType: '',
+        iconTheme: '',
+        icon: '',
+        submenu: [],
+      },
+      {
+        path: 'administration/patient-statuses',
+        title: 'menu.patientStatuses',
+        permissions: [PK.VIEW_SETTINGS],
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+      // {
+      //   path: 'administration/email-templates',
+      //   title: 'menu.emailTemplates',
+      //   permissions: [PK.VIEW_SETTINGS],
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'code',
+      //   submenu: [],
+      // },
+      {
+        path: 'administration/version',
+        title: 'menu.version',
+        permissions: [PK.VIEW_SETTINGS],
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'code',
+        submenu: [],
+      }
+      // {
+      //   path: 'administration/settings',
+      //   title: 'menu.settings',
+      //   permissions: [PK.VIEW_SETTINGS, PK.VIEW_SYSCONF],
+      //   iconType: '',
+      //   iconTheme: '',
+      //   submenu: [
+      //     {
+      //       path: 'administration/settings/system-configuration',
+      //       title: 'menu.systemConfiguration',
+      //       permissions: [PK.VIEW_SYSCONF],
+      //       iconType: '',
+      //       iconTheme: '',
+      //       submenu: [],
+      //     },
+      //     {
+      //       path: 'administration/settings/patient-statuses',
+      //       title: 'menu.patientStatuses',
+      //       permissions: [PK.VIEW_SETTINGS],
+      //       iconType: '',
+      //       iconTheme: '',
+      //       submenu: [],
+      //     },
+      //   ],
+      // },
     ],
   },
 ];
+
+// Logic for conditionally adding email templates
+// button on the menu, if env variable is true..
+
+if(environment.email){
+  MENU[5].submenu.splice(8, 0,
+    {
+      path: 'administration/email-templates',
+      title: 'menu.emailTemplates',
+      permissions: [PK.VIEW_SETTINGS],
+      iconType: 'nzIcon',
+      iconTheme: 'outline',
+      icon: 'code',
+      submenu: [],
+    },
+  )
+}

@@ -1,0 +1,17 @@
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancel-button {
+  margin-top: 20px;
+  width: 255px;
+  border-radius: 10px;
+}
+
+.add-button {
+  margin-top: 20px;
+  width: 255px;
+  float: right;
+  border-radius: 10px;
+}

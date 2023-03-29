@@ -1,0 +1,24 @@
+<nz-modal
+  [nzVisible]="isVisible"
+  [nzFooter]="null"
+  [nzTitle]="questionnaire.name"
+  (nzOnCancel)="handleCancelHandler()"
+  (nzOnOk)="handleOkHandler()"
+>
+  <ng-container *nzModalContent>
+    <p class="bold-text">Language</p>
+    <p>{{ questionnaire.questionnaire.language }}</p>
+    <p class="bold-text">Status</p>
+    <p>{{ questionnaire.status }}</p>
+    <p class="bold-text">Copyright</p>
+    <p>{{ questionnaire.copyright }}</p>
+    <p class="bold-text">Keywords</p>
+    <p>
+      <span *ngFor="let keyword of questionnaire.keywords">{{ keyword }}, </span>
+    </p>
+    <p class="bold-text">License</p>
+    <p>{{ questionnaire.license }}</p>
+    <p class="bold-text">Website</p>
+    <p>{{ questionnaire.website }}</p>
+  </ng-container>
+</nz-modal>

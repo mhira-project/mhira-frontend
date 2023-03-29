@@ -1,0 +1,21 @@
+<app-master-data-list
+  [data]="data"
+  [columns]="columns"
+  [loading]="isLoading"
+  [pageInfo]="pageInfo"
+  [actions]="actions"
+  (pageChange)="onPageChange($event)"
+  (sort)="onSort($event)"
+  (filter)="onFilter($event)"
+  (executeAction)="onAction($event)"
+  (rowClick)="handleRowClick($event)"
+>
+  <ng-container actions-left>
+    <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
+  </ng-container>
+  <ng-container actions-right>
+    <button nz-button nzType="primary" nzShape="circle" routerLink="/mhira/administration/create-report">
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>

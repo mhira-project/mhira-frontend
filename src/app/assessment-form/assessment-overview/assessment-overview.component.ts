@@ -9,6 +9,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { MhiraTranslations } from '../../@core/mhira-translations';
 import { forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { Disclaimers } from '@app/pages/administration/@types/disclaimers';
+import { finalize } from 'rxjs/operators';
+import { DisclaimersService } from '@app/pages/administration/@services/disclaimers.service';
 
 @Component({
   selector: 'app-assessment-overview',
@@ -17,6 +20,12 @@ import { TranslateService } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AssessmentOverviewComponent implements OnInit {
+  public isLoading = false;
+  public disclaimer: Disclaimers;
+  public data: Partial<Disclaimers>[];
+  public expiredDisclaimer: string;
+  public completedDisclaimer: string;
+  public plannedDisclaimer: string;
   public AssessmentStatus = AssessmentStatus;
   public assessment: FullAssessment;
   public questions: Question[];
@@ -29,6 +38,7 @@ export class AssessmentOverviewComponent implements OnInit {
   constructor(
     public assessmentFormService: AssessmentFormService,
     public translations: MhiraTranslations,
+    private disclaimersService: DisclaimersService,
     private cdr: ChangeDetectorRef,
     private assessmentService: AssessmentService,
     private messageService: NzMessageService,
@@ -51,6 +61,8 @@ export class AssessmentOverviewComponent implements OnInit {
 
       this.cdr.detectChanges();
     });
+    this.getDescription();
+    console.log(this.completedDisclaimer);
   }
 
   public getMaxRequiredQuestions(questionnaireId: string): number {
@@ -81,6 +93,9 @@ export class AssessmentOverviewComponent implements OnInit {
   }
 
   public canAccessQuestionnaire(questionnaireIdx: number): boolean {
+    if (this.assessment.questionnaireAssessment.status === 'COMPLETED') {
+      return false;
+    }
     if (questionnaireIdx === 0) return true;
     const previousQuestionnaireId = this.assessment.questionnaireAssessment.questionnaires[questionnaireIdx - 1]._id;
     return this.isQuestionnaireDone(previousQuestionnaireId);
@@ -88,7 +103,7 @@ export class AssessmentOverviewComponent implements OnInit {
 
   public completeAssessment(): void {
     const id = this.assessment.questionnaireAssessment._id;
-
+    console.log('here');
     forkJoin([
       this.translateService.get(this.translations.assessmentForm.complete),
       this.assessmentService.changeAssessmentStatus(id, AssessmentStatus.COMPLETED),
@@ -102,5 +117,26 @@ export class AssessmentOverviewComponent implements OnInit {
       },
       (err) => this.errorService.handleError(err, { prefix: `Unable to complete assessment with ID "${id}"` })
     );
+  }
+
+  private getDescription(): void {
+    this.disclaimersService
+      .disclaimers()
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }: any) => {
+          data.disclaimers.map((disclaimer: any) => {
+            if (disclaimer.type === 'plannedText') {
+              this.plannedDisclaimer = disclaimer.description;
+            } else if (disclaimer.type === 'expiredText') {
+              this.expiredDisclaimer = disclaimer.description;
+            } else if (disclaimer.type === 'completedText') {
+              this.completedDisclaimer = disclaimer.description;
+            }
+          });
+          this.cdr.detectChanges();
+        },
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to load disclaimers' })
+      );
   }
 }

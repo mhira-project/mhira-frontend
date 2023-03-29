@@ -1,0 +1,32 @@
+<app-master-data-list
+  [columns]="columns"
+  [data]="data"
+  [pageInfo]="pageInfo"
+  [loading]="isLoading"
+  (pageChange)="onPageChange($event)"
+  [actions]="actions"
+  (sort)="onSort($event)"
+  (filter)="onFilter($event)"
+  (executeAction)="onAction($event)"
+  (rowClick)="onAssessmentSelect($event)"
+>
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <qrcode [qrdata]="newUrl.toString()" [width]="450" [errorCorrectionLevel]="'M'"></qrcode>
+  </ng-container>
+</nz-modal>
+<ng-template #modalTitle>
+  <h5>{{modalData.patient.firstName}} {{modalData.patient.lastName}}</h5>
+  <p>{{modalData.assessmentType.name}}</p>
+</ng-template>
+  <div class="actions-left" actions-left>
+    <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
+   <label [ngClass]="{'text-green' : onlyMyAssessments}" class="spacer" (ngModelChange)="onMyAssessments()" nz-checkbox [(ngModel)]="onlyMyAssessments">{{ 'assessments.myAssessment' | translate }}</label>
+   <label [ngClass]="{'text-green' : onlyArchivedAssessments}" (ngModelChange)="onArchivedAssessments()" nz-checkbox [(ngModel)]="onlyArchivedAssessments">{{ 'assessments.archivedAssessments' | translate }}</label>
+</div>
+  <ng-container actions-right>
+    <button nz-button nzType="primary" nzShape="circle" (click)="onPatientSelect()">
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>

@@ -24,12 +24,14 @@ import {
   ActionArgs,
   DEFAULT_PAGE_SIZE,
 } from '../../../@shared/@modules/master-data/@types/list';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 const CryptoJS = require('crypto-js');
 
 enum ActionKey {
-  CHANGE_STATUS,
   DELETE_PATIENT,
+  ARCHIVE_PATIENT,
+  RESTORE_PATIENT
 }
 
 @Component({
@@ -66,16 +68,24 @@ export class PatientsListComponent {
 
   public patientStates: PatientStatus[] = [];
 
-  private onlyMyPatients = false;
+  public onlyMyPatients = (localStorage.getItem('onlyMyPatients') === 'true');
+  public archivedPatients = (localStorage.getItem('archivedPatients') === 'true');
 
   constructor(
     private patientsService: PatientsService,
     private router: Router,
     private modalService: NzModalService,
+    private message: NzMessageService,
     private patientStateService: PatientStatusesService,
     private errorService: ErrorHandlerService,
     public perms: AppPermissionsService
   ) {
+    if(!localStorage.getItem('onlyMyPatients')){
+      localStorage.setItem('onlyMyPatients', this.onlyMyPatients.toString());
+    }
+    if(!localStorage.getItem('archivedPatients')){
+      localStorage.setItem('archivedPatients', this.archivedPatients.toString());
+    }
     this.getPatients();
     this.getPatientStates();
     this.setActions();
@@ -104,7 +114,26 @@ export class PatientsListComponent {
   }
 
   public onMyPatients(): void {
-    this.onlyMyPatients = !this.onlyMyPatients;
+    if(this.onlyMyPatients === true){
+      localStorage.setItem('onlyMyPatients', 'false');
+      this.onlyMyPatients = false;
+   }
+    else{
+      localStorage.setItem('onlyMyPatients', 'true');
+      this.onlyMyPatients = true;
+    }
+    this.getPatients();
+  }
+
+  public onArchievedPatients(): void {
+    if(this.archivedPatients === true){
+      localStorage.setItem('archivedPatients', 'false');
+      this.archivedPatients = false;
+    }
+    else{
+      localStorage.setItem('archivedPatients', 'true');
+      this.archivedPatients = true;
+    }
     this.getPatients();
   }
 
@@ -119,8 +148,11 @@ export class PatientsListComponent {
 
   public onAction({ action, context: patient }: ActionArgs<FormattedPatient, ActionKey>): void {
     switch (action.key) {
-      case ActionKey.CHANGE_STATUS:
-        this.changePatientStatus(patient);
+      case ActionKey.ARCHIVE_PATIENT:
+        this.archivePatient(patient);
+        return;
+      case ActionKey.RESTORE_PATIENT:
+        this.restorePatient(patient);
         return;
       case ActionKey.DELETE_PATIENT:
         this.deletePatient(patient);
@@ -132,12 +164,30 @@ export class PatientsListComponent {
     this.loading = true;
     const options = { ...this.patientRequestOptions };
 
+    if(!this.archivedPatients){
+      options.filter = {
+        ...options.filter,
+        and: [{ deleted: {is: false} }, ...(options.filter.and ?? [])],
+      };
+    }  
+
+
     // apply for only my patients
-    if (this.onlyMyPatients)
+    if (this.onlyMyPatients){
       options.filter = {
         ...options.filter,
         and: [{ caseManagers: { id: { eq: this.userId } } }, ...(options.filter.and ?? [])],
       };
+    }
+
+    // archieved patients
+
+    if(this.archivedPatients){
+      options.filter = {
+        ...options.filter,
+        and: [{ deleted: {is: true} }, ...(options.filter.and ?? [])],
+      };
+    }  
 
     this.patientsService
       .patients(options)
@@ -155,29 +205,10 @@ export class PatientsListComponent {
   }
 
   private createSearchFilter(searchString: string) {
-    if (!searchString) return [];
     return [
       { firstName: { iLike: `%${searchString}%` } },
       { middleName: { iLike: `%${searchString}%` } },
       { lastName: { iLike: `%${searchString}%` } },
-      {
-        informants: {
-          or: [
-            { firstName: { iLike: `%${searchString}%` } },
-            { middleName: { iLike: `%${searchString}%` } },
-            { lastName: { iLike: `%${searchString}%` } },
-          ],
-        },
-      },
-      {
-        caseManagers: {
-          or: [
-            { firstName: { iLike: `%${searchString}%` } },
-            { middleName: { iLike: `%${searchString}%` } },
-            { lastName: { iLike: `%${searchString}%` } },
-          ],
-        },
-      },
       { medicalRecordNo: { iLike: `%${searchString}%` } },
     ];
   }
@@ -264,13 +295,74 @@ export class PatientsListComponent {
       .deletePatient(patient)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        () => this.data.splice(this.data.indexOf(patient), 1),
+        () => {
+          this.data.splice(this.data.indexOf(patient), 1);
+          this.message.success('Patient has been successfully deleted');
+          this.getPatients();
+        },
         (error) =>
           this.errorService.handleError(error, {
             prefix: `Unable to delete patient "${patient.firstName} ${patient.lastName}"`,
           })
       );
   }
+
+  private async archivePatient(patient: FormattedPatient): Promise<void> {
+    const modal = this.modalService.confirm({
+      nzOnOk: () => true,
+      nzTitle: 'Archive Patient',
+      nzContent: `
+        Are you sure you want to archive ${patient.firstName} ${patient.lastName}? This action is irreversible
+      `,
+    });
+
+    const confirmation = await modal.afterClose.toPromise();
+    if (!confirmation) return;
+
+    // archive patient
+    this.loading = true;
+    this.patientsService
+      .archivePatient(patient)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        () => {
+          this.getPatients();
+        },
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: `Unable to archived patient "${patient.firstName} ${patient.lastName}"`,
+          })
+      );
+  }
+
+  private async restorePatient(patient: FormattedPatient): Promise<void> {
+    const modal = this.modalService.confirm({
+      nzOnOk: () => true,
+      nzTitle: 'Restore Patient',
+      nzContent: `
+        Are you sure you want to restore ${patient.firstName} ${patient.lastName}? This action is irreversible
+      `,
+    });
+
+    const confirmation = await modal.afterClose.toPromise();
+    if (!confirmation) return;
+
+    // restore patient
+    this.loading = true;
+    this.patientsService
+      .restorePatient(patient)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        () => {
+          this.getPatients();
+        },
+        (error) =>
+          this.errorService.handleError(error, {
+            prefix: `Unable to restore patient "${patient.firstName} ${patient.lastName}"`,
+          })
+      );
+  }
+
 
   private get userId(): number {
     const user = JSON.parse(localStorage.getItem('user')) as User;
@@ -279,7 +371,8 @@ export class PatientsListComponent {
 
   private setActions(): void {
     if (this.perms.permissionsOnly(PermissionKey.MANAGE_PATIENTS)) {
-      this.actions = [...this.actions, { key: ActionKey.CHANGE_STATUS, title: 'Change Status' }];
+      this.actions = [...this.actions, { key: ActionKey.ARCHIVE_PATIENT, title: 'Archive Patient' }];
+      this.actions = [...this.actions, { key: ActionKey.RESTORE_PATIENT, title: 'Restore Patient' }];
     }
 
     if (this.perms.permissionsOnly(PermissionKey.DELETE_PATIENTS)) {

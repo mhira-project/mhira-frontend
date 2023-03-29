@@ -66,11 +66,31 @@ export class AssessmentService {
     });
   }
 
-  deleteAssessment(assessment: Assessment, archive: boolean = true): Observable<boolean> {
+  deleteAssessment(assessment: Assessment, statusCancel: boolean): Observable<boolean> {
     return this.apollo
       .mutate({
         mutation: AssessmentsMutations.deleteAssessment,
-        variables: { id: assessment.id, archive },
+        variables: { id: assessment.id, statusCancel },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map((result: any) => result?.data?.deleteAssessment));
+  }
+
+  archiveAssessment(assessment: Assessment): Observable<boolean> {
+    return this.apollo
+      .mutate({
+        mutation: AssessmentsMutations.archiveOneAssessment,
+        variables: { id: assessment.id },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map((result: any) => result?.data?.deleteAssessment));
+  }
+
+  restoreAssessment(assessment: Assessment): Observable<boolean> {
+    return this.apollo
+      .mutate({
+        mutation: AssessmentsMutations.restoreOneAssessment,
+        variables: { id: assessment.id },
         fetchPolicy: 'no-cache',
       })
       .pipe(map((result: any) => result?.data?.deleteAssessment));
@@ -92,14 +112,24 @@ export class AssessmentService {
     });
   }
 
-  getFullAssessment(assessmentId: number): Observable<FullAssessment> {
+  getFullAssessment(assessmentId: number, uuid?: string | null): Observable<FullAssessment> {
     return this.apollo
       .query({
         query: AssessmentsQueries.getFullAssessment,
-        variables: { id: assessmentId },
+        variables: { id: assessmentId, uuid },
         fetchPolicy: 'no-cache',
       })
       .pipe(map((result: any) => result?.data?.getFullAssessment));
+  }
+
+  getFullPublicAssessment(assessmentUuid: string): Observable<FullAssessment> {
+    return this.apollo
+      .query({
+        query: AssessmentsQueries.getFullPublicAssessment,
+        variables: { uuid: assessmentUuid },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map((result: any) => result?.data?.getFullPublicAssessment));
   }
 
   addAnswer(assessment: AnswerAssessmentInput): Observable<Answer[]> {
@@ -110,6 +140,16 @@ export class AssessmentService {
         fetchPolicy: 'no-cache',
       })
       .pipe(map((result: any) => result.data.addAnswer.answers));
+  }
+
+  sendAssessmentEmail(assessment: Assessment): Observable<boolean> {
+    return this.apollo
+      .mutate({
+        mutation: AssessmentsMutations.sendAssessmentEmail,
+        variables: { assessmentId: assessment.id },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map((result: any) => result?.data?.deleteAssessment));
   }
 
   changeAssessmentStatus(assessmentId: string, status: AssessmentStatus) {

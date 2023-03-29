@@ -1,0 +1,65 @@
+<app-master-data-list
+  [data]="data"
+  [columns]="columns"
+  [loading]="isLoading"
+  [pageInfo]="pageInfo"
+  [actions]="actions"
+  (pageChange)="onPageChange($event)"
+  (sort)="onSort($event)"
+  (filter)="onFilter($event)"
+  (executeAction)="onAction($event)"
+  (rowClick)="handleRowClick($event)"
+>
+  <ng-container actions-left>
+    <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
+  </ng-container>
+  <ng-container actions-right>
+    <button nz-button nzType="primary" nzShape="circle" (click)="openCreatePanel()">
+      <i nz-icon nzType="plus"></i>
+    </button>
+  </ng-container>
+</app-master-data-list>
+
+<nz-drawer
+  [nzWidth]="600"
+  [nzMask]="true"
+  [nzClosable]="true"
+  [nzMaskClosable]="false"
+  [nzTitle]="script?.id ? 'Edit Script' : 'Add Script'"
+  [nzVisible]="showCreateScript"
+  (nzOnClose)="closeCreatePanel()"
+  nzPlacement="right"
+>
+  <app-form
+    class="mt-3"
+    [form]="scriptForm"
+    [formData]="script"
+    [isLoading]="isLoading"
+    [populateForm]="populateForm"
+    [resetForm]="resetForm"
+    [inputMode]="true"
+    [showCancelButton]="false"
+  >
+  </app-form>
+  <div class="card-div">
+    <nz-card nzTitle="Reports*">
+      <nz-checkbox-wrapper style="width: 100%">
+        <div nz-row>
+          <div nz-col nzSpan="24" *ngFor="let report of reports">
+            <label
+              nz-checkbox
+              [nzValue]="report.id"
+              [ngModel]="scriptHasReport(report.id)"
+              (ngModelChange)="assignReportToScript(report, $event)"
+              >{{ report.name }}</label
+            >
+          </div>
+        </div>
+      </nz-checkbox-wrapper>
+    </nz-card>
+  </div>
+  <div class="buttons">
+    <button class="cancel-button" nz-button nzType="default" (click)="closeCreatePanel()">Cancel</button>
+    <button class="add-button" nz-button nzType="primary" (click)="createScript()">Add</button>
+  </div>
+</nz-drawer>

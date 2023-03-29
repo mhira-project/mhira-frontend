@@ -40,7 +40,9 @@
               "./node_modules/ng-zorro-antd/resizable/style/index.min.css",
               "src/main.scss"
             ],
-            "scripts": ["node_modules/jquery/dist/jquery.min.js"]
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js"
+            ]
           },
           "configurations": {
             "production": {

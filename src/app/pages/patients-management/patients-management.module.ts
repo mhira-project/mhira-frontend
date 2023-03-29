@@ -13,7 +13,7 @@ import { AppFormModule } from '../../@shared/components/form/app-form.module';
 import { EmergencyContactsService } from './@services/contacts.service';
 import { InformantsListComponent } from './informants-list/informants-list.component';
 import { PatientStatusesService } from './@services/patient-statuses.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MasterDataModule } from '../../@shared/@modules/master-data/master-data.module';
 import { DepartmentsComponent } from './departments/departments.component';
 import { DepartmentsService } from './@services/departments.service';
@@ -31,6 +31,20 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { CaregiverListComponent } from './caregiver-list/caregiver-list.component';
+import { CaregiversPatientComponent } from './caregivers-patient/caregivers-patient.component';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { ReportsComponent } from './reports/reports.component';
+import { AssessmentsComponent } from './assessments/assessments.component';
+import { CreateAssessmentComponent } from './create-assessment/create-assessment.component';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { AssessmentModule } from '../assessment/assessment.module';
+import { QRCodeModule } from 'angularx-qrcode';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 const antModules = [
   NzGridModule,
@@ -47,6 +61,8 @@ const antModules = [
   NzDrawerModule,
   NzAvatarModule,
   NzSelectModule,
+  NzToolTipModule,
+  NzCheckboxModule
 ];
 
 @NgModule({
@@ -59,6 +75,14 @@ const antModules = [
     SharedModule,
     PatientsManagementRoutingModule,
     MasterDataModule,
+    NzFormModule,
+    ReactiveFormsModule,
+    NzTableModule,
+    NzDividerModule,
+    NzRadioModule,
+    NzDatePickerModule,
+    AssessmentModule,
+    QRCodeModule
   ],
   declarations: [
     PatientsListComponent,
@@ -67,6 +91,11 @@ const antModules = [
     PatientProfileComponent,
     CreatePatientComponent,
     DepartmentsComponent,
+    CaregiverListComponent,
+    CaregiversPatientComponent,
+    ReportsComponent,
+    AssessmentsComponent,
+    CreateAssessmentComponent,
   ],
   providers: [
     PatientsService,

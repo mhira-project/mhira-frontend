@@ -10,7 +10,8 @@ import { PermissionsComponent } from './permissions/permissions.component';
 import { RolesComponent } from './roles/roles.component';
 import { PermissionsService } from './@services/permissions.service';
 import { RolesService } from './@services/roles.service';
-import { FormsModule } from '@angular/forms';
+import {EmailTemplatesService} from './@services/email-templates.service'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DepartmentsComponent } from './departments/departments.component';
 import { AppFormModule } from '../../@shared/components/form/app-form.module';
 import { MasterDataModule } from '../../@shared/@modules/master-data/master-data.module';
@@ -30,6 +31,17 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { ReportsComponent } from './reports/reports.component';
+import { CreateReportComponent } from './create-report/create-report.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { DisclaimersComponent } from './disclaimers/disclaimers.component';
+import { AssessmentAdministrationComponent } from './assessment-administration/assessment-administration.component';
+import { VersionComponent } from './version/version.component';
+import { EmailTemplatesComponent } from './email-templates/email-templates.component';
+import { CreateEmailTemplateComponent } from './create-email-template/create-email-template.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 const antModules = [
   NzGridModule,
@@ -63,8 +75,25 @@ const antModules = [
     AdministrationRoutingModule,
     NzSwitchModule,
     MasterDataModule,
+    ReactiveFormsModule,
+    NzSelectModule,
+    NzRadioModule,
+    NzFormModule,
+    AngularEditorModule,
   ],
-  declarations: [RolesAndPermissionsComponent, PermissionsComponent, RolesComponent, DepartmentsComponent],
-  providers: [PermissionsService, RolesService],
+  declarations: [
+    RolesAndPermissionsComponent,
+    PermissionsComponent,
+    RolesComponent,
+    DepartmentsComponent,
+    ReportsComponent,
+    CreateReportComponent,
+    DisclaimersComponent,
+    AssessmentAdministrationComponent,
+    VersionComponent,
+    EmailTemplatesComponent,
+    CreateEmailTemplateComponent
+  ],
+  providers: [PermissionsService, RolesService, EmailTemplatesService],
 })
 export class AdministrationModule {}

@@ -1,0 +1,73 @@
+.input-class {
+  width: 480px !important;
+  margin-bottom: 15px;
+}
+
+.date-picker {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.date-picker1 {
+  // width: 233px;
+  width: 100%;
+  margin-right: 15px;
+}
+
+
+h5 {
+  font-weight: bold;
+}
+
+.button {
+  width: 235px;
+}
+
+nz-form-label {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+}
+
+input[readonly] {
+  border: 0;
+  padding: 0;
+}
+
+nz-date-picker [nzInputReadOnly] {
+  margin: 0 8px 12px 0;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.link-container {
+  display: flex;
+  align-items: center;
+  margin-top: -40px;
+}
+
+.link-container a {
+  text-align: start;
+  margin: 0;
+  text-decoration: underline;
+}
+
+.email-label-wrapper{
+  display: flex; 
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.email-label{
+  color: rgb(78, 78, 78);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+

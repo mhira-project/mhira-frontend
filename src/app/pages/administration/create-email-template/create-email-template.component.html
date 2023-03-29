@@ -1,0 +1,62 @@
+<button nz-button routerLink="/mhira/administration/email-templates" nzType="secondary">Go back</button>
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <form nz-form [formGroup]="emailForm">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="6">{{'emailTemplates.name' | translate}}</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input formControlName="name" nz-input name="name" type="text" id="name">
+              </nz-form-control>
+            </nz-form-item >
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6">{{'emailTemplates.subject' | translate}}</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <input formControlName="subject" nz-input name="subject" type="text" id="subject">
+                </nz-form-control>
+            </nz-form-item >
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6">{{'emailTemplates.body' | translate}}</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <angular-editor [config]="editorConfig" [placeholder]="'Enter email body here...'" formControlName="body"></angular-editor>
+                </nz-form-control>
+            </nz-form-item >
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6">{{'emailTemplates.status' | translate}}</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                    <nz-radio-group ngModel="ACTIVE" formControlName="status">
+                        <label nz-radio nzValue="ACTIVE">Active</label>
+                        <label nz-radio nzValue="INACTIVE">Inactive</label>
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item >
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6">All Departments</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                    <nz-radio-group [(ngModel)]="allDepartments" ngModel="ACTIVE" formControlName="isPublic">
+                        <label nz-radio [nzValue]="true">Yes</label>
+                        <label nz-radio [nzValue]="false">No</label>
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item >
+            <nz-form-item *ngIf="!allDepartments">
+                <nz-form-label [nzSpan]="6">Departments</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                    <nz-checkbox-wrapper style="width: 100%; margin-top: 5px;" (nzOnChange)="selectDepartments($event)">
+                        <label style="align-items: center;" [ngModel]="templateHasDepartment(option.id)" [ngModelOptions]="{standalone: true}" *ngFor="let option of listOfDepartments" [nzValue]="option.id" nz-checkbox>{{option.name}}</label>
+                    </nz-checkbox-wrapper><br><br>
+                </nz-form-control>
+            </nz-form-item>
+            <!-- <nz-form-item>
+                <nz-form-label [nzSpan]="6">Module</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                    <nz-select formControlName="module" nzShowSearch nzAllowClear nzPlaceHolder="Select module">
+                        <nz-option nzLabel="Client" nzValue="CLIENT"></nz-option>
+                        <nz-option nzLabel="Assessment" nzValue="ASSESSMENT"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item > -->
+            <button *ngIf="!isUpdateMode" (click)="onFormSubmit()" nz-button type="submit" nzType="primary">Submit</button>
+            <button *ngIf="isUpdateMode" (click)="onFormUpdateSubmit()" nz-button nzType="primary">Update</button>
+        </form>
+    </div>
+</div>

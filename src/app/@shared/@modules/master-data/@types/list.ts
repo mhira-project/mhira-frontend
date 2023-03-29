@@ -3,7 +3,7 @@ import { Field } from '../../../components/form/@types/field';
 export interface TableColumn<T> {
   name: keyof T;
   title: string;
-  render?: 'html' | 'date' | 'tag' | 'avatar' | 'country' | 'array' | undefined;
+  render?: 'html' | 'date' | 'tag' | 'avatar' | 'country' | 'array' | 'emailStatus' | undefined;
   sort?: boolean;
   altName?: keyof T;
   translationPath?: string;

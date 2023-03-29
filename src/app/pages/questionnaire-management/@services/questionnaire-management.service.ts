@@ -45,10 +45,22 @@ export class QuestionnaireManagementService {
     return this.apollo
       .query<{ questionnaires: ConnectionResult<QuestionnaireVersion> }>({
         query: QuestionnaireQueries.getQuestionnaires,
-        variables: { ...options },
+        variables: { ...options, paging: {first: 20} },
         fetchPolicy: 'no-cache',
       })
       .pipe(map(({ data }) => data.questionnaires));
+  }
+
+  public getQuestionnairesVersion(
+    options: { paging?: Paging; filter?: any; sorting?: Sorting[] } = {}
+  ): Observable<ConnectionResult<QuestionnaireVersion>> {
+    return this.apollo
+      .query<{ getQuestionnaireVersions: ConnectionResult<QuestionnaireVersion> }>({
+        query: QuestionnaireQueries.getQuestionnairesVersion,
+        variables: { ...options },
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map(({ data }) => data.getQuestionnaireVersions));
   }
 
   public deleteQuestionnaire(_id: string, softDelete: boolean = true) {

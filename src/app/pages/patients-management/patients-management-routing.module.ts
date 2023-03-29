@@ -6,6 +6,9 @@ import { PatientProfileComponent } from './patient-profile/patient-profile.compo
 import { InformantsListComponent } from './informants-list/informants-list.component';
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { PermissionGuard } from '../../permission.guard';
+import { CaregiverListComponent } from './caregiver-list/caregiver-list.component';
+import { CreateReportComponent } from '../administration/create-report/create-report.component';
+import { CreateAssessmentComponent } from './create-assessment/create-assessment.component';
 
 const routes: Routes = [
   {
@@ -23,10 +26,28 @@ const routes: Routes = [
         },
       },
       {
+        path: 'create-assessment',
+        component: CreateAssessmentComponent,
+        data: {
+          breadcrumbI18nKey: 'menu.createAssessment',
+        },
+      },
+      {
         path: 'profile',
         component: PatientProfileComponent,
         data: {
           breadcrumbI18nKey: 'menu.createPatient',
+          permissions: {
+            only: [PermissionKey.VIEW_PATIENTS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'caregiver-list',
+        component: CaregiverListComponent,
+        data: {
+          breadcrumbI18nKey: 'menu.caregiverList',
           permissions: {
             only: [PermissionKey.VIEW_PATIENTS],
           },

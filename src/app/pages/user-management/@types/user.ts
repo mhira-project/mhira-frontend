@@ -17,6 +17,7 @@ export interface User {
   gender?: string;
   birthDate?: string;
   nationality?: string;
+  acceptedTerm?: boolean;
   passwordExpiresAt?: string;
   passwordChangeRequired?: boolean;
   createdAt?: string;
@@ -49,4 +50,5 @@ export interface CreateUserInput {
   gender?: string;
   birthDate?: string;
   nationality?: string;
+  acceptedTerm?: boolean;
 }

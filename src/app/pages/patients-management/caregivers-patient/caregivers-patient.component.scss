@@ -1,0 +1,23 @@
+.search-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-item {
+  display: block;
+}
+
+.form-control {
+  width: 575px;
+}
+
+.button {
+  width: 180px;
+  float: right;
+  margin-top: 10px;
+}
+
+.add-button {
+  width: 270px;
+}

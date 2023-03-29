@@ -3,6 +3,7 @@
 
 .side-nav {
   overflow: visible;
+  margin-bottom: 50px;
 }
 
 ul {
@@ -106,4 +107,36 @@ ul {
   .ant-menu-submenu-vertical > .ant-menu-submenu-title .ant-menu-submenu-arrow::before {
     background-image: linear-gradient(to right, $menu-text, $menu-text);
   }
+}
+
+.help-text {
+  width: 100%;
+  justify-content: center;
+  // text-align: center;
+  // margin-right: 150px;
+  margin-left: 20px;
+}
+
+.big-div {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 800px;
+}
+
+.text-in-help {
+  color: white;
+}
+
+.text-in-help:hover {
+  color: #89d180;
+}
+
+.version-text{
+  color: white;
+}
+
+.version-text-collapsed{
+  color: white;
+  margin-left: -10px;
 }

@@ -11,13 +11,13 @@ export class PatientModel {
       title: json?.status?.name ?? 'not set',
     };
 
-    json.formattedInformants = json.informants.map((informant) =>
+    json.formattedInformants = json?.informants?.map((informant) =>
       [informant?.firstName?.charAt(0), informant?.middleName?.charAt(0), informant?.lastName?.charAt(0)]
         .filter((s) => !!s)
         .join('')
     );
 
-    json.formattedCaseManagers = json.caseManagers.map((cm) =>
+    json.formattedCaseManagers = json?.caseManagers?.map((cm) =>
       [cm?.firstName?.charAt(0), cm?.middleName?.charAt(0), cm?.lastName?.charAt(0)].filter((s) => !!s).join('')
     );
 

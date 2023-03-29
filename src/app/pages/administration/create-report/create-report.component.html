@@ -1,0 +1,39 @@
+<button style="margin-bottom: 16px" nz-button nzType="primary" (click)="goBack()">Back</button>
+
+<h1>Create Report</h1>
+<div class="parent-div">
+  <div class="form-div">
+    <app-form
+      class="mt-3"
+      [form]="reportForm"
+      [formData]="report"
+      [isLoading]="isLoading"
+      [populateForm]="populateForm"
+      [resetForm]="resetForm"
+      [inputMode]="inputMode"
+      [showCancelButton]="showCancelButton"
+      [loadingMessage]="loadingMessage"
+      (submitForm)="submitForm($event)"
+      (inputModeChanged)="inputMode = $event"
+    >
+    </app-form>
+  </div>
+  <div class="card-div">
+    <nz-card style="width: 400px" nzTitle="Roles*">
+      <nz-checkbox-wrapper style="width: 100%">
+        <div nz-row>
+          <div nz-col nzSpan="24" *ngFor="let role of roles">
+            <label
+              nz-checkbox
+              [nzValue]="role.id"
+              [disabled]="!inputMode"
+              [ngModel]="reportHasRole(role.id)"
+              (ngModelChange)="assignRoleToReport(role, $event)"
+              >{{ role.name }}</label
+            >
+          </div>
+        </div>
+      </nz-checkbox-wrapper>
+    </nz-card>
+  </div>
+</div>

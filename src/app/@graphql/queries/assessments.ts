@@ -7,15 +7,26 @@ const assessments = gql`
         cursor
         node {
           id
+          uuid
           date
-          name
+          assessmentType {
+            id
+            name
+          }
+          emailReminder
+          emailStatus
+          receiverEmail
           patientId
           clinicianId
+          submissionDate
           status
+          deliveryDate
+          expirationDate
+          note
           createdAt
           updatedAt
           deletedAt
-          informant
+          informantType
           clinician {
             id
             username
@@ -33,6 +44,25 @@ const assessments = gql`
             createdAt
             updatedAt
           }
+          informantClinician {
+            id
+            username
+            active
+            firstName
+            middleName
+            lastName
+            email
+            phone
+            workID
+            address
+            gender
+            birthDate
+            nationality
+            createdAt
+            updatedAt
+            deletedAt
+          }
+          informantCaregiverRelation
           patient {
             id
             active
@@ -52,6 +82,47 @@ const assessments = gql`
           }
           questionnaireAssessment {
             status
+            questionnaires(populate: true) {
+              _id
+              name
+              status
+              createdAt
+              keywords
+              copyright
+              website
+              license
+              timeToComplete
+              questionnaire {
+                language
+                abbreviation
+              }
+              questionGroups {
+                label
+                questions {
+                  _id
+                  name
+                  label
+                  type
+                  hint
+                  relevant
+                  calculation
+                  constraint
+                  constraintMessage
+                  min
+                  max
+                  required
+                  requiredMessage
+                  image
+                  appearance
+                  default
+                  choices {
+                    name
+                    label
+                    image
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -118,13 +189,156 @@ const getFullAssessment = gql`
   query($id: Int!) {
     getFullAssessment(id: $id) {
       id
+      uuid
+      isActive
       date
-      name
+      assessmentType {
+        id
+        name
+      }
+      emailReminder
+      emailStatus
+      receiverEmail
+      mailTemplateId
+      status
+      deliveryDate
+      expirationDate
+      note
+      createdAt
+      updatedAt
+      deletedAt
+      informantType
+      informantCaregiverRelation
+      patientId
+      clinicianId
+      questionnaireAssessmentId
+      informantClinician {
+        id
+        username
+        active
+        firstName
+        middleName
+        lastName
+        email
+        phone
+        workID
+        address
+        gender
+        birthDate
+        nationality
+        createdAt
+        updatedAt
+        deletedAt
+      }
+      questionnaireAssessment {
+        _id
+        status
+        answers {
+          question
+          valid
+          textValue
+          multipleChoiceValue
+          numberValue
+          dateValue
+          booleanValue
+        }
+        questionnaires(populate: true) {
+          _id
+          name
+          status
+          createdAt
+          keywords
+          copyright
+          website
+          license
+          timeToComplete
+          questionnaire {
+            language
+            abbreviation
+          }
+          questionGroups {
+            label
+            questions {
+              _id
+              name
+              label
+              type
+              hint
+              relevant
+              calculation
+              constraint
+              constraintMessage
+              min
+              max
+              required
+              requiredMessage
+              image
+              appearance
+              default
+              choices {
+                name
+                label
+                image
+              }
+            }
+          }
+        }
+      }
+      clinician {
+        id
+        username
+        active
+        firstName
+        middleName
+        lastName
+        email
+        phone
+        workID
+        address
+        gender
+        birthDate
+        nationality
+        createdAt
+        updatedAt
+      }
+      patient {
+        id
+        active
+        medicalRecordNo
+        firstName
+        middleName
+        lastName
+        phone
+        email
+        address
+        gender
+        birthDate
+        birthCountryCode
+        nationality
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
+const getFullPublicAssessment = gql`
+  query($uuid: String!) {
+    getFullPublicAssessment(uuid: $uuid) {
+      id
+      uuid
+      date
+      assessmentType {
+        id
+        name
+      }
       status
       createdAt
       updatedAt
       deletedAt
-      informant
+      deliveryDate
+      expirationDate
+      informantType
       patientId
       clinicianId
       questionnaireAssessmentId
@@ -224,4 +438,5 @@ export const AssessmentsQueries = {
   assessments,
   questionnaires,
   getFullAssessment,
+  getFullPublicAssessment,
 };

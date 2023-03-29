@@ -20,6 +20,13 @@ const createOneAssessment = gql`
       clinicianId
       informantId
       status
+      deliveryDate
+      expirationDate
+      assessmentType {
+        id
+        name
+      }
+      note
       createdAt
       updatedAt
       deletedAt
@@ -99,6 +106,14 @@ const updateOneAssessment = gql`
       clinicianId
       informantId
       status
+      deliveryDate
+      expirationDate
+      mailTemplateId
+      note
+      assessmentType {
+        id
+        name
+      }
       createdAt
       updatedAt
       deletedAt
@@ -158,8 +173,24 @@ const updateOneAssessment = gql`
 `;
 
 const deleteAssessment = gql`
-  mutation($id: Int!, $archive: Boolean) {
-    deleteAssessment(id: $id, archive: $archive)
+  mutation($id: Int!, $statusCancel: Boolean) {
+    deleteAssessment(id: $id, statusCancel: $statusCancel)
+  }
+`;
+
+const archiveOneAssessment = gql`
+  mutation($id: Int!) {
+    archiveOneAssessment(id: $id){
+      id
+    }
+  }
+`;
+
+const restoreOneAssessment = gql`
+  mutation($id: Int!) {
+    restoreOneAssessment(id: $id){
+      id
+    }
   }
 `;
 
@@ -205,12 +236,21 @@ const changeAssessmentStatus = gql`
   }
 `;
 
+const sendAssessmentEmail = gql`
+  mutation($assessmentId: ID!) {
+    sendAssessmentEmail(assessmentId: $assessmentId)
+  }
+`;
+
 export const AssessmentsMutations = {
   createOneAssessment,
   updateOneAssessment,
   deleteAssessment,
+  archiveOneAssessment,
+  restoreOneAssessment,
   createOneMongoAssessment,
   updateOneMongoAssessment,
   addAnswer,
   changeAssessmentStatus,
+  sendAssessmentEmail
 };

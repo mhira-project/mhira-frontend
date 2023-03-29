@@ -1,0 +1,9 @@
+<h5>
+  <b>{{ 'dashboard.header' | translate }}</b>
+</h5>
+<div class="reports-container">
+  <div *ngFor="let report of reports" class="report-card" (click)="generateLink(report.url)">
+    <p class="title-card">{{ report.name }}</p>
+    <p class="description-card">{{ report.description }}</p>
+  </div>
+</div>

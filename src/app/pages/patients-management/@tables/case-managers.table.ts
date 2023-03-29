@@ -5,6 +5,7 @@ export const CaseManagerColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'First name',
     name: 'firstName',
+    translationPath: 'tables.casemanagers.firstName',
     sort: true,
     filterField: {
       type: 'text',
@@ -14,6 +15,7 @@ export const CaseManagerColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Middle name',
     name: 'middleName',
+    translationPath: 'tables.casemanagers.middleName',
     sort: true,
     filterField: {
       type: 'text',
@@ -23,6 +25,7 @@ export const CaseManagerColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Last name',
     name: 'lastName',
+    translationPath: 'tables.casemanagers.lastName',
     sort: true,
     filterField: {
       type: 'text',
@@ -32,6 +35,7 @@ export const CaseManagerColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Work ID',
     name: 'workID',
+    translationPath: 'tables.casemanagers.workID',
     sort: true,
     filterField: {
       type: 'text',
@@ -41,6 +45,7 @@ export const CaseManagerColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Phone',
     name: 'phone',
+    translationPath: 'tables.casemanagers.phone',
     sort: true,
     filterField: {
       type: 'text',
@@ -50,6 +55,7 @@ export const CaseManagerColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Username',
     name: 'username',
+    translationPath: 'tables.casemanagers.username',
     sort: true,
     filterField: {
       type: 'text',
@@ -59,6 +65,7 @@ export const CaseManagerColumns: TableColumn<FormattedUser>[] = [
   {
     title: 'Departments',
     name: 'formattedDepartments',
+    translationPath: 'tables.casemanagers.username',
     altName: 'departments',
     render: 'tag',
     filterField: {

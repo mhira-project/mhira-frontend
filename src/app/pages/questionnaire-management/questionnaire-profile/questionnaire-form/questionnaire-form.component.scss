@@ -1,0 +1,32 @@
+.parent-div {
+    display: flex;
+}
+
+.keyword-container {
+    max-width: 400px;
+    margin-left: 30px;
+    border-radius: 15px;
+}
+
+.keyword-title {
+    color: rgba(0, 0, 0, .85);
+    font-size: 14px;
+    font-size: bold;
+    margin: 0;
+}
+
+.info-tip{
+    font-size: 13px;
+    margin-top: 20%;
+}
+
+nz-select {
+    min-width: 400px;
+}
+
+:host ::ng-deep .ant-select-show-search.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    cursor: text;
+    height: auto;
+    min-height: 150px;
+    align-items: flex-start !important;
+}

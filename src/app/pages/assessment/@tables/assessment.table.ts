@@ -1,31 +1,39 @@
 import { User } from './../../user-management/@types/user';
 import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
-import { FormattedAssessment } from '../@types/assessment';
+import { Assessment, FormattedAssessment, QuestionnaireAssessment } from '../@types/assessment';
 import { Patient } from '@app/pages/patients-management/@types/patient';
+import { environment } from '@env/environment';
 
 export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
-    name: 'name',
+    name: 'formattedAssessmentType',
+    altName: 'assessmentType',
     title: 'Name',
-    sort: true,
+    translationPath: 'plannedAssessments.name',
+    // sort: true,
     filterField: {
       type: 'text',
       value: undefined,
     },
-  },
-  {
-    name: 'formattedStatus',
-    title: 'Status',
-    render: 'tag',
+    filterQuery: (q: number) =>
+      q
+        ? {
+            or: [
+              { name: { iLike: `%${q}%` } },
+            ] as Array<{ [K in keyof Assessment]: any }>,
+          }
+        : {},
   },
   {
     name: 'patientMedicalRecordNo',
     title: 'Patient Hospital ID',
+    translationPath: 'plannedAssessments.patientMedicalRecordNo',
   },
   {
     name: 'formattedPatient',
     altName: 'patient',
     title: 'Patient',
+    translationPath: 'plannedAssessments.formattedPatient',
     filterField: {
       type: 'text',
       value: undefined,
@@ -43,13 +51,10 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
         : {},
   },
   {
-    name: 'clinicianWorkId',
-    title: 'Clinician Work ID',
-  },
-  {
     name: 'formattedClinician',
     altName: 'clinician',
     title: 'Clinician',
+    translationPath: 'plannedAssessments.formattedClinician',
     filterField: {
       type: 'text',
       value: undefined,
@@ -67,8 +72,9 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
         : {},
   },
   {
-    name: 'informant',
+    name: 'informantType',
     title: 'Informant',
+    translationPath: 'plannedAssessments.informant',
     sort: true,
     filterField: {
       type: 'text',
@@ -76,14 +82,62 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     },
   },
   {
-    name: 'createdAt',
-    title: 'Created at',
+    name: 'formatedQuestionnaires',
+    title: 'Questionnaires',
+    render: 'avatar',
+    // filterField: {
+    //   type: 'text',
+    //   value: undefined,
+    // },
+  },
+  {
+    name: 'deliveryDate',
+    title: 'Delivery Date',
+    translationPath: 'plannedAssessments.deliveryDate',
     render: 'date',
-    sort: true,
+    sort: false,
     filterField: {
       type: 'dateRange',
       value: undefined,
-      title: 'Created at',
+      title: 'deliveryDate',
     },
   },
+  {
+    name: 'expirationDate',
+    title: 'Expiration Date',
+    translationPath: 'plannedAssessments.expirationDate',
+    render: 'date',
+    sort: false,
+    filterField: {
+      type: 'dateRange',
+      value: undefined,
+      title: 'expirationDate',
+    },
+  },
+  {
+    name: 'submissionDate',
+    title: 'Submission Date',
+    translationPath: 'plannedAssessments.submissionDate',
+    render: 'date'
+  },
+  {
+    name: 'formattedStatus',
+    altName: 'status',
+    title: 'Status',
+    sort: true,
+    translationPath: 'plannedAssessments.formattedStatus',
+    render: 'tag',
+  },
+  {
+    name: 'emailFormatedStatus',
+    altName: 'emailStatus',
+    title: 'Email Status',
+    translationPath: 'plannedAssessments.emailStatus',
+    render: 'tag',
+    sort: true
+  }
 ];
+
+if(!environment.email){
+  AssessmentTable.pop();
+}

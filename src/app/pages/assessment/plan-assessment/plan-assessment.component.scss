@@ -12,32 +12,68 @@ form {
     margin-top: 1em;
   }
 
+  nz-select{
+    width: 100%;
+  }
+
   input[readonly] {
     border: 0;
     padding: 0;
   }
 }
 
-// .added-questionnaire-card {
-//   margin-bottom: 15px;
-//   button {
-//     cursor: pointer;
-//     border: none;
-//     background-color: transparent;
-//     i {
-//       font-size: 23px;
-//     }
-//   }
-//   button:first-child {
-//     color: #89d080;
-//   }
-//   button:last-child {
-//     color: #f1b0b0;
-//   }
-// }
+.input-class {
+  width: 100%;
+  margin-bottom: 15px;
+}
 
-// ::ng-deep {
-//   .full-width {
-//     width: 100%;
-//   }
-// }
+h5 {
+  font-weight: bold;
+}
+
+.date-picker {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.date-picker1 {
+  // width: 233px;
+  width: 100%;
+  margin-right: 15px;
+}
+
+textarea {
+  border-radius: 5px !important;
+}
+
+p {
+  text-align: end;
+}
+
+.link-container {
+  display: flex;
+  align-items: center;
+  margin-top: -40px;
+}
+
+.link-container a {
+  text-align: start;
+  margin: 0;
+  text-decoration: underline;
+}
+
+.email-label-wrapper{
+  display: flex;
+  align-items: center; 
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.email-label{
+  color: rgb(78, 78, 78);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}

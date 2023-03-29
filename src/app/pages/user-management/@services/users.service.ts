@@ -16,10 +16,14 @@ import { Sorting } from '../../../@shared/@types/sorting';
 export class UsersService {
   constructor(private apollo: Apollo) {}
 
-  getUsers(options: { filter?: any; paging?: Paging; sorting?: Sorting[] }): Observable<FetchResult<any>> {
+  getUsers(options?: { filter?: any; paging?: Paging; sorting?: Sorting[] }): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: UsersQueries.getUsers,
-      variables: options,
+      variables: {
+        paging: options && options.paging ? options.paging : undefined,
+        filter: options && options.filter ? options.filter : undefined,
+        sorting: options && options.sorting ? options.sorting : undefined,
+      },
       fetchPolicy: 'no-cache',
     });
   }
@@ -35,6 +39,14 @@ export class UsersService {
   updateUser(updateOneUserInput: UpdateOneUserInput): Observable<FetchResult<any>> {
     return this.apollo.mutate({
       mutation: UsersMutations.updateOneUser,
+      variables: { updateOneUserInput },
+      fetchPolicy: 'no-cache',
+    });
+  }
+
+  updateUserAcceptedTerm(updateOneUserInput: UpdateOneUserInput): Observable<FetchResult<any>> {
+    return this.apollo.mutate({
+      mutation: UsersMutations.userAcceptedTerm,
       variables: { updateOneUserInput },
       fetchPolicy: 'no-cache',
     });

@@ -136,7 +136,7 @@ export class RolesComponent implements OnInit {
   disableEnableFields() {
     this.roleForms.groups.forEach((group) =>
       group.fields.forEach((field) => {
-        field.name === 'hierarchy' && this.perms.isSuperAdmin ? (field.disabled = false) : (field.disabled = true);
+        field.name === 'hierarchy' && this.perms.isSuperAdmin ? (field.disabled = true) : (field.disabled = false);
       })
     );
   }
@@ -173,11 +173,12 @@ export class RolesComponent implements OnInit {
       )
       .subscribe(
         ({ data }) => {
-          this.roles.unshift(Convert.toRole(data.createOneRole));
+          this.roles.push(Convert.toRole(data.createOneRole));
           this.rolesTable.rows = this.roles;
           this.resetForm = true;
           this.populateForm = false;
           this.toggleCreatePanel();
+          this.getRoles();
           this.message.success('Role has successfully been created');
         },
         (error) => this.errorService.handleError(error, { prefix: 'Unable to create role' })
