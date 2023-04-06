@@ -80,6 +80,7 @@ export class CreateEmailTemplateComponent implements OnInit {
           this.emailForm.controls['module'].setValue(this.emailTemplate?.module);
           this.emailForm.controls['isPublic'].setValue(this.emailTemplate?.isPublic);
           this.emailForm.controls['departmentIds'].setValue(this.emailTemplate?.departments.map((dep: any) => dep.id));
+          this.selectedDepartments = this.emailTemplate?.departments.map((dep: any) => dep.id);
         });
       }
     });
