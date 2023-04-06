@@ -18,8 +18,8 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { QuestionnaireVersionListComponent } from './questionnaire-version-list/questionnaire-version-list.component';
 import { TranslateModule } from '@ngx-translate/core';
-// import { CreateQuestionnaireBundleComponent } from './create-questionnaire-bundle/create-questionnaire-bundle.component';
-// import { QuestionnaireBundlesListComponent } from './questionnaire-bundles-list/questionnaire-bundles-list.component';
+import { CreateQuestionnaireBundleComponent } from './create-questionnaire-bundle/create-questionnaire-bundle.component';
+import { QuestionnaireBundlesListComponent } from './questionnaire-bundles-list/questionnaire-bundles-list.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -32,8 +32,8 @@ import { AssessmentModule } from '../assessment/assessment.module';
         QuestionnaireProfileComponent,
         QuestionnaireScriptComponent,
         QuestionnaireVersionListComponent,
-        // CreateQuestionnaireBundleComponent,
-        // QuestionnaireBundlesListComponent,
+        CreateQuestionnaireBundleComponent,
+        QuestionnaireBundlesListComponent,
     ],
     imports: [
         CommonModule,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
 import { QuestionnaireMutations } from '../../../@graphql/mutations/questionnaire';
 import { QuestionnaireQueries } from '../../../@graphql/queries/questionnaire';
@@ -49,6 +49,22 @@ export class QuestionnaireManagementService {
         fetchPolicy: 'no-cache',
       })
       .pipe(map(({ data }) => data.questionnaires));
+  }
+
+  public getQuestionnairesBundles() {
+    return EMPTY;
+  }
+
+  public getOneQuestionnaireBundle(id: number){
+    return EMPTY;
+  }
+
+  public updateQuestionnaireBundle(){
+    return EMPTY;
+  }
+
+  public deleteQuestionnaireBundle(){
+    return EMPTY;
   }
 
   public getQuestionnairesVersion(

@@ -70,6 +70,14 @@ export const MENU: SideNavInterface[] | any = [
         submenu: [],
       },
       {
+        path: 'questionnaire-management/questionnaire-bundles-list',
+        title: 'menu.questionnaireBundles',
+        permissions: [PK.MANAGE_QUESTIONNAIRES],
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+      {
         path: 'questionnaire-management/questionnaire-version-list',
         title: 'menu.questionnairesVersionList',
         permissions: [PK.VIEW_QUESTIONNAIRES],

@@ -1,0 +1,25 @@
+<button nz-button routerLink="/mhira/questionnaire-management/questionnaire-bundles-list" nzType="secondary">Go back</button>
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <form nz-form [formGroup]="bundleForm">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="6">{{'emailTemplates.name' | translate}}</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input placeholder="Select bundle name..." formControlName="name" nz-input name="name" type="text" id="name">
+              </nz-form-control>
+            </nz-form-item >
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6">Questionnaires</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                    <app-questionnaire-selection 
+                        [selectedQuestionnaires]="selectedQuestionnaires"
+                        (selectionChange)="onQuestionnaireSelected($event)">
+                    </app-questionnaire-selection>
+                </nz-form-control>
+              </nz-form-item >
+            <button *ngIf="!isUpdateMode" (click)="onFormSubmit()" nz-button type="submit" nzType="primary">Submit</button>
+            <button *ngIf="isUpdateMode" (click)="onFormUpdateSubmit()" nz-button nzType="primary">Update</button>
+        </form>
+    </div>
+</div>
+
