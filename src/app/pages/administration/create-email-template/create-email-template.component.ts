@@ -133,7 +133,7 @@ export class CreateEmailTemplateComponent implements OnInit {
         this.nzMessage.success(message, { nzDuration: 3000 });
       });
       message$.unsubscribe();
-      this.router.navigate(['/mhira/administration/email-templates'])
+      this.router.navigate(['/mhira/administration/email-templates']);
     },
     (err) => {
       this.nzMessage.error(`${err}`, { nzDuration: 3000 });
