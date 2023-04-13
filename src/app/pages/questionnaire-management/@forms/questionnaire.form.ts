@@ -79,6 +79,15 @@ export const QuestionnaireForm: Form & { groups: { fields: { name: keyof CreateQ
         },
         {
           value: '',
+          name: 'description',
+          title: 'Description',
+          translationPath: 'tables.departments.description',
+          description: 'Description',
+          type: 'text',
+          span: 24,
+        },
+        {
+          value: '',
           name: 'website',
           title: 'Website',
           translationPath: 'questionnairesForm.website',
@@ -174,6 +183,15 @@ export const QuestionnaireUpdateForm: Form & { groups: { fields: { name: keyof U
           description: 'Time to complete (minutes)',
           type: 'number',
           span: 12,
+        },
+        {
+          value: '',
+          name: 'description',
+          title: 'Description',
+          translationPath: 'tables.departments.description',
+          description: 'Description',
+          type: 'text',
+          span: 24,
         },
         {
           value: '',

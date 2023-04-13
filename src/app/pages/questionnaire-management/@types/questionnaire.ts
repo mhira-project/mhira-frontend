@@ -15,6 +15,7 @@ export interface UpdateQuestionnaireInput {
   license?: string;
   copyright: string;
   website?: string;
+  description?: string;
   status?: QuestionnaireStatus;
   keywords?: string[];
 }
@@ -29,6 +30,7 @@ export interface QuestionnaireVersion {
   status: QuestionnaireStatus;
   createdAt: Date;
   keywords: string[];
+  description: string;
   copyright: string;
   website: string;
   license: string;

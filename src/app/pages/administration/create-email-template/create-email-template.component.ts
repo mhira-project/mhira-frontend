@@ -42,7 +42,15 @@ export class CreateEmailTemplateComponent implements OnInit {
   emailForm = this.fb.group({
     name: '',
     subject: '',
-    body: '',
+    body: `<div><span style="background-color: transparent; font-size: 1rem;">Greetings!</span><br></div>
+    <div>MHIRA is sending you an assessment.&nbsp;<br></div>
+    <div><span style="background-color: transparent; font-size: 1rem;">Please click the link below to start the assessment!&nbsp;</span><br></div>
+    <div><br></div>
+    <a href="{{link}}" style="background-color:#007BFF; color: #fff; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Go to assessment</a>
+    <div><br></div>
+    <div><span style="background-color: transparent; font-size: 1rem;">If the button does not work, you can also copy this url to your browser to start the assessment.&nbsp;</span><br></div>
+    <div><br></div>
+    <div>{{link}}<br></div>`,
     status: '',
     module: 'ASSESSMENT',
     isPublic: false,
