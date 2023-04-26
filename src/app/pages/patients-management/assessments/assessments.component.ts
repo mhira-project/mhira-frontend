@@ -109,7 +109,6 @@ export class AssessmentsComponent implements OnInit {
 
   public onSort(sorting: SortField<FormattedAssessment>[]): void {
     this.assessmentRequestOptions.sorting = sorting;
-    localStorage.setItem('sorting-patient-assessment', JSON.stringify(this.assessmentRequestOptions.sorting));
     this.getAssessments();
   }
 
@@ -267,11 +266,7 @@ export class AssessmentsComponent implements OnInit {
     if(localStorage.getItem('filter-patient-assessment')){
       options.filter = {...options.filter, ...JSON.parse(localStorage.getItem('filter-patient-assessment'))}
     }
-
-    if(localStorage.getItem('sorting-patient-assessment')){
-      options.sorting = {...options.sorting, ...JSON.parse(localStorage.getItem('sorting-patient-assessment'))}
-    }
-
+    
     if(localStorage.getItem('paging-patient-assessment')){
       options.paging = {...options.paging, ...JSON.parse(localStorage.getItem('paging-patient-assessment'))};
     }
