@@ -1,6 +1,6 @@
 <ng-template #questionnaireItem let-questionnaire>
   <div>
-    <nz-tag nzColor="blue">{{ questionnaire.questionnaire.language }}</nz-tag>
+    <nz-tag nzColor="blue">{{ questionnaire.questionnaire?.language }}</nz-tag>
     <nz-tag [nzColor]="tagColor(questionnaire.status)">{{ questionnaire.status }}</nz-tag>
   </div>
 </ng-template>
@@ -63,8 +63,8 @@
             <p>{{ questionnaire.name }}</p>
             <span
               nz-popover
-              [nzPopoverTitle]="questionnaire.name"
-              [nzPopoverContent]="questionnaire.questionnaire.abbreviation"
+              [nzPopoverTitle]="questionnaire?.name"
+              [nzPopoverContent]="questionnaire.questionnaire?.abbreviation"
               (click)="showModal(questionnaire)"
               style="font-size: 18px"
               nz-icon
