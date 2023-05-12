@@ -1,3 +1,4 @@
+<p class="info-tip"><span nz-icon nzType="info-circle" nzTheme="outline"></span> Please use <a target="_blank" href="https://getodk.org/xlsform/">this</a> website to check the validity of your XSL form before uploading.</p>
 <div class="parent-div">
   <div class="form-div">
     <app-form
@@ -19,7 +20,6 @@
     <nz-select nz-tooltip [nzTooltipTitle]="titleTemplate" nzTooltipPlacement="bottomLeft" [disabled]="!inputMode" nzMode="tags" nzPlaceHolder="Keywords" [(ngModel)]="listOfTagOptions">
       <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
     </nz-select>
-    <p class="info-tip"><span nz-icon nzType="info-circle" nzTheme="outline"></span> Please use <a target="_blank" href="https://getodk.org/xlsform/">this</a> website to check the validity of your XSL form before uploading.</p>
   </div>
   <ng-template #titleTemplate>
     <span>Type and press "Enter" to add the keyword!</span>

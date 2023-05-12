@@ -16,6 +16,7 @@ const getQuestionnaires = gql`
           status
           createdAt
           keywords
+          description
           copyright
           website
           license
@@ -46,6 +47,7 @@ const getQuestionnairesVersion = gql`
           status
           createdAt
           keywords
+          description
           copyright
           website
           license

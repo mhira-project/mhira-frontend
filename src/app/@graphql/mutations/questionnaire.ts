@@ -9,6 +9,7 @@ const createQuestionnaire = gql`
       createdAt
       keywords
       copyright
+      description
       website
       license
       timeToComplete
@@ -29,6 +30,7 @@ const updateQuestionnaire = gql`
       createdAt
       keywords
       copyright
+      description
       website
       license
       timeToComplete

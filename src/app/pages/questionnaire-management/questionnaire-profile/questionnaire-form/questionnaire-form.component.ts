@@ -28,7 +28,7 @@ export class QuestionnaireFormComponent {
   public inputMode = true;
   public existingId: string;
   listOfOption: any = [];
-  listOfTagOptions: any;
+  listOfTagOptions: any = [];
 
   public get isExisting(): boolean {
     return !!this.existingId;

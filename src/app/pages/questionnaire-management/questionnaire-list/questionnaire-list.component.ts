@@ -170,5 +170,6 @@ export class QuestionnaireListComponent {
         (error) =>
           this.errorService.handleError(error, { prefix: `Unable to delete assessment "${questionnaire.name}"` })
       );
+      this.getQuestionnaires();
   }
 }

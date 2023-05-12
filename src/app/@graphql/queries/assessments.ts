@@ -17,6 +17,7 @@ const assessments = gql`
           emailStatus
           receiverEmail
           patientId
+          mailTemplateId
           clinicianId
           submissionDate
           status

@@ -67,8 +67,9 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
   {
     title: 'Delivery Date',
     name: 'formatedDeliveryDate',
+    altName: 'deliveryDate',
     translationPath: 'tables.assessmentsPatients.deliveryDate',
-    sort: false,
+    sort: true,
     filterField: {
       type: 'dateRange',
       value: undefined,
@@ -77,9 +78,10 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
   },
   {
     title: 'Expiration Date',
+    altName: 'expirationDate',
     name: 'formatedExpirationDate',
     translationPath: 'tables.assessmentsPatients.expirationDate',
-    sort: false,
+    sort: true,
     filterField: {
       type: 'dateRange',
       value: undefined,

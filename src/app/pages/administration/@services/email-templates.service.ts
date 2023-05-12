@@ -48,6 +48,7 @@ export class EmailTemplatesService {
           variables: {
             id,
           },
+          fetchPolicy: 'no-cache'
         });
     }
 

@@ -54,7 +54,7 @@ export class PlanAssessmentComponent implements OnInit {
   public editMode = true;
   public isLoading = false;
   public departments: Department[] = [];
-  public emailTemplates:[] = [];
+  public emailTemplates: any[] = [];
   public emailTemplatesRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
     filter: {},
@@ -333,7 +333,10 @@ export class PlanAssessmentComponent implements OnInit {
 
   getPatientEmailTemplates(id: number){
     this.emailTemplatesService.getPatientEmailTemplates(id).subscribe((data: any) => {
-      this.emailTemplates = data?.data?.getPatientEmailTemplates
+      this.emailTemplates = data?.data?.getPatientEmailTemplates;
+      if(this.editMode === true){
+        this.assessmentForm.patchValue({mailTemplateId: this.emailTemplates[0]?.id})
+      }
     });
   }
 

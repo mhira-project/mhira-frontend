@@ -120,7 +120,7 @@ export class CreateAssessmentComponent implements OnInit {
       deliveryDate: [null],
       expirationDate: [null],
       emailReminder: [null],
-      receiverEmail: [{value: this.patient?.email}],
+      receiverEmail: [this.patient?.email],
       mailTemplateId: [null],
       note: [null],
       dates: this.formBuilder.array([
@@ -213,7 +213,10 @@ export class CreateAssessmentComponent implements OnInit {
 
   getPatientEmailTemplates(id: number){
     this.emailTemplatesService.getPatientEmailTemplates(id).subscribe((data: any) => {
-      this.emailTemplates = data?.data?.getPatientEmailTemplates
+      this.emailTemplates = data?.data?.getPatientEmailTemplates;
+      if(this.editMode === true){
+        this.formGroup.patchValue({mailTemplateId: this.emailTemplates[0]?.id})
+      }
     });
   }
 

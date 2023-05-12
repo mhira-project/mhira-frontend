@@ -130,7 +130,6 @@ export class AssessmentsListComponent {
 
     public onSort(sorting : SortField < FormattedAssessment > []): void {
         this.assessmentRequestOptions.sorting = sorting;
-        localStorage.setItem('sorting', JSON.stringify(this.assessmentRequestOptions.sorting));
         this.getAssessments();
     }
 
@@ -218,10 +217,6 @@ export class AssessmentsListComponent {
 
         if(localStorage.getItem('filter')){
             options.filter = {...options.filter, ...JSON.parse(localStorage.getItem('filter'))}
-        }
-
-        if(localStorage.getItem('sorting')){
-            options.sorting = {...options.sorting, ...JSON.parse(localStorage.getItem('sorting'))}
         }
 
         if(localStorage.getItem('paging')){
