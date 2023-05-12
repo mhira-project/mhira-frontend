@@ -1,5 +1,6 @@
 .parent-div {
     display: flex;
+    justify-content: center;
 }
 
 .keyword-container {
@@ -29,4 +30,8 @@ nz-select {
     height: auto;
     min-height: 150px;
     align-items: flex-start !important;
+}
+
+.margin-top{
+    margin-top: 10px;
 }

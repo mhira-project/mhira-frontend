@@ -25,6 +25,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { AssessmentModule } from '../assessment/assessment.module';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
     declarations: [
@@ -55,7 +56,8 @@ import { AssessmentModule } from '../assessment/assessment.module';
         NzFormModule,
         NzInputModule,
         TranslateModule,
-        AssessmentModule
+        AssessmentModule,
+        AngularEditorModule
     ]
 })
 export class QuestionnaireManagementModule {}
