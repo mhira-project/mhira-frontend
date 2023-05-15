@@ -120,7 +120,7 @@ export class CreateAssessmentComponent implements OnInit {
       deliveryDate: [null],
       expirationDate: [null],
       emailReminder: [null],
-      receiverEmail: [{value: this.patient?.email}],
+      receiverEmail: [this.patient?.email],
       mailTemplateId: [null],
       note: [null],
       dates: this.formBuilder.array([

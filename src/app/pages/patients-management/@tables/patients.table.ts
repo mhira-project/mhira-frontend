@@ -54,6 +54,7 @@ export const PatientColumns: TableColumn<FormattedPatient>[] = [
       options: [
         { label: 'Female', value: 'female' },
         { label: 'Male', value: 'male' },
+        { label: 'Other', value: 'other' }
       ],
     },
   },
