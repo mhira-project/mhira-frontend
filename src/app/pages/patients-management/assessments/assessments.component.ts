@@ -62,6 +62,7 @@ export class AssessmentsComponent implements OnInit {
   isVisible = false;
   newUrl : URL;
   modalData : any = '';
+  statusFilter: string = '';
   public pageInfo: PageInfo;
   public onlyMyAssessments = (localStorage.getItem('onlyMyAssessmentsPatients') === 'true');
 
@@ -120,6 +121,12 @@ export class AssessmentsComponent implements OnInit {
 
   public onSearch(searchString: string): void {
     this.assessmentRequestOptions.filter = { or: this.createSearchFilter(searchString) };
+    this.getAssessments();
+  }
+
+  public onStatusSelect(): any{
+    this.assessmentRequestOptions.filter = {and: [{status: {eq: this.statusFilter}}]},
+    console.log('Check filter: ', this.assessmentRequestOptions.filter);
     this.getAssessments();
   }
 

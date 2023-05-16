@@ -146,7 +146,7 @@ export class UsersListComponent {
     this.loading = true;
     this.usersService
       .deleteOneUser({ id: user.id })
-      .pipe(finalize(() => (this.loading = false)))
+      .pipe(finalize(() => {this.loading = false; this.getUsers()}))
       .subscribe(
         () => this.data.splice(this.data.indexOf(user), 1),
         (error) => this.errorService.handleError(error, { prefix: 'Unable to delete user' })

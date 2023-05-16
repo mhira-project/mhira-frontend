@@ -10,6 +10,7 @@ import { environment } from '@env/environment';
 import { PermissionKey } from '@shared/@types/permission';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
 import { ErrorHandlerService } from '@shared/services/error-handler.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 const CryptoJS = require('crypto-js');
 
@@ -29,6 +30,12 @@ export class QuestionnaireFormComponent {
   public existingId: string;
   listOfOption: any = [];
   listOfTagOptions: any = [];
+  customDescription: string = '';
+  editorConfig: AngularEditorConfig = {
+    minHeight: '100px',
+    editable: true,
+    sanitize: false
+  }
 
   public get isExisting(): boolean {
     return !!this.existingId;
@@ -56,6 +63,7 @@ export class QuestionnaireFormComponent {
     // input.keywords = this.prepareKeywords(form.keywords);
 
     input.keywords = this.listOfTagOptions;
+    input.description = this.customDescription;
 
     const action = this.isExisting
       ? this.qmService.updateQuestionnaire(this.existingId, input)
@@ -96,6 +104,7 @@ export class QuestionnaireFormComponent {
       language: questionnaire.questionnaire?.language,
     };
     this.listOfTagOptions = questionnaire.keywords;
+    this.customDescription = questionnaire.description;
     this.populateForm = true;
     this.inputMode = false;
   }

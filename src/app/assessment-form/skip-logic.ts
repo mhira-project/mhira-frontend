@@ -1,7 +1,7 @@
 import { Answer } from './@types/answer';
 import { Question, QuestionType } from './@types/question';
 
-const CONDITIONALS = ['=', 'selected'] as const;
+const CONDITIONALS = ['=', 'selected', '<', '>'] as const;
 
 // tslint:disable-next-line:no-shadowed-variable
 type ElementType<T extends ReadonlyArray<unknown>> = T extends ReadonlyArray<infer ElementType> ? ElementType : never;

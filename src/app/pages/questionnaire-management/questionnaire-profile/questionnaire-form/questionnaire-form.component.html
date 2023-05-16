@@ -20,6 +20,10 @@
     <nz-select nz-tooltip [nzTooltipTitle]="titleTemplate" nzTooltipPlacement="bottomLeft" [disabled]="!inputMode" nzMode="tags" nzPlaceHolder="Keywords" [(ngModel)]="listOfTagOptions">
       <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
     </nz-select>
+    <div class="margin-top">
+      <p class="keyword-title"><b>Description</b></p>
+      <angular-editor [config]="editorConfig" [placeholder]="'Enter description here...'" [(ngModel)]="customDescription"></angular-editor>
+    </div>
   </div>
   <ng-template #titleTemplate>
     <span>Type and press "Enter" to add the keyword!</span>

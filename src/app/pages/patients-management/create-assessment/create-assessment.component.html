@@ -136,7 +136,8 @@
                 <h5 style="margin-top: 20px">Send Email</h5>
                 <div class="email-label-wrapper">
                     <label [disableControl]="!editMode" formControlName="emailReminder" [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>Sent assessment via email</label>
-                    <input [disableControl]="!editMode" formControlName="receiverEmail" style="width: 240px;" nz-input placeholder="patientemail@domain.com" [(ngModel)]="patientEmail" />
+                    <input *ngIf="isUpdate" [disableControl]="!editMode" formControlName="receiverEmail" style="width: 240px;" nz-input placeholder="patientemail@domain.com" [(ngModel)]="fullAssessment.receiverEmail" />
+                    <input *ngIf="!isUpdate" [disableControl]="!editMode" formControlName="receiverEmail" style="width: 240px;" nz-input placeholder="patientemail@domain.com" [(ngModel)]="patientEmail" />
                 </div>
                 <nz-form-item style="margin-bottom: 15px; min-width: 250px;">
                     <nz-input-group *ngIf="formGroup.controls.emailReminder.value === true">
