@@ -63,6 +63,7 @@ export class AssessmentsListComponent {
     public onlyArchivedAssessments = (localStorage.getItem('onlyArchivedAssessments') === 'true');
     isVisible = false;
     modalData : any = '';
+    statusFilter: string = '';
 
     public assessmentRequestOptions : {
         paging: Paging;
@@ -99,9 +100,9 @@ export class AssessmentsListComponent {
         if(!localStorage.getItem('onlyArchivedAssessments')){
             localStorage.setItem('onlyArchivedAssessments', this.onlyArchivedAssessments.toString());
         }
-        if(!localStorage.getItem('paging')){
-            localStorage.setItem('paging', JSON.stringify(this.assessmentRequestOptions.paging));
-        }
+        // if(!localStorage.getItem('paging')){
+        //     localStorage.setItem('paging', JSON.stringify(this.assessmentRequestOptions.paging));
+        // }
         if(!localStorage.getItem('filter')){
             localStorage.setItem('filter', JSON.stringify(this.assessmentRequestOptions.filter));
         }
@@ -124,7 +125,7 @@ export class AssessmentsListComponent {
 
     public onPageChange(paging : Paging): void {
         this.assessmentRequestOptions.paging = paging;
-        localStorage.setItem('paging', JSON.stringify(this.assessmentRequestOptions.paging));
+        // localStorage.setItem('paging', JSON.stringify(this.assessmentRequestOptions.paging));
         this.getAssessments();
     }
 
@@ -143,6 +144,12 @@ export class AssessmentsListComponent {
         this.assessmentRequestOptions.filter = {
             or: this.createSearchFilter(searchString)
         };
+        this.getAssessments();
+    }
+
+    public onStatusSelect(): any{
+        this.assessmentRequestOptions.filter = {and: [{status: {eq: this.statusFilter}}]},
+        console.log('Check filter: ', this.assessmentRequestOptions.filter);
         this.getAssessments();
     }
 
