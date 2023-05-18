@@ -84,7 +84,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
     name: 'formatedQuestionnaires',
     title: 'Questionnaires',
-    render: 'avatar',
+    render: 'questAvatar',
     // filterField: {
     //   type: 'text',
     //   value: undefined,

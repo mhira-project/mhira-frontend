@@ -58,7 +58,7 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
   {
     name: 'formatedQuestionnaires',
     title: 'Questionnaires',
-    render: 'avatar',
+    render: 'questAvatar',
     filterField: {
       type: 'text',
       value: undefined,
@@ -87,6 +87,12 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
       value: undefined,
       title: 'Expiration Date',
     },
+  },
+  {
+    name: 'submissionDate',
+    title: 'Submission Date',
+    translationPath: 'plannedAssessments.submissionDate',
+    render: 'date'
   },
   {
     title: 'Status',
