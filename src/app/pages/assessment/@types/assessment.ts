@@ -75,6 +75,7 @@ export interface FormattedAssessment extends Assessment {
   submissionDate: Date;
   questionnaireAssessment: {};
   emailFormatedStatus: {};
+  formatedQuestionnaireNames: []
   formatedQuestionnaires: []
   questionnaires: []
 }

@@ -31,8 +31,11 @@
             <nz-avatar *ngFor="let avatar of [d[column.name]].flat()" [nzText]="avatar"></nz-avatar>
           </span>
           <span *ngSwitchCase="'questAvatar'">
-            <nz-avatar *ngFor="let avatar of [d[column.name]].flat()" nz-tooltip [nzTooltipTitle]="avatar" [nzText]="avatar"></nz-avatar>
+            <nz-avatar style="background-color:#b5e8ff; color: #333;" [nzText]="[d[column.name].length]" nz-tooltip [nzTooltipTitle]="quest"></nz-avatar>
           </span>
+          <ng-template #quest>
+            <p class="quest-avatar" *ngFor="let data of d.formatedQuestionnaireNames; let i = index">{{i+1 + '. '}}{{data}}</p>
+          </ng-template>
           <span *ngSwitchCase="'array'">{{ d[column.name]?.join(', ') }}</span>
           <span *ngSwitchCase="'country'">{{ d[column.name] | country }}</span>
           <span *ngSwitchDefault>{{ d[column.name] }}</span>

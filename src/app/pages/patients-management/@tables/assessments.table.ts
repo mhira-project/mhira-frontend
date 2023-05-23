@@ -45,16 +45,16 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
         }
       : {},
   },
-  {
-    title: 'Informants',
-    name: 'informantType',
-    translationPath: 'tables.assessmentsPatients.informant',
-    sort: true,
-    filterField: {
-      type: 'text',
-      value: undefined,
-    },
-  },
+  // {
+  //   title: 'Informants',
+  //   name: 'informantType',
+  //   translationPath: 'tables.assessmentsPatients.informant',
+  //   sort: true,
+  //   filterField: {
+  //     type: 'text',
+  //     value: undefined,
+  //   },
+  // },
   {
     name: 'formatedQuestionnaires',
     title: 'Questionnaires',
@@ -62,6 +62,19 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
     filterField: {
       type: 'text',
       value: undefined,
+    },
+  },
+  {
+    title: 'Status',
+    name: 'formattedStatus',
+    altName: 'status',
+    translationPath: 'tables.assessmentsPatients.status',
+    render: 'tag',
+    sort: true,
+    filterField: {
+      type: 'select',
+      value: undefined,
+      // options added dynamically
     },
   },
   {
@@ -76,36 +89,23 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
       title: 'Delivery Date',
     },
   },
-  {
-    title: 'Expiration Date',
-    altName: 'expirationDate',
-    name: 'formatedExpirationDate',
-    translationPath: 'tables.assessmentsPatients.expirationDate',
-    sort: true,
-    filterField: {
-      type: 'dateRange',
-      value: undefined,
-      title: 'Expiration Date',
-    },
-  },
+  // {
+  //   title: 'Expiration Date',
+  //   altName: 'expirationDate',
+  //   name: 'formatedExpirationDate',
+  //   translationPath: 'tables.assessmentsPatients.expirationDate',
+  //   sort: true,
+  //   filterField: {
+  //     type: 'dateRange',
+  //     value: undefined,
+  //     title: 'Expiration Date',
+  //   },
+  // },
   {
     name: 'submissionDate',
     title: 'Submission Date',
     translationPath: 'plannedAssessments.submissionDate',
     render: 'date'
-  },
-  {
-    title: 'Status',
-    name: 'formattedStatus',
-    altName: 'status',
-    translationPath: 'tables.assessmentsPatients.status',
-    render: 'tag',
-    sort: true,
-    filterField: {
-      type: 'select',
-      value: undefined,
-      // options added dynamically
-    },
   },
   {
     title: 'Email Status',

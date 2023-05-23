@@ -71,16 +71,16 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
           }
         : {},
   },
-  {
-    name: 'informantType',
-    title: 'Informant',
-    translationPath: 'plannedAssessments.informant',
-    sort: true,
-    filterField: {
-      type: 'text',
-      value: undefined,
-    },
-  },
+  // {
+  //   name: 'informantType',
+  //   title: 'Informant',
+  //   translationPath: 'plannedAssessments.informant',
+  //   sort: true,
+  //   filterField: {
+  //     type: 'text',
+  //     value: undefined,
+  //   },
+  // },
   {
     name: 'formatedQuestionnaires',
     title: 'Questionnaires',
@@ -89,6 +89,14 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     //   type: 'text',
     //   value: undefined,
     // },
+  },
+  {
+    name: 'formattedStatus',
+    altName: 'status',
+    title: 'Status',
+    sort: true,
+    translationPath: 'plannedAssessments.formattedStatus',
+    render: 'tag',
   },
   {
     name: 'deliveryDate',
@@ -102,31 +110,23 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
       title: 'deliveryDate',
     },
   },
-  {
-    name: 'expirationDate',
-    title: 'Expiration Date',
-    translationPath: 'plannedAssessments.expirationDate',
-    render: 'date',
-    sort: true,
-    filterField: {
-      type: 'dateRange',
-      value: undefined,
-      title: 'expirationDate',
-    },
-  },
+  // {
+  //   name: 'expirationDate',
+  //   title: 'Expiration Date',
+  //   translationPath: 'plannedAssessments.expirationDate',
+  //   render: 'date',
+  //   sort: true,
+  //   filterField: {
+  //     type: 'dateRange',
+  //     value: undefined,
+  //     title: 'expirationDate',
+  //   },
+  // },
   {
     name: 'submissionDate',
     title: 'Submission Date',
     translationPath: 'plannedAssessments.submissionDate',
     render: 'date'
-  },
-  {
-    name: 'formattedStatus',
-    altName: 'status',
-    title: 'Status',
-    sort: true,
-    translationPath: 'plannedAssessments.formattedStatus',
-    render: 'tag',
   },
   {
     name: 'emailFormatedStatus',
