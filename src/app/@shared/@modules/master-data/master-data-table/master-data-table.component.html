@@ -31,7 +31,7 @@
             <nz-avatar *ngFor="let avatar of [d[column.name]].flat()" [nzText]="avatar"></nz-avatar>
           </span>
           <span *ngSwitchCase="'questAvatar'">
-            <nz-avatar style="background-color:#b5e8ff; color: #333;" [nzText]="[d[column.name].length]" nz-tooltip [nzTooltipTitle]="quest"></nz-avatar>
+            <nz-avatar style="background-color:#b5e8ff; color: #333; margin-left: 28px;" [nzText]="[d[column.name].length]" nz-tooltip [nzTooltipTitle]="quest"></nz-avatar>
           </span>
           <ng-template #quest>
             <p class="quest-avatar" *ngFor="let data of d.formatedQuestionnaireNames; let i = index">{{i+1 + '. '}}{{data}}</p>

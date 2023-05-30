@@ -77,18 +77,6 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
       // options added dynamically
     },
   },
-  {
-    title: 'Delivery Date',
-    name: 'formatedDeliveryDate',
-    altName: 'deliveryDate',
-    translationPath: 'tables.assessmentsPatients.deliveryDate',
-    sort: true,
-    filterField: {
-      type: 'dateRange',
-      value: undefined,
-      title: 'Delivery Date',
-    },
-  },
   // {
   //   title: 'Expiration Date',
   //   altName: 'expirationDate',
@@ -118,7 +106,19 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
       type: 'text',
       value: undefined,
     },
-  }
+  },
+  {
+    title: 'Delivery Date',
+    name: 'formatedDeliveryDate',
+    altName: 'deliveryDate',
+    translationPath: 'tables.assessmentsPatients.deliveryDate',
+    sort: true,
+    filterField: {
+      type: 'dateRange',
+      value: undefined,
+      title: 'Delivery Date',
+    },
+  },
 ];
 
 if(!environment.email){

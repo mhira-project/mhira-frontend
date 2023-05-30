@@ -98,18 +98,6 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     translationPath: 'plannedAssessments.formattedStatus',
     render: 'tag',
   },
-  {
-    name: 'deliveryDate',
-    title: 'Delivery Date',
-    translationPath: 'plannedAssessments.deliveryDate',
-    render: 'date',
-    sort: true,
-    filterField: {
-      type: 'dateRange',
-      value: undefined,
-      title: 'deliveryDate',
-    },
-  },
   // {
   //   name: 'expirationDate',
   //   title: 'Expiration Date',
@@ -135,7 +123,19 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     translationPath: 'plannedAssessments.emailStatus',
     render: 'tag',
     sort: true
-  }
+  },
+  {
+    name: 'deliveryDate',
+    title: 'Delivery Date',
+    translationPath: 'plannedAssessments.deliveryDate',
+    render: 'date',
+    sort: true,
+    filterField: {
+      type: 'dateRange',
+      value: undefined,
+      title: 'deliveryDate',
+    },
+  },
 ];
 
 if(!environment.email){
