@@ -26,7 +26,7 @@ export class CreateEmailTemplateComponent implements OnInit {
   checked: false;
   listOfDepartments: [] = [];
   public departmentsRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
-    paging: { first: DEFAULT_PAGE_SIZE },
+    paging: { first: 50 },
     filter: {},
     sorting: [],
   };
