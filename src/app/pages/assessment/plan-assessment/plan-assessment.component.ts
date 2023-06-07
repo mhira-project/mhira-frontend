@@ -175,7 +175,7 @@ export class PlanAssessmentComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getAssessmentTypes();
-    this.getUserDepartments();
+    this.getUserDepartments({paging: {first: 50}});
     this.initAssessment();
     this.userAutoSelect();
     this.hasEmail = environment.email;
