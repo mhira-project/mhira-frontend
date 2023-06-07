@@ -170,7 +170,7 @@ export class CreatePatientComponent implements OnInit {
         },
       },
     };
-    this.departmentsService.departments({ filter }).subscribe((response) => {
+    this.departmentsService.departments({ paging:{first: 50}, filter }).subscribe((response) => {
       this.patientForm.groups[0].fields[6].options = response.data.departments.edges.map((e: any) => ({
         label: e.node.name,
         value: e.node.id,
