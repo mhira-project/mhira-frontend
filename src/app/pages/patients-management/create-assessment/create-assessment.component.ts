@@ -135,7 +135,7 @@ export class CreateAssessmentComponent implements OnInit {
     this.initAssessment();
     this.getPatient();
     this.getCaregivers();
-    this.getUserDepartments();
+    this.getUserDepartments({paging: {first: 50}});
     this.getPatientEmailTemplates(this.patient.id);
     this.hasEmail = environment.email
   }

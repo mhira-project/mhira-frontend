@@ -20,8 +20,7 @@ export class DepartmentsService {
     return this.apollo.query({
       query: DepartmentsQueries.departments,
       variables: {
-        // paging: params && params.paging ? params.paging : undefined,
-        paging: {first: 50},
+        paging: params && params.paging ? params.paging : undefined,
         filter: params && params.filter ? params.filter : undefined,
         sorting: params && params.sorting ? params.sorting : undefined,
       },

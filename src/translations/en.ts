@@ -370,5 +370,13 @@ export default {
     subject: 'Subject',
     status: 'Status',
     module: 'Module'
+  },
+  emailStatusFilter:{
+    expired: 'Expired',
+    planned: 'Planned',
+    pending: 'Pending',
+    openForCompletion: 'Open For Completion',
+    partiallyCompleted: 'Partially Completed',
+    completed: 'Completed'
   }
 };
