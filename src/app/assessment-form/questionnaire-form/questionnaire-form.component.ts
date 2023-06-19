@@ -18,9 +18,10 @@ import { MhiraTranslations } from '../../@core/mhira-translations';
   styleUrls: ['./questionnaire-form.component.scss'],
 })
 export class QuestionnaireFormComponent {
-  public questionnaire: QuestionnaireVersion;
+  public questionnaire: any;
   public answers: Answer[];
   public skipLogic: Array<{ questionId: string; visible: boolean }> = [];
+  selectedValues: any[] = [];
 
   public set currentGroupIdx(idx: number) {
     this._currentGroupIdx = idx;
@@ -46,9 +47,42 @@ export class QuestionnaireFormComponent {
       this.assessmentFormService.assessment$.pipe(filter((assessment) => !!assessment)),
     ])
       .pipe(untilDestroyed(this))
-      .subscribe(([idx, assessment]) => {
+      .subscribe(([idx, newAssessment]) => {
+        const assessment = structuredClone(newAssessment);
+        assessment.questionnaireAssessment.questionnaires[idx].questionGroups.map((group: any) => {
+          const questions: any[] = []
+          const uniqueQuestions = {};
+          group.questions.map((question: { appearance: string; choices: any[]; }) => {
+              if (question.appearance?.toLowerCase() == 'table-list') {
+                  const choices = question.choices.map((choice: { label: any; }) => choice.label)
+                  if (!uniqueQuestions[JSON.stringify(choices)]) {
+                      uniqueQuestions[JSON.stringify(choices)] = {
+                          questions: [],
+                          choices: question.choices
+                      };
+                  }
+                  delete question.choices;
+                  delete question.appearance;
+                  uniqueQuestions[JSON.stringify(choices)].questions.push(
+                      question,
+                  );
+                  return;
+              }
+              questions.push(question)
+          })
+          group.questions = questions
+          group.uniqueQuestions = Object.values(uniqueQuestions).map(
+              (value: any) => ({
+                  label: group.label,
+                  appearance: 'table-list',
+                  subQuestions: value.questions,
+                  choices: value.choices,
+              }),
+          );
+      })
         this.questionnaire = assessment?.questionnaireAssessment?.questionnaires?.[idx];
         this.answers = assessment?.questionnaireAssessment?.answers;
+        this.selectedValues = assessment?.questionnaireAssessment?.answers.map((el: any) => el.textValue);
         this.assessmentFormService.setQuestionnaire(this.questionnaire);
         this.readSkipLogic();
       });
@@ -59,6 +93,12 @@ export class QuestionnaireFormComponent {
     return this.skipLogic.find((logic) => logic.questionId === question._id)?.visible ?? true;
   }
 
+  addAnswer(questionId: string, value: string){
+    console.log(questionId, value);
+    value = value.toString();
+    this.assessmentFormService.addAnswer({question: questionId, textValue: value}).subscribe()
+  }
+
   private readSkipLogic() {
     const assessment = this.assessmentFormService.assessmentSnapshot;
     const currentQuestions = this.questionnaire.questionGroups[this.currentGroupIdx].questions;
@@ -67,8 +107,8 @@ export class QuestionnaireFormComponent {
       .flat();
 
     this.skipLogic = currentQuestions
-      .filter((q) => q.relevant)
-      .map((q) => {
+      .filter((q: { relevant: any; }) => q.relevant)
+      .map((q: Question) => {
         let visible = true;
         try {
           visible = SkipLogic.create(q, questions, this.answers);
