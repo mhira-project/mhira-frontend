@@ -367,5 +367,13 @@ export default {
     subject: 'Subjekti',
     status: 'Statusi',
     module: 'Moduli'
+  },
+  emailStatusFilter:{
+    expired: 'Skaduar',
+    planned: 'Planifikuar',
+    pending: 'Pezull',
+    openForCompletion: 'Hapur për plotësim',
+    partiallyCompleted: 'Pjesërisht plotësuar',
+    completed: 'Plotësuar'
   }
 };

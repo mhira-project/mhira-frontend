@@ -44,6 +44,7 @@ export class AssessmentsListComponent {
     PK = PermissionKey;
     public columns : TableColumn < FormattedAssessment > [] = AssessmentTable;
     public data : FormattedAssessment[];
+    public currentFilters = false;
     public cacheFilters = JSON.parse(localStorage.getItem('filter'));
     public pageInfo : PageInfo;
     public loading = false;
@@ -138,6 +139,7 @@ export class AssessmentsListComponent {
         this.assessmentRequestOptions.filter = filter;
         localStorage.setItem('filter', JSON.stringify(this.assessmentRequestOptions.filter));
         this.getAssessments();
+        this.currentFilters = true;
     }
 
     public onSearch(searchString : string): void {
@@ -148,9 +150,13 @@ export class AssessmentsListComponent {
     }
 
     public onStatusSelect(): any{
-        this.assessmentRequestOptions.filter = {and: [{status: {eq: this.statusFilter}}]},
-        console.log('Check filter: ', this.assessmentRequestOptions.filter);
+        if(this.assessmentRequestOptions.filter.and) {
+            const filters = {...this.assessmentRequestOptions.filter, and: [...this.assessmentRequestOptions.filter.and, {status: {eq: this.statusFilter}}]};
+        } else {
+            const filters = {...this.assessmentRequestOptions.filter, and: [{status: {eq: this.statusFilter}}]};
+        }
         this.getAssessments();
+        this.currentFilters = true;
     }
 
     public onAction({action, context: assessment} : ActionArgs < FormattedAssessment, ActionKey >): void {
@@ -226,10 +232,6 @@ export class AssessmentsListComponent {
             options.filter = {...options.filter, ...JSON.parse(localStorage.getItem('filter'))}
         }
 
-        if(localStorage.getItem('paging')){
-            options.paging = {...options.paging, ...JSON.parse(localStorage.getItem('paging'))};
-        }
-
         if(options.sorting.length === 0){
             options.sorting.push({field: 'createdAt', direction: 'DESC'})
         }
@@ -258,12 +260,17 @@ export class AssessmentsListComponent {
             };
 
         // apply for archived assessments
-        if (this.onlyArchivedAssessments)
+        if (this.onlyArchivedAssessments){
             options.filter = {
                 ...options.filter,
                 and: [{ deleted: {is: true} }, ...(options.filter.and ?? [])],
             };
+        }
         
+        // apply for assessment status
+        if(this.statusFilter) {
+            options.filter = {...options.filter, and: [...options.filter.and, {status: {eq: this.statusFilter}}]}
+        }
         this.loading = true;
         this.assessmentService.getAssessments(options).pipe(finalize(() => (this.loading = false))).subscribe(({edges, pageInfo}) => {
             this.data = edges.map((e : any) => Convert.toFormattedAssessment(e.node));

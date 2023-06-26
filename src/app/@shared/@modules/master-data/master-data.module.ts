@@ -18,6 +18,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
     NzDropDownModule,
     NzButtonModule,
     NzDrawerModule,
+    NzToolTipModule,
     NzFormModule,
     NzSelectModule,
     FormsModule,

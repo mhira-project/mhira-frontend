@@ -54,6 +54,7 @@ export class AssessmentsComponent implements OnInit {
   ];
   public filter: CaseManagerFilter;
   public data: FormattedAssessment[];
+  public currentFilters = false;
   public cacheFilters = JSON.parse(localStorage.getItem('filter-patient-assessment'));
   public columns: TableColumn<FormattedAssessment>[] = AssessmentsPatientsTable;
   public user: User;
@@ -91,9 +92,6 @@ export class AssessmentsComponent implements OnInit {
     if(!localStorage.getItem('onlyArchivedAssessmentsPatients')){
       localStorage.setItem('onlyArchivedAssessmentsPatients', this.onlyArchivedAssessments.toString());
     }
-    if(!localStorage.getItem('paging-patient-assessment')){
-      localStorage.setItem('paging-patient-assessment', JSON.stringify(this.assessmentRequestOptions.paging));
-    }
     if(!localStorage.getItem('filter-patient-assessment')){
         localStorage.setItem('filter-patient-assessment', JSON.stringify(this.assessmentRequestOptions.filter));
     }
@@ -104,7 +102,6 @@ export class AssessmentsComponent implements OnInit {
 
   public onPageChange(paging: Paging): void {
     this.assessmentRequestOptions.paging = paging;
-    localStorage.setItem('paging-patient-assessment', JSON.stringify(this.assessmentRequestOptions.paging));
     this.getAssessments();
   }
 
@@ -117,6 +114,7 @@ export class AssessmentsComponent implements OnInit {
     this.assessmentRequestOptions.filter = filter;
     localStorage.setItem('filter-patient-assessment', JSON.stringify(this.assessmentRequestOptions.filter));
     this.getAssessments();
+    this.currentFilters = true;
   }
 
   public onSearch(searchString: string): void {
@@ -125,9 +123,13 @@ export class AssessmentsComponent implements OnInit {
   }
 
   public onStatusSelect(): any{
-    this.assessmentRequestOptions.filter = {and: [{status: {eq: this.statusFilter}}]},
-    console.log('Check filter: ', this.assessmentRequestOptions.filter);
+    if(this.assessmentRequestOptions.filter.and) {
+      const filters = {...this.assessmentRequestOptions.filter, and: [...this.assessmentRequestOptions.filter.and, {status: {eq: this.statusFilter}}]};
+    } else {
+        const filters = {...this.assessmentRequestOptions.filter, and: [{status: {eq: this.statusFilter}}]};
+    }
     this.getAssessments();
+    this.currentFilters = true;
   }
 
   public onAction({ action, context: assessment }: ActionArgs<FormattedAssessment, ActionKey>): void {
@@ -273,10 +275,6 @@ export class AssessmentsComponent implements OnInit {
     if(localStorage.getItem('filter-patient-assessment')){
       options.filter = {...options.filter, ...JSON.parse(localStorage.getItem('filter-patient-assessment'))}
     }
-    
-    if(localStorage.getItem('paging-patient-assessment')){
-      options.paging = {...options.paging, ...JSON.parse(localStorage.getItem('paging-patient-assessment'))};
-    }
 
     if(options.sorting.length === 0){
       options.sorting.push({field: 'createdAt', direction: 'DESC'})
@@ -302,12 +300,17 @@ export class AssessmentsComponent implements OnInit {
       };
 
     // apply for archived assessments
-    if (this.onlyArchivedAssessments)
-    options.filter = {
+    if (this.onlyArchivedAssessments){
+      options.filter = {
         ...options.filter,
         and: [{ deleted: {is: true} }, ...(options.filter.and ?? [])],
-    };
-  
+      };
+    }
+
+    // apply for assessment status
+    if(this.statusFilter) {
+      options.filter = {...options.filter, and: [...options.filter.and, {status: {eq: this.statusFilter}}]}
+    }
 
     this.isLoading = true;
     this.assessmentService
