@@ -18,7 +18,7 @@ import { ErrorHandlerService } from '@shared/services/error-handler.service';
   styleUrls: ['./assessment-form.component.scss'],
 })
 export class AssessmentFormComponent implements OnInit {
-  public assessment: FullAssessment;
+  public assessment: any;
   public AssessmentStatus = AssessmentStatus;
   public disclaimer: Disclaimers;
   public data: Partial<Disclaimers>[];
