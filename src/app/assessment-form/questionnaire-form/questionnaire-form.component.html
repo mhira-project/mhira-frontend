@@ -11,7 +11,7 @@
     </ng-container>
   </section>
 
-    <!-- <section *ngIf="questionnaire.questionGroups[currentGroupIdx] as test">
+  <!-- <section *ngIf="questionnaire.questionGroups[currentGroupIdx] as test">
     <div *ngFor="let unique of test.uniqueQuestions">
       <div style="display: flex; justify-content: flex-end;">
         <p style="margin-right: 10px; text-align: end;" *ngFor="let choice of unique.choices">{{choice.label}}</p>
@@ -46,14 +46,14 @@
           <h5 style="max-width: 400px; margin-right: 85px;">{{subQuestion.label}}</h5>
         </td>
         <td colspan="100%">
-          <nz-radio-group [(ngModel)]="selectedValues[i]" (ngModelChange)="addAnswer(subQuestion._id, selectedValues[i])" style="display: flex; width: 100%; justify-content: space-around;">
+          <nz-radio-group [(ngModel)]="mapped[subQuestion._id]" (ngModelChange)="addAnswer(subQuestion._id, mapped[subQuestion._id])" style="display: flex; width: 100%; justify-content: space-around;">
             <label *ngFor="let choice of unique.choices" nz-radio [nzValue]="choice.name"></label>
           </nz-radio-group>
         </td>
       </tr>
     </table>
   </section>
-
+  
   <section class="controls">
     <button
       nz-button
@@ -84,7 +84,7 @@
       *ngIf="currentGroupIdx < questionnaire.questionGroups.length - 1; else overviewBtn"
       nz-button
       nzType="primary"
-      (click)="currentGroupIdx = currentGroupIdx + 1"
+      (click)="currentGroupIdx = currentGroupIdx + 1; scrollToTop()"
     >
       {{ translations.assessmentForm.next | translate }}
     </button>

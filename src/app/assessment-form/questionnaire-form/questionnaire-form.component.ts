@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { QuestionnaireVersion } from '../../pages/questionnaire-management/@types/questionnaire';
 import { AssessmentFormService } from '../assessment-form.service';
 import { ActivatedRoute } from '@angular/router';
@@ -21,7 +21,7 @@ export class QuestionnaireFormComponent {
   public questionnaire: any;
   public answers: Answer[];
   public skipLogic: Array<{ questionId: string; visible: boolean }> = [];
-  selectedValues: any[] = [];
+  public mapped: any = {};
 
   public set currentGroupIdx(idx: number) {
     this._currentGroupIdx = idx;
@@ -48,44 +48,20 @@ export class QuestionnaireFormComponent {
     ])
       .pipe(untilDestroyed(this))
       .subscribe(([idx, newAssessment]) => {
-        const assessment = structuredClone(newAssessment);
-        assessment.questionnaireAssessment.questionnaires[idx].questionGroups.map((group: any) => {
-          const questions: any[] = []
-          const uniqueQuestions = {};
-          group.questions.map((question: { appearance: string; choices: any[]; }) => {
-              if (question.appearance?.toLowerCase() == 'table-list') {
-                  const choices = question.choices.map((choice: { label: any; }) => choice.label)
-                  if (!uniqueQuestions[JSON.stringify(choices)]) {
-                      uniqueQuestions[JSON.stringify(choices)] = {
-                          questions: [],
-                          choices: question.choices
-                      };
-                  }
-                  delete question.choices;
-                  delete question.appearance;
-                  uniqueQuestions[JSON.stringify(choices)].questions.push(
-                      question,
-                  );
-                  return;
-              }
-              questions.push(question)
-          })
-          group.questions = questions
-          group.uniqueQuestions = Object.values(uniqueQuestions).map(
-              (value: any) => ({
-                  label: group.label,
-                  appearance: 'table-list',
-                  subQuestions: value.questions,
-                  choices: value.choices,
-              }),
-          );
-      })
-        this.questionnaire = assessment?.questionnaireAssessment?.questionnaires?.[idx];
-        this.answers = assessment?.questionnaireAssessment?.answers;
-        this.selectedValues = assessment?.questionnaireAssessment?.answers.map((el: any) => el.textValue);
+        this.questionnaire = newAssessment?.questionnaireAssessment?.questionnaires?.[idx];
+        this.answers = newAssessment?.questionnaireAssessment?.answers;
+        this.answers.forEach(item => {
+          const questionKey = item.question;
+          this.mapped[questionKey] = item.textValue;
+        });
         this.assessmentFormService.setQuestionnaire(this.questionnaire);
         this.readSkipLogic();
       });
+  }
+
+  @HostListener('click')
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   public isVisible(question: Question) {
@@ -94,7 +70,6 @@ export class QuestionnaireFormComponent {
   }
 
   addAnswer(questionId: string, value: string){
-    console.log(questionId, value);
     value = value.toString();
     this.assessmentFormService.addAnswer({question: questionId, textValue: value}).subscribe()
   }
