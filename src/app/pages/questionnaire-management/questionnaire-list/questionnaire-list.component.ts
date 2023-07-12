@@ -144,9 +144,23 @@ export class QuestionnaireListComponent {
       const modal = this.modalService.confirm({
         nzOnOk: () => true,
         nzTitle: 'Delete Questionnaire',
-        nzContent: `
-        Are you sure you want to delete ${questionnaire.name}? This action is irreversible
-      `,
+        nzContent: `This action will delete the questionnaire and all the associated assessments. Are you sure you want to proceed?`,
+      });
+
+      // wait for modal to successfully complete
+      const confirmation = await modal.afterClose.toPromise();
+      if (!confirmation) return;
+    }
+
+    if (archive) {
+      // create confirmation modal
+      const modal = this.modalService.confirm({
+        nzOnOk: () => true,
+        nzTitle: 'Archive Questionnaire',
+        nzContent: `If you archive the questionnaire, it will be moved to the old versions. 
+        The assessments made with this questionnaire will still be available. However, you
+        cannot bring the questionnaire back from the archive, and you can no longer modify
+        it. Are you sure you want to archive?`,
       });
 
       // wait for modal to successfully complete
