@@ -84,7 +84,8 @@
       *ngIf="currentGroupIdx < questionnaire.questionGroups.length - 1; else overviewBtn"
       nz-button
       nzType="primary"
-      (click)="currentGroupIdx = currentGroupIdx + 1; scrollToTop()"
+      #targetElement
+      (click)="currentGroupIdx = currentGroupIdx + 1;"
     >
       {{ translations.assessmentForm.next | translate }}
     </button>

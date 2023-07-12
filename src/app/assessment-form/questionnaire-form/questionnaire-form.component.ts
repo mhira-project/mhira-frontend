@@ -37,7 +37,7 @@ export class QuestionnaireFormComponent {
     private activtedRoute: ActivatedRoute,
     private assessmentFormService: AssessmentFormService,
     private errorService: ErrorHandlerService,
-    public translations: MhiraTranslations
+    public translations: MhiraTranslations,
   ) {
     combineLatest([
       this.activtedRoute.params.pipe(
@@ -58,12 +58,7 @@ export class QuestionnaireFormComponent {
         this.readSkipLogic();
       });
   }
-
-  @HostListener('click')
-  scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
+  
   public isVisible(question: Question) {
     if (!question.relevant) return true;
     return this.skipLogic.find((logic) => logic.questionId === question._id)?.visible ?? true;
