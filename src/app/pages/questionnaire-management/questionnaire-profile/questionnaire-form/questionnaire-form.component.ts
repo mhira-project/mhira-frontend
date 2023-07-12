@@ -101,7 +101,8 @@ export class QuestionnaireFormComponent {
     this.formData = {
       ...questionnaire,
       keywords: (questionnaire.keywords ?? []).join(' '),
-      language: questionnaire.questionnaire?.language,
+      // Fix for dissapearing language in detailed view: ?
+      // language: questionnaire.questionnaire?.language,
     };
     this.listOfTagOptions = questionnaire.keywords;
     this.customDescription = questionnaire.description;

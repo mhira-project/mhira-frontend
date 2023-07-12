@@ -44,7 +44,7 @@ export default {
   menu: {
     dashboard: 'Dashboard',
     createAssessment: 'Create Assessment',
-    caseManagement: 'Case Managment',
+    caseManagement: 'Case Management',
     patientList: 'Patients List',
     createPatient: 'Create Patient',
     caregiverList: 'Caregiver List',
