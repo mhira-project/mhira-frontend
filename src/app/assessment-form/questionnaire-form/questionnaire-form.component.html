@@ -1,3 +1,4 @@
+
 <article *ngIf="questionnaire">
   <section class="head-row">
     <h2>{{ questionnaire.name }}</h2>
@@ -59,7 +60,7 @@
       nz-button
       nzType="primary"
       [disabled]="currentGroupIdx <= 0"
-      (click)="currentGroupIdx = currentGroupIdx - 1"
+      (click)="currentGroupIdx = currentGroupIdx - 1;"
     >
       {{ translations.assessmentForm.prev | translate }}
     </button>
@@ -71,12 +72,12 @@
           nzType="primary"
           nzShape="circle"
           nzSize="small"
-          (click)="currentGroupIdx = index"
+          (click)="currentGroupIdx = index; scrollToTop();"
         >
           &nbsp;
         </button>
         <ng-template #otherPages>
-          <button nz-button nzShape="circle" nzSize="small" (click)="currentGroupIdx = index">&nbsp;</button>
+          <button nz-button nzShape="circle" nzSize="small" (click)="currentGroupIdx = index; scrollToTop();">&nbsp;</button>
         </ng-template>
       </ng-container>
     </div>
@@ -85,7 +86,7 @@
       nz-button
       nzType="primary"
       #targetElement
-      (click)="currentGroupIdx = currentGroupIdx + 1;"
+      (click)="currentGroupIdx = currentGroupIdx + 1; scrollToTop();"
     >
       {{ translations.assessmentForm.next | translate }}
     </button>

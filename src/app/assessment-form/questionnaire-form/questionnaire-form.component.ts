@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { QuestionnaireVersion } from '../../pages/questionnaire-management/@types/questionnaire';
 import { AssessmentFormService } from '../assessment-form.service';
 import { ActivatedRoute } from '@angular/router';
@@ -37,7 +37,7 @@ export class QuestionnaireFormComponent {
     private activtedRoute: ActivatedRoute,
     private assessmentFormService: AssessmentFormService,
     private errorService: ErrorHandlerService,
-    public translations: MhiraTranslations,
+    public translations: MhiraTranslations
   ) {
     combineLatest([
       this.activtedRoute.params.pipe(
@@ -62,6 +62,10 @@ export class QuestionnaireFormComponent {
   public isVisible(question: Question) {
     if (!question.relevant) return true;
     return this.skipLogic.find((logic) => logic.questionId === question._id)?.visible ?? true;
+  }
+
+  scrollToTop() {
+    window.scrollTo({top: 0, behavior: 'smooth'})
   }
 
   addAnswer(questionId: string, value: string){
