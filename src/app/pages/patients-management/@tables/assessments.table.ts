@@ -45,20 +45,63 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
         }
       : {},
   },
+  // {
+  //   title: 'Informants',
+  //   name: 'informantType',
+  //   translationPath: 'tables.assessmentsPatients.informant',
+  //   sort: true,
+  //   filterField: {
+  //     type: 'text',
+  //     value: undefined,
+  //   },
+  // },
   {
-    title: 'Informants',
-    name: 'informantType',
-    translationPath: 'tables.assessmentsPatients.informant',
-    sort: true,
+    name: 'formatedQuestionnaires',
+    title: 'Questionnaires',
+    render: 'questAvatar',
     filterField: {
       type: 'text',
       value: undefined,
     },
   },
   {
-    name: 'formatedQuestionnaires',
-    title: 'Questionnaires',
-    render: 'avatar',
+    title: 'Status',
+    name: 'formattedStatus',
+    altName: 'status',
+    translationPath: 'tables.assessmentsPatients.status',
+    render: 'tag',
+    sort: true,
+    filterField: {
+      type: 'select',
+      value: undefined,
+      // options added dynamically
+    },
+  },
+  // {
+  //   title: 'Expiration Date',
+  //   altName: 'expirationDate',
+  //   name: 'formatedExpirationDate',
+  //   translationPath: 'tables.assessmentsPatients.expirationDate',
+  //   sort: true,
+  //   filterField: {
+  //     type: 'dateRange',
+  //     value: undefined,
+  //     title: 'Expiration Date',
+  //   },
+  // },
+  {
+    name: 'submissionDate',
+    title: 'Submission Date',
+    translationPath: 'plannedAssessments.submissionDate',
+    render: 'date'
+  },
+  {
+    title: 'Email Status',
+    name: 'emailFormatedStatus',
+    altName: 'emailStatus',
+    render: 'tag',
+    translationPath: 'tables.assessmentsPatients.emailStatus',
+    sort: true,
     filterField: {
       type: 'text',
       value: undefined,
@@ -76,43 +119,6 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
       title: 'Delivery Date',
     },
   },
-  {
-    title: 'Expiration Date',
-    altName: 'expirationDate',
-    name: 'formatedExpirationDate',
-    translationPath: 'tables.assessmentsPatients.expirationDate',
-    sort: true,
-    filterField: {
-      type: 'dateRange',
-      value: undefined,
-      title: 'Expiration Date',
-    },
-  },
-  {
-    title: 'Status',
-    name: 'formattedStatus',
-    altName: 'status',
-    translationPath: 'tables.assessmentsPatients.status',
-    render: 'tag',
-    sort: true,
-    filterField: {
-      type: 'select',
-      value: undefined,
-      // options added dynamically
-    },
-  },
-  {
-    title: 'Email Status',
-    name: 'emailFormatedStatus',
-    altName: 'emailStatus',
-    render: 'tag',
-    translationPath: 'tables.assessmentsPatients.emailStatus',
-    sort: true,
-    filterField: {
-      type: 'text',
-      value: undefined,
-    },
-  }
 ];
 
 if(!environment.email){

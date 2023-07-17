@@ -18,9 +18,10 @@ import { MhiraTranslations } from '../../@core/mhira-translations';
   styleUrls: ['./questionnaire-form.component.scss'],
 })
 export class QuestionnaireFormComponent {
-  public questionnaire: QuestionnaireVersion;
+  public questionnaire: any;
   public answers: Answer[];
   public skipLogic: Array<{ questionId: string; visible: boolean }> = [];
+  public mapped: any = {};
 
   public set currentGroupIdx(idx: number) {
     this._currentGroupIdx = idx;
@@ -46,17 +47,30 @@ export class QuestionnaireFormComponent {
       this.assessmentFormService.assessment$.pipe(filter((assessment) => !!assessment)),
     ])
       .pipe(untilDestroyed(this))
-      .subscribe(([idx, assessment]) => {
-        this.questionnaire = assessment?.questionnaireAssessment?.questionnaires?.[idx];
-        this.answers = assessment?.questionnaireAssessment?.answers;
+      .subscribe(([idx, newAssessment]) => {
+        this.questionnaire = newAssessment?.questionnaireAssessment?.questionnaires?.[idx];
+        this.answers = newAssessment?.questionnaireAssessment?.answers;
+        this.answers.forEach(item => {
+          const questionKey = item.question;
+          this.mapped[questionKey] = item.textValue;
+        });
         this.assessmentFormService.setQuestionnaire(this.questionnaire);
         this.readSkipLogic();
       });
   }
-
+  
   public isVisible(question: Question) {
     if (!question.relevant) return true;
     return this.skipLogic.find((logic) => logic.questionId === question._id)?.visible ?? true;
+  }
+
+  scrollToTop() {
+    window.scrollTo({top: 0, behavior: 'smooth'})
+  }
+
+  addAnswer(questionId: string, value: string){
+    value = value.toString();
+    this.assessmentFormService.addAnswer({question: questionId, textValue: value}).subscribe()
   }
 
   private readSkipLogic() {
@@ -67,8 +81,8 @@ export class QuestionnaireFormComponent {
       .flat();
 
     this.skipLogic = currentQuestions
-      .filter((q) => q.relevant)
-      .map((q) => {
+      .filter((q: { relevant: any; }) => q.relevant)
+      .map((q: Question) => {
         let visible = true;
         try {
           visible = SkipLogic.create(q, questions, this.answers);

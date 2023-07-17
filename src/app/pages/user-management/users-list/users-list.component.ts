@@ -154,7 +154,7 @@ export class UsersListComponent {
   }
 
   private getDepartments(): void {
-    this.departmentsService.departments().subscribe(({ data }) => {
+    this.departmentsService.departments({paging: {first: 50}}).subscribe(({ data }) => {
       const departments: Department[] = data.departments.edges.map((e: any) => e.node);
       const column = this.columns.find((c) => c.name === 'formattedDepartments');
       column.filterField.options = departments.map((d) => ({ label: d.name, value: d.id }));

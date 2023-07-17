@@ -368,5 +368,13 @@ export default {
     subject: 'Email-Vorlage Betreff',
     status: 'Status',
     module: 'Art der Email-Vorlage'
+  },
+  emailStatusFilter:{
+    expired: 'Abgelaufen',
+    planned: 'Geplant',
+    pending: 'Ausstehend',
+    openForCompletion: 'Bereit zum Ausfüllen',
+    partiallyCompleted: 'Teilweise abgeschlossen',
+    completed: 'Abgeschlossen'
   }
 };

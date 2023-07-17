@@ -43,6 +43,7 @@ export interface QuestionnaireVersion {
   questionGroups: Array<{
     label: string;
     questions: Question[];
+    uniqueQuestions: any;
   }>;
 }
 

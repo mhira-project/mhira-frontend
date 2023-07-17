@@ -71,24 +71,58 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
           }
         : {},
   },
-  {
-    name: 'informantType',
-    title: 'Informant',
-    translationPath: 'plannedAssessments.informant',
-    sort: true,
-    filterField: {
-      type: 'text',
-      value: undefined,
-    },
-  },
+  // {
+  //   name: 'informantType',
+  //   title: 'Informant',
+  //   translationPath: 'plannedAssessments.informant',
+  //   sort: true,
+  //   filterField: {
+  //     type: 'text',
+  //     value: undefined,
+  //   },
+  // },
   {
     name: 'formatedQuestionnaires',
     title: 'Questionnaires',
-    render: 'avatar',
+    render: 'questAvatar',
     // filterField: {
     //   type: 'text',
     //   value: undefined,
     // },
+  },
+  {
+    name: 'formattedStatus',
+    altName: 'status',
+    title: 'Status',
+    sort: true,
+    translationPath: 'plannedAssessments.formattedStatus',
+    render: 'tag',
+  },
+  // {
+  //   name: 'expirationDate',
+  //   title: 'Expiration Date',
+  //   translationPath: 'plannedAssessments.expirationDate',
+  //   render: 'date',
+  //   sort: true,
+  //   filterField: {
+  //     type: 'dateRange',
+  //     value: undefined,
+  //     title: 'expirationDate',
+  //   },
+  // },
+  {
+    name: 'submissionDate',
+    title: 'Submission Date',
+    translationPath: 'plannedAssessments.submissionDate',
+    render: 'date'
+  },
+  {
+    name: 'emailFormatedStatus',
+    altName: 'emailStatus',
+    title: 'Email Status',
+    translationPath: 'plannedAssessments.emailStatus',
+    render: 'tag',
+    sort: true
   },
   {
     name: 'deliveryDate',
@@ -102,40 +136,6 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
       title: 'deliveryDate',
     },
   },
-  {
-    name: 'expirationDate',
-    title: 'Expiration Date',
-    translationPath: 'plannedAssessments.expirationDate',
-    render: 'date',
-    sort: true,
-    filterField: {
-      type: 'dateRange',
-      value: undefined,
-      title: 'expirationDate',
-    },
-  },
-  {
-    name: 'submissionDate',
-    title: 'Submission Date',
-    translationPath: 'plannedAssessments.submissionDate',
-    render: 'date'
-  },
-  {
-    name: 'formattedStatus',
-    altName: 'status',
-    title: 'Status',
-    sort: true,
-    translationPath: 'plannedAssessments.formattedStatus',
-    render: 'tag',
-  },
-  {
-    name: 'emailFormatedStatus',
-    altName: 'emailStatus',
-    title: 'Email Status',
-    translationPath: 'plannedAssessments.emailStatus',
-    render: 'tag',
-    sort: true
-  }
 ];
 
 if(!environment.email){
