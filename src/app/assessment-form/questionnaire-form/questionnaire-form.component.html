@@ -1,3 +1,4 @@
+
 <article *ngIf="questionnaire">
   <section class="head-row">
     <h2>{{ questionnaire.name }}</h2>
@@ -11,12 +12,55 @@
     </ng-container>
   </section>
 
+  <!-- <section *ngIf="questionnaire.questionGroups[currentGroupIdx] as test">
+    <div *ngFor="let unique of test.uniqueQuestions">
+      <div style="display: flex; justify-content: flex-end;">
+        <p style="margin-right: 10px; text-align: end;" *ngFor="let choice of unique.choices">{{choice.label}}</p>
+      </div>
+      <div style="display: flex; justify-content: space-between;" *ngFor="let subQuestion of unique.subQuestions; let i = index">
+        <div style="max-width: 450px;">
+          <h5>{{subQuestion.label}}</h5>
+        </div>
+        <div style="list-style: none;">
+          <nz-radio-group [(ngModel)]="selectedValues[i]" (ngModelChange)="addAnswer(subQuestion._id, selectedValues[i])">
+            <label *ngFor="let choice of unique.choices" nz-radio [nzValue]="choice.name"></label>
+          </nz-radio-group>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <style>
+    td{
+      padding: 10px;
+    }
+  </style>
+
+  <section *ngIf="questionnaire.questionGroups[currentGroupIdx] as test">
+    <table *ngFor="let unique of test.uniqueQuestions">
+      <tr>
+        <td></td>
+        <td *ngFor="let choice of unique.choices">{{choice.label}}</td>
+      </tr>
+      <tr *ngFor="let subQuestion of unique.subQuestions; let i = index">
+        <td>
+          <h5 style="max-width: 400px; margin-right: 85px;">{{subQuestion.label}}</h5>
+        </td>
+        <td colspan="100%">
+          <nz-radio-group [(ngModel)]="mapped[subQuestion._id]" (ngModelChange)="addAnswer(subQuestion._id, mapped[subQuestion._id])" style="display: flex; width: 100%; justify-content: space-around;">
+            <label *ngFor="let choice of unique.choices" nz-radio [nzValue]="choice.name"></label>
+          </nz-radio-group>
+        </td>
+      </tr>
+    </table>
+  </section>
+  
   <section class="controls">
     <button
       nz-button
       nzType="primary"
       [disabled]="currentGroupIdx <= 0"
-      (click)="currentGroupIdx = currentGroupIdx - 1"
+      (click)="currentGroupIdx = currentGroupIdx - 1;"
     >
       {{ translations.assessmentForm.prev | translate }}
     </button>
@@ -28,12 +72,12 @@
           nzType="primary"
           nzShape="circle"
           nzSize="small"
-          (click)="currentGroupIdx = index"
+          (click)="currentGroupIdx = index;"
         >
           &nbsp;
         </button>
         <ng-template #otherPages>
-          <button nz-button nzShape="circle" nzSize="small" (click)="currentGroupIdx = index">&nbsp;</button>
+          <button nz-button nzShape="circle" nzSize="small" (click)="currentGroupIdx = index; scrollToTop();">&nbsp;</button>
         </ng-template>
       </ng-container>
     </div>
@@ -41,7 +85,8 @@
       *ngIf="currentGroupIdx < questionnaire.questionGroups.length - 1; else overviewBtn"
       nz-button
       nzType="primary"
-      (click)="currentGroupIdx = currentGroupIdx + 1"
+      #targetElement
+      (click)="onNext(currentGroupIdx)"
     >
       {{ translations.assessmentForm.next | translate }}
     </button>

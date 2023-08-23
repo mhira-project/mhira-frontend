@@ -371,6 +371,7 @@ const getFullPublicAssessment = gql`
           }
           questionGroups {
             label
+            appearance
             questions {
               _id
               name
@@ -386,7 +387,6 @@ const getFullPublicAssessment = gql`
               required
               requiredMessage
               image
-              appearance
               default
               choices {
                 name

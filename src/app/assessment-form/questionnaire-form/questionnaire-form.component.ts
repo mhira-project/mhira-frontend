@@ -10,6 +10,8 @@ import { Question } from '../@types/question';
 import { SkipLogic } from '../skip-logic';
 import { ErrorHandlerService } from '../../@shared/services/error-handler.service';
 import { MhiraTranslations } from '../../@core/mhira-translations';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { TranslateService } from '@ngx-translate/core';
 
 @UntilDestroy()
 @Component({
@@ -18,9 +20,10 @@ import { MhiraTranslations } from '../../@core/mhira-translations';
   styleUrls: ['./questionnaire-form.component.scss'],
 })
 export class QuestionnaireFormComponent {
-  public questionnaire: QuestionnaireVersion;
+  public questionnaire: any;
   public answers: Answer[];
   public skipLogic: Array<{ questionId: string; visible: boolean }> = [];
+  public mapped: any = {};
 
   public set currentGroupIdx(idx: number) {
     this._currentGroupIdx = idx;
@@ -36,7 +39,9 @@ export class QuestionnaireFormComponent {
     private activtedRoute: ActivatedRoute,
     private assessmentFormService: AssessmentFormService,
     private errorService: ErrorHandlerService,
-    public translations: MhiraTranslations
+    public translations: MhiraTranslations,
+    private modalService: NzModalService,
+    private translate: TranslateService
   ) {
     combineLatest([
       this.activtedRoute.params.pipe(
@@ -46,29 +51,85 @@ export class QuestionnaireFormComponent {
       this.assessmentFormService.assessment$.pipe(filter((assessment) => !!assessment)),
     ])
       .pipe(untilDestroyed(this))
-      .subscribe(([idx, assessment]) => {
-        this.questionnaire = assessment?.questionnaireAssessment?.questionnaires?.[idx];
-        this.answers = assessment?.questionnaireAssessment?.answers;
+      .subscribe(([idx, newAssessment]) => {
+        this.questionnaire = newAssessment?.questionnaireAssessment?.questionnaires?.[idx];
+        this.answers = newAssessment?.questionnaireAssessment?.answers;
+        this.answers.forEach(item => {
+          const questionKey = item.question;
+          this.mapped[questionKey] = item.textValue;
+        });
         this.assessmentFormService.setQuestionnaire(this.questionnaire);
         this.readSkipLogic();
       });
   }
-
+  
   public isVisible(question: Question) {
     if (!question.relevant) return true;
     return this.skipLogic.find((logic) => logic.questionId === question._id)?.visible ?? true;
   }
 
+  async onNext(index: any){
+    const currentRequiredQuestions = this.questionnaire.questionGroups[index]?.uniqueQuestions
+    .map((el: { subQuestions: any; }) => el.subQuestions)
+    .flat()
+    .filter((el: any) => el.required === true);
+
+    const currentNonTableListRequiredQuestions = this.questionnaire.questionGroups[index]?.questions
+    // .map((el: { subQuestions: any; }) => el.subQuestions)
+    .flat()
+    .filter((el: any) => el.required === true);
+
+    const allRequiredQuestions = currentRequiredQuestions.concat(currentNonTableListRequiredQuestions);
+
+    const answersIds = this.answers.map((el: any) => el.question);
+
+    const unAnsweredRequiredQuestions = allRequiredQuestions.filter((el: any) => !answersIds.includes(el._id));
+
+    if (unAnsweredRequiredQuestions.length !== 0) {
+      const modal = this.modalService.confirm({
+        nzOnOk: () => {
+          this.currentGroupIdx++;
+          setTimeout(() => {
+            this.scrollToTop();
+          }, 400);
+        },
+        nzOnCancel: () => true,
+        nzTitle: this.translate.instant('modal.continue'),
+        nzContent: this.translate.instant('modal.unansweredQuestions', { count: unAnsweredRequiredQuestions.length }),
+      });
+
+      // wait for modal to successfully complete
+      const confirmation = await modal.afterClose.toPromise();
+      if (!confirmation) return;
+
+      return;
+    }
+
+    this.currentGroupIdx++;
+    setTimeout(() => {
+      this.scrollToTop();
+    }, 400);
+  }
+
+  scrollToTop() {
+    window.scrollTo({top: 0, behavior: 'smooth'})
+  }
+
+  addAnswer(questionId: string, value: string){
+    value = value.toString();
+    this.assessmentFormService.addAnswer({question: questionId, textValue: value}).subscribe()
+  }
+
   private readSkipLogic() {
     const assessment = this.assessmentFormService.assessmentSnapshot;
-    const currentQuestions = this.questionnaire.questionGroups[this.currentGroupIdx].questions;
+    const currentQuestions = this.questionnaire.questionGroups[this.currentGroupIdx]?.questions;
     const questions = assessment.questionnaireAssessment.questionnaires
       .map((q) => q.questionGroups.map((g) => g.questions).flat())
       .flat();
 
     this.skipLogic = currentQuestions
-      .filter((q) => q.relevant)
-      .map((q) => {
+      .filter((q: { relevant: any; }) => q.relevant)
+      .map((q: Question) => {
         let visible = true;
         try {
           visible = SkipLogic.create(q, questions, this.answers);

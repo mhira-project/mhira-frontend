@@ -52,6 +52,9 @@ export default {
     questionnairesList: 'Questionnaires',
     questionnairesVersionList: 'Old Versions',
     uploadQuestionnaire: 'Upload Questionnaire',
+    questionnaireBundles: 'Questionnaire Bundles',
+    createQuestionnaireBundle: 'Create Bundle',
+    updateQuestionnaireBundle: 'Update Bundle',
     assessments: 'Assessments',
     planAssessment: 'Plan Assessments',
     plannedAssessments: 'Planned Assessments',
@@ -378,5 +381,9 @@ export default {
     openForCompletion: 'Open For Completion',
     partiallyCompleted: 'Partially Completed',
     completed: 'Completed'
+  },
+  modal: {
+    continue: 'Continue to next section?',
+    unansweredQuestions: "You have {{count}} unanswered required question(s). Are you sure you want to continue to the next section?"
   }
 };
