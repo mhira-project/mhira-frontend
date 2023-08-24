@@ -340,9 +340,6 @@ const getFullPublicAssessment = gql`
       deliveryDate
       expirationDate
       informantType
-      patientId
-      clinicianId
-      questionnaireAssessmentId
       questionnaireAssessment {
         _id
         status
@@ -396,40 +393,6 @@ const getFullPublicAssessment = gql`
             }
           }
         }
-      }
-      clinician {
-        id
-        username
-        active
-        firstName
-        middleName
-        lastName
-        email
-        phone
-        workID
-        address
-        gender
-        birthDate
-        nationality
-        createdAt
-        updatedAt
-      }
-      patient {
-        id
-        active
-        medicalRecordNo
-        firstName
-        middleName
-        lastName
-        phone
-        email
-        address
-        gender
-        birthDate
-        birthCountryCode
-        nationality
-        createdAt
-        updatedAt
       }
     }
   }

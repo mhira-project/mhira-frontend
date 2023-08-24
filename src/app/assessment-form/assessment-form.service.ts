@@ -62,7 +62,7 @@ export class AssessmentFormService {
         // upload answer
         this.assessmentService.addAnswer({
           ...answerInput,
-          assessmentId: this._assessment.value.questionnaireAssessmentId,
+          assessmentId: this._assessment.value.questionnaireAssessment._id,
           questionnaireVersionId: questionnaire._id,
         })
       ),
