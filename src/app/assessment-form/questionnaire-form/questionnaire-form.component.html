@@ -72,7 +72,7 @@
           nzType="primary"
           nzShape="circle"
           nzSize="small"
-          (click)="currentGroupIdx = index; scrollToTop();"
+          (click)="currentGroupIdx = index;"
         >
           &nbsp;
         </button>
@@ -86,7 +86,7 @@
       nz-button
       nzType="primary"
       #targetElement
-      (click)="currentGroupIdx = currentGroupIdx + 1; scrollToTop();"
+      (click)="onNext(currentGroupIdx)"
     >
       {{ translations.assessmentForm.next | translate }}
     </button>

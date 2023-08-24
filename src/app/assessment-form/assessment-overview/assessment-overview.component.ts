@@ -76,6 +76,10 @@ export class AssessmentOverviewComponent implements OnInit {
     return this.questionnaireQuestions[questionnaireId]?.filter((q) => q.required).length;
   }
 
+  public getMaxNotRequiredQuestions(questionnaireId: string): number {
+    return this.questionnaireQuestions[questionnaireId]?.filter((q) => !q.required).length;
+  }
+
   public getAnsweredQuestions(questionnaireId: string): number {
     return this.questionnaireQuestions[questionnaireId]?.reduce(
       (sum, q) => (this.answers.find((a) => a.question === q._id)?.valid ? (sum += 1) : sum),

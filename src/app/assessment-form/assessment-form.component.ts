@@ -43,8 +43,8 @@ export class AssessmentFormComponent implements OnInit {
         questionnaire.questionGroups.map((group: any) => {
           const questions: any[] = []
           const uniqueQuestions = {};
-          group.questions.map((question: { appearance: string; choices: any[]; }) => {
-              if (group.appearance?.toLowerCase() == 'table-list') {
+          group.questions.map((question: { appearance: string; choices: any[]; type: any }) => {
+              if (group.appearance?.toLowerCase() == 'table-list' && question.type === 'select_one') {
                   const choices = question.choices.map((choice: { label: any; }) => choice.label)
                   if (!uniqueQuestions[JSON.stringify(choices)]) {
                       uniqueQuestions[JSON.stringify(choices)] = {
@@ -73,7 +73,7 @@ export class AssessmentFormComponent implements OnInit {
       })
     }
         this.assessmentFormService.setAssessment(assessment);
-        const [lang] = assessment.questionnaireAssessment.questionnaires.map((q) => q.questionnaire.language) ?? [
+        const [lang] = assessment.questionnaireAssessment.questionnaires.map((q) => q.questionnaire?.language) ?? [
           TranslationCode.EN,
         ];
         if (translationList.some((t) => t.code === lang)) this.translateService.use(lang);
