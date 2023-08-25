@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { QuestionnaireVersion } from '../../pages/questionnaire-management/@types/questionnaire';
 import { AssessmentFormService } from '../assessment-form.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -41,7 +41,9 @@ export class QuestionnaireFormComponent {
     private errorService: ErrorHandlerService,
     public translations: MhiraTranslations,
     private modalService: NzModalService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     combineLatest([
       this.activtedRoute.params.pipe(
@@ -109,6 +111,42 @@ export class QuestionnaireFormComponent {
     setTimeout(() => {
       this.scrollToTop();
     }, 400);
+  }
+
+  async onNextOverview(index: any){
+    const currentRequiredQuestions = this.questionnaire.questionGroups[index]?.uniqueQuestions
+    .map((el: { subQuestions: any; }) => el.subQuestions)
+    .flat()
+    .filter((el: any) => el.required === true);
+
+    const currentNonTableListRequiredQuestions = this.questionnaire.questionGroups[index]?.questions
+    // .map((el: { subQuestions: any; }) => el.subQuestions)
+    .flat()
+    .filter((el: any) => el.required === true);
+
+    const allRequiredQuestions = currentRequiredQuestions.concat(currentNonTableListRequiredQuestions);
+
+    const answersIds = this.answers.map((el: any) => el.question);
+
+    const unAnsweredRequiredQuestions = allRequiredQuestions.filter((el: any) => !answersIds.includes(el._id));
+
+    if (unAnsweredRequiredQuestions.length !== 0) {
+      const modal = this.modalService.confirm({
+        nzOnOk: () => {
+          this.router.navigate(['../../overview'], { relativeTo: this.route });
+        },
+        nzOnCancel: () => true,
+        nzTitle: this.translate.instant('modal.continueOverview'),
+        nzContent: this.translate.instant('modal.unansweredQuestionsOverview', { count: unAnsweredRequiredQuestions.length }),
+      });
+
+      // wait for modal to successfully complete
+      const confirmation = await modal.afterClose.toPromise();
+      if (!confirmation) return;
+
+      return;
+    }
+    this.router.navigate(['../../overview'], { relativeTo: this.route });
   }
 
   scrollToTop() {
