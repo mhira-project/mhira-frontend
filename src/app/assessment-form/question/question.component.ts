@@ -78,8 +78,8 @@ export class QuestionComponent {
   }
 
   onKeyPress = (evt: any) => {
-    if (evt.which < 48 || evt.which > 57)
-    {
+    const charCode = evt.which || evt.keyCode;
+    if ((charCode < 48 || charCode > 57) && charCode !== 46) {
       evt.preventDefault();
     }
   }

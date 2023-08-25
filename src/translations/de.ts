@@ -379,6 +379,8 @@ export default {
   },
   modal: {
     continue: 'Zur nächsten Sektion gehen?',
-    unansweredQuestions: 'Sie haben {{count}} unbeantwortete Pflichtfrage(n). Möchten Sie wirklich zur nächsten Sektion fortfahren?'
+    continueOverview: 'Fragebogen beenden?',
+    unansweredQuestions: 'Sie haben {{count}} unbeantwortete Pflichtfrage(n). Möchten Sie wirklich zur nächsten Sektion fortfahren?',
+    unansweredQuestionsOverview: "Sie haben {{count}} unbeantwortete erforderliche Fragen. Sind Sie sicher, dass Sie den Fragebogen ausfüllen möchten?"
   }
 };
