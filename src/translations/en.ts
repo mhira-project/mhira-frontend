@@ -385,7 +385,9 @@ export default {
   modal: {
     continue: 'Continue to next section?',
     continueOverview: 'Finish questionnaire?',
-    unansweredQuestions: "You have {{count}} unanswered required question(s). Are you sure you want to continue to the next section?",
-    unansweredQuestionsOverview: "You have {{count}} unanswered required question(s). Are you sure you want to finish the questionnaire?"
+    unansweredQuestions: "You have {{count}} unanswered required question(s). All questions need to be answered to submit the questionnaire.",
+    unansweredQuestionsOverview: "You have {{count}} unanswered required question(s). Are you sure you want to finish the questionnaire?",
+    cancel: "Proceed Without Completing (Not Recommended)",
+    ok: "Go Back and Complete the Questions"
   }
 };
