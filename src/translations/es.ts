@@ -375,5 +375,13 @@ export default {
     openForCompletion: 'Abierto para completar',
     partiallyCompleted: 'Parcialmente completado',
     completed: 'Completado'
+  },
+  modal: {
+    continue: '¿Vaya a la siguiente sección?',
+    continueOverview: '¿Salir del cuestionario?',
+    unansweredQuestions: 'Usted ha dejado {{count}} preguntas sin responder. Todas las preguntas deben responderse para enviar el cuestionario.',
+    unansweredQuestionsOverview: "Sie haben {{count}} unbeantwortete erforderliche Fragen. Sind Sie sicher, dass Sie den Fragebogen ausfüllen möchten?",
+    cancel: "Continuar sin completar las preguntas que faltan (No recomendado)",
+    ok: "Vuelva a completar las preguntas que faltan"
   }
 };

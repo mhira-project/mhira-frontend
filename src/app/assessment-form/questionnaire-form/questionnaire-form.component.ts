@@ -89,14 +89,18 @@ export class QuestionnaireFormComponent {
 
     if (unAnsweredRequiredQuestions.length !== 0) {
       const modal = this.modalService.confirm({
-        nzOnOk: () => {
+        nzOnCancel: () => {
           this.currentGroupIdx++;
           setTimeout(() => {
             this.scrollToTop();
           }, 400);
         },
-        nzOnCancel: () => true,
+        nzOnOk: () => true,
+        nzCancelText: this.translate.instant('modal.cancel'),
+        nzOkText: this.translate.instant('modal.ok'),
         nzTitle: this.translate.instant('modal.continue'),
+        nzWidth: 800,
+        nzClosable: false,
         nzContent: this.translate.instant('modal.unansweredQuestions', { count: unAnsweredRequiredQuestions.length }),
       });
 
@@ -125,19 +129,23 @@ export class QuestionnaireFormComponent {
     .filter((el: any) => el.required === true);
 
     const allRequiredQuestions = currentRequiredQuestions.concat(currentNonTableListRequiredQuestions);
-
+ 
     const answersIds = this.answers.map((el: any) => el.question);
 
     const unAnsweredRequiredQuestions = allRequiredQuestions.filter((el: any) => !answersIds.includes(el._id));
 
     if (unAnsweredRequiredQuestions.length !== 0) {
       const modal = this.modalService.confirm({
-        nzOnOk: () => {
+        nzOnCancel: () => {
           this.router.navigate(['../../overview'], { relativeTo: this.route });
         },
-        nzOnCancel: () => true,
+        nzOnOk: () => true,
         nzTitle: this.translate.instant('modal.continueOverview'),
         nzContent: this.translate.instant('modal.unansweredQuestionsOverview', { count: unAnsweredRequiredQuestions.length }),
+        nzCancelText: this.translate.instant('modal.cancel'),
+        nzWidth: 800,
+        nzClosable: false,
+        nzOkText: this.translate.instant('modal.ok'),
       });
 
       // wait for modal to successfully complete
