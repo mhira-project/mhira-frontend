@@ -73,7 +73,11 @@ export class AssessmentOverviewComponent implements OnInit {
   }
 
   public getMaxRequiredQuestions(questionnaireId: string): number {
-    return this.questionnaireQuestions[questionnaireId]?.filter((q) => q.required).length;
+    return this.questionnaireQuestions[questionnaireId]?.filter((q) => q.required && q.type !== 'note').length;
+  }
+
+  public getMaxNotRequiredQuestions(questionnaireId: string): number {
+    return this.questionnaireQuestions[questionnaireId]?.filter((q) => !q.required && q.type !== 'note').length;
   }
 
   public getAnsweredQuestions(questionnaireId: string): number {

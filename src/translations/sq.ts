@@ -375,5 +375,13 @@ export default {
     openForCompletion: 'Hapur për plotësim',
     partiallyCompleted: 'Pjesërisht plotësuar',
     completed: 'Plotësuar'
+  },
+  modal: {
+    continue: 'Kalo tek seksioni tjetër?',
+    continueOverview: 'Përfundo vlerësimin?',
+    unansweredQuestions: "Ju keni {{count}} pyetje të detyruara pa përgjigje. Të gjitha pyetjet duhet të marrin përgjigje për të përfunduar vlerësimin.",
+    unansweredQuestionsOverview: "Ju keni {{count}} pyetje të kërkuara pa përgjigje. Jeni i sigurt që dëshironi të përfundoni vlerësimin?",
+    cancel: "Vazhdoni pa përfunduar (Nuk rekomandohet)",
+    ok: "Kthehu prapa dhe plotëso pyetjet"
   }
 };

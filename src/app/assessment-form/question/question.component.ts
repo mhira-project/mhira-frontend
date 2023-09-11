@@ -77,6 +77,13 @@ export class QuestionComponent {
     this.answer = answers.find((a) => a.question === question._id) ?? this.createBlankAnswer(question);
   }
 
+  onKeyPress = (evt: any) => {
+    const charCode = evt.which || evt.keyCode;
+    if ((charCode < 48 || charCode > 57) && charCode !== 46) {
+      evt.preventDefault();
+    }
+  }
+
   private createBlankAnswer(question: Question): Answer {
     const answer: Answer = {
       question: question._id,

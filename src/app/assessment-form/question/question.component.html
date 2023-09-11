@@ -23,6 +23,7 @@
             [required]="question.required"
             [(ngModel)]="answer.numberValue"
             (ngModelChange)="answerGiven.next(answer)"
+            (keypress)="onKeyPress($event)"
           ></nz-input-number>
         </ng-container>
         <ng-container *ngSwitchCase="QuestionType.INTEGER">
@@ -31,6 +32,7 @@
             [required]="question.required"
             [(ngModel)]="answer.numberValue"
             (ngModelChange)="answerGiven.next(answer)"
+            (keypress)="onKeyPress($event)"
           ></nz-input-number>
         </ng-container>
         <ng-container *ngSwitchCase="QuestionType.CHECKBOX">

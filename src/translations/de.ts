@@ -270,7 +270,7 @@ export default {
     fillingTime: 'Dauer: {{time}}min',
     completeAssessment: 'Testung abschliessen und Daten übermitteln',
     alreadyCompleted: 'Testung wurde abgeschlossen',
-    overview: 'Übersicht',
+    overview: 'Fragebogen abschliessen und zurück zur Übersicht',
     next: 'Weiter',
     prev: 'Zurück',
     complete: 'Danke für die Teilnahme an der Untersuchung.',
@@ -376,5 +376,13 @@ export default {
     openForCompletion: 'Bereit zum Ausfüllen',
     partiallyCompleted: 'Teilweise abgeschlossen',
     completed: 'Abgeschlossen'
+  },
+  modal: {
+    continue: 'Zur nächsten Sektion gehen?',
+    continueOverview: 'Fragebogen beenden?',
+    unansweredQuestions: 'Sie haben {{count}} unbeantwortete Pflichtfragen. Alle Pflichtfragen müssen beantwortet werden, um den Fragebogen abschliessen zu können.',
+    unansweredQuestionsOverview: "Sie haben {{count}} unbeantwortete Pflichtfragen. Alle Pflichtfragen müssen beantwortet werden, um den Fragebogen abschliessen zu können.",
+    cancel: "Fortfahren ohne Vervollständigung (Nicht empfohlen)",
+    ok: "Zurück und Pflichtfragen beantworten"
   }
 };

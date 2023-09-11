@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { QuestionnaireVersion } from '../../pages/questionnaire-management/@types/questionnaire';
 import { AssessmentFormService } from '../assessment-form.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -10,6 +10,8 @@ import { Question } from '../@types/question';
 import { SkipLogic } from '../skip-logic';
 import { ErrorHandlerService } from '../../@shared/services/error-handler.service';
 import { MhiraTranslations } from '../../@core/mhira-translations';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { TranslateService } from '@ngx-translate/core';
 
 @UntilDestroy()
 @Component({
@@ -37,7 +39,11 @@ export class QuestionnaireFormComponent {
     private activtedRoute: ActivatedRoute,
     private assessmentFormService: AssessmentFormService,
     private errorService: ErrorHandlerService,
-    public translations: MhiraTranslations
+    public translations: MhiraTranslations,
+    private modalService: NzModalService,
+    private translate: TranslateService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     combineLatest([
       this.activtedRoute.params.pipe(
@@ -64,6 +70,93 @@ export class QuestionnaireFormComponent {
     return this.skipLogic.find((logic) => logic.questionId === question._id)?.visible ?? true;
   }
 
+  async onNext(index: any){
+    const currentRequiredQuestions = this.questionnaire.questionGroups[index]?.uniqueQuestions
+    .map((el: { subQuestions: any; }) => el.subQuestions)
+    .flat()
+    .filter((el: any) => el.required === true);
+
+    const currentNonTableListRequiredQuestions = this.questionnaire.questionGroups[index]?.questions
+    // .map((el: { subQuestions: any; }) => el.subQuestions)
+    .flat()
+    .filter((el: any) => el.required === true);
+
+    const allRequiredQuestions = currentRequiredQuestions.concat(currentNonTableListRequiredQuestions);
+
+    const answersIds = this.answers.map((el: any) => el.question);
+
+    const unAnsweredRequiredQuestions = allRequiredQuestions.filter((el: any) => !answersIds.includes(el._id));
+
+    if (unAnsweredRequiredQuestions.length !== 0) {
+      const modal = this.modalService.confirm({
+        nzOnCancel: () => {
+          this.currentGroupIdx++;
+          setTimeout(() => {
+            this.scrollToTop();
+          }, 400);
+        },
+        nzOnOk: () => true,
+        nzCancelText: this.translate.instant('modal.cancel'),
+        nzOkText: this.translate.instant('modal.ok'),
+        nzTitle: this.translate.instant('modal.continue'),
+        nzWidth: 800,
+        nzClosable: false,
+        nzContent: this.translate.instant('modal.unansweredQuestions', { count: unAnsweredRequiredQuestions.length }),
+      });
+
+      // wait for modal to successfully complete
+      const confirmation = await modal.afterClose.toPromise();
+      if (!confirmation) return;
+
+      return;
+    }
+
+    this.currentGroupIdx++;
+    setTimeout(() => {
+      this.scrollToTop();
+    }, 400);
+  }
+
+  async onNextOverview(index: any){
+    const currentRequiredQuestions = this.questionnaire.questionGroups[index]?.uniqueQuestions
+    .map((el: { subQuestions: any; }) => el.subQuestions)
+    .flat()
+    .filter((el: any) => el.required === true);
+
+    const currentNonTableListRequiredQuestions = this.questionnaire.questionGroups[index]?.questions
+    // .map((el: { subQuestions: any; }) => el.subQuestions)
+    .flat()
+    .filter((el: any) => el.required === true);
+
+    const allRequiredQuestions = currentRequiredQuestions.concat(currentNonTableListRequiredQuestions);
+ 
+    const answersIds = this.answers.map((el: any) => el.question);
+
+    const unAnsweredRequiredQuestions = allRequiredQuestions.filter((el: any) => !answersIds.includes(el._id));
+
+    if (unAnsweredRequiredQuestions.length !== 0) {
+      const modal = this.modalService.confirm({
+        nzOnCancel: () => {
+          this.router.navigate(['../../overview'], { relativeTo: this.route });
+        },
+        nzOnOk: () => true,
+        nzTitle: this.translate.instant('modal.continueOverview'),
+        nzContent: this.translate.instant('modal.unansweredQuestionsOverview', { count: unAnsweredRequiredQuestions.length }),
+        nzCancelText: this.translate.instant('modal.cancel'),
+        nzWidth: 800,
+        nzClosable: false,
+        nzOkText: this.translate.instant('modal.ok'),
+      });
+
+      // wait for modal to successfully complete
+      const confirmation = await modal.afterClose.toPromise();
+      if (!confirmation) return;
+
+      return;
+    }
+    this.router.navigate(['../../overview'], { relativeTo: this.route });
+  }
+
   scrollToTop() {
     window.scrollTo({top: 0, behavior: 'smooth'})
   }
@@ -75,7 +168,7 @@ export class QuestionnaireFormComponent {
 
   private readSkipLogic() {
     const assessment = this.assessmentFormService.assessmentSnapshot;
-    const currentQuestions = this.questionnaire.questionGroups[this.currentGroupIdx].questions;
+    const currentQuestions = this.questionnaire.questionGroups[this.currentGroupIdx]?.questions;
     const questions = assessment.questionnaireAssessment.questionnaires
       .map((q) => q.questionGroups.map((g) => g.questions).flat())
       .flat();

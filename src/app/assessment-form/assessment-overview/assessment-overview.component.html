@@ -56,10 +56,9 @@
               }
       }}
     </span>
-    <span class="progress-optional" *ngIf="getAnsweredOptionalQuestions(questionnaire._id)">
+    <span class="progress-optional">
       {{
-        translations.assessmentForm.optionalAnswered
-          | translate: { actual: getAnsweredOptionalQuestions(questionnaire._id) }
+        getAnsweredOptionalQuestions(questionnaire._id) + '/' + getMaxNotRequiredQuestions(questionnaire._id) + ' optional questions'
       }}
     </span>
     <span *ngIf="questionnaire.timeToComplete">
