@@ -10,6 +10,7 @@ import { AppPermissionsService } from '@shared/services/app-permissions.service'
 import { PermissionKey } from '@app/@shared/@types/permission';
 import { ErrorHandlerService } from '../../../@shared/services/error-handler.service';
 import { finalize } from 'rxjs/operators';
+import { User } from '@app/pages/user-management/@types/user';
 
 @Component({
   selector: 'app-roles-and-permissions',
@@ -87,6 +88,12 @@ export class RolesAndPermissionsComponent implements OnInit {
   permissionInRole(permission: Permission, role: Role): boolean {
     const permIds: number[] = role.permissions.map((perm) => perm.id);
     return permIds.includes(permission.id);
+  }
+
+  getUserPermissions(permission: any){
+    const user = JSON.parse(localStorage.getItem('user')) as User;
+    const userId = user.id;
+    return this.matrix.roles.filter((el) => el.id === userId)[0]?.permissions.map((el) => el.name).includes(permission);
   }
 
   assignPermissionToRole(permission: Permission, role: Role, checked: boolean) {

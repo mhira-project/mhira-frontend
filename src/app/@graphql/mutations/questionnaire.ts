@@ -13,10 +13,8 @@ const createQuestionnaire = gql`
       website
       license
       timeToComplete
-      questionnaire {
-        language
-        abbreviation
-      }
+      language
+      abbreviation
     }
   }
 `;
@@ -34,10 +32,8 @@ const updateQuestionnaire = gql`
       website
       license
       timeToComplete
-      questionnaire {
-        language
-        abbreviation
-      }
+      language
+      abbreviation
     }
   }
 `;

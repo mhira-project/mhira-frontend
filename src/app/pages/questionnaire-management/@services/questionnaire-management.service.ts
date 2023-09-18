@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
 import { QuestionnaireMutations } from '../../../@graphql/mutations/questionnaire';
 import { QuestionnaireQueries } from '../../../@graphql/queries/questionnaire';
@@ -40,7 +40,7 @@ export class QuestionnaireManagementService {
   }
 
   public getQuestionnaires(
-    options: { paging?: Paging; filter?: any; sorting?: Sorting[] } = {}
+    options: { paging?: Paging; filter?: any; sorting?: Sorting[] }
   ): Observable<ConnectionResult<QuestionnaireVersion>> {
     return this.apollo
       .query<{ questionnaires: ConnectionResult<QuestionnaireVersion> }>({
@@ -52,7 +52,7 @@ export class QuestionnaireManagementService {
   }
 
   public getQuestionnairesVersion(
-    options: { paging?: Paging; filter?: any; sorting?: Sorting[] } = {}
+    options: { paging?: Paging; filter?: any; sorting?: Sorting[] }
   ): Observable<ConnectionResult<QuestionnaireVersion>> {
     return this.apollo
       .query<{ getQuestionnaireVersions: ConnectionResult<QuestionnaireVersion> }>({
@@ -69,5 +69,21 @@ export class QuestionnaireManagementService {
       variables: { _id, softDelete },
       fetchPolicy: 'no-cache',
     });
+  }
+
+  public getQuestionnairesBundles() {
+    return EMPTY;
+  }
+
+  public getOneQuestionnaireBundle(id: number){
+    return EMPTY;
+  }
+
+  public updateQuestionnaireBundle(){
+    return EMPTY;
+  }
+
+  public deleteQuestionnaireBundle(){
+    return EMPTY;
   }
 }

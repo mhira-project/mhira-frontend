@@ -93,10 +93,8 @@ const assessments = gql`
               website
               license
               timeToComplete
-              questionnaire {
-                language
-                abbreviation
-              }
+              language
+              abbreviation
               questionGroups {
                 label
                 questions {
@@ -253,10 +251,8 @@ const getFullAssessment = gql`
           website
           license
           timeToComplete
-          questionnaire {
-            language
-            abbreviation
-          }
+          language
+          abbreviation
           questionGroups {
             label
             questions {
@@ -362,10 +358,8 @@ const getFullPublicAssessment = gql`
           website
           license
           timeToComplete
-          questionnaire {
-            language
-            abbreviation
-          }
+          language
+          abbreviation
           questionGroups {
             label
             appearance

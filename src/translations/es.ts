@@ -287,6 +287,17 @@ export default {
     website: 'Sitio Web',
     license: 'licencia',
     createdAt: 'Creado En',
+    discardedTitle: '¿Está seguro de que desea eliminar este cuestionario?',
+    discardedMessage: `<p>Por favor, tenga en cuenta las siguientes consecuencias:</p>
+    <ol>
+      <li><b>Nuevas pruebas</b>: El cuestionario eliminado no estará disponible para futuras pruebas.</li>
+      <li><b>Acceso a datos</b>: Los datos recopilados con el cuestionario ahora eliminado seguirán siendo accesibles.</li>
+      <li><b>Ajustes de informes</b>: Los informes que incluyen el cuestionario eliminado todavía pueden ser modificados.</li>
+      <li><b>Sección de archivo</b>: El cuestionario eliminado se trasladará a la sección "Versiones antiguas", donde aún podrá ser editado.</li>
+      <li><b>Opción de reemplazo</b>: Tras la eliminación, tendrá la opción de crear un nuevo cuestionario con la misma abreviatura y en el mismo idioma.</li>
+    </ol>`,
+    continueButton: 'Continuar',
+    cancelButton: 'Cancelar'
   },
   questionnairesForm: {
     name: 'Nombre',
@@ -380,7 +391,7 @@ export default {
     continue: '¿Vaya a la siguiente sección?',
     continueOverview: '¿Salir del cuestionario?',
     unansweredQuestions: 'Usted ha dejado {{count}} preguntas sin responder. Todas las preguntas deben responderse para enviar el cuestionario.',
-    unansweredQuestionsOverview: "Sie haben {{count}} unbeantwortete erforderliche Fragen. Sind Sie sicher, dass Sie den Fragebogen ausfüllen möchten?",
+    unansweredQuestionsOverview: "Tienes {{count}} preguntas obligatorias sin respuesta. ¿Estás seguro de que quieres completar el cuestionario?",
     cancel: "Continuar sin completar las preguntas que faltan (No recomendado)",
     ok: "Vuelva a completar las preguntas que faltan"
   }
