@@ -25,6 +25,7 @@ export interface CreateQuestionnaireInput extends UpdateQuestionnaireInput {
 }
 
 export interface QuestionnaireVersion {
+  zombie: boolean;
   _id: string;
   name: string;
   status: QuestionnaireStatus;
