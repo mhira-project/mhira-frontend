@@ -167,6 +167,15 @@
     <div nz-col class="questionnaire" nzSpan="14">
         <h4>{{ 'questionnaireSelection.selectQuestionnaires' | translate }}</h4>
         <app-questionnaire-selection [readonly]="!editMode" [selectedQuestionnaires]="selectedQuestionnaires" (selectionChange)="onQuestionnaireSelected($event)"></app-questionnaire-selection>
+        <!--  -->
+        <hr>
+        <h4>Select Bundles</h4>
+        <nz-select style="width: 100%;" nzMode="multiple" nzPlaceHolder="Select your bundle..." [(ngModel)]="listOfSelectedBundles" (ngModelChange)="onBundleSelection()">
+        <nz-option *ngFor="let option of listOfBundles" [nzLabel]="option?.node?.name" [nzValue]="option"></nz-option>
+        </nz-select>
+        <br />
+        <br />
+        <!--  -->
     </div>
 </div>
 <!--  -->

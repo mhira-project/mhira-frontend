@@ -25,6 +25,7 @@ import { AssessmentAdministrationService } from '@app/pages/administration/@serv
 import { Clipboard } from '@angular/cdk/clipboard';
 import { LocationStrategy } from '@angular/common';
 import { EmailTemplatesService } from '@app/pages/administration/@services/email-templates.service';
+import { QuestionnaireBundlesService } from '@app/pages/questionnaire-management/@services/questionnaire-bundles.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -40,6 +41,8 @@ export class CreateAssessmentComponent implements OnInit {
   typeSelected: any = 'PATIENT';
   dataToSelect: any = [];
   selectedInformant: any = null;
+  listOfBundles: any = [];
+  listOfSelectedBundles: any = [];
   noteValue: any = '';
   patientEmail = '';
   options = [
@@ -103,6 +106,7 @@ export class CreateAssessmentComponent implements OnInit {
     private errorService: ErrorHandlerService,
     private departmentsService: DepartmentsService,
     private emailTemplatesService: EmailTemplatesService,
+    private bundlesService: QuestionnaireBundlesService,
     private assessmentService: AssessmentService,
     private nzMessage: NzMessageService,
     private clipboard: Clipboard,
@@ -134,6 +138,7 @@ export class CreateAssessmentComponent implements OnInit {
     this.userAutoSelect();
     this.initAssessment();
     this.getPatient();
+    this.getBundles();
     this.getCaregivers();
     this.getUserDepartments({paging: {first: 50}});
     this.getPatientEmailTemplates(this.patient.id);
@@ -405,6 +410,34 @@ export class CreateAssessmentComponent implements OnInit {
           .map((caregiver: any) => caregiver.node.caregiver);
         this.pageInfo = response.data.patientCaregivers.pageInfo;
       });
+  }
+
+  getBundles(){
+    this.bundlesService.getQuestionnairesBundles().subscribe((data: any) => {
+      this.listOfBundles = data.data.getQuestionnaireBundles.edges;
+    })
+  }
+
+  onBundleSelection(){
+    this.selectedQuestionnaires = this.selectedQuestionnaires.concat(this.listOfSelectedBundles.map((bundle: any) => bundle.node.questionnaires).flat());
+    this.selectedQuestionnaires = this.filterUniqueQuestionnaires(this.selectedQuestionnaires);
+    this.formGroup.patchValue({questionnaires: this.selectedQuestionnaires});
+  }
+
+  filterUniqueQuestionnaires(questionnaires: any) {
+    const uniqueQuestionnaires = [];
+    const seenIds = new Set();
+  
+    for (const questionnaire of questionnaires) {
+      const id = questionnaire._id;
+  
+      // Check if the _id has been seen before
+      if (!seenIds.has(id)) {
+        seenIds.add(id);
+        uniqueQuestionnaires.push(questionnaire);
+      }
+    }
+    return uniqueQuestionnaires;
   }
 
   private getAssessmentTypes(): void {
