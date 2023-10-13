@@ -63,7 +63,7 @@ const antModules = [
   NzAvatarModule,
   NzSelectModule,
   NzToolTipModule,
-  NzCheckboxModule
+  NzCheckboxModule,
 ];
 
 @NgModule({
@@ -84,7 +84,7 @@ const antModules = [
     NzDatePickerModule,
     AssessmentModule,
     QRCodeModule,
-    CustomDirectivesModule
+    CustomDirectivesModule,
   ],
   declarations: [
     PatientsListComponent,

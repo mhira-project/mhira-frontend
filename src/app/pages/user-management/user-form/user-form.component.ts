@@ -85,7 +85,7 @@ export class UserFormComponent implements OnInit {
     this.getUserFromUrl();
     this.getUser();
     this.getRoles();
-    this.getDepartments({paging: {first: 50}});
+    this.getDepartments({ paging: { first: 50 } });
   }
 
   getDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting[] }) {

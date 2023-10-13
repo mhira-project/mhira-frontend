@@ -55,7 +55,7 @@ export class CreateReportComponent implements OnInit {
   ngOnInit(): void {
     this.getReportFromUrl();
     this.getRoles();
-    if(this.report){
+    if (this.report) {
       this.selectedRoles = this.report?.roles?.filter((role) => this.reportHasRole(role.id));
     }
   }
@@ -72,8 +72,7 @@ export class CreateReportComponent implements OnInit {
   assignRoleToReport(role: Role, checked: boolean) {
     if (checked && !this.selectedRoles?.includes(role)) {
       this.selectedRoles?.push(role);
-    } 
-    else if (!checked) {
+    } else if (!checked) {
       this.selectedRoles = this.selectedRoles?.filter((item) => item.id !== role.id);
     }
   }
@@ -189,7 +188,7 @@ export class CreateReportComponent implements OnInit {
         },
         (error) => {
           this.populateForm = true;
-          this.errorService.handleError(error, { 
+          this.errorService.handleError(error, {
             prefix: `Unable to update user "${reportUpdates.name}"`,
           });
         }

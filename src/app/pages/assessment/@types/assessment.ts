@@ -39,8 +39,8 @@ export interface Assessment {
   informantCaregiverRelation?: string;
   informantClinician?: User;
   emailStatus: string;
-  questionnaireAssessment:any;
-  questionnaires: []
+  questionnaireAssessment: any;
+  questionnaires: [];
 }
 
 export interface QuestionnaireAssessment {
@@ -75,7 +75,7 @@ export interface FormattedAssessment extends Assessment {
   submissionDate: Date;
   questionnaireAssessment: {};
   emailFormatedStatus: {};
-  formatedQuestionnaireNames: []
-  formatedQuestionnaires: []
-  questionnaires: []
+  formatedQuestionnaireNames: [];
+  formatedQuestionnaires: [];
+  questionnaires: [];
 }

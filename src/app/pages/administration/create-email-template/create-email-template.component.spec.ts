@@ -8,9 +8,8 @@ describe('CreateEmailTemplateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateEmailTemplateComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateEmailTemplateComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

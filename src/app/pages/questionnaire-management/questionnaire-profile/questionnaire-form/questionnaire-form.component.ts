@@ -34,8 +34,8 @@ export class QuestionnaireFormComponent {
   editorConfig: AngularEditorConfig = {
     minHeight: '100px',
     editable: true,
-    sanitize: false
-  }
+    sanitize: false,
+  };
 
   public get isExisting(): boolean {
     return !!this.existingId;

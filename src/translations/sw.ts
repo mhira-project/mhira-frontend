@@ -23,7 +23,7 @@ export default {
   assessments: {
     myAssessment: 'Tathmini yangu',
     archivedAssessments: 'Show Archived - REPLACE',
-    notArchivedAssessments: 'Show Not Archived - REPLACE'
+    notArchivedAssessments: 'Show Not Archived - REPLACE',
   },
   card: {
     changePassword: 'Badilisha neno la siri',
@@ -66,12 +66,12 @@ export default {
     noTabs: 'Hakuna kurasa',
     disclaimers: 'Kanusho',
     emailTemplates: 'Email Templates - REPLACE',
-    version: 'Version - REPLACE'
+    version: 'Version - REPLACE',
   },
   patients: {
     myPatients: 'Wagonjwa Wangu',
     archivedPatients: 'Show Archived - REPLACE',
-    notArchivedPatients: 'Show not Archived - REPLACE'
+    notArchivedPatients: 'Show not Archived - REPLACE',
   },
   tables: {
     assessmentAdministration: {
@@ -350,7 +350,7 @@ export default {
     permissions: 'Ruhusa',
     roles: 'Majukumu',
   },
-  emailTemplates:{
+  emailTemplates: {
     createTemplate: 'Create Template - REPLACE',
     created: 'Email template created successfully! - REPLACE',
     updated: 'Email template updated successfully! - REPLACE',
@@ -360,6 +360,6 @@ export default {
     body: 'Body - REPLACE',
     subject: 'Subject - REPLACE',
     status: 'Status - REPLACE',
-    module: 'Module - REPLACE'
-  }
+    module: 'Module - REPLACE',
+  },
 };

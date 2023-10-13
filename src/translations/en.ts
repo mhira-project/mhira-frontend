@@ -23,7 +23,7 @@ export default {
   assessments: {
     myAssessment: 'My Assessments',
     archivedAssessments: 'Show Archived',
-    notArchivedAssessments: 'Show Not Archived'
+    notArchivedAssessments: 'Show Not Archived',
   },
   card: {
     changePassword: 'Change Password',
@@ -75,12 +75,12 @@ export default {
     noTabs: 'No Tabs',
     disclaimers: 'Messages',
     emailTemplates: 'Email Templates',
-    version: 'Version'
+    version: 'Version',
   },
   patients: {
     myPatients: 'My Patients',
     archivedPatients: 'Show Archived',
-    notArchivedPatients: 'Show not Archived'
+    notArchivedPatients: 'Show not Archived',
   },
   tables: {
     assessmentAdministration: {
@@ -303,7 +303,7 @@ export default {
       <li><b>Replacement</b>: Discarding frees up space for a new questionnaire with the same language and abbreviation.</li>
     </ol>`,
     continueButton: 'Continue',
-    cancelButton: 'Cancel'
+    cancelButton: 'Cancel',
   },
   questionnairesForm: {
     name: 'Name',
@@ -373,7 +373,7 @@ export default {
     permissions: 'Permissions',
     roles: 'Roles',
   },
-  emailTemplates:{
+  emailTemplates: {
     createTemplate: 'Create Template',
     created: 'Email template created successfully!',
     updated: 'Email template updated successfully!',
@@ -383,28 +383,30 @@ export default {
     body: 'Body',
     subject: 'Subject',
     status: 'Status',
-    module: 'Module'
+    module: 'Module',
   },
-  emailStatusFilter:{
+  emailStatusFilter: {
     expired: 'Expired',
     planned: 'Planned',
     pending: 'Pending',
     openForCompletion: 'Open For Completion',
     partiallyCompleted: 'Partially Completed',
-    completed: 'Completed'
+    completed: 'Completed',
   },
   modal: {
     continue: 'Continue to next section?',
     continueOverview: 'Finish questionnaire?',
-    unansweredQuestions: "You have {{count}} unanswered required question(s). All questions need to be answered to submit the questionnaire.",
-    unansweredQuestionsOverview: "You have {{count}} unanswered required question(s). Are you sure you want to finish the questionnaire?",
-    cancel: "Proceed Without Completing (Not Recommended)",
-    ok: "Go Back and Complete the Questions"
+    unansweredQuestions:
+      'You have {{count}} unanswered required question(s). All questions need to be answered to submit the questionnaire.',
+    unansweredQuestionsOverview:
+      'You have {{count}} unanswered required question(s). Are you sure you want to finish the questionnaire?',
+    cancel: 'Proceed Without Completing (Not Recommended)',
+    ok: 'Go Back and Complete the Questions',
   },
   bundles: {
     created: 'Bundle created successfully!',
     updated: 'Bundle updated successfully!',
     deleted: 'Bundle deleted successfully!',
     unableToLoad: 'Unable to load bundles!',
-  }
+  },
 };

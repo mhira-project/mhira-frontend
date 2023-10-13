@@ -23,7 +23,7 @@ export default {
   assessments: {
     myAssessment: 'Meine Testungen',
     archivedAssessments: 'Archivierte Testungen anzeigen',
-    notArchivedAssessments: 'Nicht-archivierte Testungen anzeigen'
+    notArchivedAssessments: 'Nicht-archivierte Testungen anzeigen',
   },
   card: {
     changePassword: 'Passwort ändern',
@@ -41,7 +41,6 @@ export default {
     plannedText: 'Die Testung ist noch nicht verfügbar! Verfügbar ab:',
     completedText: 'Diese Testung ist abgeschlossen!',
   },
-​
   menu: {
     dashboard: 'Dashboard',
     createAssessment: 'Neue Testung erstellen',
@@ -73,12 +72,12 @@ export default {
     noTabs: 'Keine Registerkarten',
     disclaimers: 'Mitteilungen',
     emailTemplates: 'Emails konfigurieren',
-    version: 'Version'
+    version: 'Version',
   },
   patients: {
     myPatients: 'Meine Patienten',
     archivedPatients: 'Archivierte Patienten anzeigen',
-    notArchivedPatients: 'Nicht-archivierte Patienten anzeigen'
+    notArchivedPatients: 'Nicht-archivierte Patienten anzeigen',
   },
   tables: {
     assessmentAdministration: {
@@ -298,7 +297,7 @@ export default {
       <li><b>Ersatzmöglichkeit</b>: Nach dem Entfernen haben Sie die Möglichkeit, einen neuen Fragebogen mit der gleichen Abkürzung und in derselben Sprache zu erstellen.</li>
     </ol>`,
     continueButton: 'Fortfahren',
-    cancelButton: 'Abbrechen'
+    cancelButton: 'Abbrechen',
   },
   questionnairesForm: {
     name: 'Name',
@@ -368,7 +367,7 @@ export default {
     permissions: 'Berechtigungen',
     roles: 'Rollen',
   },
-  emailTemplates:{
+  emailTemplates: {
     createTemplate: 'Email-Vorlage erstellen',
     created: 'Email-Vorlage wurde erstellt',
     updated: 'Email-Vorlage wurde aktualisiert',
@@ -378,22 +377,24 @@ export default {
     body: 'Email-Vorlage Text',
     subject: 'Email-Vorlage Betreff',
     status: 'Status',
-    module: 'Art der Email-Vorlage'
+    module: 'Art der Email-Vorlage',
   },
-  emailStatusFilter:{
+  emailStatusFilter: {
     expired: 'Abgelaufen',
     planned: 'Geplant',
     pending: 'Ausstehend',
     openForCompletion: 'Bereit zum Ausfüllen',
     partiallyCompleted: 'Teilweise abgeschlossen',
-    completed: 'Abgeschlossen'
+    completed: 'Abgeschlossen',
   },
   modal: {
     continue: 'Zur nächsten Sektion gehen?',
     continueOverview: 'Fragebogen beenden?',
-    unansweredQuestions: 'Sie haben {{count}} unbeantwortete Pflichtfragen. Alle Pflichtfragen müssen beantwortet werden, um den Fragebogen abschliessen zu können.',
-    unansweredQuestionsOverview: "Sie haben {{count}} unbeantwortete Pflichtfragen. Alle Pflichtfragen müssen beantwortet werden, um den Fragebogen abschliessen zu können.",
-    cancel: "Fortfahren ohne Vervollständigung (Nicht empfohlen)",
-    ok: "Zurück und Pflichtfragen beantworten"
-  }
+    unansweredQuestions:
+      'Sie haben {{count}} unbeantwortete Pflichtfragen. Alle Pflichtfragen müssen beantwortet werden, um den Fragebogen abschliessen zu können.',
+    unansweredQuestionsOverview:
+      'Sie haben {{count}} unbeantwortete Pflichtfragen. Alle Pflichtfragen müssen beantwortet werden, um den Fragebogen abschliessen zu können.',
+    cancel: 'Fortfahren ohne Vervollständigung (Nicht empfohlen)',
+    ok: 'Zurück und Pflichtfragen beantworten',
+  },
 };

@@ -40,16 +40,13 @@
               "./node_modules/ng-zorro-antd/resizable/style/index.min.css",
               "src/main.scss"
             ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.min.js"
-            ]
+            "scripts": ["node_modules/jquery/dist/jquery.min.js"]
           },
           "configurations": {
             "production": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": false,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -78,7 +75,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": false,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -107,7 +103,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": true,
-              "extractCss": false,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,

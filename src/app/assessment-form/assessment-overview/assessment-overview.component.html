@@ -58,7 +58,10 @@
     </span>
     <span class="progress-optional">
       {{
-        getAnsweredOptionalQuestions(questionnaire._id) + '/' + getMaxNotRequiredQuestions(questionnaire._id) + ' optional questions'
+        getAnsweredOptionalQuestions(questionnaire._id) +
+          '/' +
+          getMaxNotRequiredQuestions(questionnaire._id) +
+          ' optional questions'
       }}
     </span>
     <span *ngIf="questionnaire.timeToComplete">

@@ -23,7 +23,7 @@ export default {
   assessments: {
     myAssessment: 'Vlerësimet e Mia',
     archivedAssessments: 'Të Arkivuara',
-    notArchivedAssessments: 'Jo Të Arkivuara'
+    notArchivedAssessments: 'Jo Të Arkivuara',
   },
   card: {
     changePassword: 'Ndrysho fjalekalimin',
@@ -71,12 +71,12 @@ export default {
     noTabs: 'Nuk ka skedar',
     disclaimers: 'Mesazhet',
     emailTemplates: 'Shabllonet e Email',
-    version: 'Versioni'
+    version: 'Versioni',
   },
   patients: {
     myPatients: 'Klientët e Mi',
     archivedPatients: 'Të Arkivuar',
-    notArchivedPatients: 'Jo Të Arkivuar'
+    notArchivedPatients: 'Jo Të Arkivuar',
   },
   tables: {
     assessmentAdministration: {
@@ -297,7 +297,7 @@ export default {
       <li><b>Zëvëndësimi</b>: Skarcimi liron hapësirë për një version të ri me të njejtën gjuhë dhe shkurtim.</li>
     </ol>`,
     continueButton: 'Procedo',
-    cancelButton: 'Anullo'
+    cancelButton: 'Anullo',
   },
   questionnairesForm: {
     name: 'Emri',
@@ -367,7 +367,7 @@ export default {
     permissions: 'Lejet',
     roles: 'Rolet',
   },
-  emailTemplates:{
+  emailTemplates: {
     createTemplate: 'Krijo Shabllon',
     created: 'Shablloni i email u krijua me sukses!',
     updated: 'Shablloni i email u rifreskua me sukses!',
@@ -377,22 +377,24 @@ export default {
     body: 'Trupi',
     subject: 'Subjekti',
     status: 'Statusi',
-    module: 'Moduli'
+    module: 'Moduli',
   },
-  emailStatusFilter:{
+  emailStatusFilter: {
     expired: 'Skaduar',
     planned: 'Planifikuar',
     pending: 'Pezull',
     openForCompletion: 'Hapur për plotësim',
     partiallyCompleted: 'Pjesërisht plotësuar',
-    completed: 'Plotësuar'
+    completed: 'Plotësuar',
   },
   modal: {
     continue: 'Kalo tek seksioni tjetër?',
     continueOverview: 'Përfundo vlerësimin?',
-    unansweredQuestions: "Ju keni {{count}} pyetje të detyruara pa përgjigje. Të gjitha pyetjet duhet të marrin përgjigje për të përfunduar vlerësimin.",
-    unansweredQuestionsOverview: "Ju keni {{count}} pyetje të kërkuara pa përgjigje. Jeni i sigurt që dëshironi të përfundoni vlerësimin?",
-    cancel: "Vazhdoni pa përfunduar (Nuk rekomandohet)",
-    ok: "Kthehu prapa dhe plotëso pyetjet"
-  }
+    unansweredQuestions:
+      'Ju keni {{count}} pyetje të detyruara pa përgjigje. Të gjitha pyetjet duhet të marrin përgjigje për të përfunduar vlerësimin.',
+    unansweredQuestionsOverview:
+      'Ju keni {{count}} pyetje të kërkuara pa përgjigje. Jeni i sigurt që dëshironi të përfundoni vlerësimin?',
+    cancel: 'Vazhdoni pa përfunduar (Nuk rekomandohet)',
+    ok: 'Kthehu prapa dhe plotëso pyetjet',
+  },
 };

@@ -1,12 +1,12 @@
 import gql from 'graphql-tag';
 
-const createQuestionnaireBundle = gql `
+const createQuestionnaireBundle = gql`
   mutation($input: CreateQuestionnaireBundleInput!) {
     createQuestionnaireBundle(input: $input) {
       _id
       name
       departmentIds
-      questionnaires{
+      questionnaires {
         _id
         name
         status
@@ -16,34 +16,34 @@ const createQuestionnaireBundle = gql `
         website
         license
         timeToComplete
-        questionGroups{
+        questionGroups {
+          _id
+          label
+          appearance
+          questions {
             _id
+            name
             label
+            type
+            hint
+            relevant
+            calculation
+            constraint
+            constraintMessage
+            min
+            max
+            required
+            requiredMessage
+            image
             appearance
-            questions{
-                _id
-                name
-                label
-                type
-                hint
-                relevant
-                calculation
-                constraint
-                constraintMessage
-                min
-                max
-                required
-                requiredMessage
-                image
-                appearance
-                default
-                choices{
-                    _id
-                    name
-                    label
-                    image
-                }
+            default
+            choices {
+              _id
+              name
+              label
+              image
             }
+          }
         }
         language
         abbreviation
@@ -51,22 +51,22 @@ const createQuestionnaireBundle = gql `
         zombie
         createdAt
         updatedAt
-    }
-    createdAt
-    updatedAt
+      }
+      createdAt
+      updatedAt
       createdAt
       updatedAt
     }
   }
 `;
 
-const updateQuestionnaireBundle = gql `
+const updateQuestionnaireBundle = gql`
   mutation($input: UpdateQuestionnaireBundleInput!) {
     updateQuestionnaireBundle(input: $input) {
       _id
       name
       departmentIds
-      questionnaires{
+      questionnaires {
         _id
         name
         status
@@ -76,34 +76,34 @@ const updateQuestionnaireBundle = gql `
         website
         license
         timeToComplete
-        questionGroups{
+        questionGroups {
+          _id
+          label
+          appearance
+          questions {
             _id
+            name
             label
+            type
+            hint
+            relevant
+            calculation
+            constraint
+            constraintMessage
+            min
+            max
+            required
+            requiredMessage
+            image
             appearance
-            questions{
-                _id
-                name
-                label
-                type
-                hint
-                relevant
-                calculation
-                constraint
-                constraintMessage
-                min
-                max
-                required
-                requiredMessage
-                image
-                appearance
-                default
-                choices{
-                    _id
-                    name
-                    label
-                    image
-                }
+            default
+            choices {
+              _id
+              name
+              label
+              image
             }
+          }
         }
         language
         abbreviation
@@ -111,20 +111,20 @@ const updateQuestionnaireBundle = gql `
         zombie
         createdAt
         updatedAt
-    }
-      createdAt 
+      }
+      createdAt
       updatedAt
     }
   }
 `;
 
-const deleteQuestionnaireBundle = gql `
+const deleteQuestionnaireBundle = gql`
   mutation($_id: String!) {
-    deleteQuestionnaireBundle(_id: $_id){
+    deleteQuestionnaireBundle(_id: $_id) {
       _id
       name
       departmentIds
-      questionnaires{
+      questionnaires {
         _id
         name
         status
@@ -134,34 +134,34 @@ const deleteQuestionnaireBundle = gql `
         website
         license
         timeToComplete
-        questionGroups{
+        questionGroups {
+          _id
+          label
+          appearance
+          questions {
             _id
+            name
             label
+            type
+            hint
+            relevant
+            calculation
+            constraint
+            constraintMessage
+            min
+            max
+            required
+            requiredMessage
+            image
             appearance
-            questions{
-                _id
-                name
-                label
-                type
-                hint
-                relevant
-                calculation
-                constraint
-                constraintMessage
-                min
-                max
-                required
-                requiredMessage
-                image
-                appearance
-                default
-                choices{
-                    _id
-                    name
-                    label
-                    image
-                }
+            default
+            choices {
+              _id
+              name
+              label
+              image
             }
+          }
         }
         language
         abbreviation
@@ -169,15 +169,15 @@ const deleteQuestionnaireBundle = gql `
         zombie
         createdAt
         updatedAt
-    }
-      createdAt 
+      }
+      createdAt
       updatedAt
     }
   }
 `;
 
 export const BundleMutations = {
-    createQuestionnaireBundle,
-    updateQuestionnaireBundle,
-    deleteQuestionnaireBundle
-}
+  createQuestionnaireBundle,
+  updateQuestionnaireBundle,
+  deleteQuestionnaireBundle,
+};

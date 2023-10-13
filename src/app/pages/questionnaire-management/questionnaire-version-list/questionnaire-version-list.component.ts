@@ -42,7 +42,7 @@ export class QuestionnaireVersionListComponent implements OnInit {
 
   public questionnaireRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
-    filter: {and: [{zombie: {is: true}}]},
+    filter: { and: [{ zombie: { is: true } }] },
     sorting: [],
   };
 

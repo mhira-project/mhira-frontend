@@ -27,7 +27,6 @@ enum ActionKey {
   styleUrls: ['./assessment-administration.component.scss'],
 })
 export class AssessmentAdministrationComponent implements OnInit {
-
   public data: Partial<AssessmentAdministration>[];
   public columns: TableColumn<Partial<AssessmentAdministration>>[] = AssessmentAdministrationColumns;
   public isLoading = false;

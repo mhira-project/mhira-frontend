@@ -34,7 +34,7 @@ enum ActionKey {
   ARCHIVE_ASSESSMENT,
   RESTORE_ASSESSMENT,
   DELETE_ASSESSMENT,
-  SCAN_QR_CODE
+  SCAN_QR_CODE,
 }
 
 @Component({
@@ -59,13 +59,13 @@ export class AssessmentsComponent implements OnInit {
   public columns: TableColumn<FormattedAssessment>[] = AssessmentsPatientsTable;
   public user: User;
   public isLoading = false;
-  public onlyArchivedAssessments = (localStorage.getItem('onlyArchivedAssessmentsPatients') === 'true');
+  public onlyArchivedAssessments = localStorage.getItem('onlyArchivedAssessmentsPatients') === 'true';
   isVisible = false;
-  newUrl : URL;
-  modalData : any = '';
+  newUrl: URL;
+  modalData: any = '';
   statusFilter: string = '';
   public pageInfo: PageInfo;
-  public onlyMyAssessments = (localStorage.getItem('onlyMyAssessmentsPatients') === 'true');
+  public onlyMyAssessments = localStorage.getItem('onlyMyAssessmentsPatients') === 'true';
 
   public assessmentRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
@@ -86,17 +86,17 @@ export class AssessmentsComponent implements OnInit {
   ngOnInit(): void {
     this.getAssessments();
 
-    if(!localStorage.getItem('onlyMyAssessmentsPatients')){
+    if (!localStorage.getItem('onlyMyAssessmentsPatients')) {
       localStorage.setItem('onlyMyAssessmentsPatients', this.onlyMyAssessments.toString());
     }
-    if(!localStorage.getItem('onlyArchivedAssessmentsPatients')){
+    if (!localStorage.getItem('onlyArchivedAssessmentsPatients')) {
       localStorage.setItem('onlyArchivedAssessmentsPatients', this.onlyArchivedAssessments.toString());
     }
-    if(!localStorage.getItem('filter-patient-assessment')){
-        localStorage.setItem('filter-patient-assessment', JSON.stringify(this.assessmentRequestOptions.filter));
+    if (!localStorage.getItem('filter-patient-assessment')) {
+      localStorage.setItem('filter-patient-assessment', JSON.stringify(this.assessmentRequestOptions.filter));
     }
-    if(!localStorage.getItem('sorting-patient-assessment')){
-        localStorage.setItem('sorting-patient-assessment', JSON.stringify(this.assessmentRequestOptions.sorting));
+    if (!localStorage.getItem('sorting-patient-assessment')) {
+      localStorage.setItem('sorting-patient-assessment', JSON.stringify(this.assessmentRequestOptions.sorting));
     }
   }
 
@@ -122,11 +122,14 @@ export class AssessmentsComponent implements OnInit {
     this.getAssessments();
   }
 
-  public onStatusSelect(): any{
-    if(this.assessmentRequestOptions.filter.and) {
-      const filters = {...this.assessmentRequestOptions.filter, and: [...this.assessmentRequestOptions.filter.and, {status: {eq: this.statusFilter}}]};
+  public onStatusSelect(): any {
+    if (this.assessmentRequestOptions.filter.and) {
+      const filters = {
+        ...this.assessmentRequestOptions.filter,
+        and: [...this.assessmentRequestOptions.filter.and, { status: { eq: this.statusFilter } }],
+      };
     } else {
-        const filters = {...this.assessmentRequestOptions.filter, and: [{status: {eq: this.statusFilter}}]};
+      const filters = { ...this.assessmentRequestOptions.filter, and: [{ status: { eq: this.statusFilter } }] };
     }
     this.getAssessments();
     this.currentFilters = true;
@@ -145,23 +148,22 @@ export class AssessmentsComponent implements OnInit {
         return;
       case ActionKey.RESTORE_ASSESSMENT:
         this.restoreAssessment(assessment);
-        return;  
+        return;
       case ActionKey.DELETE_ASSESSMENT:
         this.deleteAssessment(assessment, false);
         return;
       case ActionKey.SCAN_QR_CODE:
-        this.modalData = assessment
+        this.modalData = assessment;
         this.newUrl = new URL(this.generateAssessmentURL(assessment.uuid), window.location.origin);
-        this.showModal()
-        return;  
+        this.showModal();
+        return;
     }
   }
   public onMyAssessments(): void {
-    if(this.onlyMyAssessments === true){
+    if (this.onlyMyAssessments === true) {
       localStorage.setItem('onlyMyAssessmentsPatients', 'false');
       this.onlyMyAssessments = false;
-    }
-    else{
+    } else {
       localStorage.setItem('onlyMyAssessmentsPatients', 'true');
       this.onlyMyAssessments = true;
     }
@@ -169,11 +171,10 @@ export class AssessmentsComponent implements OnInit {
   }
 
   public onArchivedAssessments(): void {
-    if(this.onlyArchivedAssessments === true){
+    if (this.onlyArchivedAssessments === true) {
       localStorage.setItem('onlyArchivedAssessmentsPatients', 'false');
       this.onlyArchivedAssessments = false;
-    }
-    else{
+    } else {
       localStorage.setItem('onlyArchivedAssessmentsPatients', 'true');
       this.onlyArchivedAssessments = true;
     }
@@ -236,14 +237,14 @@ export class AssessmentsComponent implements OnInit {
     return [
       {
         assessmentType: {
-            or: [
-                {
-                    name: {
-                        iLike: `%${searchString}%`
-                    }
-                }
-            ]
-        }
+          or: [
+            {
+              name: {
+                iLike: `%${searchString}%`,
+              },
+            },
+          ],
+        },
       },
       {
         patient: {
@@ -272,20 +273,20 @@ export class AssessmentsComponent implements OnInit {
     // copy to not modify original options
     const options = { ...this.assessmentRequestOptions };
 
-    if(localStorage.getItem('filter-patient-assessment')){
-      options.filter = {...options.filter, ...JSON.parse(localStorage.getItem('filter-patient-assessment'))}
+    if (localStorage.getItem('filter-patient-assessment')) {
+      options.filter = { ...options.filter, ...JSON.parse(localStorage.getItem('filter-patient-assessment')) };
     }
 
-    if(options.sorting.length === 0){
-      options.sorting.push({field: 'createdAt', direction: 'DESC'})
+    if (options.sorting.length === 0) {
+      options.sorting.push({ field: 'createdAt', direction: 'DESC' });
     }
 
-    if(!this.onlyArchivedAssessments){
+    if (!this.onlyArchivedAssessments) {
       options.filter = {
         ...options.filter,
-        and: [{ deleted: {is: false} }, ...(options.filter.and ?? [])],
+        and: [{ deleted: { is: false } }, ...(options.filter.and ?? [])],
       };
-    } 
+    }
 
     options.filter = {
       ...options.filter,
@@ -300,16 +301,16 @@ export class AssessmentsComponent implements OnInit {
       };
 
     // apply for archived assessments
-    if (this.onlyArchivedAssessments){
+    if (this.onlyArchivedAssessments) {
       options.filter = {
         ...options.filter,
-        and: [{ deleted: {is: true} }, ...(options.filter.and ?? [])],
+        and: [{ deleted: { is: true } }, ...(options.filter.and ?? [])],
       };
     }
 
     // apply for assessment status
-    if(this.statusFilter) {
-      options.filter = {...options.filter, and: [...options.filter.and, {status: {eq: this.statusFilter}}]}
+    if (this.statusFilter) {
+      options.filter = { ...options.filter, and: [...options.filter.and, { status: { eq: this.statusFilter } }] };
     }
 
     this.isLoading = true;
@@ -325,58 +326,58 @@ export class AssessmentsComponent implements OnInit {
       );
   }
 
-  private async archiveAssessment(assessment : FormattedAssessment) {
+  private async archiveAssessment(assessment: FormattedAssessment) {
     const modal = this.modalService.confirm({
-        nzOnOk: () => true,
-        nzTitle: 'Archive Assessment',
-        nzContent: `
-        Are you sure you want to archive ${
-            assessment.name
-        }?`
+      nzOnOk: () => true,
+      nzTitle: 'Archive Assessment',
+      nzContent: `
+        Are you sure you want to archive ${assessment.name}?`,
     });
 
     const confirmation = await modal.afterClose.toPromise();
-    if (! confirmation) 
-        return;
-    
+    if (!confirmation) return;
 
     this.isLoading = true;
-    this.assessmentService.archiveAssessment(assessment).pipe(finalize(() => (this.isLoading = false))).subscribe((archived) => {
-        if (!archived) {
+    this.assessmentService
+      .archiveAssessment(assessment)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        (archived) => {
+          if (!archived) {
             this.getAssessments();
-        } else {
+          } else {
             this.getAssessments();
-        }
-    }, (error) => this.errorService.handleError(error, {prefix: `Unable to archive assessment "${
-            assessment.name
-        }"`}));
+          }
+        },
+        (error) => this.errorService.handleError(error, { prefix: `Unable to archive assessment "${assessment.name}"` })
+      );
   }
 
-  private async restoreAssessment(assessment : FormattedAssessment) {
+  private async restoreAssessment(assessment: FormattedAssessment) {
     const modal = this.modalService.confirm({
-        nzOnOk: () => true,
-        nzTitle: 'Restore Assessment',
-        nzContent: `
-        Are you sure you want to restore ${
-            assessment?.name
-        }?`
+      nzOnOk: () => true,
+      nzTitle: 'Restore Assessment',
+      nzContent: `
+        Are you sure you want to restore ${assessment?.name}?`,
     });
 
     const confirmation = await modal.afterClose.toPromise();
-    if (! confirmation) 
-        return;
-    
+    if (!confirmation) return;
 
     this.isLoading = true;
-    this.assessmentService.restoreAssessment(assessment).pipe(finalize(() => (this.isLoading = false))).subscribe((archived) => {
-        if (!archived) {
+    this.assessmentService
+      .restoreAssessment(assessment)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        (archived) => {
+          if (!archived) {
             this.getAssessments();
-        } else {
+          } else {
             this.getAssessments();
-        }
-    }, (error) => this.errorService.handleError(error, {prefix: `Unable to restore assessment "${
-            assessment.name
-        }"`}));
+          }
+        },
+        (error) => this.errorService.handleError(error, { prefix: `Unable to restore assessment "${assessment.name}"` })
+      );
   }
 
   private async deleteAssessment(assessment: FormattedAssessment, archive: boolean = true): Promise<void> {

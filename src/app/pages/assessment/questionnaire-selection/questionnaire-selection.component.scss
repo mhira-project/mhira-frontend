@@ -22,25 +22,25 @@ p {
   justify-content: space-between;
 }
 
-nz-empty{
+nz-empty {
   display: none !important;
 }
 
-.spacer-class{
+.spacer-class {
   margin-top: 15px;
 }
 
-.keyword-tag{
+.keyword-tag {
   border-radius: 10px;
 }
 
-.add-remove-button{
+.add-remove-button {
   position: absolute;
   left: 90%;
 }
 
 @media only screen and (max-width: 1080px) {
-  .add-remove-button{
+  .add-remove-button {
     position: absolute;
     margin-left: -2%;
   }

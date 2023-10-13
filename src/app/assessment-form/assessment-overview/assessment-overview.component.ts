@@ -47,24 +47,27 @@ export class AssessmentOverviewComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.assessmentFormService.assessment$.subscribe((assessment : any) => {
+    this.assessmentFormService.assessment$.subscribe((assessment: any) => {
       this.assessment = assessment;
       this.questionnaireQuestions = {};
-      this.questions = assessment.questionnaireAssessment.questionnaires.reduce((questions: any, questionnaire: any) => {
-        let questionnaireQuestions = questionnaire.questionGroups.reduce(
-          (qs: any, group: any) => [...qs, ...group.questions],
-          []
-        );
-        // ************
-        for(let unique of questionnaire.questionGroups?? []){
-          for(let uq of unique.uniqueQuestions) {
-            questionnaireQuestions = [...questionnaireQuestions, ...uq.subQuestions]
+      this.questions = assessment.questionnaireAssessment.questionnaires.reduce(
+        (questions: any, questionnaire: any) => {
+          let questionnaireQuestions = questionnaire.questionGroups.reduce(
+            (qs: any, group: any) => [...qs, ...group.questions],
+            []
+          );
+          // ************
+          for (let unique of questionnaire.questionGroups ?? []) {
+            for (let uq of unique.uniqueQuestions) {
+              questionnaireQuestions = [...questionnaireQuestions, ...uq.subQuestions];
+            }
           }
-        }
-        // *************
-        this.questionnaireQuestions[questionnaire._id] = questionnaireQuestions;
-        return [...questions, ...questionnaireQuestions];
-      }, []);
+          // *************
+          this.questionnaireQuestions[questionnaire._id] = questionnaireQuestions;
+          return [...questions, ...questionnaireQuestions];
+        },
+        []
+      );
 
       this.cdr.detectChanges();
     });

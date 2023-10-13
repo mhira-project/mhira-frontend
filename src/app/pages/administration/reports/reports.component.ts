@@ -58,9 +58,7 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getReports();
-    this.actions = [
-      { key: ActionKey.DELETE_REPORT, title: 'Delete Report' },
-    ];
+    this.actions = [{ key: ActionKey.DELETE_REPORT, title: 'Delete Report' }];
   }
 
   public handleRowClick(event: any) {

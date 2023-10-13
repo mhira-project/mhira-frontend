@@ -37,7 +37,14 @@ export class QuestionnaireSelectionComponent {
     this.questionnaireService
       .getQuestionnaires({ filter })
       // Added filter to filter out the archieved quest.
-      .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node).filter(e => e.status !== 'ARCHIVED' && e.status !== 'DRAFT' && e.status !== 'PRIVATE' && e.zombie === false)));
+      .subscribe(
+        (questionnaires) =>
+          (this.foundQuestionnaires = questionnaires.edges
+            .map((e) => e.node)
+            .filter(
+              (e) => e.status !== 'ARCHIVED' && e.status !== 'DRAFT' && e.status !== 'PRIVATE' && e.zombie === false
+            ))
+      );
   }
 
   public onQuestionnaireSearchNew(q: string) {
@@ -47,14 +54,28 @@ export class QuestionnaireSelectionComponent {
 
       this.questionnaireService
         .getQuestionnaires({ filter })
-        .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node).filter(e => e.status !== 'ARCHIVED' && e.status !== 'DRAFT' && e.status !== 'PRIVATE'  && e.zombie === false)));
+        .subscribe(
+          (questionnaires) =>
+            (this.foundQuestionnaires = questionnaires.edges
+              .map((e) => e.node)
+              .filter(
+                (e) => e.status !== 'ARCHIVED' && e.status !== 'DRAFT' && e.status !== 'PRIVATE' && e.zombie === false
+              ))
+        );
     }
 
     const filter = { or: createSearchFilter(q) };
 
     this.questionnaireService
       .getQuestionnaires({ filter })
-      .subscribe((questionnaires) => (this.foundQuestionnaires = questionnaires.edges.map((e) => e.node).filter(e => e.status !== 'ARCHIVED' && e.status !== 'DRAFT' && e.status !== 'PRIVATE'  && e.zombie === false)));
+      .subscribe(
+        (questionnaires) =>
+          (this.foundQuestionnaires = questionnaires.edges
+            .map((e) => e.node)
+            .filter(
+              (e) => e.status !== 'ARCHIVED' && e.status !== 'DRAFT' && e.status !== 'PRIVATE' && e.zombie === false
+            ))
+      );
   }
 
   public onToggleQuestionnaire(questionnaire: QuestionnaireVersion): void {

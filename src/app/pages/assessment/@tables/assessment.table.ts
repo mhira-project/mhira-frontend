@@ -18,9 +18,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     filterQuery: (q: number) =>
       q
         ? {
-            or: [
-              { name: { iLike: `%${q}%` } },
-            ] as Array<{ [K in keyof Assessment]: any }>,
+            or: [{ name: { iLike: `%${q}%` } }] as Array<{ [K in keyof Assessment]: any }>,
           }
         : {},
   },
@@ -114,7 +112,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     name: 'submissionDate',
     title: 'Submission Date',
     translationPath: 'plannedAssessments.submissionDate',
-    render: 'date'
+    render: 'date',
   },
   {
     name: 'emailFormatedStatus',
@@ -122,7 +120,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
     title: 'Email Status',
     translationPath: 'plannedAssessments.emailStatus',
     render: 'tag',
-    sort: true
+    sort: true,
   },
   {
     name: 'deliveryDate',
@@ -138,6 +136,6 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   },
 ];
 
-if(!environment.email){
+if (!environment.email) {
   AssessmentTable.pop();
 }

@@ -180,7 +180,7 @@ const deleteAssessment = gql`
 
 const archiveOneAssessment = gql`
   mutation($id: Int!) {
-    archiveOneAssessment(id: $id){
+    archiveOneAssessment(id: $id) {
       id
     }
   }
@@ -188,7 +188,7 @@ const archiveOneAssessment = gql`
 
 const restoreOneAssessment = gql`
   mutation($id: Int!) {
-    restoreOneAssessment(id: $id){
+    restoreOneAssessment(id: $id) {
       id
     }
   }
@@ -252,5 +252,5 @@ export const AssessmentsMutations = {
   updateOneMongoAssessment,
   addAnswer,
   changeAssessmentStatus,
-  sendAssessmentEmail
+  sendAssessmentEmail,
 };

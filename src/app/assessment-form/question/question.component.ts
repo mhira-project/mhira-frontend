@@ -82,7 +82,7 @@ export class QuestionComponent {
     if ((charCode < 48 || charCode > 57) && charCode !== 46) {
       evt.preventDefault();
     }
-  }
+  };
 
   private createBlankAnswer(question: Question): Answer {
     const answer: Answer = {

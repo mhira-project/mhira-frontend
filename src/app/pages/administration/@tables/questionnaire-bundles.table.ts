@@ -7,7 +7,7 @@ export const QuestionnaireBundlesColumns: TableColumn<any>[] = [
     translationPath: 'emailTemplates.name',
     filterField: {
       type: 'text',
-      value: ''
+      value: '',
     },
   },
   {

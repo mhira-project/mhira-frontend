@@ -83,7 +83,7 @@ const assessments = gql`
           }
           questionnaireAssessment {
             status
-            questionnaireBundles{
+            questionnaireBundles {
               _id
               name
             }
@@ -234,7 +234,7 @@ const getFullAssessment = gql`
         deletedAt
       }
       questionnaireAssessment {
-        questionnaireBundles{
+        questionnaireBundles {
           _id
           name
         }

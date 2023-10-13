@@ -14,16 +14,15 @@ import { EmailTemplatesService } from '../@services/email-templates.service';
 import { EmailTemplatesColumns } from '../@tables/email-templates.table';
 
 enum ActionKey {
-  EDIT
+  EDIT,
 }
 
 @Component({
   selector: 'app-email-templates',
   templateUrl: './email-templates.component.html',
-  styleUrls: ['./email-templates.component.scss']
+  styleUrls: ['./email-templates.component.scss'],
 })
 export class EmailTemplatesComponent implements OnInit {
-
   public data: Partial<any>[] | any;
   public columns: TableColumn<Partial<any>>[] = EmailTemplatesColumns;
   public isLoading = false;
@@ -44,14 +43,14 @@ export class EmailTemplatesComponent implements OnInit {
   constructor(
     private emailTemplatesService: EmailTemplatesService,
     private errorService: ErrorHandlerService,
-    private nzMessage: NzMessageService, 
+    private nzMessage: NzMessageService,
     private router: Router,
     private translate: TranslateService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getEmailTemplates();
-    this.actions = [{ key: ActionKey.EDIT, title: 'Edit Template'}];
+    this.actions = [{ key: ActionKey.EDIT, title: 'Edit Template' }];
   }
 
   public onPageChange(paging: Paging): void {
@@ -68,23 +67,23 @@ export class EmailTemplatesComponent implements OnInit {
     this.getEmailTemplates();
   }
 
-  private getEmailTemplates(): void{
+  private getEmailTemplates(): void {
     this.isLoading = true;
     this.emailTemplatesService
-    .getAllEmailTemplates(this.emailTemplatesRequestOptions)
-    .pipe(finalize(() => (this.isLoading = false)))
-    // tslint:disable
-    .subscribe((x: any) => { this.data = x.data.getAllEmailTemplates.edges.map((x: any) =>
-      Convert.toAssessmentAdministration(x.node));
-      this.pageInfo = x.data.getAllEmailTemplates.pageInfo;
-      const message$ = this.translate.get('emailTemplates.unableToLoad').subscribe((message) => {
-        (err: any) => this.errorService.handleError(err, { prefix: message })
+      .getAllEmailTemplates(this.emailTemplatesRequestOptions)
+      .pipe(finalize(() => (this.isLoading = false)))
+      // tslint:disable
+      .subscribe((x: any) => {
+        this.data = x.data.getAllEmailTemplates.edges.map((x: any) => Convert.toAssessmentAdministration(x.node));
+        this.pageInfo = x.data.getAllEmailTemplates.pageInfo;
+        const message$ = this.translate.get('emailTemplates.unableToLoad').subscribe((message) => {
+          (err: any) => this.errorService.handleError(err, { prefix: message });
+        });
+        message$.unsubscribe();
       });
-      message$.unsubscribe();
-    });
   }
 
-  deleteEmailTemplate(id: number){
+  deleteEmailTemplate(id: number) {
     this.emailTemplatesService.deleteEmailTemplate(id).subscribe(() => {
       const message$ = this.translate.get('emailTemplates.deleted').subscribe((message) => {
         this.nzMessage.success(message, { nzDuration: 3000 });
@@ -94,13 +93,10 @@ export class EmailTemplatesComponent implements OnInit {
     });
   }
 
-  public onAction({
-    action,
-    context: assessmentAdministration,
-  }: ActionArgs<any, ActionKey>): void {
+  public onAction({ action, context: assessmentAdministration }: ActionArgs<any, ActionKey>): void {
     switch (action.key) {
       case ActionKey.EDIT:
-        this.router.navigate([`/mhira/administration/create-template/${assessmentAdministration.id}`])
+        this.router.navigate([`/mhira/administration/create-template/${assessmentAdministration.id}`]);
         return;
     }
   }

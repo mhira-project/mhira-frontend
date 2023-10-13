@@ -26,7 +26,7 @@ import { registerLocale as registerLocalCountry } from 'i18n-iso-countries';
 import { registerLocale as registerLocaleLanguage } from '@cospired/i18n-iso-languages';
 import { MhiraMissingTranslationHandler } from './@core/mhira-missing-translation-handler';
 import { TranslationCode } from './@shared/@types/translation';
-import { CustomDirectivesModule } from './@shared/directives/custom-directives.module'
+import { CustomDirectivesModule } from './@shared/directives/custom-directives.module';
 
 // Translations Config
 // DEV: show key and warn in console, PROD: show default lang translation

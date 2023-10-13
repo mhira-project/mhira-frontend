@@ -35,43 +35,39 @@ export class AssessmentFormComponent implements OnInit {
       .pipe(
         map((data) => data?.assessment),
         filter((a) => !!a),
-        untilDestroyed(this),
+        untilDestroyed(this)
       )
       .subscribe((oldAssessment: FullAssessment) => {
-      const assessment = structuredClone(oldAssessment);
-      for (const questionnaire of assessment.questionnaireAssessment.questionnaires) {
-        questionnaire.questionGroups.map((group: any) => {
-          const questions: any[] = []
-          const uniqueQuestions = {};
-          group.questions.map((question: { appearance: string; choices: any[]; type: any }) => {
+        const assessment = structuredClone(oldAssessment);
+        for (const questionnaire of assessment.questionnaireAssessment.questionnaires) {
+          questionnaire.questionGroups.map((group: any) => {
+            const questions: any[] = [];
+            const uniqueQuestions = {};
+            group.questions.map((question: { appearance: string; choices: any[]; type: any }) => {
               if (group.appearance?.toLowerCase() == 'table-list' && question.type === 'select_one') {
-                  const choices = question.choices.map((choice: { label: any; }) => choice.label)
-                  if (!uniqueQuestions[JSON.stringify(choices)]) {
-                      uniqueQuestions[JSON.stringify(choices)] = {
-                          questions: [],
-                          choices: question.choices
-                      };
-                  }
-                  delete question.choices;
-                  delete question.appearance;
-                  uniqueQuestions[JSON.stringify(choices)].questions.push(
-                      question,
-                  );
-                  return;
+                const choices = question.choices.map((choice: { label: any }) => choice.label);
+                if (!uniqueQuestions[JSON.stringify(choices)]) {
+                  uniqueQuestions[JSON.stringify(choices)] = {
+                    questions: [],
+                    choices: question.choices,
+                  };
+                }
+                delete question.choices;
+                delete question.appearance;
+                uniqueQuestions[JSON.stringify(choices)].questions.push(question);
+                return;
               }
-              questions.push(question)
-          })
-          group.questions = questions
-          group.uniqueQuestions = Object.values(uniqueQuestions).map(
-              (value: any) => ({
-                  label: group.label,
-                  appearance: 'table-list',
-                  subQuestions: value.questions,
-                  choices: value.choices,
-              }),
-          );
-      })
-    }
+              questions.push(question);
+            });
+            group.questions = questions;
+            group.uniqueQuestions = Object.values(uniqueQuestions).map((value: any) => ({
+              label: group.label,
+              appearance: 'table-list',
+              subQuestions: value.questions,
+              choices: value.choices,
+            }));
+          });
+        }
         this.assessmentFormService.setAssessment(assessment);
         const [lang] = assessment.questionnaireAssessment.questionnaires.map((q) => q.questionnaire?.language) ?? [
           TranslationCode.EN,

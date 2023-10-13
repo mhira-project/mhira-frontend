@@ -31,7 +31,7 @@ const CryptoJS = require('crypto-js');
 enum ActionKey {
   DELETE_PATIENT,
   ARCHIVE_PATIENT,
-  RESTORE_PATIENT
+  RESTORE_PATIENT,
 }
 
 @Component({
@@ -68,8 +68,8 @@ export class PatientsListComponent {
 
   public patientStates: PatientStatus[] = [];
 
-  public onlyMyPatients = (localStorage.getItem('onlyMyPatients') === 'true');
-  public archivedPatients = (localStorage.getItem('archivedPatients') === 'true');
+  public onlyMyPatients = localStorage.getItem('onlyMyPatients') === 'true';
+  public archivedPatients = localStorage.getItem('archivedPatients') === 'true';
 
   constructor(
     private patientsService: PatientsService,
@@ -80,10 +80,10 @@ export class PatientsListComponent {
     private errorService: ErrorHandlerService,
     public perms: AppPermissionsService
   ) {
-    if(!localStorage.getItem('onlyMyPatients')){
+    if (!localStorage.getItem('onlyMyPatients')) {
       localStorage.setItem('onlyMyPatients', this.onlyMyPatients.toString());
     }
-    if(!localStorage.getItem('archivedPatients')){
+    if (!localStorage.getItem('archivedPatients')) {
       localStorage.setItem('archivedPatients', this.archivedPatients.toString());
     }
     this.getPatients();
@@ -114,11 +114,10 @@ export class PatientsListComponent {
   }
 
   public onMyPatients(): void {
-    if(this.onlyMyPatients === true){
+    if (this.onlyMyPatients === true) {
       localStorage.setItem('onlyMyPatients', 'false');
       this.onlyMyPatients = false;
-   }
-    else{
+    } else {
       localStorage.setItem('onlyMyPatients', 'true');
       this.onlyMyPatients = true;
     }
@@ -126,11 +125,10 @@ export class PatientsListComponent {
   }
 
   public onArchievedPatients(): void {
-    if(this.archivedPatients === true){
+    if (this.archivedPatients === true) {
       localStorage.setItem('archivedPatients', 'false');
       this.archivedPatients = false;
-    }
-    else{
+    } else {
       localStorage.setItem('archivedPatients', 'true');
       this.archivedPatients = true;
     }
@@ -164,16 +162,15 @@ export class PatientsListComponent {
     this.loading = true;
     const options = { ...this.patientRequestOptions };
 
-    if(!this.archivedPatients){
+    if (!this.archivedPatients) {
       options.filter = {
         ...options.filter,
-        and: [{ deleted: {is: false} }, ...(options.filter.and ?? [])],
+        and: [{ deleted: { is: false } }, ...(options.filter.and ?? [])],
       };
-    }  
-
+    }
 
     // apply for only my patients
-    if (this.onlyMyPatients){
+    if (this.onlyMyPatients) {
       options.filter = {
         ...options.filter,
         and: [{ caseManagers: { id: { eq: this.userId } } }, ...(options.filter.and ?? [])],
@@ -182,12 +179,12 @@ export class PatientsListComponent {
 
     // archieved patients
 
-    if(this.archivedPatients){
+    if (this.archivedPatients) {
       options.filter = {
         ...options.filter,
-        and: [{ deleted: {is: true} }, ...(options.filter.and ?? [])],
+        and: [{ deleted: { is: true } }, ...(options.filter.and ?? [])],
       };
-    }  
+    }
 
     this.patientsService
       .patients(options)
@@ -362,7 +359,6 @@ export class PatientsListComponent {
           })
       );
   }
-
 
   private get userId(): number {
     const user = JSON.parse(localStorage.getItem('user')) as User;

@@ -16,7 +16,6 @@
   margin-right: 15px;
 }
 
-
 h5 {
   font-weight: bold;
 }
@@ -31,7 +30,7 @@ nz-form-label {
   width: 100%;
 }
 
-nz-select{
+nz-select {
   min-width: 200px !important;
 }
 
@@ -61,17 +60,16 @@ nz-date-picker [nzInputReadOnly] {
   text-decoration: underline;
 }
 
-.email-label-wrapper{
-  display: flex; 
+.email-label-wrapper {
+  display: flex;
   justify-content: center;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-.email-label{
+.email-label {
   color: rgb(78, 78, 78);
   font-size: 14px;
   display: flex;
   align-items: center;
 }
-

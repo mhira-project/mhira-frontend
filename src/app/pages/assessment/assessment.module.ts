@@ -52,7 +52,7 @@ const antModules = [
   NzTagModule,
   NzPopoverModule,
   NzCheckboxModule,
-  NzAvatarModule
+  NzAvatarModule,
 ];
 
 @NgModule({
@@ -75,7 +75,7 @@ const antModules = [
     NzSelectModule,
     NzToolTipModule,
     QRCodeModule,
-    CustomDirectivesModule
+    CustomDirectivesModule,
   ],
   declarations: [
     PlanAssessmentComponent,

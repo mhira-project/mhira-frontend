@@ -77,7 +77,7 @@ export default {
   patients: {
     myPatients: 'Mis Pacientes',
     archivedPatients: 'Mostrar Pacientes Archivados',
-    notArchivedPatients: 'Mostrar Pacientes No Archivados'
+    notArchivedPatients: 'Mostrar Pacientes No Archivados',
   },
   tables: {
     assessmentAdministration: {
@@ -297,7 +297,7 @@ export default {
       <li><b>Opción de reemplazo</b>: Tras la eliminación, tendrá la opción de crear un nuevo cuestionario con la misma abreviatura y en el mismo idioma.</li>
     </ol>`,
     continueButton: 'Continuar',
-    cancelButton: 'Cancelar'
+    cancelButton: 'Cancelar',
   },
   questionnairesForm: {
     name: 'Nombre',
@@ -367,7 +367,7 @@ export default {
     permissions: 'Permisos',
     roles: 'Roles',
   },
-  emailTemplates:{
+  emailTemplates: {
     createTemplate: 'Crear Modelo de Email',
     created: '¡Modelo de email creado exitosamente!',
     updated: '¡Modelo de email actualizado exitosamente!',
@@ -377,22 +377,24 @@ export default {
     body: 'Cotenido',
     subject: 'Asunto',
     status: 'Estado',
-    module: 'Módulo'
+    module: 'Módulo',
   },
-  emailStatusFilter:{
+  emailStatusFilter: {
     expired: 'Expirado',
     planned: 'Planificado',
     pending: 'Pendiente',
     openForCompletion: 'Abierto para completar',
     partiallyCompleted: 'Parcialmente completado',
-    completed: 'Completado'
+    completed: 'Completado',
   },
   modal: {
     continue: '¿Vaya a la siguiente sección?',
     continueOverview: '¿Salir del cuestionario?',
-    unansweredQuestions: 'Usted ha dejado {{count}} preguntas sin responder. Todas las preguntas deben responderse para enviar el cuestionario.',
-    unansweredQuestionsOverview: "Tienes {{count}} preguntas obligatorias sin respuesta. ¿Estás seguro de que quieres completar el cuestionario?",
-    cancel: "Continuar sin completar las preguntas que faltan (No recomendado)",
-    ok: "Vuelva a completar las preguntas que faltan"
-  }
+    unansweredQuestions:
+      'Usted ha dejado {{count}} preguntas sin responder. Todas las preguntas deben responderse para enviar el cuestionario.',
+    unansweredQuestionsOverview:
+      'Tienes {{count}} preguntas obligatorias sin respuesta. ¿Estás seguro de que quieres completar el cuestionario?',
+    cancel: 'Continuar sin completar las preguntas que faltan (No recomendado)',
+    ok: 'Vuelva a completar las preguntas que faltan',
+  },
 };

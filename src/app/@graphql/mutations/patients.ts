@@ -276,7 +276,7 @@ const restorePatient = gql`
       updatedAt
     }
   }
-`
+`;
 
 const addInformantsToPatient = gql`
   mutation($input: AddInformantsToPatientInput!) {

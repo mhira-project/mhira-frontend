@@ -62,11 +62,11 @@
             [(ngModel)]="selectedInformant"
             formControlName="informantPatient"
           >
-          <ng-container *ngIf="dataToSelect[0].value !== undefined">
-            <nz-option *ngFor="let data of dataToSelect" [nzLabel]="data.label" [nzValue]="data.value">{{
-              data.label
-            }}</nz-option>
-          </ng-container>
+            <ng-container *ngIf="dataToSelect[0].value !== undefined">
+              <nz-option *ngFor="let data of dataToSelect" [nzLabel]="data.label" [nzValue]="data.value">{{
+                data.label
+              }}</nz-option>
+            </ng-container>
           </nz-select>
         </nz-input-group>
         <p>Self Rating.</p>
@@ -137,52 +137,84 @@
 
       <!-- Start Create -->
       <div *ngIf="!isUpdate">
-        <div *ngFor="let control of  datesFieldAsFormArray.controls ;let i = index;" formArrayName='dates' >
-          <div [formGroupName]="i" >
-              <div class="date-picker">
-                <nz-form-item style="margin-top: 14px">
-                  <nz-input-group class="date-picker1">
-                    <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
-                    <nz-date-picker
-                      [required]="assessmentForm.controls.emailReminder.value === true"
-                      [nzBorderless]="!editMode"
-                      nzShowTime
-                      nzFormat="yyyy-MM-dd HH:mm"
-                      [nzDisabled]="!editMode"
-                      formControlName="deliveryDate"
-                    ></nz-date-picker>
-                  </nz-input-group>
-                </nz-form-item>
-                <nz-form-item>
-                  <nz-input-group class="date-picker1">
-                    <h5>{{ 'createAssessment.expirationDate' | translate }}</h5>
-                    <nz-date-picker
-                      [nzBorderless]="!editMode"
-                      nzShowTime
-                      nzFormat="yyyy-MM-dd HH:mm"
-                      [nzDisabled]="!editMode"
-                      formControlName="expirationDate"
-                    ></nz-date-picker>
-                  </nz-input-group>
-                </nz-form-item>
-                <button *ngIf="i !== 0" (click)="remove(i)" nz-button nzShape="circle"><span nz-icon nzType="delete"></span></button>
-              </div>
+        <div *ngFor="let control of datesFieldAsFormArray.controls; let i = index" formArrayName="dates">
+          <div [formGroupName]="i">
+            <div class="date-picker">
+              <nz-form-item style="margin-top: 14px">
+                <nz-input-group class="date-picker1">
+                  <h5>{{ 'createAssessment.deliveryDate' | translate }}</h5>
+                  <nz-date-picker
+                    [required]="assessmentForm.controls.emailReminder.value === true"
+                    [nzBorderless]="!editMode"
+                    nzShowTime
+                    nzFormat="yyyy-MM-dd HH:mm"
+                    [nzDisabled]="!editMode"
+                    formControlName="deliveryDate"
+                  ></nz-date-picker>
+                </nz-input-group>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-input-group class="date-picker1">
+                  <h5>{{ 'createAssessment.expirationDate' | translate }}</h5>
+                  <nz-date-picker
+                    [nzBorderless]="!editMode"
+                    nzShowTime
+                    nzFormat="yyyy-MM-dd HH:mm"
+                    [nzDisabled]="!editMode"
+                    formControlName="expirationDate"
+                  ></nz-date-picker>
+                </nz-input-group>
+              </nz-form-item>
+              <button *ngIf="i !== 0" (click)="remove(i)" nz-button nzShape="circle">
+                <span nz-icon nzType="delete"></span>
+              </button>
+            </div>
           </div>
         </div>
-        <button (click)="addControl()" [disabled]="!editMode" type="button" nz-button nzShape="circle"><span nz-icon nzType="plus"></span></button>
+        <button (click)="addControl()" [disabled]="!editMode" type="button" nz-button nzShape="circle">
+          <span nz-icon nzType="plus"></span>
+        </button>
       </div>
       <!-- End Create -->
 
       <ng-container *ngIf="hasEmail">
         <h5 style="margin-top: 20px">Send Email</h5>
         <div class="email-label-wrapper">
-          <label [disableControl]="!editMode" formControlName="emailReminder" [nzValue]="fullAssessment?.emailReminder" [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>Sent assessment via email</label>
-          <input [disableControl]="!editMode" [ngModel]="patient?.email" style="width: 100%; height: min-content;" formControlName="receiverEmail" nz-input placeholder="youremail@domain.com" [value]="fullAssessment?.patient?.email" [disabled]="!checked" />
+          <label
+            [disableControl]="!editMode"
+            formControlName="emailReminder"
+            [nzValue]="fullAssessment?.emailReminder"
+            [nzTooltipPlacement]="['topLeft', 'leftTop']"
+            nz-tooltip
+            nzTooltipTitle="Email will be sent on the selected delivery date!"
+            class="email-label"
+            [(nzChecked)]="checked"
+            nz-checkbox
+            >Sent assessment via email</label
+          >
+          <input
+            [disableControl]="!editMode"
+            [ngModel]="patient?.email"
+            style="width: 100%; height: min-content"
+            formControlName="receiverEmail"
+            nz-input
+            placeholder="youremail@domain.com"
+            [value]="fullAssessment?.patient?.email"
+            [disabled]="!checked"
+          />
         </div>
         <nz-form-item>
           <nz-input-group *ngIf="assessmentForm.controls.emailReminder.value === true">
-            <nz-select [nzDisabled]="!editMode" formControlName="mailTemplateId" nzPlaceHolder="Please select the email template">
-              <nz-option *ngFor="let template of emailTemplates" [nzValue]="template.id" [nzLabel]="template.name"></nz-option>
+            <nz-select
+              [nzDisabled]="!editMode"
+              formControlName="mailTemplateId"
+              nzPlaceHolder="Please select the email template"
+            >
+              <nz-option
+                *ngFor="let template of emailTemplates"
+                [nzValue]="template.id"
+                [nzLabel]="template.name"
+              ></nz-option>
             </nz-select>
           </nz-input-group>
         </nz-form-item>
@@ -224,9 +256,15 @@
       (selectionChange)="onQuestionnaireSelected($event)"
     ></app-questionnaire-selection>
     <!--  -->
-    <hr>
+    <hr />
     <h4>Select Bundles</h4>
-    <nz-select style="width: 100%;" nzMode="multiple" nzPlaceHolder="Select your bundle..." [(ngModel)]="listOfSelectedBundles" (ngModelChange)="onBundleSelection()">
+    <nz-select
+      style="width: 100%"
+      nzMode="multiple"
+      nzPlaceHolder="Select your bundle..."
+      [(ngModel)]="listOfSelectedBundles"
+      (ngModelChange)="onBundleSelection()"
+    >
       <nz-option *ngFor="let option of listOfBundles" [nzLabel]="option?.node?.name" [nzValue]="option"></nz-option>
     </nz-select>
     <br />
@@ -234,12 +272,16 @@
     <!--  -->
   </section>
 </article>
-<hr>
-<div style="margin-top: 15px; margin-bottom: 15px;">
-  <h5 *ngIf="fullAssessment?.uuid !== null && fullAssessment?.uuid !== undefined"><span nz-icon nzType="link" nzTheme="outline"></span> Questionnaire Link</h5>
+<hr />
+<div style="margin-top: 15px; margin-bottom: 15px">
+  <h5 *ngIf="fullAssessment?.uuid !== null && fullAssessment?.uuid !== undefined">
+    <span nz-icon nzType="link" nzTheme="outline"></span> Questionnaire Link
+  </h5>
   <br />
 </div>
 <div class="link-container" *ngIf="fullAssessment?.uuid !== null && fullAssessment?.uuid !== undefined">
   <a target="_blank" [href]="assessmentUrl">{{ this.assessmentUrl?.toString().slice(0, 50) }}...</a>
-  <button style="margin-left: 10px;" nz-button nzType="default" nzShape="circle"><span (click)="copyAssessmentLink(this.assessmentUrl)" nz-icon nzType="copy" nzTheme="outline"></span></button>
+  <button style="margin-left: 10px" nz-button nzType="default" nzShape="circle">
+    <span (click)="copyAssessmentLink(this.assessmentUrl)" nz-icon nzType="copy" nzTheme="outline"></span>
+  </button>
 </div>
