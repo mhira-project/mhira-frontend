@@ -93,7 +93,7 @@ export class RolesAndPermissionsComponent implements OnInit {
   getUserPermissions(permission: any){
     const user = JSON.parse(localStorage.getItem('user')) as User;
     const userId = user.id;
-    return this.matrix.roles.filter((el) => el.id === userId)[0]?.permissions.map((el) => el.name).includes(permission);
+    return this.matrix.roles.filter((el) => el.name === user.roles[0]?.name)[0]?.permissions.map((el) => el.name).includes(permission);
   }
 
   assignPermissionToRole(permission: Permission, role: Role, checked: boolean) {

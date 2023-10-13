@@ -41,7 +41,7 @@ export const QuestionnaireVersionsColumns: TableColumn<FormattedQuestionnaireVer
         { label: QuestionnaireStatus.DRAFT, value: QuestionnaireStatus.DRAFT },
         { label: QuestionnaireStatus.PRIVATE, value: QuestionnaireStatus.PRIVATE },
         { label: QuestionnaireStatus.PUBLISHED, value: QuestionnaireStatus.PUBLISHED },
-        { label: QuestionnaireStatus.ARCHIVED, value: QuestionnaireStatus.ARCHIVED },
+        // { label: QuestionnaireStatus.ARCHIVED, value: QuestionnaireStatus.ARCHIVED },
       ],
     },
   },
