@@ -21,12 +21,13 @@ import { ErrorHandlerService } from '@shared/services/error-handler.service';
 import { PageInfo, Paging } from '@shared/@types/paging';
 import { Sorting } from '@shared/@types/sorting';
 import { QuestionnaireVersion } from '@app/pages/questionnaire-management/@types/questionnaire';
+import { TranslateService } from '@ngx-translate/core';
 
 const CryptoJS = require('crypto-js');
 
 enum ActionKey {
   ARCHIVE_QUESTIONNAIRE,
-  DELETE_QUESTIONNAIRE,
+  // DELETE_QUESTIONNAIRE,
 }
 
 // TODO: implement keyword search
@@ -35,11 +36,11 @@ export const createSearchFilter = (searchString: string): Array<{ [K in keyof Pa
   if (!searchString) return [];
   return [
     { name: { iLike: `%${searchString}%` } },
-    {
-      questionnaire: {
-        or: [{ abbreviation: { iLike: `%${searchString}%` } }, { language: { iLike: `%${searchString}%` } }],
-      },
-    },
+    // {
+    //   questionnaire: {
+    //     or: [{ abbreviation: { iLike: `%${searchString}%` } }, { language: { iLike: `%${searchString}%` } }],
+    //   },
+    // },
   ];
 };
 
@@ -63,7 +64,7 @@ export class QuestionnaireListComponent {
 
   public questionnaireRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
-    filter: {and: [{status: {eq: 'PUBLISHED'}}]},
+    filter: {and: [{status: {neq: 'PRIVATE'}}, {zombie: {is: false}}]},
     sorting: [],
   };
 
@@ -72,16 +73,17 @@ export class QuestionnaireListComponent {
     public perms: AppPermissionsService,
     private router: Router,
     private modalService: NzModalService,
-    private errorService: ErrorHandlerService
+    private errorService: ErrorHandlerService,
+    private translate: TranslateService
   ) {
     this.getQuestionnaires();
 
     if (this.perms.permissionsOnly(PermissionKey.MANAGE_QUESTIONNAIRES)) {
-      this.actions.push({ key: ActionKey.ARCHIVE_QUESTIONNAIRE, title: 'Archive Questionnaire' });
+      this.actions.push({ key: ActionKey.ARCHIVE_QUESTIONNAIRE, title: 'Discard Questionnaire' });
     }
-    if (this.perms.permissionsOnly(PermissionKey.DELETE_QUESTIONNAIRES)) {
-      this.actions.push({ key: ActionKey.DELETE_QUESTIONNAIRE, title: 'Delete Questionnaire' });
-    }
+    // if (this.perms.permissionsOnly(PermissionKey.DELETE_QUESTIONNAIRES)) {
+    //   this.actions.push({ key: ActionKey.DELETE_QUESTIONNAIRE, title: 'Delete Questionnaire' });
+    // }
   }
 
   public onSelect(questionnaire: FormattedQuestionnaireVersion): void {
@@ -98,9 +100,9 @@ export class QuestionnaireListComponent {
       case ActionKey.ARCHIVE_QUESTIONNAIRE:
         this.deleteQuestionnaire(questionnaire);
         return;
-      case ActionKey.DELETE_QUESTIONNAIRE:
-        this.deleteQuestionnaire(questionnaire, false);
-        return;
+      // case ActionKey.DELETE_QUESTIONNAIRE:
+      //   this.deleteQuestionnaire(questionnaire, false);
+      //   return;
     }
   }
 
@@ -154,13 +156,23 @@ export class QuestionnaireListComponent {
 
     if (archive) {
       // create confirmation modal
+      let title = '';
+      let content = '';
+      let continueButton = '';
+      let cancelButton = '';
+
+      this.translate.get('questionnaires.discardedTitle').subscribe((translation) => title = translation);
+      this.translate.get('questionnaires.discardedMessage').subscribe((translation) => content = translation);
+      this.translate.get('questionnaires.continueButton').subscribe((translation) => continueButton = translation);
+      this.translate.get('questionnaires.cancelButton').subscribe((translation) => cancelButton = translation);
+
       const modal = this.modalService.confirm({
         nzOnOk: () => true,
-        nzTitle: 'Archive Questionnaire',
-        nzContent: `If you archive the questionnaire, it will be moved to the old versions. 
-        The assessments made with this questionnaire will still be available. However, you
-        cannot bring the questionnaire back from the archive, and you can no longer modify
-        it. Are you sure you want to archive?`,
+        nzTitle: title,
+        nzContent: content,
+        nzClosable: false,
+        nzOkText: continueButton,
+        nzCancelText: cancelButton
       });
 
       // wait for modal to successfully complete
@@ -170,7 +182,7 @@ export class QuestionnaireListComponent {
 
     this.loading = true;
     this.qmService
-      .deleteQuestionnaire(questionnaire.questionnaire._id, archive)
+      .deleteQuestionnaire(questionnaire._id, archive)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () => {
@@ -180,10 +192,10 @@ export class QuestionnaireListComponent {
           } else {
             this.data.splice(this.data.indexOf(questionnaire), 1);
           }
+          this.getQuestionnaires();
         },
         (error) =>
           this.errorService.handleError(error, { prefix: `Unable to delete assessment "${questionnaire.name}"` })
       );
-      this.getQuestionnaires();
   }
 }

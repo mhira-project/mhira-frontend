@@ -98,8 +98,8 @@ export class Convert {
       title: questionnaire.status,
     };
 
-    questionnaire.language = json.questionnaire.language;
-    questionnaire.abbreviation = json.questionnaire.abbreviation;
+    // questionnaire.language = json.questionnaire.language;
+    // questionnaire.abbreviation = json.questionnaire.abbreviation;
 
     return questionnaire;
   }

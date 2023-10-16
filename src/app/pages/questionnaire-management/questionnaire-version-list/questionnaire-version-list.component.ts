@@ -42,7 +42,7 @@ export class QuestionnaireVersionListComponent implements OnInit {
 
   public questionnaireRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
-    filter: {},
+    filter: {and: [{zombie: {is: true}}]},
     sorting: [],
   };
 
@@ -82,7 +82,7 @@ export class QuestionnaireVersionListComponent implements OnInit {
   private getQuestionnaires(): void {
     this.loading = true;
     this.qmService
-      .getQuestionnairesVersion(this.questionnaireRequestOptions)
+      .getQuestionnaires(this.questionnaireRequestOptions)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(({ edges, pageInfo }) => {
         console.log(edges);

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getQuestionnaires = gql`
-  query($paging: CursorPaging, $filter: QuestionnaireVersionFilter, $sorting: [QuestionnaireVersionSort!]) {
+  query($paging: CursorPaging, $filter: QuestionnaireFilter, $sorting: [QuestionnaireSort!]) {
     questionnaires(paging: $paging, filter: $filter, sorting: $sorting) {
       pageInfo {
         hasNextPage
@@ -13,6 +13,7 @@ const getQuestionnaires = gql`
         node {
           _id
           name
+          zombie
           status
           createdAt
           keywords
@@ -21,11 +22,8 @@ const getQuestionnaires = gql`
           website
           license
           timeToComplete
-          questionnaire {
-            _id
-            language
-            abbreviation
-          }
+          language
+          abbreviation
         }
       }
     }

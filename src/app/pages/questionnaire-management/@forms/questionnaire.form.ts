@@ -38,10 +38,10 @@ export const QuestionnaireForm: Form & { groups: { fields: { name: keyof CreateQ
           span: 12,
           isRequired: true,
           options: [
-            { value: QuestionnaireStatus.DRAFT, label: 'Draft' },
-            { value: QuestionnaireStatus.PRIVATE, label: 'Private' },
+            // { value: QuestionnaireStatus.DRAFT, label: 'Draft' },
+            // { value: QuestionnaireStatus.PRIVATE, label: 'Private' },
             { value: QuestionnaireStatus.PUBLISHED, label: 'Published' },
-            { value: QuestionnaireStatus.ARCHIVED, label: 'Archived' },
+            // { value: QuestionnaireStatus.ARCHIVED, label: 'Archived' },
           ],
         },
         {
@@ -136,10 +136,10 @@ export const QuestionnaireUpdateForm: Form & { groups: { fields: { name: keyof U
           span: 12,
           isRequired: true,
           options: [
-            { value: QuestionnaireStatus.DRAFT, label: 'Draft' },
-            { value: QuestionnaireStatus.PRIVATE, label: 'Private' },
+            // { value: QuestionnaireStatus.DRAFT, label: 'Draft' },
+            // { value: QuestionnaireStatus.PRIVATE, label: 'Private' },
             { value: QuestionnaireStatus.PUBLISHED, label: 'Published' },
-            { value: QuestionnaireStatus.ARCHIVED, label: 'Archived' },
+            // { value: QuestionnaireStatus.ARCHIVED, label: 'Archived' },
           ],
         },
         {

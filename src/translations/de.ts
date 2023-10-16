@@ -288,6 +288,17 @@ export default {
     website: 'Website',
     license: 'Lizenz',
     createdAt: 'Erstellungsdatum',
+    discardedTitle: 'Sind Sie sicher, dass Sie diesen Fragebogen entfernen möchten?',
+    discardedMessage: `<p>Bitte beachten Sie die folgenden Konsequenzen:</p>
+    <ol>
+      <li><b>Neue Testungen</b>: Der entfernte Fragebogen steht für zukünftige Testungen nicht mehr zur Verfügung.</li>
+      <li><b>Datenzugriff</b>: Daten, die mit dem nun entfernten Fragebogen erhoben wurden, bleiben weiterhin zugänglich.</li>
+      <li><b>Berichtsanpassungen</b>: Berichte, die den entfernten Fragebogen beinhalten, können nach wie vor angepasst werden.</li>
+      <li><b>Archiv-Bereich</b>: Der entfernte Fragebogen wird in den Bereich "Alte Fragebogenversionen" verschoben, wo er weiterhin bearbeitet werden kann.</li>
+      <li><b>Ersatzmöglichkeit</b>: Nach dem Entfernen haben Sie die Möglichkeit, einen neuen Fragebogen mit der gleichen Abkürzung und in derselben Sprache zu erstellen.</li>
+    </ol>`,
+    continueButton: 'Fortfahren',
+    cancelButton: 'Abbrechen'
   },
   questionnairesForm: {
     name: 'Name',

@@ -50,7 +50,7 @@ export default {
     caregiverList: 'Caregiver List',
     questionnaires: 'Questionnaires',
     questionnairesList: 'Questionnaires',
-    questionnairesVersionList: 'Old Versions',
+    questionnairesVersionList: 'Discarded Questionnaires',
     uploadQuestionnaire: 'Upload Questionnaire',
     questionnaireBundles: 'Questionnaire Bundles',
     createQuestionnaireBundle: 'Create Bundle',
@@ -293,6 +293,17 @@ export default {
     website: 'Website',
     license: 'License',
     createdAt: 'Created At',
+    discardedTitle: 'Are You Sure You Want to Discard This Questionnaire?',
+    discardedMessage: `<p>What happens when you discard a questionnaire?</p>
+    <ol>
+      <li><b>New Assessments</b>: You won't be able to use this questionnaire for new assessments.</li>
+      <li><b>Data</b>: Any data you've already collected with this questionnaire will still be accessible.</li>
+      <li><b>Report Scripts</b>: You will still be able to edit the scripts that generate reports based on this questionnaire.</li>
+      <li><b>Location</b>: The questionnaire will be moved to a separate section called "Discarded Questionnaires." This is where you can edit the questionnaire, including its associated scripts.</li>
+      <li><b>Replacement</b>: Discarding frees up space for a new questionnaire with the same language and abbreviation.</li>
+    </ol>`,
+    continueButton: 'Continue',
+    cancelButton: 'Cancel'
   },
   questionnairesForm: {
     name: 'Name',

@@ -287,6 +287,17 @@ export default {
     website: 'Faqja e Internetit',
     license: 'Liçensë',
     createdAt: 'Krijuar Më',
+    discardedTitle: 'A je i sigurt se do të skarcosh këtë version?',
+    discardedMessage: `<p>Çfarë ndodh kur skarcon një version?</p>
+    <ol>
+      <li><b>Vlerësimet e Reja</b>: Nuk do të jeni në gjendje të përdorni këtë version për vlerësime të reja.</li>
+      <li><b>Të dhënat</b>: Të gjitha të dhënat që keni grumbulluar deri më tani me këtë version do të jenë përsëri të aksesueshme.</li>
+      <li><b>Skriptet e Raporteve</b>: Do të jeni ende në gjendje të editoni skriptin që gjeneron raporte bazuar në këtë version.</li>
+      <li><b>Vendndodhja</b>: Vlerësimi do të zhvendoset në një seksion të veçantë të quajtur "Vlerësimet e skarcuara". Këtu mund të editoni vlerësimin, përfshirë dhe skriptet e lidhura me të.</li>
+      <li><b>Zëvëndësimi</b>: Skarcimi liron hapësirë për një version të ri me të njejtën gjuhë dhe shkurtim.</li>
+    </ol>`,
+    continueButton: 'Procedo',
+    cancelButton: 'Anullo'
   },
   questionnairesForm: {
     name: 'Emri',
