@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/auth/auth.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { version } from '../../../../package.json';
+import packageInfo from '../../../../package.json';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   hasErrors = false;
   errors: string[] = [];
   passwordVisible = false;
-  version: string = version;
+  version: string = packageInfo.version;
 
   constructor(
     private fb: FormBuilder,
