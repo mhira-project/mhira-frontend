@@ -83,6 +83,10 @@ const assessments = gql`
           }
           questionnaireAssessment {
             status
+            questionnaireBundles{
+              _id
+              name
+            }
             questionnaires(populate: true) {
               _id
               name
@@ -230,6 +234,10 @@ const getFullAssessment = gql`
         deletedAt
       }
       questionnaireAssessment {
+        questionnaireBundles{
+          _id
+          name
+        }
         _id
         status
         answers {

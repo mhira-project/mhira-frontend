@@ -400,5 +400,11 @@ export default {
     unansweredQuestionsOverview: "You have {{count}} unanswered required question(s). Are you sure you want to finish the questionnaire?",
     cancel: "Proceed Without Completing (Not Recommended)",
     ok: "Go Back and Complete the Questions"
+  },
+  bundles: {
+    created: 'Bundle created successfully!',
+    updated: 'Bundle updated successfully!',
+    deleted: 'Bundle deleted successfully!',
+    unableToLoad: 'Unable to load bundles!',
   }
 };

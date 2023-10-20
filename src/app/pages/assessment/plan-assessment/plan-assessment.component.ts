@@ -26,6 +26,7 @@ import { LocationStrategy } from '@angular/common';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { EmailTemplatesService } from '@app/pages/administration/@services/email-templates.service';
 import { DEFAULT_PAGE_SIZE } from '@app/@shared/@modules/master-data/@types/list';
+import { QuestionnaireBundlesService } from '@app/pages/questionnaire-management/@services/questionnaire-bundles.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -38,6 +39,8 @@ export class PlanAssessmentComponent implements OnInit {
   public PK = PermissionKey;
   public selectedQuestionnaires: QuestionnaireVersion[] = [];
   public selectedAssessment: any = null;
+  listOfBundles: any = [];
+  listOfSelectedBundles: any = [];
   public typeSelected: any = 'PATIENT';
   public dataToSelect: any = [];
   public users: User[] = [];
@@ -165,6 +168,7 @@ export class PlanAssessmentComponent implements OnInit {
     private errorService: ErrorHandlerService,
     private activatedRoute: ActivatedRoute,
     private emailTemplatesService: EmailTemplatesService,
+    private bundlesService: QuestionnaireBundlesService,
     private departmentsService: DepartmentsService,
     private assessmentAdministrationService: AssessmentAdministrationService,
     public perms: AppPermissionsService,
@@ -178,7 +182,11 @@ export class PlanAssessmentComponent implements OnInit {
     this.getUserDepartments({paging: {first: 50}});
     this.initAssessment();
     this.userAutoSelect();
+    this.getBundles();
     this.hasEmail = environment.email;
+    setTimeout(() => {
+      console.log('FULL ASSESSMENT: ', this.fullAssessment);
+    }, 1000);
   }
 
   get datesFieldAsFormArray(): FormArray {
@@ -338,6 +346,34 @@ export class PlanAssessmentComponent implements OnInit {
         this.assessmentForm.patchValue({mailTemplateId: this.emailTemplates[0]?.id})
       }
     });
+  }
+
+  getBundles(){
+    this.bundlesService.getQuestionnairesBundles().subscribe((data: any) => {
+      this.listOfBundles = data.data.getQuestionnaireBundles.edges;
+    })
+  }
+
+  onBundleSelection(){
+    this.selectedQuestionnaires = this.selectedQuestionnaires.concat(this.listOfSelectedBundles.map((bundle: any) => bundle.node.questionnaires).flat());
+    this.selectedQuestionnaires = this.filterUniqueQuestionnaires(this.selectedQuestionnaires);
+    this.assessmentForm.patchValue({questionnaires: this.selectedQuestionnaires});
+  }
+
+  filterUniqueQuestionnaires(questionnaires: any) {
+    const uniqueQuestionnaires = [];
+    const seenIds = new Set();
+  
+    for (const questionnaire of questionnaires) {
+      const id = questionnaire._id;
+  
+      // Check if the _id has been seen before
+      if (!seenIds.has(id)) {
+        seenIds.add(id);
+        uniqueQuestionnaires.push(questionnaire);
+      }
+    }
+    return uniqueQuestionnaires;
   }
 
   get dates(): FormArray {

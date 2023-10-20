@@ -223,6 +223,15 @@
       [selectedQuestionnaires]="selectedQuestionnaires"
       (selectionChange)="onQuestionnaireSelected($event)"
     ></app-questionnaire-selection>
+    <!--  -->
+    <hr>
+    <h4>Select Bundles</h4>
+    <nz-select style="width: 100%;" nzMode="multiple" nzPlaceHolder="Select your bundle..." [(ngModel)]="listOfSelectedBundles" (ngModelChange)="onBundleSelection()">
+      <nz-option *ngFor="let option of listOfBundles" [nzLabel]="option?.node?.name" [nzValue]="option"></nz-option>
+    </nz-select>
+    <br />
+    <br />
+    <!--  -->
   </section>
 </article>
 <hr>

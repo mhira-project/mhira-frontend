@@ -88,6 +88,14 @@ export const MENU: SideNavInterface[] | any = [
         submenu: [],
       },
       {
+        path: 'questionnaire-management/questionnaire-bundles-list',
+        title: 'menu.questionnaireBundles',
+        permissions: [PK.MANAGE_QUESTIONNAIRES],
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+      {
         path: 'questionnaire-management/questionnaire-form',
         title: 'menu.uploadQuestionnaire',
         permissions: [PK.MANAGE_QUESTIONNAIRES],

@@ -97,5 +97,5 @@ export class EmailTemplatesService {
               fetchPolicy: 'no-cache'
           }
       );
-  }
+    }
 }
