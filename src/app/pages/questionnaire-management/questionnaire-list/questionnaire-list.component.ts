@@ -182,7 +182,7 @@ export class QuestionnaireListComponent {
 
     this.loading = true;
     this.qmService
-      .deleteQuestionnaire(questionnaire._id, archive)
+      .deleteQuestionnaire(questionnaire._id)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () => {
