@@ -187,7 +187,6 @@
       }
     }
   },
-  "defaultProject": "ng-x-rocket",
   "cli": {
     "analytics": "1d3e231a-7d09-4602-a8b5-587527590c05"
   }

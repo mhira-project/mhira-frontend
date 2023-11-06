@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/auth/auth.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -11,7 +11,7 @@ import packageInfo from '../../../../package.json';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  validateForm!: FormGroup;
+  validateForm!: UntypedFormGroup;
   isLoading = false;
   hasErrors = false;
   errors: string[] = [];
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   version: string = packageInfo.version;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private authService: AuthService,
     private notification: NzNotificationService

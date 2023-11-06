@@ -7,7 +7,7 @@ import {
   UpdateOneReportInput,
   UpdateReport,
 } from '@app/pages/administration/@types/reports';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { Role } from '@app/pages/administration/@types/role';
 import { finalize } from 'rxjs/operators';
 import { RolesService } from '@app/pages/administration/@services/roles.service';
@@ -43,7 +43,7 @@ export class CreateReportComponent implements OnInit {
   newMode = false;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private rolesService: RolesService,
     private errorService: ErrorHandlerService,
     private message: NzMessageService,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { EmailTemplatesService } from '../@services/email-templates.service';
@@ -58,7 +58,7 @@ export class CreateEmailTemplateComponent implements OnInit {
 
   constructor(
     private emailTemplatesService: EmailTemplatesService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private nzMessage: NzMessageService,
     private router: Router,
     private route: ActivatedRoute,

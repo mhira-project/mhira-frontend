@@ -5,7 +5,7 @@ import { environment } from '@env/environment';
 import { QuestionnaireVersion } from '../../questionnaire-management/@types/questionnaire';
 import { User } from '@app/pages/user-management/@types/user';
 import { Patient } from '@app/pages/patients-management/@types/patient';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, FormControl } from '@angular/forms';
 import { FullAssessment } from '../@types/assessment';
 import { PermissionKey } from '../../../@shared/@types/permission';
 import { AppPermissionsService } from '../../../@shared/services/app-permissions.service';
@@ -53,7 +53,7 @@ export class PlanAssessmentComponent implements OnInit {
   public selectedInformant: any = null;
   public selectedClinician: User;
   public fullAssessment: FullAssessment;
-  public assessmentForm: FormGroup;
+  public assessmentForm: UntypedFormGroup;
   public editMode = true;
   public isLoading = false;
   public departments: Department[] = [];
@@ -162,7 +162,7 @@ export class PlanAssessmentComponent implements OnInit {
   ];
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private assessmentService: AssessmentService,
     private nzMessage: NzMessageService,
     private errorService: ErrorHandlerService,
@@ -189,8 +189,8 @@ export class PlanAssessmentComponent implements OnInit {
     }, 1000);
   }
 
-  get datesFieldAsFormArray(): FormArray {
-    return this.assessmentForm.get('dates') as FormArray;
+  get datesFieldAsFormArray(): UntypedFormArray {
+    return this.assessmentForm.get('dates') as UntypedFormArray;
   }
 
   addControl(): void {
@@ -384,8 +384,8 @@ export class PlanAssessmentComponent implements OnInit {
     return uniqueQuestionnaires;
   }
 
-  get dates(): FormArray {
-    return this.assessmentForm.get('dates') as FormArray;
+  get dates(): UntypedFormArray {
+    return this.assessmentForm.get('dates') as UntypedFormArray;
   }
 
   private initAssessment() {

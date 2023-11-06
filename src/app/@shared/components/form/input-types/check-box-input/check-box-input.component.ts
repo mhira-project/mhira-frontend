@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Field } from '@shared/components/form/@types/field';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-check-box-input',
@@ -12,7 +12,7 @@ export class CheckBoxInputComponent implements OnInit {
   @Input() inputMode = false;
   @Input() autoFill = false;
   @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
-  inputGroup: FormGroup;
+  inputGroup: UntypedFormGroup;
   values: any[] = [];
 
   constructor() {}
@@ -22,29 +22,29 @@ export class CheckBoxInputComponent implements OnInit {
   }
 
   initializeInput() {
-    let control: FormControl | FormGroup;
+    let control: UntypedFormControl | UntypedFormGroup;
     if (this.field.isRequired) {
       if (this.field.pattern) {
-        control = new FormControl('', [Validators.required, Validators.pattern(this.field.pattern)]);
+        control = new UntypedFormControl('', [Validators.required, Validators.pattern(this.field.pattern)]);
       } else if (this.field.maxLength) {
-        control = new FormControl('', [Validators.required, Validators.maxLength(this.field.maxLength)]);
+        control = new UntypedFormControl('', [Validators.required, Validators.maxLength(this.field.maxLength)]);
       } else if (this.field.minLength) {
-        control = new FormControl('', [Validators.required, Validators.minLength(this.field.minLength)]);
+        control = new UntypedFormControl('', [Validators.required, Validators.minLength(this.field.minLength)]);
       } else {
-        control = new FormControl('', Validators.required);
+        control = new UntypedFormControl('', Validators.required);
       }
     } else {
       if (this.field.pattern) {
-        control = new FormControl('', Validators.pattern(this.field.pattern));
+        control = new UntypedFormControl('', Validators.pattern(this.field.pattern));
       } else if (this.field.maxLength) {
-        control = new FormControl('', Validators.maxLength(this.field.maxLength));
+        control = new UntypedFormControl('', Validators.maxLength(this.field.maxLength));
       } else if (this.field.minLength) {
-        control = new FormControl('', Validators.minLength(this.field.minLength));
+        control = new UntypedFormControl('', Validators.minLength(this.field.minLength));
       } else {
-        control = new FormControl();
+        control = new UntypedFormControl();
       }
     }
-    this.inputGroup = new FormGroup({ [this.field.name]: control });
+    this.inputGroup = new UntypedFormGroup({ [this.field.name]: control });
   }
 
   inputIsValid(): boolean {

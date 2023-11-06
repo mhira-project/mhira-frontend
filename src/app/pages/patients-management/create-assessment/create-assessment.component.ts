@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { FormattedPatient } from '@app/pages/patients-management/@types/formatted-patient';
 import { PatientModel } from '@app/pages/patients-management/@models/patient.model';
 import { environment } from '@env/environment';
@@ -35,7 +35,7 @@ const CryptoJS = require('crypto-js');
   styleUrls: ['./create-assessment.component.scss'],
 })
 export class CreateAssessmentComponent implements OnInit {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   deliveryDate: any = null;
   expireDate: any = null;
   typeSelected: any = 'PATIENT';
@@ -98,7 +98,7 @@ export class CreateAssessmentComponent implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private caregiversPatientService: CaregiversPatientService,
@@ -145,12 +145,12 @@ export class CreateAssessmentComponent implements OnInit {
     this.hasEmail = environment.email;
   }
 
-  get datesFieldAsFormArray(): FormArray {
-    return this.formGroup.get('dates') as FormArray;
+  get datesFieldAsFormArray(): UntypedFormArray {
+    return this.formGroup.get('dates') as UntypedFormArray;
   }
 
-  get dates(): FormArray {
-    return this.formGroup.get('dates') as FormArray;
+  get dates(): UntypedFormArray {
+    return this.formGroup.get('dates') as UntypedFormArray;
   }
 
   addControl(): void {

@@ -20,7 +20,7 @@ import { finalize } from 'rxjs/operators';
 import { CaregiversPatientService } from '@app/pages/patients-management/@services/caregivers-patient.service';
 import { CaregiversPatientTable } from '@app/pages/patients-management/@tables/caregivers-patient.table';
 import { AppPermissionsService } from '@shared/services/app-permissions.service';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { ErrorHandlerService } from '@shared/services/error-handler.service';
 import { CaregiversPatientForm } from '@app/pages/patients-management/@forms/caregivers-patient.form';
 import { CaregiversService } from '@app/pages/patients-management/@services/caregivers.service';
@@ -43,7 +43,7 @@ export class CaregiversPatientComponent implements OnInit {
   public PK = PermissionKey;
   public data: Partial<Caregiver>[];
   public columns: TableColumn<Partial<Caregiver>>[] = CaregiversPatientTable as TableColumn<Partial<Caregiver>>[];
-  public addCaregiverForm: FormGroup;
+  public addCaregiverForm: UntypedFormGroup;
   public selectedCaregiver: Caregiver;
 
   // form properties
