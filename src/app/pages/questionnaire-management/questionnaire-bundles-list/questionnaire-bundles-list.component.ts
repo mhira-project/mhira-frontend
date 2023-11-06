@@ -30,10 +30,11 @@ export class QuestionnaireBundlesListComponent implements OnInit {
   public pageInfo: PageInfo;
   public actions: Action<ActionKey>[] | any = [];
 
-  public bundlesRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
+  public bundlesRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[]; departmentIds: [] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
     filter: {},
     sorting: [],
+    departmentIds: []
   };
 
   constructor(private router: Router, private bundlesService: QuestionnaireBundlesService, private translate: TranslateService, private nzMessage: NzMessageService) { }

@@ -304,6 +304,7 @@ export class PlanAssessmentComponent implements OnInit {
     this.getUserDepartments({filter: { and: [{ patients: { id: { eq: this.fullAssessment?.patientId ?? this.patient?.id } } }]}});
     this.emailTemplates = [];
     this.getPatientEmailTemplates(this.fullAssessment?.patientId || this.patient?.id);
+    this.getBundles();
   }
 
   goBack() {
@@ -349,6 +350,7 @@ export class PlanAssessmentComponent implements OnInit {
   }
 
   getBundles(){
+    const departmentIds = this.departments.map((el) => el.id);
     this.bundlesService.getQuestionnairesBundles().subscribe((data: any) => {
       this.listOfBundles = data.data.getQuestionnaireBundles.edges;
     })

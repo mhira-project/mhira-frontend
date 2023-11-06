@@ -18,6 +18,7 @@ export class QuestionnaireBundlesService {
         paging?: Paging;
         filter?: Filter;
         sorting?: Sorting[];
+        departmentIds: any[];
     }): Observable < FetchResult < any >> {
         return this.apollo.query(
             {
