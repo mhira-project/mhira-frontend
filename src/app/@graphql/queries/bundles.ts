@@ -1,8 +1,13 @@
 import gql from 'graphql-tag';
 
 const getQuestionnaireBundles = gql`
-  query($paging: CursorPaging, $filter: QuestionnaireBundleFilter, $sorting: [QuestionnaireBundleSort!]) {
-    getQuestionnaireBundles(paging: $paging, filter: $filter, sorting: $sorting) {
+  query(
+    $paging: CursorPaging
+    $filter: QuestionnaireBundleFilter
+    $sorting: [QuestionnaireBundleSort!]
+    $departmentIds: [Float!]
+  ) {
+    getQuestionnaireBundles(paging: $paging, filter: $filter, sorting: $sorting, departmentIds: $departmentIds) {
       edges {
         node {
           _id

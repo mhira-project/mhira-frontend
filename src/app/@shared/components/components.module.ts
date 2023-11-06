@@ -180,7 +180,7 @@ const PIPES = [
     CommonModule,
     FormsModule,
     AppFormModule,
-    NgxInputSearchModule,
+    // NgxInputSearchModule,
     ReactiveFormsModule,
     TranslateModule,
   ],

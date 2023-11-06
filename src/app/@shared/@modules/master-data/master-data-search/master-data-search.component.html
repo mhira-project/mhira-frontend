@@ -5,8 +5,8 @@
     type="text"
     [placeholder]="placeholder ? placeholder : ('core.search' | translate)"
     nz-input
-    [debounceTime]="300"
-    (ngxInputSearch)="search.emit(field.value)"
+    debounceTime="300"
+    (input)="search.emit(field.value)"
     (emptyInput)="search.emit(field.value)"
   />
 </nz-input-group>

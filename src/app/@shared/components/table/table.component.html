@@ -8,9 +8,9 @@
     <div nz-col nzFlex="300px">
       <nz-input-group *ngIf="showSearch" [nzSuffix]="suffixIconSearch">
         <input
-          (ngxInputSearch)="onSearchAction($event)"
+          (input)="onSearchAction($event)"
           (emptyInput)="handleEmptySearch()"
-          [debounceTime]="300"
+          debounceTime="300"
           nz-input
           placeholder="Search"
           type="text"

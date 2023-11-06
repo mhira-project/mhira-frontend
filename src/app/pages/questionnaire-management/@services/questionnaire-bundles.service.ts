@@ -18,6 +18,7 @@ export class QuestionnaireBundlesService {
     paging?: Paging;
     filter?: Filter;
     sorting?: Sorting[];
+    departmentIds: any[];
   }): Observable<FetchResult<any>> {
     return this.apollo.query({
       query: BundleQueries.getQuestionnaireBundles,
@@ -25,6 +26,7 @@ export class QuestionnaireBundlesService {
         paging: params && params.paging ? params.paging : undefined,
         filter: params && params.filter ? params.filter : undefined,
         sorting: params && params.sorting ? params.sorting : undefined,
+        // departmentIds: params && params.departmentIds ? params.departmentIds : undefined
       },
       fetchPolicy: 'no-cache',
     });

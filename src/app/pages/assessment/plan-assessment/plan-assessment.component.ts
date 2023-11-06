@@ -308,6 +308,7 @@ export class PlanAssessmentComponent implements OnInit {
     });
     this.emailTemplates = [];
     this.getPatientEmailTemplates(this.fullAssessment?.patientId || this.patient?.id);
+    this.getBundles();
   }
 
   goBack() {
@@ -353,6 +354,7 @@ export class PlanAssessmentComponent implements OnInit {
   }
 
   getBundles() {
+    const departmentIds = this.departments.map((el) => el.id);
     this.bundlesService.getQuestionnairesBundles().subscribe((data: any) => {
       this.listOfBundles = data.data.getQuestionnaireBundles.edges;
     });

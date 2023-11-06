@@ -67,10 +67,10 @@ export class QuestionnaireManagementService {
       .pipe(map(({ data }) => data.getQuestionnaireVersions));
   }
 
-  public deleteQuestionnaire(_id: string, softDelete: boolean = true) {
+  public deleteQuestionnaire(_id: string) {
     return this.apollo.mutate({
       mutation: QuestionnaireMutations.deleteQuestionnaire,
-      variables: { _id, softDelete },
+      variables: { _id },
       fetchPolicy: 'no-cache',
     });
   }

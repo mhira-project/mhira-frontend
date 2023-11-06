@@ -30,7 +30,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
   imports: [
     CommonModule,
     SharedModule,
-    NgxInputSearchModule,
+    // NgxInputSearchModule,
     NzInputModule,
     NzIconModule,
     NzTableModule,

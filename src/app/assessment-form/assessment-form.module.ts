@@ -52,7 +52,7 @@ import { TranslateModule } from '@ngx-translate/core';
     NzTagModule,
     NzDatePickerModule,
     NzTimePickerModule,
-    NgxInputSearchModule,
+    // NgxInputSearchModule,
     NzFormModule,
     TranslateModule,
   ],

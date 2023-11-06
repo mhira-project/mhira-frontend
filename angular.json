@@ -138,17 +138,14 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "ng-x-rocket:build",
-            "hmr": true,
-            "hmrWarning": false
+            "hmr": true
           },
           "configurations": {
             "production": {
               "browserTarget": "ng-x-rocket:build:production",
               "hmr": false
             },
-            "ci": {
-              "progress": false
-            },
+            "ci": {},
             "dev": {
               "browserTarget": "ng-x-rocket:build:dev",
               "hmr": false
@@ -173,13 +170,6 @@
               "coverage": true,
               "silent": true
             }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json", "e2e/tsconfig.json"],
-            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
