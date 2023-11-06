@@ -39,8 +39,8 @@ const updateQuestionnaire = gql`
 `;
 
 const deleteQuestionnaire = gql`
-  mutation($_id: String!, $softDelete: Boolean) {
-    deleteQuestionnaire(_id: $_id, softDelete: $softDelete) {
+  mutation($_id: String!) {
+    deleteQuestionnaire(_id: $_id) {
       _id
     }
   }
