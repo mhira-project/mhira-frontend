@@ -55,7 +55,6 @@ export class QuestionnaireBundlesService {
   }
 
   public updateQuestionnaireBundle(bundle: any): Observable<FetchResult<any>> {
-    console.log('bundle', bundle);
     return this.apollo.mutate({
       mutation: BundleMutations.updateQuestionnaireBundle,
       variables: {
