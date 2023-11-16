@@ -7,13 +7,13 @@ export const QuestionnaireBundlesColumns: TableColumn<any>[] = [
     translationPath: 'emailTemplates.name',
     filterField: {
       type: 'text',
-      value: ''
+      value: '',
     },
   },
   {
     title: 'Questionnaires',
     name: 'questionnaires',
-    render: 'questAvatar',
+    render: 'questionaireBundle',
     translationPath: 'menu.questionnaires',
     filterField: {
       type: 'text',
