@@ -88,14 +88,6 @@ export const MENU: SideNavInterface[] | any = [
         submenu: [],
       },
       {
-        path: 'questionnaire-management/questionnaire-bundles-list',
-        title: 'menu.questionnaireBundles',
-        permissions: [PK.MANAGE_QUESTIONNAIRES],
-        iconType: '',
-        iconTheme: '',
-        submenu: [],
-      },
-      {
         path: 'questionnaire-management/questionnaire-form',
         title: 'menu.uploadQuestionnaire',
         permissions: [PK.MANAGE_QUESTIONNAIRES],
@@ -107,6 +99,14 @@ export const MENU: SideNavInterface[] | any = [
         path: 'questionnaire-management/questionnaire-version-list',
         title: 'menu.questionnairesVersionList',
         permissions: [PK.VIEW_QUESTIONNAIRES],
+        iconType: '',
+        iconTheme: '',
+        submenu: [],
+      },
+      {
+        path: 'questionnaire-management/questionnaire-bundles-list',
+        title: 'menu.questionnaireBundles',
+        permissions: [PK.MANAGE_QUESTIONNAIRES],
         iconType: '',
         iconTheme: '',
         submenu: [],
@@ -231,7 +231,7 @@ export const MENU: SideNavInterface[] | any = [
         iconTheme: 'outline',
         icon: 'code',
         submenu: [],
-      }
+      },
       // {
       //   path: 'administration/settings',
       //   title: 'menu.settings',
@@ -264,16 +264,14 @@ export const MENU: SideNavInterface[] | any = [
 // Logic for conditionally adding email templates
 // button on the menu, if env variable is true..
 
-if(environment.email){
-  MENU[5].submenu.splice(8, 0,
-    {
-      path: 'administration/email-templates',
-      title: 'menu.emailTemplates',
-      permissions: [PK.VIEW_SETTINGS],
-      iconType: 'nzIcon',
-      iconTheme: 'outline',
-      icon: 'code',
-      submenu: [],
-    },
-  )
+if (environment.email) {
+  MENU[5].submenu.splice(8, 0, {
+    path: 'administration/email-templates',
+    title: 'menu.emailTemplates',
+    permissions: [PK.VIEW_SETTINGS],
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'code',
+    submenu: [],
+  });
 }
