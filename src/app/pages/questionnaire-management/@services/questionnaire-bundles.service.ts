@@ -62,6 +62,7 @@ export class QuestionnaireBundlesService {
           _id: bundle._id,
           name: bundle.name,
           questionnaireIds: bundle.questionnaireIds,
+          departmentIds: bundle.departmentIds,
         },
       },
       fetchPolicy: 'no-cache',
