@@ -18,9 +18,11 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { QuestionnaireVersionListComponent } from './questionnaire-version-list/questionnaire-version-list.component';
 import { TranslateModule } from '@ngx-translate/core';
-// import { CreateQuestionnaireBundleComponent } from './create-questionnaire-bundle/create-questionnaire-bundle.component';
-// import { QuestionnaireBundlesListComponent } from './questionnaire-bundles-list/questionnaire-bundles-list.component';
+import { CreateQuestionnaireBundleComponent } from './create-questionnaire-bundle/create-questionnaire-bundle.component';
+import { QuestionnaireBundlesListComponent } from './questionnaire-bundles-list/questionnaire-bundles-list.component';
+// import { QuestionnaireBundlesService } from './@services/questionnaire-bundles.service';
 
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -34,8 +36,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
         QuestionnaireProfileComponent,
         QuestionnaireScriptComponent,
         QuestionnaireVersionListComponent,
-        // CreateQuestionnaireBundleComponent,
-        // QuestionnaireBundlesListComponent,
+        CreateQuestionnaireBundleComponent,
+        QuestionnaireBundlesListComponent,
     ],
     imports: [
         CommonModule,
@@ -45,6 +47,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
         MasterDataModule,
         NzButtonModule,
         NzGridModule,
+        NzRadioModule,
         NzIconModule,
         NzSelectModule,
         AppFormModule,
@@ -58,6 +61,10 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
         TranslateModule,
         AssessmentModule,
         AngularEditorModule
-    ]
+    ],
+    // Needs to be provided in root, since it will be required by assessment and patient modules.
+    // providers:[
+    //     QuestionnaireBundlesService
+    // ]
 })
 export class QuestionnaireManagementModule {}

@@ -25,6 +25,7 @@ import { AssessmentAdministrationService } from '@app/pages/administration/@serv
 import { Clipboard } from '@angular/cdk/clipboard';
 import { LocationStrategy } from '@angular/common';
 import { EmailTemplatesService } from '@app/pages/administration/@services/email-templates.service';
+import { QuestionnaireBundlesService } from '@app/pages/questionnaire-management/@services/questionnaire-bundles.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -40,6 +41,8 @@ export class CreateAssessmentComponent implements OnInit {
   typeSelected: any = 'PATIENT';
   dataToSelect: any = [];
   selectedInformant: any = null;
+  listOfBundles: any = [];
+  listOfSelectedBundles: any = [];
   noteValue: any = '';
   patientEmail = '';
   options = [
@@ -103,10 +106,11 @@ export class CreateAssessmentComponent implements OnInit {
     private errorService: ErrorHandlerService,
     private departmentsService: DepartmentsService,
     private emailTemplatesService: EmailTemplatesService,
+    private bundlesService: QuestionnaireBundlesService,
     private assessmentService: AssessmentService,
     private nzMessage: NzMessageService,
     private clipboard: Clipboard,
-    private locationStrategy: LocationStrategy,
+    private locationStrategy: LocationStrategy
   ) {}
 
   ngOnInit(): void {
@@ -126,18 +130,19 @@ export class CreateAssessmentComponent implements OnInit {
       dates: this.formBuilder.array([
         this.formBuilder.group({
           expirationDate: [null],
-          deliveryDate: [null]
-        })
-      ])
+          deliveryDate: [null],
+        }),
+      ]),
     });
     this.getAssessmentTypes();
     this.userAutoSelect();
     this.initAssessment();
     this.getPatient();
+    this.getBundles();
     this.getCaregivers();
-    this.getUserDepartments({paging: {first: 50}});
+    this.getUserDepartments({ paging: { first: 50 } });
     this.getPatientEmailTemplates(this.patient.id);
-    this.hasEmail = environment.email
+    this.hasEmail = environment.email;
   }
 
   get datesFieldAsFormArray(): FormArray {
@@ -151,9 +156,10 @@ export class CreateAssessmentComponent implements OnInit {
   addControl(): void {
     this.datesFieldAsFormArray.push(
       this.formBuilder.group({
-      expirationDate: [null],
-      deliveryDate: [null]
-    }));
+        expirationDate: [null],
+        deliveryDate: [null],
+      })
+    );
   }
 
   remove(i: number): void {
@@ -211,11 +217,11 @@ export class CreateAssessmentComponent implements OnInit {
     this.clipboard.copy(url);
   }
 
-  getPatientEmailTemplates(id: number){
+  getPatientEmailTemplates(id: number) {
     this.emailTemplatesService.getPatientEmailTemplates(id).subscribe((data: any) => {
       this.emailTemplates = data?.data?.getPatientEmailTemplates;
-      if(this.editMode === true){
-        this.formGroup.patchValue({mailTemplateId: this.emailTemplates[0]?.id})
+      if (this.editMode === true) {
+        this.formGroup.patchValue({ mailTemplateId: this.emailTemplates[0]?.id });
       }
     });
   }
@@ -223,7 +229,13 @@ export class CreateAssessmentComponent implements OnInit {
   public getUserDepartments(params?: { paging?: Paging; filter?: Filter; sorting?: Sorting[] }) {
     this.isLoading = true;
     this.departmentsService
-      .departments({...params, filter: {...params?.filter, and: [{ patients: { id: { eq: this.fullAssessment?.patientId ?? this.patient?.id } } }]}})
+      .departments({
+        ...params,
+        filter: {
+          ...params?.filter,
+          and: [{ patients: { id: { eq: this.fullAssessment?.patientId ?? this.patient?.id } } }],
+        },
+      })
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }: any) => {
@@ -303,10 +315,9 @@ export class CreateAssessmentComponent implements OnInit {
 
     action.subscribe(
       () => {
-        if(this.isUpdate){
+        if (this.isUpdate) {
           this.nzMessage.success('Assessment updated', { nzDuration: 3000 });
-        }
-        else{
+        } else {
           this.nzMessage.success('Assessment created', { nzDuration: 3000 });
         }
         this.editMode = false;
@@ -317,9 +328,9 @@ export class CreateAssessmentComponent implements OnInit {
 
   public async initAssessment(): Promise<void> {
     const data = this.activatedRoute.snapshot.queryParamMap.get('assessment');
-    if (!data){
-      this.formGroup.removeControl('deliveryDate'); 
-      this.formGroup.removeControl('expirationDate'); 
+    if (!data) {
+      this.formGroup.removeControl('deliveryDate');
+      this.formGroup.removeControl('expirationDate');
       this.isUpdate = false;
       return;
     }
@@ -345,10 +356,12 @@ export class CreateAssessmentComponent implements OnInit {
       expirationDate: this.fullAssessment.expirationDate,
       note: '',
     });
-    this.dates.push(this.formBuilder.group({
-      deliveryDate: this.fullAssessment.deliveryDate,
-      expirationDate:  this.fullAssessment.expirationDate
-    }))
+    this.dates.push(
+      this.formBuilder.group({
+        deliveryDate: this.fullAssessment.deliveryDate,
+        expirationDate: this.fullAssessment.expirationDate,
+      })
+    );
     this.selectedClinician = this.fullAssessment.clinician;
     this.expireDate = this.fullAssessment.expirationDate;
     this.deliveryDate = this.fullAssessment.deliveryDate;
@@ -407,6 +420,44 @@ export class CreateAssessmentComponent implements OnInit {
       });
   }
 
+  getBundles() {
+    const departments = this.patient.departments.map((item) => {
+      return item.id;
+    });
+
+    this.bundlesService
+      .getQuestionnairesBundles({
+        departmentIds: departments,
+      })
+      .subscribe((data: any) => {
+        this.listOfBundles = data.data.getQuestionnaireBundles.edges;
+      });
+  }
+
+  onBundleSelection() {
+    this.selectedQuestionnaires = this.selectedQuestionnaires.concat(
+      this.listOfSelectedBundles.map((bundle: any) => bundle.node.questionnaires).flat()
+    );
+    this.selectedQuestionnaires = this.filterUniqueQuestionnaires(this.selectedQuestionnaires);
+    this.formGroup.patchValue({ questionnaires: this.selectedQuestionnaires });
+  }
+
+  filterUniqueQuestionnaires(questionnaires: any) {
+    const uniqueQuestionnaires = [];
+    const seenIds = new Set();
+
+    for (const questionnaire of questionnaires) {
+      const id = questionnaire._id;
+
+      // Check if the _id has been seen before
+      if (!seenIds.has(id)) {
+        seenIds.add(id);
+        uniqueQuestionnaires.push(questionnaire);
+      }
+    }
+    return uniqueQuestionnaires;
+  }
+
   private getAssessmentTypes(): void {
     this.isLoading = true;
     this.assessmentAdministrationService
@@ -425,5 +476,4 @@ export class CreateAssessmentComponent implements OnInit {
     const tree = this.router.createUrlTree(['/assessment/overview'], { queryParams: { assessment: cryptoId } });
     return this.locationStrategy.prepareExternalUrl(this.router.serializeUrl(tree));
   }
-
 }
