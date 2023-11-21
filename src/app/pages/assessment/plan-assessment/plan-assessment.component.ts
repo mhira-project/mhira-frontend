@@ -332,6 +332,7 @@ export class PlanAssessmentComponent implements OnInit {
       .subscribe(
         ({ data }: any) => {
           const page = data.departments;
+          this.departments = [];
           page.edges.map((departmentData: any) => {
             const _department = Convert.toDepartment(departmentData.node);
             this.departments.push(_department);
