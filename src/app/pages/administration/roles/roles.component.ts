@@ -155,7 +155,7 @@ export class RolesComponent implements OnInit {
       this.role = null;
       this.resetForm = true;
     }
-    this.panelTitle = !this.isCreateAction ? 'Update Role' : 'Create Role';
+    this.panelTitle = !this.isCreateAction ? 'Update Role' : 'Create Role' ;
   }
 
   createRole(role: Role) {

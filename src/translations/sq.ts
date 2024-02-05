@@ -14,6 +14,30 @@ export default {
     createCaregiver: 'Krijo Kujdestar',
     questionnaire: 'Pyetësor',
     scripts: 'Skriptet',
+    pageSize: 'Madhësia e faqes:',
+    filter: 'Filteri',
+    notSet: 'Nuk esht',
+    back: 'Mbrapa',
+    submit: 'Ruaj',
+    cancel: 'Anulo',
+    deleteUser: 'Fshini Përdoruesin',
+    removeUser: 'Për të fshirë përdoruesin,',
+    toggle: 'shtyp butonin më poshtë.',
+    enable: 'Për të aktivizuar ose deaktivizuar përdoruesin,',
+    disable: 'shtyp butonin më poshtë.',
+    change: 'Ndrysho Fjalëkalimin',
+    toChange: 'Për të ndryshuar fjalëkalimin e përdoruesit,',
+    toChange2: 'shtyp butonin më poshtë.',
+    enableDisable: 'Aktivizo ose Deaktivizo Përdoruesin',
+    delUser: 'Fshij përdoruesin',
+    translations:  'Përkthime',
+    help: 'Ndihmë',
+    apply: 'Apliko',
+    actions: 'Aksionet',
+
+    
+    
+
   },
   dashboard: {
     welcome: 'Mirë se Vini në MHIRA',
@@ -34,6 +58,9 @@ export default {
     noResult: 'Asnjë Rezultat',
     searchSelect: `Kërkoni dhe zgjidhni pyetësorët për t'i shtuar vlerësimit`,
     selectQuestionnaires: 'Zgjidhni Pyetësorët',
+    selectedQuestionnaires: 'Pyetësorët e Përzgjedhur'
+    
+
   },
   assessmentMessages: {
     expiredText: 'Na vjen keq, vlerësimi nuk është më i disponueshëm!',
@@ -49,6 +76,7 @@ export default {
     caregiverList: 'Lista e Kujdestarëve',
     questionnaires: 'Pyetësorët',
     questionnairesList: ' Pyetësorët',
+    questionnaireBundles: 'Paketat e Pyetësorëve',
     uploadQuestionnaire: 'Krijo një Pyetësor',
     questionnairesVersionList: 'Versionet e Vjetra të Pyetësorit',
     assessments: 'Vlerësimet',
@@ -71,7 +99,8 @@ export default {
     noTabs: 'Nuk ka skedar',
     disclaimers: 'Mesazhet',
     emailTemplates: 'Shabllonet e Email',
-    version: 'Versioni'
+    version: 'Versioni',
+    createPatientStatus: 'Krijo statusin e pacientit'
   },
   patients: {
     myPatients: 'Klientët e Mi',
@@ -83,6 +112,19 @@ export default {
       assessmentType: 'Lloji i Vlerësimit',
       lastUpdate: 'Përditësimi Përfundimtar',
       status: 'Statusi',
+    },
+    roles:{
+      name: 'Emri i Rolit',
+      hierarchy: 'Hierarkia e Rolit',
+      createdAt: 'Krijuar Më'
+    },
+    patientStatuses: {
+      name: 'Emri',
+      
+      description: 'Përshkrimi',
+      formattedUpdatedAt: 'Data e përditësuar',
+      formattedCreatedAt: 'Data e krijuar',
+
     },
     disclaimer: {
       type: 'Tipi',
@@ -116,10 +158,15 @@ export default {
     },
     patients: {
       firstName: 'Emri',
+      firstNam: 'Emri',
       middleName: 'Emri i Mesëm',
+      middleNam: 'Emri i Mesëm',
       lastName: 'Mbiemri',
+      lastNam: 'Mbiemri',
       medicalRecordNo: 'ID e Klientit',
+      hospitalId: 'ID e Klientit',
       gender: 'Gjinia',
+      selectGender:'Zgjidh gjininë',
       birthDate: 'Data e Lindjes',
       status: 'Statusi',
       informants: 'Personi Informues',
@@ -159,6 +206,8 @@ export default {
       phone: 'Telefoni',
       username: 'Emri i Përdoruesit',
       formattedStatus: 'Statusi',
+      inactive: 'Joaktiv',
+      active: 'Aktiv',
       formattedRoles: 'Rolet',
       formattedDepartments: 'Departamentet',
     },
@@ -175,10 +224,18 @@ export default {
     assessmentAdministration: {
       typeName: 'Shkruani Emrin',
       status: 'Statusi',
+      descriptionName: 'Shkruani emrin e llojit',
+      validationName: 'Ju lutemi shkruani emrin e llojit',
+      createName: 'Krijo emrin e vlerësimit',
     },
     patientStatuses: {
       name: 'Emri i Statusit të Pacientit',
+      submitPatient: 'Paraqisni statusin e pacientit',
       description: 'Përshkrim',
+      formattedUpdatedAt: 'Data e përditësimit',
+
+    
+      
     },
     scripts: {
       name: 'Emri',
@@ -191,6 +248,19 @@ export default {
     createReportForm: {
       reportName: 'Emri i Raportit',
       description: 'Përshkrim',
+      descriptionReportName: 'Shkruani emrin e raportit',
+      validationReportName: 'Ju lutemi shkruani emrin e raportit',
+      descriptionResources: 'Futni burimet e raportit',
+      patients: 'Klientet',
+      dashboard : 'Paneli',
+      validationResources: 'Ju lutemi Futni burimet e Raportit',
+      descriptionPlace: 'Shkruani përshkrimin e raportit',
+      validationDescription: 'Ju lutemi shkruani përshkrimin e raportit',
+      descriptionUrl: 'Fut url-në e raportit',
+      validationUrl: 'ju lutemi shkruani url-në e raportit',
+      descriptionRespository: 'Shkruani lidhjen e depove të Raportit',
+      validationRespository: 'Ju lutemi shkruani lidhjen e depove të raportit',
+      submitButtonText: 'Ruaj Raportin',
       resources: 'Burimet',
       url: 'URL-ja e Mjetit Të Raportimit',
       appName: 'Emri i Aplikacionit',
@@ -198,6 +268,7 @@ export default {
       reportStatus: 'Raportoni Statusin',
       anonymus: 'Anonim',
       roles: 'Rolet',
+      createReport: 'Krijo Raport'
     },
     changePassword: {
       newPassword: 'Shkruaj një fjalëkalim të ri',
@@ -210,6 +281,25 @@ export default {
     },
     userProfile: {
       username: 'Emri i Përdoruesit për Login',
+      descriptionUserName: 'Shkruani emrin e përdoruesit',
+      validationUserName: 'Ju lutemi shkruani një emër përdoruesi të vlefshëm',
+      descriptionId: 'Shkruani ID-në e punës',
+      validationId: 'Please fill in ID',
+      descriptionEmail: 'Shkruani email të vlefshëm',
+      validationEmail: 'Ju lutemi shkruani email të vlefshëm',
+      descriptionFirstName: 'Shkruani emrin tuaj të parë',
+      validationFirstName: 'Ju lutemi shkruani emrin tuaj',
+      descriptionMiddleName: 'Shkruani emrin tuaj të mesëm',
+      validationMiddleName: 'Ju lutemi shkruani emrin tuaj të mesëm',
+      descriptionLastName: 'Shkruani mbiemrin tuaj',
+      validationLastName: 'Ju lutemi shkruani mbiemrin tuaj',
+      descriptionPhone: 'Shkruani numrin e telefonit',
+      validationPhone: 'Ju lutemi plotësoni numrin e telefonit',
+      descriptionPass: 'Shkruani fjalëkalimin',
+      validationPass: 'Ju lutemi plotësoni fjalëkalimin',
+      descriptionRepeatPass: 'Përsëritni fjalëkalimin',
+
+
       workID: 'ID',
       email: 'Emaili',
       firstName: 'Emri',
@@ -227,18 +317,63 @@ export default {
       middleName: 'Emri i Mesëm',
       lastName: 'Mbiemri',
       phone: 'Telefoni',
+      descriptionUsername: 'Shkruani emrin e përdoruesit',
+      validationUsername: 'Ju lutemi shkruani një emër përdoruesi të vlefshëm',
+      descriptionId: 'Futni ID',
+      validationMessage: 'Ju lutemi vendosni ID-në',
+      descriptionEmail: 'Shkruani email të vlefshëm',
+      validationEmail: 'Ju lutemi shkruani email të vlefshëm',
+      descriptionFirstName: 'Shkruani emrin tuaj të parë',
+      validationFirstName: 'Ju lutemi shkruani emrin tuaj',
+      descriptionMiddleName: 'Shkruani emrin tuaj të mesëm',
+      validationMiddleName: 'Ju lutemi shkruani emrin tuaj të mesëm',
+      descriptionLastName: 'Shkruani mbiemrin tuaj',
+      validationLastName: 'Ju lutemi shkruani mbiemrin tuaj',
+      descriptionPhone: 'Shkruani numrin e telefonit',
+      validationPhone: 'Ju lutemi plotësoni numrin e telefonit',
     },
     userRolesPermissions: {
       roleId: 'Roli i Përdoruesit',
+      roles: 'Roles',
+      roleName:'Role Name',
+      description:'enter permission name',
+      roleHierarchy: 'Role hierarchy',
+      validationMessage:'please enter permission name',
+     
+      saveRole:'Save Role',
+      editRole: 'Edit ROle',
+      createRole: 'Krijo nje rol',
+      
     },
     patients: {
       patientInformation: 'Informatat mbi Klientin',
+      description:'Shkruaj emrin',
+        description1:'Shkruaj emrin e mesëm',
+      description2: 'Shkruaj mbiemrin',
+      description3: 'Shkruaj numrin e regjistrit',
+      description4: 'Shkruaj diten e lindjes',
+      description5: 'Selekto Departamentin',
+      description6: 'Shkruaj emrin e rrugës',
+      description7: 'Shkruaj numrin',
+      description8: 'Shkruaj numrin e apartamentit',
+      description9: 'Shkruani vendbanimin',
+      description10: 'Shkruaj kodin postar',
+      description11: 'Selekto shtetin',
+      description12: 'Shkruj email adresën',
+      description13: 'Shkruaj numrin e telefoni',
+      description14: 'Shkruaj numrin tjetër të telefonit',
+      validationMessage: 'ju lutem shkruani emrin',
       firstName: 'Emri',
       middleName: 'Emri i Mesëm',
       lastName: 'Mbiemri',
       id: 'Id',
       birthDate: 'Data e Lindjes',
-      gender: 'Gjinia',
+      gender: {
+        male: 'Mashkull',
+        female: 'Femer',
+        other: 'Tjeter',
+      },
+      
       department: 'Departamenti',
       patientAddress: 'Adresa e Klientit',
       street: 'Emri i Rrugës',
@@ -248,9 +383,27 @@ export default {
       addressPostalCode: 'Kodi Postar',
       addressCountryCode: 'Shteti',
       patientContact: 'Kontakti i Klientit',
-      email: 'Email Adresa',
+      email: 'Adresa e emailit',
       phone: 'Telefoni',
       phone2: 'Numër tjetër Telefoni',
+      descriptionContact: 'Vendosi numrin e telefonit',
+      validationContact: 'Ju lutemi vendosni numrin e telefonit',
+      descriptionContactName: 'Vendosni emrin ',
+      validationContactName: 'Ju lutemi vendosni emrin ',
+      descriptionMiddleName: 'Vendosni emrin e mesëm ',
+      validationMiddleName: 'Ju lutemi Vndosni emrin e mesëm',
+      descriptionLastName: 'Vendosni mbiemrin e kontaktit',
+      validationLastName: 'Ju lutemi vendosni mbiemrin ',
+      descriptionEmail: 'Vendosni E-mailin',
+      validationEmail: 'Ju lutemi vendosni E-mailin',
+      descriptionContactNum: 'Vendosni numrin e kontaktit',
+      validationContactNum: 'Ju lutemi vendosni numrin e kontaktit',
+      descriptionPlace: 'Vendosni vendin e kontaktit',
+      validationPlace: 'Ju lutemi vendosni vendin e kontaktit',
+      descriptionPostal: 'Shkruani kodin postar ',
+      validationPostal: 'Ju lutemi shkruani kodin postar',
+      descriptionCountry: 'Vendos shtetin ',
+      validationCountry: 'Ju lutemi vendosni shtetin',
       relation: 'Marrëdhënia me Klientin',
       number: 'Numër',
       apartment: 'Apartment',
@@ -260,6 +413,7 @@ export default {
       emergency: 'Kontakti Emergjent',
       note: 'Shënim',
       addCaregiver: 'Shto Kujdestar',
+      submitContact: 'Paraqisni kontaktin',
     },
   },
   assessmentForm: {
@@ -309,11 +463,17 @@ export default {
     website: 'Faqja e Internetit',
     license: 'Liçensë',
     keywords: 'Fjalë Kyçe',
+    description: 'Përshkrim',
+    enterHere: 'Shkruani përshkrimin këtu...',
+    addKeyword: 'Shkruani dhe shtypni "Enter" për të shtuar fjalën kyçe!',
+    pleaseUse: 'Ju lutemi përdorni',
+    this: 'këtë',
+    thisWeb: 'uebsajt për të kontrolluar vlefshmërinë e formularit tuaj XSL përpara se ta ngarkoni.'
   },
   plannedAssessments: {
     name: 'Emri',
     formattedStatus: 'Statusi',
-    patientMedicalRecordNo: 'ID e Spitalit të Klientit Në',
+    patientMedicalRecordNo: 'ID e Spitalit të Klientit',
     formattedPatient: 'Klienti',
     submissionDate: 'Data e Dorëzimit',
     emailStatus: 'Statusi i Email',
@@ -324,6 +484,10 @@ export default {
     expirationDate: 'Data e skadencës',
     updatedAt: 'Data e dorezimit',
     deliveryDate: 'Data e dorëzimit',
+    selectBundles: 'Zgjidhni Paketat',
+    selectBundle: 'Përzgjidh pakon...',
+    questionnaires: 'Pyetësorët',
+    filterStatus: 'Statusi i Filtrit'
   },
   planAssessment: {
     assessmentName: 'Emri i Vlerësimit',
@@ -340,6 +504,13 @@ export default {
     deliveryDate: 'Data e dorëzimit',
     expirationDate: ' Data e skadencës',
     notes: 'Shënime për menaxherin e vlerësimit',
+    informantType: 'Burimi i Informatave',
+    selfRating: 'Vetëvlerësim',
+    sendEmail: 'Dërgo email',
+    viaEmail: 'Vlerësimi u dërgua me email',
+    emailTemplate: 'Ju lutemi zgjidhni shabllonin e emailit'
+
+
   },
   form: {
     system: {
@@ -366,6 +537,17 @@ export default {
   rolesPermissions: {
     permissions: 'Lejet',
     roles: 'Rolet',
+    roleName:'Emri i rolit',
+    description:'shkruani emrin e lejes',
+    roleHierarchy: 'Hierarkia e roleve',
+    validationMessage:'ju lutemi shkruani emrin e lejes',
+    validationRole: 'Ju lutemi shkruani hierarkinë e roleve',
+    createRole: 'Krijo nje Rol',
+    saveRole: 'Ruaj Rolin'
+    
+    
+    
+
   },
   emailTemplates:{
     createTemplate: 'Krijo Shabllon',
@@ -375,9 +557,21 @@ export default {
     unableToLoad: 'Shabllonet email nuk mund të shfaqen!',
     name: 'Emri',
     body: 'Trupi',
+    selectBundleName: 'Zgjidhni emrin e paketës',
+    questionnaires: 'Pyetësorët',
     subject: 'Subjekti',
     status: 'Statusi',
-    module: 'Moduli'
+    module: 'Moduli',
+    active: 'Aktiv',
+    inactive: 'Joaktiv',
+    emailBody: 'Shkruani trupin e emailit këtu...',
+    yes: 'PO',
+    no: 'Jo',
+    allDepartments: 'Të gjitha Departamentet',
+    departments: 'Departamentet',
+    goBack: 'Kthehu Mbrapa',
+    submit: 'Paraqisni',
+    update: 'Përditëso'
   },
   emailStatusFilter:{
     expired: 'Skaduar',

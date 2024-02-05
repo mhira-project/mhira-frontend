@@ -30,7 +30,7 @@ export interface Field {
   disabled?: boolean;
   isValid?: boolean;
   span?: number;
-  translationPath?: string;
+  translationPath?: string ;
   options?: {
     value: number | boolean | string;
     label: string;
