@@ -17,13 +17,13 @@
     [nzShowArrow]="false"
     (ngModelChange)="handleValueChange($event)"
     (nzOnSearch)="optionsSearch.next($event)"
-    [formControlName]="field.name"
+    [formControlName]="field.name | translate"
     [ngClass]="{
       'has-error': inputIsValid() === false,
       'has-success': inputIsValid() === true
     }"
   >
-    <nz-option *ngFor="let option of field.options" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+    <nz-option *ngFor="let option of field.options" [nzLabel]="option.label | translate" [nzValue]="option.value"></nz-option>
   </nz-select>
 </ng-container>
 <div class="field-value" *ngIf="!inputMode">

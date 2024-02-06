@@ -17,6 +17,7 @@ import {
   AssessmentAdministrationStatus,
   FormattedAssessmentAdministration,
 } from '@app/pages/administration/@types/assessment-administration';
+import {TranslateService} from  "@ngx-translate/core";
 
 const STATUS_COLOR = {
   [QuestionnaireStatus.DRAFT]: 'blue',
