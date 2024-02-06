@@ -14,6 +14,31 @@ export default {
     createCaregiver: 'Create Caregiver',
     questionnaire: 'Questionnaire',
     scripts: 'Scripts',
+    pageSize: 'Page Size:',
+    filter: 'Filter',
+    notSet: 'Not Set',
+    back: 'Back',
+    submit: 'Submit',
+    cancel: 'Cancel',
+    active: 'Active',
+    inactive: 'Inactive',
+    goBack: 'Go Back',
+    deleteUser: 'Delete User',
+    removeUser: ' To remove User',
+    toggle: ' toggle the button below.',
+    enable: 'To disable and Enable',
+    disable: 'toggle the switch below.',
+    change: 'Change Password',
+    toChange: 'To change password for,',
+    toChange2: 'toggle the button below.',
+    enableDisable: 'Enable or Disable',
+    delUser: 'Delete User',
+    translations:  'Translations',
+    help: 'Help',
+    apply: 'Apply',
+    actions: 'Actions'
+   
+
   },
   dashboard: {
     welcome: 'Welcome to MHIRA',
@@ -23,7 +48,9 @@ export default {
   assessments: {
     myAssessment: 'My Assessments',
     archivedAssessments: 'Show Archived',
-    notArchivedAssessments: 'Show Not Archived'
+    notArchivedAssessments: 'Show Not Archived',
+    
+
   },
   card: {
     changePassword: 'Change Password',
@@ -35,6 +62,8 @@ export default {
     searchSelect: 'Search and select questionnaires to add to the assessment',
     selectQuestionnaires: 'Select Questionnaires',
     selectedQuestionnaires: 'Selected Questionnaires',
+    selectBundles: 'Select Bundles'
+
   },
   assessmentMessages: {
     expiredText: 'Sorry, assessment is no longer available!',
@@ -75,7 +104,8 @@ export default {
     noTabs: 'No Tabs',
     disclaimers: 'Messages',
     emailTemplates: 'Email Templates',
-    version: 'Version'
+    version: 'Version',
+    createPatientStatus: 'Create PatientStatus'
   },
   patients: {
     myPatients: 'My Patients',
@@ -88,8 +118,27 @@ export default {
       lastUpdate: 'Last Update',
       status: 'Status',
     },
+
+    roles:{
+      name: 'Role Name',
+      hierarchy: 'Role Hierarchy',
+      createdAt: 'Created At',
+      deleteRole: 'Delete Role',
+      updateRole:'Update Role',
+      createRole: 'Create Role',
+    },
+    patientStatuses: {
+      name: 'Name',
+      description: 'Description',
+      formattedUpdatedAt: 'Updated Date',
+      formattedCreatedAt: 'Created Date',
+    },
     patientStatus: {
       name: '',
+      
+
+      
+      
     },
     disclaimer: {
       type: 'Type',
@@ -127,6 +176,7 @@ export default {
       lastName: 'Last Name',
       medicalRecordNo: 'Hospital ID',
       gender: 'Gender',
+      selectGender: 'Select Gender',
       birthDate: 'Date of Birth',
       status: 'Status',
       informants: 'Informants',
@@ -156,6 +206,8 @@ export default {
       name: 'Name',
       description: 'Description',
       createdAt: 'Created At',
+      
+
     },
     users: {
       firstName: 'First name',
@@ -165,6 +217,8 @@ export default {
       phone: 'Phone',
       username: 'Username',
       formattedStatus: 'Status',
+      inactive: 'Inactive',
+      active: 'Active',
       formattedRoles: 'Roles',
       formattedDepartments: 'Departments',
     },
@@ -175,16 +229,28 @@ export default {
       createdAt: 'Created At',
       departmentName: 'Department Name',
       status: 'Status',
+      createDepartment:'Create Department',
     },
+   
   },
   forms: {
     assessmentAdministration: {
       typeName: 'Type Name',
       status: 'Status',
+      descriptionName: 'Enter Type Name',
+      validationName: 'Please Enter Type Name',
+      createName: 'Create Assessment Name',
     },
     patientStatuses: {
-      name: 'Patient Status Name',
+      name: 'Name',
+      submitPatient: 'Submit PatientStatus',
       description: 'Description',
+      formattedUpdatedAt: 'Updated Date'
+      
+
+
+      
+
     },
     scripts: {
       name: 'Name',
@@ -197,6 +263,20 @@ export default {
     createReportForm: {
       reportName: 'Report Name',
       description: 'Description',
+      descriptionReportName: 'Enter report name',
+      validationReportName: 'Please enter report name',
+      descriptionResources: 'Enter Report resources',
+      patients: 'Patients',
+      dashboard : 'Dashboard',
+      validationResources: 'please Enter Report resources',
+      descriptionPlace: 'Enter Report description',
+      validationDescription: 'Please enter report description',
+      descriptionUrl: 'Enter Report url',
+      validationUrl: 'please Enter Report url',
+      descriptionRespository: 'Enter Report repository link',
+      validationRespository: 'Please enter Report repository link',
+      saveReport: 'Save Report',
+
       resources: 'Resources',
       url: 'URL Of The Reporting Tool',
       appName: 'App Name',
@@ -208,6 +288,8 @@ export default {
     changePassword: {
       newPassword: 'Enter New Password',
       newPasswordConfirmation: 'Repeat Password',
+      
+    
     },
     changeUserPassword: {
       currentPassword: 'Enter current password',
@@ -215,7 +297,26 @@ export default {
       newPasswordConfirmation: 'Repeat password',
     },
     userProfile: {
+  
       username: 'Login Username',
+      descriptionUserName: 'Enter Username',
+      validationUserName: 'Please enter valid username',
+      descriptionId: 'Enter work id',
+      validationId: 'Please fill in ID',
+      descriptionEmail: 'Enter valid email',
+      validationEmail: 'Please enter valid email',
+      descriptionFirstName: 'Enter your first name',
+      validationFirstName: 'Please enter your First name',
+      descriptionMiddleName: 'Enter your middle name',
+      validationMiddleName: 'Please enter your Middle name',
+      descriptionLastName: 'Enter your last name',
+      validationLastName: 'Please enter your last name',
+      descriptionPhone: 'Enter phone number',
+      validationPhone: 'Please fill phone number',
+      descriptionPass: 'Enter Password',
+      validationPass: 'Please fill password',
+      descriptionRepeatPass: 'Repeat password',
+      
       workID: 'ID',
       email: 'Email',
       firstName: 'First Name',
@@ -226,6 +327,8 @@ export default {
       passwordConfirmation: 'Repeat Password',
     },
     userProfileEdit: {
+      editUser: 'Edit User',
+      saveUser: 'Save User',
       username: 'Login Username',
       workID: 'ID',
       email: 'Email',
@@ -233,18 +336,72 @@ export default {
       middleName: 'Middle name',
       lastName: 'Last name',
       phone: 'Phone',
+      descriptionUsername: 'Enter Username',
+      validationUsername: 'Please enter valid username',
+      descriptionId: 'Enter ID',
+      validationMessage: 'Please enter ID',
+      descriptionEmail: 'Enter valid email',
+      validationEmail: 'Please enter valid email',
+      descriptionFirstName: 'Enter your first name',
+      validationFirstName: 'Please enter your First name',
+      descriptionMiddleName: 'Enter your middle name',
+      validationMiddleName: 'Please enter your Middle name',
+      descriptionLastName: 'Enter your last name',
+      validationLastName: 'Please enter your last name',
+      descriptionPhone: 'Enter phone number',
+      validationPhone: 'Please fill phone number',
+      
+
     },
     userRolesPermissions: {
       roleId: 'User Role',
     },
     patients: {
       patientInformation: 'Patient Information',
+      savePatient: 'Save Patient',
+      savePatient2: 'Save Patient',
       firstName: 'First Name',
+      description: 'enter first name',
+      descriptionEnterMiddleName: 'enter middle name',
+      descriptionEnterLastName: 'enter last name',
+      descriptionId: 'enter medical record number',
+      descriptionBirthDate: 'enter date of birth',
+      descriptionSelect: 'Select Department',
+      descriptionStreetName: 'enter street name',
+      descriptionNum: 'enter number',
+      descriptionApartment: 'enter apartment number',
+      descriptionEnterPlace: 'enter place',
+      descriptionEnterPostal: 'enter postal code',
+      descriptionEnterCountry: 'Select Country',
+      descriptionEnterEmail: 'Enter email address',
+      descriptionPhone: 'Enter phone number',
+      descriptionPhone2: 'Enter alternative phone number',
+      validationMessage: 'please enter first name',
+      validationMessageMiddleName: 'please enter middle name',
+      validationMessageLastName: 'please enter last name',
+      validationMessageId: 'please enter medical record number',
+      validationMessageBirth: 'please enter date of birth',
+      validationMessageGender: 'please select gender',
+      validationMessageSelect: 'please select Department',
+      validationMessageStreet: 'please enter street name',
+      validationMessageNum: 'please enter number',
+      validationMessagApartment: 'please enter apartment number',
+      validationMessagePlace: 'please enter place',
+      validationMessagePostal: 'please enter postal code',
+      validationMessageCountry: 'please select country',
+      validationMessageEmail: 'please enter email address',
+      validationMessagePhone: 'please enter phone number',
+      validationMessagePhone2: 'please alternative enter phone number',
+      
       middleName: 'Middle Name',
       lastName: 'Last Name',
       id: 'Id',
       birthDate: 'Date of Birth',
-      gender: 'Gender',
+      gender: {
+        male: 'Male',
+        female: 'Female',
+        other: 'Other',
+      },
       department: 'Department',
       patientAddress: 'Patient Address',
       street: 'Street',
@@ -257,7 +414,28 @@ export default {
       email: 'Email Address',
       phone: 'Phone',
       phone2: 'Alternative Phone',
+      descriptionContact: 'Enter contact phone',
+      validationContact: 'please enter contact phone',
+      descriptionContactName: 'Enter contact first name',
+      validationContactName: 'please enter contact first name',
+      descriptionMiddleName: 'Enter contact middle name',
+      validationMiddleName: 'please enter contact middle name',
+      descriptionLastName: 'Enter contact last name',
+      validationLastName: 'please enter contact last name',
+      descriptionEmail: 'Enter contact email',
+      validationEmail: 'please enter contact email',
+      descriptionContactNum: 'Enter contact number',
+      validationContactNum: 'please enter contact number',
+      descriptionPlace: 'Enter contact place',
+      validationPlace: 'please enter contact place',
+      descriptionPostal: 'Enter contact Postal Code',
+      validationPostal: 'please enter contact Postal Code',
+      descriptionCountry: 'Enter contact country',
+      validationCountry: 'please enter contact country',
       relation: 'Relation to Patient',
+      mother: 'Mother',
+      father: 'Father22',
+
       number: 'Number',
       apartment: 'Apartment',
       place: 'Place',
@@ -266,6 +444,14 @@ export default {
       emergency: 'Emergency Contacts',
       note: 'Note',
       addCaregiver: 'Add Caregiver',
+      firstNameDescription: 'Enter first name',
+      middleNameDescription: 'Enter middle name',
+      lastNameDescription: 'Enter last name',
+      idDescription: 'Enter medical record number',
+      female: 'Female',
+      submitContact: 'Submit Contact',
+     
+
     },
   },
   assessmentForm: {
@@ -303,7 +489,9 @@ export default {
       <li><b>Replacement</b>: Discarding frees up space for a new questionnaire with the same language and abbreviation.</li>
     </ol>`,
     continueButton: 'Continue',
-    cancelButton: 'Cancel'
+    cancelButton: 'Cancel',
+    draft: '',
+
   },
   questionnairesForm: {
     name: 'Name',
@@ -315,6 +503,12 @@ export default {
     website: 'Website',
     license: 'License',
     keywords: 'Keywords',
+    description: 'Description',
+    enterHere: 'Enter description here...',
+    addKeyword: 'Type and press "Enter" to add the keyword!',
+    pleaseUse: 'Please use',
+    this: 'this',
+    thisWeb: 'website to check the validity of your XSL form before uploading.'
   },
   plannedAssessments: {
     name: 'Assessment Name',
@@ -330,6 +524,10 @@ export default {
     expirationDate: 'Expiration Date',
     updatedAt: 'Submission Date',
     deliveryDate: 'Delivery Date',
+    selectBundles:  'Select Bundles',
+    selectBundle: 'Select your bundle...',
+    questionnaires: 'Questionnaires',
+    filterStatus: 'Filter Status'
   },
   planAssessment: {
     assessmentName: 'Assessment Name',
@@ -346,6 +544,13 @@ export default {
     deliveryDate: 'Delivery Date',
     expirationDate: 'Expiration Date',
     notes: 'Notes for the assessment manager',
+    informantType: 'Informant Type',
+    selfRating: 'Self Rating',
+    sendEmail: 'Send Email',
+    viaEmail: 'Sent assessment via email',
+    emailTemplate: 'Please select the email template',
+    
+
   },
   form: {
     system: {
@@ -372,8 +577,19 @@ export default {
   rolesPermissions: {
     permissions: 'Permissions',
     roles: 'Roles',
+    roleName:'Role Name',
+    description:'enter permission name',
+    roleHierarchy: 'Role hierarchy',
+    validationMessage:'please enter permission name',
+    validationRole: 'Please enter role hierarchy',
+    saveRole:'Save Role',
+    editRole: 'Edit Role',
+    createRole: 'Create Role',
+    
+
   },
   emailTemplates:{
+
     createTemplate: 'Create Template',
     created: 'Email template created successfully!',
     updated: 'Email template updated successfully!',
@@ -381,9 +597,23 @@ export default {
     unableToLoad: 'Unable to load email templates',
     name: 'Name',
     body: 'Body',
+    selectBundleName: 'Select Bundle Name',
+    questionnaires: 'Questionnaires',
+    
     subject: 'Subject',
     status: 'Status',
-    module: 'Module'
+    module: 'Module',
+    active: 'Active2',
+    inactive: 'Inactive',
+    emailBody: 'Enter email body here...',
+    yes: 'Yes',
+    no: 'No',
+    allDepartments: 'All Departments',
+    departments: 'Departments',
+    update: 'Update',
+    goBack: 'Go Back',
+    submit: 'Submit'
+
   },
   emailStatusFilter:{
     expired: 'Expired',

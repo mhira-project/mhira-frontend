@@ -23,6 +23,7 @@ export class TextInputComponent implements OnInit {
 
   initializeInput() {
     let control: FormControl | FormGroup;
+    console.log(this.field)
     if (this.field.isRequired) {
       if (this.field.pattern) {
         control = new FormControl('', [Validators.required, Validators.pattern(this.field.pattern)]);

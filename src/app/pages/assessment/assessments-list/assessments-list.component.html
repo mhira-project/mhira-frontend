@@ -24,7 +24,7 @@
 
     <label [ngClass]="{'text-green' : onlyMyAssessments}" class="spacer" (ngModelChange)="onMyAssessments()" nz-checkbox [(ngModel)]="onlyMyAssessments">{{ 'assessments.myAssessment' | translate }}</label>
     <label [ngClass]="{'text-green' : onlyArchivedAssessments}" (ngModelChange)="onArchivedAssessments()" nz-checkbox [(ngModel)]="onlyArchivedAssessments">{{ 'assessments.archivedAssessments' | translate }}</label>
-    <nz-select style="margin-right: 10px;" nzPlaceHolder="Filter status" [(ngModel)]="statusFilter" (ngModelChange)="onStatusSelect()">
+    <nz-select style="margin-right: 10px;" [nzPlaceHolder]="'plannedAssessments.filterStatus'| translate" [(ngModel)]="statusFilter" (ngModelChange)="onStatusSelect()">
       <nz-option nzValue="EXPIRED" [nzLabel]="'emailStatusFilter.expired' | translate"></nz-option>
       <nz-option nzValue="PLANNED" [nzLabel]="'emailStatusFilter.planned' | translate"></nz-option>
       <nz-option nzValue="PENDING" [nzLabel]="'emailStatusFilter.pending' | translate"></nz-option>

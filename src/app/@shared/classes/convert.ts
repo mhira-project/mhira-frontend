@@ -17,6 +17,7 @@ import {
   AssessmentAdministrationStatus,
   FormattedAssessmentAdministration,
 } from '@app/pages/administration/@types/assessment-administration';
+import {TranslateService} from  "@ngx-translate/core";
 
 const STATUS_COLOR = {
   [QuestionnaireStatus.DRAFT]: 'blue',
@@ -40,6 +41,7 @@ export class Convert {
     json.createdAt = json.createdAt ? moment(json.createdAt).format('DD-MM-YYYY HH:mm') : '';
     return json;
   }
+  constructor(private translate: TranslateService) {}
 
   public static toReport(json: any): Reports {
     json.createdAt = json.createdAt ? moment(json.createdAt).format('DD-MM-YYYY') : '';

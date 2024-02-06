@@ -23,8 +23,8 @@
       [attr.autocomplete]="autoFill"
       (change)="handleValueChange($event)"
       nz-input
-      [attr.placeholder]="field.description"
-      [formControlName]="field.name"
+      [attr.placeholder]="field.description | translate"
+      [formControlName]="field.name | translate"
     />
   </nz-input-group>
 </ng-container>

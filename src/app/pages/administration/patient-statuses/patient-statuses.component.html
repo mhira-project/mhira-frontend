@@ -10,7 +10,7 @@
       [listOfData]="patientStatusesTable.rows"
       [listOfColumn]="patientStatusesTable.columns"
       [showButton]="perms.permissionsOnly([PK.MANAGE_SETTINGS])"
-      [buttonText]="'Create PatientStatus'"
+      [buttonText]="'menu.createPatientStatus' | translate"
       [hasNextPage]="pageInfo?.hasNextPage"
       [hasPreviousPage]="pageInfo?.hasPreviousPage"
       (onNext)="navigatePages('next')"
@@ -27,7 +27,7 @@
   [nzClosable]="true"
   [nzVisible]="showCreatePatientStatus"
   nzPlacement="right"
-  [nzTitle]="panelTitle"
+  [nzTitle]="panelTitle | translate"
   (nzOnClose)="toggleCreatePanel()"
 >
   <div nz-row>
