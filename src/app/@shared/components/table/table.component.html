@@ -12,7 +12,7 @@
           (emptyInput)="handleEmptySearch()"
           [debounceTime]="300"
           nz-input
-          placeholder="Search"
+          [placeholder]="'core.search' | translate"
           type="text"
         />
       </nz-input-group>
@@ -138,7 +138,7 @@
           [nzColumnKey]="column.name"
           [nzSortDirections]="column.sortDirections"
         >
-          {{ column.title }}
+          {{ column.title | translate}}
           <nz-filter-trigger *ngIf="column.isFilterable" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
             <i nz-icon nzType="search"></i>
           </nz-filter-trigger>
@@ -164,11 +164,11 @@
           <ng-container *ngIf="column.isList">
             <nz-divider class="m-v-10"></nz-divider>
             <div [attr.width]="listColumn.width" *ngFor="let listColumn of column.listColumns">
-              {{ listColumn.title }}
+              {{ listColumn.title | translate}}
             </div>
           </ng-container>
         </th>
-        <th *ngIf="showActionColumn" [nzWidth]="'100px'">Actions</th>
+        <th *ngIf="showActionColumn" [nzWidth]="'100px'">{{'core.actions' | translate}}</th>
       </tr>
     </thead>
     <tbody>
@@ -223,13 +223,13 @@
     <div nz-row nzAlign="middle" class="m-v-10">
       <div nz-col nzFlex="300px">
         <button nzShape="round" [disabled]="!hasPreviousPage" (click)="onPreviousAction()" nz-button nzType="primary">
-          Previous
+          {{'core.previous' | translate}}
         </button>
       </div>
       <div nz-col nzFlex="auto">
         <div nz-row nzJustify="end">
           <button nzShape="round" [disabled]="!hasNextPage" (click)="onNextAction()" nz-button nzType="primary">
-            Next
+            {{'core.next' | translate}}
           </button>
         </div>
       </div>

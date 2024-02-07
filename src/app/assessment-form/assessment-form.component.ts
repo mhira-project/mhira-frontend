@@ -44,7 +44,7 @@ export class AssessmentFormComponent implements OnInit {
           const questions: any[] = []
           const uniqueQuestions = {};
           group.questions.map((question: { appearance: string; choices: any[]; type: any }) => {
-              if (group.appearance?.toLowerCase() == 'table-list' && question.type === 'select_one') {
+              if (group.appearance?.toLowerCase() === 'table-list' && question.type === 'select_one') {
                   const choices = question.choices.map((choice: { label: any; }) => choice.label)
                   if (!uniqueQuestions[JSON.stringify(choices)]) {
                       uniqueQuestions[JSON.stringify(choices)] = {

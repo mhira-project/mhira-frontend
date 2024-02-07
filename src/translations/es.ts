@@ -391,8 +391,8 @@ export default {
     continue: '¿Vaya a la siguiente sección?',
     continueOverview: '¿Salir del cuestionario?',
     unansweredQuestions: 'Usted ha dejado {{count}} preguntas sin responder. Todas las preguntas deben responderse para enviar el cuestionario.',
-    unansweredQuestionsOverview: "Tienes {{count}} preguntas obligatorias sin respuesta. ¿Estás seguro de que quieres completar el cuestionario?",
-    cancel: "Continuar sin completar las preguntas que faltan (No recomendado)",
-    ok: "Vuelva a completar las preguntas que faltan"
+    unansweredQuestionsOverview: 'Tienes {{count}} preguntas obligatorias sin respuesta. ¿Estás seguro de que quieres completar el cuestionario?',
+    cancel: 'Continuar sin completar las preguntas que faltan (No recomendado)',
+    ok: 'Vuelva a completar las preguntas que faltan'
   }
 };

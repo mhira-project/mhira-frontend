@@ -72,6 +72,7 @@ export class PlanAssessmentComponent implements OnInit {
   url: any = '';
   options = [
     {
+      
       label: 'Mother',
       value: 'Mother',
     },
@@ -359,7 +360,7 @@ export class PlanAssessmentComponent implements OnInit {
 
   getBundles() {
     const departmentIds = this.departments.map((el) => el.id);
-    this.bundlesService.getQuestionnairesBundles({ departmentIds: departmentIds }).subscribe((data: any) => {
+    this.bundlesService.getQuestionnairesBundles({ departmentIds }).subscribe((data: any) => {
       this.listOfBundles = data.data.getQuestionnaireBundles.edges;
     });
   }

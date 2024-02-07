@@ -28,7 +28,7 @@ export const QuestionnaireColumns: TableColumn<FormattedQuestionnaireVersion>[] 
     },
   },
   {
-    title: 'Status',
+    title: 'questionnaires.formattedStatus',
     name: 'formattedStatus',
     translationPath: 'questionnaires.formattedStatus',
     altName: 'status',

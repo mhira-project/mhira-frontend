@@ -392,8 +392,8 @@ export default {
     continue: 'Zur nächsten Sektion gehen?',
     continueOverview: 'Fragebogen beenden?',
     unansweredQuestions: 'Sie haben {{count}} unbeantwortete Pflichtfragen. Alle Pflichtfragen müssen beantwortet werden, um den Fragebogen abschliessen zu können.',
-    unansweredQuestionsOverview: "Sie haben {{count}} unbeantwortete Pflichtfragen. Alle Pflichtfragen müssen beantwortet werden, um den Fragebogen abschliessen zu können.",
-    cancel: "Fortfahren ohne Vervollständigung (Nicht empfohlen)",
-    ok: "Zurück und Pflichtfragen beantworten"
+    unansweredQuestionsOverview: 'Sie haben {{count}} unbeantwortete Pflichtfragen. Alle Pflichtfragen müssen beantwortet werden, um den Fragebogen abschliessen zu können.',
+    cancel: 'Fortfahren ohne Vervollständigung (Nicht empfohlen)',
+    ok: 'Zurück und Pflichtfragen beantworten'
   }
 };

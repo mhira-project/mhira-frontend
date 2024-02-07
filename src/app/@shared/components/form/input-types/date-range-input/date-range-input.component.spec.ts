@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DateRangeInputComponent } from './date-range-input.component';
 
 describe('DateRangeInputComponent', () => {

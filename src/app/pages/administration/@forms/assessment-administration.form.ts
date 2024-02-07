@@ -2,7 +2,7 @@ import { Form } from '@shared/components/form/@types/form';
 import { AssessmentAdministrationStatus } from '../@types/assessment-administration';
 
 export const AssessmentAdministrationForm: Form = {
-  submitButtonText: 'Create Assessment Name',
+  submitButtonText: 'forms.assessmentAdministration.createName',
   editButtonText: 'Edit Assessment Name',
   submitButtonClass: 'full-width',
   groups: [
@@ -11,9 +11,9 @@ export const AssessmentAdministrationForm: Form = {
         {
           value: '',
           name: 'name',
-          title: 'Type Name',
+          title: 'forms.assessmentAdministration.typeName',
           label: 'Type Name',
-          description: 'Enter Type Name',
+          description: 'forms.assessmentAdministration.typeName',
           translationPath: 'forms.assessmentAdministration.typeName',
           type: 'text',
           validationMessage: 'Please Enter Type Name',
@@ -26,7 +26,7 @@ export const AssessmentAdministrationForm: Form = {
           name: 'status',
           title: 'Status',
           label: 'Status',
-          description: '',
+          description: 'tables.assessmentAdministration.status',
           translationPath: 'tables.assessmentAdministration.status',
           type: 'select',
           validationMessage: '',

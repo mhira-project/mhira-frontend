@@ -31,7 +31,10 @@ export class QuestionComponent {
 
   private _question: Question;
 
-  constructor(private assessmentFormService: AssessmentFormService, private errorService: ErrorHandlerService) {
+  constructor(
+    private assessmentFormService: AssessmentFormService,
+    private errorService: ErrorHandlerService
+  ) {
     // get date format and convert to ng-zorro datepicker readable type
     // this.dateFormat = JSON.parse(localStorage.getItem('settings'))?.dateFormat;
     // this.dateFormat = this.dateFormat.replace(/[D]/g, 'd');
@@ -40,6 +43,13 @@ export class QuestionComponent {
     // debounce answer
     this.answerGiven.pipe(debounceTime(500)).subscribe((answer) => this.addAnswer(answer));
   }
+
+  onKeyPress = (evt: any) => {
+    const charCode = evt.which || evt.keyCode;
+    if ((charCode < 48 || charCode > 57) && charCode !== 46) {
+      evt.preventDefault();
+    }
+  };
 
   public addAnswer(answer: Answer): void {
     this.assessmentFormService
@@ -75,13 +85,6 @@ export class QuestionComponent {
   private initAnswer(question: Question): void {
     const answers = this.assessmentFormService.assessmentSnapshot?.questionnaireAssessment?.answers ?? [];
     this.answer = answers.find((a) => a.question === question._id) ?? this.createBlankAnswer(question);
-  }
-
-  onKeyPress = (evt: any) => {
-    const charCode = evt.which || evt.keyCode;
-    if ((charCode < 48 || charCode > 57) && charCode !== 46) {
-      evt.preventDefault();
-    }
   }
 
   private createBlankAnswer(question: Question): Answer {

@@ -56,8 +56,8 @@ export class AssessmentOverviewComponent implements OnInit {
           []
         );
         // ************
-        for(let unique of questionnaire.questionGroups?? []){
-          for(let uq of unique.uniqueQuestions) {
+        for(const unique of questionnaire.questionGroups?? []){
+          for(const uq of unique.uniqueQuestions) {
             questionnaireQuestions = [...questionnaireQuestions, ...uq.subQuestions]
           }
         }
