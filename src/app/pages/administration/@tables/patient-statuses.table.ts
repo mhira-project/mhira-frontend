@@ -1,11 +1,10 @@
 const actions: any[] = [
   {
     type: 'Edit PatientStatus',
-    name: 'tables.patientStatuses.editPatientStatus',
+    name: 'Edit PatientStatus',
   },
   {
     type: 'Delete PatientStatus',
-    translationPath: 'tables.patientStatuses.delete',
     name: 'Delete PatientStatus',
   },
 ];
