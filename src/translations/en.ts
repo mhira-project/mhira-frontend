@@ -24,8 +24,9 @@ export default {
     translations:  'Translations',
     help: 'Help',
     apply: 'Apply',
-    actions: 'Actions'
-   
+    cancel: 'Cancel',
+    actions: 'Actions', 
+    mother: 'mom3443',
   },
   userForm:{
     deleteUser2: 'Delete User',
@@ -517,6 +518,8 @@ export default {
     patient: 'Select the patient this assesment belongs to',
     clinician: 'Clinician',
     informant: 'Informant',
+    
+
   },
   createAssessment: {
     title: 'Assessment Name',
@@ -532,7 +535,29 @@ export default {
     sendEmail: 'Send Email',
     viaEmail: 'Sent assessment via email',
     emailTemplate: 'Please select the email template',
-    
+    mother: 'Mother',
+    father: 'Father',
+    grandparent: 'Grandparent',
+    uncleAunt: 'Uncle/Aunt',
+    extendedFamily: 'Extended Family',
+    legalGuardian: 'Legal Guardian',
+    familyDoctor: 'Family Doctor',
+    externalPaediatrician:'External Paediatrician',
+    externalPsychotherapist: 'External Psychotherapist',
+    externalPsychologist: 'External Psychologist',
+    externalSocialWorker: 'External Social Worker',
+    externalNurse: 'External Nurse',
+    emergencyDepartment: 'Emergency Department',
+    friend: 'Friend',
+    neighbour:'Neighbour',
+    teacher: 'Teacher',
+    schoolRepresentative: 'School Representative',
+    advisor: 'Advisor',
+    legalAdvisor: 'Legal Advisor',
+    assistance: 'Assistance',
+    supervisor: 'Supervisor',
+    other: 'Other'
+
   },
   form: {
     system: {

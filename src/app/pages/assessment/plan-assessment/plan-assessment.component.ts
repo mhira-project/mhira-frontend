@@ -72,92 +72,91 @@ export class PlanAssessmentComponent implements OnInit {
   url: any = '';
   options = [
     {
-      
-      label: 'Mother',
+      label: 'createAssessment.mother',
       value: 'Mother',
     },
     {
-      label: 'Father',
+      label: 'createAssessment.father',
       value: 'Father',
     },
     {
-      label: 'Grandparent',
+      label: 'createAssessment.grandparent',
       value: 'Grandparent',
     },
     {
-      label: 'Uncle/Aunt',
+      label:'createAssessment.uncleAunt',
       value: 'Uncle/Aunt',
     },
     {
-      label: 'Extended Family',
+      label: 'createAssessment.extendedFamily',
       value: 'Extended Family',
     },
     {
-      label: 'Legal Guardian',
+      label: 'createAssessment.legalGuardian',
       value: 'Legal Guardian',
     },
     {
-      label: 'Family Doctor',
+      label: 'createAssessment.familyDoctor',
       value: 'Family Doctor',
     },
     {
-      label: 'External Paediatrician',
+      label: 'createAssessment.externalPaediatrician',
       value: 'External Paediatrician',
     },
     {
-      label: 'External Psychotherapist',
+      label: 'createAssessment.externalPsychotherapist',
       value: 'External Psychotherapist',
     },
     {
-      label: 'External Psychologist',
+      label: 'createAssessment.externalPsychologist',
       value: 'External Psychologist',
     },
     {
-      label: 'External Social Worker',
+      label: 'createAssessment.externalSocialWorker',
       value: 'External Social Worker',
     },
     {
-      label: 'External Nurse',
+      label: 'createAssessment.externalNurse',
       value: 'External Nurse',
     },
     {
-      label: 'Emergency Department',
+      label: 'createAssessment.emergencyDepartment',
       value: 'Emergency Department',
     },
     {
-      label: 'Friend',
+      label: 'createAssessment.friend',
       value: 'Friend',
     },
     {
-      label: 'Neighbour',
+      label: 'createAssessment.neighbour',
       value: 'Neighbour',
     },
     {
-      label: 'Teacher',
+      label: 'createAssessment.teacher',
       value: 'Teacher',
     },
     {
-      label: 'School Representative',
+      label: 'createAssessment.schoolRepresentative',
       value: 'School Representative',
     },
     {
-      label: 'Advisor',
+      label: 'createAssessment.advisor',
       value: 'Advisor',
     },
     {
-      label: 'Legal Advisor',
+      label: 'createAssessment.legalAdvisor',
       value: 'Legal Advisor',
     },
     {
-      label: 'Assistance',
+      label: 'createAssessment.assistance',
       value: 'Assistance',
     },
     {
-      label: 'Supervisor',
+      label: 'createAssessment.supervisor',
       value: 'Supervisor',
     },
     {
-      label: 'Other',
+      label: 'createAssessment.other',
       value: 'Other',
     },
   ];

@@ -91,14 +91,15 @@
         <nz-input-group>
           <h5>{{ 'createAssessment.patientsCaregiver' | translate }}</h5>
           <nz-select
-            [nzBorderless]="!editMode"
-            [nzOptions]="options"
-            class="input-class"
-            [nzDisabled]="!editMode"
-            [(ngModel)]="selectedInformant"
-            formControlName="informantCaregiverRelation"
-          >
-          </nz-select>
+          [nzBorderless]="!editMode"
+          class="input-class"
+          [nzDisabled]="!editMode"
+          [(ngModel)]="selectedInformant"
+          formControlName="informantCaregiverRelation"
+        >
+          <nz-option *ngFor="let option of options" [nzLabel]="option.label | translate" [nzValue]="option.value">
+          </nz-option>
+        </nz-select>
         </nz-input-group>
       </nz-form-item>
 

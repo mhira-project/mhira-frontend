@@ -21,6 +21,7 @@ export default {
     translations:  'Përkthime',
     help: 'Ndihmë',
     apply: 'Apliko',
+    cancel: 'Anullo',
     actions: 'Aksionet',
 
   },
@@ -504,7 +505,29 @@ export default {
     selfRating: 'Vetëvlerësim',
     sendEmail: 'Dërgo email',
     viaEmail: 'Vlerësimi u dërgua me email',
-    emailTemplate: 'Ju lutemi zgjidhni shabllonin e emailit'
+    emailTemplate: 'Ju lutemi zgjidhni shabllonin e emailit',
+    mother: 'Nëna',
+    father: 'Babai',
+    grandparent: 'Gjyshi',
+    uncleAunt: 'xhaxhai/tezja',
+    extendedFamily: 'Familje e zgjeruar',
+    legalGuardian: 'Kujdestari Ligjor',
+    familyDoctor: 'Doktori i familjes',
+    externalPaediatrician:'Pediatër i jashtëm',
+    externalPsychotherapist: 'Psikoterapist i jashtëm',
+    externalPsychologist: 'Psikolog i jashtëm',
+    externalSocialWorker: 'Punonjës social i jashtëm',
+    externalNurse: 'Infermiere e jashtme',
+    emergencyDepartment: 'Departamenti i emergjences',
+    friend: 'Shoku',
+    neighbour:'Komshiu',
+    teacher: 'Mësues',
+    schoolRepresentative: 'Përfaqësues i shkollës',
+    advisor: 'Këshilltar',
+    legalAdvisor: 'Këshilltar ligjor',
+    assistance: 'Asistencë',
+    supervisor: 'Mbikëqyrësi',
+    other: 'Të tjera'
 
   },
   form: {
