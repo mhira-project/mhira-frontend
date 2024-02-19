@@ -49,6 +49,7 @@ export default {
     myAssessment: 'My Assessments',
     archivedAssessments: 'Show Archived',
     notArchivedAssessments: 'Show Not Archived',
+
     
   },
   card: {
@@ -116,6 +117,8 @@ export default {
       assessmentType: 'Assessment Type',
       lastUpdate: 'Last Update',
       status: 'Status',
+      edit:'Edit Assessment Name',
+      create: 'Create Assessment Name'
     },
 
     roles:{
