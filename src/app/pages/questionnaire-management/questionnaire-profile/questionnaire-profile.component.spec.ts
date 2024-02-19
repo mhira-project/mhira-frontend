@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { QuestionnaireProfileComponent } from './questionnaire-profile.component';
 
 describe('QuestionnaireProfileComponent', () => {

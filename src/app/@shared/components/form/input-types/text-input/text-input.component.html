@@ -28,7 +28,7 @@
       (change)="handleValueChange($event)"
       nz-input
       [attr.placeholder]="field.description | translate"
-      [formControlName]="field.name | translate"
+      [formControlName]="field.name"
     />
   </nz-input-group>
 </ng-container>
@@ -36,7 +36,6 @@
   <span>{{ field?.value ? field?.value : '-' }}</span>
 </div>
 <ng-template #suffix>
-
   <i nz-icon [nzType]="field?.iconName"></i>
 </ng-template>
 <p *ngIf="inputGroup.controls[field.name].dirty && inputGroup.controls[field.name].invalid" translate>

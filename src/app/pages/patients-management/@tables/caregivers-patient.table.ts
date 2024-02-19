@@ -35,7 +35,6 @@ export const CaregiversPatientTable: TableColumn<Caregiver>[] = [
   {
     title: 'E-mail',
     name: 'email',
-    
     sort: true,
     filterField: {
       type: 'text',

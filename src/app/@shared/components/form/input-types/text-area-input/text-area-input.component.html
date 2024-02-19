@@ -20,7 +20,7 @@
       [disabled]="field.disabled ? field.disabled : false"
       (change)="handleValueChange($event)"
       [nzAutosize]="{ minRows: 3, maxRows: 5 }"
-      [formControlName]="field.name | translate"
+      [formControlName]="field.name"
     >
     </textarea>
   </nz-input-group>

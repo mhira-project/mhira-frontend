@@ -17,7 +17,7 @@
     [nzShowArrow]="false"
     (ngModelChange)="handleValueChange($event)"
     (nzOnSearch)="optionsSearch.next($event)"
-    [formControlName]="field.name | translate"
+    [formControlName]="field.name"
     [ngClass]="{
       'has-error': inputIsValid() === false,
       'has-success': inputIsValid() === true

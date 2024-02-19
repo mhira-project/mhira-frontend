@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed,waitForAsync } from '@angular/core/testing';
-
 import { VersionComponent } from './version.component';
 
 describe('VersionComponent', () => {
