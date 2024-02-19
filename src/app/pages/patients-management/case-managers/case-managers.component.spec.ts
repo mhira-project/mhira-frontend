@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CaseManagersComponent } from './case-managers.component';
 
 describe('CaseManagersComponent', () => {

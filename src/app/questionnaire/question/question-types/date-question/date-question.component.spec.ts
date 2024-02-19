@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DateQuestionComponent } from './date-question.component';
 
 describe('DateQuestionComponent', () => {

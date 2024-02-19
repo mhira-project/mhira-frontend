@@ -23,7 +23,7 @@
       [attr.autocomplete]="autoFill"
       (change)="handleValueChange($event)"
       nz-input
-      [attr.placeholder]="field.description"
+      [attr.placeholder]="field.description | translate"
       [formControlName]="field.name"
     />
   </nz-input-group>

@@ -18,8 +18,9 @@ export class MasterDataFilterFormComponent<T> {
   public set columns(columns: TableColumn<T>[]) {
     if (!columns) return;
     this._columns = columns;
+
     this.form = {
-      submitButtonText: 'Apply',
+      submitButtonText: 'core.apply',
       groups: [
         {
           fields: columns
@@ -28,6 +29,7 @@ export class MasterDataFilterFormComponent<T> {
               (c) =>
                 ({
                   name: c.altName ?? c.name,
+                  translationPath: c.translationPath,
                   description: c.title,
                   span: 24,
                   ...c.filterField,

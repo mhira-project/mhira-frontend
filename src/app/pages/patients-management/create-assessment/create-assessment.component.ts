@@ -402,25 +402,9 @@ export class CreateAssessmentComponent implements OnInit {
     }
   }
 
-  private getCaregivers(): void {
-    this.isLoading = true;
-    const options = {
-      filter: {
-        and: [{ patient: { id: { eq: this.fullAssessment?.patientId ?? this.patient.id } } }],
-      },
-    };
-    this.caregiversPatientService
-      .caregiversPatient(options)
-      .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe((response) => {
-        this.caregivers = response.data.patientCaregivers.edges
-          .filter((e: any) => e.node.caregiver)
-          .map((caregiver: any) => caregiver.node.caregiver);
-        this.pageInfo = response.data.patientCaregivers.pageInfo;
-      });
-  }
 
-  getBundles() {
+
+ getBundles() {
     const departments = this.patient.departments.map((item) => {
       return item.id;
     });
@@ -456,6 +440,24 @@ export class CreateAssessmentComponent implements OnInit {
       }
     }
     return uniqueQuestionnaires;
+  }
+
+  private getCaregivers(): void {
+    this.isLoading = true;
+    const options = {
+      filter: {
+        and: [{ patient: { id: { eq: this.fullAssessment?.patientId ?? this.patient.id } } }],
+      },
+    };
+    this.caregiversPatientService
+      .caregiversPatient(options)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe((response) => {
+        this.caregivers = response.data.patientCaregivers.edges
+          .filter((e: any) => e.node.caregiver)
+          .map((caregiver: any) => caregiver.node.caregiver);
+        this.pageInfo = response.data.patientCaregivers.pageInfo;
+      });
   }
 
   private getAssessmentTypes(): void {

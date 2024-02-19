@@ -64,7 +64,7 @@ export class AssessmentsListComponent {
     public onlyArchivedAssessments = (localStorage.getItem('onlyArchivedAssessments') === 'true');
     isVisible = false;
     modalData : any = '';
-    statusFilter: string = '';
+    statusFilter = '';
 
     public assessmentRequestOptions : {
         paging: Paging;

@@ -4,7 +4,7 @@ import { CaseManager } from '../@types/case-manager';
 
 export const PatientColumns: TableColumn<FormattedPatient>[] = [
   {
-    title: 'First name',
+    title: 'tables.patients.firstName',
     name: 'firstName',
     translationPath: 'tables.patients.firstName',
     sort: true,
@@ -14,7 +14,7 @@ export const PatientColumns: TableColumn<FormattedPatient>[] = [
     },
   },
   {
-    title: 'Middle name',
+    title: 'tables.patients.middleName',
     name: 'middleName',
     translationPath: 'tables.patients.middleName',
     sort: true,
@@ -24,7 +24,7 @@ export const PatientColumns: TableColumn<FormattedPatient>[] = [
     },
   },
   {
-    title: 'Last name',
+    title: 'tables.patients.lastName',
     name: 'lastName',
     translationPath: 'tables.patients.lastName',
     sort: true,
@@ -34,7 +34,7 @@ export const PatientColumns: TableColumn<FormattedPatient>[] = [
     },
   },
   {
-    title: 'Hospital ID',
+    title: 'tables.patients.medicalRecordNo',
     name: 'medicalRecordNo',
     translationPath: 'tables.patients.medicalRecordNo',
     sort: true,
@@ -52,14 +52,14 @@ export const PatientColumns: TableColumn<FormattedPatient>[] = [
       type: 'radio',
       value: undefined,
       options: [
-        { label: 'Female', value: 'female' },
-        { label: 'Male', value: 'male' },
-        { label: 'Other', value: 'other' }
+        { label: 'forms.patients.gender.male', value: 'male' }, 
+        { label: 'forms.patients.gender.female', value: 'female' },
+        { label: 'forms.patients.gender.other', value: 'other' },
       ],
     },
   },
   {
-    title: 'Date of Birth',
+    title: 'tables.patients.birthDate',
     name: 'birthDate',
     translationPath: 'tables.patients.birthDate',
     render: 'date',
@@ -71,7 +71,7 @@ export const PatientColumns: TableColumn<FormattedPatient>[] = [
     },
   },
   {
-    title: 'Status',
+    title: 'tables.patients.status',
     name: 'formattedStatus',
     translationPath: 'tables.patients.status',
     altName: 'statusId',
@@ -90,7 +90,7 @@ export const PatientColumns: TableColumn<FormattedPatient>[] = [
     render: 'avatar',
   },
   {
-    title: 'Case Manager',
+    title: 'tables.patients.caseManager',
     name: 'formattedCaseManagers',
     translationPath: 'tables.patients.caseManager',
     altName: 'caseManagers',

@@ -1,4 +1,4 @@
-<button style="margin-bottom: 16px" nz-button nzType="primary" (click)="goBack()">Back</button>
+<button style="margin-bottom: 16px" nz-button nzType="primary" (click)="goBack()">{{'core.back' | translate}}</button>
 
 <article nz-row [nzGutter]="20">
   <section nz-col nzSpan="10">
@@ -46,7 +46,7 @@
           [(ngModel)]="typeSelected"
           (ngModelChange)="onSelectChange($event)"
         >
-          <h5>Informant Type</h5>
+          <h5>{{'createAssessment.informantType' | translate}}</h5>
           <label nz-radio-button nzValue="PATIENT">{{ 'createAssessment.patient' | translate }}</label>
           <label nz-radio-button nzValue="USER">{{ 'createAssessment.departmentsUser' | translate }}</label>
           <label nz-radio-button nzValue="CAREGIVER">{{ 'createAssessment.patientsCaregiver' | translate }}</label>
@@ -69,7 +69,7 @@
           </ng-container>
           </nz-select>
         </nz-input-group>
-        <p>Self Rating.</p>
+        <p>{{'createAssessment.selfRating' | translate}}</p>
       </nz-form-item>
       <nz-form-item *ngIf="typeSelected === 'USER'">
         <nz-input-group>
@@ -91,14 +91,15 @@
         <nz-input-group>
           <h5>{{ 'createAssessment.patientsCaregiver' | translate }}</h5>
           <nz-select
-            [nzBorderless]="!editMode"
-            [nzOptions]="options"
-            class="input-class"
-            [nzDisabled]="!editMode"
-            [(ngModel)]="selectedInformant"
-            formControlName="informantCaregiverRelation"
-          >
-          </nz-select>
+          [nzBorderless]="!editMode"
+          class="input-class"
+          [nzDisabled]="!editMode"
+          [(ngModel)]="selectedInformant"
+          formControlName="informantCaregiverRelation"
+        >
+          <nz-option *ngFor="let option of options" [nzLabel]="option.label | translate" [nzValue]="option.value">
+          </nz-option>
+        </nz-select>
         </nz-input-group>
       </nz-form-item>
 
@@ -174,14 +175,14 @@
       <!-- End Create -->
 
       <ng-container *ngIf="hasEmail">
-        <h5 style="margin-top: 20px">Send Email</h5>
+        <h5 style="margin-top: 20px">{{'createAssessment.sendEmail' |translate}}</h5>
         <div class="email-label-wrapper">
-          <label [disableControl]="!editMode" formControlName="emailReminder" [nzValue]="fullAssessment?.emailReminder" [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>Sent assessment via email</label>
+          <label [disableControl]="!editMode" formControlName="emailReminder" [nzValue]="fullAssessment?.emailReminder" [nzTooltipPlacement]="['topLeft', 'leftTop']" nz-tooltip nzTooltipTitle="Email will be sent on the selected delivery date!" class="email-label" [(nzChecked)]="checked" nz-checkbox>{{'createAssessment.viaEmail' | translate}}</label>
           <input [disableControl]="!editMode" [ngModel]="patient?.email" style="width: 100%; height: min-content;" formControlName="receiverEmail" nz-input placeholder="youremail@domain.com" [value]="fullAssessment?.patient?.email" [disabled]="!checked" />
         </div>
         <nz-form-item>
           <nz-input-group *ngIf="assessmentForm.controls.emailReminder.value === true">
-            <nz-select [nzDisabled]="!editMode" formControlName="mailTemplateId" nzPlaceHolder="Please select the email template">
+            <nz-select [nzDisabled]="!editMode" formControlName="mailTemplateId" [nzPlaceHolder]="'createAssessment.emailTemplate' | translate">
               <nz-option *ngFor="let template of emailTemplates" [nzValue]="template.id" [nzLabel]="template.name"></nz-option>
             </nz-select>
           </nz-input-group>
@@ -190,7 +191,7 @@
 
       <nz-form-item>
         <nz-input-group>
-          <h5>Notes for the assessment manager</h5>
+          <h5>{{'createAssessment.notes' | translate}}</h5>
           <nz-textarea-count [nzMaxCharacterCount]="200" placeholder="Write notes">
             <textarea formControlName="note" nz-input [disableControl]="!editMode"></textarea>
           </nz-textarea-count>
@@ -200,8 +201,8 @@
       <nz-form-item>
         <nz-form-control>
           <ng-container *ngIf="editMode">
-            <button nz-button nzType="primary" [disabled]="!assessmentForm.valid">Submit</button>
-            <button nz-button type="button" (click)="editMode = !editMode">Cancel</button>
+            <button nz-button nzType="primary" [disabled]="!assessmentForm.valid">{{'assessmentForm.submit' | translate}}</button>
+            <button nz-button type="button" (click)="editMode = !editMode">{{'assessmentForm.cancel' | translate}}</button>
           </ng-container>
           <button
             nz-button
@@ -225,8 +226,8 @@
     ></app-questionnaire-selection>
     <!--  -->
     <hr>
-    <h4>Select Bundles</h4>
-    <nz-select style="width: 100%;" nzMode="multiple" nzPlaceHolder="Select your bundle..." [(ngModel)]="listOfSelectedBundles" (ngModelChange)="onBundleSelection()">
+    <h4>{{'plannedAssessments.selectBundles' | translate}}</h4>
+    <nz-select style="width: 100%;" nzMode="multiple" [nzPlaceHolder]="'plannedAssessments.selectBundle' | translate" [(ngModel)]="listOfSelectedBundles" (ngModelChange)="onBundleSelection()">
       <nz-option *ngFor="let option of listOfBundles" [nzLabel]="option?.node?.name" [nzValue]="option"></nz-option>
     </nz-select>
     <br />

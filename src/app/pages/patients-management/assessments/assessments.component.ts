@@ -63,7 +63,7 @@ export class AssessmentsComponent implements OnInit {
   isVisible = false;
   newUrl : URL;
   modalData : any = '';
-  statusFilter: string = '';
+  statusFilter = '';
   public pageInfo: PageInfo;
   public onlyMyAssessments = (localStorage.getItem('onlyMyAssessmentsPatients') === 'true');
 
@@ -124,9 +124,13 @@ export class AssessmentsComponent implements OnInit {
 
   public onStatusSelect(): any{
     if(this.assessmentRequestOptions.filter.and) {
-      const filters = {...this.assessmentRequestOptions.filter, and: [...this.assessmentRequestOptions.filter.and, {status: {eq: this.statusFilter}}]};
+      const filters = {
+        ...this.assessmentRequestOptions.filter, 
+        and: [...this.assessmentRequestOptions.filter.and, {status: {eq: this.statusFilter}}]};
     } else {
-        const filters = {...this.assessmentRequestOptions.filter, and: [{status: {eq: this.statusFilter}}]};
+        const filters = {
+          ...this.assessmentRequestOptions.filter, 
+          and: [{status: {eq: this.statusFilter}}]};
     }
     this.getAssessments();
     this.currentFilters = true;

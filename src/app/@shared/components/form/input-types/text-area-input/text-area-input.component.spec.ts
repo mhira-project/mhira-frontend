@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TextAreaInputComponent } from './text-area-input.component';
 
 describe('TextAreaInputComponent', () => {

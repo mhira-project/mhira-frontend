@@ -1,6 +1,5 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-
 import { I18nService } from './i18n.service';
 import { LanguageSelectorComponent } from './language-selector.component';
 

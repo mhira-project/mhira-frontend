@@ -23,7 +23,7 @@
   [nzMaskClosable]="false"
   [nzVisible]="showCreateAssessmentAdministration"
   nzPlacement="right"
-  [nzTitle]="assessmentAdministration?.id ? 'Edit Assessment Name' : 'Create Assessment Name'"
+  [nzTitle]="(assessmentAdministration?.id ? 'tables.assessmentAdministration.edit' : 'tables.assessmentAdministration.create') | translate"
   (nzOnClose)="closeCreatePanel()"
 >
   <app-form
