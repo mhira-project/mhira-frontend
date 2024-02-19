@@ -23,6 +23,7 @@ export default {
     goBack: 'Zurück',
     translations:  'Übersetzungen',
     help: 'Hilfe',
+    cancel: 'Stornieren',
     apply: 'Anwenden',
     actions: 'Aktionen'
   },
