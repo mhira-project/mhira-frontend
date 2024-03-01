@@ -213,6 +213,7 @@ export default {
       status: 'Statusi',
       departmentName: 'Emri i Departamentit',
       createDepartment:'Krijo Departamentin',
+      editDepartment: 'Abteilung bearbeiten'
     },
   },
   forms: {
