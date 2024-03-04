@@ -14,14 +14,14 @@
       (ngModelChange)="handleValueChange($event)"
       [(ngModel)]="field.value"
       [attr.autocomplete]="autoFill"
-      [nzPlaceHolder]="field.description"
+      [nzPlaceHolder]="field.description | translate"
       [formControlName]="field.name"
       [ngClass]="{
         'has-error': inputIsValid() === false,
         'has-success': inputIsValid() === true
       }"
     >
-      <nz-option *ngFor="let option of field.options" [nzValue]="option.value" [nzLabel]="option.label"> </nz-option>
+      <nz-option *ngFor="let option of field.options" [nzValue]="option.value | translate" [nzLabel]="option.label | translate"> </nz-option>
     </nz-select>
   </nz-input-group>
 </ng-container>

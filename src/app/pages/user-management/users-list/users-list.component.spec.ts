@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { UsersListComponent } from './users-list.component';
 
 describe('UserManagementComponent', () => {

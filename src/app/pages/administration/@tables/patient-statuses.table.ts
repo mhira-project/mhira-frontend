@@ -11,29 +11,29 @@ const actions: any[] = [
 
 const columns: any[] = [
   {
-    title: 'Name',
+    title: 'tables.patientStatuses.name',
     name: 'name',
     translationPath: 'tables.patientStatuses.name',
     isFilterable: false,
     sort: true,
   },
   {
-    title: 'Description',
+    title: 'tables.patientStatuses.description',
     name: 'description',
     translationPath: 'tables.patientStatuses.description',
     isFilterable: false,
     sort: true,
   },
   {
-    title: 'Created Date',
+    title: 'tables.patientStatuses.formattedCreatedAt',
     name: 'formattedCreatedAt',
     translationPath: 'tables.patientStatuses.formattedCreatedAt',
     isFilterable: false,
   },
   {
-    title: 'Updated Date',
+    title: 'forms.patientStatuses.formattedUpdatedAt',
     name: 'formattedUpdatedAt',
-    translationPath: 'tables.patientStatuses.formattedUpdatedAt',
+    translationPath: 'forms.patientStatuses.formattedUpdatedAt',
     isFilterable: false,
   },
 ];

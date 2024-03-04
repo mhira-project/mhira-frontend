@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FileInputComponent } from './file-input.component';
 
 describe('FileInputComponent', () => {

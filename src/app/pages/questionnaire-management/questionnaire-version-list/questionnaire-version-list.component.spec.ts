@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { QuestionnaireVersionListComponent } from './questionnaire-version-list.component';
 
 describe('QuestionnaireVersionListComponent', () => {

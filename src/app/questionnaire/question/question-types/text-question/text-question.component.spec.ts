@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TextQuestionComponent } from './text-question.component';
 
 describe('TextQuestionComponent', () => {

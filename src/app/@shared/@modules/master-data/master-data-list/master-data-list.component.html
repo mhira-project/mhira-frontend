@@ -36,7 +36,7 @@
       {{ 'core.previous' | translate }}
     </button>
     <nz-select [(ngModel)]="pageSize" (ngModelChange)="onPageChange()">
-      <nz-option *ngFor="let ps of PAGE_SIZES" [nzValue]="ps" nzLabel="Page size: {{ ps }}"></nz-option>
+      <nz-option *ngFor="let ps of PAGE_SIZES" [nzValue]="ps" nzLabel="{{ 'core.pageSize' | translate }} {{ ps }}"></nz-option>
     </nz-select>
     <button
       nzShape="round"
@@ -55,7 +55,7 @@
     </ul>
   </nz-dropdown-menu>
 
-  <nz-drawer #drawer [nzClosable]="true" nzTitle="Filter" (nzOnClose)="drawer.close()">
+  <nz-drawer #drawer [nzClosable]="true" [nzTitle]="'core.filter' | translate" (nzOnClose)="drawer.close()">
     <app-master-data-filter-form
       [drawer]="drawer"
       [columns]="columns"
