@@ -191,6 +191,7 @@ export default {
       name: 'Emri',
       description: 'Përshkrimi',
       createdAt: 'Krijuar më',
+      
     },
     users: {
       firstName: 'Emri',
@@ -213,6 +214,7 @@ export default {
       status: 'Statusi',
       departmentName: 'Emri i Departamentit',
       createDepartment:'Krijo Departamentin',
+      editDepartment: 'Edito Departamentin'
     },
   },
   forms: {
