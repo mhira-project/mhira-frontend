@@ -217,6 +217,7 @@ export default {
       departmentName: 'Abteilungsname',
       status: 'Status',
       createDepartment:'Abteilung erstellen',
+      editDepartment: 'Abteilung bearbeiten'
     },
   },
   forms: {

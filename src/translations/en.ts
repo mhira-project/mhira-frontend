@@ -227,7 +227,8 @@ export default {
       createdAt: 'Created At',
       departmentName: 'Department Name',
       status: 'Status',
-      createDepartment:'Create Department',
+      createDepartment: 'Create Department',
+      editDepartment: 'Edit Department'
     },
   },
   forms: {

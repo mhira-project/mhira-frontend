@@ -31,7 +31,7 @@
   [nzMaskClosable]="false"
   [nzVisible]="showCreateDepartment"
   nzPlacement="right"
-  [nzTitle]="department?.id ? 'Edit Department' : 'tables.department.createDepartment' | translate"
+  [nzTitle]="department?.id ? ('tables.department.editDepartment' | translate) : ('tables.department.createDepartment' | translate)"
   (nzOnClose)="closeCreatePanel()"
 >
   <app-form
