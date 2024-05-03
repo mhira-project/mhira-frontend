@@ -52,7 +52,6 @@ export class AssessmentOverviewComponent implements OnInit {
   public ngOnInit(): void {
     this.assessmentFormService.assessment$.subscribe((assessment: FullAssessment) => {
       this.assessment = assessment;
-      console.log('assessment', assessment);
       this.questionnaireQuestions = {};
       this.questions = assessment.questionnaireAssessment.questionnaires.reduce(
         (questions: any, questionnaire: any) => {
