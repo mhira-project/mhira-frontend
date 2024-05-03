@@ -28,6 +28,10 @@ export interface Assessment {
   assessmentType: AssessmentAdministration;
   patientId: number;
   note: string;
+  consentDescription?: string;
+  consentCheckbox1?: string;
+  consentCheckbox2?: string;
+  submitContent?: string;
   clinicianId: number;
   patient: Patient;
   clinician?: User;
@@ -39,8 +43,8 @@ export interface Assessment {
   informantCaregiverRelation?: string;
   informantClinician?: User;
   emailStatus: string;
-  questionnaireAssessment:any;
-  questionnaires: []
+  questionnaireAssessment: any;
+  questionnaires: [];
 }
 
 export interface QuestionnaireAssessment {
@@ -48,6 +52,12 @@ export interface QuestionnaireAssessment {
   questionnaires: QuestionnaireVersion[];
   answers: Answer[];
   status: AssessmentStatus;
+  consentTimestamp?: Date;
+  acceptedConsentContent?: {
+    description?: string;
+    checkbox1?: string;
+    checkbox2?: string;
+  };
 }
 
 export interface FullAssessment extends Assessment {
@@ -75,7 +85,7 @@ export interface FormattedAssessment extends Assessment {
   submissionDate: Date;
   questionnaireAssessment: {};
   emailFormatedStatus: {};
-  formatedQuestionnaireNames: []
-  formatedQuestionnaires: []
-  questionnaires: []
+  formatedQuestionnaireNames: [];
+  formatedQuestionnaires: [];
+  questionnaires: [];
 }

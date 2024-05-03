@@ -28,6 +28,10 @@ const assessments = gql`
           updatedAt
           deletedAt
           informantType
+          consentDescription
+          consentCheckbox1
+          consentCheckbox2
+          submitContent
           clinician {
             id
             username
@@ -83,7 +87,13 @@ const assessments = gql`
           }
           questionnaireAssessment {
             status
-            questionnaireBundles{
+            consentTimestamp
+            acceptedConsentContent {
+              description
+              checkbox1
+              checkbox2
+            }
+            questionnaireBundles {
               _id
               name
             }
@@ -207,6 +217,10 @@ const getFullAssessment = gql`
       deliveryDate
       expirationDate
       note
+      consentDescription
+      consentCheckbox1
+      consentCheckbox2
+      submitContent
       createdAt
       updatedAt
       deletedAt
@@ -234,12 +248,18 @@ const getFullAssessment = gql`
         deletedAt
       }
       questionnaireAssessment {
-        questionnaireBundles{
+        questionnaireBundles {
           _id
           name
         }
         _id
         status
+        consentTimestamp
+        acceptedConsentContent {
+          description
+          checkbox1
+          checkbox2
+        }
         answers {
           question
           valid
@@ -344,9 +364,19 @@ const getFullPublicAssessment = gql`
       deliveryDate
       expirationDate
       informantType
+      consentDescription
+      consentCheckbox1
+      consentCheckbox2
+      submitContent
       questionnaireAssessment {
         _id
         status
+        consentTimestamp
+        acceptedConsentContent {
+          description
+          checkbox1
+          checkbox2
+        }
         answers {
           question
           valid

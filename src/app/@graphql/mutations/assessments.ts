@@ -180,7 +180,7 @@ const deleteAssessment = gql`
 
 const archiveOneAssessment = gql`
   mutation($id: Int!) {
-    archiveOneAssessment(id: $id){
+    archiveOneAssessment(id: $id) {
       id
     }
   }
@@ -188,7 +188,7 @@ const archiveOneAssessment = gql`
 
 const restoreOneAssessment = gql`
   mutation($id: Int!) {
-    restoreOneAssessment(id: $id){
+    restoreOneAssessment(id: $id) {
       id
     }
   }
@@ -242,6 +242,14 @@ const sendAssessmentEmail = gql`
   }
 `;
 
+const setAssessmentAcceptedConsentDate = gql`
+  mutation($id: String!) {
+    setAssessmentAcceptedConsentDate(_id: $id) {
+      _id
+    }
+  }
+`;
+
 export const AssessmentsMutations = {
   createOneAssessment,
   updateOneAssessment,
@@ -252,5 +260,6 @@ export const AssessmentsMutations = {
   updateOneMongoAssessment,
   addAnswer,
   changeAssessmentStatus,
-  sendAssessmentEmail
+  sendAssessmentEmail,
+  setAssessmentAcceptedConsentDate,
 };

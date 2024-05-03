@@ -30,6 +30,9 @@ export class AssessmentOverviewComponent implements OnInit {
   public assessment: FullAssessment;
   public questions: Question[];
   public questionnaireQuestions: { [K in string]: Question[] };
+  isConsentShown = false;
+  isConsent1Checked = false;
+  isConsent2Checked = false;
 
   public get answers(): Answer[] {
     return this.assessment.questionnaireAssessment.answers;
@@ -47,29 +50,40 @@ export class AssessmentOverviewComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.assessmentFormService.assessment$.subscribe((assessment : any) => {
+    this.assessmentFormService.assessment$.subscribe((assessment: FullAssessment) => {
       this.assessment = assessment;
+      console.log('assessment', assessment);
       this.questionnaireQuestions = {};
-      this.questions = assessment.questionnaireAssessment.questionnaires.reduce((questions: any, questionnaire: any) => {
-        let questionnaireQuestions = questionnaire.questionGroups.reduce(
-          (qs: any, group: any) => [...qs, ...group.questions],
-          []
-        );
-        // ************
-        for(const unique of questionnaire.questionGroups?? []){
-          for(const uq of unique.uniqueQuestions) {
-            questionnaireQuestions = [...questionnaireQuestions, ...uq.subQuestions]
+      this.questions = assessment.questionnaireAssessment.questionnaires.reduce(
+        (questions: any, questionnaire: any) => {
+          let questionnaireQuestions = questionnaire.questionGroups.reduce(
+            (qs: any, group: any) => [...qs, ...group.questions],
+            []
+          );
+          // ************
+          for (const unique of questionnaire.questionGroups ?? []) {
+            for (const uq of unique.uniqueQuestions) {
+              questionnaireQuestions = [...questionnaireQuestions, ...uq.subQuestions];
+            }
           }
-        }
-        // *************
-        this.questionnaireQuestions[questionnaire._id] = questionnaireQuestions;
-        return [...questions, ...questionnaireQuestions];
-      }, []);
+          // *************
+          this.questionnaireQuestions[questionnaire._id] = questionnaireQuestions;
+          return [...questions, ...questionnaireQuestions];
+        },
+        []
+      );
+
+      if (
+        assessment.questionnaireAssessment.consentTimestamp === null &&
+        (this.assessment.consentCheckbox1 || this.assessment.consentCheckbox2) &&
+        this.assessment.consentDescription
+      ) {
+        this.showConsentModal();
+      }
 
       this.cdr.detectChanges();
     });
     this.getDescription();
-    console.log(this.completedDisclaimer);
   }
 
   public getMaxRequiredQuestions(questionnaireId: string): number {
@@ -114,7 +128,6 @@ export class AssessmentOverviewComponent implements OnInit {
 
   public completeAssessment(): void {
     const id = this.assessment.questionnaireAssessment._id;
-    console.log('here');
     forkJoin([
       this.translateService.get(this.translations.assessmentForm.complete),
       this.assessmentService.changeAssessmentStatus(id, AssessmentStatus.COMPLETED),
@@ -149,5 +162,20 @@ export class AssessmentOverviewComponent implements OnInit {
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load disclaimers' })
       );
+  }
+
+  showConsentModal(): void {
+    this.isConsentShown = true;
+  }
+
+  handleOk(): void {
+    this.assessmentService.setAssessmentAcceptedConsentDate(this.assessment.questionnaireAssessment._id).subscribe(
+      () => {
+        this.isConsentShown = false;
+        this.messageService.success('Consent accepted successfully');
+        this.cdr.detectChanges();
+      },
+      (err) => this.errorService.handleError(err, { prefix: 'Unable to accept consent' })
+    );
   }
 }

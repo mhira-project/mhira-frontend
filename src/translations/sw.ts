@@ -23,7 +23,7 @@ export default {
   assessments: {
     myAssessment: 'Tathmini yangu',
     archivedAssessments: 'Show Archived - REPLACE',
-    notArchivedAssessments: 'Show Not Archived - REPLACE'
+    notArchivedAssessments: 'Show Not Archived - REPLACE',
   },
   card: {
     changePassword: 'Badilisha neno la siri',
@@ -66,12 +66,12 @@ export default {
     noTabs: 'Hakuna kurasa',
     disclaimers: 'Kanusho',
     emailTemplates: 'Email Templates - REPLACE',
-    version: 'Version - REPLACE'
+    version: 'Version - REPLACE',
   },
   patients: {
     myPatients: 'Wagonjwa Wangu',
     archivedPatients: 'Show Archived - REPLACE',
-    notArchivedPatients: 'Show not Archived - REPLACE'
+    notArchivedPatients: 'Show not Archived - REPLACE',
   },
   tables: {
     assessmentAdministration: {
@@ -267,6 +267,8 @@ export default {
     next: 'Ifuatayo',
     prev: 'Iliyotangulia',
     complete: 'Asante kwa kumaliza tathmini hii! Unaweza kufunga ukurasa huu sasa.',
+    consentModalTitle: 'We need your consent to proceed with the assessment',
+    acceptConsentButton: 'I Accept',
   },
   questionnaires: {
     questionnairesId: 'Kitambulisho cha toleo',
@@ -323,6 +325,12 @@ export default {
     deliveryDate: 'Tarehe ya Uwasilishaji',
     expirationDate: 'Tarehe ya kumalizika muda wake',
     notes: 'Vidokezo kwa msimamizi wa tathmini',
+    consentCheckbox1: 'First Consent checkbox',
+    consentCheckbox2: 'Second Consent checkbox',
+    consentDescription: 'Consent message',
+    submitContent: 'Submit message',
+    consent: 'Consent',
+    consentGiven: 'Consent was given',
   },
   form: {
     system: {
@@ -350,7 +358,7 @@ export default {
     permissions: 'Ruhusa',
     roles: 'Majukumu',
   },
-  emailTemplates:{
+  emailTemplates: {
     createTemplate: 'Create Template - REPLACE',
     created: 'Email template created successfully! - REPLACE',
     updated: 'Email template updated successfully! - REPLACE',
@@ -360,6 +368,6 @@ export default {
     body: 'Body - REPLACE',
     subject: 'Subject - REPLACE',
     status: 'Status - REPLACE',
-    module: 'Module - REPLACE'
-  }
+    module: 'Module - REPLACE',
+  },
 };

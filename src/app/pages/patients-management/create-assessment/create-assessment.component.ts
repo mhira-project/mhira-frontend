@@ -127,6 +127,10 @@ export class CreateAssessmentComponent implements OnInit {
       receiverEmail: [this.patient?.email],
       mailTemplateId: [null],
       note: [null],
+      consentCheckbox1: [null],
+      consentCheckbox2: [null],
+      consentDescription: [null],
+      submitContent: [null],
       dates: this.formBuilder.array([
         this.formBuilder.group({
           expirationDate: [null],
@@ -339,6 +343,7 @@ export class CreateAssessmentComponent implements OnInit {
     const bytes = CryptoJS.AES.decrypt(data, environment.secretKey);
     const assessment: FullAssessment = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     this.fullAssessment = assessment;
+    console.log(this.fullAssessment);
     this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
     this.patient = this.fullAssessment.patient;
     this.editMode = false;
@@ -355,6 +360,10 @@ export class CreateAssessmentComponent implements OnInit {
       informantCaregiverRelation: this.fullAssessment.informantCaregiverRelation,
       expirationDate: this.fullAssessment.expirationDate,
       note: '',
+      consentCheckbox1: this.fullAssessment.consentCheckbox1,
+      consentCheckbox2: this.fullAssessment.consentCheckbox2,
+      consentDescription: this.fullAssessment.consentDescription,
+      submitContent: this.fullAssessment.submitContent,
     });
     this.dates.push(
       this.formBuilder.group({
@@ -402,9 +411,7 @@ export class CreateAssessmentComponent implements OnInit {
     }
   }
 
-
-
- getBundles() {
+  getBundles() {
     const departments = this.patient.departments.map((item) => {
       return item.id;
     });

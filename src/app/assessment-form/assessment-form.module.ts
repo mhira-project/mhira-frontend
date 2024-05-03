@@ -25,6 +25,7 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { TranslateModule } from '@ngx-translate/core';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { TranslateModule } from '@ngx-translate/core';
     NgxInputSearchModule,
     NzFormModule,
     TranslateModule,
+    NzModalModule,
   ],
   providers: [AssessmentFormService],
 })
