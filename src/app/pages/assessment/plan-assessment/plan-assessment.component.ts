@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { AssessmentService } from '../@services/assessment.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '@env/environment';
@@ -69,6 +69,7 @@ export class PlanAssessmentComponent implements OnInit {
   public checked = false;
   public isUpdate: boolean;
   public hasEmail = false;
+  public isConsentEnabled = false;
   url: any = '';
   options = [
     {
@@ -84,7 +85,7 @@ export class PlanAssessmentComponent implements OnInit {
       value: 'Grandparent',
     },
     {
-      label:'createAssessment.uncleAunt',
+      label: 'createAssessment.uncleAunt',
       value: 'Uncle/Aunt',
     },
     {
@@ -174,7 +175,8 @@ export class PlanAssessmentComponent implements OnInit {
     public perms: AppPermissionsService,
     private router: Router,
     private locationStrategy: LocationStrategy,
-    private clipboard: Clipboard
+    private clipboard: Clipboard,
+    private cdr: ChangeDetectorRef
   ) {}
 
   public ngOnInit(): void {
@@ -182,9 +184,6 @@ export class PlanAssessmentComponent implements OnInit {
     this.initAssessment();
     this.userAutoSelect();
     this.hasEmail = environment.email;
-    setTimeout(() => {
-      console.log('FULL ASSESSMENT: ', this.fullAssessment);
-    }, 1000);
   }
 
   get datesFieldAsFormArray(): FormArray {
@@ -208,8 +207,6 @@ export class PlanAssessmentComponent implements OnInit {
     if (!this.editMode) {
       return;
     }
-    console.log(this.patient);
-    console.log(this.selectedPatient);
     if (event === 'PATIENT') {
       this.dataToSelect = [
         {
@@ -418,6 +415,10 @@ export class PlanAssessmentComponent implements OnInit {
         expirationDate: [null],
         dates: this.formBuilder.array([]),
         note: [null],
+        consentCheckbox1: [null],
+        consentCheckbox2: [null],
+        consentDescription: [null],
+        submitContent: [null],
       });
     } catch {
       this.assessmentForm = this.formBuilder.group({
@@ -439,6 +440,10 @@ export class PlanAssessmentComponent implements OnInit {
           }),
         ]),
         note: [null],
+        consentCheckbox1: [null],
+        consentCheckbox2: [null],
+        consentDescription: [null],
+        submitContent: [null],
       });
       this.isUpdate = false;
       return;
@@ -447,6 +452,7 @@ export class PlanAssessmentComponent implements OnInit {
     this.assessmentService.getFullAssessment(assessmentId).subscribe(
       (assessment) => {
         this.editMode = false;
+        this.isConsentEnabled = assessment.consentCheckbox1 !== '' || assessment.consentCheckbox2 !== '';
         this.fullAssessment = assessment;
         this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
         this.assessmentForm.patchValue({
@@ -467,6 +473,10 @@ export class PlanAssessmentComponent implements OnInit {
           mailTemplateId: this.fullAssessment.mailTemplateId,
           note: this.fullAssessment.note,
           questionnaires: this.fullAssessment.questionnaireAssessment?.questionnaires,
+          consentDescription: this.fullAssessment.consentDescription,
+          consentCheckbox1: this.fullAssessment.consentCheckbox1,
+          consentCheckbox2: this.fullAssessment.consentCheckbox2,
+          submitContent: this.fullAssessment.submitContent,
         });
         // @ts-ignore
         this.dates.push(
@@ -541,5 +551,10 @@ export class PlanAssessmentComponent implements OnInit {
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load assessment type' })
       );
+  }
+
+  public onConsentCheckboxChange(event: any) {
+    this.isConsentEnabled = event;
+    this.cdr.detectChanges();
   }
 }

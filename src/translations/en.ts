@@ -21,14 +21,14 @@ export default {
     active: 'Active',
     inactive: 'Inactive',
     goBack: 'Go Back',
-    translations:  'Translations',
+    translations: 'Translations',
     help: 'Help',
     apply: 'Apply',
     cancel: 'Cancel',
-    actions: 'Actions', 
+    actions: 'Actions',
     mother: 'mom3443',
   },
-  userForm:{
+  userForm: {
     deleteUser2: 'Delete User',
     deleteUser: 'Delete User',
     removeUser: 'To remove User',
@@ -49,8 +49,6 @@ export default {
     myAssessment: 'My Assessments',
     archivedAssessments: 'Show Archived',
     notArchivedAssessments: 'Show Not Archived',
-
-    
   },
   card: {
     changePassword: 'Change Password',
@@ -62,8 +60,7 @@ export default {
     searchSelect: 'Search and select questionnaires to add to the assessment',
     selectQuestionnaires: 'Select Questionnaires',
     selectedQuestionnaires: 'Selected Questionnaires',
-    selectBundles: 'Select Bundles'
-
+    selectBundles: 'Select Bundles',
   },
   assessmentMessages: {
     expiredText: 'Sorry, assessment is no longer available!',
@@ -105,28 +102,28 @@ export default {
     disclaimers: 'Messages',
     emailTemplates: 'Email Templates',
     version: 'Version',
-    createPatientStatus: 'Create PatientStatus'
+    createPatientStatus: 'Create PatientStatus',
   },
   patients: {
     myPatients: 'My Patients',
     archivedPatients: 'Show Archived',
-    notArchivedPatients: 'Show not Archived'
+    notArchivedPatients: 'Show not Archived',
   },
   tables: {
     assessmentAdministration: {
       assessmentType: 'Assessment Type',
       lastUpdate: 'Last Update',
       status: 'Status',
-      edit:'Edit Assessment Name',
-      create: 'Create Assessment Name'
+      edit: 'Edit Assessment Name',
+      create: 'Create Assessment Name',
     },
 
-    roles:{
+    roles: {
       name: 'Role Name',
       hierarchy: 'Role Hierarchy',
       createdAt: 'Created At',
       deleteRole: 'Delete Role',
-      updateRole:'Update Role',
+      updateRole: 'Update Role',
       createRole: 'Create Role',
     },
     patientStatuses: {
@@ -137,7 +134,6 @@ export default {
     },
     patientStatus: {
       name: '',
-
     },
     disclaimer: {
       type: 'Type',
@@ -169,7 +165,7 @@ export default {
       repositoryLink: 'Repository Link',
       createdAt: 'Created At',
     },
-    
+
     patients: {
       firstName: 'First Name',
       middleName: 'Middle Name',
@@ -228,7 +224,7 @@ export default {
       departmentName: 'Department Name',
       status: 'Status',
       createDepartment: 'Create Department',
-      editDepartment: 'Edit Department'
+      editDepartment: 'Edit Department',
     },
   },
   forms: {
@@ -238,14 +234,14 @@ export default {
       descriptionName: 'Enter Type Name',
       validationName: 'Please Enter Type Name',
       createName: 'Create Assessment Name',
-      assessmentTitle:'Create Assessment Name',
+      assessmentTitle: 'Create Assessment Name',
       assessmentEdit: 'Edit Assessment Name',
     },
     patientStatuses: {
       name: 'Name',
       submitPatient: 'Submit PatientStatus',
       description: 'Description',
-      formattedUpdatedAt: 'Updated Date'
+      formattedUpdatedAt: 'Updated Date',
     },
     scripts: {
       name: 'Name',
@@ -262,7 +258,7 @@ export default {
       validationReportName: 'Please enter report name',
       descriptionResources: 'Enter Report resources',
       patients: 'Patients',
-      dashboard : 'Dashboard',
+      dashboard: 'Dashboard',
       validationResources: 'please Enter Report resources',
       descriptionPlace: 'Enter Report description',
       validationDescription: 'Please enter report description',
@@ -278,12 +274,11 @@ export default {
       reportStatus: 'Report Status',
       anonymus: 'Anonymus',
       roles: 'Roles',
-      createReport: 'Create Report'
+      createReport: 'Create Report',
     },
     changePassword: {
       newPassword: 'Enter New Password',
       newPasswordConfirmation: 'Repeat Password',
-      
     },
     changeUserPassword: {
       currentPassword: 'Enter current password',
@@ -437,7 +432,6 @@ export default {
       idDescription: 'Enter medical record number',
       female: 'Female',
       submitContact: 'Submit Contact',
-
     },
   },
   assessmentForm: {
@@ -453,6 +447,8 @@ export default {
     complete: 'Thank you for completing this assessment! You can close this page now.',
     submit: 'Submit',
     cancel: 'Cancel',
+    consentModalTitle: 'We need your consent to proceed with the assessment',
+    acceptConsentButton: 'I Accept',
   },
   questionnaires: {
     questionnairesId: 'Version ID',
@@ -479,7 +475,6 @@ export default {
     continueButton: 'Continue',
     cancelButton: 'Cancel',
     draft: '',
-
   },
   questionnairesForm: {
     name: 'Name',
@@ -496,7 +491,7 @@ export default {
     addKeyword: 'Type and press "Enter" to add the keyword!',
     pleaseUse: 'Please use',
     this: 'this',
-    thisWeb: 'website to check the validity of your XSL form before uploading.'
+    thisWeb: 'website to check the validity of your XSL form before uploading.',
   },
   plannedAssessments: {
     name: 'Assessment Name',
@@ -512,18 +507,16 @@ export default {
     expirationDate: 'Expiration Date',
     updatedAt: 'Submission Date',
     deliveryDate: 'Delivery Date',
-    selectBundles:  'Select Bundles',
+    selectBundles: 'Select Bundles',
     selectBundle: 'Select your bundle...',
     questionnaires: 'Questionnaires',
-    filterStatus: 'Filter Status'
+    filterStatus: 'Filter Status',
   },
   planAssessment: {
     assessmentName: 'Assessment Name',
     patient: 'Select the patient this assesment belongs to',
     clinician: 'Clinician',
     informant: 'Informant',
-    
-
   },
   createAssessment: {
     title: 'Assessment Name',
@@ -546,22 +539,27 @@ export default {
     extendedFamily: 'Extended Family',
     legalGuardian: 'Legal Guardian',
     familyDoctor: 'Family Doctor',
-    externalPaediatrician:'External Paediatrician',
+    externalPaediatrician: 'External Paediatrician',
     externalPsychotherapist: 'External Psychotherapist',
     externalPsychologist: 'External Psychologist',
     externalSocialWorker: 'External Social Worker',
     externalNurse: 'External Nurse',
     emergencyDepartment: 'Emergency Department',
     friend: 'Friend',
-    neighbour:'Neighbour',
+    neighbour: 'Neighbour',
     teacher: 'Teacher',
     schoolRepresentative: 'School Representative',
     advisor: 'Advisor',
     legalAdvisor: 'Legal Advisor',
     assistance: 'Assistance',
     supervisor: 'Supervisor',
-    other: 'Other'
-
+    other: 'Other',
+    consentCheckbox1: 'First Consent checkbox',
+    consentCheckbox2: 'Second Consent checkbox',
+    consentDescription: 'Consent message',
+    submitContent: 'Custom Submit message',
+    consent: 'Consent',
+    consentGiven: 'Consent given',
   },
   form: {
     system: {
@@ -588,17 +586,16 @@ export default {
   rolesPermissions: {
     permissions: 'Permissions',
     roles: 'Roles',
-    roleName:'Role Name',
-    description:'enter permission name',
+    roleName: 'Role Name',
+    description: 'enter permission name',
     roleHierarchy: 'Role hierarchy',
-    validationMessage:'please enter permission name',
+    validationMessage: 'please enter permission name',
     validationRole: 'Please enter role hierarchy',
-    saveRole:'Save Role',
+    saveRole: 'Save Role',
     editRole: 'Edit Role',
     createRole: 'Create Role',
-    
   },
-  emailTemplates:{
+  emailTemplates: {
     editTemplate: 'Edit Template',
     createTemplate: 'Create Template',
     created: 'Email template created successfully!',
@@ -622,28 +619,29 @@ export default {
     update: 'Update',
     goBack: 'Go Back',
     submit: 'Submit',
-   
   },
-  emailStatusFilter:{
+  emailStatusFilter: {
     expired: 'Expired',
     planned: 'Planned',
     pending: 'Pending',
     openForCompletion: 'Open For Completion',
     partiallyCompleted: 'Partially Completed',
-    completed: 'Completed'
+    completed: 'Completed',
   },
   modal: {
     continue: 'Continue to next section?',
     continueOverview: 'Finish questionnaire?',
-    unansweredQuestions: 'You have {{count}} unanswered required question(s). All questions need to be answered to submit the questionnaire.',
-    unansweredQuestionsOverview: 'You have {{count}} unanswered required question(s). Are you sure you want to finish the questionnaire?',
+    unansweredQuestions:
+      'You have {{count}} unanswered required question(s). All questions need to be answered to submit the questionnaire.',
+    unansweredQuestionsOverview:
+      'You have {{count}} unanswered required question(s). Are you sure you want to finish the questionnaire?',
     cancel: 'Proceed Without Completing (Not Recommended)',
-    ok: 'Go Back and Complete the Questions'
+    ok: 'Go Back and Complete the Questions',
   },
   bundles: {
     created: 'Bundle created successfully!',
     updated: 'Bundle updated successfully!',
     deleted: 'Bundle deleted successfully!',
     unableToLoad: 'Unable to load bundles!',
-  }
+  },
 };

@@ -159,4 +159,12 @@ export class AssessmentService {
       fetchPolicy: 'no-cache',
     });
   }
+
+  setAssessmentAcceptedConsentDate(assessmentId: string) {
+    return this.apollo.mutate({
+      mutation: AssessmentsMutations.setAssessmentAcceptedConsentDate,
+      variables: { id: assessmentId },
+      fetchPolicy: 'no-cache',
+    });
+  }
 }
