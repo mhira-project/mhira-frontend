@@ -18,8 +18,14 @@ export class AssessmentFormService {
     percentage?: number;
   } = {};
 
+  private _percentageCompletedValue = new BehaviorSubject<number>(0);
+
   public get assessment$(): Observable<FullAssessment> {
     return this._assessment.asObservable();
+  }
+
+  public get percentageCompletedValue$(): Observable<number> {
+    return this._percentageCompletedValue.asObservable();
   }
 
   public get assessmentSnapshot(): FullAssessment {
@@ -91,14 +97,12 @@ export class AssessmentFormService {
       .flat();
     this._assessmentInfo.answers = assessment.questionnaireAssessment.answers;
     const requiredUniqueQuestions = assessment.questionnaireAssessment.questionnaires
-    .map((q) => q.questionGroups.map((g) => g.uniqueQuestions))
-    .flat(2)
-    .map((el) => el.subQuestions)
-    .flat()
-    .filter((q) => q.required);
-    const requiredQuestions = this._assessmentInfo.questions
-    .filter((q) => q.required)
-    .concat(requiredUniqueQuestions);
+      .map((q) => q.questionGroups.map((g) => g.uniqueQuestions))
+      .flat(2)
+      .map((el) => el.subQuestions)
+      .flat()
+      .filter((q) => q.required);
+    const requiredQuestions = this._assessmentInfo.questions.filter((q) => q.required).concat(requiredUniqueQuestions);
 
     const numAnswers = requiredQuestions.reduce(
       (sum, question) =>
@@ -106,5 +110,6 @@ export class AssessmentFormService {
       0
     );
     this._assessmentInfo.percentage = (numAnswers / requiredQuestions.length) * 100;
+    this._percentageCompletedValue.next(this._assessmentInfo.percentage);
   }
 }

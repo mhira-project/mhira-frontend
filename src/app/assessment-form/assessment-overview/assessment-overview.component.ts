@@ -33,6 +33,7 @@ export class AssessmentOverviewComponent implements OnInit {
   isConsentShown = false;
   isConsent1Checked = false;
   isConsent2Checked = false;
+  isSubmitModalVisible = false;
 
   public get answers(): Answer[] {
     return this.assessment.questionnaireAssessment.answers;
@@ -50,9 +51,14 @@ export class AssessmentOverviewComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.assessmentFormService.percentageCompletedValue$.subscribe((percentage) => {
+      this.updateSubmitModalVisible(percentage);
+    });
+
     this.assessmentFormService.assessment$.subscribe((assessment: FullAssessment) => {
       this.assessment = assessment;
       this.questionnaireQuestions = {};
+      console.log('here');
       this.questions = assessment.questionnaireAssessment.questionnaires.reduce(
         (questions: any, questionnaire: any) => {
           let questionnaireQuestions = questionnaire.questionGroups.reduce(
@@ -78,6 +84,10 @@ export class AssessmentOverviewComponent implements OnInit {
         this.assessment.consentDescription
       ) {
         this.showConsentModal();
+      }
+
+      if (this.assessmentFormService.percentageCompleted > 0) {
+        this.isSubmitModalVisible = true;
       }
 
       this.cdr.detectChanges();
@@ -176,5 +186,32 @@ export class AssessmentOverviewComponent implements OnInit {
       },
       (err) => this.errorService.handleError(err, { prefix: 'Unable to accept consent' })
     );
+  }
+
+  isAcceptConsentDisabled(): boolean {
+    if (this.assessment.consentCheckbox1 && this.assessment.consentCheckbox2) {
+      return !this.isConsent1Checked || !this.isConsent2Checked;
+    }
+
+    if (this.assessment.consentCheckbox1) {
+      return !this.isConsent1Checked;
+    }
+
+    if (this.assessment.consentCheckbox2) {
+      return !this.isConsent2Checked;
+    }
+  }
+
+  updateSubmitModalVisible(percentage?: number): void {
+    console.log('this.assessmentFormService.percentageCompleted', this.assessmentFormService.percentageCompleted);
+    console.log('this.assessment.questionnaireAssessment.status', this.assessment.questionnaireAssessment.status);
+    this.isSubmitModalVisible =
+      percentage == 100 && this.assessment.questionnaireAssessment.status !== AssessmentStatus.COMPLETED;
+  }
+
+  handleCancelSubmitModal(): void {
+    if (this.assessmentFormService.percentageCompleted !== 100) {
+      this.isSubmitModalVisible = false;
+    }
   }
 }

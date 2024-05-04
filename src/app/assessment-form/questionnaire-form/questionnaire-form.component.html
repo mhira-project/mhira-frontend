@@ -1,4 +1,3 @@
-
 <article *ngIf="questionnaire">
   <section class="head-row">
     <h2>{{ questionnaire.name }}</h2>
@@ -31,7 +30,7 @@
   </section> -->
 
   <style>
-    td{
+    td {
       padding: 10px;
     }
   </style>
@@ -40,27 +39,31 @@
     <table *ngFor="let unique of test.uniqueQuestions">
       <tr>
         <td></td>
-        <td *ngFor="let choice of unique.choices">{{choice.label}}</td>
+        <td *ngFor="let choice of unique.choices">{{ choice.label }}</td>
       </tr>
       <tr *ngFor="let subQuestion of unique.subQuestions; let i = index">
         <td>
-          <h5 style="max-width: 400px; margin-right: 85px;">{{subQuestion.label}}</h5>
+          <h5 style="max-width: 400px; margin-right: 85px">{{ subQuestion.label }}</h5>
         </td>
         <td colspan="100%">
-          <nz-radio-group [(ngModel)]="mapped[subQuestion._id]" (ngModelChange)="addAnswer(subQuestion._id, mapped[subQuestion._id])" style="display: flex; width: 100%; justify-content: space-around;">
+          <nz-radio-group
+            [(ngModel)]="mapped[subQuestion._id]"
+            (ngModelChange)="addAnswer(subQuestion._id, mapped[subQuestion._id])"
+            style="display: flex; width: 100%; justify-content: space-around"
+          >
             <label *ngFor="let choice of unique.choices" nz-radio [nzValue]="choice.name"></label>
           </nz-radio-group>
         </td>
       </tr>
     </table>
   </section>
-  
+
   <section class="controls">
     <button
       nz-button
       nzType="primary"
       [disabled]="currentGroupIdx <= 0"
-      (click)="currentGroupIdx = currentGroupIdx - 1;"
+      (click)="currentGroupIdx = currentGroupIdx - 1"
     >
       {{ translations.assessmentForm.prev | translate }}
     </button>
@@ -72,12 +75,14 @@
           nzType="primary"
           nzShape="circle"
           nzSize="small"
-          (click)="currentGroupIdx = index;"
+          (click)="currentGroupIdx = index"
         >
           &nbsp;
         </button>
         <ng-template #otherPages>
-          <button nz-button nzShape="circle" nzSize="small" (click)="currentGroupIdx = index; scrollToTop();">&nbsp;</button>
+          <button nz-button nzShape="circle" nzSize="small" (click)="currentGroupIdx = index; scrollToTop()">
+            &nbsp;
+          </button>
         </ng-template>
       </ng-container>
     </div>

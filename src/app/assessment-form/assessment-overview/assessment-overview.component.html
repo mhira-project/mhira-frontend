@@ -99,7 +99,7 @@
 
 <nz-modal
   [(nzVisible)]="isConsentShown"
-  [(nzOkDisabled)]="!isConsent1Checked || !isConsent2Checked"
+  [nzOkDisabled]="isAcceptConsentDisabled()"
   nzCancelDisabled="true"
   nzClosable="false"
   nzOkText="{{ translations.assessmentForm.acceptConsentButton | translate }}"
@@ -107,26 +107,24 @@
   (nzOnOk)="handleOk()"
 >
   <ng-container *nzModalContent>
-    <p>{{ assessment.consentDescription }}</p>
-    <div>
+    <div class="consent-message">{{ assessment.consentDescription }}</div>
+    <div *ngIf="assessment.consentCheckbox1">
       <label nz-checkbox [(ngModel)]="isConsent1Checked">{{ assessment.consentCheckbox1 }}</label>
     </div>
-    <div>
+    <div *ngIf="assessment.consentCheckbox2">
       <label nz-checkbox [(ngModel)]="isConsent2Checked">{{ assessment.consentCheckbox2 }}</label>
     </div>
   </ng-container>
 </nz-modal>
 
 <nz-modal
-  [(nzVisible)]="
-    assessmentFormService.percentageCompleted == 100 &&
-    assessment.questionnaireAssessment.status !== AssessmentStatus.COMPLETED
-  "
+  [nzVisible]="isSubmitModalVisible && assessment.questionnaireAssessment.status != AssessmentStatus.COMPLETED"
   nzOkText="{{ translations.assessmentForm.completeAssessment | translate }}"
   nzTitle="{{ translations.assessmentForm.completeAssessment | translate }}"
   (nzOnOk)="completeAssessment()"
-  nzCancelDisabled="true"
-  nzClosable="false"
+  [nzClosable]="assessmentFormService.percentageCompleted !== 100"
+  [nzCancelDisabled]="assessmentFormService.percentageCompleted === 100"
+  (nzOnCancel)="handleCancelSubmitModal()"
 >
   <ng-container *nzModalContent>
     <p>

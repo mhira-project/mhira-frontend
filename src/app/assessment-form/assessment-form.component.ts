@@ -78,6 +78,9 @@ export class AssessmentFormComponent implements OnInit {
 
   ngOnInit() {
     this.getDescription();
+    this.assessmentFormService.percentageCompletedValue$.subscribe((percentage) => {
+      console.log('percentage', percentage);
+    });
   }
 
   private getDescription(): void {

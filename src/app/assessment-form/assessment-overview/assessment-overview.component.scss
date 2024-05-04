@@ -60,3 +60,8 @@ button.highlight {
   display: flex;
   justify-content: center;
 }
+
+.consent-message {
+  max-height: 400px;
+  overflow-y: auto;
+}
