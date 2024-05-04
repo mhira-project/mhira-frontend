@@ -430,6 +430,7 @@ export default {
     optionalAnswered: '+{{actual}} optional',
     fillingTime: 'Dauer: {{time}}min',
     completeAssessment: 'Testung abschliessen und Daten übermitteln',
+    completeAssessmentMessage: 'Sie können die Bewertung jetzt abgeben',
     alreadyCompleted: 'Testung wurde abgeschlossen',
     overview: 'Fragebogen abschliessen und zurück zur Übersicht',
     next: 'Weiter',

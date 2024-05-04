@@ -440,6 +440,7 @@ export default {
     optionalAnswered: '+{{actual}} optional',
     fillingTime: 'Filling time: {{time}}min',
     completeAssessment: 'Submit assessment',
+    completeAssessmentMessage: 'You can submit the assessment now',
     alreadyCompleted: 'Assessment is completed',
     overview: 'Finish Questionnaire',
     next: 'Next',

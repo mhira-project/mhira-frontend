@@ -413,6 +413,7 @@ export default {
     optionalAnswered: '+{{actual}} opcionale',
     fillingTime: 'Koha e shpenzuar: {{time}}min',
     completeAssessment: 'Përfundo vlerësimin',
+    completeAssessmentMessage: 'Ju mund të dorëzoni vlerësimin tani',
     alreadyCompleted: 'Vlerësimi u përfundua',
     overview: 'Përmbledhje',
     next: 'Përpara',
