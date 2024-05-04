@@ -262,6 +262,7 @@ export default {
     optionalAnswered: '+{{actual}} ya hiari',
     fillingTime: 'Muda wa kujaza: dk {{time}}',
     completeAssessment: 'Kamilisha tathmini',
+    completeAssessmentMessage: 'You can submit the assessment now',
     alreadyCompleted: 'Tathmini imekamilika',
     overview: 'Maelezo ya Jumla',
     next: 'Ifuatayo',

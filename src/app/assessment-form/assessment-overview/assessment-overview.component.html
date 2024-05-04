@@ -58,38 +58,16 @@
     </span>
     <span class="progress-optional">
       {{
-        getAnsweredOptionalQuestions(questionnaire._id) + '/' + getMaxNotRequiredQuestions(questionnaire._id) + ' optional questions'
+        getAnsweredOptionalQuestions(questionnaire._id) +
+          '/' +
+          getMaxNotRequiredQuestions(questionnaire._id) +
+          ' optional questions'
       }}
     </span>
     <span *ngIf="questionnaire.timeToComplete">
       {{ translations.assessmentForm.fillingTime | translate: { time: questionnaire.timeToComplete } }}
     </span>
   </nz-card>
-</section>
-
-<section
-  *ngIf="
-    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.OPEN_FOR_COMPLETION ||
-    AssessmentStatus[assessment.questionnaireAssessment.status] === AssessmentStatus.PARTIALLY_COMPLETED
-  "
->
-  <button
-    nz-button
-    nzType="primary"
-    [class.highlight]="assessmentFormService.percentageCompleted >= 100"
-    [disabled]="
-      assessmentFormService.percentageCompleted < 100 ||
-      assessment.questionnaireAssessment.status === AssessmentStatus.COMPLETED
-    "
-    (click)="completeAssessment()"
-  >
-    {{
-      (assessment.questionnaireAssessment.status === AssessmentStatus.COMPLETED
-        ? translations.assessmentForm.alreadyCompleted
-        : translations.assessmentForm.completeAssessment
-      ) | translate
-    }}
-  </button>
 </section>
 
 <section
@@ -118,3 +96,45 @@
     </h1>
   </div>
 </section>
+
+<nz-modal
+  [(nzVisible)]="isConsentShown"
+  [(nzOkDisabled)]="!isConsent1Checked || !isConsent2Checked"
+  nzCancelDisabled="true"
+  nzClosable="false"
+  nzOkText="{{ translations.assessmentForm.acceptConsentButton | translate }}"
+  nzTitle="{{ translations.assessmentForm.consentModalTitle | translate }}"
+  (nzOnOk)="handleOk()"
+>
+  <ng-container *nzModalContent>
+    <p>{{ assessment.consentDescription }}</p>
+    <div>
+      <label nz-checkbox [(ngModel)]="isConsent1Checked">{{ assessment.consentCheckbox1 }}</label>
+    </div>
+    <div>
+      <label nz-checkbox [(ngModel)]="isConsent2Checked">{{ assessment.consentCheckbox2 }}</label>
+    </div>
+  </ng-container>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="
+    assessmentFormService.percentageCompleted == 100 &&
+    assessment.questionnaireAssessment.status !== AssessmentStatus.COMPLETED
+  "
+  nzOkText="{{ translations.assessmentForm.completeAssessment | translate }}"
+  nzTitle="{{ translations.assessmentForm.completeAssessment | translate }}"
+  (nzOnOk)="completeAssessment()"
+  nzCancelDisabled="true"
+  nzClosable="false"
+>
+  <ng-container *nzModalContent>
+    <p>
+      {{
+        assessment.submitContent
+          ? assessment.submitContent
+          : (translations.assessmentForm.completeAssessmentMessage | translate)
+      }}
+    </p>
+  </ng-container>
+</nz-modal>
