@@ -108,11 +108,13 @@
 >
   <ng-container *nzModalContent>
     <div class="consent-message">{{ assessment.consentDescription }}</div>
-    <div *ngIf="assessment.consentCheckbox1">
-      <label nz-checkbox [(ngModel)]="isConsent1Checked">{{ assessment.consentCheckbox1 }}</label>
-    </div>
-    <div *ngIf="assessment.consentCheckbox2">
-      <label nz-checkbox [(ngModel)]="isConsent2Checked">{{ assessment.consentCheckbox2 }}</label>
+    <div class="consent-checkboxes">
+      <div *ngIf="assessment.consentCheckbox1">
+        <label nz-checkbox [(ngModel)]="isConsent1Checked">{{ assessment.consentCheckbox1 }}</label>
+      </div>
+      <div *ngIf="assessment.consentCheckbox2">
+        <label nz-checkbox [(ngModel)]="isConsent2Checked">{{ assessment.consentCheckbox2 }}</label>
+      </div>
     </div>
   </ng-container>
 </nz-modal>
