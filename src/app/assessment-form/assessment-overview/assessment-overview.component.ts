@@ -58,7 +58,6 @@ export class AssessmentOverviewComponent implements OnInit {
     this.assessmentFormService.assessment$.subscribe((assessment: FullAssessment) => {
       this.assessment = assessment;
       this.questionnaireQuestions = {};
-      console.log('here');
       this.questions = assessment.questionnaireAssessment.questionnaires.reduce(
         (questions: any, questionnaire: any) => {
           let questionnaireQuestions = questionnaire.questionGroups.reduce(
@@ -203,8 +202,6 @@ export class AssessmentOverviewComponent implements OnInit {
   }
 
   updateSubmitModalVisible(percentage?: number): void {
-    console.log('this.assessmentFormService.percentageCompleted', this.assessmentFormService.percentageCompleted);
-    console.log('this.assessment.questionnaireAssessment.status', this.assessment.questionnaireAssessment.status);
     this.isSubmitModalVisible =
       percentage == 100 && this.assessment.questionnaireAssessment.status !== AssessmentStatus.COMPLETED;
   }
