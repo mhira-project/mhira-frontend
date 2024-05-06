@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Disclaimers } from '@app/pages/administration/@types/disclaimers';
 import { finalize } from 'rxjs/operators';
 import { DisclaimersService } from '@app/pages/administration/@services/disclaimers.service';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 
 @Component({
   selector: 'app-assessment-overview',
@@ -30,9 +31,6 @@ export class AssessmentOverviewComponent implements OnInit {
   public assessment: FullAssessment;
   public questions: Question[];
   public questionnaireQuestions: { [K in string]: Question[] };
-  isConsentShown = false;
-  isConsent1Checked = false;
-  isConsent2Checked = false;
   isSubmitModalVisible = false;
 
   public get answers(): Answer[] {
@@ -47,7 +45,9 @@ export class AssessmentOverviewComponent implements OnInit {
     private assessmentService: AssessmentService,
     private messageService: NzMessageService,
     private errorService: ErrorHandlerService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   public ngOnInit(): void {
@@ -76,18 +76,6 @@ export class AssessmentOverviewComponent implements OnInit {
         },
         []
       );
-
-      if (
-        assessment.questionnaireAssessment.consentTimestamp === null &&
-        (this.assessment.consentCheckbox1 || this.assessment.consentCheckbox2) &&
-        this.assessment.consentDescription
-      ) {
-        this.showConsentModal();
-      }
-
-      if (this.assessmentFormService.percentageCompleted > 0) {
-        this.isSubmitModalVisible = true;
-      }
 
       this.cdr.detectChanges();
     });
@@ -145,6 +133,7 @@ export class AssessmentOverviewComponent implements OnInit {
           nzDuration: 5000,
         });
         this.assessment.questionnaireAssessment.status = AssessmentStatus.COMPLETED;
+        this.isSubmitModalVisible = false;
         this.cdr.detectChanges();
       },
       (err) => this.errorService.handleError(err, { prefix: `Unable to complete assessment with ID "${id}"` })
@@ -172,38 +161,14 @@ export class AssessmentOverviewComponent implements OnInit {
       );
   }
 
-  showConsentModal(): void {
-    this.isConsentShown = true;
-  }
-
-  handleOk(): void {
-    this.assessmentService.setAssessmentAcceptedConsentDate(this.assessment.questionnaireAssessment._id).subscribe(
-      () => {
-        this.isConsentShown = false;
-        this.messageService.success('Consent accepted successfully');
-        this.cdr.detectChanges();
-      },
-      (err) => this.errorService.handleError(err, { prefix: 'Unable to accept consent' })
-    );
-  }
-
-  isAcceptConsentDisabled(): boolean {
-    if (this.assessment.consentCheckbox1 && this.assessment.consentCheckbox2) {
-      return !this.isConsent1Checked || !this.isConsent2Checked;
-    }
-
-    if (this.assessment.consentCheckbox1) {
-      return !this.isConsent1Checked;
-    }
-
-    if (this.assessment.consentCheckbox2) {
-      return !this.isConsent2Checked;
-    }
-  }
-
   updateSubmitModalVisible(percentage?: number): void {
+    const isAllFilled = percentage == 100;
+
+    const queryParams = this.route.snapshot.queryParamMap;
+    const showFromUrl = queryParams.get('showSubmitModal') === 'true';
+
     this.isSubmitModalVisible =
-      percentage == 100 && this.assessment.questionnaireAssessment.status !== AssessmentStatus.COMPLETED;
+      (isAllFilled || showFromUrl) && this.assessment?.questionnaireAssessment?.status !== AssessmentStatus.COMPLETED;
   }
 
   handleCancelSubmitModal(): void {
