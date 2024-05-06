@@ -237,6 +237,7 @@ export class QuestionnaireFormComponent {
   handleOk(): void {
     this.assessmentService.setAssessmentAcceptedConsentDate(this.assessment.questionnaireAssessment._id).subscribe(
       () => {
+        this.assessment.questionnaireAssessment.consentTimestamp = new Date();
         this.isConsentShown = false;
         this.messageService.success('Consent accepted successfully');
         this.cdr.detectChanges();
