@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { QuestionnaireVersion } from '../../pages/questionnaire-management/@types/questionnaire';
 import { AssessmentFormService } from '../assessment-form.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,9 @@ import { ErrorHandlerService } from '../../@shared/services/error-handler.servic
 import { MhiraTranslations } from '../../@core/mhira-translations';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { TranslateService } from '@ngx-translate/core';
+import { FullAssessment } from '@app/pages/assessment/@types/assessment';
+import { AssessmentService } from '@app/pages/assessment/@services/assessment.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @UntilDestroy()
 @Component({
@@ -24,6 +27,11 @@ export class QuestionnaireFormComponent {
   public answers: Answer[];
   public skipLogic: Array<{ questionId: string; visible: boolean }> = [];
   public mapped: any = {};
+
+  public assessment: FullAssessment;
+  isConsentShown = false;
+  isConsent1Checked = false;
+  isConsent2Checked = false;
 
   public set currentGroupIdx(idx: number) {
     this._currentGroupIdx = idx;
@@ -43,7 +51,10 @@ export class QuestionnaireFormComponent {
     private modalService: NzModalService,
     private translate: TranslateService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: NzMessageService,
+    private assessmentService: AssessmentService,
+    private cdr: ChangeDetectorRef
   ) {
     combineLatest([
       this.activtedRoute.params.pipe(
@@ -68,6 +79,19 @@ export class QuestionnaireFormComponent {
   ngOnInit() {
     this.assessmentFormService.percentageCompletedValue$.subscribe((percentage) => {
       this.navigateToOverview(percentage);
+    });
+
+    this.assessmentFormService.assessment$.subscribe((assessment: FullAssessment) => {
+      this.assessment = assessment;
+      if (
+        assessment.questionnaireAssessment.consentTimestamp === null &&
+        (assessment.consentCheckbox1 || assessment.consentCheckbox2) &&
+        assessment.consentDescription
+      ) {
+        this.showConsentModal();
+      }
+
+      this.cdr.detectChanges();
     });
   }
 
@@ -149,7 +173,11 @@ export class QuestionnaireFormComponent {
     if (unAnsweredRequiredQuestions.length !== 0) {
       const modal = this.modalService.confirm({
         nzOnCancel: () => {
-          this.router.navigate(['../../overview'], { relativeTo: this.route });
+          this.router.navigate(['../../overview'], {
+            relativeTo: this.route,
+            queryParams: { showSubmitModal: true },
+            queryParamsHandling: 'merge',
+          });
         },
         nzOnOk: () => true,
         nzTitle: this.translate.instant('modal.continueOverview'),
@@ -200,5 +228,34 @@ export class QuestionnaireFormComponent {
         }
         return { questionId: q._id, visible };
       });
+  }
+
+  showConsentModal(): void {
+    this.isConsentShown = true;
+  }
+
+  handleOk(): void {
+    this.assessmentService.setAssessmentAcceptedConsentDate(this.assessment.questionnaireAssessment._id).subscribe(
+      () => {
+        this.isConsentShown = false;
+        this.messageService.success('Consent accepted successfully');
+        this.cdr.detectChanges();
+      },
+      (err) => this.errorService.handleError(err, { prefix: 'Unable to accept consent' })
+    );
+  }
+
+  isAcceptConsentDisabled(): boolean {
+    if (this.assessment.consentCheckbox1 && this.assessment.consentCheckbox2) {
+      return !this.isConsent1Checked || !this.isConsent2Checked;
+    }
+
+    if (this.assessment.consentCheckbox1) {
+      return !this.isConsent1Checked;
+    }
+
+    if (this.assessment.consentCheckbox2) {
+      return !this.isConsent2Checked;
+    }
   }
 }

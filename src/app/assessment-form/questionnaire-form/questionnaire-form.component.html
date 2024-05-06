@@ -103,3 +103,25 @@
     {{ translations.assessmentForm.overview | translate }}
   </button>
 </ng-template>
+
+<nz-modal
+  [(nzVisible)]="isConsentShown"
+  [nzOkDisabled]="isAcceptConsentDisabled()"
+  nzCancelDisabled="true"
+  nzClosable="false"
+  nzOkText="{{ translations.assessmentForm.acceptConsentButton | translate }}"
+  nzTitle="{{ translations.assessmentForm.consentModalTitle | translate }}"
+  (nzOnOk)="handleOk()"
+>
+  <ng-container *nzModalContent>
+    <div class="consent-message">{{ assessment.consentDescription }}</div>
+    <div class="consent-checkboxes">
+      <div *ngIf="assessment.consentCheckbox1">
+        <label nz-checkbox [(ngModel)]="isConsent1Checked">{{ assessment.consentCheckbox1 }}</label>
+      </div>
+      <div *ngIf="assessment.consentCheckbox2">
+        <label nz-checkbox [(ngModel)]="isConsent2Checked">{{ assessment.consentCheckbox2 }}</label>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>
