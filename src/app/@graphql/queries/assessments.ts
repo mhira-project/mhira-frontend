@@ -32,6 +32,7 @@ const assessments = gql`
           consentCheckbox1
           consentCheckbox2
           submitContent
+          consentId
           clinician {
             id
             username
@@ -209,6 +210,7 @@ const getFullAssessment = gql`
         id
         name
       }
+      consentId
       emailReminder
       emailStatus
       receiverEmail
@@ -368,6 +370,7 @@ const getFullPublicAssessment = gql`
       consentCheckbox1
       consentCheckbox2
       submitContent
+      consentId
       questionnaireAssessment {
         _id
         status

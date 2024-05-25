@@ -26,6 +26,8 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { LocationStrategy } from '@angular/common';
 import { EmailTemplatesService } from '@app/pages/administration/@services/email-templates.service';
 import { QuestionnaireBundlesService } from '@app/pages/questionnaire-management/@services/questionnaire-bundles.service';
+import { Consent } from '@app/pages/administration/@types/consent';
+import { ConsentsService } from '@app/pages/administration/@services/consents.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -89,6 +91,8 @@ export class CreateAssessmentComponent implements OnInit {
   public checked = false;
   public isUpdate: boolean;
   public hasEmail = false;
+  public consents: Consent[] = [];
+  public selectedConsent: number = null;
 
   get patientTitle(): string {
     const name = [this.patient?.firstName, this.patient?.middleName, this.patient?.lastName]
@@ -110,7 +114,8 @@ export class CreateAssessmentComponent implements OnInit {
     private assessmentService: AssessmentService,
     private nzMessage: NzMessageService,
     private clipboard: Clipboard,
-    private locationStrategy: LocationStrategy
+    private locationStrategy: LocationStrategy,
+    private consentService: ConsentsService
   ) {}
 
   ngOnInit(): void {
@@ -131,6 +136,7 @@ export class CreateAssessmentComponent implements OnInit {
       consentCheckbox2: [null],
       consentDescription: [null],
       submitContent: [null],
+      consentId: [null],
       dates: this.formBuilder.array([
         this.formBuilder.group({
           expirationDate: [null],
@@ -138,6 +144,7 @@ export class CreateAssessmentComponent implements OnInit {
         }),
       ]),
     });
+    this.getConsents();
     this.getAssessmentTypes();
     this.userAutoSelect();
     this.initAssessment();
@@ -378,7 +385,7 @@ export class CreateAssessmentComponent implements OnInit {
     this.noteValue = this.fullAssessment.note;
     this.patientEmail = this.patient.email;
     this.selectedAssessment = this.fullAssessment.assessmentType?.id;
-    // this.formGroup.controls.note.disable();
+    this.selectedConsent = this.fullAssessment.consentId;
 
     if (this.fullAssessment.informantClinician) {
       this.typeSelected = `USER`;
@@ -477,6 +484,19 @@ export class CreateAssessmentComponent implements OnInit {
           this.assessmentAdministration = data.activeAssessmentTypes;
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load assessment type' })
+      );
+  }
+
+  private getConsents(): void {
+    this.isLoading = true;
+    this.consentService
+      .consents()
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }: any) => {
+          this.consents = data.consents;
+        },
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to load consents' })
       );
   }
 

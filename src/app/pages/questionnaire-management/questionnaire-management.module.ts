@@ -30,41 +30,41 @@ import { AssessmentModule } from '../assessment/assessment.module';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
-    declarations: [
-        QuestionnaireFormComponent,
-        QuestionnaireListComponent,
-        QuestionnaireProfileComponent,
-        QuestionnaireScriptComponent,
-        QuestionnaireVersionListComponent,
-        CreateQuestionnaireBundleComponent,
-        QuestionnaireBundlesListComponent,
-    ],
-    imports: [
-        CommonModule,
-        QuestionnaireManagementRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MasterDataModule,
-        NzButtonModule,
-        NzGridModule,
-        NzRadioModule,
-        NzIconModule,
-        NzSelectModule,
-        AppFormModule,
-        NzTabsModule,
-        NzDrawerModule,
-        NzCardModule,
-        NzCheckboxModule,
-        NzToolTipModule,
-        NzFormModule,
-        NzInputModule,
-        TranslateModule,
-        AssessmentModule,
-        AngularEditorModule
-    ],
-    // Needs to be provided in root, since it will be required by assessment and patient modules.
-    // providers:[
-    //     QuestionnaireBundlesService
-    // ]
+  declarations: [
+    QuestionnaireFormComponent,
+    QuestionnaireListComponent,
+    QuestionnaireProfileComponent,
+    QuestionnaireScriptComponent,
+    QuestionnaireVersionListComponent,
+    CreateQuestionnaireBundleComponent,
+    QuestionnaireBundlesListComponent,
+  ],
+  imports: [
+    CommonModule,
+    QuestionnaireManagementRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MasterDataModule,
+    NzButtonModule,
+    NzGridModule,
+    NzRadioModule,
+    NzIconModule,
+    NzSelectModule,
+    AppFormModule,
+    NzTabsModule,
+    NzDrawerModule,
+    NzCardModule,
+    NzCheckboxModule,
+    NzToolTipModule,
+    NzFormModule,
+    NzInputModule,
+    TranslateModule,
+    AssessmentModule,
+    AngularEditorModule,
+  ],
+  // Needs to be provided in root, since it will be required by assessment and patient modules.
+  // providers:[
+  //     QuestionnaireBundlesService
+  // ]
 })
 export class QuestionnaireManagementModule {}

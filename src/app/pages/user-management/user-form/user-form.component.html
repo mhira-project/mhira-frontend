@@ -41,7 +41,7 @@
         </nz-card>
       </div>
       <div nz-col>
-        <nz-card style="width: 300px" nzTitle="{{ user?.firstName }}'s {{'core.departments' | translate}}">
+        <nz-card style="width: 300px" nzTitle="{{ user?.firstName }}'s {{ 'core.departments' | translate }}">
           <nz-checkbox-wrapper style="width: 100%">
             <div nz-row>
               <div nz-col nzSpan="24" *ngFor="let department of departments">
@@ -60,7 +60,7 @@
       </div>
 
       <div nz-col>
-        <nz-card style="width: 300px" nzTitle="{{'userForm.enableDisable' | translate}} {{ user?.firstName }}">
+        <nz-card style="width: 300px" nzTitle="{{ 'userForm.enableDisable' | translate }} {{ user?.firstName }}">
           <p>{{ 'userForm.enable' | translate }} {{ user?.firstName }}{{ 'userForm.disable' | translate }}</p>
           <nz-switch
             [disabled]="!perms.permissionsOnly([PK.MANAGE_USERS]) || !perms.hasAccessLevelToUser(user)"
@@ -71,27 +71,30 @@
       </div>
       <div nz-col>
         <nz-card style="width: 300px" nzTitle="Change {{ user?.firstName }}'s password">
-          <p> {{'userForm.toChange' | translate}} {{ user.firstName }} {{ 'userForm.toChange2' | translate}} </p>
+          <p>{{ 'userForm.toChange' | translate }} {{ user.firstName }} {{ 'userForm.toChange2' | translate }}</p>
           <button
             [disabled]="!perms.permissionsOnly([PK.MANAGE_USERS]) || !perms.hasAccessLevelToUser(user)"
             (click)="showChangePasswordForm()"
             nz-button
             nzType="primary"
           >
-            {{'userForm.change' | translate}}
+            {{ 'userForm.change' | translate }}
           </button>
         </nz-card>
       </div>
       <div nz-col>
-        <nz-card style="width: 300px" nzTitle="{{'userForm.deleteUser2' | translate}} {{ user?.firstName }} ({{ user?.username }})">
-          <p>{{'userForm.removeUser' | translate}} {{ user?.firstName }} {{'userForm.toggle' | translate}}</p>
+        <nz-card
+          style="width: 300px"
+          nzTitle="{{ 'userForm.deleteUser2' | translate }} {{ user?.firstName }} ({{ user?.username }})"
+        >
+          <p>{{ 'userForm.removeUser' | translate }} {{ user?.firstName }} {{ 'userForm.toggle' | translate }}</p>
           <button
             [disabled]="!perms.permissionsOnly([PK.DELETE_USERS]) || !perms.hasAccessLevelToUser(user)"
             (click)="handleDeleteAction(user)"
             nz-button
             nzType="danger"
           >
-            {{'userForm.deleteUser' | translate}}
+            {{ 'userForm.deleteUser' | translate }}
           </button>
         </nz-card>
       </div>

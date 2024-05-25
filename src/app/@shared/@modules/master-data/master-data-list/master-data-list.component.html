@@ -36,7 +36,11 @@
       {{ 'core.previous' | translate }}
     </button>
     <nz-select [(ngModel)]="pageSize" (ngModelChange)="onPageChange()">
-      <nz-option *ngFor="let ps of PAGE_SIZES" [nzValue]="ps" nzLabel="{{ 'core.pageSize' | translate }} {{ ps }}"></nz-option>
+      <nz-option
+        *ngFor="let ps of PAGE_SIZES"
+        [nzValue]="ps"
+        nzLabel="{{ 'core.pageSize' | translate }} {{ ps }}"
+      ></nz-option>
     </nz-select>
     <button
       nzShape="round"

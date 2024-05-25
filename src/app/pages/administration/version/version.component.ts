@@ -4,15 +4,12 @@ import { version } from '../../../../../package.json';
 @Component({
   selector: 'app-version',
   templateUrl: './version.component.html',
-  styleUrls: ['./version.component.scss']
+  styleUrls: ['./version.component.scss'],
 })
 export class VersionComponent implements OnInit {
-
   version: string = version;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

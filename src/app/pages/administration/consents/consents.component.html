@@ -1,0 +1,46 @@
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <app-master-data-list
+      [data]="consentsTable.rows"
+      [columns]="consentsTable.columns"
+      [loading]="isLoading"
+      [pageInfo]="pageInfo"
+      [actions]="actions"
+      (executeAction)="onAction($event)"
+      (rowClick)="handleRowClick($event)"
+      (rowClick)="handleRowClick($event)"
+      (onButton)="toggleCreatePanel()"
+    >
+      <ng-container actions-right>
+        <button nz-button nzType="primary" nzShape="circle" (click)="toggleCreatePanel()">
+          <i nz-icon nzType="plus"></i>
+        </button>
+      </ng-container>
+    </app-master-data-list>
+  </div>
+</div>
+
+<nz-drawer
+  [nzMask]="true"
+  [nzClosable]="true"
+  [nzMaskClosable]="false"
+  [nzVisible]="showCreateConsent"
+  nzPlacement="right"
+  [nzWidth]="720"
+  [nzTitle]="panelTitle | translate"
+  (nzOnClose)="closeCreatePanel()"
+>
+  <app-form
+    class="mt-3"
+    [form]="consentForms"
+    [formData]="role"
+    [isLoading]="isLoading"
+    [populateForm]="populateForm"
+    [resetForm]="resetForm"
+    [inputMode]="inputMode"
+    [showCancelButton]="showCancelButton"
+    [loadingMessage]="loadingMessage"
+    (submitForm)="submitForm($event)"
+  >
+  </app-form>
+</nz-drawer>

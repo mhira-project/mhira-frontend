@@ -102,15 +102,13 @@
   nzOkText="{{ translations.assessmentForm.completeAssessment | translate }}"
   nzTitle="{{ translations.assessmentForm.completeAssessment | translate }}"
   (nzOnOk)="completeAssessment()"
-  [nzClosable]="assessmentFormService.percentageCompleted !== 100"
-  [nzCancelDisabled]="assessmentFormService.percentageCompleted === 100"
   (nzOnCancel)="handleCancelSubmitModal()"
 >
   <ng-container *nzModalContent>
     <p>
       {{
-        assessment.submitContent
-          ? assessment.submitContent
+        consentData?.submitContent
+          ? consentData.submitContent
           : (translations.assessmentForm.completeAssessmentMessage | translate)
       }}
     </p>

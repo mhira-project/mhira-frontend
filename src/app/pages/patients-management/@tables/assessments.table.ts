@@ -15,13 +15,11 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
       value: undefined,
     },
     filterQuery: (q: number) =>
-    q
-      ? {
-          or: [
-            { name: { iLike: `%${q}%` } },
-          ] as Array<{ [K in keyof Assessment]: any }>,
-        }
-      : {},
+      q
+        ? {
+            or: [{ name: { iLike: `%${q}%` } }] as Array<{ [K in keyof Assessment]: any }>,
+          }
+        : {},
   },
   {
     title: 'Manager',
@@ -34,16 +32,16 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
       value: undefined,
     },
     filterQuery: (q: number) =>
-    q
-      ? {
-          or: [
-            { firstName: { iLike: `%${q}%` } },
-            { middleName: { iLike: `%${q}%` } },
-            { lastName: { iLike: `%${q}%` } },
-            { workID: { iLike: `%${q}%` } },
-          ] as Array<{ [K in keyof User]: any }>,
-        }
-      : {},
+      q
+        ? {
+            or: [
+              { firstName: { iLike: `%${q}%` } },
+              { middleName: { iLike: `%${q}%` } },
+              { lastName: { iLike: `%${q}%` } },
+              { workID: { iLike: `%${q}%` } },
+            ] as Array<{ [K in keyof User]: any }>,
+          }
+        : {},
   },
   // {
   //   title: 'Informants',
@@ -93,7 +91,7 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
     name: 'submissionDate',
     title: 'Submission Date',
     translationPath: 'plannedAssessments.submissionDate',
-    render: 'date'
+    render: 'date',
   },
   {
     title: 'Email Status',
@@ -121,6 +119,6 @@ export const AssessmentsPatientsTable: TableColumn<FormattedAssessment>[] = [
   },
 ];
 
-if(!environment.email){
+if (!environment.email) {
   AssessmentsPatientsTable.pop();
 }

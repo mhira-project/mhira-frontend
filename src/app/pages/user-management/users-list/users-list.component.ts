@@ -146,7 +146,12 @@ export class UsersListComponent {
     this.loading = true;
     this.usersService
       .deleteOneUser({ id: user.id })
-      .pipe(finalize(() => {this.loading = false; this.getUsers()}))
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          this.getUsers();
+        })
+      )
       .subscribe(
         () => this.data.splice(this.data.indexOf(user), 1),
         (error) => this.errorService.handleError(error, { prefix: 'Unable to delete user' })
@@ -154,7 +159,7 @@ export class UsersListComponent {
   }
 
   private getDepartments(): void {
-    this.departmentsService.departments({paging: {first: 50}}).subscribe(({ data }) => {
+    this.departmentsService.departments({ paging: { first: 50 } }).subscribe(({ data }) => {
       const departments: Department[] = data.departments.edges.map((e: any) => e.node);
       const column = this.columns.find((c) => c.name === 'formattedDepartments');
       column.filterField.options = departments.map((d) => ({ label: d.name, value: d.id }));

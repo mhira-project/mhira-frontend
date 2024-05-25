@@ -13,6 +13,8 @@ import { Disclaimers } from '@app/pages/administration/@types/disclaimers';
 import { finalize } from 'rxjs/operators';
 import { DisclaimersService } from '@app/pages/administration/@services/disclaimers.service';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { ConsentsService } from '@app/pages/administration/@services/consents.service';
+import { Consent } from '@app/pages/administration/@types/consent';
 
 @Component({
   selector: 'app-assessment-overview',
@@ -31,7 +33,8 @@ export class AssessmentOverviewComponent implements OnInit {
   public assessment: FullAssessment;
   public questions: Question[];
   public questionnaireQuestions: { [K in string]: Question[] };
-  isSubmitModalVisible = false;
+  public isSubmitModalVisible = false;
+  public consentData: Consent = null;
 
   public get answers(): Answer[] {
     return this.assessment.questionnaireAssessment.answers;
@@ -47,7 +50,8 @@ export class AssessmentOverviewComponent implements OnInit {
     private errorService: ErrorHandlerService,
     private translateService: TranslateService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private consentsService: ConsentsService
   ) {}
 
   public ngOnInit(): void {
@@ -76,6 +80,8 @@ export class AssessmentOverviewComponent implements OnInit {
         },
         []
       );
+
+      this.getConsent(assessment.consentId);
 
       this.cdr.detectChanges();
     });
@@ -168,12 +174,21 @@ export class AssessmentOverviewComponent implements OnInit {
     const showFromUrl = queryParams.get('showSubmitModal') === 'true';
 
     this.isSubmitModalVisible =
-      (isAllFilled || showFromUrl) && this.assessment?.questionnaireAssessment?.status !== AssessmentStatus.COMPLETED;
+      (isAllFilled || showFromUrl) &&
+      this.assessment &&
+      this.assessment.questionnaireAssessment?.status !== AssessmentStatus.COMPLETED;
   }
 
   handleCancelSubmitModal(): void {
-    if (this.assessmentFormService.percentageCompleted !== 100) {
-      this.isSubmitModalVisible = false;
-    }
+    this.isSubmitModalVisible = false;
+  }
+
+  private getConsent(id: number): void {
+    this.consentsService.consents().subscribe(
+      ({ data }: any) => {
+        this.consentData = data.consents.find((consent: Consent) => consent.id === id);
+      },
+      (err) => this.errorService.handleError(err, { prefix: 'Unable to load consent' })
+    );
   }
 }

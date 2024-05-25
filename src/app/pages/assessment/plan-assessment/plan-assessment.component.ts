@@ -27,6 +27,8 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { EmailTemplatesService } from '@app/pages/administration/@services/email-templates.service';
 import { DEFAULT_PAGE_SIZE } from '@app/@shared/@modules/master-data/@types/list';
 import { QuestionnaireBundlesService } from '@app/pages/questionnaire-management/@services/questionnaire-bundles.service';
+import { ConsentsService } from '@app/pages/administration/@services/consents.service';
+import { Consent } from '@app/pages/administration/@types/consent';
 
 const CryptoJS = require('crypto-js');
 
@@ -70,6 +72,9 @@ export class PlanAssessmentComponent implements OnInit {
   public isUpdate: boolean;
   public hasEmail = false;
   public isConsentEnabled = false;
+  public consents: Consent[] = [];
+  public selectedConsent: number = null;
+
   url: any = '';
   options = [
     {
@@ -172,6 +177,7 @@ export class PlanAssessmentComponent implements OnInit {
     private bundlesService: QuestionnaireBundlesService,
     private departmentsService: DepartmentsService,
     private assessmentAdministrationService: AssessmentAdministrationService,
+    private consentService: ConsentsService,
     public perms: AppPermissionsService,
     private router: Router,
     private locationStrategy: LocationStrategy,
@@ -181,6 +187,7 @@ export class PlanAssessmentComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getAssessmentTypes();
+    this.getConsents();
     this.initAssessment();
     this.userAutoSelect();
     this.hasEmail = environment.email;
@@ -419,6 +426,7 @@ export class PlanAssessmentComponent implements OnInit {
         consentCheckbox2: [null],
         consentDescription: [null],
         submitContent: [null],
+        consentId: [null],
       });
     } catch {
       this.assessmentForm = this.formBuilder.group({
@@ -444,6 +452,7 @@ export class PlanAssessmentComponent implements OnInit {
         consentCheckbox2: [null],
         consentDescription: [null],
         submitContent: [null],
+        consentId: [null],
       });
       this.isUpdate = false;
       return;
@@ -478,6 +487,7 @@ export class PlanAssessmentComponent implements OnInit {
           consentCheckbox2: this.fullAssessment.consentCheckbox2,
           submitContent: this.fullAssessment.submitContent,
         });
+
         // @ts-ignore
         this.dates.push(
           this.formBuilder.group({
@@ -492,6 +502,7 @@ export class PlanAssessmentComponent implements OnInit {
         this.fullAssessment = this.fullAssessment;
         this.patient = this.fullAssessment.patient;
         this.selectedAssessment = this.fullAssessment.assessmentType?.id;
+        this.selectedConsent = this.fullAssessment.consentId;
         this.typeSelected = this.fullAssessment.informantType;
         if (this.fullAssessment.informantClinician) {
           this.selectedInformant = this.fullAssessment.informantClinician.id;
@@ -550,6 +561,19 @@ export class PlanAssessmentComponent implements OnInit {
           this.data = data.activeAssessmentTypes;
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load assessment type' })
+      );
+  }
+
+  private getConsents(): void {
+    this.isLoading = true;
+    this.consentService
+      .consents()
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }: any) => {
+          this.consents = data.consents;
+        },
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to load consents' })
       );
   }
 

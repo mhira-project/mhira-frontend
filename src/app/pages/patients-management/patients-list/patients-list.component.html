@@ -12,8 +12,21 @@
 >
   <div class="actions-left" actions-left>
     <app-master-data-search (search)="searchPatients($event)"></app-master-data-search>
-   <label [ngClass]="{'text-green' : onlyMyPatients}" class="spacer" (ngModelChange)="onMyPatients()" nz-checkbox [(ngModel)]="onlyMyPatients">{{ 'patients.myPatients' | translate }}</label>
-   <label [ngClass]="{'text-green' : archivedPatients}" (ngModelChange)="onArchievedPatients()" nz-checkbox [(ngModel)]="archivedPatients">{{ 'patients.archivedPatients' | translate }}</label>
+    <label
+      [ngClass]="{ 'text-green': onlyMyPatients }"
+      class="spacer"
+      (ngModelChange)="onMyPatients()"
+      nz-checkbox
+      [(ngModel)]="onlyMyPatients"
+      >{{ 'patients.myPatients' | translate }}</label
+    >
+    <label
+      [ngClass]="{ 'text-green': archivedPatients }"
+      (ngModelChange)="onArchievedPatients()"
+      nz-checkbox
+      [(ngModel)]="archivedPatients"
+      >{{ 'patients.archivedPatients' | translate }}</label
+    >
   </div>
   <ng-container actions-right>
     <button

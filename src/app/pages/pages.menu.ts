@@ -198,6 +198,15 @@ export const MENU: SideNavInterface[] | any = [
         submenu: [],
       },
       {
+        path: 'administration/consents',
+        title: 'menu.consents',
+        permissions: [PK.VIEW_SETTINGS],
+        iconType: '',
+        iconTheme: '',
+        icon: '',
+        submenu: [],
+      },
+      {
         path: 'administration/assessments',
         title: 'menu.assessments',
         permissions: [PK.VIEW_SETTINGS],

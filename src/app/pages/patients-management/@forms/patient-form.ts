@@ -74,15 +74,13 @@ const informationFields: Field[] = [
     validationMessage: 'forms.patients.validationMessageGender',
     isRequired: false,
     options: [
-      { label: 'forms.patients.gender.male', value: 'male' }, 
+      { label: 'forms.patients.gender.male', value: 'male' },
       { label: 'forms.patients.gender.female', value: 'female' },
       { label: 'forms.patients.gender.other', value: 'other' },
     ],
     span: 8,
   },
 ];
-
-
 
 const departmentsField: Field = {
   value: '',

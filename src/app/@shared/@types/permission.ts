@@ -30,7 +30,7 @@ export enum PermissionKey {
 
   VIEW_TEMPLATES = 'view templates',
   MANAGE_TEMPLATES = 'manage templates',
-  DELETE_TEMPLATES = 'delete templates'
+  DELETE_TEMPLATES = 'delete templates',
 }
 
 export const isPermissionKey = (key: any): key is PermissionKey => {

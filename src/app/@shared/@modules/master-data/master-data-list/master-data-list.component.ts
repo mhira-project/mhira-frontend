@@ -79,11 +79,11 @@ export class MasterDataListComponent<T> {
   }
 
   public onReset(): void {
-    if(localStorage.getItem('filter')){
-      localStorage.removeItem('filter')
+    if (localStorage.getItem('filter')) {
+      localStorage.removeItem('filter');
     }
-    if(localStorage.getItem('filter-patient-assessment')){
-      localStorage.removeItem('filter-patient-assessment')
+    if (localStorage.getItem('filter-patient-assessment')) {
+      localStorage.removeItem('filter-patient-assessment');
     }
     location.reload();
   }

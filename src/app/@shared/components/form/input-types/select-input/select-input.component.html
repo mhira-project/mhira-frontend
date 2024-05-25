@@ -21,7 +21,12 @@
         'has-success': inputIsValid() === true
       }"
     >
-      <nz-option *ngFor="let option of field.options" [nzValue]="option.value | translate" [nzLabel]="option.label | translate"> </nz-option>
+      <nz-option
+        *ngFor="let option of field.options"
+        [nzValue]="option.value | translate"
+        [nzLabel]="option.label | translate"
+      >
+      </nz-option>
     </nz-select>
   </nz-input-group>
 </ng-container>

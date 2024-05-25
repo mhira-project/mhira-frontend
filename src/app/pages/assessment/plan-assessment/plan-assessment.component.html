@@ -244,55 +244,24 @@
         </label>
       </h5>
 
-      <div class="consent-inputs">
-        <nz-form-item>
-          <nz-form-label>{{ 'createAssessment.consentCheckbox1' | translate }}</nz-form-label>
-          <nz-form-control>
-            <input
-              placeholder="{{ 'createAssessment.consentCheckbox1' | translate }}"
-              formControlName="consentCheckbox1"
-              nz-input
-              [disableControl]="!editMode"
-            />
-          </nz-form-control>
-        </nz-form-item>
-
-        <nz-form-item>
-          <nz-form-label>{{ 'createAssessment.consentCheckbox2' | translate }}</nz-form-label>
-          <nz-form-control>
-            <input
-              placeholder="{{ 'createAssessment.consentCheckbox2' | translate }}"
-              formControlName="consentCheckbox2"
-              nz-input
-              [disableControl]="!editMode"
-            />
-          </nz-form-control>
-        </nz-form-item>
-
-        <nz-form-item>
-          <nz-input-group>
-            <nz-form-label>{{ 'createAssessment.consentDescription' | translate }}</nz-form-label>
-            <textarea
-              placeholder="{{ 'createAssessment.consentDescription' | translate }}"
-              formControlName="consentDescription"
-              nz-input
-              [disableControl]="!editMode"
-            ></textarea>
-          </nz-input-group>
-        </nz-form-item>
-
-        <nz-form-item>
-          <nz-input-group>
-            <nz-form-label>{{ 'createAssessment.submitContent' | translate }}</nz-form-label>
-            <textarea
-              placeholder="{{ 'createAssessment.submitContent' | translate }}"
-              formControlName="submitContent"
-              nz-input
-              [disableControl]="!editMode"
-            ></textarea>
-          </nz-input-group>
-        </nz-form-item>
-      </div>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-select
+            [nzBorderless]="!editMode"
+            class="input-class"
+            [nzDisabled]="!editMode"
+            [(ngModel)]="selectedConsent"
+            formControlName="consentId"
+          >
+            <nz-option [nzLabel]="'createAssessment.noConsent' | translate">{{
+              'createAssessment.noConsent' | translate
+            }}</nz-option>
+            <nz-option *ngFor="let consent of consents" [nzLabel]="consent.name" [nzValue]="consent.id">{{
+              consent.name
+            }}</nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
 
       <nz-form-item>
         <nz-form-control>

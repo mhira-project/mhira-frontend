@@ -100,6 +100,7 @@ export default {
     notFound: 'Not Found',
     noTabs: 'No Tabs',
     disclaimers: 'Messages',
+    consents: 'Consents',
     emailTemplates: 'Email Templates',
     version: 'Version',
     createPatientStatus: 'Create PatientStatus',
@@ -117,7 +118,6 @@ export default {
       edit: 'Edit Assessment Name',
       create: 'Create Assessment Name',
     },
-
     roles: {
       name: 'Role Name',
       hierarchy: 'Role Hierarchy',
@@ -139,6 +139,17 @@ export default {
       type: 'Type',
       textInformation: 'Text Information',
       lastUpdate: 'Last Update',
+    },
+    consents: {
+      name: 'Name',
+      description: 'Description',
+      consent1: 'Consent 1',
+      consent2: 'Consent 2',
+      submitContent: 'Submit Content',
+      validationMessage: 'This is required',
+      createdAt: 'Created At',
+      createConsent: 'Create consent',
+      saveConsent: 'Save consent',
     },
     assessmentsPatients: {
       title: 'Assessment Name',
@@ -561,6 +572,7 @@ export default {
     submitContent: 'Custom Submit message',
     consent: 'Consent',
     consentGiven: 'Consent given',
+    noConsent: 'No consent',
   },
   form: {
     system: {
