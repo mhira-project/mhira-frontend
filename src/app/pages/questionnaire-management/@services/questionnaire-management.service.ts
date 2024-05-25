@@ -39,21 +39,25 @@ export class QuestionnaireManagementService {
       .pipe(map((result) => result.data.updateQuestionnaire));
   }
 
-  public getQuestionnaires(
-    options: { paging?: Paging; filter?: any; sorting?: Sorting[] }
-  ): Observable<ConnectionResult<QuestionnaireVersion>> {
+  public getQuestionnaires(options: {
+    paging?: Paging;
+    filter?: any;
+    sorting?: Sorting[];
+  }): Observable<ConnectionResult<QuestionnaireVersion>> {
     return this.apollo
       .query<{ questionnaires: ConnectionResult<QuestionnaireVersion> }>({
         query: QuestionnaireQueries.getQuestionnaires,
-        variables: { ...options, paging: {first: 20} },
+        variables: { ...options, paging: { first: 20 } },
         fetchPolicy: 'no-cache',
       })
       .pipe(map(({ data }) => data.questionnaires));
   }
 
-  public getQuestionnairesVersion(
-    options: { paging?: Paging; filter?: any; sorting?: Sorting[] }
-  ): Observable<ConnectionResult<QuestionnaireVersion>> {
+  public getQuestionnairesVersion(options: {
+    paging?: Paging;
+    filter?: any;
+    sorting?: Sorting[];
+  }): Observable<ConnectionResult<QuestionnaireVersion>> {
     return this.apollo
       .query<{ getQuestionnaireVersions: ConnectionResult<QuestionnaireVersion> }>({
         query: QuestionnaireQueries.getQuestionnairesVersion,
@@ -75,15 +79,15 @@ export class QuestionnaireManagementService {
     return EMPTY;
   }
 
-  public getOneQuestionnaireBundle(id: number){
+  public getOneQuestionnaireBundle(id: number) {
     return EMPTY;
   }
 
-  public updateQuestionnaireBundle(){
+  public updateQuestionnaireBundle() {
     return EMPTY;
   }
 
-  public deleteQuestionnaireBundle(){
+  public deleteQuestionnaireBundle() {
     return EMPTY;
   }
 }

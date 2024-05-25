@@ -1,0 +1,28 @@
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancel-button {
+  margin-top: 20px;
+  width: 255px;
+  border-radius: 10px;
+}
+
+.add-button {
+  margin-top: 20px;
+  width: 255px;
+  float: right;
+  border-radius: 10px;
+}
+
+.big-div {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 800px;
+}
+
+textarea .ant-input {
+  height: 220px !important;
+}

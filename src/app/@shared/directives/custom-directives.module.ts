@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {DisableControlDirective} from './disabled-control-directive';
+import { DisableControlDirective } from './disabled-control-directive';
 
 @NgModule({
   declarations: [DisableControlDirective],
-  imports: [
-    CommonModule
-  ],
-  exports: [DisableControlDirective]
+  imports: [CommonModule],
+  exports: [DisableControlDirective],
 })
-
-export class CustomDirectivesModule { }
+export class CustomDirectivesModule {}

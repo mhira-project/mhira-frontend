@@ -1,7 +1,7 @@
 import { Form } from '@shared/components/form/@types/form';
 
 export const DepartmentForm: Form = {
-  submitButtonText: 'tables.department.createDepartment',   
+  submitButtonText: 'tables.department.createDepartment',
   editButtonText: 'Edit Department',
   submitButtonClass: 'full-width',
   groups: [

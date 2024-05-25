@@ -15,6 +15,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { FullAssessment } from '@app/pages/assessment/@types/assessment';
 import { AssessmentService } from '@app/pages/assessment/@services/assessment.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { ConsentsService } from '@app/pages/administration/@services/consents.service';
+import { Consent } from '@app/pages/administration/@types/consent';
 
 @UntilDestroy()
 @Component({
@@ -32,6 +34,7 @@ export class QuestionnaireFormComponent {
   isConsentShown = false;
   isConsent1Checked = false;
   isConsent2Checked = false;
+  consentData: Consent = null;
 
   public set currentGroupIdx(idx: number) {
     this._currentGroupIdx = idx;
@@ -54,7 +57,8 @@ export class QuestionnaireFormComponent {
     private route: ActivatedRoute,
     private messageService: NzMessageService,
     private assessmentService: AssessmentService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private consentsService: ConsentsService
   ) {
     combineLatest([
       this.activtedRoute.params.pipe(
@@ -77,28 +81,14 @@ export class QuestionnaireFormComponent {
   }
 
   ngOnInit() {
-    this.assessmentFormService.percentageCompletedValue$.subscribe((percentage) => {
-      this.navigateToOverview(percentage);
-    });
-
     this.assessmentFormService.assessment$.subscribe((assessment: FullAssessment) => {
       this.assessment = assessment;
-      if (
-        assessment.questionnaireAssessment.consentTimestamp === null &&
-        (assessment.consentCheckbox1 || assessment.consentCheckbox2) &&
-        assessment.consentDescription
-      ) {
-        this.showConsentModal();
+      if (assessment.questionnaireAssessment.consentTimestamp === null && assessment.consentId) {
+        this.getConsent(assessment.consentId);
       }
 
       this.cdr.detectChanges();
     });
-  }
-
-  async navigateToOverview(percentage: number) {
-    if (percentage === 100) {
-      this.router.navigate(['../../overview'], { relativeTo: this.route });
-    }
   }
 
   public isVisible(question: Question) {
@@ -247,16 +237,29 @@ export class QuestionnaireFormComponent {
   }
 
   isAcceptConsentDisabled(): boolean {
-    if (this.assessment.consentCheckbox1 && this.assessment.consentCheckbox2) {
+    if (!this.consentData) {
+      return false;
+    }
+    if (this.consentData.consent1 && this.consentData.consent2) {
       return !this.isConsent1Checked || !this.isConsent2Checked;
     }
 
-    if (this.assessment.consentCheckbox1) {
+    if (this.consentData.consent1) {
       return !this.isConsent1Checked;
     }
 
-    if (this.assessment.consentCheckbox2) {
+    if (this.consentData.consent2) {
       return !this.isConsent2Checked;
     }
+  }
+
+  private getConsent(id: number): void {
+    this.consentsService.consents().subscribe(
+      ({ data }: any) => {
+        this.consentData = data.consents.find((consent: Consent) => consent.id === id);
+        this.showConsentModal();
+      },
+      (err) => this.errorService.handleError(err, { prefix: 'Unable to load consent' })
+    );
   }
 }

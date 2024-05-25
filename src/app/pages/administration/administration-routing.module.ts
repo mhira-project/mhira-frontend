@@ -14,6 +14,7 @@ import { AssessmentAdministrationComponent } from './assessment-administration/a
 import { VersionComponent } from './version/version.component';
 import { EmailTemplatesComponent } from './email-templates/email-templates.component';
 import { CreateEmailTemplateComponent } from './create-email-template/create-email-template.component';
+import { ConsentsComponent } from './consents/consents.component';
 
 const routes: Routes = [
   {
@@ -68,6 +69,17 @@ const routes: Routes = [
         component: DisclaimersComponent,
         data: {
           breadcrumbI18nKey: 'menu.disclaimers',
+          permissions: {
+            only: [PermissionKey.VIEW_ROLES_PERMISSIONS],
+          },
+        },
+        canActivate: [PermissionGuard],
+      },
+      {
+        path: 'consents',
+        component: ConsentsComponent,
+        data: {
+          breadcrumbI18nKey: 'menu.consents',
           permissions: {
             only: [PermissionKey.VIEW_ROLES_PERMISSIONS],
           },

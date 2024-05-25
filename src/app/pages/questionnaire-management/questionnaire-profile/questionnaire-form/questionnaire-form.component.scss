@@ -1,37 +1,37 @@
 .parent-div {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .keyword-container {
-    max-width: 400px;
-    margin-left: 30px;
-    border-radius: 15px;
+  max-width: 400px;
+  margin-left: 30px;
+  border-radius: 15px;
 }
 
 .keyword-title {
-    color: rgba(0, 0, 0, .85);
-    font-size: 14px;
-    font-size: bold;
-    margin: 0;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 14px;
+  font-size: bold;
+  margin: 0;
 }
 
-.info-tip{
-    font-size: 18px;
-    margin-bottom: 40px;
+.info-tip {
+  font-size: 18px;
+  margin-bottom: 40px;
 }
 
 nz-select {
-    min-width: 400px;
+  min-width: 400px;
 }
 
 :host ::ng-deep .ant-select-show-search.ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    cursor: text;
-    height: auto;
-    min-height: 150px;
-    align-items: flex-start !important;
+  cursor: text;
+  height: auto;
+  min-height: 150px;
+  align-items: flex-start !important;
 }
 
-.margin-top{
-    margin-top: 10px;
+.margin-top {
+  margin-top: 10px;
 }
