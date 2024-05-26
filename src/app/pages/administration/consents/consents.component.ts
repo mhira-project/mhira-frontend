@@ -88,10 +88,8 @@ export class ConsentsComponent implements OnInit {
     this.getConsents({ paging });
   }
 
-  handleRowClick(event: any) {
-    if (!this.perms.permissionsOnly([PermissionKey.MANAGE_ROLES_PERMISSIONS])) return;
-
-    this.role = this.consents[event.index];
+  handleRowClick(consent: Consent) {
+    this.role = consent;
     this.populateForm = true;
     this.toggleCreatePanel(false);
   }
