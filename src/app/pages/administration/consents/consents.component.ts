@@ -73,7 +73,6 @@ export class ConsentsComponent implements OnInit {
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         ({ data }: any) => {
-          console.log('data', data);
           data.consents.map((consent: any) => {
             this.consents.push(Convert.toConsent(consent));
           });

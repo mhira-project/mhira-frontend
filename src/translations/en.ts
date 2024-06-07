@@ -150,6 +150,8 @@ export default {
       createdAt: 'Created At',
       createConsent: 'Create consent',
       saveConsent: 'Save consent',
+      title: "Consent's title",
+      acceptLabel: 'Accept button label',
     },
     assessmentsPatients: {
       title: 'Assessment Name',

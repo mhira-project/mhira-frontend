@@ -55,6 +55,7 @@ export interface QuestionnaireAssessment {
   status: AssessmentStatus;
   consentTimestamp?: Date;
   acceptedConsentContent?: {
+    name?: string;
     description?: string;
     checkbox1?: string;
     checkbox2?: string;

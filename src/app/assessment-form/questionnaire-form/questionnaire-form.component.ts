@@ -186,7 +186,7 @@ export class QuestionnaireFormComponent {
 
       return;
     }
-    this.router.navigate(['../../overview'], { relativeTo: this.route });
+    this.router.navigate(['../../overview'], { relativeTo: this.route, queryParams: { showSubmitModal: true } });
   }
 
   scrollToTop() {

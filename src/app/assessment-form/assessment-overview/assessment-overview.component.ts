@@ -82,7 +82,7 @@ export class AssessmentOverviewComponent implements OnInit {
       );
 
       this.getConsent(assessment.consentId);
-
+      this.updateSubmitModalVisible();
       this.cdr.detectChanges();
     });
     this.getDescription();
@@ -169,9 +169,12 @@ export class AssessmentOverviewComponent implements OnInit {
 
   updateSubmitModalVisible(percentage?: number): void {
     const isAllFilled = percentage == 100;
-
+    console.log('isAllFilled', isAllFilled);
     const queryParams = this.route.snapshot.queryParamMap;
     const showFromUrl = queryParams.get('showSubmitModal') === 'true';
+    console.log('queryParams', queryParams);
+    console.log(this.assessment);
+    console.log(this.assessment?.questionnaireAssessment?.status);
 
     this.isSubmitModalVisible =
       (isAllFilled || showFromUrl) &&

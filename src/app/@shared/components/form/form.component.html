@@ -113,6 +113,14 @@
                 >
                 </app-file-input>
               </div>
+              <div *ngSwitchCase="'wysiwyg'">
+                <app-wysiwyg-input
+                  [field]="field"
+                  [inputMode]="inputMode"
+                  (valueChange)="handleInputChange(field, $event)"
+                >
+                </app-wysiwyg-input>
+              </div>
             </ng-container>
           </div>
         </ng-container>

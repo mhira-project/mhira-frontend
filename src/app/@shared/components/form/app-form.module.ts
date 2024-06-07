@@ -15,6 +15,7 @@ import { DateInputComponent } from './input-types/date-input/date-input.componen
 import { DateRangeInputComponent } from './input-types/date-range-input/date-range-input.component';
 import { ArrayInputComponent } from './input-types/array-input/array-input.component';
 import { FileInputComponent } from './input-types/file-input/file-input.component';
+import { WYSIWYGInputComponent } from './input-types/wysiwyg-input/wysiwyg-input.component';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzAnchorModule } from 'ng-zorro-antd/anchor';
@@ -80,6 +81,7 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { TranslateModule } from '@ngx-translate/core';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 const antModules = [
   NzAffixModule,
@@ -149,7 +151,15 @@ const antModules = [
 ];
 
 @NgModule({
-  imports: [...antModules, CommonModule, FormsModule, NgxInputSearchModule, ReactiveFormsModule, TranslateModule],
+  imports: [
+    ...antModules,
+    CommonModule,
+    FormsModule,
+    NgxInputSearchModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    AngularEditorModule,
+  ],
   declarations: [
     FormComponent,
     TextInputComponent,
@@ -164,6 +174,7 @@ const antModules = [
     DateRangeInputComponent,
     ArrayInputComponent,
     FileInputComponent,
+    WYSIWYGInputComponent,
   ],
   exports: [FormComponent],
   providers: [],

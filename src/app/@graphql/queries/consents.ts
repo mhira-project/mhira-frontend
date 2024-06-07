@@ -10,6 +10,8 @@ const consents = gql`
       consent1
       consent2
       createdAt
+      title
+      acceptLabel
     }
   }
 `;

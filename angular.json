@@ -40,9 +40,7 @@
               "./node_modules/ng-zorro-antd/resizable/style/index.min.css",
               "src/main.scss"
             ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.min.js"
-            ]
+            "scripts": ["node_modules/jquery/dist/jquery.min.js"]
           },
           "configurations": {
             "production": {
@@ -104,15 +102,15 @@
               ]
             },
             "dev": {
-              "optimization": true,
-              "outputHashing": "all",
+              "optimization": false,
+              "outputHashing": "none",
               "sourceMap": true,
               "extractCss": false,
-              "namedChunks": false,
-              "aot": true,
+              "namedChunks": true,
+              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -140,7 +138,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-x-rocket:build",
+            "browserTarget": "ng-x-rocket:build:development",
             "hmr": true,
             "hmrWarning": false
           },
