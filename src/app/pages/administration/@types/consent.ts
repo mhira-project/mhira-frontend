@@ -5,6 +5,8 @@ export interface Consent {
   consent1: string;
   consent2?: string;
   submitContent?: string;
+  title?: string;
+  acceptLabel?: string;
 }
 
 export interface UpdateOneConsentInput {
@@ -14,4 +16,6 @@ export interface UpdateOneConsentInput {
   consent1: string;
   consent2: string;
   submitContent: string;
+  title?: string;
+  acceptLabel?: string;
 }
