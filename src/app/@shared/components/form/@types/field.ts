@@ -16,6 +16,7 @@ export interface Field {
     | 'date'
     | 'dateRange'
     | 'array'
+    | 'wysiwyg'
     | 'file';
   children?: Field[];
   rows?: any;

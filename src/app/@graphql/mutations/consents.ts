@@ -11,6 +11,8 @@ const createOneConsent = gql`
       submitContent
       createdAt
       updatedAt
+      title
+      acceptLabel
     }
   }
 `;
@@ -26,6 +28,8 @@ const updateOneConsent = gql`
       submitContent
       createdAt
       updatedAt
+      title
+      acceptLabel
     }
   }
 `;

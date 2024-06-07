@@ -90,6 +90,7 @@ const assessments = gql`
             status
             consentTimestamp
             acceptedConsentContent {
+              name
               description
               checkbox1
               checkbox2
@@ -258,6 +259,7 @@ const getFullAssessment = gql`
         status
         consentTimestamp
         acceptedConsentContent {
+          name
           description
           checkbox1
           checkbox2
@@ -376,6 +378,7 @@ const getFullPublicAssessment = gql`
         status
         consentTimestamp
         acceptedConsentContent {
+          name
           description
           checkbox1
           checkbox2

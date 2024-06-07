@@ -11,10 +11,10 @@ const columns: any[] = [
     },
   },
   {
-    title: 'tables.consents.description',
-    name: 'description',
+    title: 'tables.consents.title',
+    name: 'title',
     sort: true,
-    translationPath: 'tables.consents.description',
+    translationPath: 'tables.consents.title',
     isFilterable: false,
   },
   {

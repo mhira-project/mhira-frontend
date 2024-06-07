@@ -105,23 +105,29 @@
 </ng-template>
 
 <nz-modal
-  [(nzVisible)]="isConsentShown"
+  [(nzVisible)]="isConsentShown && consentData"
   [nzOkDisabled]="isAcceptConsentDisabled()"
   nzCancelDisabled="true"
   nzClosable="false"
-  nzOkText="{{ translations.assessmentForm.acceptConsentButton | translate }}"
-  nzTitle="{{ translations.assessmentForm.consentModalTitle | translate }}"
-  (nzOnOk)="handleOk()"
+  nzTitle="{{ consentData?.title || translations.assessmentForm.consentModalTitle | translate }}"
+  [nzFooter]="modalFooter"
+  nzWidth="700px"
 >
   <ng-container *nzModalContent>
-    <div class="consent-message">{{ consentData.description }}</div>
+    <div class="consent-message" [innerHTML]="consentData.description"></div>
     <div class="consent-checkboxes">
-      <div *ngIf="consentData.consent1">
+      <div class="checkbox1" *ngIf="consentData.consent1">
         <label nz-checkbox [(ngModel)]="isConsent1Checked">{{ consentData.consent1 }}</label>
       </div>
-      <div *ngIf="consentData.consent2">
+      <div class="checkbox2" *ngIf="consentData.consent2">
         <label nz-checkbox [(ngModel)]="isConsent2Checked">{{ consentData.consent2 }}</label>
       </div>
     </div>
   </ng-container>
+
+  <ng-template #modalFooter>
+    <button [disabled]="isAcceptConsentDisabled()" nz-button nzType="primary" (click)="handleOk()">
+      {{ consentData.acceptLabel || translations.assessmentForm.acceptConsentButton | translate }}
+    </button>
+  </ng-template>
 </nz-modal>
