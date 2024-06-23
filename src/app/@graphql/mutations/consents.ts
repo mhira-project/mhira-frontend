@@ -8,11 +8,17 @@ const createOneConsent = gql`
       description
       consent1
       consent2
+      consent3
+      consent4
+      consent5
+      consent6
+      consent7
       submitContent
       createdAt
       updatedAt
       title
       acceptLabel
+      submitLabel
     }
   }
 `;
@@ -25,11 +31,17 @@ const updateOneConsent = gql`
       description
       consent1
       consent2
+      consent3
+      consent4
+      consent5
+      consent6
+      consent7
       submitContent
       createdAt
       updatedAt
       title
       acceptLabel
+      submitLabel
     }
   }
 `;

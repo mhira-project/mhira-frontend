@@ -9,9 +9,15 @@ const consents = gql`
       submitContent
       consent1
       consent2
+      consent3
+      consent4
+      consent5
+      consent6
+      consent7
       createdAt
       title
       acceptLabel
+      submitLabel
     }
   }
 `;

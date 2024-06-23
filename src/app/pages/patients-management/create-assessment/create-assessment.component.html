@@ -257,7 +257,7 @@
             <nz-select
               [nzBorderless]="!editMode"
               class="input-class"
-              [nzDisabled]="!editMode"
+              [nzDisabled]="!editMode || fullAssessment?.questionnaireAssessment?.consentTimestamp"
               [(ngModel)]="selectedConsent"
               formControlName="consentId"
             >

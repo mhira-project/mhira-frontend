@@ -34,6 +34,11 @@ export class QuestionnaireFormComponent {
   isConsentShown = false;
   isConsent1Checked = false;
   isConsent2Checked = false;
+  isConsent3Checked = false;
+  isConsent4Checked = false;
+  isConsent5Checked = false;
+  isConsent6Checked = false;
+  isConsent7Checked = false;
   consentData: Consent = null;
 
   public set currentGroupIdx(idx: number) {
@@ -240,17 +245,38 @@ export class QuestionnaireFormComponent {
     if (!this.consentData) {
       return false;
     }
-    if (this.consentData.consent1 && this.consentData.consent2) {
-      return !this.isConsent1Checked || !this.isConsent2Checked;
+
+    var isDisabled = false;
+
+    if (this.consentData.consent1 && !this.isConsent1Checked) {
+      isDisabled = true;
     }
 
-    if (this.consentData.consent1) {
-      return !this.isConsent1Checked;
+    if (this.consentData.consent2 && !this.isConsent2Checked) {
+      isDisabled = true;
     }
 
-    if (this.consentData.consent2) {
-      return !this.isConsent2Checked;
+    if (this.consentData.consent3 && !this.isConsent3Checked) {
+      isDisabled = true;
     }
+
+    if (this.consentData.consent4 && !this.isConsent4Checked) {
+      isDisabled = true;
+    }
+
+    if (this.consentData.consent5 && !this.isConsent5Checked) {
+      isDisabled = true;
+    }
+
+    if (this.consentData.consent6 && !this.isConsent6Checked) {
+      isDisabled = true;
+    }
+
+    if (this.consentData.consent7 && !this.isConsent7Checked) {
+      isDisabled = true;
+    }
+
+    return isDisabled;
   }
 
   private getConsent(id: number): void {

@@ -28,10 +28,6 @@ const assessments = gql`
           updatedAt
           deletedAt
           informantType
-          consentDescription
-          consentCheckbox1
-          consentCheckbox2
-          submitContent
           consentId
           clinician {
             id
@@ -220,10 +216,6 @@ const getFullAssessment = gql`
       deliveryDate
       expirationDate
       note
-      consentDescription
-      consentCheckbox1
-      consentCheckbox2
-      submitContent
       createdAt
       updatedAt
       deletedAt
@@ -368,10 +360,6 @@ const getFullPublicAssessment = gql`
       deliveryDate
       expirationDate
       informantType
-      consentDescription
-      consentCheckbox1
-      consentCheckbox2
-      submitContent
       consentId
       questionnaireAssessment {
         _id
