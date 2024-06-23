@@ -422,10 +422,6 @@ export class PlanAssessmentComponent implements OnInit {
         expirationDate: [null],
         dates: this.formBuilder.array([]),
         note: [null],
-        consentCheckbox1: [null],
-        consentCheckbox2: [null],
-        consentDescription: [null],
-        submitContent: [null],
         consentId: [null],
       });
     } catch {
@@ -448,10 +444,6 @@ export class PlanAssessmentComponent implements OnInit {
           }),
         ]),
         note: [null],
-        consentCheckbox1: [null],
-        consentCheckbox2: [null],
-        consentDescription: [null],
-        submitContent: [null],
         consentId: [null],
       });
       this.isUpdate = false;
@@ -461,7 +453,6 @@ export class PlanAssessmentComponent implements OnInit {
     this.assessmentService.getFullAssessment(assessmentId).subscribe(
       (assessment) => {
         this.editMode = false;
-        this.isConsentEnabled = assessment.consentCheckbox1 !== '' || assessment.consentCheckbox2 !== '';
         this.fullAssessment = assessment;
         this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
         this.assessmentForm.patchValue({
@@ -482,10 +473,6 @@ export class PlanAssessmentComponent implements OnInit {
           mailTemplateId: this.fullAssessment.mailTemplateId,
           note: this.fullAssessment.note,
           questionnaires: this.fullAssessment.questionnaireAssessment?.questionnaires,
-          consentDescription: this.fullAssessment.consentDescription,
-          consentCheckbox1: this.fullAssessment.consentCheckbox1,
-          consentCheckbox2: this.fullAssessment.consentCheckbox2,
-          submitContent: this.fullAssessment.submitContent,
         });
 
         // @ts-ignore

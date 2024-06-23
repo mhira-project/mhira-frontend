@@ -132,10 +132,6 @@ export class CreateAssessmentComponent implements OnInit {
       receiverEmail: [this.patient?.email],
       mailTemplateId: [null],
       note: [null],
-      consentCheckbox1: [null],
-      consentCheckbox2: [null],
-      consentDescription: [null],
-      submitContent: [null],
       consentId: [null],
       dates: this.formBuilder.array([
         this.formBuilder.group({
@@ -367,10 +363,6 @@ export class CreateAssessmentComponent implements OnInit {
       informantCaregiverRelation: this.fullAssessment.informantCaregiverRelation,
       expirationDate: this.fullAssessment.expirationDate,
       note: '',
-      consentCheckbox1: this.fullAssessment.consentCheckbox1,
-      consentCheckbox2: this.fullAssessment.consentCheckbox2,
-      consentDescription: this.fullAssessment.consentDescription,
-      submitContent: this.fullAssessment.submitContent,
     });
     this.dates.push(
       this.formBuilder.group({

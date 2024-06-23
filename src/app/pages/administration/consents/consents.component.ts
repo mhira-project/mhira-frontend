@@ -161,7 +161,14 @@ export class ConsentsComponent implements OnInit {
       description: consent.description,
       consent1: consent.consent1,
       consent2: consent.consent2,
+      consent3: consent.consent3,
+      consent4: consent.consent4,
+      consent5: consent.consent5,
+      consent6: consent.consent6,
+      consent7: consent.consent7,
       submitContent: consent.submitContent,
+      acceptLabel: consent.acceptLabel,
+      submitLabel: consent.submitLabel,
     };
     this.isLoading = true;
     this.loadingMessage = `Updating consent ${consent.name}`;

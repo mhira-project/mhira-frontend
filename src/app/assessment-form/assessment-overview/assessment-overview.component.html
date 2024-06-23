@@ -99,7 +99,7 @@
 
 <nz-modal
   [nzVisible]="isSubmitModalVisible"
-  nzOkText="{{ translations.assessmentForm.completeAssessment | translate }}"
+  nzOkText="{{ consentData?.submitLabel || translations.assessmentForm.completeAssessment | translate }}"
   nzTitle="{{ translations.assessmentForm.completeAssessment | translate }}"
   (nzOnOk)="completeAssessment()"
   (nzOnCancel)="handleCancelSubmitModal()"

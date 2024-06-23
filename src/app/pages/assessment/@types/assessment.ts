@@ -29,10 +29,6 @@ export interface Assessment {
   assessmentType: AssessmentAdministration;
   patientId: number;
   note: string;
-  consentDescription?: string;
-  consentCheckbox1?: string;
-  consentCheckbox2?: string;
-  submitContent?: string;
   clinicianId: number;
   patient: Patient;
   clinician?: User;

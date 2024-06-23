@@ -168,13 +168,27 @@ export class AssessmentOverviewComponent implements OnInit {
   }
 
   updateSubmitModalVisible(percentage?: number): void {
+    if (!this.assessment) {
+      this.isSubmitModalVisible = false;
+      return;
+    }
+
     const isAllFilled = percentage == 100;
     const queryParams = this.route.snapshot.queryParamMap;
     const showFromUrl = queryParams.get('showSubmitModal') === 'true';
 
+    var areQuestionairesFilled = false;
+    for (const questionnaire of this.assessment.questionnaireAssessment.questionnaires) {
+      if (!this.isQuestionnaireDone(questionnaire._id)) {
+        areQuestionairesFilled = false;
+        break;
+      }
+      areQuestionairesFilled = true;
+    }
+
     this.isSubmitModalVisible =
+      areQuestionairesFilled &&
       (isAllFilled || showFromUrl) &&
-      this.assessment &&
       this.assessment.questionnaireAssessment?.status !== AssessmentStatus.COMPLETED;
   }
 
