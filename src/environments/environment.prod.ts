@@ -4,4 +4,5 @@ export const environment = {
   ...EnvironmentBase,
   production: true,
   baseURL: 'https://api.mhira.net/graphql',
+  surveyServiceURL: 'http://localhost:8001',
 };
