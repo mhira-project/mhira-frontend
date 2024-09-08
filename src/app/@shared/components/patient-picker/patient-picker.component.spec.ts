@@ -6,13 +6,11 @@ describe('PatientPickerComponent', () => {
   let component: PatientPickerComponent;
   let fixture: ComponentFixture<PatientPickerComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [PatientPickerComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [PatientPickerComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PatientPickerComponent);

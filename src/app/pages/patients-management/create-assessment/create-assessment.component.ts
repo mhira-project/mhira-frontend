@@ -402,9 +402,7 @@ export class CreateAssessmentComponent implements OnInit {
     }
   }
 
-
-
- getBundles() {
+  getBundles() {
     const departments = this.patient.departments.map((item) => {
       return item.id;
     });

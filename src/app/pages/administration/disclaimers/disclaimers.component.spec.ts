@@ -1,4 +1,4 @@
-import {  ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DisclaimersComponent } from './disclaimers.component';
 
 describe('DisclaimersComponent', () => {

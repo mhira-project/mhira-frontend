@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getReportsByResources = gql`
-  query($resource: String!) {
+  query ($resource: String!) {
     getReportsByResource(resource: $resource) {
       resources
       id

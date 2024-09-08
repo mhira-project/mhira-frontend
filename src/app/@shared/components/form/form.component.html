@@ -120,7 +120,9 @@
     </ng-container>
   </ng-container>
   <nz-button-group *ngIf="form.submitButtonText && inputMode" [ngClass]="form.submitButtonClass">
-    <button nz-button *ngIf="showCancelButton" [nzShape]="'round'" (click)="onCancel()">{{'core.cancel' | translate}}</button>
+    <button nz-button *ngIf="showCancelButton" [nzShape]="'round'" (click)="onCancel()">
+      {{ 'core.cancel' | translate }}
+    </button>
     <button
       *ngIf="showSubmitButton"
       nz-button
@@ -129,7 +131,7 @@
       (click)="handleSubmitForm(form)"
       [nzType]="'primary'"
     >
-      {{ form.submitButtonText | translate}}
+      {{ form.submitButtonText | translate }}
     </button>
   </nz-button-group>
   <button
@@ -140,6 +142,6 @@
     [ngClass]="form.submitButtonClass"
     (click)="toggleEdit()"
   >
-    {{ form.editButtonText | translate}}
+    {{ form.editButtonText | translate }}
   </button>
 </nz-spin>

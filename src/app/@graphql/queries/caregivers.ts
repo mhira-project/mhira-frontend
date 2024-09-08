@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const caregivers = gql`
-  query($paging: CursorPaging, $filter: CaregiverFilter, $sorting: [CaregiverSort!]) {
+  query ($paging: CursorPaging, $filter: CaregiverFilter, $sorting: [CaregiverSort!]) {
     caregivers(paging: $paging, filter: $filter, sorting: $sorting) {
       edges {
         cursor

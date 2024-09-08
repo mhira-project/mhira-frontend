@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed,waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { VersionComponent } from './version.component';
 
 describe('VersionComponent', () => {
@@ -7,9 +7,8 @@ describe('VersionComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ VersionComponent ]
-    })
-    .compileComponents();
+      declarations: [VersionComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed,waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { EmailTemplatesComponent } from './email-templates.component';
 
 describe('EmailTemplatesComponent', () => {
@@ -7,9 +7,8 @@ describe('EmailTemplatesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ EmailTemplatesComponent ]
-    })
-    .compileComponents();
+      declarations: [EmailTemplatesComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

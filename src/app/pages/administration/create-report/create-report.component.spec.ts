@@ -5,13 +5,11 @@ describe('CreateReportComponent', () => {
   let component: CreateReportComponent;
   let fixture: ComponentFixture<CreateReportComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CreateReportComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [CreateReportComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CreateReportComponent);

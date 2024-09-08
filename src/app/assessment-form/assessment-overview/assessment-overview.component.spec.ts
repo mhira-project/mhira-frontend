@@ -5,13 +5,11 @@ describe('AssessmentOverviewComponent', () => {
   let component: AssessmentOverviewComponent;
   let fixture: ComponentFixture<AssessmentOverviewComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [AssessmentOverviewComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [AssessmentOverviewComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AssessmentOverviewComponent);

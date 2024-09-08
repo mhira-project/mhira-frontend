@@ -5,13 +5,11 @@ describe('MasterDataTableComponent', () => {
   let component: MasterDataTableComponent<any>;
   let fixture: ComponentFixture<MasterDataTableComponent<any>>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [MasterDataTableComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [MasterDataTableComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MasterDataTableComponent);

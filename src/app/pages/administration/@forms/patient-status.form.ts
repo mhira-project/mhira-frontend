@@ -1,6 +1,5 @@
 import { Form } from '../../../@shared/components/form/@types/form';
 
-
 export const PatientStatusForm: Form = {
   submitButtonText: 'forms.patientStatuses.submitPatient',
   editButtonText: 'Submit PatientStatus',

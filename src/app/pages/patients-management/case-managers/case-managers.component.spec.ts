@@ -5,13 +5,11 @@ describe('CaseManagersComponent', () => {
   let component: CaseManagersComponent;
   let fixture: ComponentFixture<CaseManagersComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CaseManagersComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [CaseManagersComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CaseManagersComponent);

@@ -5,13 +5,11 @@ describe('ArrayInputComponent', () => {
   let component: ArrayInputComponent;
   let fixture: ComponentFixture<ArrayInputComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ArrayInputComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ArrayInputComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ArrayInputComponent);

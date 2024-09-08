@@ -18,7 +18,6 @@ import {
   FormattedAssessmentAdministration,
 } from '@app/pages/administration/@types/assessment-administration';
 
-
 const STATUS_COLOR = {
   [QuestionnaireStatus.DRAFT]: 'blue',
   [QuestionnaireStatus.PRIVATE]: 'orange',

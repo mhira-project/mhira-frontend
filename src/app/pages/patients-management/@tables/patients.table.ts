@@ -52,7 +52,7 @@ export const PatientColumns: TableColumn<FormattedPatient>[] = [
       type: 'radio',
       value: undefined,
       options: [
-        { label: 'forms.patients.gender.male', value: 'male' }, 
+        { label: 'forms.patients.gender.male', value: 'male' },
         { label: 'forms.patients.gender.female', value: 'female' },
         { label: 'forms.patients.gender.other', value: 'other' },
       ],

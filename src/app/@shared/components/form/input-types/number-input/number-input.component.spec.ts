@@ -5,13 +5,11 @@ describe('NumberInputComponent', () => {
   let component: NumberInputComponent;
   let fixture: ComponentFixture<NumberInputComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [NumberInputComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [NumberInputComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NumberInputComponent);

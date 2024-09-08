@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createOneScript = gql`
-  mutation($input: CreateQuestionnaireScriptInput!) {
+  mutation ($input: CreateQuestionnaireScriptInput!) {
     createNewQuestionnaireScript(input: $input) {
       id
       name
@@ -20,7 +20,7 @@ const createOneScript = gql`
 `;
 
 const updateOneScript = gql`
-  mutation($input: UpdateQuestionnaireScriptInput!) {
+  mutation ($input: UpdateQuestionnaireScriptInput!) {
     updateOneQuestionnaireScript(input: $input) {
       id
       name
@@ -39,7 +39,7 @@ const updateOneScript = gql`
 `;
 
 const deleteOneScript = gql`
-  mutation($input: DeleteQuestionnaireScriptInput!) {
+  mutation ($input: DeleteQuestionnaireScriptInput!) {
     deleteOneQuestionnaireScript(input: $input) {
       id
     }

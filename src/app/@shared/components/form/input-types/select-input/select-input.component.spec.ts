@@ -5,13 +5,11 @@ describe('SelectInputComponent', () => {
   let component: SelectInputComponent;
   let fixture: ComponentFixture<SelectInputComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [SelectInputComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [SelectInputComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SelectInputComponent);

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createOneAssessmentType = gql`
-  mutation($assessmentType: CreateAssessmentTypeInput!) {
+  mutation ($assessmentType: CreateAssessmentTypeInput!) {
     createNewAssessmentType(assessmentType: $assessmentType) {
       id
       name
@@ -13,7 +13,7 @@ const createOneAssessmentType = gql`
 `;
 
 const updateOneAssessmentType = gql`
-  mutation($assessmentType: UpdateAssessmentTypeInput!) {
+  mutation ($assessmentType: UpdateAssessmentTypeInput!) {
     updateAssessmentType(assessmentType: $assessmentType) {
       id
       name
@@ -25,7 +25,7 @@ const updateOneAssessmentType = gql`
 `;
 
 const deleteOneAssessmentType = gql`
-  mutation($input: DeleteOneInput!) {
+  mutation ($input: DeleteOneInput!) {
     deleteOnePatientStatus(input: $input) {
       id
       name

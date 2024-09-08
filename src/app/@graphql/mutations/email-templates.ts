@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
-const createOneEmailTemplate = gql `
-  mutation($input: CreateEmailTemplate!) {
+const createOneEmailTemplate = gql`
+  mutation ($input: CreateEmailTemplate!) {
     createEmailTemplate(input: $input) {
       id
       name
@@ -10,15 +10,15 @@ const createOneEmailTemplate = gql `
       status
       module
       isPublic
-      departments{
+      departments {
         id
       }
     }
   }
 `;
 
-const updateOneEmailTemplate = gql `
-  mutation($input: UpdateEmailTemplate!) {
+const updateOneEmailTemplate = gql`
+  mutation ($input: UpdateEmailTemplate!) {
     updateEmailTemplate(input: $input) {
       id
       name
@@ -27,21 +27,21 @@ const updateOneEmailTemplate = gql `
       status
       module
       isPublic
-      departments{
+      departments {
         id
       }
     }
   }
 `;
 
-const deleteOneEmailTemplate = gql `
-  mutation($id: Float!) {
+const deleteOneEmailTemplate = gql`
+  mutation ($id: Float!) {
     deleteEmailTemplate(id: $id)
   }
 `;
 
 export const EmailTemplatesMutations = {
-    createOneEmailTemplate,
-    updateOneEmailTemplate,
-    deleteOneEmailTemplate
+  createOneEmailTemplate,
+  updateOneEmailTemplate,
+  deleteOneEmailTemplate,
 };

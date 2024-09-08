@@ -5,13 +5,11 @@ describe('PasswordInputComponent', () => {
   let component: PasswordInputComponent;
   let fixture: ComponentFixture<PasswordInputComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [PasswordInputComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [PasswordInputComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PasswordInputComponent);

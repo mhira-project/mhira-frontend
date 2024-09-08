@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createOneCaregiver = gql`
-  mutation($input: CreateOneCaregiverInput!) {
+  mutation ($input: CreateOneCaregiverInput!) {
     createOneCaregiver(input: $input) {
       id
       #      emergencyContact
@@ -32,7 +32,7 @@ const createOneCaregiver = gql`
 `;
 
 const createManyCaregivers = gql`
-  mutation($input: CreateManyCaregiversInput!) {
+  mutation ($input: CreateManyCaregiversInput!) {
     createManyCaregivers(input: $input) {
       id
       #      emergencyContact
@@ -63,7 +63,7 @@ const createManyCaregivers = gql`
 `;
 
 const updateOneCaregiver = gql`
-  mutation($input: UpdateOneCaregiverInput!) {
+  mutation ($input: UpdateOneCaregiverInput!) {
     updateOneCaregiver(input: $input) {
       id
       firstName
@@ -98,7 +98,7 @@ const updateOneCaregiver = gql`
 `;
 
 const updateManyCaregivers = gql`
-  mutation($input: UpdateManyCaregiversInput!) {
+  mutation ($input: UpdateManyCaregiversInput!) {
     updateManyCaregivers(input: $input) {
       id
       #      emergencyContact
@@ -129,7 +129,7 @@ const updateManyCaregivers = gql`
 `;
 
 const deleteOneCaregiver = gql`
-  mutation($input: DeleteOneCaregiverInput!) {
+  mutation ($input: DeleteOneCaregiverInput!) {
     deleteOneCaregiver(input: $input) {
       id
       #      emergencyContact
@@ -160,7 +160,7 @@ const deleteOneCaregiver = gql`
 `;
 
 const deleteManyCaregivers = gql`
-  mutation($input: DeleteManyCaregiversInput!) {
+  mutation ($input: DeleteManyCaregiversInput!) {
     deleteManyCaregivers(input: $input) {
       deletedCount
     }
@@ -168,7 +168,7 @@ const deleteManyCaregivers = gql`
 `;
 
 const removeCaregiverFromPatient = gql`
-  mutation($input: RemoveCaregiverFromPatientInput!) {
+  mutation ($input: RemoveCaregiverFromPatientInput!) {
     removeCaregiverFromPatient(input: $input) {
       id
       statusId
@@ -247,7 +247,7 @@ const removeCaregiverFromPatient = gql`
 `;
 
 const addCaregiversToPatient = gql`
-  mutation($input: AddCaregiversToPatientInput!) {
+  mutation ($input: AddCaregiversToPatientInput!) {
     addCaregiversToPatient(input: $input) {
       id
       statusId
@@ -325,7 +325,7 @@ const addCaregiversToPatient = gql`
 `;
 
 const deleteCaregiverPatient = gql`
-  mutation($input: DeleteOnePatientCaregiverInput!) {
+  mutation ($input: DeleteOnePatientCaregiverInput!) {
     deleteOnePatientCaregiver(input: $input) {
       id
       patientId

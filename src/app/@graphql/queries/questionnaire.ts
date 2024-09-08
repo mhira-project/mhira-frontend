@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getQuestionnaires = gql`
-  query($paging: CursorPaging, $filter: QuestionnaireFilter, $sorting: [QuestionnaireSort!]) {
+  query ($paging: CursorPaging, $filter: QuestionnaireFilter, $sorting: [QuestionnaireSort!]) {
     questionnaires(paging: $paging, filter: $filter, sorting: $sorting) {
       pageInfo {
         hasNextPage
@@ -30,7 +30,7 @@ const getQuestionnaires = gql`
   }
 `;
 const getQuestionnairesVersion = gql`
-  query($paging: CursorPaging, $filter: QuestionnaireVersionFilter, $sorting: [QuestionnaireVersionSort!]) {
+  query ($paging: CursorPaging, $filter: QuestionnaireVersionFilter, $sorting: [QuestionnaireVersionSort!]) {
     getQuestionnaireVersions(paging: $paging, filter: $filter, sorting: $sorting) {
       pageInfo {
         hasNextPage

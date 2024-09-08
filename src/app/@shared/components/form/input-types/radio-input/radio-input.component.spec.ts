@@ -5,13 +5,11 @@ describe('RadioInputComponent', () => {
   let component: RadioInputComponent;
   let fixture: ComponentFixture<RadioInputComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [RadioInputComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [RadioInputComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RadioInputComponent);

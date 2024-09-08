@@ -1,4 +1,4 @@
-import {  ComponentFixture, TestBed,waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CreateQuestionnaireBundleComponent } from './create-questionnaire-bundle.component';
 
 describe('CreateQuestionnaireBundleComponent', () => {
@@ -7,9 +7,8 @@ describe('CreateQuestionnaireBundleComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateQuestionnaireBundleComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateQuestionnaireBundleComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

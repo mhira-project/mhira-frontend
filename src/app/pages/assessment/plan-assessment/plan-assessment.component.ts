@@ -84,7 +84,7 @@ export class PlanAssessmentComponent implements OnInit {
       value: 'Grandparent',
     },
     {
-      label:'createAssessment.uncleAunt',
+      label: 'createAssessment.uncleAunt',
       value: 'Uncle/Aunt',
     },
     {

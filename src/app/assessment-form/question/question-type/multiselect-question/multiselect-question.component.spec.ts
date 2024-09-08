@@ -5,13 +5,11 @@ describe('MultiselectQuestionComponent', () => {
   let component: MultiselectQuestionComponent;
   let fixture: ComponentFixture<MultiselectQuestionComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [MultiselectQuestionComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [MultiselectQuestionComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MultiselectQuestionComponent);

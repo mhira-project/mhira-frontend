@@ -64,7 +64,7 @@ export class QuestionnaireListComponent {
 
   public questionnaireRequestOptions: { paging: Paging; filter: Filter; sorting: Sorting[] } = {
     paging: { first: DEFAULT_PAGE_SIZE },
-    filter: {and: [{status: {neq: 'PRIVATE'}}, {zombie: {is: false}}]},
+    filter: { and: [{ status: { neq: 'PRIVATE' } }, { zombie: { is: false } }] },
     sorting: [],
   };
 
@@ -161,10 +161,10 @@ export class QuestionnaireListComponent {
       let continueButton = '';
       let cancelButton = '';
 
-      this.translate.get('questionnaires.discardedTitle').subscribe((translation) => title = translation);
-      this.translate.get('questionnaires.discardedMessage').subscribe((translation) => content = translation);
-      this.translate.get('questionnaires.continueButton').subscribe((translation) => continueButton = translation);
-      this.translate.get('questionnaires.cancelButton').subscribe((translation) => cancelButton = translation);
+      this.translate.get('questionnaires.discardedTitle').subscribe((translation) => (title = translation));
+      this.translate.get('questionnaires.discardedMessage').subscribe((translation) => (content = translation));
+      this.translate.get('questionnaires.continueButton').subscribe((translation) => (continueButton = translation));
+      this.translate.get('questionnaires.cancelButton').subscribe((translation) => (cancelButton = translation));
 
       const modal = this.modalService.confirm({
         nzOnOk: () => true,
@@ -172,7 +172,7 @@ export class QuestionnaireListComponent {
         nzContent: content,
         nzClosable: false,
         nzOkText: continueButton,
-        nzCancelText: cancelButton
+        nzCancelText: cancelButton,
       });
 
       // wait for modal to successfully complete

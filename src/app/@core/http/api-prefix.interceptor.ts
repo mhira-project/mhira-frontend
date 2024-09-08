@@ -5,9 +5,6 @@ import { catchError, tap } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
 
-/**
- * Prefixes all requests not starting with `http[s]` with `environment.serverUrl`.
- */
 @Injectable({
   providedIn: 'root',
 })

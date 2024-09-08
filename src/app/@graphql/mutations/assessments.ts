@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createOneAssessment = gql`
-  mutation($patientId: Int!, $date: DateTime, $name: String, $clinicianId: Int!, $informantId: Int!) {
+  mutation ($patientId: Int!, $date: DateTime, $name: String, $clinicianId: Int!, $informantId: Int!) {
     createOneAssessment(
       input: {
         assessment: {
@@ -86,7 +86,7 @@ const createOneAssessment = gql`
 `;
 
 const updateOneAssessment = gql`
-  mutation($id: ID!, $patientId: Int!, $date: DateTime, $name: String, $clinicianId: Int!, $informantId: Int!) {
+  mutation ($id: ID!, $patientId: Int!, $date: DateTime, $name: String, $clinicianId: Int!, $informantId: Int!) {
     updateOneAssessment(
       input: {
         id: $id
@@ -173,29 +173,29 @@ const updateOneAssessment = gql`
 `;
 
 const deleteAssessment = gql`
-  mutation($id: Int!, $statusCancel: Boolean) {
+  mutation ($id: Int!, $statusCancel: Boolean) {
     deleteAssessment(id: $id, statusCancel: $statusCancel)
   }
 `;
 
 const archiveOneAssessment = gql`
-  mutation($id: Int!) {
-    archiveOneAssessment(id: $id){
+  mutation ($id: Int!) {
+    archiveOneAssessment(id: $id) {
       id
     }
   }
 `;
 
 const restoreOneAssessment = gql`
-  mutation($id: Int!) {
-    restoreOneAssessment(id: $id){
+  mutation ($id: Int!) {
+    restoreOneAssessment(id: $id) {
       id
     }
   }
 `;
 
 const createOneMongoAssessment = gql`
-  mutation($assessment: CreateFullAssessmentInput!) {
+  mutation ($assessment: CreateFullAssessmentInput!) {
     createNewAssessment(assessment: $assessment) {
       id
     }
@@ -203,7 +203,7 @@ const createOneMongoAssessment = gql`
 `;
 
 const updateOneMongoAssessment = gql`
-  mutation($assessment: UpdateFullAssessmentInput!) {
+  mutation ($assessment: UpdateFullAssessmentInput!) {
     updateAssessment(assessment: $assessment) {
       id
     }
@@ -211,7 +211,7 @@ const updateOneMongoAssessment = gql`
 `;
 
 const addAnswer = gql`
-  mutation($assessment: AnswerAssessmentInput!) {
+  mutation ($assessment: AnswerAssessmentInput!) {
     addAnswer(assessment: $assessment) {
       _id
       answers {
@@ -228,7 +228,7 @@ const addAnswer = gql`
 `;
 
 const changeAssessmentStatus = gql`
-  mutation($statusInput: ChangeAssessmentStatusInput!) {
+  mutation ($statusInput: ChangeAssessmentStatusInput!) {
     changeAssessmentStatus(statusInput: $statusInput) {
       _id
       status
@@ -237,7 +237,7 @@ const changeAssessmentStatus = gql`
 `;
 
 const sendAssessmentEmail = gql`
-  mutation($assessmentId: ID!) {
+  mutation ($assessmentId: ID!) {
     sendAssessmentEmail(assessmentId: $assessmentId)
   }
 `;
@@ -252,5 +252,5 @@ export const AssessmentsMutations = {
   updateOneMongoAssessment,
   addAnswer,
   changeAssessmentStatus,
-  sendAssessmentEmail
+  sendAssessmentEmail,
 };

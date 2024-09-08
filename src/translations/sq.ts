@@ -18,14 +18,13 @@ export default {
     filter: 'Filteri',
     notSet: 'Nuk esht',
     back: 'Mbrapa',
-    translations:  'Përkthime',
+    translations: 'Përkthime',
     help: 'Ndihmë',
     apply: 'Apliko',
     cancel: 'Anullo',
     actions: 'Aksionet',
-
   },
-  userForm:{
+  userForm: {
     deleteUser2: 'Fshij përdoruesin',
     deleteUser: 'Fshini Përdoruesin',
     removeUser: 'Për të fshirë përdoruesin,',
@@ -45,7 +44,7 @@ export default {
   assessments: {
     myAssessment: 'Vlerësimet e Mia',
     archivedAssessments: 'Të Arkivuara',
-    notArchivedAssessments: 'Jo Të Arkivuara'
+    notArchivedAssessments: 'Jo Të Arkivuara',
   },
   card: {
     changePassword: 'Ndrysho fjalekalimin',
@@ -56,8 +55,7 @@ export default {
     noResult: 'Asnjë Rezultat',
     searchSelect: `Kërkoni dhe zgjidhni pyetësorët për t'i shtuar vlerësimit`,
     selectQuestionnaires: 'Zgjidhni Pyetësorët',
-    selectedQuestionnaires: 'Pyetësorët e Përzgjedhur'
-
+    selectedQuestionnaires: 'Pyetësorët e Përzgjedhur',
   },
   assessmentMessages: {
     expiredText: 'Na vjen keq, vlerësimi nuk është më i disponueshëm!',
@@ -97,12 +95,12 @@ export default {
     disclaimers: 'Mesazhet',
     emailTemplates: 'Shabllonet e Email',
     version: 'Versioni',
-    createPatientStatus: 'Krijo statusin e pacientit'
+    createPatientStatus: 'Krijo statusin e pacientit',
   },
   patients: {
     myPatients: 'Klientët e Mi',
     archivedPatients: 'Të Arkivuar',
-    notArchivedPatients: 'Jo Të Arkivuar'
+    notArchivedPatients: 'Jo Të Arkivuar',
   },
   tables: {
     assessmentAdministration: {
@@ -110,17 +108,16 @@ export default {
       lastUpdate: 'Përditësimi Përfundimtar',
       status: 'Statusi',
     },
-    roles:{
+    roles: {
       name: 'Emri i Rolit',
       hierarchy: 'Hierarkia e Rolit',
-      createdAt: 'Krijuar Më'
+      createdAt: 'Krijuar Më',
     },
     patientStatuses: {
       name: 'Emri',
       description: 'Përshkrimi',
       formattedUpdatedAt: 'Data e përditësuar',
       formattedCreatedAt: 'Data e krijuar',
-
     },
     disclaimer: {
       type: 'Tipi',
@@ -153,14 +150,13 @@ export default {
       createdAt: 'Krijuar Më',
     },
     patients: {
-
       firstName: 'Emri',
       middleName: 'Emri i Mesëm',
       lastName: 'Mbiemri',
       medicalRecordNo: 'ID e Klientit',
       hospitalId: 'ID e Klientit',
       gender: 'Gjinia',
-      selectGender:'Zgjidh gjininë',
+      selectGender: 'Zgjidh gjininë',
       birthDate: 'Data e Lindjes',
       status: 'Statusi',
       informants: 'Personi Informues',
@@ -191,7 +187,6 @@ export default {
       name: 'Emri',
       description: 'Përshkrimi',
       createdAt: 'Krijuar më',
-      
     },
     users: {
       firstName: 'Emri',
@@ -213,8 +208,8 @@ export default {
       createdAt: 'Krijuar më',
       status: 'Statusi',
       departmentName: 'Emri i Departamentit',
-      createDepartment:'Krijo Departamentin',
-      editDepartment: 'Edito Departamentin'
+      createDepartment: 'Krijo Departamentin',
+      editDepartment: 'Edito Departamentin',
     },
   },
   forms: {
@@ -246,7 +241,7 @@ export default {
       validationReportName: 'Ju lutemi shkruani emrin e raportit',
       descriptionResources: 'Futni burimet e raportit',
       patients: 'Klientet',
-      dashboard : 'Paneli',
+      dashboard: 'Paneli',
       validationResources: 'Ju lutemi Futni burimet e Raportit',
       descriptionPlace: 'Shkruani përshkrimin e raportit',
       validationDescription: 'Ju lutemi shkruani përshkrimin e raportit',
@@ -263,7 +258,7 @@ export default {
       anonymus: 'Anonim',
       roles: 'Rolet',
       createReport: 'Krijo Raport',
-      saveReport: 'Ruaj'
+      saveReport: 'Ruaj',
     },
     changePassword: {
       newPassword: 'Shkruaj një fjalëkalim të ri',
@@ -331,19 +326,18 @@ export default {
     userRolesPermissions: {
       roleId: 'Roli i Përdoruesit',
       roles: 'Roles',
-      roleName:'Role Name',
-      description:'enter permission name',
+      roleName: 'Role Name',
+      description: 'enter permission name',
       roleHierarchy: 'Role hierarchy',
-      validationMessage:'please enter permission name',
-      saveRole:'Save Role',
+      validationMessage: 'please enter permission name',
+      saveRole: 'Save Role',
       editRole: 'Edit ROle',
       createRole: 'Krijo nje rol',
-      
     },
     patients: {
       patientInformation: 'Informatat mbi Klientin',
-      description:'Shkruaj emrin',
-      descriptionEnterMiddleName:'Shkruaj emrin e mesëm',
+      description: 'Shkruaj emrin',
+      descriptionEnterMiddleName: 'Shkruaj emrin e mesëm',
       descriptionEnterLastName: 'Shkruaj mbiemrin',
       descriptionId: 'Shkruaj numrin e regjistrit',
       descriptionBirthDate: 'Shkruaj diten e lindjes',
@@ -368,7 +362,7 @@ export default {
         female: 'Femer',
         other: 'Tjeter',
       },
-      
+
       department: 'Departamenti',
       patientAddress: 'Adresa e Klientit',
       street: 'Emri i Rrugës',
@@ -450,7 +444,7 @@ export default {
       <li><b>Zëvëndësimi</b>: Skarcimi liron hapësirë për një version të ri me të njejtën gjuhë dhe shkurtim.</li>
     </ol>`,
     continueButton: 'Procedo',
-    cancelButton: 'Anullo'
+    cancelButton: 'Anullo',
   },
   questionnairesForm: {
     name: 'Emri',
@@ -467,7 +461,7 @@ export default {
     addKeyword: 'Shkruani dhe shtypni "Enter" për të shtuar fjalën kyçe!',
     pleaseUse: 'Ju lutemi përdorni',
     this: 'këtë',
-    thisWeb: 'uebsajt për të kontrolluar vlefshmërinë e formularit tuaj XSL përpara se ta ngarkoni.'
+    thisWeb: 'uebsajt për të kontrolluar vlefshmërinë e formularit tuaj XSL përpara se ta ngarkoni.',
   },
   plannedAssessments: {
     name: 'Emri',
@@ -486,7 +480,7 @@ export default {
     selectBundles: 'Zgjidhni Paketat',
     selectBundle: 'Përzgjidh pakon...',
     questionnaires: 'Pyetësorët',
-    filterStatus: 'Statusi i Filtrit'
+    filterStatus: 'Statusi i Filtrit',
   },
   planAssessment: {
     assessmentName: 'Emri i Vlerësimit',
@@ -515,22 +509,21 @@ export default {
     extendedFamily: 'Familje e zgjeruar',
     legalGuardian: 'Kujdestari Ligjor',
     familyDoctor: 'Doktori i familjes',
-    externalPaediatrician:'Pediatër i jashtëm',
+    externalPaediatrician: 'Pediatër i jashtëm',
     externalPsychotherapist: 'Psikoterapist i jashtëm',
     externalPsychologist: 'Psikolog i jashtëm',
     externalSocialWorker: 'Punonjës social i jashtëm',
     externalNurse: 'Infermiere e jashtme',
     emergencyDepartment: 'Departamenti i emergjences',
     friend: 'Shoku',
-    neighbour:'Komshiu',
+    neighbour: 'Komshiu',
     teacher: 'Mësues',
     schoolRepresentative: 'Përfaqësues i shkollës',
     advisor: 'Këshilltar',
     legalAdvisor: 'Këshilltar ligjor',
     assistance: 'Asistencë',
     supervisor: 'Mbikëqyrësi',
-    other: 'Të tjera'
-
+    other: 'Të tjera',
   },
   form: {
     system: {
@@ -557,15 +550,15 @@ export default {
   rolesPermissions: {
     permissions: 'Lejet',
     roles: 'Rolet',
-    roleName:'Emri i rolit',
-    description:'shkruani emrin e lejes',
+    roleName: 'Emri i rolit',
+    description: 'shkruani emrin e lejes',
     roleHierarchy: 'Hierarkia e roleve',
-    validationMessage:'ju lutemi shkruani emrin e lejes',
+    validationMessage: 'ju lutemi shkruani emrin e lejes',
     validationRole: 'Ju lutemi shkruani hierarkinë e roleve',
     createRole: 'Krijo nje Rol',
-    saveRole: 'Ruaj Rolin'
+    saveRole: 'Ruaj Rolin',
   },
-  emailTemplates:{
+  emailTemplates: {
     createTemplate: 'Krijo Shabllon',
     created: 'Shablloni i email u krijua me sukses!',
     updated: 'Shablloni i email u rifreskua me sukses!',
@@ -587,22 +580,24 @@ export default {
     departments: 'Departamentet',
     goBack: 'Kthehu Mbrapa',
     submit: 'Paraqisni',
-    update: 'Përditëso'
+    update: 'Përditëso',
   },
-  emailStatusFilter:{
+  emailStatusFilter: {
     expired: 'Skaduar',
     planned: 'Planifikuar',
     pending: 'Pezull',
     openForCompletion: 'Hapur për plotësim',
     partiallyCompleted: 'Pjesërisht plotësuar',
-    completed: 'Plotësuar'
+    completed: 'Plotësuar',
   },
   modal: {
     continue: 'Kalo tek seksioni tjetër?',
     continueOverview: 'Përfundo vlerësimin?',
-    unansweredQuestions: 'Ju keni {{count}} pyetje të detyruara pa përgjigje. Të gjitha pyetjet duhet të marrin përgjigje për të përfunduar vlerësimin.',
-    unansweredQuestionsOverview: 'Ju keni {{count}} pyetje të kërkuara pa përgjigje. Jeni i sigurt që dëshironi të përfundoni vlerësimin?',
+    unansweredQuestions:
+      'Ju keni {{count}} pyetje të detyruara pa përgjigje. Të gjitha pyetjet duhet të marrin përgjigje për të përfunduar vlerësimin.',
+    unansweredQuestionsOverview:
+      'Ju keni {{count}} pyetje të kërkuara pa përgjigje. Jeni i sigurt që dëshironi të përfundoni vlerësimin?',
     cancel: 'Vazhdoni pa përfunduar (Nuk rekomandohet)',
-    ok: 'Kthehu prapa dhe plotëso pyetjet'
-  }
+    ok: 'Kthehu prapa dhe plotëso pyetjet',
+  },
 };

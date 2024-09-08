@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const scripts = gql`
-  query($questionnaireId: String!, $paging: CursorPaging) {
+  query ($questionnaireId: String!, $paging: CursorPaging) {
     scripts(questionnaireId: $questionnaireId, paging: $paging) {
       edges {
         cursor

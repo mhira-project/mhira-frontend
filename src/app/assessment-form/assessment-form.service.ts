@@ -91,14 +91,12 @@ export class AssessmentFormService {
       .flat();
     this._assessmentInfo.answers = assessment.questionnaireAssessment.answers;
     const requiredUniqueQuestions = assessment.questionnaireAssessment.questionnaires
-    .map((q) => q.questionGroups.map((g) => g.uniqueQuestions))
-    .flat(2)
-    .map((el) => el.subQuestions)
-    .flat()
-    .filter((q) => q.required);
-    const requiredQuestions = this._assessmentInfo.questions
-    .filter((q) => q.required)
-    .concat(requiredUniqueQuestions);
+      .map((q) => q.questionGroups.map((g) => g.uniqueQuestions))
+      .flat(2)
+      .map((el) => el.subQuestions)
+      .flat()
+      .filter((q) => q.required);
+    const requiredQuestions = this._assessmentInfo.questions.filter((q) => q.required).concat(requiredUniqueQuestions);
 
     const numAnswers = requiredQuestions.reduce(
       (sum, question) =>

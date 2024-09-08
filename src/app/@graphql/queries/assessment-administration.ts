@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const assessmentAdministration = gql`
-  query($paging: CursorPaging, $filter: AssessmentTypeFilter) {
+  query ($paging: CursorPaging, $filter: AssessmentTypeFilter) {
     assessmentTypes(paging: $paging, filter: $filter) {
       pageInfo {
         hasNextPage

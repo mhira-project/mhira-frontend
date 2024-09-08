@@ -21,13 +21,13 @@ export default {
     active: 'Active',
     inactive: 'Inactive',
     goBack: 'Go Back',
-    translations:  'Translations',
+    translations: 'Translations',
     help: 'Help',
     apply: 'Apply',
     cancel: 'Cancel',
-    actions: 'Actions'
+    actions: 'Actions',
   },
-  userForm:{
+  userForm: {
     deleteUser2: 'Delete User',
     deleteUser: 'Delete User',
     removeUser: 'To remove User',
@@ -59,7 +59,7 @@ export default {
     searchSelect: 'Buscar y seleccionar cuestionarios para agregar a la evaluación',
     selectQuestionnaires: 'Seleccionar Cuestionarios',
     selectedQuestionnaires: 'Cuestionarios Seleccionados',
-    selectBundles: 'Select Bundles'
+    selectBundles: 'Select Bundles',
   },
   assessmentMessages: {
     expiredText: 'Lo sentimos, ¡la evaluación ya no está disponible!',
@@ -98,12 +98,12 @@ export default {
     disclaimers: 'Mensajes',
     emailTemplates: 'Modelos de Email',
     version: 'Versión',
-    createPatientStatus: 'Create PatientStatus'
+    createPatientStatus: 'Create PatientStatus',
   },
   patients: {
     myPatients: 'Mis Pacientes',
     archivedPatients: 'Mostrar Pacientes Archivados',
-    notArchivedPatients: 'Mostrar Pacientes No Archivados'
+    notArchivedPatients: 'Mostrar Pacientes No Archivados',
   },
   tables: {
     assessmentAdministration: {
@@ -111,12 +111,12 @@ export default {
       lastUpdate: 'Última Actualización',
       status: 'Estado',
     },
-    roles:{
+    roles: {
       name: 'Role Name',
       hierarchy: 'Role Hierarchy',
       createdAt: 'Created At',
       deleteRole: 'Delete Role',
-      updateRole:'Update Role',
+      updateRole: 'Update Role',
       createRole: 'Create Role',
     },
     disclaimer: {
@@ -155,7 +155,7 @@ export default {
       lastName: 'Apellidos',
       medicalRecordNo: 'Número de Ficha',
       gender: 'Sexo',
-      selectGender:'Select Gender',
+      selectGender: 'Select Gender',
       birthDate: 'Fecha de Nacimiento',
       status: 'Estado',
       informants: 'Informantes',
@@ -204,7 +204,7 @@ export default {
       createdAt: 'Creado En',
       departmentName: 'Nombre de Departamento',
       status: 'Estado',
-      createDepartment:'Create Department',
+      createDepartment: 'Create Department',
     },
   },
   forms: {
@@ -214,14 +214,14 @@ export default {
       descriptionName: 'Enter Type Name',
       validationName: 'Please Enter Type Name',
       createName: 'Create Assessment Name',
-      assessmentTitle:'Create Assessment Name',
+      assessmentTitle: 'Create Assessment Name',
       assessmentEdit: 'Edit Assessment Name',
     },
     patientStatuses: {
       name: 'Nombre',
       submitPatient: 'Submit PatientStatus',
       description: 'Descripción',
-      formattedUpdatedAt: 'Updated Date'
+      formattedUpdatedAt: 'Updated Date',
     },
     scripts: {
       name: 'Name',
@@ -238,7 +238,7 @@ export default {
       validationReportName: 'Please enter report name',
       descriptionResources: 'Enter Report resources',
       patients: 'Patients',
-      dashboard : 'Dashboard',
+      dashboard: 'Dashboard',
       validationResources: 'please Enter Report resources',
       descriptionPlace: 'Enter Report description',
       validationDescription: 'Please enter report description',
@@ -254,7 +254,7 @@ export default {
       reportStatus: 'Estado del Informe',
       anonymus: 'Anónimo',
       roles: 'Roles',
-      createReport: 'Create Report'
+      createReport: 'Create Report',
     },
     changePassword: {
       newPassword: 'Ingrese su Nueva Contraseña',
@@ -412,7 +412,6 @@ export default {
       idDescription: 'Enter medical record number',
       female: 'Female',
       submitContact: 'Submit Contact',
-
     },
   },
   assessmentForm: {
@@ -452,7 +451,7 @@ export default {
       <li><b>Opción de reemplazo</b>: Tras la eliminación, tendrá la opción de crear un nuevo cuestionario con la misma abreviatura y en el mismo idioma.</li>
     </ol>`,
     continueButton: 'Continuar',
-    cancelButton: 'Cancelar'
+    cancelButton: 'Cancelar',
   },
   questionnairesForm: {
     name: 'Nombre',
@@ -469,8 +468,7 @@ export default {
     addKeyword: 'Type and press "Enter" to add the keyword!',
     pleaseUse: 'Please use',
     this: 'this',
-    thisWeb: 'website to check the validity of your XSL form before uploading.'
-  
+    thisWeb: 'website to check the validity of your XSL form before uploading.',
   },
   plannedAssessments: {
     name: 'Nombre',
@@ -486,10 +484,10 @@ export default {
     expirationDate: 'Fecha de Expiración',
     updatedAt: 'Día de Entrega',
     deliveryDate: 'Fecha de Entrega',
-    selectBundles:  'Select Bundles',
+    selectBundles: 'Select Bundles',
     selectBundle: 'Select your bundle...',
     questionnaires: 'Questionnaires',
-    filterStatus: 'Filter Status'
+    filterStatus: 'Filter Status',
   },
   planAssessment: {
     assessmentName: 'Nombre de la Evaluación',
@@ -537,16 +535,16 @@ export default {
   rolesPermissions: {
     permissions: 'Permisos',
     roles: 'Roles',
-    roleName:'Role Name',
-    description:'enter permission name',
+    roleName: 'Role Name',
+    description: 'enter permission name',
     roleHierarchy: 'Role hierarchy',
-    validationMessage:'please enter permission name',
+    validationMessage: 'please enter permission name',
     validationRole: 'Please enter role hierarchy',
-    saveRole:'Save Role',
+    saveRole: 'Save Role',
     editRole: 'Edit Role',
     createRole: 'Create Role',
   },
-  emailTemplates:{
+  emailTemplates: {
     editTemplate: 'Edit Template',
     createTemplate: 'Crear Modelo de Email',
     created: '¡Modelo de email creado exitosamente!',
@@ -569,20 +567,22 @@ export default {
     goBack: 'Go Back',
     submit: 'Submit',
   },
-  emailStatusFilter:{
+  emailStatusFilter: {
     expired: 'Expirado',
     planned: 'Planificado',
     pending: 'Pendiente',
     openForCompletion: 'Abierto para completar',
     partiallyCompleted: 'Parcialmente completado',
-    completed: 'Completado'
+    completed: 'Completado',
   },
   modal: {
     continue: '¿Vaya a la siguiente sección?',
     continueOverview: '¿Salir del cuestionario?',
-    unansweredQuestions: 'Usted ha dejado {{count}} preguntas sin responder. Todas las preguntas deben responderse para enviar el cuestionario.',
-    unansweredQuestionsOverview: 'Tienes {{count}} preguntas obligatorias sin respuesta. ¿Estás seguro de que quieres completar el cuestionario?',
+    unansweredQuestions:
+      'Usted ha dejado {{count}} preguntas sin responder. Todas las preguntas deben responderse para enviar el cuestionario.',
+    unansweredQuestionsOverview:
+      'Tienes {{count}} preguntas obligatorias sin respuesta. ¿Estás seguro de que quieres completar el cuestionario?',
     cancel: 'Continuar sin completar las preguntas que faltan (No recomendado)',
-    ok: 'Vuelva a completar las preguntas que faltan'
-  }
+    ok: 'Vuelva a completar las preguntas que faltan',
+  },
 };

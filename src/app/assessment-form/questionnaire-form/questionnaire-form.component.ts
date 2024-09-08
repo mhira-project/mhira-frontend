@@ -56,7 +56,7 @@ export class QuestionnaireFormComponent {
       .subscribe(([idx, newAssessment]) => {
         this.questionnaire = newAssessment?.questionnaireAssessment?.questionnaires?.[idx];
         this.answers = newAssessment?.questionnaireAssessment?.answers;
-        this.answers.forEach(item => {
+        this.answers.forEach((item) => {
           const questionKey = item.question;
           this.mapped[questionKey] = item.textValue;
         });
@@ -64,22 +64,22 @@ export class QuestionnaireFormComponent {
         this.readSkipLogic();
       });
   }
-  
+
   public isVisible(question: Question) {
     if (!question.relevant) return true;
     return this.skipLogic.find((logic) => logic.questionId === question._id)?.visible ?? true;
   }
 
-  async onNext(index: any){
+  async onNext(index: any) {
     const currentRequiredQuestions = this.questionnaire.questionGroups[index]?.uniqueQuestions
-    .map((el: { subQuestions: any; }) => el.subQuestions)
-    .flat()
-    .filter((el: any) => el.required === true);
+      .map((el: { subQuestions: any }) => el.subQuestions)
+      .flat()
+      .filter((el: any) => el.required === true);
 
     const currentNonTableListRequiredQuestions = this.questionnaire.questionGroups[index]?.questions
-    // .map((el: { subQuestions: any; }) => el.subQuestions)
-    .flat()
-    .filter((el: any) => el.required === true);
+      // .map((el: { subQuestions: any; }) => el.subQuestions)
+      .flat()
+      .filter((el: any) => el.required === true);
 
     const allRequiredQuestions = currentRequiredQuestions.concat(currentNonTableListRequiredQuestions);
 
@@ -117,19 +117,19 @@ export class QuestionnaireFormComponent {
     }, 400);
   }
 
-  async onNextOverview(index: any){
+  async onNextOverview(index: any) {
     const currentRequiredQuestions = this.questionnaire.questionGroups[index]?.uniqueQuestions
-    .map((el: { subQuestions: any; }) => el.subQuestions)
-    .flat()
-    .filter((el: any) => el.required === true);
+      .map((el: { subQuestions: any }) => el.subQuestions)
+      .flat()
+      .filter((el: any) => el.required === true);
 
     const currentNonTableListRequiredQuestions = this.questionnaire.questionGroups[index]?.questions
-    // .map((el: { subQuestions: any; }) => el.subQuestions)
-    .flat()
-    .filter((el: any) => el.required === true);
+      // .map((el: { subQuestions: any; }) => el.subQuestions)
+      .flat()
+      .filter((el: any) => el.required === true);
 
     const allRequiredQuestions = currentRequiredQuestions.concat(currentNonTableListRequiredQuestions);
- 
+
     const answersIds = this.answers.map((el: any) => el.question);
 
     const unAnsweredRequiredQuestions = allRequiredQuestions.filter((el: any) => !answersIds.includes(el._id));
@@ -141,7 +141,9 @@ export class QuestionnaireFormComponent {
         },
         nzOnOk: () => true,
         nzTitle: this.translate.instant('modal.continueOverview'),
-        nzContent: this.translate.instant('modal.unansweredQuestionsOverview', { count: unAnsweredRequiredQuestions.length }),
+        nzContent: this.translate.instant('modal.unansweredQuestionsOverview', {
+          count: unAnsweredRequiredQuestions.length,
+        }),
         nzCancelText: this.translate.instant('modal.cancel'),
         nzWidth: 800,
         nzClosable: false,
@@ -158,12 +160,12 @@ export class QuestionnaireFormComponent {
   }
 
   scrollToTop() {
-    window.scrollTo({top: 0, behavior: 'smooth'})
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  addAnswer(questionId: string, value: string){
+  addAnswer(questionId: string, value: string) {
     value = value.toString();
-    this.assessmentFormService.addAnswer({question: questionId, textValue: value}).subscribe()
+    this.assessmentFormService.addAnswer({ question: questionId, textValue: value }).subscribe();
   }
 
   private readSkipLogic() {
@@ -174,7 +176,7 @@ export class QuestionnaireFormComponent {
       .flat();
 
     this.skipLogic = currentQuestions
-      .filter((q: { relevant: any; }) => q.relevant)
+      .filter((q: { relevant: any }) => q.relevant)
       .map((q: Question) => {
         let visible = true;
         try {
