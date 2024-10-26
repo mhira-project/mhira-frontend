@@ -144,6 +144,7 @@
           },
           "configurations": {
             "production": {
+              "disableHostCheck": true,
               "browserTarget": "ng-x-rocket:build:production",
               "hmr": false
             },
@@ -151,6 +152,7 @@
               "progress": false
             },
             "dev": {
+              "disableHostCheck": true,
               "browserTarget": "ng-x-rocket:build:dev",
               "hmr": false
             }
