@@ -15,7 +15,8 @@ const uri = environment.baseURL;
 export function createApollo(httpLink: HttpLink) {
   const auth = setContext((operation, context) => ({
     headers: {
-      'x-tenant-id': tenantID,
+      // Temporarily commenting out below line, to avoid CORS error when running the app locally.
+      // 'x-tenant-id': tenantID,
     },
   }));
 

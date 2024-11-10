@@ -36,37 +36,39 @@
   [nzTitle]="caregiver?.id ? ('core.editCaregiver' | translate) : ('core.createCaregiver' | translate)"
   (nzOnClose)="closeCreatePanel()"
 >
-  <app-form
-    class="mt-3"
-    [form]="caregiverForm"
-    [formData]="caregiver"
-    [isLoading]="isLoading"
-    [populateForm]="populateForm"
-    [resetForm]="resetForm"
-    [inputMode]="true"
-    [showCancelButton]="false"
-    (submitForm)="onSubmitForm($event)"
-  >
-  </app-form>
+  <ng-container *nzDrawerContent>
+    <app-form
+      class="mt-3"
+      [form]="caregiverForm"
+      [formData]="caregiver"
+      [isLoading]="isLoading"
+      [populateForm]="populateForm"
+      [resetForm]="resetForm"
+      [inputMode]="true"
+      [showCancelButton]="false"
+      (submitForm)="onSubmitForm($event)"
+    >
+    </app-form>
 
-  <div style="margin-top: 25px">
-    <nz-table [nzFrontPagination]="false" #basicTable [nzData]="caregiver?.patientCaregivers">
-      <thead>
-        <tr>
-          <th>{{ 'caregiver.patient' | translate }}</th>
-          <th>{{ 'caregiver.birthDate' | translate }}</th>
-          <th>{{ 'caregiver.medicalRecordNumber' | translate }}</th>
-          <th>{{ 'caregiver.relationToPatient' | translate }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of basicTable.data" (click)="onAction1(data)">
-          <td>{{ data.patient.firstName }} {{ data.patient.lastName }}</td>
-          <td>{{ data.patient.birthDate }}</td>
-          <td>{{ data.patient.medicalRecordNo }}</td>
-          <td>{{ data.relation }}</td>
-        </tr>
-      </tbody>
-    </nz-table>
-  </div>
+    <div style="margin-top: 25px">
+      <nz-table [nzFrontPagination]="false" #basicTable [nzData]="caregiver?.patientCaregivers">
+        <thead>
+          <tr>
+            <th>{{ 'caregiver.patient' | translate }}</th>
+            <th>{{ 'caregiver.birthDate' | translate }}</th>
+            <th>{{ 'caregiver.medicalRecordNumber' | translate }}</th>
+            <th>{{ 'caregiver.relationToPatient' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data" (click)="onAction1(data)">
+            <td>{{ data.patient.firstName }} {{ data.patient.lastName }}</td>
+            <td>{{ data.patient.birthDate }}</td>
+            <td>{{ data.patient.medicalRecordNo }}</td>
+            <td>{{ data.relation }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </ng-container>
 </nz-drawer>

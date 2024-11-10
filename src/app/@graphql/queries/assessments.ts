@@ -84,8 +84,6 @@ const assessments = gql`
           }
           questionnaireAssessment {
             status
-<<<<<<< HEAD
-=======
             consentTimestamp
             acceptedConsentContent {
               name
@@ -93,7 +91,6 @@ const assessments = gql`
               checkbox1
               checkbox2
             }
->>>>>>> origin/develop
             questionnaireBundles {
               _id
               name

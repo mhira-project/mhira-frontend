@@ -181,7 +181,8 @@ export class PlanAssessmentComponent implements OnInit {
     public perms: AppPermissionsService,
     private router: Router,
     private locationStrategy: LocationStrategy,
-    private clipboard: Clipboard
+    private clipboard: Clipboard,
+    private cdr: ChangeDetectorRef
   ) {}
 
   public ngOnInit(): void {

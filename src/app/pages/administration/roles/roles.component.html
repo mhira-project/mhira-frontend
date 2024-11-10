@@ -32,17 +32,19 @@
   [nzTitle]="panelTitle | translate"
   (nzOnClose)="closeCreatePanel()"
 >
-  <app-form
-    class="mt-3"
-    [form]="roleForms"
-    [formData]="role"
-    [isLoading]="isLoading"
-    [populateForm]="populateForm"
-    [resetForm]="resetForm"
-    [inputMode]="inputMode"
-    [showCancelButton]="showCancelButton"
-    [loadingMessage]="loadingMessage"
-    (submitForm)="submitForm($event)"
-  >
-  </app-form>
+  <ng-container *nzDrawerContent>
+    <app-form
+      class="mt-3"
+      [form]="roleForms"
+      [formData]="role"
+      [isLoading]="isLoading"
+      [populateForm]="populateForm"
+      [resetForm]="resetForm"
+      [inputMode]="inputMode"
+      [showCancelButton]="showCancelButton"
+      [loadingMessage]="loadingMessage"
+      (submitForm)="submitForm($event)"
+    >
+    </app-form>
+  </ng-container>
 </nz-drawer>
