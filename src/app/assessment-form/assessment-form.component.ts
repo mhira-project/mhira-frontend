@@ -87,9 +87,8 @@ export class AssessmentFormComponent implements OnInit {
       .subscribe(
         ({ data }: any) => {
           this.disclaimer = data.disclaimers.find((disclaimers: any) => disclaimers.type === 'assessments');
-          console.log(this.disclaimer);
         },
-        (err) => this.errorService.handleError(err, { prefix: 'Unable to load disclaimers' })
+        (err: any) => this.errorService.handleError(err, { prefix: 'Unable to load disclaimers' })
       );
   }
 }

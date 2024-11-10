@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PatientStatusesComponent } from './patient-statuses.component';
 
 describe('PatientStatusesComponent', () => {

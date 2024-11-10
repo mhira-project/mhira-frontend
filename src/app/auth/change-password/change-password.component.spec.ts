@@ -3,7 +3,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { CoreModule } from '@core';
 import { AuthService, CredentialsService } from '../index';
 import { MockAuthenticationService } from '../authentication.service.mock';

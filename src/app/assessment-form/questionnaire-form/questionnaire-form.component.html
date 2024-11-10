@@ -103,3 +103,46 @@
     {{ translations.assessmentForm.overview | translate }}
   </button>
 </ng-template>
+
+<nz-modal
+  [(nzVisible)]="isConsentShown && consentData"
+  [nzOkDisabled]="isAcceptConsentDisabled()"
+  nzCancelDisabled="true"
+  nzClosable="false"
+  nzTitle="{{ consentData?.title || translations.assessmentForm.consentModalTitle | translate }}"
+  [nzFooter]="modalFooter"
+  nzWidth="700px"
+>
+  <ng-container *nzModalContent>
+    <div class="consent-message" [innerHTML]="consentData.description"></div>
+    <div class="consent-checkboxes">
+      <div class="checkbox1" *ngIf="consentData.consent1">
+        <label nz-checkbox [(ngModel)]="isConsent1Checked">{{ consentData.consent1 }}</label>
+      </div>
+      <div class="checkbox2" *ngIf="consentData.consent2">
+        <label nz-checkbox [(ngModel)]="isConsent2Checked">{{ consentData.consent2 }}</label>
+      </div>
+      <div class="checkbox2" *ngIf="consentData.consent3">
+        <label nz-checkbox [(ngModel)]="isConsent3Checked">{{ consentData.consent3 }}</label>
+      </div>
+      <div class="checkbox2" *ngIf="consentData.consent4">
+        <label nz-checkbox [(ngModel)]="isConsent4Checked">{{ consentData.consent4 }}</label>
+      </div>
+      <div class="checkbox2" *ngIf="consentData.consent5">
+        <label nz-checkbox [(ngModel)]="isConsent5Checked">{{ consentData.consent5 }}</label>
+      </div>
+      <div class="checkbox2" *ngIf="consentData.consent6">
+        <label nz-checkbox [(ngModel)]="isConsent6Checked">{{ consentData.consent6 }}</label>
+      </div>
+      <div class="checkbox2" *ngIf="consentData.consent7">
+        <label nz-checkbox [(ngModel)]="isConsent7Checked">{{ consentData.consent7 }}</label>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #modalFooter>
+    <button [disabled]="isAcceptConsentDisabled()" nz-button nzType="primary" (click)="handleOk()">
+      {{ consentData.acceptLabel || translations.assessmentForm.acceptConsentButton | translate }}
+    </button>
+  </ng-template>
+</nz-modal>

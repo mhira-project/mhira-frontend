@@ -26,7 +26,7 @@ export class QuestionnaireBundlesService {
         paging: params && params.paging ? params.paging : undefined,
         filter: params && params.filter ? params.filter : undefined,
         sorting: params && params.sorting ? params.sorting : undefined,
-        // departmentIds: params && params.departmentIds ? params.departmentIds : undefined
+        departmentIds: params && params.departmentIds ? params.departmentIds : undefined,
       },
       fetchPolicy: 'no-cache',
     });
@@ -62,6 +62,7 @@ export class QuestionnaireBundlesService {
           _id: bundle._id,
           name: bundle.name,
           questionnaireIds: bundle.questionnaireIds,
+          departmentIds: bundle.departmentIds,
         },
       },
       fetchPolicy: 'no-cache',

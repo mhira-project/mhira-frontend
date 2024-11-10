@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DoAssessmentComponent } from './do-assessment.component';
 
 describe('DoAssessmentComponent', () => {

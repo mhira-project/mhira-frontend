@@ -41,6 +41,13 @@ export class QuestionComponent {
     this.answerGiven.pipe(debounceTime(500)).subscribe((answer) => this.addAnswer(answer));
   }
 
+  onKeyPress = (evt: any) => {
+    const charCode = evt.which || evt.keyCode;
+    if ((charCode < 48 || charCode > 57) && charCode !== 46) {
+      evt.preventDefault();
+    }
+  };
+
   public addAnswer(answer: Answer): void {
     this.assessmentFormService
       .addAnswer({

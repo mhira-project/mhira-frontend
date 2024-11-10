@@ -26,6 +26,8 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { LocationStrategy } from '@angular/common';
 import { EmailTemplatesService } from '@app/pages/administration/@services/email-templates.service';
 import { QuestionnaireBundlesService } from '@app/pages/questionnaire-management/@services/questionnaire-bundles.service';
+import { Consent } from '@app/pages/administration/@types/consent';
+import { ConsentsService } from '@app/pages/administration/@services/consents.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -89,6 +91,8 @@ export class CreateAssessmentComponent implements OnInit {
   public checked = false;
   public isUpdate: boolean;
   public hasEmail = false;
+  public consents: Consent[] = [];
+  public selectedConsent: number = null;
 
   get patientTitle(): string {
     const name = [this.patient?.firstName, this.patient?.middleName, this.patient?.lastName]
@@ -110,7 +114,8 @@ export class CreateAssessmentComponent implements OnInit {
     private assessmentService: AssessmentService,
     private nzMessage: NzMessageService,
     private clipboard: Clipboard,
-    private locationStrategy: LocationStrategy
+    private locationStrategy: LocationStrategy,
+    private consentService: ConsentsService
   ) {}
 
   ngOnInit(): void {
@@ -127,6 +132,7 @@ export class CreateAssessmentComponent implements OnInit {
       receiverEmail: [this.patient?.email],
       mailTemplateId: [null],
       note: [null],
+      consentId: [null],
       dates: this.formBuilder.array([
         this.formBuilder.group({
           expirationDate: [null],
@@ -134,6 +140,7 @@ export class CreateAssessmentComponent implements OnInit {
         }),
       ]),
     });
+    this.getConsents();
     this.getAssessmentTypes();
     this.userAutoSelect();
     this.initAssessment();
@@ -339,6 +346,7 @@ export class CreateAssessmentComponent implements OnInit {
     const bytes = CryptoJS.AES.decrypt(data, environment.secretKey);
     const assessment: FullAssessment = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     this.fullAssessment = assessment;
+    console.log(this.fullAssessment);
     this.assessmentUrl = new URL(this.generateAssessmentURL(this.fullAssessment?.uuid), window.location.origin);
     this.patient = this.fullAssessment.patient;
     this.editMode = false;
@@ -369,7 +377,7 @@ export class CreateAssessmentComponent implements OnInit {
     this.noteValue = this.fullAssessment.note;
     this.patientEmail = this.patient.email;
     this.selectedAssessment = this.fullAssessment.assessmentType?.id;
-    // this.formGroup.controls.note.disable();
+    this.selectedConsent = this.fullAssessment.consentId;
 
     if (this.fullAssessment.informantClinician) {
       this.typeSelected = `USER`;
@@ -402,28 +410,18 @@ export class CreateAssessmentComponent implements OnInit {
     }
   }
 
-  private getCaregivers(): void {
-    this.isLoading = true;
-    const options = {
-      filter: {
-        and: [{ patient: { id: { eq: this.fullAssessment?.patientId ?? this.patient.id } } }],
-      },
-    };
-    this.caregiversPatientService
-      .caregiversPatient(options)
-      .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe((response) => {
-        this.caregivers = response.data.patientCaregivers.edges
-          .filter((e: any) => e.node.caregiver)
-          .map((caregiver: any) => caregiver.node.caregiver);
-        this.pageInfo = response.data.patientCaregivers.pageInfo;
-      });
-  }
-
   getBundles() {
-    this.bundlesService.getQuestionnairesBundles().subscribe((data: any) => {
-      this.listOfBundles = data.data.getQuestionnaireBundles.edges;
+    const departments = this.patient.departments.map((item) => {
+      return item.id;
     });
+
+    this.bundlesService
+      .getQuestionnairesBundles({
+        departmentIds: departments,
+      })
+      .subscribe((data: any) => {
+        this.listOfBundles = data.data.getQuestionnaireBundles.edges;
+      });
   }
 
   onBundleSelection() {
@@ -450,6 +448,24 @@ export class CreateAssessmentComponent implements OnInit {
     return uniqueQuestionnaires;
   }
 
+  private getCaregivers(): void {
+    this.isLoading = true;
+    const options = {
+      filter: {
+        and: [{ patient: { id: { eq: this.fullAssessment?.patientId ?? this.patient.id } } }],
+      },
+    };
+    this.caregiversPatientService
+      .caregiversPatient(options)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe((response) => {
+        this.caregivers = response.data.patientCaregivers.edges
+          .filter((e: any) => e.node.caregiver)
+          .map((caregiver: any) => caregiver.node.caregiver);
+        this.pageInfo = response.data.patientCaregivers.pageInfo;
+      });
+  }
+
   private getAssessmentTypes(): void {
     this.isLoading = true;
     this.assessmentAdministrationService
@@ -460,6 +476,19 @@ export class CreateAssessmentComponent implements OnInit {
           this.assessmentAdministration = data.activeAssessmentTypes;
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load assessment type' })
+      );
+  }
+
+  private getConsents(): void {
+    this.isLoading = true;
+    this.consentService
+      .consents()
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }: any) => {
+          this.consents = data.consents;
+        },
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to load consents' })
       );
   }
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { AssessmentService } from '../@services/assessment.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '@env/environment';
@@ -27,6 +27,8 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { EmailTemplatesService } from '@app/pages/administration/@services/email-templates.service';
 import { DEFAULT_PAGE_SIZE } from '@app/@shared/@modules/master-data/@types/list';
 import { QuestionnaireBundlesService } from '@app/pages/questionnaire-management/@services/questionnaire-bundles.service';
+import { ConsentsService } from '@app/pages/administration/@services/consents.service';
+import { Consent } from '@app/pages/administration/@types/consent';
 
 const CryptoJS = require('crypto-js');
 
@@ -69,94 +71,98 @@ export class PlanAssessmentComponent implements OnInit {
   public checked = false;
   public isUpdate: boolean;
   public hasEmail = false;
+  public isConsentEnabled = false;
+  public consents: Consent[] = [];
+  public selectedConsent: number = null;
+
   url: any = '';
   options = [
     {
-      label: 'Mother',
+      label: 'createAssessment.mother',
       value: 'Mother',
     },
     {
-      label: 'Father',
+      label: 'createAssessment.father',
       value: 'Father',
     },
     {
-      label: 'Grandparent',
+      label: 'createAssessment.grandparent',
       value: 'Grandparent',
     },
     {
-      label: 'Uncle/Aunt',
+      label: 'createAssessment.uncleAunt',
       value: 'Uncle/Aunt',
     },
     {
-      label: 'Extended Family',
+      label: 'createAssessment.extendedFamily',
       value: 'Extended Family',
     },
     {
-      label: 'Legal Guardian',
+      label: 'createAssessment.legalGuardian',
       value: 'Legal Guardian',
     },
     {
-      label: 'Family Doctor',
+      label: 'createAssessment.familyDoctor',
       value: 'Family Doctor',
     },
     {
-      label: 'External Paediatrician',
+      label: 'createAssessment.externalPaediatrician',
       value: 'External Paediatrician',
     },
     {
-      label: 'External Psychotherapist',
+      label: 'createAssessment.externalPsychotherapist',
       value: 'External Psychotherapist',
     },
     {
-      label: 'External Psychologist',
+      label: 'createAssessment.externalPsychologist',
       value: 'External Psychologist',
     },
     {
-      label: 'External Social Worker',
+      label: 'createAssessment.externalSocialWorker',
       value: 'External Social Worker',
     },
     {
-      label: 'External Nurse',
+      label: 'createAssessment.externalNurse',
       value: 'External Nurse',
     },
     {
-      label: 'Emergency Department',
+      label: 'createAssessment.emergencyDepartment',
       value: 'Emergency Department',
     },
     {
-      label: 'Friend',
+      label: 'createAssessment.friend',
       value: 'Friend',
     },
     {
-      label: 'Neighbour',
+      label: 'createAssessment.neighbour',
       value: 'Neighbour',
     },
     {
-      label: 'Teacher',
+      label: 'createAssessment.teacher',
       value: 'Teacher',
     },
     {
-      label: 'School Representative',
+      label: 'createAssessment.schoolRepresentative',
       value: 'School Representative',
     },
     {
-      label: 'Advisor',
+      label: 'createAssessment.advisor',
       value: 'Advisor',
     },
     {
-      label: 'Legal Advisor',
+      label: 'createAssessment.legalAdvisor',
       value: 'Legal Advisor',
     },
     {
-      label: 'Assistance',
+      label: 'createAssessment.assistance',
       value: 'Assistance',
     },
     {
-      label: 'Supervisor',
+      label: 'createAssessment.supervisor',
       value: 'Supervisor',
     },
     {
-      label: 'Other',
+      label: 'createAssessment.other',
       value: 'Other',
     },
   ];
@@ -171,6 +177,7 @@ export class PlanAssessmentComponent implements OnInit {
     private bundlesService: QuestionnaireBundlesService,
     private departmentsService: DepartmentsService,
     private assessmentAdministrationService: AssessmentAdministrationService,
+    private consentService: ConsentsService,
     public perms: AppPermissionsService,
     private router: Router,
     private locationStrategy: LocationStrategy,
@@ -179,14 +186,10 @@ export class PlanAssessmentComponent implements OnInit {
 
   public ngOnInit(): void {
     this.getAssessmentTypes();
-    this.getUserDepartments({ paging: { first: 50 } });
+    this.getConsents();
     this.initAssessment();
     this.userAutoSelect();
-    this.getBundles();
     this.hasEmail = environment.email;
-    setTimeout(() => {
-      console.log('FULL ASSESSMENT: ', this.fullAssessment);
-    }, 1000);
   }
 
   get datesFieldAsFormArray(): UntypedFormArray {
@@ -210,8 +213,6 @@ export class PlanAssessmentComponent implements OnInit {
     if (!this.editMode) {
       return;
     }
-    console.log(this.patient);
-    console.log(this.selectedPatient);
     if (event === 'PATIENT') {
       this.dataToSelect = [
         {
@@ -331,6 +332,7 @@ export class PlanAssessmentComponent implements OnInit {
       .subscribe(
         ({ data }: any) => {
           const page = data.departments;
+          this.departments = [];
           page.edges.map((departmentData: any) => {
             const _department = Convert.toDepartment(departmentData.node);
             this.departments.push(_department);
@@ -339,6 +341,8 @@ export class PlanAssessmentComponent implements OnInit {
               if (!exists) this.users.push(user);
             });
           });
+
+          this.getBundles();
         },
         (error) => this.errorService.handleError(error, { prefix: 'Unable to load departments' })
       );
@@ -355,7 +359,7 @@ export class PlanAssessmentComponent implements OnInit {
 
   getBundles() {
     const departmentIds = this.departments.map((el) => el.id);
-    this.bundlesService.getQuestionnairesBundles().subscribe((data: any) => {
+    this.bundlesService.getQuestionnairesBundles({ departmentIds }).subscribe((data: any) => {
       this.listOfBundles = data.data.getQuestionnaireBundles.edges;
     });
   }
@@ -414,6 +418,7 @@ export class PlanAssessmentComponent implements OnInit {
         expirationDate: [null],
         dates: this.formBuilder.array([]),
         note: [null],
+        consentId: [null],
       });
     } catch {
       this.assessmentForm = this.formBuilder.group({
@@ -435,6 +440,7 @@ export class PlanAssessmentComponent implements OnInit {
           }),
         ]),
         note: [null],
+        consentId: [null],
       });
       this.isUpdate = false;
       return;
@@ -464,6 +470,7 @@ export class PlanAssessmentComponent implements OnInit {
           note: this.fullAssessment.note,
           questionnaires: this.fullAssessment.questionnaireAssessment?.questionnaires,
         });
+
         // @ts-ignore
         this.dates.push(
           this.formBuilder.group({
@@ -478,6 +485,7 @@ export class PlanAssessmentComponent implements OnInit {
         this.fullAssessment = this.fullAssessment;
         this.patient = this.fullAssessment.patient;
         this.selectedAssessment = this.fullAssessment.assessmentType?.id;
+        this.selectedConsent = this.fullAssessment.consentId;
         this.typeSelected = this.fullAssessment.informantType;
         if (this.fullAssessment.informantClinician) {
           this.selectedInformant = this.fullAssessment.informantClinician.id;
@@ -537,5 +545,23 @@ export class PlanAssessmentComponent implements OnInit {
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load assessment type' })
       );
+  }
+
+  private getConsents(): void {
+    this.isLoading = true;
+    this.consentService
+      .consents()
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        ({ data }: any) => {
+          this.consents = data.consents;
+        },
+        (err) => this.errorService.handleError(err, { prefix: 'Unable to load consents' })
+      );
+  }
+
+  public onConsentCheckboxChange(event: any) {
+    this.isConsentEnabled = event;
+    this.cdr.detectChanges();
   }
 }

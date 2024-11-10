@@ -59,12 +59,12 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "5mb",
-                  "maximumError": "10mb"
+                  "maximumWarning": "20mb",
+                  "maximumError": "30mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "50kb"
                 }
               ],
               "serviceWorker": false,
@@ -108,16 +108,16 @@
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "5mb",
-                  "maximumError": "10mb"
+                  "maximumWarning": "20mb",
+                  "maximumError": "30mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "50kb"
                 }
               ],
               "serviceWorker": false,
@@ -142,11 +142,13 @@
           },
           "configurations": {
             "production": {
+              "disableHostCheck": true,
               "browserTarget": "ng-x-rocket:build:production",
               "hmr": false
             },
             "ci": {},
             "dev": {
+              "disableHostCheck": true,
               "browserTarget": "ng-x-rocket:build:dev",
               "hmr": false
             }

@@ -39,7 +39,7 @@
     >
     <nz-select
       style="margin-right: 10px"
-      nzPlaceHolder="Filter status"
+      [nzPlaceHolder]="'plannedAssessments.filterStatus' | translate"
       [(ngModel)]="statusFilter"
       (ngModelChange)="onStatusSelect()"
     >

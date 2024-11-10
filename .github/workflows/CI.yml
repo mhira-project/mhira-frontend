@@ -27,7 +27,7 @@ jobs:
         run: npm run lint:ts
 
       - name: Build
-        run: npm run build:dev
+        run: npm run build:prod
           
       # - name: Run tests
       #   run: npm run test

@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RolesAndPermissionsComponent } from './roles-and-permissions.component';
 
 describe('RolesAndPermissionsComponent', () => {

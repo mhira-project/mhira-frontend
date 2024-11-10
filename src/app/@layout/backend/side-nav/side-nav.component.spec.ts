@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { SideNavComponent } from './side-nav.component';
 
 describe('SideNavComponent', () => {

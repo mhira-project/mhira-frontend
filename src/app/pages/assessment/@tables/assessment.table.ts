@@ -8,7 +8,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
     name: 'formattedAssessmentType',
     altName: 'assessmentType',
-    title: 'Name',
+    title: 'plannedAssessments.name',
     translationPath: 'plannedAssessments.name',
     // sort: true,
     filterField: {
@@ -24,13 +24,13 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   },
   {
     name: 'patientMedicalRecordNo',
-    title: 'Patient Hospital ID',
+    title: 'plannedAssessments.patientMedicalRecordNo',
     translationPath: 'plannedAssessments.patientMedicalRecordNo',
   },
   {
     name: 'formattedPatient',
     altName: 'patient',
-    title: 'Patient',
+    title: 'plannedAssessments.formattedPatient',
     translationPath: 'plannedAssessments.formattedPatient',
     filterField: {
       type: 'text',
@@ -51,7 +51,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
     name: 'formattedClinician',
     altName: 'clinician',
-    title: 'Clinician',
+    title: 'plannedAssessments.formattedClinician',
     translationPath: 'plannedAssessments.formattedClinician',
     filterField: {
       type: 'text',
@@ -82,6 +82,7 @@ export const AssessmentTable: TableColumn<FormattedAssessment>[] = [
   {
     name: 'formatedQuestionnaires',
     title: 'Questionnaires',
+    translationPath: 'plannedAssessments.questionnaires',
     render: 'questAvatar',
     // filterField: {
     //   type: 'text',

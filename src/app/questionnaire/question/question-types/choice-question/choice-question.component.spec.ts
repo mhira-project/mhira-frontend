@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ChoiceQuestionComponent } from './choice-question.component';
 
 describe('ChoiceQuestionComponent', () => {

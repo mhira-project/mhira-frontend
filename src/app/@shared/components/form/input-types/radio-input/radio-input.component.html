@@ -15,7 +15,7 @@
     [ngClass]="{ 'has-error': inputIsValid() === false, 'has-success': inputIsValid() === true }"
     (ngModelChange)="handleValueChange($event)"
   >
-    <label nz-radio *ngFor="let option of field.options" [nzValue]="option.value">{{ option.label }}</label>
+    <label nz-radio *ngFor="let option of field.options" [nzValue]="option.value">{{ option.label | translate }}</label>
   </nz-radio-group>
 </ng-container>
 <div class="field-value" *ngIf="!inputMode">

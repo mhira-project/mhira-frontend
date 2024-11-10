@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SystemConfigurationComponent } from './system-configuration.component';
 
 describe('SystemConfigurationComponent', () => {

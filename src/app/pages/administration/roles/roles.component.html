@@ -10,7 +10,7 @@
       [listOfData]="rolesTable.rows"
       [listOfColumn]="rolesTable.columns"
       [showButton]="perms.permissionsOnly(PK.MANAGE_ROLES_PERMISSIONS)"
-      [buttonText]="'Create Role'"
+      [buttonText]="'rolesPermissions.createRole' | translate"
       [hasNextPage]="pageInfo?.hasNextPage"
       [hasPreviousPage]="pageInfo?.hasPreviousPage"
       (onNext)="navigatePages('next')"
@@ -29,7 +29,7 @@
   [nzMaskClosable]="false"
   [nzVisible]="showCreateRole"
   nzPlacement="right"
-  [nzTitle]="panelTitle"
+  [nzTitle]="panelTitle | translate"
   (nzOnClose)="closeCreatePanel()"
 >
   <app-form

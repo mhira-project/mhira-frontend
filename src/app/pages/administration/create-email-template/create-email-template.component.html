@@ -1,4 +1,6 @@
-<button nz-button routerLink="/mhira/administration/email-templates" nzType="secondary">Go back</button>
+<button nz-button routerLink="/mhira/administration/email-templates" nzType="secondary">
+  {{ 'emailTemplates.goBack' | translate }}
+</button>
 <div nz-row>
   <div nz-col nzSpan="24">
     <form nz-form [formGroup]="emailForm">
@@ -19,7 +21,7 @@
         <nz-form-control [nzSpan]="14">
           <angular-editor
             [config]="editorConfig"
-            [placeholder]="'Enter email body here...'"
+            [placeholder]="'emailTemplates.emailBody' | translate"
             formControlName="body"
           ></angular-editor>
         </nz-form-control>

@@ -30,7 +30,7 @@ export class QuestionnaireFormComponent {
   public existingId: string;
   listOfOption: any = [];
   listOfTagOptions: any = [];
-  customDescription: string = '';
+  customDescription = '';
   editorConfig: AngularEditorConfig = {
     minHeight: '100px',
     editable: true,

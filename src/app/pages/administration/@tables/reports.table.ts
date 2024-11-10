@@ -3,7 +3,7 @@ import { FormattedReport, Reports } from '../@types/reports';
 
 export const ReportsColumns: TableColumn<Partial<FormattedReport>>[] = [
   {
-    title: 'Name',
+    title: 'tables.reports.name',
     name: 'name',
     translationPath: 'tables.reports.name',
     sort: true,
@@ -13,7 +13,7 @@ export const ReportsColumns: TableColumn<Partial<FormattedReport>>[] = [
     },
   },
   {
-    title: 'Report Type',
+    title: 'tables.reports.resources',
     name: 'resources',
     translationPath: 'tables.reports.resources',
     sort: true,
@@ -23,7 +23,7 @@ export const ReportsColumns: TableColumn<Partial<FormattedReport>>[] = [
     },
   },
   {
-    title: 'Roles',
+    title: 'tables.users.formattedRoles',
     name: 'formattedRoles',
     translationPath: 'tables.users.formattedRoles',
     render: 'tag',
@@ -35,7 +35,7 @@ export const ReportsColumns: TableColumn<Partial<FormattedReport>>[] = [
     filterQuery: (q: number) => (q ? { id: { eq: q } } : { id: { is: null } }),
   },
   {
-    title: 'Status',
+    title: 'tables.reports.status',
     name: 'status',
     translationPath: 'tables.reports.status',
     sort: true,
@@ -45,7 +45,7 @@ export const ReportsColumns: TableColumn<Partial<FormattedReport>>[] = [
     },
   },
   {
-    title: 'Repository Link',
+    title: 'tables.reports.repositoryLink',
     name: 'repositoryLink',
     translationPath: 'tables.reports.repositoryLink',
     sort: true,
@@ -55,7 +55,7 @@ export const ReportsColumns: TableColumn<Partial<FormattedReport>>[] = [
     },
   },
   {
-    title: 'Created At',
+    title: 'tables.reports.createdAt',
     name: 'createdAt',
     translationPath: 'tables.reports.createdAt',
     sort: true,

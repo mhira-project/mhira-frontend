@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { QuestionnaireScriptComponent } from './questionnaire-script.component';
 
 describe('QuestionnaireScriptComponent', () => {

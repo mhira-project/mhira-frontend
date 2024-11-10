@@ -13,7 +13,7 @@ export const QuestionnaireBundlesColumns: TableColumn<any>[] = [
   {
     title: 'Questionnaires',
     name: 'questionnaires',
-    render: 'questAvatar',
+    render: 'questionaireBundle',
     translationPath: 'menu.questionnaires',
     filterField: {
       type: 'text',

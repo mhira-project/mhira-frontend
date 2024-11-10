@@ -242,6 +242,14 @@ const sendAssessmentEmail = gql`
   }
 `;
 
+const setAssessmentAcceptedConsentDate = gql`
+  mutation($id: String!) {
+    setAssessmentAcceptedConsentDate(_id: $id) {
+      _id
+    }
+  }
+`;
+
 export const AssessmentsMutations = {
   createOneAssessment,
   updateOneAssessment,
@@ -253,4 +261,5 @@ export const AssessmentsMutations = {
   addAnswer,
   changeAssessmentStatus,
   sendAssessmentEmail,
+  setAssessmentAcceptedConsentDate,
 };

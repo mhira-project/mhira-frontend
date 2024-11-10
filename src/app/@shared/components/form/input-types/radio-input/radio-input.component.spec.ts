@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RadioInputComponent } from './radio-input.component';
 
 describe('RadioInputComponent', () => {

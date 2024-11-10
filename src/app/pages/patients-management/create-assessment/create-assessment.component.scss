@@ -73,3 +73,43 @@ nz-date-picker [nzInputReadOnly] {
   display: flex;
   align-items: center;
 }
+
+.consent-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.consent-container .ant-form-inline .ant-form-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.consent-container .ant-form-inline .ant-form-item > .ant-form-item-label {
+  text-align: left;
+}
+
+.consent-container .ant-form-item-control,
+.consent-container .ant-form-item-label {
+  padding: 0 !important;
+}
+
+.consent-container .ant-form-item {
+  width: 100%;
+}
+
+.consent-inputs {
+  margin-bottom: 20px;
+}
+
+.approved-consent {
+  font-size: 15px;
+  float: right;
+  font-weight: normal;
+}
+
+.anticon.anticon-check-circle {
+  font-size: 18px;
+}

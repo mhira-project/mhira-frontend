@@ -52,10 +52,31 @@ p {
   text-align: end;
 }
 
+.consent-inputs {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.consent-title {
+  margin-bottom: 12px;
+  margin-top: 10px;
+}
+
+.approved-consent {
+  font-size: 15px;
+  float: right;
+  font-weight: normal;
+  margin-left: 20px;
+}
+
 .link-container {
   display: flex;
   align-items: center;
   margin-top: -40px;
+}
+
+.anticon.anticon-check-circle {
+  font-size: 18px;
 }
 
 .link-container a {

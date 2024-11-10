@@ -3,7 +3,7 @@ import { FormattedDisclaimer } from '../@types/disclaimers';
 
 export const DisclaimersColumns: TableColumn<Partial<FormattedDisclaimer>>[] = [
   {
-    title: 'Type',
+    title: 'tables.disclaimer.type',
     name: 'formattedType',
     translationPath: 'tables.disclaimer.type',
     filterField: {
@@ -12,7 +12,7 @@ export const DisclaimersColumns: TableColumn<Partial<FormattedDisclaimer>>[] = [
     },
   },
   {
-    title: 'Text Information',
+    title: 'tables.disclaimer.textInformation',
     name: 'description',
     translationPath: 'tables.disclaimer.textInformation',
     filterField: {

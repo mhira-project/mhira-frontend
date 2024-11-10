@@ -90,6 +90,7 @@ export class CreateQuestionnaireBundleComponent implements OnInit {
   }
 
   onFormUpdateSubmit() {
+    this.bundleForm.controls['departmentIds'].setValue(this.selectedDepartments);
     this.bundlesService.updateQuestionnaireBundle(this.bundleForm.value).subscribe(
       () => {
         this.bundleForm.reset();

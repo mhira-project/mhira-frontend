@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { QuestionnaireVersion } from '../../pages/questionnaire-management/@types/questionnaire';
 import { AssessmentFormService } from '../assessment-form.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,11 @@ import { ErrorHandlerService } from '../../@shared/services/error-handler.servic
 import { MhiraTranslations } from '../../@core/mhira-translations';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { TranslateService } from '@ngx-translate/core';
+import { FullAssessment } from '@app/pages/assessment/@types/assessment';
+import { AssessmentService } from '@app/pages/assessment/@services/assessment.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { ConsentsService } from '@app/pages/administration/@services/consents.service';
+import { Consent } from '@app/pages/administration/@types/consent';
 
 @UntilDestroy()
 @Component({
@@ -24,6 +29,17 @@ export class QuestionnaireFormComponent {
   public answers: Answer[];
   public skipLogic: Array<{ questionId: string; visible: boolean }> = [];
   public mapped: any = {};
+
+  public assessment: FullAssessment;
+  isConsentShown = false;
+  isConsent1Checked = false;
+  isConsent2Checked = false;
+  isConsent3Checked = false;
+  isConsent4Checked = false;
+  isConsent5Checked = false;
+  isConsent6Checked = false;
+  isConsent7Checked = false;
+  consentData: Consent = null;
 
   public set currentGroupIdx(idx: number) {
     this._currentGroupIdx = idx;
@@ -43,7 +59,11 @@ export class QuestionnaireFormComponent {
     private modalService: NzModalService,
     private translate: TranslateService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: NzMessageService,
+    private assessmentService: AssessmentService,
+    private cdr: ChangeDetectorRef,
+    private consentsService: ConsentsService
   ) {
     combineLatest([
       this.activtedRoute.params.pipe(
@@ -137,7 +157,11 @@ export class QuestionnaireFormComponent {
     if (unAnsweredRequiredQuestions.length !== 0) {
       const modal = this.modalService.confirm({
         nzOnCancel: () => {
-          this.router.navigate(['../../overview'], { relativeTo: this.route });
+          this.router.navigate(['../../overview'], {
+            relativeTo: this.route,
+            queryParams: { showSubmitModal: true },
+            queryParamsHandling: 'merge',
+          });
         },
         nzOnOk: () => true,
         nzTitle: this.translate.instant('modal.continueOverview'),
@@ -156,7 +180,7 @@ export class QuestionnaireFormComponent {
 
       return;
     }
-    this.router.navigate(['../../overview'], { relativeTo: this.route });
+    this.router.navigate(['../../overview'], { relativeTo: this.route, queryParams: { showSubmitModal: true } });
   }
 
   scrollToTop() {
@@ -188,5 +212,69 @@ export class QuestionnaireFormComponent {
         }
         return { questionId: q._id, visible };
       });
+  }
+
+  showConsentModal(): void {
+    this.isConsentShown = true;
+  }
+
+  handleOk(): void {
+    this.assessmentService.setAssessmentAcceptedConsentDate(this.assessment.questionnaireAssessment._id).subscribe(
+      () => {
+        this.assessment.questionnaireAssessment.consentTimestamp = new Date();
+        this.isConsentShown = false;
+        this.messageService.success('Consent accepted successfully');
+        this.cdr.detectChanges();
+      },
+      (err) => this.errorService.handleError(err, { prefix: 'Unable to accept consent' })
+    );
+  }
+
+  isAcceptConsentDisabled(): boolean {
+    if (!this.consentData) {
+      return false;
+    }
+
+    var isDisabled = false;
+
+    if (this.consentData.consent1 && !this.isConsent1Checked) {
+      isDisabled = true;
+    }
+
+    if (this.consentData.consent2 && !this.isConsent2Checked) {
+      isDisabled = true;
+    }
+
+    if (this.consentData.consent3 && !this.isConsent3Checked) {
+      isDisabled = true;
+    }
+
+    if (this.consentData.consent4 && !this.isConsent4Checked) {
+      isDisabled = true;
+    }
+
+    if (this.consentData.consent5 && !this.isConsent5Checked) {
+      isDisabled = true;
+    }
+
+    if (this.consentData.consent6 && !this.isConsent6Checked) {
+      isDisabled = true;
+    }
+
+    if (this.consentData.consent7 && !this.isConsent7Checked) {
+      isDisabled = true;
+    }
+
+    return isDisabled;
+  }
+
+  private getConsent(id: number): void {
+    this.consentsService.consents().subscribe(
+      ({ data }: any) => {
+        this.consentData = data.consents.find((consent: Consent) => consent.id === id);
+        this.showConsentModal();
+      },
+      (err) => this.errorService.handleError(err, { prefix: 'Unable to load consent' })
+    );
   }
 }

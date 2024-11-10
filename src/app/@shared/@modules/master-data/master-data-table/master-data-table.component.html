@@ -38,6 +38,11 @@
               [nzTooltipTitle]="quest"
             ></nz-avatar>
           </span>
+          <span *ngSwitchCase="'questionaireBundle'">
+            <nz-tag *ngFor="let tag of [d[column.name]].flat()" [nzColor]="'blue'">
+              {{ tag.name }}
+            </nz-tag>
+          </span>
           <ng-template #quest>
             <p class="quest-avatar" *ngFor="let data of d.formatedQuestionnaireNames; let i = index">
               {{ i + 1 + '. ' }}{{ data }}

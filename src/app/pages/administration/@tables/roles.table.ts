@@ -11,21 +11,21 @@ const actions: any[] = [
 
 const columns: any[] = [
   {
-    title: 'Role Name',
+    title: 'tables.roles.name',
     name: 'name',
     translationPath: 'tables.roles.name',
     sort: true,
     isFilterable: false,
   },
   {
-    title: 'Role Hierarchy',
+    title: 'tables.roles.hierarchy',
     name: 'hierarchy',
     sort: true,
     translationPath: 'tables.roles.hierarchy',
     isFilterable: false,
   },
   {
-    title: 'Created At',
+    title: 'tables.roles.createdAt',
     name: 'createdAt',
     sort: true,
     translationPath: 'tables.roles.createdAt',

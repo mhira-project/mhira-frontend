@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CustomFilterComponent } from './custom-filter.component';
 
 describe('CustomFilterComponent', () => {

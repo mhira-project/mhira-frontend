@@ -18,8 +18,14 @@ export class AssessmentFormService {
     percentage?: number;
   } = {};
 
+  private _percentageCompletedValue = new BehaviorSubject<number>(0);
+
   public get assessment$(): Observable<FullAssessment> {
     return this._assessment.asObservable();
+  }
+
+  public get percentageCompletedValue$(): Observable<number> {
+    return this._percentageCompletedValue.asObservable();
   }
 
   public get assessmentSnapshot(): FullAssessment {
@@ -104,5 +110,6 @@ export class AssessmentFormService {
       0
     );
     this._assessmentInfo.percentage = (numAnswers / requiredQuestions.length) * 100;
+    this._percentageCompletedValue.next(this._assessmentInfo.percentage);
   }
 }

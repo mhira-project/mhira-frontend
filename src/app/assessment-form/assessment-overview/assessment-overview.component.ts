@@ -12,6 +12,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { Disclaimers } from '@app/pages/administration/@types/disclaimers';
 import { finalize } from 'rxjs/operators';
 import { DisclaimersService } from '@app/pages/administration/@services/disclaimers.service';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { ConsentsService } from '@app/pages/administration/@services/consents.service';
+import { Consent } from '@app/pages/administration/@types/consent';
 
 @Component({
   selector: 'app-assessment-overview',
@@ -30,6 +33,8 @@ export class AssessmentOverviewComponent implements OnInit {
   public assessment: FullAssessment;
   public questions: Question[];
   public questionnaireQuestions: { [K in string]: Question[] };
+  public isSubmitModalVisible = false;
+  public consentData: Consent = null;
 
   public get answers(): Answer[] {
     return this.assessment.questionnaireAssessment.answers;
@@ -43,7 +48,10 @@ export class AssessmentOverviewComponent implements OnInit {
     private assessmentService: AssessmentService,
     private messageService: NzMessageService,
     private errorService: ErrorHandlerService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private consentsService: ConsentsService
   ) {}
 
   public ngOnInit(): void {
@@ -69,10 +77,11 @@ export class AssessmentOverviewComponent implements OnInit {
         []
       );
 
+      this.getConsent(assessment.consentId);
+      this.updateSubmitModalVisible();
       this.cdr.detectChanges();
     });
     this.getDescription();
-    console.log(this.completedDisclaimer);
   }
 
   public getMaxRequiredQuestions(questionnaireId: string): number {
@@ -117,7 +126,6 @@ export class AssessmentOverviewComponent implements OnInit {
 
   public completeAssessment(): void {
     const id = this.assessment.questionnaireAssessment._id;
-    console.log('here');
     forkJoin([
       this.translateService.get(this.translations.assessmentForm.complete),
       this.assessmentService.changeAssessmentStatus(id, AssessmentStatus.COMPLETED),
@@ -127,6 +135,7 @@ export class AssessmentOverviewComponent implements OnInit {
           nzDuration: 5000,
         });
         this.assessment.questionnaireAssessment.status = AssessmentStatus.COMPLETED;
+        this.isSubmitModalVisible = false;
         this.cdr.detectChanges();
       },
       (err) => this.errorService.handleError(err, { prefix: `Unable to complete assessment with ID "${id}"` })
@@ -152,5 +161,43 @@ export class AssessmentOverviewComponent implements OnInit {
         },
         (err) => this.errorService.handleError(err, { prefix: 'Unable to load disclaimers' })
       );
+  }
+
+  updateSubmitModalVisible(percentage?: number): void {
+    if (!this.assessment) {
+      this.isSubmitModalVisible = false;
+      return;
+    }
+
+    const isAllFilled = percentage == 100;
+    const queryParams = this.route.snapshot.queryParamMap;
+    const showFromUrl = queryParams.get('showSubmitModal') === 'true';
+
+    var areQuestionairesFilled = false;
+    for (const questionnaire of this.assessment.questionnaireAssessment.questionnaires) {
+      if (!this.isQuestionnaireDone(questionnaire._id)) {
+        areQuestionairesFilled = false;
+        break;
+      }
+      areQuestionairesFilled = true;
+    }
+
+    this.isSubmitModalVisible =
+      areQuestionairesFilled &&
+      (isAllFilled || showFromUrl) &&
+      this.assessment.questionnaireAssessment?.status !== AssessmentStatus.COMPLETED;
+  }
+
+  handleCancelSubmitModal(): void {
+    this.isSubmitModalVisible = false;
+  }
+
+  private getConsent(id: number): void {
+    this.consentsService.consents().subscribe(
+      ({ data }: any) => {
+        this.consentData = data.consents.find((consent: Consent) => consent.id === id);
+      },
+      (err) => this.errorService.handleError(err, { prefix: 'Unable to load consent' })
+    );
   }
 }

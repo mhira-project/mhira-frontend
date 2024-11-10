@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CheckboxQuestionComponent } from './checkbox-question.component';
 
 describe('CheckboxQuestionComponent', () => {

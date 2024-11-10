@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MasterDataTableComponent } from './master-data-table.component';
 
 describe('MasterDataTableComponent', () => {

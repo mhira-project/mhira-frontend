@@ -262,11 +262,14 @@ export default {
     optionalAnswered: '+{{actual}} ya hiari',
     fillingTime: 'Muda wa kujaza: dk {{time}}',
     completeAssessment: 'Kamilisha tathmini',
+    completeAssessmentMessage: 'You can submit the assessment now',
     alreadyCompleted: 'Tathmini imekamilika',
     overview: 'Maelezo ya Jumla',
     next: 'Ifuatayo',
     prev: 'Iliyotangulia',
     complete: 'Asante kwa kumaliza tathmini hii! Unaweza kufunga ukurasa huu sasa.',
+    consentModalTitle: 'We need your consent to proceed with the assessment',
+    acceptConsentButton: 'I Accept',
   },
   questionnaires: {
     questionnairesId: 'Kitambulisho cha toleo',
@@ -323,6 +326,8 @@ export default {
     deliveryDate: 'Tarehe ya Uwasilishaji',
     expirationDate: 'Tarehe ya kumalizika muda wake',
     notes: 'Vidokezo kwa msimamizi wa tathmini',
+    consent: 'Consent',
+    consentGiven: 'Consent was given',
   },
   form: {
     system: {

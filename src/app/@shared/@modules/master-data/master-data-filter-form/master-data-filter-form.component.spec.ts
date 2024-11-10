@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MasterDataFilterFormComponent } from './master-data-filter-form.component';
 
 describe('MasterDataFilterFormComponent', () => {

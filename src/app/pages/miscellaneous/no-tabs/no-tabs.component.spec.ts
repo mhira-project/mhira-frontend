@@ -1,5 +1,4 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { NoTabsComponent } from './no-tabs.component';
 
 describe('NoTabsComponent', () => {

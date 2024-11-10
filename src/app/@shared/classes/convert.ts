@@ -17,6 +17,7 @@ import {
   AssessmentAdministrationStatus,
   FormattedAssessmentAdministration,
 } from '@app/pages/administration/@types/assessment-administration';
+import { Consent } from '@app/pages/administration/@types/consent';
 
 const STATUS_COLOR = {
   [QuestionnaireStatus.DRAFT]: 'blue',
@@ -63,6 +64,12 @@ export class Convert {
 
   // Role
   public static toRole(json: any): Role {
+    json.createdAt = json.createdAt ? moment(json.createdAt).format('DD-MM-YYYY HH:mm') : '';
+    return json;
+  }
+
+  // Role
+  public static toConsent(json: any): Consent {
     json.createdAt = json.createdAt ? moment(json.createdAt).format('DD-MM-YYYY HH:mm') : '';
     return json;
   }
@@ -130,7 +137,7 @@ export class Convert {
     ]);
 
     assessment.formatedQuestionnaireNames = json?.questionnaireAssessment?.questionnaires.map((questionnaire: any) => [
-      `${questionnaire?.name}` + ' ' + '(' + questionnaire?.questionnaire?.abbreviation + ')',
+      `${questionnaire?.name}` + ' ' + '(' + questionnaire?.abbreviation + ')',
     ]);
 
     assessment.emailFormatedStatus = {

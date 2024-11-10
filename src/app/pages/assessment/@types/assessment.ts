@@ -5,6 +5,7 @@ import { Answer } from '../../../assessment-form/@types/answer';
 import { TagInfo } from '../../../@shared/@modules/master-data/@types/list';
 import { Caregiver } from '@app/pages/patients-management/@types/caregiver';
 import { AssessmentAdministration } from '@app/pages/administration/@types/assessment-administration';
+import { Consent } from '@app/pages/administration/@types/consent';
 
 export enum AssessmentStatus {
   PLANNED = 'PLANNED',
@@ -48,12 +49,20 @@ export interface QuestionnaireAssessment {
   questionnaires: QuestionnaireVersion[];
   answers: Answer[];
   status: AssessmentStatus;
+  consentTimestamp?: Date;
+  acceptedConsentContent?: {
+    name?: string;
+    description?: string;
+    checkbox1?: string;
+    checkbox2?: string;
+  };
 }
 
 export interface FullAssessment extends Assessment {
   questionnaireAssessment: QuestionnaireAssessment;
   informantClinician: User;
   assessmentType: AssessmentAdministration;
+  consentId: number;
   informantCaregiverRelation: string;
   emailReminder: boolean;
   receiverEmail: string;

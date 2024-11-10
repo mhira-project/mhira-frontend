@@ -3,7 +3,7 @@ import { FormattedDepartment } from '../@types/department';
 
 export const DepartmentColumns: TableColumn<Partial<FormattedDepartment>>[] = [
   {
-    title: 'Department Name',
+    title: 'tables.department.name',
     name: 'name',
     translationPath: 'tables.department.name',
     sort: true,
@@ -13,7 +13,7 @@ export const DepartmentColumns: TableColumn<Partial<FormattedDepartment>>[] = [
     },
   },
   {
-    title: 'Description',
+    title: 'tables.department.description',
     name: 'description',
     translationPath: 'tables.department.description',
     sort: true,
@@ -23,7 +23,7 @@ export const DepartmentColumns: TableColumn<Partial<FormattedDepartment>>[] = [
     },
   },
   {
-    title: 'Status',
+    title: 'tables.department.formattedStatus',
     name: 'formattedStatus',
     translationPath: 'tables.department.formattedStatus',
     altName: 'active',

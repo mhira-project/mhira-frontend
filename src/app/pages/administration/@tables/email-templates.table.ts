@@ -2,7 +2,7 @@ import { TableColumn } from '../../../@shared/@modules/master-data/@types/list';
 
 export const EmailTemplatesColumns: TableColumn<any>[] = [
   {
-    title: 'Name',
+    title: 'emailTemplates.name',
     name: 'name',
     translationPath: 'emailTemplates.name',
     filterField: {
@@ -11,7 +11,7 @@ export const EmailTemplatesColumns: TableColumn<any>[] = [
     },
   },
   {
-    title: 'Subject',
+    title: 'emailTemplates.subject',
     name: 'subject',
     translationPath: 'emailTemplates.subject',
     filterField: {
