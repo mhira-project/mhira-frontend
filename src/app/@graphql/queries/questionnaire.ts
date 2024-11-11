@@ -58,7 +58,26 @@ const getQuestionnairesVersion = gql`
   }
 `;
 
+const getSurveyTemplates = gql`
+  query {
+    surveyTemplates(after: null, first: 10) {
+      edges {
+        node {
+          id
+          fullName
+          description
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`;
+
 export const QuestionnaireQueries = {
   getQuestionnaires,
   getQuestionnairesVersion,
+  getSurveyTemplates,
 };
