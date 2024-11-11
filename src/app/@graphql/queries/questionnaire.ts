@@ -64,8 +64,20 @@ const getSurveyTemplates = gql`
       edges {
         node {
           id
+          createdAt
+          updatedAt
+          deletedAt
           fullName
+          abbreviation
           description
+          languages
+          surveyJsTitle
+          numberOfItems
+          surveyJson
+          license
+          licenseText
+          keywords
+          status
         }
       }
       pageInfo {

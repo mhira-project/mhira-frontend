@@ -53,6 +53,16 @@ export class QuestionnaireManagementService {
       .pipe(map(({ data }) => data.questionnaires));
   }
 
+  public getSuperSurveys(): Observable<any> {
+    return this.apollo
+      .use('superSurvey')
+      .query({
+        query: QuestionnaireQueries.getSurveyTemplates,
+        fetchPolicy: 'no-cache',
+      })
+      .pipe(map(({ data }) => data));
+  }
+
   public getQuestionnairesVersion(options: {
     paging?: Paging;
     filter?: any;

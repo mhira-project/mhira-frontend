@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { ApolloModule, APOLLO_OPTIONS, APOLLO_NAMED_OPTIONS } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { environment } from '../environments/environment';
@@ -11,6 +11,7 @@ if (hostnames.length > 2) {
   tenantID = hostnames[0];
 }
 const uri = environment.baseURL;
+const superSurveyUri = environment.superSurveyURL;
 
 export function createApollo(httpLink: HttpLink) {
   const auth = setContext((operation, context) => ({
@@ -28,12 +29,34 @@ export function createApollo(httpLink: HttpLink) {
   };
 }
 
+export function createSuperSurveyApollo(httpLink: HttpLink) {
+  const auth = setContext((operation, context) => ({
+    headers: {
+      // 'x-tenant-id': tenantID,
+    },
+  }));
+
+  const http = httpLink.create({ uri: superSurveyUri });
+
+  return {
+    link: auth.concat(http),
+    cache: new InMemoryCache(),
+  };
+}
+
 @NgModule({
   exports: [ApolloModule, HttpLinkModule],
   providers: [
     {
       provide: APOLLO_OPTIONS,
       useFactory: createApollo,
+      deps: [HttpLink],
+    },
+    {
+      provide: APOLLO_NAMED_OPTIONS,
+      useFactory: (httpLink: HttpLink) => ({
+        superSurvey: createSuperSurveyApollo(httpLink),
+      }),
       deps: [HttpLink],
     },
   ],

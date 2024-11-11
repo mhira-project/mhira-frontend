@@ -137,6 +137,10 @@ export class QuestionnaireListComponent {
       });
   }
 
+  private getSuperSurveys() {
+    this.qmService.getSuperSurveys().subscribe((data) => console.log(data));
+  }
+
   private async deleteQuestionnaire(
     questionnaire: FormattedQuestionnaireVersion,
     archive: boolean = true
