@@ -5,13 +5,11 @@ describe('CustomFilterComponent', () => {
   let component: CustomFilterComponent;
   let fixture: ComponentFixture<CustomFilterComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CustomFilterComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [CustomFilterComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CustomFilterComponent);

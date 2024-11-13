@@ -412,13 +412,9 @@ export class AssessmentsListComponent {
       );
   }
 
-  private createSearchFilter(
-    searchString: string
-  ): Array<
-    {
-      [K in keyof Partial<FormattedAssessment>]: {};
-    }
-  > {
+  private createSearchFilter(searchString: string): Array<{
+    [K in keyof Partial<FormattedAssessment>]: {};
+  }> {
     return [
       {
         assessmentType: {

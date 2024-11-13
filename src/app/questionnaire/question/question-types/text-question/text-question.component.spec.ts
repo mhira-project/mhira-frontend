@@ -5,13 +5,11 @@ describe('TextQuestionComponent', () => {
   let component: TextQuestionComponent;
   let fixture: ComponentFixture<TextQuestionComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [TextQuestionComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [TextQuestionComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TextQuestionComponent);

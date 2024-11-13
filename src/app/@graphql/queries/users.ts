@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getUsers = gql`
-  query($paging: CursorPaging, $filter: UserFilter, $sorting: [UserSort!]) {
+  query ($paging: CursorPaging, $filter: UserFilter, $sorting: [UserSort!]) {
     users(paging: $paging, filter: $filter, sorting: $sorting) {
       pageInfo {
         hasNextPage

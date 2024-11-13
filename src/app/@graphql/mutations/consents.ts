@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createOneConsent = gql`
-  mutation($input: CreateOneConsentInput!) {
+  mutation ($input: CreateOneConsentInput!) {
     createOneConsent(input: $input) {
       id
       name
@@ -24,7 +24,7 @@ const createOneConsent = gql`
 `;
 
 const updateOneConsent = gql`
-  mutation($input: UpdateOneConsentInput!) {
+  mutation ($input: UpdateOneConsentInput!) {
     updateOneConsent(input: $input) {
       id
       name
@@ -47,7 +47,7 @@ const updateOneConsent = gql`
 `;
 
 const deleteOneConsent = gql`
-  mutation($input: DeleteOneConsentInput!) {
+  mutation ($input: DeleteOneConsentInput!) {
     deleteOneConsent(input: $input) {
       id
     }

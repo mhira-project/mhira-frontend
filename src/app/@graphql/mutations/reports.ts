@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createOneReport = gql`
-  mutation($input: CreateOneReportInput!) {
+  mutation ($input: CreateOneReportInput!) {
     createOneReport(input: $input) {
       id
       anonymus
@@ -23,7 +23,7 @@ const createOneReport = gql`
 `;
 
 const createManyReports = gql`
-  mutation($input: CreateManyReportsInput!) {
+  mutation ($input: CreateManyReportsInput!) {
     createManyReports(input: $input) {
       id
       anonymus
@@ -41,7 +41,7 @@ const createManyReports = gql`
 `;
 
 const updateOneReport = gql`
-  mutation($input: UpdateOneReportInput!) {
+  mutation ($input: UpdateOneReportInput!) {
     updateOneReport(input: $input) {
       id
       anonymus
@@ -63,7 +63,7 @@ const updateOneReport = gql`
 `;
 
 const updateManyReports = gql`
-  mutation($input: UpdateManyReportsInput!) {
+  mutation ($input: UpdateManyReportsInput!) {
     updateManyReports(input: $input) {
       id
       anonymus
@@ -81,7 +81,7 @@ const updateManyReports = gql`
 `;
 
 const deleteOneReport = gql`
-  mutation($input: DeleteOneReportInput!) {
+  mutation ($input: DeleteOneReportInput!) {
     deleteReport(input: $input) {
       id
     }
@@ -89,7 +89,7 @@ const deleteOneReport = gql`
 `;
 
 const addRolesToReport = gql`
-  mutation($input: ReportRoleInput!) {
+  mutation ($input: ReportRoleInput!) {
     addRolesToReport(input: $input) {
       id
     }

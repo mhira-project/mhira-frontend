@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createOneEmailTemplate = gql`
-  mutation($input: CreateEmailTemplate!) {
+  mutation ($input: CreateEmailTemplate!) {
     createEmailTemplate(input: $input) {
       id
       name
@@ -18,7 +18,7 @@ const createOneEmailTemplate = gql`
 `;
 
 const updateOneEmailTemplate = gql`
-  mutation($input: UpdateEmailTemplate!) {
+  mutation ($input: UpdateEmailTemplate!) {
     updateEmailTemplate(input: $input) {
       id
       name
@@ -35,7 +35,7 @@ const updateOneEmailTemplate = gql`
 `;
 
 const deleteOneEmailTemplate = gql`
-  mutation($id: Float!) {
+  mutation ($id: Float!) {
     deleteEmailTemplate(id: $id)
   }
 `;

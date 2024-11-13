@@ -6,13 +6,11 @@ describe('CaregiverPickerComponent', () => {
   let component: CaregiverPickerComponent;
   let fixture: ComponentFixture<CaregiverPickerComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CaregiverPickerComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [CaregiverPickerComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CaregiverPickerComponent);

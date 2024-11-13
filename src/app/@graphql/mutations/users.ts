@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createOneUser = gql`
-  mutation($createOneUserInput: CreateOneUserInput!) {
+  mutation ($createOneUserInput: CreateOneUserInput!) {
     createOneUser(input: $createOneUserInput) {
       id
       username
@@ -45,7 +45,7 @@ const createOneUser = gql`
 `;
 
 const updateOneUser = gql`
-  mutation($updateOneUserInput: UpdateOneUserInput!) {
+  mutation ($updateOneUserInput: UpdateOneUserInput!) {
     updateOneUser(input: $updateOneUserInput) {
       id
       username
@@ -89,7 +89,7 @@ const updateOneUser = gql`
   }
 `;
 const changeUserPassword = gql`
-  mutation($currentPassword: String!, $newPassword: String!, $newPasswordConfirmation: String!) {
+  mutation ($currentPassword: String!, $newPassword: String!, $newPasswordConfirmation: String!) {
     changePassword(
       currentPassword: $currentPassword
       newPassword: $newPassword
@@ -98,18 +98,18 @@ const changeUserPassword = gql`
   }
 `;
 const updateUserPassword = gql`
-  mutation($newPassword: String!, $newPasswordConfirmation: String!, $id: Int!) {
+  mutation ($newPassword: String!, $newPasswordConfirmation: String!, $id: Int!) {
     updateUserPassword(input: { newPassword: $newPassword, newPasswordConfirmation: $newPasswordConfirmation }, id: $id)
   }
 `;
 const deleteOneUser = gql`
-  mutation($input: DeleteOneUserInput!) {
+  mutation ($input: DeleteOneUserInput!) {
     deleteOneUser(input: $input)
   }
 `;
 
 const softDeleteUser = gql`
-  mutation($id: ID!) {
+  mutation ($id: ID!) {
     updateOneUser(input: { id: $id, update: { deleted: true } }) {
       id
       workID
@@ -129,7 +129,7 @@ const softDeleteUser = gql`
 `;
 
 const userAcceptedTerm = gql`
-  mutation($updateOneUserInput: UpdateOneUserInput!) {
+  mutation ($updateOneUserInput: UpdateOneUserInput!) {
     updateUserAcceptedTerm(input: $updateOneUserInput) {
       id
       username

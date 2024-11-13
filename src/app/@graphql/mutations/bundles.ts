@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createQuestionnaireBundle = gql`
-  mutation($input: CreateQuestionnaireBundleInput!) {
+  mutation ($input: CreateQuestionnaireBundleInput!) {
     createQuestionnaireBundle(input: $input) {
       _id
       name
@@ -61,7 +61,7 @@ const createQuestionnaireBundle = gql`
 `;
 
 const updateQuestionnaireBundle = gql`
-  mutation($input: UpdateQuestionnaireBundleInput!) {
+  mutation ($input: UpdateQuestionnaireBundleInput!) {
     updateQuestionnaireBundle(input: $input) {
       _id
       name
@@ -119,7 +119,7 @@ const updateQuestionnaireBundle = gql`
 `;
 
 const deleteQuestionnaireBundle = gql`
-  mutation($_id: String!) {
+  mutation ($_id: String!) {
     deleteQuestionnaireBundle(_id: $_id) {
       _id
       name

@@ -5,13 +5,11 @@ describe('NoTabsComponent', () => {
   let component: NoTabsComponent;
   let fixture: ComponentFixture<NoTabsComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [NoTabsComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [NoTabsComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NoTabsComponent);

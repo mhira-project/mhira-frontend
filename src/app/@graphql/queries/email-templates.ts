@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getAllEmailTemplates = gql`
-  query($paging: CursorPaging, $filter: MailTemplateFilter) {
+  query ($paging: CursorPaging, $filter: MailTemplateFilter) {
     getAllEmailTemplates(paging: $paging, filter: $filter) {
       edges {
         node {
@@ -28,7 +28,7 @@ const getAllEmailTemplates = gql`
 `;
 
 const getPatientEmailTemplates = gql`
-  query($patientId: ID) {
+  query ($patientId: ID) {
     getPatientEmailTemplates(patientId: $patientId) {
       id
       name
@@ -48,7 +48,7 @@ const getPatientEmailTemplates = gql`
 `;
 
 const getOneEmailTemplate = gql`
-  query($id: ID!) {
+  query ($id: ID!) {
     getEmailTemplate(id: $id) {
       id
       name

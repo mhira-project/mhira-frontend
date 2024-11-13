@@ -6,13 +6,11 @@ describe('AssessmentsComponent', () => {
   let component: AssessmentsComponent;
   let fixture: ComponentFixture<AssessmentsComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [AssessmentsComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [AssessmentsComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AssessmentsComponent);

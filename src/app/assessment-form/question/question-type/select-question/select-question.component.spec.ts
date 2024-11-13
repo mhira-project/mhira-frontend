@@ -5,13 +5,11 @@ describe('SelectQuestionComponent', () => {
   let component: SelectQuestionComponent;
   let fixture: ComponentFixture<SelectQuestionComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [SelectQuestionComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [SelectQuestionComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SelectQuestionComponent);

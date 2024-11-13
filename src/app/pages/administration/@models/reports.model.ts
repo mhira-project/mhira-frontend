@@ -1,6 +1,6 @@
 import { FormattedReport, Reports } from '../@types/reports';
 import * as moment from 'moment';
-
+import 'moment/min/moment-with-locales';
 export class ReportsModel {
   public static fromJson(json: FormattedReport): Reports {
     const data = { ...json };

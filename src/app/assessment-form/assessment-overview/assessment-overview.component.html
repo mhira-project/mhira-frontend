@@ -39,7 +39,7 @@
       <ng-template #tooltipContent>
         <div class="tooltip">
           <span *ngIf="questionnaire.license">
-            {{ translations.assessmentForm.license | translate: { license: questionnaire.license } }}
+            {{ translations.assessmentForm.license | translate : { license: questionnaire.license } }}
           </span>
           <span *ngIf="questionnaire.copyright">&copy; {{ questionnaire.copyright }}</span>
         </div>
@@ -65,7 +65,7 @@
       }}
     </span>
     <span *ngIf="questionnaire.timeToComplete">
-      {{ translations.assessmentForm.fillingTime | translate: { time: questionnaire.timeToComplete } }}
+      {{ translations.assessmentForm.fillingTime | translate : { time: questionnaire.timeToComplete } }}
     </span>
   </nz-card>
 </section>
@@ -85,7 +85,7 @@
   <div class="expired-text">
     <h1>
       {{ plannedDisclaimer }}
-      {{ assessment.deliveryDate | date: 'medium' }}.
+      {{ assessment.deliveryDate | date : 'medium' }}.
     </h1>
   </div>
 </section>

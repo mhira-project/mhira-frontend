@@ -5,13 +5,11 @@ describe('SystemConfigurationComponent', () => {
   let component: SystemConfigurationComponent;
   let fixture: ComponentFixture<SystemConfigurationComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [SystemConfigurationComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [SystemConfigurationComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SystemConfigurationComponent);

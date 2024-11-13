@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import 'moment/min/moment-with-locales';
 import { FormattedScript, Scripts } from '../@types/scripts';
 
 export class ScriptsModel {

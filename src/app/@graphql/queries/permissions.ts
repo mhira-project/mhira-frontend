@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const permissions = gql`
-  query($paging: CursorPaging, $filter: PermissionFilter, $sorting: [PermissionSort!]) {
+  query ($paging: CursorPaging, $filter: PermissionFilter, $sorting: [PermissionSort!]) {
     permissions(paging: $paging, filter: $filter, sorting: $sorting) {
       edges {
         cursor

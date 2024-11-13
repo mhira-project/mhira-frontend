@@ -5,13 +5,11 @@ describe('MasterDataFilterFormComponent', () => {
   let component: MasterDataFilterFormComponent<any>;
   let fixture: ComponentFixture<MasterDataFilterFormComponent<any>>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [MasterDataFilterFormComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [MasterDataFilterFormComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MasterDataFilterFormComponent);

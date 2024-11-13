@@ -5,13 +5,11 @@ describe('WysiwygInputComponent', () => {
   let component: WYSIWYGInputComponent;
   let fixture: ComponentFixture<WYSIWYGInputComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [WYSIWYGInputComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [WYSIWYGInputComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WYSIWYGInputComponent);

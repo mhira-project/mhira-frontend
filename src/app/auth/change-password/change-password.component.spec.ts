@@ -14,21 +14,12 @@ describe('LoginComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          NgbModule,
-          RouterTestingModule,
-          TranslateModule.forRoot(),
-          I18nModule,
-          ReactiveFormsModule,
-          CoreModule,
-        ],
-        declarations: [ChangePasswordComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [NgbModule, RouterTestingModule, TranslateModule.forRoot(), I18nModule, ReactiveFormsModule, CoreModule],
+      declarations: [ChangePasswordComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ChangePasswordComponent);

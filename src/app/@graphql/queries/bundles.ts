@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getQuestionnaireBundles = gql`
-  query(
+  query (
     $paging: CursorPaging
     $filter: QuestionnaireBundleFilter
     $sorting: [QuestionnaireBundleSort!]
@@ -74,7 +74,7 @@ const getQuestionnaireBundles = gql`
 `;
 
 const getQuestionnaireBundle = gql`
-  query($_id: String!) {
+  query ($_id: String!) {
     getQuestionnaireBundle(_id: $_id) {
       _id
       name

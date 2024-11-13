@@ -5,13 +5,11 @@ describe('MasterDataListComponent', () => {
   let component: MasterDataListComponent<any>;
   let fixture: ComponentFixture<MasterDataListComponent<any>>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [MasterDataListComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [MasterDataListComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MasterDataListComponent);

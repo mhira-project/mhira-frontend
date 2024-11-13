@@ -5,13 +5,11 @@ describe('CheckBoxInputComponent', () => {
   let component: CheckBoxInputComponent;
   let fixture: ComponentFixture<CheckBoxInputComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CheckBoxInputComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [CheckBoxInputComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CheckBoxInputComponent);

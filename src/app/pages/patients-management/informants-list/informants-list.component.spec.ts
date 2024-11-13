@@ -5,13 +5,11 @@ describe('CampaignsListComponent', () => {
   let component: InformantsListComponent;
   let fixture: ComponentFixture<InformantsListComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [InformantsListComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [InformantsListComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(InformantsListComponent);

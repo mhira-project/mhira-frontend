@@ -6,13 +6,11 @@ describe('MasterDataSearchComponent', () => {
   let component: MasterDataSearchComponent;
   let fixture: ComponentFixture<MasterDataSearchComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [MasterDataSearchComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [MasterDataSearchComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MasterDataSearchComponent);

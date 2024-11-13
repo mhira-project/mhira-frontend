@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const updateDisclaimer = gql`
-  mutation($input: UpdateDisclaimerInput!) {
+  mutation ($input: UpdateDisclaimerInput!) {
     updateDisclaimer(input: $input) {
       type
       description

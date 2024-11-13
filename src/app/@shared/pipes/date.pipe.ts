@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import * as moment from 'moment';
-
+import 'moment/min/moment-with-locales';
 @Pipe({
   name: 'formatDate',
 })

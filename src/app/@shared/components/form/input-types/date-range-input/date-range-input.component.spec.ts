@@ -5,13 +5,11 @@ describe('DateRangeInputComponent', () => {
   let component: DateRangeInputComponent;
   let fixture: ComponentFixture<DateRangeInputComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [DateRangeInputComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [DateRangeInputComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DateRangeInputComponent);
