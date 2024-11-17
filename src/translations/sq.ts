@@ -96,6 +96,7 @@ export default {
     emailTemplates: 'Shabllonet e Email',
     version: 'Versioni',
     createPatientStatus: 'Krijo statusin e pacientit',
+    superSurvey: 'Super Survey',
   },
   patients: {
     myPatients: 'Klientët e Mi',

@@ -67,6 +67,7 @@ export default {
     disclaimers: 'Kanusho',
     emailTemplates: 'Email Templates - REPLACE',
     version: 'Version - REPLACE',
+    superSurvey: 'Super Survey',
   },
   patients: {
     myPatients: 'Wagonjwa Wangu',

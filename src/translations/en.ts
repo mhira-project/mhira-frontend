@@ -104,6 +104,7 @@ export default {
     emailTemplates: 'Email Templates',
     version: 'Version',
     createPatientStatus: 'Create PatientStatus',
+    superSurvey: 'Super Survey',
   },
   patients: {
     myPatients: 'My Patients',

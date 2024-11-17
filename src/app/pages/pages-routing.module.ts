@@ -26,6 +26,13 @@ const routes: Routes = [
       import('./questionnaire-management/questionnaire-management.module').then((m) => m.QuestionnaireManagementModule),
   },
   {
+    path: 'super-survey',
+    data: {
+      breadcrumbI18nKey: 'menu.superSurvey',
+    },
+    loadChildren: () => import('./super-survey/super-survey.module').then((m) => m.SuperSurveyModule),
+  },
+  {
     path: 'assessments',
     data: {
       breadcrumbI18nKey: 'menu.assessments',

@@ -28,6 +28,10 @@ export enum PermissionKey {
   MANAGE_QUESTIONNAIRES = 'manage questionnaires',
   DELETE_QUESTIONNAIRES = 'delete questionnaires',
 
+  VIEW_SUPER_SURVEYS = 'view super surveys',
+  MANAGE_SUPER_SURVEYS = 'manage super surveys',
+  DELETE_SUPER_SURVEYS = 'delete super surveys',
+
   VIEW_TEMPLATES = 'view templates',
   MANAGE_TEMPLATES = 'manage templates',
   DELETE_TEMPLATES = 'delete templates',

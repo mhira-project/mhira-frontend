@@ -99,6 +99,7 @@ export default {
     emailTemplates: 'Emails konfigurieren',
     version: 'Version',
     createPatientStatus: 'PatientenStatus erstellen',
+    superSurvey: 'Super Survey',
   },
   patients: {
     myPatients: 'Meine Patienten',

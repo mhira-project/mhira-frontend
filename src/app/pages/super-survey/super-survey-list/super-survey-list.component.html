@@ -1,0 +1,14 @@
+<app-master-data-list
+  [data]="data"
+  [columns]="columns"
+  [loading]="loading"
+  [pageInfo]="pageInfo"
+  (rowClick)="onSelect($event)"
+  (pageChange)="onPageChange($event)"
+  (sort)="onSort($event)"
+  (filter)="onFilter($event)"
+>
+  <ng-container actions-left>
+    <app-master-data-search (search)="onSearch($event)"></app-master-data-search>
+  </ng-container>
+</app-master-data-list>
