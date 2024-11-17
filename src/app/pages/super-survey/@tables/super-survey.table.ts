@@ -3,25 +3,9 @@ import { FormattedSuperSurvey } from '../@types/super-survey';
 
 export const SuperSurveyColumns: TableColumn<FormattedSuperSurvey>[] = [
   {
-    title: 'Abbreviation',
-    name: 'abbreviation',
-    translationPath: 'superSurveys.abbreviation',
-  },
-  {
-    title: 'Survey ID',
-    name: 'id',
-    translationPath: 'superSurveys.surveyId',
-  },
-  {
-    title: 'Languages',
-    name: 'languages',
-    translationPath: 'superSurveys.languages',
-    render: 'array',
-  },
-  {
     title: 'Full Name',
     name: 'fullName',
-    translationPath: 'superSurveys.fullName',
+    translationPath: 'tables.superSurveys.fullName',
     sort: true,
     filterField: {
       type: 'text',
@@ -29,9 +13,26 @@ export const SuperSurveyColumns: TableColumn<FormattedSuperSurvey>[] = [
     },
   },
   {
+    title: 'Abbreviation',
+    name: 'abbreviation',
+    translationPath: 'tables.superSurveys.abbreviation',
+  },
+  {
+    title: 'Survey ID',
+    name: 'id',
+    translationPath: 'tables.superSurveys.surveyId',
+  },
+  {
+    title: 'Languages',
+    name: 'languages',
+    translationPath: 'tables.superSurveys.languages',
+    render: 'array',
+  },
+  {
     title: 'Status',
-    name: 'status',
-    translationPath: 'superSurveys.status',
+    name: 'formattedStatus',
+    altName: 'status',
+    translationPath: 'tables.superSurveys.status',
     render: 'tag',
     sort: true,
     filterField: {
@@ -40,43 +41,43 @@ export const SuperSurveyColumns: TableColumn<FormattedSuperSurvey>[] = [
       options: [
         { label: 'Draft', value: 'DRAFT' },
         { label: 'Active', value: 'ACTIVE' },
-        { label: 'Archived', value: 'ARCHIVED' },
+        { label: 'Private', value: 'Private' },
       ],
     },
   },
   {
     title: 'Keywords',
     name: 'keywords',
-    translationPath: 'superSurveys.keywords',
+    translationPath: 'tables.superSurveys.keywords',
     render: 'array',
   },
   {
     title: 'Number of Items',
     name: 'numberOfItems',
-    translationPath: 'superSurveys.numberOfItems',
+    translationPath: 'tables.superSurveys.numberOfItems',
   },
   {
     title: 'License',
     name: 'license',
-    translationPath: 'superSurveys.license',
+    translationPath: 'tables.superSurveys.license',
   },
-  {
-    title: 'License Text',
-    name: 'licenseText',
-    translationPath: 'superSurveys.licenseText',
-  },
-  {
-    title: 'Created At',
-    name: 'createdAt',
-    translationPath: 'superSurveys.createdAt',
-    render: 'date',
-    sort: true,
-  },
-  {
-    title: 'Updated At',
-    name: 'updatedAt',
-    translationPath: 'superSurveys.updatedAt',
-    render: 'date',
-    sort: true,
-  },
+  // {
+  //   title: 'License Text',
+  //   name: 'licenseText',
+  //   translationPath: 'tables.superSurveys.licenseText',
+  // },
+  // {
+  //   title: 'Created At',
+  //   name: 'createdAt',
+  //   translationPath: 'tables.superSurveys.createdAt',
+  //   render: 'date',
+  //   sort: true,
+  // },
+  // {
+  //   title: 'Updated At',
+  //   name: 'updatedAt',
+  //   translationPath: 'tables.superSurveys.updatedAt',
+  //   render: 'date',
+  //   sort: true,
+  // },
 ];

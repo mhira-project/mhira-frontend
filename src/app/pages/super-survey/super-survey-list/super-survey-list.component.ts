@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { FormattedSuperSurvey } from '@app/pages/super-survey/@types/super-survey';
 import { SuperSurveyColumns } from '@app/pages/super-survey/@tables/super-survey.table';
+import { Convert } from '@app/@shared/classes/convert';
 
 @Component({
   selector: 'app-super-survey-list',
@@ -62,9 +63,11 @@ export class SuperSurveyListComponent {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(({ edges, pageInfo }) => {
         this.pageInfo = pageInfo;
-        this.data = edges.map((e) => ({
-          ...e.node,
-        }));
+        // this.data = edges.map((e) => ({
+        //   ...e.node,
+        // }));
+        this.data = edges.map((e) => Convert.toFormattedSuperSurvey(e.node));
+        console.log('DATAAAA', this.data);
       });
   }
 }

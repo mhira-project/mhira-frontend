@@ -19,9 +19,9 @@ export interface SuperSurvey {
 }
 
 export enum Status {
-  Draft = 'Draft',
-  Public = 'Public',
-  Private = 'Private',
+  DRAFT = 'DRAFT',
+  PUBLIC = 'PUBLIC',
+  PRIVATE = 'PRIVATE',
 }
 
 export enum License {

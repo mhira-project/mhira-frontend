@@ -1,27 +1,27 @@
 <h1 *ngIf="superSurveyTitle">{{ superSurveyTitle }}</h1>
 <nz-descriptions nzBordered [nzColumn]="1">
-  <nz-descriptions-item nzTitle="ID">{{ superSurvey.id }}</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Full Name">{{ superSurvey.fullName }}</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Abbreviation">{{ superSurvey.abbreviation }}</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Description">{{ superSurvey.description || 'N/A' }}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="ID">{{ superSurvey?.id }}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Full Name">{{ superSurvey?.fullName }}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Abbreviation">{{ superSurvey?.abbreviation }}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Description">{{ superSurvey?.description || 'N/A' }}</nz-descriptions-item>
   <nz-descriptions-item nzTitle="Languages">
     <ul>
-      <li *ngFor="let language of superSurvey.languages">{{ language }}</li>
+      <li *ngFor="let language of superSurvey?.languages">{{ language }}</li>
     </ul>
   </nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Survey Title">{{ superSurvey.surveyJsTitle || 'N/A' }}</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Number of Items">{{ superSurvey.numberOfItems || 'N/A' }}</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="License">{{ superSurvey.license }}</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="License Text">{{ superSurvey.licenseText }}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Survey Title">{{ superSurvey?.surveyJsTitle || 'N/A' }}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Number of Items">{{ superSurvey?.numberOfItems || 'N/A' }}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="License">{{ superSurvey?.license }}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="License Text">{{ superSurvey?.licenseText }}</nz-descriptions-item>
   <nz-descriptions-item nzTitle="Keywords">
     <ul>
-      <li *ngFor="let keyword of superSurvey.keywords">{{ keyword }}</li>
+      <li *ngFor="let keyword of superSurvey?.keywords">{{ keyword }}</li>
     </ul>
   </nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Status">{{ superSurvey.status }}</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Created At">{{ superSurvey.createdAt | date : 'medium' }}</nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Updated At">{{ superSurvey.updatedAt | date : 'medium' }}</nz-descriptions-item>
-  <nz-descriptions-item *ngIf="superSurvey.deletedAt" nzTitle="Deleted At"
-    >{{ superSurvey.deletedAt | date : 'medium' }}
+  <nz-descriptions-item nzTitle="Status">{{ superSurvey?.status }}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Created At">{{ superSurvey?.createdAt | date: 'medium' }}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Updated At">{{ superSurvey?.updatedAt | date: 'medium' }}</nz-descriptions-item>
+  <nz-descriptions-item *ngIf="superSurvey?.deletedAt" nzTitle="Deleted At"
+    >{{ superSurvey?.deletedAt | date: 'medium' }}
   </nz-descriptions-item>
 </nz-descriptions>

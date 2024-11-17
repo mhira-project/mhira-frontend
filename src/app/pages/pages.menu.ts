@@ -121,14 +121,14 @@ export const MENU: SideNavInterface[] | any = [
     icon: 'file',
     permissions: [PK.VIEW_SUPER_SURVEYS, PK.MANAGE_SUPER_SURVEYS],
     submenu: [
-      {
-        path: 'super-survey/list',
-        title: 'menu.superSurvey',
-        permissions: [PK.VIEW_SUPER_SURVEYS],
-        iconType: '',
-        iconTheme: '',
-        submenu: [],
-      },
+      // {
+      //   path: 'super-survey/list',
+      //   title: 'menu.superSurvey',
+      //   permissions: [PK.VIEW_SUPER_SURVEYS],
+      //   iconType: '',
+      //   iconTheme: '',
+      //   submenu: [],
+      // },
     ],
   },
   {

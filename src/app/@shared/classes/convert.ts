@@ -18,12 +18,19 @@ import {
   FormattedAssessmentAdministration,
 } from '@app/pages/administration/@types/assessment-administration';
 import { Consent } from '@app/pages/administration/@types/consent';
+import { FormattedSuperSurvey, SuperSurvey, Status } from '@app/pages/super-survey/@types/super-survey';
 
 const STATUS_COLOR = {
   [QuestionnaireStatus.DRAFT]: 'blue',
   [QuestionnaireStatus.PRIVATE]: 'orange',
   [QuestionnaireStatus.PUBLISHED]: 'green',
   [QuestionnaireStatus.ARCHIVED]: 'red',
+};
+
+const SURVEY_STATUS_COLOR = {
+  [Status.DRAFT]: 'blue',
+  [Status.PRIVATE]: 'orange',
+  [Status.PUBLIC]: 'green',
 };
 
 const ASSESSMENT_STATUS_COLOR = {
@@ -109,6 +116,17 @@ export class Convert {
     // questionnaire.abbreviation = json.questionnaire.abbreviation;
 
     return questionnaire;
+  }
+
+  public static toFormattedSuperSurvey(json: SuperSurvey): FormattedSuperSurvey {
+    const survey: FormattedSuperSurvey = json as FormattedSuperSurvey;
+
+    survey.formattedStatus = {
+      color: SURVEY_STATUS_COLOR[survey.status],
+      title: survey.status,
+    };
+
+    return survey;
   }
 
   public static toFormattedQuestionnaireVersion2(json: QuestionnaireVersion): FormattedQuestionnaireVersion {

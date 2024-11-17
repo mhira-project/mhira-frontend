@@ -104,7 +104,8 @@ export default {
     emailTemplates: 'Email Templates',
     version: 'Version',
     createPatientStatus: 'Create PatientStatus',
-    superSurvey: 'Super Survey',
+    superSurvey: 'Questionnaires',
+    superSurveyDetails: 'Questionnaire Details',
   },
   patients: {
     myPatients: 'My Patients',
@@ -112,6 +113,19 @@ export default {
     notArchivedPatients: 'Show not Archived',
   },
   tables: {
+    superSurveys: {
+      fullName: 'Full Name',
+      abbreviation: 'Abbreviation',
+      surveyId: 'Survey ID',
+      languages: 'Languages',
+      status: 'Status',
+      keywords: 'Keywords',
+      numberOfItems: 'Number of items',
+      license: 'License',
+      licenseText: 'License text',
+      createdAt: 'Created At',
+      updatedAt: 'Updated At',
+    },
     assessmentAdministration: {
       assessmentType: 'Assessment Type',
       lastUpdate: 'Last Update',
