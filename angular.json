@@ -22,7 +22,6 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/apple-touch-icon.png",
@@ -40,16 +39,20 @@
               "./node_modules/ng-zorro-antd/resizable/style/index.min.css",
               "src/main.scss"
             ],
-            "scripts": ["node_modules/jquery/dist/jquery.min.js"]
+            "scripts": ["node_modules/jquery/dist/jquery.min.js"],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": false,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -76,9 +79,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": false,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -102,12 +103,9 @@
               ]
             },
             "dev": {
-              "optimization": false,
-              "outputHashing": "none",
-              "sourceMap": true,
-              "extractCss": false,
-              "namedChunks": true,
-              "aot": false,
+              "optimization": true,
+              "outputHashing": "all",
+              "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -133,14 +131,14 @@
             "ci": {
               "progress": false
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-x-rocket:build:development",
-            "hmr": true,
-            "hmrWarning": false
+            "browserTarget": "ng-x-rocket:build",
+            "hmr": true
           },
           "configurations": {
             "production": {
@@ -148,9 +146,7 @@
               "browserTarget": "ng-x-rocket:build:production",
               "hmr": false
             },
-            "ci": {
-              "progress": false
-            },
+            "ci": {},
             "dev": {
               "disableHostCheck": true,
               "browserTarget": "ng-x-rocket:build:dev",
@@ -178,13 +174,6 @@
             }
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json", "e2e/tsconfig.json"],
-            "exclude": ["**/node_modules/**"]
-          }
-        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -200,7 +189,6 @@
       }
     }
   },
-  "defaultProject": "ng-x-rocket",
   "cli": {
     "analytics": "1d3e231a-7d09-4602-a8b5-587527590c05"
   }

@@ -53,7 +53,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NzTagModule,
     NzDatePickerModule,
     NzTimePickerModule,
-    NgxInputSearchModule,
+    // NgxInputSearchModule,
     NzFormModule,
     TranslateModule,
     NzModalModule,

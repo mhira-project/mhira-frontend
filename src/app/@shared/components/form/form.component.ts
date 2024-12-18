@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Field } from './@types/field';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Form } from './@types/form';
 import { FieldGroup } from './@types/field.group';
 
@@ -48,7 +48,7 @@ export class FormComponent implements OnInit {
   @Output() formUpdate: EventEmitter<any> = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<void>();
   @Output() inputModeChanged = new EventEmitter<boolean>();
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   private _resetForm = false;
 
   constructor() {}

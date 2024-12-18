@@ -10,7 +10,7 @@ import { PaginationService } from '@shared/services/pagination.service';
 import { NestJsQueriesService } from '@shared/services/nestjs-queries.service';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, NgxInputSearchModule, ReactiveFormsModule, ComponentsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ComponentsModule],
   declarations: [],
   exports: [ComponentsModule],
   providers: [XlsExportService, DateService, AppPermissionsService, NestJsQueriesService, PaginationService],

@@ -85,17 +85,6 @@ export class QuestionnaireFormComponent {
       });
   }
 
-  ngOnInit() {
-    this.assessmentFormService.assessment$.subscribe((assessment: FullAssessment) => {
-      this.assessment = assessment;
-      if (assessment.questionnaireAssessment.consentTimestamp === null && assessment.consentId) {
-        this.getConsent(assessment.consentId);
-      }
-
-      this.cdr.detectChanges();
-    });
-  }
-
   public isVisible(question: Question) {
     if (!question.relevant) return true;
     return this.skipLogic.find((logic) => logic.questionId === question._id)?.visible ?? true;

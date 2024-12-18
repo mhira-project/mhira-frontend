@@ -60,10 +60,12 @@
   </nz-dropdown-menu>
 
   <nz-drawer #drawer [nzClosable]="true" [nzTitle]="'core.filter' | translate" (nzOnClose)="drawer.close()">
-    <app-master-data-filter-form
-      [drawer]="drawer"
-      [columns]="columns"
-      (filter)="filter.emit($event)"
-    ></app-master-data-filter-form>
+    <ng-container *nzDrawerContent>
+      <app-master-data-filter-form
+        [drawer]="drawer"
+        [columns]="columns"
+        (filter)="filter.emit($event)"
+      ></app-master-data-filter-form>
+    </ng-container>
   </nz-drawer>
 </article>

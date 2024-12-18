@@ -5,13 +5,11 @@ describe('CreateEmailTemplateComponent', () => {
   let component: CreateEmailTemplateComponent;
   let fixture: ComponentFixture<CreateEmailTemplateComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CreateEmailTemplateComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [CreateEmailTemplateComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CreateEmailTemplateComponent);

@@ -151,15 +151,7 @@ const antModules = [
 ];
 
 @NgModule({
-  imports: [
-    ...antModules,
-    CommonModule,
-    FormsModule,
-    NgxInputSearchModule,
-    ReactiveFormsModule,
-    TranslateModule,
-    AngularEditorModule,
-  ],
+  imports: [...antModules, CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, AngularEditorModule],
   declarations: [
     FormComponent,
     TextInputComponent,

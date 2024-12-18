@@ -5,13 +5,11 @@ describe('CreateQuestionnaireBundleComponent', () => {
   let component: CreateQuestionnaireBundleComponent;
   let fixture: ComponentFixture<CreateQuestionnaireBundleComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [CreateQuestionnaireBundleComponent],
-      }).compileComponents();
-    })
-  );
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [CreateQuestionnaireBundleComponent],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CreateQuestionnaireBundleComponent);

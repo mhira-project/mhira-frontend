@@ -55,11 +55,7 @@ export class AssessmentOverviewComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.assessmentFormService.percentageCompletedValue$.subscribe((percentage) => {
-      this.updateSubmitModalVisible(percentage);
-    });
-
-    this.assessmentFormService.assessment$.subscribe((assessment: FullAssessment) => {
+    this.assessmentFormService.assessment$.subscribe((assessment: any) => {
       this.assessment = assessment;
       this.questionnaireQuestions = {};
       this.questions = assessment.questionnaireAssessment.questionnaires.reduce(
@@ -69,8 +65,8 @@ export class AssessmentOverviewComponent implements OnInit {
             []
           );
           // ************
-          for (const unique of questionnaire.questionGroups ?? []) {
-            for (const uq of unique.uniqueQuestions) {
+          for (let unique of questionnaire.questionGroups ?? []) {
+            for (let uq of unique.uniqueQuestions) {
               questionnaireQuestions = [...questionnaireQuestions, ...uq.subQuestions];
             }
           }

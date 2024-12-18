@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { FormItemType } from './form-item.type';
-import { FormBuilder, FormControl, FormArray, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormArray, UntypedFormGroup, Validators } from '@angular/forms';
 import setHours from 'date-fns/setHours';
 
 @Component({
@@ -19,9 +19,9 @@ export class FormGeneratorComponent implements OnInit, OnChanges {
 
   today = new Date();
   timeDefaultValue = setHours(new Date(), 0);
-  validateForm: FormGroup;
+  validateForm: UntypedFormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {}
 
@@ -72,7 +72,7 @@ export class FormGeneratorComponent implements OnInit, OnChanges {
             this.formData[item.name].forEach((meta: any) => {
               const controls = {};
               item.fields.forEach((field) => {
-                controls[field.name] = new FormControl('');
+                controls[field.name] = new UntypedFormControl('');
               });
               initialObject[item.name].push(this.fb.group(controls));
             });
@@ -81,7 +81,7 @@ export class FormGeneratorComponent implements OnInit, OnChanges {
               initialObject[item.name][0] = [null, [Validators.required]];
               const controls = {};
               item.fields.forEach((field) => {
-                controls[field.name] = new FormControl('');
+                controls[field.name] = new UntypedFormControl('');
               });
               initialObject[item.name].push(this.fb.group(controls));
             }
@@ -100,12 +100,12 @@ export class FormGeneratorComponent implements OnInit, OnChanges {
   }
 
   addMetaField(formItem: FormItemType) {
-    const meta = this.validateForm.get(formItem.name) as FormArray;
+    const meta = this.validateForm.get(formItem.name) as UntypedFormArray;
     switch (formItem.type) {
       case 'metaWithOptions':
         const controls = {};
         for (const field of formItem.fields) {
-          controls[field.name] = new FormControl('');
+          controls[field.name] = new UntypedFormControl('');
         }
         meta.push(this.fb.group(controls));
         break;
@@ -127,7 +127,7 @@ export class FormGeneratorComponent implements OnInit, OnChanges {
   }
 
   removeMetaFiled(index: number, formItem: any) {
-    const meta = this.validateForm.get(formItem.name) as FormArray;
+    const meta = this.validateForm.get(formItem.name) as UntypedFormArray;
     meta.removeAt(index);
   }
 

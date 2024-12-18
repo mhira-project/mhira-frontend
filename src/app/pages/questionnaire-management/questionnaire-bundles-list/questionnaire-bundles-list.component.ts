@@ -32,7 +32,7 @@ export class QuestionnaireBundlesListComponent implements OnInit {
     paging: { first: DEFAULT_PAGE_SIZE },
     filter: {},
     sorting: [],
-    departmentIds: undefined,
+    departmentIds: [],
   };
 
   constructor(

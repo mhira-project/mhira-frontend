@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/auth/auth.service';
 import { UserChangePasswordInput } from '@app/pages/user-management/user-form/user-update-password.type';
@@ -12,7 +12,7 @@ import { User } from '@app/pages/user-management/@types/user';
   styleUrls: ['./change-password.component.scss'],
 })
 export class ChangePasswordComponent implements OnInit {
-  validateForm!: FormGroup;
+  validateForm!: UntypedFormGroup;
   isLoading = false;
   hasErrors = false;
   errors: string[] = [];
@@ -21,7 +21,7 @@ export class ChangePasswordComponent implements OnInit {
   repeatPassword = false;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private authService: AuthService,
     private usersService: UsersService

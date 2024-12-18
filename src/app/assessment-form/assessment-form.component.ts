@@ -44,7 +44,7 @@ export class AssessmentFormComponent implements OnInit {
             const questions: any[] = [];
             const uniqueQuestions = {};
             group.questions.map((question: { appearance: string; choices: any[]; type: any }) => {
-              if (group.appearance?.toLowerCase() === 'table-list' && question.type === 'select_one') {
+              if (group.appearance?.toLowerCase() == 'table-list' && question.type === 'select_one') {
                 const choices = question.choices.map((choice: { label: any }) => choice.label);
                 if (!uniqueQuestions[JSON.stringify(choices)]) {
                   uniqueQuestions[JSON.stringify(choices)] = {
@@ -88,7 +88,7 @@ export class AssessmentFormComponent implements OnInit {
         ({ data }: any) => {
           this.disclaimer = data.disclaimers.find((disclaimers: any) => disclaimers.type === 'assessments');
         },
-        (err) => this.errorService.handleError(err, { prefix: 'Unable to load disclaimers' })
+        (err: any) => this.errorService.handleError(err, { prefix: 'Unable to load disclaimers' })
       );
   }
 }
