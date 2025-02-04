@@ -39,7 +39,7 @@ const CryptoJS = require('crypto-js');
 })
 export class PlanAssessmentComponent implements OnInit {
   public PK = PermissionKey;
-  public selectedQuestionnaires: QuestionnaireVersion[] = [];
+  public selectedQuestionnaires: any[] = [];
   public selectedAssessment: any = null;
   listOfBundles: any = [];
   listOfSelectedBundles: any = [];
@@ -241,7 +241,7 @@ export class PlanAssessmentComponent implements OnInit {
 
   public onSubmitAssessment() {
     if (this.assessmentForm.invalid) return;
-    const questionnaires = this.selectedQuestionnaires.map((q) => q._id);
+    const questionnaires = this.selectedQuestionnaires.map((q) => q.id);
     const { informant, informantPatient, ...rest } = this.assessmentForm.value;
     const newAssessmentData = {
       ...rest,

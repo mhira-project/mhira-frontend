@@ -16,7 +16,11 @@ import { map } from 'rxjs/operators'; // Adjust the import path as needed
 export class SuperSurveyService {
   constructor(private apollo: Apollo) {}
 
-  public getSuperSurveys(options: { paging?: Paging; filter?: any; sorting?: Sorting[] }): Observable<{
+  public getSuperSurveys(options: {
+    paging?: Paging;
+    filter?: any;
+    sorting?: Sorting[];
+  }): Observable<{
     edges: { node: FormattedSuperSurvey; cursor: string }[];
     pageInfo: PageInfo;
     totalCount: number;
@@ -54,7 +58,11 @@ export class SuperSurveyService {
       );
   }
 
-  private mapOldToNewQueryVariables(options: { paging?: Paging; filter?: any; sorting?: Sorting[] }): {
+  private mapOldToNewQueryVariables(options: {
+    paging?: Paging;
+    filter?: any;
+    sorting?: Sorting[];
+  }): {
     filter?: any;
     orderBy?: any[];
     after?: string;
@@ -91,6 +99,6 @@ export class SuperSurveyService {
         },
         fetchPolicy: 'no-cache',
       })
-      .pipe(map((res) => res.data?.['surveyTemplate'] ?? null));
+      .pipe(map((res: any) => res.data?.['surveyTemplate'] ?? null));
   }
 }

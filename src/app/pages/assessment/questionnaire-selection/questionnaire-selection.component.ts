@@ -4,6 +4,7 @@ import { QuestionnaireVersion } from '../../questionnaire-management/@types/ques
 import { QuestionnaireManagementService } from '../../questionnaire-management/@services/questionnaire-management.service';
 import { createSearchFilter } from '../../questionnaire-management/questionnaire-list/questionnaire-list.component';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { SuperSurveyService } from '@app/pages/super-survey/@services/super-survey.service';
 @Component({
   selector: 'app-questionnaire-selection',
   templateUrl: './questionnaire-selection.component.html',
@@ -19,12 +20,16 @@ export class QuestionnaireSelectionComponent {
   @Input()
   public readonly = false;
 
-  public foundQuestionnaires: QuestionnaireVersion[] = [];
+  public foundQuestionnaires: any[] = [];
 
   isVisible = false;
   questionnareActive: any = null;
 
-  constructor(private questionnaireService: QuestionnaireManagementService, private clipboard: Clipboard) {}
+  constructor(
+    private questionnaireService: QuestionnaireManagementService,
+    private superSurveyService: SuperSurveyService,
+    private clipboard: Clipboard
+  ) {}
 
   public onQuestionnaireSearch(q: string) {
     if (q === '') {
@@ -34,17 +39,21 @@ export class QuestionnaireSelectionComponent {
 
     const filter = { or: createSearchFilter(q) };
 
-    this.questionnaireService
-      .getQuestionnaires({ filter })
-      // Added filter to filter out the archieved quest.
-      .subscribe(
-        (questionnaires) =>
-          (this.foundQuestionnaires = questionnaires.edges
-            .map((e) => e.node)
-            .filter(
-              (e) => e.status !== 'ARCHIVED' && e.status !== 'DRAFT' && e.status !== 'PRIVATE' && e.zombie === false
-            ))
-      );
+    // this.questionnaireService
+    //   .getQuestionnaires({ filter })
+    //   // Added filter to filter out the archieved quest.
+    //   .subscribe(
+    //     (questionnaires) =>
+    //       (this.foundQuestionnaires = questionnaires.edges
+    //         .map((e) => e.node)
+    //         .filter(
+    //           (e) => e.status !== 'ARCHIVED' && e.status !== 'DRAFT' && e.status !== 'PRIVATE' && e.zombie === false
+    //         ))
+    //   );
+
+    this.superSurveyService
+      .getSuperSurveys({})
+      .subscribe((data) => (this.foundQuestionnaires = data.edges.map((e) => e.node)));
   }
 
   public onQuestionnaireSearchNew(q: string) {
@@ -52,30 +61,38 @@ export class QuestionnaireSelectionComponent {
       // tslint:disable
       const filter = { or: createSearchFilter(q) };
 
-      this.questionnaireService
-        .getQuestionnaires({ filter })
-        .subscribe(
-          (questionnaires) =>
-            (this.foundQuestionnaires = questionnaires.edges
-              .map((e) => e.node)
-              .filter(
-                (e) => e.status !== 'ARCHIVED' && e.status !== 'DRAFT' && e.status !== 'PRIVATE' && e.zombie === false
-              ))
-        );
+      // this.questionnaireService
+      //   .getQuestionnaires({ filter })
+      //   .subscribe(
+      //     (questionnaires) =>
+      //       (this.foundQuestionnaires = questionnaires.edges
+      //         .map((e) => e.node)
+      //         .filter(
+      //           (e) => e.status !== 'ARCHIVED' && e.status !== 'DRAFT' && e.status !== 'PRIVATE' && e.zombie === false
+      //         ))
+      //   );
+
+      this.superSurveyService
+        .getSuperSurveys({})
+        .subscribe((data) => (this.foundQuestionnaires = data.edges.map((e) => e.node)));
     }
 
     const filter = { or: createSearchFilter(q) };
 
-    this.questionnaireService
-      .getQuestionnaires({ filter })
-      .subscribe(
-        (questionnaires) =>
-          (this.foundQuestionnaires = questionnaires.edges
-            .map((e) => e.node)
-            .filter(
-              (e) => e.status !== 'ARCHIVED' && e.status !== 'DRAFT' && e.status !== 'PRIVATE' && e.zombie === false
-            ))
-      );
+    // this.questionnaireService
+    //   .getQuestionnaires({ filter })
+    //   .subscribe(
+    //     (questionnaires) =>
+    //       (this.foundQuestionnaires = questionnaires.edges
+    //         .map((e) => e.node)
+    //         .filter(
+    //           (e) => e.status !== 'ARCHIVED' && e.status !== 'DRAFT' && e.status !== 'PRIVATE' && e.zombie === false
+    //         ))
+    //   );
+
+    this.superSurveyService
+      .getSuperSurveys({})
+      .subscribe((data) => (this.foundQuestionnaires = data.edges.map((e) => e.node)));
   }
 
   public onToggleQuestionnaire(questionnaire: QuestionnaireVersion): void {
@@ -83,17 +100,18 @@ export class QuestionnaireSelectionComponent {
       this.selectedQuestionnaires.splice(this.selectedIndex(questionnaire), 1);
     } else {
       this.selectedQuestionnaires.push(questionnaire);
+      console.log('SELECTED ONES: ', this.selectedQuestionnaires);
     }
 
     this.selectionChange.emit(this.selectedQuestionnaires);
   }
 
-  public isSelected(questionnaire: QuestionnaireVersion): boolean {
-    return !!this.selectedQuestionnaires.find((q) => q._id === questionnaire._id);
+  public isSelected(questionnaire: any): boolean {
+    return !!this.selectedQuestionnaires.find((q: any) => q.id === questionnaire.id);
   }
 
-  public selectedIndex(questionnaire: QuestionnaireVersion): number {
-    return this.selectedQuestionnaires.findIndex((q) => q._id === questionnaire._id);
+  public selectedIndex(questionnaire: any): number {
+    return this.selectedQuestionnaires.findIndex((q: any) => q.id === questionnaire.id);
   }
 
   public canMove(direction: 'up' | 'down', questionnaire: QuestionnaireVersion): boolean {

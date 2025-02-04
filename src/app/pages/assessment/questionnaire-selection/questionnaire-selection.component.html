@@ -1,6 +1,6 @@
 <ng-template #questionnaireItem let-questionnaire>
   <div>
-    <nz-tag nzColor="blue">{{ questionnaire?.language }}</nz-tag>
+    <!-- <nz-tag nzColor="blue">{{ questionnaire?.language }}</nz-tag> -->
     <nz-tag [nzColor]="tagColor(questionnaire.status)">{{ questionnaire.status }}</nz-tag>
   </div>
 </ng-template>
@@ -26,8 +26,8 @@
             <nz-list-item>
               <ng-template #questionnaireItemSearch let-questionnaire>
                 <div>
-                  <span class="questionnaire-title">{{ questionnaire.name }}</span>
-                  <nz-tag nzColor="blue">{{ questionnaire?.language }}</nz-tag>
+                  <span class="questionnaire-title">{{ questionnaire.fullName }}</span>
+                  <!-- <nz-tag nzColor="blue">{{ questionnaire?.language }}</nz-tag> -->
                   <nz-tag [nzColor]="tagColor(questionnaire.status)">{{ questionnaire.status }}</nz-tag>
                   <ng-container *ngIf="questionnaire.keywords?.length !== 0">
                     <nz-tag class="keyword-tag" *ngFor="let keyword of questionnaire.keywords" [nzColor]="'purple'">{{
@@ -45,7 +45,6 @@
                 nz-button
                 [nzType]="isSelected(o) ? 'danger' : 'primary'"
                 nzShape="circle"
-                [disabled]="isDisabled(o)"
                 (click)="onToggleQuestionnaire(o)"
               >
                 <i nz-icon [nzType]="isSelected(o) ? 'minus' : 'plus'"></i>
@@ -67,10 +66,10 @@
       >
         <ng-template class="header-title" #dummy>
           <div class="header-container">
-            <p>{{ questionnaire.name }}</p>
+            <p>{{ questionnaire.fullName }}</p>
             <span
               nz-popover
-              [nzPopoverTitle]="questionnaire?.name"
+              [nzPopoverTitle]="questionnaire?.fullName"
               [nzPopoverContent]="questionnaire.questionnaire?.abbreviation"
               (click)="showModal(questionnaire)"
               style="font-size: 18px"
